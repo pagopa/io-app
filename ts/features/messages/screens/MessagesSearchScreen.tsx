@@ -6,15 +6,15 @@ import {
   SearchInputRef,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FlatList, ListRenderItemInfo, Platform, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../../i18n";
 import { EmptyList } from "../components/Search/EmptyList";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../store/hooks";
-import { searchMessagesCachedSelector } from "../store/reducers/allPaginated";
+import { useIOStore } from "../../../store/hooks";
+import { searchMessagesUncachedSelector } from "../store/reducers/allPaginated";
 import { UIMessage } from "../types";
 import { WrappedMessageListItem } from "../components/Home/WrappedMessageListItem";
 
@@ -24,12 +24,12 @@ const MIN_QUERY_LENGTH: number = 3;
 export const MessagesSearchScreen = () => {
   const insets = useSafeAreaInsets();
   const navigation = useIONavigation();
+  const store = useIOStore();
   const searchInputRef = useRef<SearchInputRef>(null);
   const [query, setQuery] = useState<string>("");
-
-  const searchResultMessages = useIOSelector(state =>
-    searchMessagesCachedSelector(state, query, MIN_QUERY_LENGTH)
-  );
+  const [filteredMessages, setFilteredMessages] = useState<
+    ReadonlyArray<UIMessage>
+  >([]);
 
   const renderItemCallback = useCallback(
     (itemInfo: ListRenderItemInfo<UIMessage>) => (
@@ -58,6 +58,19 @@ export const MessagesSearchScreen = () => {
     }, [])
   );
 
+  useEffect(() => {
+    const timeoutHandleId = setTimeout(() => {
+      const state = store.getState();
+      const searchResult = searchMessagesUncachedSelector(
+        state,
+        query,
+        MIN_QUERY_LENGTH
+      );
+      setFilteredMessages(searchResult);
+    }, 350);
+    return () => clearTimeout(timeoutHandleId);
+  }, [query, setFilteredMessages, store]);
+
   return (
     <>
       <View
@@ -84,7 +97,7 @@ export const MessagesSearchScreen = () => {
       </View>
       <FlatList
         ItemSeparatorComponent={() => <Divider />}
-        data={searchResultMessages}
+        data={filteredMessages}
         renderItem={renderItemCallback}
         ListEmptyComponent={renderListEmptyComponent}
         keyboardDismissMode={Platform.select({
