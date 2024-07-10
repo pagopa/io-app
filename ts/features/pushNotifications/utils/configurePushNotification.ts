@@ -29,6 +29,7 @@ import {
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
 import { isLoadingOrUpdating } from "../../../utils/pot";
+import { isArchivingInProcessingModeSelector } from "../../messages/store/reducers/archiving";
 
 /**
  * Helper type used to validate the notification payload.
@@ -47,11 +48,15 @@ const NotificationPayload = t.partial({
  */
 function handleForegroundMessageReload() {
   const state = store.getState();
-  // Make sure there are not progressing message loadings
+  // Make sure there are not progressing message loadings and
+  // that the system is not processing any message archiving/restoring
   const allPaginated = state.entities.messages.allPaginated;
+  const isProcessingArchivingOrRestoring =
+    isArchivingInProcessingModeSelector(state);
   if (
     isLoadingOrUpdating(allPaginated.archive.data) ||
-    isLoadingOrUpdating(allPaginated.inbox.data)
+    isLoadingOrUpdating(allPaginated.inbox.data) ||
+    isProcessingArchivingOrRestoring
   ) {
     return;
   }
