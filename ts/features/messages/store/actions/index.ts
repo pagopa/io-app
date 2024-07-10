@@ -24,6 +24,13 @@ import {
   shownPreconditionStatusAction,
   updateRequiredPreconditionStatusAction
 } from "./preconditions";
+import {
+  resetMessageArchivingAction,
+  interruptMessageArchivingProcessingAction,
+  removeScheduledMessageArchivingAction,
+  startProcessingMessageArchivingAction,
+  toggleScheduledMessageArchivingAction
+} from "./archiving";
 
 export type ThirdPartyMessageActions = ActionType<typeof loadThirdPartyMessage>;
 
@@ -339,4 +346,9 @@ export type MessagesActions = ActionType<
   | typeof cancelQueuedPaymentUpdates
   | typeof addUserSelectedPaymentRptId
   | typeof setShownMessageCategoryAction
+  | typeof toggleScheduledMessageArchivingAction
+  | typeof resetMessageArchivingAction
+  | typeof startProcessingMessageArchivingAction
+  | typeof removeScheduledMessageArchivingAction
+  | typeof interruptMessageArchivingProcessingAction
 >;
