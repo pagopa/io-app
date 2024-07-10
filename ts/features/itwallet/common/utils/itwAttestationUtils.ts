@@ -50,7 +50,7 @@ export const getAttestation = async (
   await generate(ephemeralKey);
   const wiaCryptoContext = createCryptoContextFor(ephemeralKey);
 
-  return await WalletInstanceAttestation.getAttestation({
+  return WalletInstanceAttestation.getAttestation({
     wiaCryptoContext,
     integrityContext,
     walletProviderBaseUrl: itwWalletProviderBaseUrl
