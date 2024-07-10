@@ -258,3 +258,4 @@ export const itwGoogleCloudProjectNumber =
   Config.ITW_GOOGLE_CLOUD_PROJECT_NUMBER;
 export const itWalletPidIssuanceRedirectUri =
   Config.ITW_PID_ISSUANCE_REDIRECT_URI;
+export const itwPidProviderBaseUrl = Config.ITW_PID_PROVIDER_BASE_URL;
