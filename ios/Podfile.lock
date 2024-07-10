@@ -142,7 +142,7 @@ PODS:
   - OpenSSL-Universal (1.1.1100)
   - pagopa-io-react-native-crypto (0.3.0):
     - React-Core
-  - pagopa-io-react-native-http-client (1.0.2):
+  - pagopa-io-react-native-http-client (1.0.5):
     - Alamofire (~> 5.9.1)
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -488,7 +488,7 @@ PODS:
   - react-native-pager-view (6.2.3):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - react-native-pdf (6.7.5):
+  - react-native-pdf (6.7.4):
     - React-Core
   - react-native-pdf-thumbnail (1.2.1):
     - React-Core
@@ -1076,9 +1076,8 @@ SPEC CHECKSUMS:
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
-  pagopa-io-react-native-http-client: 48d51868a2751db4d9220283626d0d53f2375f63
-  pagopa-io-react-native-integrity: 2df0acdf2dff0a4d612bfe06ec70f8fc2c1ba9a0
-  pagopa-io-react-native-jwt: 662d4e722715996758b079774abea1996b057467
+  pagopa-io-react-native-http-client: 8ed571ea31ec9e6216688f63056e5c92bcbe484d
+  pagopa-io-react-native-jwt: f89a378bbc5ebfd93c24ec5993e97545a4815157
   pagopa-io-react-native-login-utils: 9fb43fd59dcc864a24343209e74bd7429659456a
   pagopa-react-native-zendesk: 60a26f8a8072234789c34bb7c8a769c156eb57dc
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
@@ -1108,7 +1107,7 @@ SPEC CHECKSUMS:
   react-native-get-random-values: 21325b2244dfa6b58878f51f9aa42821e7ba3d06
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
   react-native-pager-view: 948dc00b6545d82b53e5f99cafef4a8521c60dd4
-  react-native-pdf: 103940c90d62adfd259f63cca99c7c0c306b514c
+  react-native-pdf: 79aa75e39a80c1d45ffe58aa500f3cf08f267a2e
   react-native-pdf-thumbnail: a042fffdab7a49f0f9df0e11da0a90beebfd4241
   react-native-render-html: 96c979fe7452a0a41559685d2f83b12b93edac8c
   react-native-safe-area-context: 399a5859f6acbdf67f671c69b53113f535f3b5b0

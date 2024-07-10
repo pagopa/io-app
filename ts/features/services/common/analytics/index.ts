@@ -13,6 +13,7 @@ import { paginatedServicesGet } from "../../institution/store/actions";
 import { searchPaginatedInstitutionsGet } from "../../search/store/actions";
 
 type ServiceBaseType = {
+  service_id: string;
   service_name: string;
 } & InstitutionBaseType;
 
@@ -24,7 +25,6 @@ type ServiceDetailsType = {
   bottom_cta_available: boolean;
   organization_fiscal_code: string;
   service_category: "special" | "standard";
-  service_id: string;
 } & ServiceBaseType;
 
 type ServiceDetailsConsentType = {
@@ -68,6 +68,7 @@ type ServiceSelectedType = {
 } & ServiceBaseType;
 
 type InstitutionSelectedType = {
+  organization_fiscal_code: string;
   source:
     | "featured_organizations"
     | "main_list"
@@ -109,25 +110,29 @@ export const trackSearchStart = (props: SearchStartType) =>
 
 export const trackServiceSelected = ({
   organization_name,
+  service_id,
   service_name,
   source
 }: ServiceSelectedType) =>
   void mixpanelTrack(
     "SERVICES_SELECTED",
     buildEventProperties("UX", "action", {
-      service_name,
       organization_name,
+      service_id,
+      service_name,
       source
     })
   );
 
 export const trackInstitutionSelected = ({
+  organization_fiscal_code,
   organization_name,
   source
 }: InstitutionSelectedType) =>
   void mixpanelTrack(
     "SERVICES_ORGANIZATION_SELECTED",
     buildEventProperties("UX", "action", {
+      organization_fiscal_code,
       organization_name,
       source
     })
@@ -147,10 +152,13 @@ export const trackInstitutionDetails = ({
     })
   );
 
-export const trackInstitutionDetailsError = (reason: string) =>
+export const trackInstitutionDetailsError = (
+  organization_fiscal_code: string,
+  reason: string
+) =>
   void mixpanelTrack(
     "SERVICES_ORGANIZATION_DETAIL_ERROR",
-    buildEventProperties("KO", undefined, { reason })
+    buildEventProperties("KO", undefined, { organization_fiscal_code, reason })
   );
 
 export const trackSearchPage = () =>
@@ -215,6 +223,14 @@ export const trackServiceDetailsUserExit = (
     buildEventProperties("UX", "exit", props)
   );
 
+export const trackServicesCgnStartRequest = (service_id: string) =>
+  void mixpanelTrack(
+    "SERVICES_CGN_START_REQUEST",
+    buildEventProperties("UX", "action", {
+      service_id
+    })
+  );
+
 export const trackSpecialServiceStatusChanged = (
   props: SpecialServiceStatusChangedType
 ) =>
@@ -223,10 +239,10 @@ export const trackSpecialServiceStatusChanged = (
     buildEventProperties("UX", "action", props)
   );
 
-export const trackServiceDetailsError = (reason: string) =>
+export const trackServiceDetailsError = (service_id: string, reason: string) =>
   void mixpanelTrack(
     "SERVICES_DETAIL_ERROR",
-    buildEventProperties("KO", undefined, { reason })
+    buildEventProperties("KO", undefined, { service_id, reason })
   );
 
 export const trackServiceDetailsCtaTapped = (
@@ -268,10 +284,14 @@ export const trackServicesAction =
       // Institution details
       case getType(paginatedServicesGet.failure):
         return trackInstitutionDetailsError(
+          action.payload.id,
           getNetworkErrorMessage(action.payload)
         );
       // Service details
       case getType(loadServicePreference.failure):
-        return trackServiceDetailsError(getNetworkErrorMessage(action.payload));
+        return trackServiceDetailsError(
+          action.payload.id,
+          getNetworkErrorMessage(action.payload)
+        );
     }
   };

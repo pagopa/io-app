@@ -2080,10 +2080,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-crypto/-/io-react-native-crypto-0.3.0.tgz#4181a53e36d4cd142b93ef133d3d227d9d360f96"
   integrity sha512-3H5CqJwpEYX14QNUhqbSizJBFBeIQRFv8Bw/46+YILTZpvCloVDjfSrPDsKNLZdC1d05wfUSTGGRncMQOB2kMg==
 
-"@pagopa/io-react-native-http-client@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-http-client/-/io-react-native-http-client-1.0.2.tgz#8d92a7ea920f1fe01f5632ccb939bb7961392bd6"
-  integrity sha512-UVd0S8gV8RUf6ZlHhQDb2jvEyMlc+XQ76j44ewRiP4xGNDX9QmYGfr+QNUmg0PwJ55OoeH6j5lbWiW2Mh1QCtQ==
+"@pagopa/io-react-native-http-client@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-http-client/-/io-react-native-http-client-1.0.5.tgz#5dbc4812732e7842ade594f3a29b8ff32b621628"
+  integrity sha512-JGQX9UxZY22LqZd+hAb+O+7jB4z6EAbUqkIBSAm6wqb71k282RtyJgWGDYdYsig2DPKeWbs66nF240csqDAOtw==
   dependencies:
     auto-changelog "^2.4.0"
 
@@ -13020,10 +13020,10 @@ react-native-pdf-thumbnail@^1.2.1:
   resolved "https://registry.yarnpkg.com/react-native-pdf-thumbnail/-/react-native-pdf-thumbnail-1.2.1.tgz#edf4e13a43098a0004503b2e617f0866f6d4d5a4"
   integrity sha512-MuEKMYRbLj8oxnhe247Ze1yI3tH4u24gLzQ0g8VxdZ47/9sUL7RPlv4Br+2IWX8kcX6/VerP/Mxfh1D61ri+Hw==
 
-react-native-pdf@^6.7.5:
-  version "6.7.5"
-  resolved "https://registry.yarnpkg.com/react-native-pdf/-/react-native-pdf-6.7.5.tgz#1bc5479f2161189f938912b4080ea9eef8a9d84d"
-  integrity sha512-d1S76p2Vwax2iG+kTnjINiUMvpjtJJvtMiYwHRbgGczT8GJjtXH49YCWOd+HfnUAU29cB+knzsKGYoZBMQM8Ow==
+react-native-pdf@6.7.4:
+  version "6.7.4"
+  resolved "https://registry.yarnpkg.com/react-native-pdf/-/react-native-pdf-6.7.4.tgz#f350af350074ee0a93fff578caefec16867781b4"
+  integrity sha512-sBeNcsrTRnLjmiU9Wx7Uk0K2kPSQtKIIG+FECdrEG16TOdtmQ3iqqEwt0dmy0pJegpg07uES5BXqiKsKkRUIFw==
   dependencies:
     crypto-js "4.2.0"
     deprecated-react-native-prop-types "^2.3.0"
@@ -15978,7 +15978,7 @@ xss@1.0.10:
     commander "^2.20.3"
     cssfilter "0.0.10"
 
-"xstate5@npm:xstate@5":
+"xstate5@npm:xstate@5", xstate@^5.13.0:
   version "5.13.0"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.13.0.tgz#7f7092d813a89d94024b083fe23a86b6cf4a323a"
   integrity sha512-Z0om784N5u8sAzUvQJBa32jiTCIGGF/2ZsmKkerQEqeeUktAeOMK20FIHFUMywC4GcAkNksSvaeX7lwoRNXPEQ==

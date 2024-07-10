@@ -6,9 +6,9 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
-  servicePreferenceResponseSuccessSelector,
-  servicePreferenceSelector
-} from "../../../services/details/store/reducers/servicePreference";
+  servicePreferencePotSelector,
+  servicePreferenceResponseSuccessSelector
+} from "../../../services/details/store/reducers";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { cgnActivationStart } from "../store/actions/activation";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
@@ -31,7 +31,7 @@ export const CgnServiceCta = ({ serviceId }: CgnServiceCtaProps) => {
     servicePreferenceResponseSuccessSelector
   );
 
-  const servicePreferencePot = useIOSelector(servicePreferenceSelector);
+  const servicePreferencePot = useIOSelector(servicePreferencePotSelector);
 
   const unsubscriptionStatus = useIOSelector(cgnUnsubscribeSelector);
 
@@ -109,10 +109,7 @@ export const CgnServiceCta = ({ serviceId }: CgnServiceCtaProps) => {
       loading={isLoadingStatus}
       testID="service-activate-bonus-button"
       onPress={() => {
-        analytics.trackSpecialServiceStatusChanged({
-          is_active: true,
-          service_id: serviceId
-        });
+        analytics.trackServicesCgnStartRequest(serviceId);
         dispatch(loadAvailableBonuses.request());
         dispatch(cgnActivationStart());
       }}

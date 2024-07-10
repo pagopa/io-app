@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { IOToast } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
+import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 export const createEidIssuanceActionsImplementation = (
-  navigation: ReturnType<typeof useIONavigation>
+  navigation: ReturnType<typeof useIONavigation>,
+  toast: IOToast
 ) => ({
   navigateToTosScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -33,7 +36,7 @@ export const createEidIssuanceActionsImplementation = (
 
   navigateToSuccessScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.RESULT
+      screen: ITW_ROUTES.ISSUANCE.EID_RESULT
     });
   },
 
@@ -42,16 +45,14 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   navigateToWallet: () => {
+    toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
     navigation.reset({
       index: 1,
       routes: [
         {
           name: ROUTES.MAIN,
           params: {
-            screen: ROUTES.WALLET_HOME,
-            params: {
-              newMethodAdded: true
-            }
+            screen: ROUTES.WALLET_HOME
           }
         }
       ]

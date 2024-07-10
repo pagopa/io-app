@@ -31,5 +31,4 @@ export type ProfileParamsList = {
   [ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS]: undefined;
   [ROUTES.IDPAY_ONBOARDING_PLAYGROUND]: undefined;
   [ROUTES.IDPAY_CODE_PLAYGROUND]: undefined;
-  [ROUTES.ITW_PLAYGROUND]: undefined;
 };
