@@ -1,7 +1,7 @@
 import React from "react";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import OrganizationHeader from "../../../components/OrganizationHeader";
-import { logosForService } from "../../../utils/services";
+import { logosForService } from "../../services/common/utils";
 
 type Props = Readonly<{ service: ServicePublic }>;
 

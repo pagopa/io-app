@@ -49,20 +49,6 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
     "nameByFiscalCode": {},
   },
   "paymentByRptId": {},
-  "services": {
-    "byId": {},
-    "byOrgFiscalCode": {},
-    "firstLoading": {
-      "isFirstServicesLoadingCompleted": false,
-    },
-    "readState": {},
-    "servicePreference": {
-      "kind": "PotNone",
-    },
-    "visible": {
-      "kind": "PotNone",
-    },
-  },
 }
 `;
 
@@ -134,12 +120,6 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
 `;
 
 exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'profile' state 1`] = `
-{
-  "kind": "PotNone",
-}
-`;
-
-exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'userMetadata' state 1`] = `
 {
   "kind": "PotNone",
 }

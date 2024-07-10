@@ -23,9 +23,9 @@ import { upsertServicePreference } from "../store/actions/preference";
 import {
   isErrorServicePreferenceSelector,
   isLoadingServicePreferenceSelector,
+  serviceMetadataInfoSelector,
   servicePreferenceResponseSuccessSelector
-} from "../store/reducers/servicePreference";
-import { serviceMetadataInfoSelector } from "../store/reducers/servicesById";
+} from "../store/reducers";
 
 const hasChannel = (
   notificationChannel: NotificationChannelEnum,

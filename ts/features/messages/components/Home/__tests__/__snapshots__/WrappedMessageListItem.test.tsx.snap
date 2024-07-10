@@ -498,7 +498,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                       accessibilityState={
                                         {
                                           "busy": undefined,
-                                          "checked": undefined,
+                                          "checked": false,
                                           "disabled": undefined,
                                           "expanded": undefined,
                                           "selected": undefined,
@@ -559,65 +559,6 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                           ]
                                         }
                                       />
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="100%"
-                                        bbWidth="100%"
-                                        focusable={false}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
-                                          [
-                                            {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            {
-                                              "flex": 0,
-                                              "height": "100%",
-                                              "width": "100%",
-                                            },
-                                          ]
-                                        }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                      >
-                                        <RNSVGGroup
-                                          fill={
-                                            {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
-                                          <RNSVGPath
-                                            d="m7 12 4 4 7-7"
-                                            fill={null}
-                                            onLayout={[Function]}
-                                            propList={
-                                              [
-                                                "fill",
-                                                "stroke",
-                                                "strokeWidth",
-                                                "strokeDasharray",
-                                                "strokeLinecap",
-                                                "strokeLinejoin",
-                                              ]
-                                            }
-                                            stroke={
-                                              {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeDasharray={null}
-                                            strokeLinecap={1}
-                                            strokeLinejoin={1}
-                                            strokeWidth={1.5}
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
@@ -1570,7 +1511,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                       accessibilityState={
                                         {
                                           "busy": undefined,
-                                          "checked": undefined,
+                                          "checked": false,
                                           "disabled": undefined,
                                           "expanded": undefined,
                                           "selected": undefined,
@@ -1631,65 +1572,6 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                           ]
                                         }
                                       />
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="100%"
-                                        bbWidth="100%"
-                                        focusable={false}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
-                                          [
-                                            {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            {
-                                              "flex": 0,
-                                              "height": "100%",
-                                              "width": "100%",
-                                            },
-                                          ]
-                                        }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                      >
-                                        <RNSVGGroup
-                                          fill={
-                                            {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
-                                          <RNSVGPath
-                                            d="m7 12 4 4 7-7"
-                                            fill={null}
-                                            onLayout={[Function]}
-                                            propList={
-                                              [
-                                                "fill",
-                                                "stroke",
-                                                "strokeWidth",
-                                                "strokeDasharray",
-                                                "strokeLinecap",
-                                                "strokeLinejoin",
-                                              ]
-                                            }
-                                            stroke={
-                                              {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeDasharray={null}
-                                            strokeLinecap={1}
-                                            strokeLinejoin={1}
-                                            strokeWidth={1.5}
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
@@ -2749,7 +2631,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0B3EE3",
+                                                "color": "#0066CC",
                                               },
                                               {
                                                 "flex": 0,
@@ -2758,7 +2640,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                               },
                                             ]
                                           }
-                                          tintColor="#0B3EE3"
+                                          tintColor="#0066CC"
                                           vbHeight={32}
                                           vbWidth={32}
                                           width={20}
@@ -2818,7 +2700,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                       accessibilityState={
                                         {
                                           "busy": undefined,
-                                          "checked": undefined,
+                                          "checked": false,
                                           "disabled": undefined,
                                           "expanded": undefined,
                                           "selected": undefined,
@@ -2879,65 +2761,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           ]
                                         }
                                       />
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="100%"
-                                        bbWidth="100%"
-                                        focusable={false}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
-                                          [
-                                            {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            {
-                                              "flex": 0,
-                                              "height": "100%",
-                                              "width": "100%",
-                                            },
-                                          ]
-                                        }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                      >
-                                        <RNSVGGroup
-                                          fill={
-                                            {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
-                                          <RNSVGPath
-                                            d="m7 12 4 4 7-7"
-                                            fill={null}
-                                            onLayout={[Function]}
-                                            propList={
-                                              [
-                                                "fill",
-                                                "stroke",
-                                                "strokeWidth",
-                                                "strokeDasharray",
-                                                "strokeLinecap",
-                                                "strokeLinejoin",
-                                              ]
-                                            }
-                                            stroke={
-                                              {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeDasharray={null}
-                                            strokeLinecap={1}
-                                            strokeLinejoin={1}
-                                            strokeWidth={1.5}
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
@@ -3852,7 +3675,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0B3EE3",
+                                                "color": "#0066CC",
                                               },
                                               {
                                                 "flex": 0,
@@ -3861,7 +3684,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                               },
                                             ]
                                           }
-                                          tintColor="#0B3EE3"
+                                          tintColor="#0066CC"
                                           vbHeight={32}
                                           vbWidth={32}
                                           width={20}
@@ -3921,7 +3744,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                       accessibilityState={
                                         {
                                           "busy": undefined,
-                                          "checked": undefined,
+                                          "checked": false,
                                           "disabled": undefined,
                                           "expanded": undefined,
                                           "selected": undefined,
@@ -3982,65 +3805,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           ]
                                         }
                                       />
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="100%"
-                                        bbWidth="100%"
-                                        focusable={false}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
-                                          [
-                                            {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            {
-                                              "flex": 0,
-                                              "height": "100%",
-                                              "width": "100%",
-                                            },
-                                          ]
-                                        }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                      >
-                                        <RNSVGGroup
-                                          fill={
-                                            {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
-                                          <RNSVGPath
-                                            d="m7 12 4 4 7-7"
-                                            fill={null}
-                                            onLayout={[Function]}
-                                            propList={
-                                              [
-                                                "fill",
-                                                "stroke",
-                                                "strokeWidth",
-                                                "strokeDasharray",
-                                                "strokeLinecap",
-                                                "strokeLinejoin",
-                                              ]
-                                            }
-                                            stroke={
-                                              {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeDasharray={null}
-                                            strokeLinecap={1}
-                                            strokeLinejoin={1}
-                                            strokeWidth={1.5}
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
@@ -5010,7 +4774,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0B3EE3",
+                                                "color": "#0066CC",
                                               },
                                               {
                                                 "flex": 0,
@@ -5019,7 +4783,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                               },
                                             ]
                                           }
-                                          tintColor="#0B3EE3"
+                                          tintColor="#0066CC"
                                           vbHeight={32}
                                           vbWidth={32}
                                           width={20}
@@ -5079,7 +4843,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                       accessibilityState={
                                         {
                                           "busy": undefined,
-                                          "checked": undefined,
+                                          "checked": false,
                                           "disabled": undefined,
                                           "expanded": undefined,
                                           "selected": undefined,
@@ -5140,65 +4904,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           ]
                                         }
                                       />
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="100%"
-                                        bbWidth="100%"
-                                        focusable={false}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
-                                          [
-                                            {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            {
-                                              "flex": 0,
-                                              "height": "100%",
-                                              "width": "100%",
-                                            },
-                                          ]
-                                        }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                      >
-                                        <RNSVGGroup
-                                          fill={
-                                            {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
-                                          <RNSVGPath
-                                            d="m7 12 4 4 7-7"
-                                            fill={null}
-                                            onLayout={[Function]}
-                                            propList={
-                                              [
-                                                "fill",
-                                                "stroke",
-                                                "strokeWidth",
-                                                "strokeDasharray",
-                                                "strokeLinecap",
-                                                "strokeLinejoin",
-                                              ]
-                                            }
-                                            stroke={
-                                              {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeDasharray={null}
-                                            strokeLinecap={1}
-                                            strokeLinejoin={1}
-                                            strokeWidth={1.5}
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
@@ -5988,7 +5693,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0B3EE3",
+                                                "color": "#0066CC",
                                               },
                                               {
                                                 "flex": 0,
@@ -5997,7 +5702,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                               },
                                             ]
                                           }
-                                          tintColor="#0B3EE3"
+                                          tintColor="#0066CC"
                                           vbHeight={32}
                                           vbWidth={32}
                                           width={20}
@@ -6057,7 +5762,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                       accessibilityState={
                                         {
                                           "busy": undefined,
-                                          "checked": undefined,
+                                          "checked": false,
                                           "disabled": undefined,
                                           "expanded": undefined,
                                           "selected": undefined,
@@ -6118,65 +5823,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           ]
                                         }
                                       />
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="100%"
-                                        bbWidth="100%"
-                                        focusable={false}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
-                                          [
-                                            {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            {
-                                              "flex": 0,
-                                              "height": "100%",
-                                              "width": "100%",
-                                            },
-                                          ]
-                                        }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                      >
-                                        <RNSVGGroup
-                                          fill={
-                                            {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
-                                          <RNSVGPath
-                                            d="m7 12 4 4 7-7"
-                                            fill={null}
-                                            onLayout={[Function]}
-                                            propList={
-                                              [
-                                                "fill",
-                                                "stroke",
-                                                "strokeWidth",
-                                                "strokeDasharray",
-                                                "strokeLinecap",
-                                                "strokeLinejoin",
-                                              ]
-                                            }
-                                            stroke={
-                                              {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeDasharray={null}
-                                            strokeLinecap={1}
-                                            strokeLinejoin={1}
-                                            strokeWidth={1.5}
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
@@ -6969,7 +6615,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                       accessibilityState={
                                         {
                                           "busy": undefined,
-                                          "checked": undefined,
+                                          "checked": false,
                                           "disabled": undefined,
                                           "expanded": undefined,
                                           "selected": undefined,
@@ -7030,65 +6676,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           ]
                                         }
                                       />
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="100%"
-                                        bbWidth="100%"
-                                        focusable={false}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
-                                          [
-                                            {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            {
-                                              "flex": 0,
-                                              "height": "100%",
-                                              "width": "100%",
-                                            },
-                                          ]
-                                        }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                      >
-                                        <RNSVGGroup
-                                          fill={
-                                            {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
-                                          <RNSVGPath
-                                            d="m7 12 4 4 7-7"
-                                            fill={null}
-                                            onLayout={[Function]}
-                                            propList={
-                                              [
-                                                "fill",
-                                                "stroke",
-                                                "strokeWidth",
-                                                "strokeDasharray",
-                                                "strokeLinecap",
-                                                "strokeLinejoin",
-                                              ]
-                                            }
-                                            stroke={
-                                              {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeDasharray={null}
-                                            strokeLinecap={1}
-                                            strokeLinejoin={1}
-                                            strokeWidth={1.5}
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
@@ -7826,7 +7413,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                       accessibilityState={
                                         {
                                           "busy": undefined,
-                                          "checked": undefined,
+                                          "checked": false,
                                           "disabled": undefined,
                                           "expanded": undefined,
                                           "selected": undefined,
@@ -7887,65 +7474,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           ]
                                         }
                                       />
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="100%"
-                                        bbWidth="100%"
-                                        focusable={false}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
-                                          [
-                                            {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            {
-                                              "flex": 0,
-                                              "height": "100%",
-                                              "width": "100%",
-                                            },
-                                          ]
-                                        }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                      >
-                                        <RNSVGGroup
-                                          fill={
-                                            {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
-                                          <RNSVGPath
-                                            d="m7 12 4 4 7-7"
-                                            fill={null}
-                                            onLayout={[Function]}
-                                            propList={
-                                              [
-                                                "fill",
-                                                "stroke",
-                                                "strokeWidth",
-                                                "strokeDasharray",
-                                                "strokeLinecap",
-                                                "strokeLinejoin",
-                                              ]
-                                            }
-                                            stroke={
-                                              {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeDasharray={null}
-                                            strokeLinecap={1}
-                                            strokeLinejoin={1}
-                                            strokeWidth={1.5}
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
