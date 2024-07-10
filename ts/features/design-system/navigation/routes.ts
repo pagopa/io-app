@@ -110,6 +110,12 @@ const DESIGN_SYSTEM_ROUTES = {
       title: "Footer Actions (not fixed)"
     }
   },
+  EXPERIMENTAL_LAB: {
+    DYNAMIC_BACKGROUND: {
+      route: "DS_DYNAMIC_BACKGROUND",
+      title: "Dynamic header background"
+    }
+  },
   LEGACY: {
     PICTOGRAMS: {
       route: "DESIGN_SYSTEM_LEGACY_PICTOGRAMS",
