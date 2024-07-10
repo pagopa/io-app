@@ -7,7 +7,6 @@ import * as O from "fp-ts/lib/Option";
 import {
   disableSearch,
   searchMessagesEnabled,
-  searchServicesEnabled,
   updateSearchText
 } from "../actions/search";
 import { Action } from "../actions/types";
@@ -17,14 +16,12 @@ export type SearchState = Readonly<{
   searchText: O.Option<string>;
   isSearchEnabled: boolean;
   isSearchMessagesEnabled: boolean;
-  isSearchServicesEnabled: boolean;
 }>;
 
 const INITIAL_STATE: SearchState = {
   searchText: O.none,
   isSearchEnabled: false,
-  isSearchMessagesEnabled: false,
-  isSearchServicesEnabled: false
+  isSearchMessagesEnabled: false
 };
 
 // Selectors
@@ -37,9 +34,6 @@ export const isSearchEnabledSelector = (state: GlobalState): boolean =>
 export const isSearchMessagesEnabledSelector = (state: GlobalState): boolean =>
   state.search.isSearchMessagesEnabled;
 
-export const isSearchServicesEnabledSelector = (state: GlobalState): boolean =>
-  state.search.isSearchServicesEnabled;
-
 const reducer = (
   state: SearchState = INITIAL_STATE,
   action: Action
@@ -50,13 +44,6 @@ const reducer = (
         ...state,
         isSearchEnabled: action.payload,
         isSearchMessagesEnabled: action.payload
-      };
-
-    case getType(searchServicesEnabled):
-      return {
-        ...state,
-        isSearchEnabled: action.payload,
-        isSearchServicesEnabled: action.payload
       };
 
     case getType(updateSearchText):

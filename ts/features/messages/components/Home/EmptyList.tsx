@@ -1,12 +1,19 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
+import { constUndefined, pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
 import { ButtonSolidProps, IOPictograms } from "@pagopa/io-app-design-system";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
 import { emptyListReasonSelector } from "../../store/reducers/allPaginated";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { reloadAllMessages } from "../../store/actions";
 import { pageSize } from "../../../../config";
 import { MessageListCategory } from "../../types/messageListCategory";
+import { isArchivingInProcessingModeSelector } from "../../store/reducers/archiving";
 
 export type EmptyListProps = {
   category: MessageListCategory;
@@ -24,8 +31,30 @@ type ScreenDataType = {
 
 export const EmptyList = ({ category }: EmptyListProps) => {
   const dispatch = useIODispatch();
+  const store = useIOStore();
+
   const emptyListReason = useIOSelector(state =>
     emptyListReasonSelector(state, category)
+  );
+  const onRetryCallback = useCallback(
+    () =>
+      pipe(
+        store.getState(),
+        isArchivingInProcessingModeSelector,
+        B.fold(
+          () =>
+            pipe(
+              {
+                pageSize,
+                filter: { getArchived: category === "ARCHIVE" }
+              },
+              reloadAllMessages.request,
+              dispatch
+            ),
+          constUndefined
+        )
+      ),
+    [category, dispatch, store]
   );
 
   const screenData = useMemo((): ScreenDataType | undefined => {
@@ -42,13 +71,7 @@ export const EmptyList = ({ category }: EmptyListProps) => {
           action: {
             testID: "home_emptyList_retry",
             label: I18n.t("global.buttons.retry"),
-            onPress: () =>
-              dispatch(
-                reloadAllMessages.request({
-                  pageSize,
-                  filter: { getArchived: category === "ARCHIVE" }
-                })
-              )
+            onPress: onRetryCallback
           },
           pictogram: "fatalError",
           title: I18n.t("messages.loadingErrorTitle")
@@ -56,7 +79,7 @@ export const EmptyList = ({ category }: EmptyListProps) => {
       default:
         return undefined;
     }
-  }, [category, dispatch, emptyListReason]);
+  }, [category, emptyListReason, onRetryCallback]);
 
   if (!screenData) {
     return null;

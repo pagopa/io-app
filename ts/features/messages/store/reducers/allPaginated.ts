@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constFalse, constUndefined, pipe } from "fp-ts/lib/function";
-import * as B from "fp-ts/lib/boolean";
+import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
@@ -22,13 +22,12 @@ import {
 import { clearCache } from "../../../../store/actions/profile";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { UIMessage } from "../../types";
+import { UIMessage, UIMessageId } from "../../types";
 import { foldK, isSomeLoadingOrSomeUpdating } from "../../../../utils/pot";
 import { emptyMessageArray } from "../../utils";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 import { foldMessageCategoryK } from "../../utils/messageCategory";
 import { paymentsByRptIdSelector } from "../../../../store/reducers/entities/payments";
-import { TranslationKeys } from "../../../../../locales/locales";
 
 export type MessagePage = {
   page: ReadonlyArray<UIMessage>;
@@ -875,54 +874,6 @@ const reasonFromMessagePageContainer = (
   container: MessagePage
 ): "notEmpty" | "noData" => (container.page.length > 0 ? "notEmpty" : "noData");
 
-export const latestMessageOperationTranslationKeySelector = (
-  state: GlobalState
-): TranslationKeys | undefined =>
-  pipe(
-    state.entities.messages.allPaginated.latestMessageOperation,
-    O.fromNullable,
-    O.map(latestMessageOperation =>
-      pipe(
-        latestMessageOperation,
-        E.fold(
-          failure =>
-            pipe(
-              failure.operation === "archive",
-              B.fold(
-                () => "messages.operations.restore.failure" as const,
-                () => "messages.operations.archive.failure" as const
-              )
-            ),
-          successOperation =>
-            pipe(
-              successOperation === "archive",
-              B.fold(
-                () => "messages.operations.restore.success" as const,
-                () => "messages.operations.archive.success" as const
-              )
-            )
-        )
-      )
-    ),
-    O.toUndefined
-  );
-
-export const latestMessageOperationToastTypeSelector = (state: GlobalState) =>
-  pipe(
-    state.entities.messages.allPaginated.latestMessageOperation,
-    O.fromNullable,
-    O.map(latestMessageOperation =>
-      pipe(
-        latestMessageOperation,
-        E.fold(
-          _ => "error" as const,
-          _ => "success" as const
-        )
-      )
-    ),
-    O.toUndefined
-  );
-
 export const inboxMessagesErrorReasonSelector = (state: GlobalState) =>
   pipe(
     state.entities.messages.allPaginated.inbox.data,
@@ -933,6 +884,20 @@ export const archiveMessagesErrorReasonSelector = (state: GlobalState) =>
   pipe(
     state.entities.messages.allPaginated.archive.data,
     messagePotToToastReportableErrorOrUndefined
+  );
+
+export const paginatedMessageFromIdForCategorySelector = (
+  state: GlobalState,
+  messageId: UIMessageId,
+  category: MessageListCategory
+) =>
+  pipe(
+    state,
+    messagePagePotFromCategorySelector(category),
+    pot.toOption,
+    O.map(messagePage => messagePage.page),
+    O.chain(RA.findFirst(message => message.id === messageId)),
+    O.toUndefined
   );
 
 const messagePotToToastReportableErrorOrUndefined = (
