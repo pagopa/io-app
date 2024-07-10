@@ -47,7 +47,9 @@ type Props = Readonly<{
   referenceToContentScreen?: React.RefObject<ScrollView>;
 }>;
 
-export default class WalletLayout extends React.Component<Props> {
+export default class WalletLayout extends React.Component<
+  React.PropsWithChildren<Props>
+> {
   public render(): React.ReactNode {
     const {
       title,

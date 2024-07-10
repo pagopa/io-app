@@ -116,7 +116,6 @@ export const handleCgnStatusPolling = (
             throw Error(
               `CGN Activation status ${cgnActivationResult.right.value.status}`
             );
-            break;
           // activation is still pending skip
           case StatusEnum.PENDING:
             break;
