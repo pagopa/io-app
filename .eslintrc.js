@@ -8,7 +8,8 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:react-native-a11y/all",
     "plugin:sonarjs/recommended",
-    "prettier"
+    "prettier",
+    "@react-native"
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -26,9 +27,11 @@ module.exports = {
     "import",
     "functional",
     "sonarjs",
-    "@jambit/typed-redux-saga"
+    "@jambit/typed-redux-saga",
+    "@stylistic/eslint-plugin-js"
   ],
   rules: {
+    "comma-dangle": ["error", "never"],
     "no-case-declarations": "off",
     "no-inner-declarations": "off",
     "prefer-const": "error",
@@ -47,7 +50,9 @@ module.exports = {
     "no-console": "error",
     "no-caller": "error",
     "no-bitwise": "error",
+    "no-void": "off",
     "no-duplicate-imports": "error",
+    quotes: "off",
     eqeqeq: ["error", "smart"],
     "max-classes-per-file": ["error", 1],
     "guard-for-in": "error",
@@ -94,6 +99,14 @@ module.exports = {
     "react/display-name": "off",
     "react/jsx-key": "error",
     "react/jsx-no-bind": ["error", { allowArrowFunctions: true }],
+    "react/no-unstable-nested-components": [
+      "off",
+      {
+        allowAsProps: true
+      }
+    ],
+    "react/no-direct-mutation-state": "off",
+    "react/require-render-return": "off",
     "functional/no-let": "error",
     "functional/immutable-data": "error",
     "sonarjs/no-small-switch": "off",
