@@ -132,7 +132,7 @@ describe("Preconditions", () => {
     );
   });
   it("should provide 'PreconditionsFooter' with a navigation callback that navigates to the message router", () => {
-    // eslint-disable-next-line functional/no-let, no-undef-init
+    // eslint-disable-next-line functional/no-let
     let onNavigationCallback: (_messageId: UIMessageId) => void = jest.fn();
     jest
       .spyOn(bottomSheet, "useIOBottomSheetModal")
@@ -168,7 +168,7 @@ describe("Preconditions", () => {
   });
 
   it("should provide 'PreconditionsFooter' with a dismiss callback that dispatches 'clearLegacyMessagePrecondition' and 'idlePreconditionStatusAction'", () => {
-    // eslint-disable-next-line functional/no-let, no-undef-init
+    // eslint-disable-next-line functional/no-let
     let onDismissCallback: (() => void) | undefined = jest.fn();
     jest
       .spyOn(bottomSheet, "useIOBottomSheetModal")
@@ -197,7 +197,7 @@ describe("Preconditions", () => {
     );
   });
   it("should provider the 'PreconditionsFooter' with the bottom sheet's 'dismiss' callback", () => {
-    // eslint-disable-next-line functional/no-let, no-undef-init
+    // eslint-disable-next-line functional/no-let
     let footerOnDismissCallback: (() => void) | undefined = jest.fn();
     const mockBottomSheetDismiss = jest.fn();
     jest
