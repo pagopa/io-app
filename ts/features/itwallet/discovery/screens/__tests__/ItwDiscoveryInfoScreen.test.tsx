@@ -16,6 +16,7 @@ describe("Test ItwDiscoveryInfo screen", () => {
 
 const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
+
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => <ItwDiscoveryInfoScreen />,
     ITW_ROUTES.DISCOVERY.INFO,
