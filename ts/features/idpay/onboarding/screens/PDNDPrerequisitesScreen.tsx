@@ -1,5 +1,5 @@
 import {
-  ModuleSummaryItem,
+  ModuleSummary,
   ButtonSolid,
   ContentWrapper,
   FooterWithButtons,
@@ -117,7 +117,7 @@ export const PDNDPrerequisitesScreen = () => {
         <View style={[IOStyles.horizontalContentPadding, styles.listContainer]}>
           {pdndCriteria.map((criteria, index) => (
             <React.Fragment key={index}>
-              <ModuleSummaryItem
+              <ModuleSummary
                 label={I18n.t(
                   `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
                 )}

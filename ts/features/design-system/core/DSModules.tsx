@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Alert, View, ImageSourcePropType } from "react-native";
 import {
-  ModuleSummaryItem,
+  ModuleSummary,
   ModuleAttachment,
   ModuleCheckout,
   ModuleCredential,
@@ -103,9 +103,9 @@ export const DSModules = () => {
         weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
-        ModuleSummaryItem
+        ModuleSummary
       </H2>
-      {renderModuleSummaryItem()}
+      {renderModuleSummary()}
 
       <VSpacer size={40} />
 
@@ -287,26 +287,26 @@ const renderModuleCheckout = () => (
   </>
 );
 
-const renderModuleSummaryItem = () => (
+const renderModuleSummary = () => (
   <>
-    <DSComponentViewerBox name="ModuleSummaryItem, default variant">
-      <ModuleSummaryItem
+    <DSComponentViewerBox name="ModuleSummary, default variant">
+      <ModuleSummary
         label={"Label name"}
         description={"This is a description of the element"}
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>
-    <DSComponentViewerBox name="ModuleSummaryItem, custom icon, label only">
+    <DSComponentViewerBox name="ModuleSummary, custom icon, label only">
       <View>
-        <ModuleSummaryItem
+        <ModuleSummary
           icon="chevronRightListItem"
           label={"Label only"}
           onPress={onButtonPress}
         />
       </View>
     </DSComponentViewerBox>
-    <DSComponentViewerBox name="ModuleSummaryItem, stress test">
-      <ModuleSummaryItem
+    <DSComponentViewerBox name="ModuleSummary, stress test">
+      <ModuleSummary
         label={"A very looong loooooooong looooooooooooooong label"}
         description={"This is a very looooooong description of the element"}
         onPress={onButtonPress}
