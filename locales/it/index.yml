@@ -585,9 +585,6 @@ profile:
           content: "Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.\nQueste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando."
           cta: Ho capito!
       error: Si è verificato un errore con la tua richiesta
-userMetadata:
-  errors:
-    upsertVersion: Impossibile creare o aggiornare i metadata utente con questa versione
 navigation:
   messages: Messaggi
   profile: Profilo
@@ -2018,6 +2015,9 @@ messages:
     archive:
       success: "Archiviazione riuscita!"
       failure: "L’archiviazione non è andata a buon fine"
+    generic:
+      failure: "L'operazione non è andata a buon fine"
+      success: "Operazione riuscita!"
     restore:
       success: "Ripristino effettuato."
       failure: "Il ripristino non è andato a buon fine"

@@ -32,7 +32,6 @@ jobs:
       - id: build-release-android
         run: |
           ./scripts/android-release.sh ./android/app
-          yarn bundle:android-release
           cd android && bundle exec fastlane alpha
           bundle exec fastlane promote_internal_to_alpha
         shell: bash

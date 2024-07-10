@@ -39,8 +39,6 @@ import {
   GetUserDataProcessingT,
   getUserMessageDefaultDecoder,
   getUserMessagesDefaultDecoder,
-  getUserMetadataDefaultDecoder,
-  GetUserMetadataT,
   GetUserProfileT,
   StartEmailValidationProcessT,
   updateProfileDefaultDecoder,
@@ -49,8 +47,6 @@ import {
   UpsertServicePreferencesT,
   upsertUserDataProcessingDefaultDecoder,
   UpsertUserDataProcessingT,
-  upsertUserMetadataDefaultDecoder,
-  UpsertUserMetadataT,
   upsertMessageStatusAttributesDefaultDecoder,
   UpsertMessageStatusAttributesT,
   getUserProfileDefaultDecoder,
@@ -134,7 +130,6 @@ export type LogoutT = IPostApiRequestType<
 // Create client
 //
 
-// eslint-disable-next-line
 export function BackendClient(
   baseUrl: string,
   token: SessionToken,
@@ -263,14 +258,6 @@ export function BackendClient(
     response_decoder: updateProfileDefaultDecoder()
   };
 
-  const getUserMetadataT: GetUserMetadataT = {
-    method: "get",
-    url: () => "/api/v1/user-metadata",
-    query: _ => ({}),
-    headers: tokenHeaderProducer,
-    response_decoder: getUserMetadataDefaultDecoder()
-  };
-
   const postStartEmailValidationProcessT: StartEmailValidationProcessT = {
     method: "post",
     url: () => "/api/v1/email-validation-process",
@@ -278,15 +265,6 @@ export function BackendClient(
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     body: _ => JSON.stringify({}),
     response_decoder: startEmailValidationProcessDefaultDecoder()
-  };
-
-  const createOrUpdateUserMetadataT: UpsertUserMetadataT = {
-    method: "post",
-    url: () => "/api/v1/user-metadata",
-    query: _ => ({}),
-    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-    body: p => JSON.stringify(p.body),
-    response_decoder: upsertUserMetadataDefaultDecoder()
   };
 
   const getUserDataProcessingT: GetUserDataProcessingT = {
@@ -399,12 +377,6 @@ export function BackendClient(
     getProfile: withBearerToken(createFetchRequestForApi(getProfileT, options)),
     createOrUpdateProfile: withBearerToken(
       createFetchRequestForApi(createOrUpdateProfileT, options)
-    ),
-    getUserMetadata: withBearerToken(
-      createFetchRequestForApi(getUserMetadataT, options)
-    ),
-    createOrUpdateUserMetadata: withBearerToken(
-      createFetchRequestForApi(createOrUpdateUserMetadataT, options)
     ),
     createOrUpdateInstallation: withBearerToken(
       createFetchRequestForApi(createOrUpdateInstallationT, options)

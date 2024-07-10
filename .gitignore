@@ -108,3 +108,9 @@ GeneratedDotEnv.m
 
 # Sentry prop file
 sentry.properties
+
+# Temporary files created by Metro to check the health of the file watcher
+.metro-health-check*
+
+# yarn cache dir
+.yarn/cache
