@@ -448,9 +448,6 @@ profile:
           content: "Wenn diese Option aktiviert ist, werden bei Push-Benachrichtigungen der Absender und der Betreff von Nachrichten angezeigt, auch wenn der Bildschirm gesperrt ist. Diese Informationen werden vom Hersteller deines Betriebssystems und von den Apps der Drittanbieter, die möglicherweise ausgeführt werden, verarbeitet."
           cta: "OK, habe verstanden!"
       error: "Bei deiner Anfrage ist ein Fehler aufgetreten"
-userMetadata:
-  errors:
-    upsertVersion: "Mit dieser Version können keine Benutzer-Metadaten erstellt oder aktualisiert werden"
 navigation:
   messages: "Mitteilungen"
   profile: "Profil"
@@ -2024,7 +2021,7 @@ bonus:
         error:
           noCode: "Die Rabattcodes für diese Ermäßigung sind derzeit abgelaufen, bitte versuche es später noch einmal."
       title:
-        deals: "Rabatte und Ermäßigungen"
+        deals: Opportunità
         description: "Beschreibung"
         services: "Dienste"
         contactInfo: "Adressen"
@@ -2036,6 +2033,7 @@ bonus:
         label: "Besuche die Website des Anbieters"
         landingPage: "Die Ermäßigung nutzen"
         discountUrl: "Nutze die Ermäßigung"
+        website: Vai al sito del partner
       categories:
         all: "Alle Anbieter"
         counting: "und weitere {{count}}"

@@ -3,6 +3,7 @@ import { render, RenderOptions } from "@testing-library/react-native";
 import React from "react";
 import { Provider } from "react-redux";
 import { Store } from "redux";
+import * as linkingSubscription from "../navigation/linkingSubscription";
 import { TestInnerNavigationContainer } from "../navigation/AppStackNavigator";
 
 /**
@@ -18,8 +19,12 @@ export const renderScreenWithNavigationStoreContext = <S,>(
   route: string,
   params: Record<string, any>,
   store: Store<S>,
-  renderOptions: RenderOptions = {}
+  renderOptions: RenderOptions = {},
+  mockLinkingSubscription = jest.fn()
 ) => {
+  jest
+    .spyOn(linkingSubscription, "linkingSubscription")
+    .mockImplementation(mockLinkingSubscription);
   const Stack = createStackNavigator();
   const component = (
     <Provider store={store}>

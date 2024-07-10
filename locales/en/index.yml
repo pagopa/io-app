@@ -584,9 +584,6 @@ profile:
           content: If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
           cta: Ok!
       error: An error occurred with your request
-userMetadata:
-  errors:
-    upsertVersion: Can't upsert user metadata with this version
 navigation:
   messages: Messages
   profile: Profile
@@ -2017,6 +2014,9 @@ messages:
     archive:
       success: "Successfully archived!"
       failure: "Failed to archive"
+    generic:
+      failure: "Operation failed"
+      success: "Operazione successful!"
     restore:
       success: "Successfully unarchived."
       failure: "Failed to unarchive"
@@ -2637,7 +2637,7 @@ bonus:
         error:
           noCode: Codes for this discount are temporary over, please try again later
       title:
-        deals: Deals and opportunities
+        deals: Opportunities
         description: Description
         services: Services
         contactInfo: Addresses
@@ -2646,10 +2646,10 @@ bonus:
         discountCode: Discount code
         conditions: Conditions
       cta:
-        label: Navigate to operator website
+        label: Go to partner's website
         landingPage: Get the benefit
         discountUrl: Go to the benefit
-        website: Go to the website
+        website: Go to partner's website
       categories:
         all: All the operators
         counting: and other {{count}}
