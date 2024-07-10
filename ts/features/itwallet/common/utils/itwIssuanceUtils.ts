@@ -9,15 +9,16 @@ import uuid from "react-native-uuid";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import {
   itWalletPidIssuanceRedirectUri,
-  itwWalletProviderBaseUrl
+  itwWalletProviderBaseUrl,
+  itwPidProviderBaseUrl
 } from "../../../../config";
 import { type IdentificationMode } from "../../machine/eid/events";
 import { getIntegrityContext } from "./itwIntegrityUtils";
 
 // TODO: read from env
-const SPID_HINT =
+const SPID_HINT = "https://demo.spid.gov.it";
+const CIE_HINT =
   "https://collaudo.idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO";
-const CIE_HINT = "https://demo.spid.gov.it";
 
 const idpHintsMap: Record<IdentificationMode, string> = {
   cieId: CIE_HINT,
@@ -51,7 +52,7 @@ export async function getPid({
       : undefined;
 
   const startFlow: Credential.Issuance.StartFlow = () => ({
-    issuerUrl: itwWalletProviderBaseUrl,
+    issuerUrl: itwPidProviderBaseUrl,
     credentialType: "PersonIdentificationData"
   });
 
