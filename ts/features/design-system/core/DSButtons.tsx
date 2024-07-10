@@ -1,5 +1,4 @@
 import {
-  BlockButtons,
   ButtonLink,
   ButtonOutline,
   ButtonSolid,
@@ -13,15 +12,11 @@ import {
   useIOExperimentalDesign,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as React from "react";
 import { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
-import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import PaymentButton from "../../messages/components/MessageDetail/PaymentButton";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
@@ -42,7 +37,6 @@ const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
 };
 
-// eslint-disable-next-line complexity, sonarjs/cognitive-complexity
 export const DSButtons = () => {
   const { isExperimental } = useIOExperimentalDesign();
   const theme = useIOTheme();
@@ -51,7 +45,7 @@ export const DSButtons = () => {
     <DesignSystemScreen title={"Buttons"}>
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ButtonSolid
@@ -62,7 +56,7 @@ export const DSButtons = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ButtonOutline
@@ -73,7 +67,7 @@ export const DSButtons = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ButtonLink
@@ -84,7 +78,7 @@ export const DSButtons = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         IconButton
@@ -95,7 +89,7 @@ export const DSButtons = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         IconButtonSolid
@@ -106,34 +100,12 @@ export const DSButtons = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         IconButtonContained (Icebox)
       </H2>
       {renderIconButtonContained(isExperimental)}
-
-      <VSpacer size={48} />
-
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"SemiBold"}
-        style={{ marginBottom: 16 }}
-      >
-        Block Buttons (not NativeBase)
-      </H2>
-      {renderBlockButtons()}
-
-      <VSpacer size={48} />
-
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"SemiBold"}
-        style={{ marginBottom: 16 }}
-      >
-        Specific buttons
-      </H2>
-      {renderSpecificButtons()}
     </DesignSystemScreen>
   );
 };
@@ -992,138 +964,6 @@ const renderIconButtonContained = (isExperimental: boolean) => (
         </View>
       </DSComponentViewerBox>
     </View>
-  </>
-);
-
-const renderBlockButtons = () => (
-  <>
-    <BlockButtons
-      type="SingleButton"
-      primary={{
-        type: "Solid",
-        buttonProps: {
-          color: "primary",
-          accessibilityLabel: "primary button",
-          onPress: onButtonPress,
-          label: "Primary button"
-        }
-      }}
-    />
-    <VSpacer size={16} />
-    <BlockButtons
-      type="TwoButtonsInlineThird"
-      primary={{
-        type: "Outline",
-        buttonProps: {
-          color: "primary",
-          accessibilityLabel: "Left button",
-          onPress: onButtonPress,
-          label: "Left button"
-        }
-      }}
-      secondary={{
-        type: "Solid",
-        buttonProps: {
-          color: "primary",
-          accessibilityLabel: "Right button",
-          onPress: onButtonPress,
-          label: "Right button"
-        }
-      }}
-    />
-    <VSpacer size={16} />
-    <BlockButtons
-      type="TwoButtonsInlineHalf"
-      primary={{
-        type: "Outline",
-        buttonProps: {
-          color: "primary",
-          accessibilityLabel: "Left button",
-          onPress: onButtonPress,
-          label: "Left button"
-        }
-      }}
-      secondary={{
-        type: "Solid",
-        buttonProps: {
-          color: "primary",
-          accessibilityLabel: "Right button",
-          onPress: onButtonPress,
-          label: "Right button"
-        }
-      }}
-    />
-    <VSpacer size={16} />
-    <BlockButtons
-      type="TwoButtonsInlineThirdInverted"
-      primary={{
-        type: "Outline",
-        buttonProps: {
-          color: "primary",
-          accessibilityLabel: "Left button",
-          onPress: onButtonPress,
-          label: "Left button"
-        }
-      }}
-      secondary={{
-        type: "Solid",
-        buttonProps: {
-          color: "primary",
-          accessibilityLabel: "Right button",
-          onPress: onButtonPress,
-          label: "Right button"
-        }
-      }}
-    />
-  </>
-);
-
-const renderSpecificButtons = () => (
-  <>
-    <DSComponentViewerBox name="PaymentButton">
-      <PaymentButton
-        amount={9999999999}
-        noticeNumber={"123112312312321321" as PaymentNoticeNumber}
-        organizationFiscalCode={"46545" as OrganizationFiscalCode}
-      />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="CalendarEventButton (using new ButtonOutline)">
-      <ButtonOutline
-        accessibilityLabel="Tap to trigger test alert"
-        label={"Aggiungi promemoria"}
-        icon="add"
-        onPress={onButtonPress}
-      />
-
-      <VSpacer size={16} />
-
-      <ButtonOutline
-        accessibilityLabel="Tap to trigger test alert"
-        label={"Aggiunto"}
-        icon="checkTickBig"
-        onPress={onButtonPress}
-      />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="CopyButtonComponent">
-      <CopyButtonComponent textToCopy={"Copied text by CopyButton"} />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="Login buttons">
-      <ButtonSolid
-        fullWidth
-        accessibilityLabel="Tap to trigger test alert"
-        label={"Entra con SPID"}
-        icon="profile"
-        onPress={onButtonPress}
-      />
-      <VSpacer size={8} />
-      <ButtonSolid
-        fullWidth
-        accessibilityLabel="Tap to trigger test alert"
-        label={"Entra con CIE"}
-        icon="cie"
-        onPress={onButtonPress}
-      />
-    </DSComponentViewerBox>
   </>
 );
 

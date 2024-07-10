@@ -15,7 +15,6 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import { useDispatch } from "react-redux";
 import { isError, isReady } from "../../../../common/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
 import { Body } from "../../../../components/core/typography/Body";
@@ -30,7 +29,7 @@ import {
   pspForPaymentV2,
   pspSelectedForPaymentV2
 } from "../../../../store/actions/wallet/payment";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { pspV2ListSelector } from "../../../../store/reducers/wallet/payment";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
@@ -52,14 +51,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "flex-start"
-  },
-  pspListItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingLeft: 0,
-    paddingRight: 0,
-    flex: 1
   }
+  // pspListItem: {
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  //   paddingLeft: 0,
+  //   paddingRight: 0,
+  //   flex: 1
+  // }
 });
 
 // an header over the psp list with 2 columns
@@ -104,7 +103,7 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
   return (
     <PressableListItemBase
       testID={`pspItemTestID_${psp.id}`}
-      style={styles.pspListItem}
+      // style={styles.pspListItem}
       accessibilityRole={"button"}
       onPress={props.onPress}
     >
@@ -114,7 +113,7 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
           O.fold(
             () => (
               <H4
-                weight={"SemiBold"}
+                weight={"Semibold"}
                 color={"bluegreyDark"}
                 testID={"pspNameTestID"}
               >
@@ -164,7 +163,7 @@ const PayPalPspUpdateScreen: React.FunctionComponent = () => {
     >().params;
   const locales = getLocales();
   const navigation = useIONavigation();
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const pspList = useIOSelector(pspV2ListSelector);
   const searchPaypalPsp = () => {
     dispatch(pspForPaymentV2.request({ idPayment, idWallet }));

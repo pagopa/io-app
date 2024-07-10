@@ -1,5 +1,6 @@
-import { GradientScrollView } from "@pagopa/io-app-design-system";
+import { GradientScrollView, IOStyles } from "@pagopa/io-app-design-system";
 import * as React from "react";
+import Animated, { Layout } from "react-native-reanimated";
 import { ScrollView } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -13,6 +14,7 @@ import {
   isPaymentsSectionEmptySelector,
   isPaymentsSectionLoadingSelector
 } from "../store/selectors";
+import { PaymentsAlertStatus } from "../components/PaymentsAlertStatus";
 
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
@@ -28,6 +30,15 @@ const PaymentsHomeScreen = () => {
     });
   };
 
+  const AnimatedPaymentsHomeScreenContent = React.useCallback(
+    () => (
+      <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
+        <PaymentsHomeScreenContent />
+      </Animated.View>
+    ),
+    []
+  );
+
   if (isTransactionsEmpty) {
     return (
       <ScrollView
@@ -36,7 +47,8 @@ const PaymentsHomeScreen = () => {
           flexGrow: 1
         }}
       >
-        <PaymentsHomeScreenContent />
+        <PaymentsAlertStatus />
+        <AnimatedPaymentsHomeScreenContent />
       </ScrollView>
     );
   }
@@ -57,7 +69,8 @@ const PaymentsHomeScreen = () => {
       }
       excludeSafeAreaMargins={true}
     >
-      <PaymentsHomeScreenContent />
+      <PaymentsAlertStatus />
+      <AnimatedPaymentsHomeScreenContent />
     </GradientScrollView>
   );
 };

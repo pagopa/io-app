@@ -63,7 +63,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
       <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
         <H6 color={"grey-700"}>{I18n.t("wallet.capability.title")}</H6>
         <Body
-          weight="SemiBold"
+          weight="Semibold"
           color="blue"
           onPress={navigateToPairableInitiativesList}
         >

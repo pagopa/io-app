@@ -11,14 +11,12 @@ import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
-import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { trackPNPushSettings } from "../../../pn/analytics";
 import { upsertServicePreference } from "../store/actions/preference";
 import {
-  ServicePreferenceState,
-  servicePreferenceSelector
-} from "../store/reducers/servicePreference";
-import { serviceMetadataInfoSelector } from "../store/reducers/servicesById";
+  serviceMetadataInfoSelector,
+  servicePreferencePotSelector
+} from "../store/reducers";
 import { isServicePreferenceResponseSuccess } from "../types/ServicePreferenceResponse";
 import { mapKinds } from "./handleGetServicePreference";
 
@@ -30,7 +28,9 @@ import { mapKinds } from "./handleGetServicePreference";
  * @param action
  */
 const calculateUpdatingPreference = (
-  currentServicePreferenceState: ServicePreferenceState,
+  currentServicePreferenceState: ReturnType<
+    typeof servicePreferencePotSelector
+  >,
   action: ActionType<typeof upsertServicePreference.request>
 ): ServicePreference => {
   if (
@@ -97,11 +97,10 @@ export function* handleUpsertServicePreference(
 ) {
   yield* call(trackPNPushNotificationSettings, action);
 
-  const currentPreferences: ReturnType<typeof servicePreferenceSelector> =
-    yield* select(servicePreferenceSelector);
+  const servicePreferencePot = yield* select(servicePreferencePotSelector);
 
   const updatingPreference = calculateUpdatingPreference(
-    currentPreferences,
+    servicePreferencePot,
     action
   );
 
@@ -132,10 +131,7 @@ export function* handleUpsertServicePreference(
 
     if (E.isRight(response)) {
       if (response.right.status === 401) {
-        const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
-        if (isFastLoginEnabled) {
-          return;
-        }
+        return;
       }
 
       if (response.right.status === 200) {

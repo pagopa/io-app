@@ -3,7 +3,7 @@
 exports[`Test SignatureFieldItem component should render a SignatureFieldItem component with props correctly 1`] = `
 <View
   style={
-    Object {
+    {
       "borderBottomColor": "#E6E9F2",
       "borderBottomWidth": 1,
       "marginBottom": 16,
@@ -16,9 +16,20 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
     accessibilityLabel="Clause title 1"
     accessibilityRole="checkbox"
     accessibilityState={
-      Object {
+      {
+        "busy": undefined,
         "checked": false,
         "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
       }
     }
     accessible={true}
@@ -39,16 +50,16 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
     <View
       needsOffscreenAlphaCompositing={true}
       style={
-        Array [
-          Object {
+        [
+          {
             "marginHorizontal": -24,
             "paddingHorizontal": 24,
             "paddingVertical": 12,
           },
-          Object {
+          {
             "backgroundColor": undefined,
           },
-          Object {
+          {
             "opacity": 1,
           },
         ]
@@ -56,9 +67,9 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
     >
       <View
         style={
-          Object {
-            "transform": Array [
-              Object {
+          {
+            "transform": [
+              {
                 "scale": undefined,
               },
             ],
@@ -67,7 +78,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       >
         <View
           style={
-            Object {
+            {
               "alignItems": "flex-start",
               "flexDirection": "row",
               "justifyContent": "space-between",
@@ -76,11 +87,11 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "flexDirection": "row",
                 },
-                Object {
+                {
                   "flexShrink": 1,
                 },
               ]
@@ -90,39 +101,39 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
               allowFontScaling={false}
               color="black"
               defaultColor="black"
-              defaultWeight="SemiBold"
-              font="TitilliumWeb"
+              defaultWeight="Semibold"
+              font="TitilliumSansPro"
               fontStyle={
-                Object {
+                {
                   "fontSize": 18,
                   "lineHeight": 25,
                 }
               }
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "flexShrink": 1,
                   },
-                  Object {
+                  {
                     "fontSize": 18,
                     "lineHeight": 25,
                   },
-                  Object {
+                  {
                     "color": "#0E0F13",
-                    "fontFamily": "Titillium Web",
+                    "fontFamily": "Titillium Sans Pro",
                     "fontStyle": "normal",
                     "fontWeight": "600",
                   },
                 ]
               }
-              weight="SemiBold"
+              weight="Semibold"
             >
               Clause title 1
             </Text>
           </View>
           <View
             style={
-              Object {
+              {
                 "width": 8,
               }
             }
@@ -131,6 +142,23 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
             pointerEvents="none"
           >
             <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
               accessible={false}
               collapsable={false}
               focusable={true}
@@ -144,7 +172,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Object {
+                {
                   "height": 24,
                   "width": 24,
                 }
@@ -153,8 +181,8 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
             >
               <View
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "borderCurve": "continuous",
                       "borderRadius": 5,
                       "borderWidth": 2,
@@ -164,7 +192,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                       "top": 0,
                       "width": 24,
                     },
-                    Object {
+                    {
                       "borderColor": "#475A6D",
                     },
                   ]
@@ -172,8 +200,8 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
               />
               <View
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "borderCurve": "continuous",
                       "borderRadius": 5,
                       "height": 24,
@@ -182,13 +210,13 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                       "top": 0,
                       "width": 24,
                     },
-                    Object {
+                    {
                       "backgroundColor": "#0073E6",
                     },
-                    Object {
+                    {
                       "opacity": 0,
-                      "transform": Array [
-                        Object {
+                      "transform": [
+                        {
                           "scale": undefined,
                         },
                       ],
@@ -204,11 +232,11 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
   </View>
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "flexDirection": "row",
         },
-        Object {
+        {
           "paddingBottom": 8,
           "paddingTop": 16,
         },
@@ -222,10 +250,10 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       allowFontScaling={false}
       color="blue"
       defaultColor="blue"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
+      defaultWeight="Semibold"
+      font="TitilliumSansPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 16,
           "lineHeight": 24,
           "textDecorationLine": "underline",
@@ -233,22 +261,22 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       }
       onPress={[MockFunction]}
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 16,
             "lineHeight": 24,
             "textDecorationLine": "underline",
           },
-          Object {
+          {
             "color": "#0073E6",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "600",
           },
         ]
       }
       testID="SignatureFieldItemDetailTestID"
-      weight="SemiBold"
+      weight="Semibold"
     >
       See on document
     </Text>

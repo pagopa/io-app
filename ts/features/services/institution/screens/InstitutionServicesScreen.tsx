@@ -7,6 +7,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { useFocusEffect } from "@react-navigation/native";
 import React, { useCallback, useEffect } from "react";
 import { ListRenderItemInfo, RefreshControl, StyleSheet } from "react-native";
 import Animated, {
@@ -78,14 +79,16 @@ export const InstitutionServicesScreen = ({
 
   useOnFirstRender(() => fetchPage(0));
 
-  useOnFirstRender(
-    () =>
-      analytics.trackInstitutionDetails({
-        organization_fiscal_code: institutionId,
-        organization_name: institutionName,
-        services_count: data?.count ?? 0
-      }),
-    () => !!data
+  useFocusEffect(
+    useCallback(() => {
+      if (data) {
+        analytics.trackInstitutionDetails({
+          organization_fiscal_code: institutionId,
+          organization_name: institutionName,
+          services_count: data?.count
+        });
+      }
+    }, [data, institutionId, institutionName])
   );
 
   useEffect(() => {
@@ -120,6 +123,7 @@ export const InstitutionServicesScreen = ({
     ({ id, name }: ServiceMinified) => {
       analytics.trackServiceSelected({
         organization_name: institutionName,
+        service_id: id,
         service_name: name,
         source: "organization_detail"
       });
@@ -135,7 +139,14 @@ export const InstitutionServicesScreen = ({
   );
 
   const handleEndReached = useCallback(
-    () => fetchNextPage(currentPage + 1),
+    ({ distanceFromEnd }: { distanceFromEnd: number }) => {
+      // guard needed to avoid endless loop
+      if (distanceFromEnd === 0) {
+        return;
+      }
+
+      fetchNextPage(currentPage + 1);
+    },
     [currentPage, fetchNextPage]
   );
 
@@ -233,7 +244,7 @@ export const InstitutionServicesScreen = ({
       data={data?.services || []}
       keyExtractor={(item, index) => `service-${item.id}-${index}`}
       onEndReached={handleEndReached}
-      onEndReachedThreshold={0.001}
+      onEndReachedThreshold={0.1}
       renderItem={renderItem}
       refreshControl={refreshControl}
       testID="intitution-services-list"

@@ -1,26 +1,25 @@
-import * as React from "react";
-import { View, StyleSheet } from "react-native";
 import {
+  HSpacer,
+  IOColors,
   IOPictograms,
   IOPictogramsBleed,
-  IOPictogramsObject,
   IOPictogramsLegacy,
+  IOPictogramsObject,
   Pictogram,
   PictogramBleed,
   SVGPictogramProps,
-  IOColors,
-  HSpacer,
   hexToRgba,
-  VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { StyleSheet, View } from "react-native";
+import { H2 } from "../../../components/core/typography/H2";
 import {
   DSAssetViewerBox,
   assetItemGutter
 } from "../components/DSAssetViewerBox";
-import { H2 } from "../../../components/core/typography/H2";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -99,7 +98,7 @@ export const DSPictograms = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{
           marginBottom: 16
         }}
@@ -125,7 +124,7 @@ export const DSPictograms = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{
           marginBottom: 16
         }}
@@ -151,7 +150,7 @@ export const DSPictograms = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{
           marginBottom: 16
         }}
@@ -183,29 +182,6 @@ export const DSPictograms = () => {
           <Pictogram name="charity" pictogramStyle="dark-content" />
         </View>
       </DSComponentViewerBox>
-
-      <VSpacer size={40} />
-
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"SemiBold"}
-        style={{
-          marginBottom: 16
-        }}
-      >
-        Legacy Pictograms
-      </H2>
-      <View style={styles.itemsWrapper}>
-        {Object.entries(IOPictogramsLegacy).map(([pictogramItemName]) => (
-          <DSAssetViewerBox
-            key={pictogramItemName}
-            name={pictogramItemName}
-            image={
-              <Pictogram name={pictogramItemName as IOPictograms} size="100%" />
-            }
-          />
-        ))}
-      </View>
     </DesignSystemScreen>
   );
 };

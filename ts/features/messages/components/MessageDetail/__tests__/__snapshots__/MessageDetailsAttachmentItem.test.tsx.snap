@@ -3,7 +3,7 @@
 exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the attachment 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,7 +326,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -324,8 +336,20 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                         accessibilityLabel="Download in progress"
                         accessibilityRole="button"
                         accessibilityState={
-                          Object {
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
                             "disabled": true,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
                           }
                         }
                         accessible={true}
@@ -345,8 +369,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                           accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "alignItems": "center",
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "#CCD4DC",
@@ -357,14 +381,14 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                 "paddingHorizontal": 16,
                                 "paddingVertical": 16,
                               },
-                              Object {
-                                "transform": Array [
-                                  Object {
+                              {
+                                "transform": [
+                                  {
                                     "scale": undefined,
                                   },
                                 ],
                               },
-                              Object {
+                              {
                                 "opacity": 1,
                               },
                             ]
@@ -372,7 +396,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                                 "flexDirection": "column",
                               }
@@ -381,52 +405,52 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                             <Text
                               allowFontScaling={false}
                               color="blueIO-500"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              defaultColor="black"
+                              defaultWeight="Semibold"
+                              font="TitilliumSansPro"
                               fontStyle={
-                                Object {
-                                  "fontSize": 14,
+                                {
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 }
                               }
                               numberOfLines={1}
                               style={
-                                Array [
-                                  Object {
-                                    "fontSize": 14,
+                                [
+                                  {
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0B3EE3",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               1
                             </Text>
                             <View
                               style={
-                                Object {
+                                {
                                   "height": 4,
                                 }
                               }
                             />
                             <View
                               style={
-                                Object {
+                                {
                                   "width": 44,
                                 }
                               }
                             >
                               <View
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
                                       "borderRadius": 24,
@@ -435,7 +459,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                       "paddingHorizontal": 8,
                                       "paddingVertical": 4,
                                     },
-                                    Object {
+                                    {
                                       "backgroundColor": "#F4F5F8",
                                     },
                                   ]
@@ -445,20 +469,20 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                   ellipsizeMode="tail"
                                   numberOfLines={1}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "alignSelf": "center",
                                         "flexShrink": 1,
                                         "fontSize": 12,
                                         "lineHeight": 16,
                                         "textTransform": "uppercase",
                                       },
-                                      Object {
-                                        "fontFamily": "Titillium Web",
+                                      {
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
-                                      Object {
+                                      {
                                         "color": "#555C70",
                                       },
                                     ]
@@ -471,7 +495,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "alignItems": "center",
                                 "marginLeft": 12,
                               }
@@ -482,7 +506,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                               accessible={true}
                               importantForAccessibility="no-hide-descendants"
                               style={
-                                Object {
+                                {
                                   "height": 24,
                                   "width": 24,
                                 }
@@ -492,9 +516,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                               <View
                                 collapsable={false}
                                 style={
-                                  Object {
-                                    "transform": Array [
-                                      Object {
+                                  {
+                                    "transform": [
+                                      {
                                         "rotateZ": "0deg",
                                       },
                                     ],
@@ -513,12 +537,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                   minX={0}
                                   minY={0}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "backgroundColor": "transparent",
                                         "borderWidth": 0,
                                       },
-                                      Object {
+                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -532,7 +556,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                   <RNSVGGroup
                                     fill={null}
                                     propList={
-                                      Array [
+                                      [
                                         "fill",
                                       ]
                                     }
@@ -540,7 +564,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                     <RNSVGDefs>
                                       <RNSVGLinearGradient
                                         gradient={
-                                          Array [
+                                          [
                                             0,
                                             736995,
                                             1,
@@ -557,7 +581,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                       />
                                       <RNSVGLinearGradient
                                         gradient={
-                                          Array [
+                                          [
                                             0,
                                             -16040221,
                                             1,
@@ -575,13 +599,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                     </RNSVGDefs>
                                     <RNSVGGroup
                                       fill={
-                                        Object {
+                                        {
                                           "payload": 4278190080,
                                           "type": 0,
                                         }
                                       }
                                       propList={
-                                        Array [
+                                        [
                                           "strokeWidth",
                                         ]
                                       }
@@ -590,18 +614,18 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                       <RNSVGPath
                                         d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
                                         fill={
-                                          Object {
+                                          {
                                             "payload": 4278190080,
                                             "type": 0,
                                           }
                                         }
                                         propList={
-                                          Array [
+                                          [
                                             "stroke",
                                           ]
                                         }
                                         stroke={
-                                          Object {
+                                          {
                                             "brushRef": "spinner-secondHalf",
                                             "type": 1,
                                           }
@@ -610,18 +634,18 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                       <RNSVGPath
                                         d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
                                         fill={
-                                          Object {
+                                          {
                                             "payload": 4278190080,
                                             "type": 0,
                                           }
                                         }
                                         propList={
-                                          Array [
+                                          [
                                             "stroke",
                                           ]
                                         }
                                         stroke={
-                                          Object {
+                                          {
                                             "brushRef": "spinner-firstHalf",
                                             "type": 1,
                                           }
@@ -630,19 +654,19 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                       <RNSVGPath
                                         d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
                                         fill={
-                                          Object {
+                                          {
                                             "payload": 4278190080,
                                             "type": 0,
                                           }
                                         }
                                         propList={
-                                          Array [
+                                          [
                                             "stroke",
                                             "strokeLinecap",
                                           ]
                                         }
                                         stroke={
-                                          Object {
+                                          {
                                             "payload": 4278927075,
                                             "type": 0,
                                           }
@@ -663,8 +687,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -673,7 +697,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
 exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment has no name 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -681,8 +705,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -691,8 +715,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -704,7 +728,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -720,7 +744,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -734,12 +758,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -753,7 +777,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -765,7 +789,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -773,7 +797,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -784,7 +808,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -798,7 +822,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -813,7 +837,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -827,7 +851,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -841,21 +865,34 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -867,7 +904,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -885,12 +922,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -900,10 +937,10 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -912,9 +949,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -930,27 +967,26 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -960,13 +996,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -976,7 +1012,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -984,7 +1020,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -994,8 +1030,20 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                         accessibilityLabel="1"
                         accessibilityRole="button"
                         accessibilityState={
-                          Object {
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
                             "disabled": false,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
                           }
                         }
                         accessible={true}
@@ -1015,8 +1063,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                           accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "alignItems": "center",
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "#CCD4DC",
@@ -1027,14 +1075,14 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                 "paddingHorizontal": 16,
                                 "paddingVertical": 16,
                               },
-                              Object {
-                                "transform": Array [
-                                  Object {
+                              {
+                                "transform": [
+                                  {
                                     "scale": undefined,
                                   },
                                 ],
                               },
-                              Object {
+                              {
                                 "opacity": 1,
                               },
                             ]
@@ -1042,7 +1090,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                                 "flexDirection": "column",
                               }
@@ -1051,52 +1099,52 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                             <Text
                               allowFontScaling={false}
                               color="blueIO-500"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              defaultColor="black"
+                              defaultWeight="Semibold"
+                              font="TitilliumSansPro"
                               fontStyle={
-                                Object {
-                                  "fontSize": 14,
+                                {
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 }
                               }
                               numberOfLines={1}
                               style={
-                                Array [
-                                  Object {
-                                    "fontSize": 14,
+                                [
+                                  {
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0B3EE3",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               1
                             </Text>
                             <View
                               style={
-                                Object {
+                                {
                                   "height": 4,
                                 }
                               }
                             />
                             <View
                               style={
-                                Object {
+                                {
                                   "width": 44,
                                 }
                               }
                             >
                               <View
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
                                       "borderRadius": 24,
@@ -1105,7 +1153,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                       "paddingHorizontal": 8,
                                       "paddingVertical": 4,
                                     },
-                                    Object {
+                                    {
                                       "backgroundColor": "#F4F5F8",
                                     },
                                   ]
@@ -1115,20 +1163,20 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                   ellipsizeMode="tail"
                                   numberOfLines={1}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "alignSelf": "center",
                                         "flexShrink": 1,
                                         "fontSize": 12,
                                         "lineHeight": 16,
                                         "textTransform": "uppercase",
                                       },
-                                      Object {
-                                        "fontFamily": "Titillium Web",
+                                      {
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
-                                      Object {
+                                      {
                                         "color": "#555C70",
                                       },
                                     ]
@@ -1141,7 +1189,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "alignItems": "center",
                                 "marginLeft": 12,
                               }
@@ -1161,15 +1209,15 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                               minX={0}
                               minY={0}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "backgroundColor": "transparent",
                                     "borderWidth": 0,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0B3EE3",
                                   },
-                                  Object {
+                                  {
                                     "flex": 0,
                                     "height": 24,
                                     "width": 24,
@@ -1183,7 +1231,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                             >
                               <RNSVGGroup
                                 fill={
-                                  Object {
+                                  {
                                     "payload": 4278190080,
                                     "type": 0,
                                   }
@@ -1193,13 +1241,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                   clipRule={0}
                                   d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                   fill={
-                                    Object {
+                                    {
                                       "type": 2,
                                     }
                                   }
                                   fillRule={0}
                                   propList={
-                                    Array [
+                                    [
                                       "fill",
                                       "fillRule",
                                     ]
@@ -1216,8 +1264,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1226,7 +1274,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
 exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1234,8 +1282,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1244,8 +1292,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1257,7 +1305,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1273,7 +1321,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1287,12 +1335,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1306,7 +1354,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1318,7 +1366,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1326,7 +1374,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1337,7 +1385,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1351,7 +1399,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1366,7 +1414,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1380,7 +1428,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1394,21 +1442,34 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1420,7 +1481,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1438,12 +1499,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1453,10 +1514,10 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1465,9 +1526,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1483,27 +1544,26 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1513,13 +1573,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1529,7 +1589,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1537,7 +1597,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -1547,8 +1607,20 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                         accessibilityLabel="A PDF File"
                         accessibilityRole="button"
                         accessibilityState={
-                          Object {
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
                             "disabled": true,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
                           }
                         }
                         accessible={true}
@@ -1568,8 +1640,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                           accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "alignItems": "center",
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "#CCD4DC",
@@ -1580,14 +1652,14 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                 "paddingHorizontal": 16,
                                 "paddingVertical": 16,
                               },
-                              Object {
-                                "transform": Array [
-                                  Object {
+                              {
+                                "transform": [
+                                  {
                                     "scale": undefined,
                                   },
                                 ],
                               },
-                              Object {
+                              {
                                 "opacity": 0.5,
                               },
                             ]
@@ -1595,7 +1667,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                                 "flexDirection": "column",
                               }
@@ -1604,52 +1676,52 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                             <Text
                               allowFontScaling={false}
                               color="blueIO-500"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              defaultColor="black"
+                              defaultWeight="Semibold"
+                              font="TitilliumSansPro"
                               fontStyle={
-                                Object {
-                                  "fontSize": 14,
+                                {
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 }
                               }
                               numberOfLines={1}
                               style={
-                                Array [
-                                  Object {
-                                    "fontSize": 14,
+                                [
+                                  {
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0B3EE3",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               A PDF File
                             </Text>
                             <View
                               style={
-                                Object {
+                                {
                                   "height": 4,
                                 }
                               }
                             />
                             <View
                               style={
-                                Object {
+                                {
                                   "width": 44,
                                 }
                               }
                             >
                               <View
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
                                       "borderRadius": 24,
@@ -1658,7 +1730,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                       "paddingHorizontal": 8,
                                       "paddingVertical": 4,
                                     },
-                                    Object {
+                                    {
                                       "backgroundColor": "#F4F5F8",
                                     },
                                   ]
@@ -1668,20 +1740,20 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                   ellipsizeMode="tail"
                                   numberOfLines={1}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "alignSelf": "center",
                                         "flexShrink": 1,
                                         "fontSize": 12,
                                         "lineHeight": 16,
                                         "textTransform": "uppercase",
                                       },
-                                      Object {
-                                        "fontFamily": "Titillium Web",
+                                      {
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
-                                      Object {
+                                      {
                                         "color": "#555C70",
                                       },
                                     ]
@@ -1694,7 +1766,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "alignItems": "center",
                                 "marginLeft": 12,
                               }
@@ -1714,15 +1786,15 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                               minX={0}
                               minY={0}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "backgroundColor": "transparent",
                                     "borderWidth": 0,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0B3EE3",
                                   },
-                                  Object {
+                                  {
                                     "flex": 0,
                                     "height": 24,
                                     "width": 24,
@@ -1736,7 +1808,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                             >
                               <RNSVGGroup
                                 fill={
-                                  Object {
+                                  {
                                     "payload": 4278190080,
                                     "type": 0,
                                   }
@@ -1746,13 +1818,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                   clipRule={0}
                                   d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                   fill={
-                                    Object {
+                                    {
                                       "type": 2,
                                     }
                                   }
                                   fillRule={0}
                                   propList={
-                                    Array [
+                                    [
                                       "fill",
                                       "fillRule",
                                     ]
@@ -1765,7 +1837,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                       </View>
                       <View
                         style={
-                          Object {
+                          {
                             "height": 8,
                           }
                         }
@@ -1776,8 +1848,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1786,7 +1858,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
 exports[`MessageDetailsAttachmentItem Should match snapshot with required parameters 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1794,8 +1866,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1804,8 +1876,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1817,7 +1889,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1833,7 +1905,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1847,12 +1919,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1866,7 +1938,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1878,7 +1950,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1886,7 +1958,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1897,7 +1969,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1911,7 +1983,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1926,7 +1998,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1940,7 +2012,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1954,21 +2026,34 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1980,7 +2065,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1998,12 +2083,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -2013,10 +2098,10 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -2025,9 +2110,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -2043,27 +2128,26 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -2073,13 +2157,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -2089,7 +2173,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -2097,7 +2181,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -2107,8 +2191,20 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                         accessibilityLabel="A PDF File"
                         accessibilityRole="button"
                         accessibilityState={
-                          Object {
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
                             "disabled": false,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
                           }
                         }
                         accessible={true}
@@ -2128,8 +2224,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                           accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "alignItems": "center",
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "#CCD4DC",
@@ -2140,14 +2236,14 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                 "paddingHorizontal": 16,
                                 "paddingVertical": 16,
                               },
-                              Object {
-                                "transform": Array [
-                                  Object {
+                              {
+                                "transform": [
+                                  {
                                     "scale": undefined,
                                   },
                                 ],
                               },
-                              Object {
+                              {
                                 "opacity": 1,
                               },
                             ]
@@ -2155,7 +2251,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                                 "flexDirection": "column",
                               }
@@ -2164,52 +2260,52 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                             <Text
                               allowFontScaling={false}
                               color="blueIO-500"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              defaultColor="black"
+                              defaultWeight="Semibold"
+                              font="TitilliumSansPro"
                               fontStyle={
-                                Object {
-                                  "fontSize": 14,
+                                {
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 }
                               }
                               numberOfLines={1}
                               style={
-                                Array [
-                                  Object {
-                                    "fontSize": 14,
+                                [
+                                  {
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0B3EE3",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               A PDF File
                             </Text>
                             <View
                               style={
-                                Object {
+                                {
                                   "height": 4,
                                 }
                               }
                             />
                             <View
                               style={
-                                Object {
+                                {
                                   "width": 44,
                                 }
                               }
                             >
                               <View
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
                                       "borderRadius": 24,
@@ -2218,7 +2314,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                       "paddingHorizontal": 8,
                                       "paddingVertical": 4,
                                     },
-                                    Object {
+                                    {
                                       "backgroundColor": "#F4F5F8",
                                     },
                                   ]
@@ -2228,20 +2324,20 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                   ellipsizeMode="tail"
                                   numberOfLines={1}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "alignSelf": "center",
                                         "flexShrink": 1,
                                         "fontSize": 12,
                                         "lineHeight": 16,
                                         "textTransform": "uppercase",
                                       },
-                                      Object {
-                                        "fontFamily": "Titillium Web",
+                                      {
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
-                                      Object {
+                                      {
                                         "color": "#555C70",
                                       },
                                     ]
@@ -2254,7 +2350,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "alignItems": "center",
                                 "marginLeft": 12,
                               }
@@ -2274,15 +2370,15 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                               minX={0}
                               minY={0}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "backgroundColor": "transparent",
                                     "borderWidth": 0,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0B3EE3",
                                   },
-                                  Object {
+                                  {
                                     "flex": 0,
                                     "height": 24,
                                     "width": 24,
@@ -2296,7 +2392,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                             >
                               <RNSVGGroup
                                 fill={
-                                  Object {
+                                  {
                                     "payload": 4278190080,
                                     "type": 0,
                                   }
@@ -2306,13 +2402,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                   clipRule={0}
                                   d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                   fill={
-                                    Object {
+                                    {
                                       "type": 2,
                                     }
                                   }
                                   fillRule={0}
                                   propList={
-                                    Array [
+                                    [
                                       "fill",
                                       "fillRule",
                                     ]
@@ -2329,8 +2425,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

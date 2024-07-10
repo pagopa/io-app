@@ -3,7 +3,7 @@
 exports[`MessageDetailsHeader component should match the snapshot with default props 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,14 +326,14 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
                         style={
-                          Object {
+                          {
                             "flexDirection": "row",
                             "flexWrap": "wrap",
                             "justifyContent": "flex-start",
@@ -332,7 +344,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                       />
                       <View
                         style={
-                          Object {
+                          {
                             "height": 8,
                           }
                         }
@@ -341,36 +353,36 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         allowFontScaling={false}
                         color="bluegreyDark"
                         defaultColor="bluegreyDark"
-                        defaultWeight="SemiBold"
-                        font="TitilliumWeb"
+                        defaultWeight="Semibold"
+                        font="TitilliumSansPro"
                         fontStyle={
-                          Object {
+                          {
                             "fontSize": 24,
                             "lineHeight": 34,
                           }
                         }
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "fontSize": 24,
                               "lineHeight": 34,
                             },
-                            Object {
+                            {
                               "color": "#17324D",
-                              "fontFamily": "Titillium Web",
+                              "fontFamily": "Titillium Sans Pro",
                               "fontStyle": "normal",
                               "fontWeight": "600",
                             },
                           ]
                         }
                         testID="message-header-subject"
-                        weight="SemiBold"
+                        weight="Semibold"
                       >
                         #### Subject ####
                       </Text>
                       <View
                         style={
-                          Object {
+                          {
                             "height": 8,
                           }
                         }
@@ -380,42 +392,41 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         color="grey-700"
                         defaultColor="blue"
                         defaultWeight="Bold"
-                        font="TitilliumWeb"
-                        fontSize="regular"
+                        font="TitilliumSansPro"
                         fontStyle={
-                          Object {
+                          {
                             "fontSize": 14,
                             "lineHeight": 21,
                           }
                         }
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "fontSize": 14,
                               "lineHeight": 21,
                             },
-                            Object {
+                            {
                               "color": "#555C70",
-                              "fontFamily": "Titillium Web",
+                              "fontFamily": "Titillium Sans Pro",
                               "fontStyle": "normal",
-                              "fontWeight": "700",
+                              "fontWeight": "400",
                             },
                           ]
                         }
-                        weight="Bold"
+                        weight="Regular"
                       >
                         18 Oct 2021, 16:00
                       </Text>
                       <View
                         style={
-                          Object {
+                          {
                             "height": 8,
                           }
                         }
                       />
                       <View
                         style={
-                          Object {
+                          {
                             "backgroundColor": "#D2D6E3",
                             "height": 0.5,
                           }
@@ -423,7 +434,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                       />
                       <View
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "flexDirection": "row",
                             "justifyContent": "space-between",
@@ -433,7 +444,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "flex": 1,
                             }
                           }
@@ -441,31 +452,30 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                           <Text
                             allowFontScaling={false}
                             color="grey-700"
-                            defaultColor="blue"
-                            defaultWeight="Bold"
-                            font="TitilliumWeb"
-                            fontSize="regular"
+                            defaultColor="black"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
-                              Object {
-                                "fontSize": 14,
+                              {
+                                "fontSize": 16,
                                 "lineHeight": 21,
                               }
                             }
                             style={
-                              Array [
-                                Object {
-                                  "fontSize": 14,
+                              [
+                                {
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
-                                  "fontWeight": "700",
+                                  "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="Bold"
+                            weight="Semibold"
                           >
                             Ċentru tas-Saħħa
                           </Text>
@@ -474,24 +484,23 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                             color="blueIO-500"
                             defaultColor="blue"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
-                            fontSize="regular"
+                            font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 14,
                                 "lineHeight": 21,
                               }
                             }
                             onPress={[Function]}
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 14,
                                   "lineHeight": 21,
                                 },
-                                Object {
+                                {
                                   "color": "#0B3EE3",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "700",
                                 },
@@ -504,7 +513,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "marginLeft": 16,
                             }
                           }
@@ -512,14 +521,14 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                           <View
                             accessibilityIgnoresInvertColors={true}
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "borderColor": "rgba(14,15,19,0.1)",
                                   "borderCurve": "continuous",
                                   "borderWidth": 1,
                                   "overflow": "hidden",
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "height": 44,
@@ -531,13 +540,13 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                           >
                             <View
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "backgroundColor": "#FFFFFF",
                                     "borderCurve": "continuous",
                                     "overflow": "hidden",
                                   },
-                                  Object {
+                                  {
                                     "borderRadius": 2,
                                   },
                                 ]
@@ -547,12 +556,12 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                 accessibilityIgnoresInvertColors={true}
                                 onError={[Function]}
                                 source={
-                                  Object {
+                                  {
                                     "uri": "https://assets.cdn.io.pagopa.it/logos/services/service_one.png",
                                   }
                                 }
                                 style={
-                                  Object {
+                                  {
                                     "height": "100%",
                                     "resizeMode": "contain",
                                     "width": "100%",
@@ -565,7 +574,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                       </View>
                       <View
                         style={
-                          Object {
+                          {
                             "backgroundColor": "#D2D6E3",
                             "height": 0.5,
                           }
@@ -577,8 +586,8 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

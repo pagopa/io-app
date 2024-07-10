@@ -30,7 +30,7 @@ platform :android do
     gradle(
       task: "assemble",
       build_type: "Debug",
-      flags: "-x bundleReleaseJsAndAssets --no-daemon"
+      # flags: "-x bundleReleaseJsAndAssets --no-daemon"
     )
   end
 
@@ -42,7 +42,7 @@ platform :android do
     gradle(
       task: "bundle",
       build_type: "Release",
-      flags: "-x bundleReleaseJsAndAssets --no-daemon"
+      # flags: "-x bundleReleaseJsAndAssets --no-daemon"
     )
   end
 
@@ -65,22 +65,6 @@ platform :android do
   desc "Promote the internal version to alpha"
   lane :promote_internal_to_alpha do
     upload_to_play_store(track: "internal", track_promote_to: "alpha")
-  end
-
-  desc "Build the App in release mode and deploy a new fast login version to the Google Play Store"
-  lane :fast_login do
-    build_release
-
-    # Generate the changelog from the last commit message
-    changelog_from_git_commits(
-      commits_count: 1
-    )
-
-    upload_to_play_store(
-      track: "FL",
-      skip_upload_screenshots: true,
-      skip_upload_images: true
-    )
   end
 
   desc "Deploy a new version to the Google Play"

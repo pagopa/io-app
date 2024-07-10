@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { ContentWrapper, Tag, VSpacer } from "@pagopa/io-app-design-system";
+import { ContentWrapper, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -40,7 +40,7 @@ import { cancelPaymentStatusTracking } from "../../pn/store/actions";
 import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
 import { MessageDetailsStickyFooter } from "../components/MessageDetail/MessageDetailsStickyFooter";
 import { MessageDetailsScrollViewAdditionalSpace } from "../components/MessageDetail/MessageDetailsScrollViewAdditionalSpace";
-import { serviceMetadataByIdSelector } from "../../services/details/store/reducers/servicesById";
+import { serviceMetadataByIdSelector } from "../../services/details/store/reducers";
 import { isPNOptInMessage } from "../../pn/utils";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
@@ -180,12 +180,13 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
             >
               {hasAttachments && (
                 <MessageDetailsTagBox>
-                  <Tag
-                    variant="attachment"
-                    testID="attachment-tag"
-                    iconAccessibilityLabel={I18n.t(
+                  <Icon
+                    name="attachment"
+                    accessibilityLabel={I18n.t(
                       "messageDetails.accessibilityAttachmentIcon"
                     )}
+                    testID="attachment-tag"
+                    size={16}
                   />
                 </MessageDetailsTagBox>
               )}

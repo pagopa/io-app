@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { capitalize } from "lodash";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
@@ -20,6 +19,7 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import TransactionReceiptDivider from "../../../../../img/features/wallet/transaction-receipt-divider.svg";
 import { TransactionDetailResponse } from "../../../../../definitions/pagopa/biz-events/TransactionDetailResponse";
 import { WalletInfo } from "../../../../../definitions/pagopa/biz-events/WalletInfo";
+import { getPayerInfoLabel } from "../utils";
 
 type PaymentsBizEventsTransactionInfoSectionProps = {
   transaction?: TransactionDetailResponse;
@@ -79,7 +79,7 @@ const PaymentsBizEventsTransactionInfoSection = ({
                 <>
                   <ListItemInfo
                     label={I18n.t("transaction.details.info.executedBy")}
-                    value={`${transactionInfo.payer.name}\n(${transactionInfo.payer.taxCode})`}
+                    value={getPayerInfoLabel(transactionInfo.payer)}
                   />
                   <Divider />
                 </>

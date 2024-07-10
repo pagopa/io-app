@@ -8,7 +8,7 @@ import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem"
 import I18n from "../../../../i18n";
 import { TransactionDetailResponse } from "../../../../../definitions/pagopa/biz-events/TransactionDetailResponse";
 import { Psp } from "../../../../types/pagopa";
-import { formatAmountText } from "../utils";
+import { calculateTotalAmount, formatAmountText } from "../utils";
 import { PaymentsTransactionBizEventsStackNavigation } from "../navigation/navigator";
 import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
 import { PaymentsBizEventsTransactionCartList } from "./PaymentsBizEventsTransactionCartList";
@@ -69,15 +69,6 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
     return null;
   };
 
-  const calculateTotalAmount = () => {
-    if (transactionInfo?.amount && transactionInfo?.fee) {
-      return (
-        _.toNumber(transactionInfo.amount) + _.toNumber(transactionInfo.fee)
-      ).toString();
-    }
-    return transactionInfo?.amount;
-  };
-
   return (
     <View style={[IOStyles.horizontalContentPadding, IOStyles.bgWhite]}>
       <VSpacer size={16} />
@@ -89,7 +80,7 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
       <VSpacer size={8} />
       <PaymentsBizEventsTransactionTotalAmount
         loading={isLoading}
-        totalAmount={calculateTotalAmount()}
+        totalAmount={calculateTotalAmount(transactionInfo)}
       />
       <VSpacer size={8} />
       <FeeAmountSection />

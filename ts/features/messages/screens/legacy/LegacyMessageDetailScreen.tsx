@@ -20,7 +20,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
-import { isNoticePaidSelector } from "../../../../store/reducers/entities/payments";
 import {
   loadMessageDetails,
   resetGetMessageDataAction
@@ -36,10 +35,11 @@ import { UIMessageId } from "../../types";
 import {
   serviceByIdPotSelector,
   serviceMetadataByIdSelector
-} from "../../../services/details/store/reducers/servicesById";
+} from "../../../services/details/store/reducers";
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { isPaymentMessageWithPaidNoticeSelector } from "../../store/reducers/allPaginated";
 
 const styles = StyleSheet.create({
   notFullStateContainer: {
@@ -100,7 +100,9 @@ const LegacyMessageDetailScreen = () => {
     serviceMetadataByIdSelector(state, serviceId)
   );
   const hasPaidBadge: boolean = useIOSelector(state =>
-    message ? isNoticePaidSelector(state, message.category) : false
+    message
+      ? isPaymentMessageWithPaidNoticeSelector(state, message.category)
+      : false
   );
 
   useOnFirstRender(() => {

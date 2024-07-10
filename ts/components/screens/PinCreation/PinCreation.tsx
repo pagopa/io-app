@@ -1,3 +1,4 @@
+/* eslint-disable functional/immutable-data */
 import {
   ButtonLink,
   ButtonOutline,
@@ -31,6 +32,7 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { ContextualHelpPropsMarkdown } from "../BaseScreenComponent";
+import { PIN_LENGTH_SIX } from "../../../utils/constants";
 import usePinValidationBottomSheet from "./usePinValidationBottomSheet";
 import { PinCaouselItemProps, PinCarouselItem } from "./PinCarouselItem";
 
@@ -57,14 +59,13 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
   const navigation = useIONavigation();
   const [pin, setPin] = useState("");
   const [pinConfirmation, setPinConfirmation] = useState("");
-  const [pinMode, setPinMode] = useState<PinMode>("creation");
+  const pinModeRef = useRef<PinMode>("creation");
   const { handleSubmit } = useCreatePin({ isOnboarding });
   const pinRef = useRef<string | null>(null);
   const carouselRef = useRef<FlatList>(null);
   const titleCreationRef = useRef<View>(null);
   const titleConfirmationRef = useRef<View>(null);
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
-  const isCreation = pinMode === "creation";
   const { present, bottomSheet } = usePinValidationBottomSheet();
   const { showAlert } = useOnboardingAbortAlert();
 
@@ -74,7 +75,8 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
 
   const scrollToCreation = useCallback(() => {
     setPin("");
-    setPinMode("creation");
+
+    pinModeRef.current = "creation";
     carouselRef.current?.scrollToIndex({
       animated: true,
       index: CREATION_INDEX
@@ -83,7 +85,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
   }, []);
   const scrollToConfirmation = useCallback(() => {
     setPinConfirmation("");
-    setPinMode("confirmation");
+    pinModeRef.current = "confirmation";
     carouselRef.current?.scrollToIndex({
       animated: true,
       index: CONFIRMATION_INDEX
@@ -92,7 +94,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
   }, []);
 
   const goBack = useCallback(() => {
-    if (!isCreation) {
+    if (pinModeRef.current === "confirmation") {
       /**
        * Scrolls back to pin creation section
        */
@@ -102,7 +104,28 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
     } else {
       navigation.goBack();
     }
-  }, [navigation, isCreation, isOnboarding, showAlert, scrollToCreation]);
+  }, [navigation, isOnboarding, showAlert, scrollToCreation]);
+
+  const getCurrentSetState = useCallback(
+    (updateValue: (prev: string) => string) =>
+      pinModeRef.current === "creation"
+        ? setPin(updateValue)
+        : setPinConfirmation(updateValue),
+    []
+  );
+
+  const handlePinChange = useCallback(
+    (value: number) =>
+      getCurrentSetState((prev: string) =>
+        prev.length < PIN_LENGTH_SIX ? `${prev}${value}` : prev
+      ),
+    [getCurrentSetState]
+  );
+
+  const onDeletePress = useCallback(
+    () => getCurrentSetState((prev: string) => prev.slice(0, -1)),
+    [getCurrentSetState]
+  );
 
   useHeaderSecondLevel({
     title: "",
@@ -112,12 +135,12 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
   });
 
   const insertValidPin = useCallback(() => {
-    if (isCreation) {
+    if (pinModeRef.current === "creation") {
       setPin(defaultPin);
     } else {
       setPinConfirmation(defaultPin);
     }
-  }, [isCreation]);
+  }, []);
 
   const handlePinCreation = useCallback(
     (v: string) => {
@@ -127,7 +150,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
         /**
          * pinRef is used to avoid having to pass pin as a dependency of useCallback around `handlePinConfirmation`.
          */
-        // eslint-disable-next-line functional/immutable-data
+
         pinRef.current = v;
         scrollToConfirmation();
       } else {
@@ -182,7 +205,8 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
       value: pin,
       testID: "create-pin-carousel-item",
       handleOnValidate: handlePinCreation,
-      onValueChange: setPin
+      onValueChange: setPin,
+      maxLength: PIN_LENGTH_SIX
     },
     {
       title: I18n.t("onboarding.pinConfirmation.title"),
@@ -190,7 +214,8 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
       value: pinConfirmation,
       testID: "confirm-pin-carousel-item",
       handleOnValidate: handlePinConfirmation,
-      onValueChange: setPinConfirmation
+      onValueChange: setPinConfirmation,
+      maxLength: PIN_LENGTH_SIX
     }
   ];
 
@@ -213,8 +238,8 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
         <VSpacer size={40} />
         <ContentWrapper>
           <NumberPad
-            value={isCreation ? pin : pinConfirmation}
-            onValueChange={isCreation ? setPin : setPinConfirmation}
+            onNumberPress={handlePinChange}
+            onDeletePress={onDeletePress}
             variant="light"
             deleteAccessibilityLabel={I18n.t("global.buttons.delete")}
           />

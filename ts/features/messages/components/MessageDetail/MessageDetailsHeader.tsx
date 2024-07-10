@@ -7,9 +7,9 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { localeDateFormat } from "../../../../utils/locale";
 import I18n from "../../../../i18n";
-import { logosForService } from "../../../../utils/services";
+import { logosForService } from "../../../services/common/utils";
 import { useIOSelector } from "../../../../store/hooks";
-import { serviceByIdPotSelector } from "../../../services/details/store/reducers/servicesById";
+import { serviceByIdPotSelector } from "../../../services/details/store/reducers";
 import { gapBetweenItemsInAGrid } from "../../utils";
 import { OrganizationHeader } from "./OrganizationHeader";
 
@@ -36,7 +36,7 @@ const MessageDetailsHeaderContent = ({
   <>
     <H3 testID="message-header-subject">{subject}</H3>
     <VSpacer size={8} />
-    <LabelSmall fontSize="regular" color="grey-700">
+    <LabelSmall weight="Regular" color="grey-700">
       {localeDateFormat(
         createdAt,
         I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithTime")

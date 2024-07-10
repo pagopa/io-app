@@ -53,7 +53,7 @@ export const DSTypography = () => {
     <DesignSystemScreen title={"Typography"}>
       <LegacyH2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: sectionTitleMargin }}
       >
         New typographic scale
@@ -95,7 +95,7 @@ export const DSTypography = () => {
 
       <LegacyH2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: sectionTitleMargin }}
       >
         Legacy typographic scale
@@ -121,14 +121,7 @@ const getTitle = (element: string) => `Heading ${element}`;
 const getLongerTitle = (element: string) =>
   `Very loooong looong title set with Heading ${element}`;
 
-export const DarkBackgroundTypographicScale = () => (
-  <View style={{ backgroundColor: IOColors.bluegrey }}>
-    <H1 color={"white"}>Header H1</H1>
-    <HSpacer size={16} />
-  </View>
-);
-
-export const LegacyH1Row = () => (
+const LegacyH1Row = () => (
   <>
     <View>
       <LegacyH1>{getTitle("H1")}</LegacyH1>
@@ -138,12 +131,12 @@ export const LegacyH1Row = () => (
   </>
 );
 
-export const LegacyH2Row = () => (
+const LegacyH2Row = () => (
   <>
     <View>
       <LegacyH2>{getTitle("H2")}</LegacyH2>
       <LegacyH2 style={styles.distancedTitle}>{getLongerTitle("H2")}</LegacyH2>
-      <LegacyH2 style={styles.distancedTitle} weight={"SemiBold"}>
+      <LegacyH2 style={styles.distancedTitle} weight={"Semibold"}>
         {getTitle("H2 Semibold")}
       </LegacyH2>
     </View>
@@ -151,7 +144,7 @@ export const LegacyH2Row = () => (
   </>
 );
 
-export const LegacyH3Row = () => (
+const LegacyH3Row = () => (
   <>
     <View style={styles.row}>
       <LegacyH3>Header H3 SB</LegacyH3>
@@ -174,7 +167,7 @@ export const LegacyH3Row = () => (
   </>
 );
 
-export const LegacyH4Row = () => (
+const LegacyH4Row = () => (
   <>
     <View style={styles.row}>
       {/* Bold */}
@@ -188,10 +181,10 @@ export const LegacyH4Row = () => (
     </View>
     <VSpacer size={16} />
     <View style={styles.row}>
-      {/* SemiBold */}
+      {/* Semibold */}
       <View style={{ backgroundColor: IOColors.bluegrey }}>
-        <LegacyH4 color={"white"} weight={"SemiBold"}>
-          Header H4 SemiBold
+        <LegacyH4 color={"white"} weight={"Semibold"}>
+          Header H4 Semibold
         </LegacyH4>
       </View>
     </View>
@@ -220,7 +213,7 @@ export const LegacyH4Row = () => (
   </>
 );
 
-export const LegacyH5Row = () => (
+const LegacyH5Row = () => (
   <>
     <View style={styles.row}>
       <LegacyH5>Header H5 SB</LegacyH5>
@@ -249,7 +242,7 @@ export const LegacyH5Row = () => (
   </>
 );
 
-export const LegacyLabelSmallRow = () => (
+const LegacyLabelSmallRow = () => (
   <>
     <View style={styles.row}>
       <LegacyLabelSmall>Label small</LegacyLabelSmall>
@@ -266,7 +259,7 @@ export const LegacyLabelSmallRow = () => (
   </>
 );
 
-export const LegacyLabelRow = () => (
+const LegacyLabelRow = () => (
   <>
     <View style={styles.row}>
       <LegacyLabel>Label</LegacyLabel>
@@ -281,7 +274,7 @@ export const LegacyLabelRow = () => (
   </>
 );
 
-export const HeroRow = () => (
+const HeroRow = () => (
   <>
     <View>
       <Hero>{getTitle("Hero")}</Hero>
@@ -291,7 +284,7 @@ export const HeroRow = () => (
   </>
 );
 
-export const H1Row = () => (
+const H1Row = () => (
   <>
     <View>
       <H1>{getTitle("H1")}</H1>
@@ -301,7 +294,7 @@ export const H1Row = () => (
   </>
 );
 
-export const H2Row = () => (
+const H2Row = () => (
   <>
     <View>
       <H2>{getTitle("H2")}</H2>
@@ -311,7 +304,7 @@ export const H2Row = () => (
   </>
 );
 
-export const H3Row = () => (
+const H3Row = () => (
   <>
     <View style={styles.row}>
       <H3>Header H3</H3>
@@ -326,7 +319,7 @@ export const H3Row = () => (
   </>
 );
 
-export const H4Row = () => (
+const H4Row = () => (
   <>
     <View style={styles.row}>
       {/* Bold */}
@@ -342,7 +335,7 @@ export const H4Row = () => (
   </>
 );
 
-export const H5Row = () => (
+const H5Row = () => (
   <>
     <View style={styles.row}>
       <H5>Header H5</H5>
@@ -355,7 +348,7 @@ export const H5Row = () => (
   </>
 );
 
-export const H6Row = () => (
+const H6Row = () => (
   <>
     <View style={styles.row}>
       <H6>Header H6</H6>
@@ -368,7 +361,7 @@ export const H6Row = () => (
   </>
 );
 
-export const ButtonTextRow = () => (
+const ButtonTextRow = () => (
   <>
     <View style={styles.row}>
       <View style={{ backgroundColor: IOColors["grey-700"] }}>
@@ -383,7 +376,7 @@ export const ButtonTextRow = () => (
   </>
 );
 
-export const CaptionRow = () => (
+const CaptionRow = () => (
   <>
     <View style={styles.row}>
       <Caption>Caption</Caption>
@@ -396,7 +389,7 @@ export const CaptionRow = () => (
   </>
 );
 
-export const ChipRow = () => (
+const ChipRow = () => (
   <>
     <View style={styles.row}>
       <Chip>Chip</Chip>
@@ -409,7 +402,7 @@ export const ChipRow = () => (
   </>
 );
 
-export const LabelSmallRow = () => (
+const LabelSmallRow = () => (
   <>
     <View style={styles.row}>
       <LabelSmall>Label small</LabelSmall>
@@ -426,7 +419,7 @@ export const LabelSmallRow = () => (
   </>
 );
 
-export const LabelRow = () => (
+const LabelRow = () => (
   <>
     <View style={styles.row}>
       <Label>Label</Label>

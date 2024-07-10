@@ -30,13 +30,12 @@ export const MessageDetailsScrollViewAdditionalSpace = ({
     (hasCTA1 ? buttonSolidHeight + gapBetweenItemsInAGrid : 0) +
     (hasCTA2 ? buttonSolidHeight + gapBetweenItemsInAGrid : 0) +
     gapBetweenItemsInAGrid +
-    IOStyles.footer.paddingBottom +
     safeAreaInsets.bottom;
   return (
     <View
       style={{
         height
       }}
-    ></View>
+    />
   );
 };

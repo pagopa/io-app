@@ -4,7 +4,6 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { View, ScrollView } from "react-native";
-import { useDispatch } from "react-redux";
 import {
   ContentWrapper,
   HeaderSecondLevel,
@@ -13,7 +12,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import FAQComponent from "../../../components/FAQComponent";
 import BaseScreenComponent, {
   ContextualHelpProps
 } from "../../../components/screens/BaseScreenComponent";
@@ -29,24 +27,25 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
 import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
-import ZendeskSupportComponent from "../components/ZendeskSupportComponent";
-import { ZendeskParamsList } from "../navigation/params";
-import {
-  getZendeskConfig,
-  ZendeskStartPayload,
-  zendeskSupportCancel,
-  zendeskSupportCompleted
-} from "../store/actions";
-import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSignatureRequest";
 import {
   addTicketCustomField,
   zendeskFciId
 } from "../../../utils/supportAssistance";
+import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSignatureRequest";
+import ZendeskSupportComponent from "../components/ZendeskSupportComponent";
+import { ZendeskParamsList } from "../navigation/params";
+import {
+  ZendeskStartPayload,
+  getZendeskConfig,
+  zendeskSupportCancel,
+  zendeskSupportCompleted
+} from "../store/actions";
 import {
   isProfileEmailValidatedSelector,
   profileSelector
 } from "../../../store/reducers/profile";
 import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
+import FAQComponent from "../../../components/FAQComponent";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -71,7 +70,7 @@ export type ZendeskSupportHelpCenterNavigationParams = ZendeskStartPayload;
  * @constructor
  */
 const FaqManager = (props: FaqManagerProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const workUnitComplete = () => dispatch(zendeskSupportCompleted());
   const potContextualData = useIOSelector(
     getContextualHelpDataFromRouteSelector(props.startingRoute)
@@ -105,12 +104,12 @@ const FaqManager = (props: FaqManagerProps) => {
       () => ({
         title: "",
         faqs: getFAQsFromCategories(faqCategories ?? []),
-        content: constNull
+        content: null
       }),
       cHC => ({
         title: cHC.title,
         faqs: getFAQsFromCategories(faqCategories ?? []),
-        content: cHC.body()
+        content: cHC.body
       })
     )
   );

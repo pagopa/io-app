@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   label: {
     alignSelf: "center",
-    ...makeFontStyleObject("SemiBold")
+    ...makeFontStyleObject("Semibold")
   },
   labelSizeDefault: {
     fontSize: 14,

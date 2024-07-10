@@ -317,7 +317,7 @@ const MessageList = ({
         scrollEventThrottle={animated?.scrollEventThrottle}
         style={styles.padded}
         getItemLayout={(
-          _: ReadonlyArray<UIMessage> | null | undefined,
+          _: ArrayLike<UIMessage> | null | undefined,
           index: number
         ) => generateItemLayout(messages.length)(index)}
         onScroll={(...args) => {
@@ -333,13 +333,14 @@ const MessageList = ({
   );
 };
 
-// eslint-disable-next-line arrow-body-style
 const mapStateToProps = (state: GlobalState, { filter }: OwnProps) => {
   const archived = filter.getArchived ?? false;
   const paginatedState = archived
     ? allArchiveSelector(state)
     : allInboxSelector(state);
-  const error = pot.isError(paginatedState) ? paginatedState.error : undefined;
+  const error = pot.isError(paginatedState)
+    ? paginatedState.error.reason
+    : undefined;
   const messagesPage = pot.getOrElse(paginatedState, undefined);
   const didLoad = pot.isSome(paginatedState);
   return {

@@ -10,6 +10,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import React, { useCallback, useEffect, useRef } from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { Institution } from "../../../../../definitions/services/Institution";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../../i18n";
@@ -42,19 +43,23 @@ export const ServicesHomeScreen = () => {
   const {
     currentPage,
     data,
-    fetchInstitutions,
+    fetchNextPage,
+    fetchPage,
     isError,
     isLastPage,
     isLoading,
-    isUpdating,
     isRefreshing,
-    refreshInstitutions
+    isUpdating,
+    refresh
   } = useInstitutionsFetcher();
 
-  useOnFirstRender(() => {
-    analytics.trackServicesHome();
-    fetchInstitutions(0);
-  });
+  useOnFirstRender(() => fetchPage(0));
+
+  useFocusEffect(
+    useCallback(() => {
+      analytics.trackServicesHome();
+    }, [])
+  );
 
   useTabItemPressWhenScreenActive(
     () => flatListRef.current?.scrollToOffset({ offset: 0, animated: true }),
@@ -76,14 +81,11 @@ export const ServicesHomeScreen = () => {
         </>
       );
     }
-    return <></>;
+    return null;
   }, [isFirstRender, isLoading]);
 
   const navigateToSearch = useCallback(
-    () =>
-      navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
-        screen: SERVICES_ROUTES.SEARCH
-      }),
+    () => navigation.navigate(SERVICES_ROUTES.SEARCH),
     [navigation]
   );
 
@@ -102,6 +104,7 @@ export const ServicesHomeScreen = () => {
             }
           }}
         />
+        <VSpacer size={16} />
         <FeaturedServiceList />
         <FeaturedInstitutionList />
         <ListItemHeader label={I18n.t("services.home.institutions.title")} />
@@ -133,23 +136,37 @@ export const ServicesHomeScreen = () => {
       );
     }
 
-    return <VSpacer size={16} />;
+    return null;
   }, [isLastPage, isUpdating, isRefreshing, navigateToSearch]);
 
   const handleRefresh = useCallback(() => {
     dispatch(featuredServicesGet.request());
     dispatch(featuredInstitutionsGet.request());
-    refreshInstitutions();
-  }, [dispatch, refreshInstitutions]);
+    refresh();
+  }, [dispatch, refresh]);
 
-  const handleEndReached = useCallback(() => {
-    analytics.trackInstitutionsScroll();
-    fetchInstitutions(currentPage + 1);
-  }, [currentPage, fetchInstitutions]);
+  const handleEndReached = useCallback(
+    ({ distanceFromEnd }: { distanceFromEnd: number }) => {
+      // Managed behavior:
+      // at the end of data load, in case of response error,
+      // the footer is removed from total list length and
+      // `onEndReached` is triggered continuously causing an endless loop.
+      // Implemented solution:
+      // this guard is needed to avoid endless loop
+      if (distanceFromEnd === 0) {
+        return;
+      }
+
+      analytics.trackInstitutionsScroll();
+      fetchNextPage(currentPage + 1);
+    },
+    [currentPage, fetchNextPage]
+  );
 
   const navigateToInstitution = useCallback(
-    ({ id, name }: Institution) => {
+    ({ fiscal_code, id, name }: Institution) => {
       analytics.trackInstitutionSelected({
+        organization_fiscal_code: fiscal_code,
         organization_name: name,
         source: "main_list"
       });
@@ -192,7 +209,7 @@ export const ServicesHomeScreen = () => {
       data={data?.institutions || []}
       keyExtractor={(item, index) => `institution-${item.id}-${index}`}
       onEndReached={handleEndReached}
-      onEndReachedThreshold={0.001}
+      onEndReachedThreshold={0.1}
       onRefresh={handleRefresh}
       ref={flatListRef}
       refreshing={isRefreshing}

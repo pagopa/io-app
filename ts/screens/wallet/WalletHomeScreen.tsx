@@ -347,7 +347,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   private transactionError() {
     return (
       <View style={[styles.noBottomPadding, styles.whiteBg, IOStyles.flex]}>
-        <H3 weight="SemiBold" color="bluegreyDark">
+        <H3 weight="Semibold" color="bluegreyDark">
           {I18n.t("wallet.latestTransactions")}
         </H3>
         <VSpacer size={16} />

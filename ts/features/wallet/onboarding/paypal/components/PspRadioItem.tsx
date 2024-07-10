@@ -102,7 +102,7 @@ export const PspRadioItem = (
         O.fold(
           () => (
             <H4
-              weight={"SemiBold"}
+              weight={"Semibold"}
               color={"bluegreyDark"}
               testID={"pspNameTestID"}
             >

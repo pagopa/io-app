@@ -3,11 +3,11 @@
 exports[`when rendering on match snapshot for OTP discount 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "paddingTop": 16,
       },
-      Object {
+      {
         "flex": 1,
       },
     ]
@@ -16,14 +16,14 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "flexDirection": "row",
         },
-        Object {
+        {
           "flex": 1,
         },
-        Object {
+        {
           "flexWrap": "wrap",
         },
       ]
@@ -31,14 +31,14 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
   />
   <View
     style={
-      Object {
+      {
         "height": 16,
       }
     }
   />
   <View
     style={
-      Object {
+      {
         "height": 8,
       }
     }
@@ -50,28 +50,28 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
       accessibilityRole="header"
       accessible={true}
       color="bluegreyDark"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 18,
           "lineHeight": 22,
         }
       }
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 18,
             "lineHeight": 22,
           },
-          Object {
+          {
             "color": "#17324D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "600",
           },
         ]
       }
-      weight="SemiBold"
+      weight="Semibold"
       weightColorFactory={[Function]}
     >
       Discount code
@@ -79,6 +79,15 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
     <View
       accessibilityHint="By pressing the item you will copy the code"
       accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
       accessible={true}
       focusable={true}
       onClick={[Function]}
@@ -89,11 +98,11 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "flexDirection": "row",
           },
-          Object {
+          {
             "alignItems": "center",
             "justifyContent": "space-between",
           },
@@ -104,12 +113,12 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
         color="bluegreyDark"
         font="RobotoMono"
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 20,
             },
             undefined,
-            Object {
+            {
               "color": "#17324D",
               "fontFamily": "Roboto Mono",
               "fontStyle": "normal",
@@ -135,15 +144,15 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
         minX={0}
         minY={0}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "borderWidth": 0,
             },
-            Object {
+            {
               "color": "#0073E6",
             },
-            Object {
+            {
               "flex": 0,
               "height": 24,
               "width": 24,
@@ -157,7 +166,7 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
       >
         <RNSVGGroup
           fill={
-            Object {
+            {
               "payload": 4278190080,
               "type": 0,
             }
@@ -167,13 +176,13 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
             clipRule={0}
             d="M2.377 11.667A10.997 10.997 0 0 1 12.001 6c4.138 0 7.744 2.285 9.623 5.666a.686.686 0 0 1 0 .667A10.997 10.997 0 0 1 12 18a10.997 10.997 0 0 1-9.623-5.666.686.686 0 0 1 0-.667zM12.001 4A12.997 12.997 0 0 0 .629 10.696a2.686 2.686 0 0 0 0 2.609A12.997 12.997 0 0 0 12 20c4.894 0 9.155-2.705 11.372-6.696.45-.812.45-1.797 0-2.609A12.997 12.997 0 0 0 12.001 4zM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 0a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"
             fill={
-              Object {
+              {
                 "type": 2,
               }
             }
             fillRule={0}
             propList={
-              Array [
+              [
                 "fill",
                 "fillRule",
               ]
@@ -185,7 +194,7 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "height": 16,
       }
     }
@@ -194,50 +203,50 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
     accessibilityRole="header"
     accessible={true}
     color="bluegreyDark"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 22,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 22,
         },
-        Object {
+        {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
     weightColorFactory={[Function]}
   >
     Validity
   </Text>
   <Text
     color="bluegreyDark"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 22,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 22,
         },
-        Object {
+        {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -250,14 +259,14 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 16,
       }
     }
   />
   <View
     style={
-      Object {
+      {
         "height": 16,
       }
     }
@@ -268,11 +277,11 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
 exports[`when rendering on match snapshot for bucket discount 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "paddingTop": 16,
       },
-      Object {
+      {
         "flex": 1,
       },
     ]
@@ -281,14 +290,14 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "flexDirection": "row",
         },
-        Object {
+        {
           "flex": 1,
         },
-        Object {
+        {
           "flexWrap": "wrap",
         },
       ]
@@ -296,7 +305,7 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
   />
   <View
     style={
-      Object {
+      {
         "height": 16,
       }
     }
@@ -305,50 +314,50 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
     accessibilityRole="header"
     accessible={true}
     color="bluegreyDark"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 22,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 22,
         },
-        Object {
+        {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
     weightColorFactory={[Function]}
   >
     Validity
   </Text>
   <Text
     color="bluegreyDark"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 22,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 22,
         },
-        Object {
+        {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -361,14 +370,14 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 16,
       }
     }
   />
   <View
     style={
-      Object {
+      {
         "height": 16,
       }
     }
@@ -379,11 +388,11 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
 exports[`when rendering on match snapshot for landing page discount 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "paddingTop": 16,
       },
-      Object {
+      {
         "flex": 1,
       },
     ]
@@ -392,14 +401,14 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "flexDirection": "row",
         },
-        Object {
+        {
           "flex": 1,
         },
-        Object {
+        {
           "flexWrap": "wrap",
         },
       ]
@@ -407,7 +416,7 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
   />
   <View
     style={
-      Object {
+      {
         "height": 16,
       }
     }
@@ -416,50 +425,50 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
     accessibilityRole="header"
     accessible={true}
     color="bluegreyDark"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 22,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 22,
         },
-        Object {
+        {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
     weightColorFactory={[Function]}
   >
     Validity
   </Text>
   <Text
     color="bluegreyDark"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 22,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 22,
         },
-        Object {
+        {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -472,14 +481,14 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 16,
       }
     }
   />
   <View
     style={
-      Object {
+      {
         "height": 16,
       }
     }
@@ -490,11 +499,11 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
 exports[`when rendering on match snapshot for static code 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "paddingTop": 16,
       },
-      Object {
+      {
         "flex": 1,
       },
     ]
@@ -503,14 +512,14 @@ exports[`when rendering on match snapshot for static code 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "flexDirection": "row",
         },
-        Object {
+        {
           "flex": 1,
         },
-        Object {
+        {
           "flexWrap": "wrap",
         },
       ]
@@ -518,14 +527,14 @@ exports[`when rendering on match snapshot for static code 1`] = `
   />
   <View
     style={
-      Object {
+      {
         "height": 16,
       }
     }
   />
   <View
     style={
-      Object {
+      {
         "height": 8,
       }
     }
@@ -534,28 +543,28 @@ exports[`when rendering on match snapshot for static code 1`] = `
     accessibilityRole="header"
     accessible={true}
     color="bluegreyDark"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 22,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 22,
         },
-        Object {
+        {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
     weightColorFactory={[Function]}
   >
     Discount code
@@ -563,6 +572,15 @@ exports[`when rendering on match snapshot for static code 1`] = `
   <View
     accessibilityHint="By pressing the item you will copy the code"
     accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
     accessible={true}
     focusable={true}
     onClick={[Function]}
@@ -573,11 +591,11 @@ exports[`when rendering on match snapshot for static code 1`] = `
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flexDirection": "row",
         },
-        Object {
+        {
           "alignItems": "center",
           "justifyContent": "space-between",
         },
@@ -589,12 +607,12 @@ exports[`when rendering on match snapshot for static code 1`] = `
       color="bluegreyDark"
       font="RobotoMono"
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 20,
           },
           undefined,
-          Object {
+          {
             "color": "#17324D",
             "fontFamily": "Roboto Mono",
             "fontStyle": "normal",
@@ -620,15 +638,15 @@ exports[`when rendering on match snapshot for static code 1`] = `
       minX={0}
       minY={0}
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "borderWidth": 0,
           },
-          Object {
+          {
             "color": "#0073E6",
           },
-          Object {
+          {
             "flex": 0,
             "height": 24,
             "width": 24,
@@ -642,7 +660,7 @@ exports[`when rendering on match snapshot for static code 1`] = `
     >
       <RNSVGGroup
         fill={
-          Object {
+          {
             "payload": 4278190080,
             "type": 0,
           }
@@ -652,13 +670,13 @@ exports[`when rendering on match snapshot for static code 1`] = `
           clipRule={0}
           d="M2.377 11.667A10.997 10.997 0 0 1 12.001 6c4.138 0 7.744 2.285 9.623 5.666a.686.686 0 0 1 0 .667A10.997 10.997 0 0 1 12 18a10.997 10.997 0 0 1-9.623-5.666.686.686 0 0 1 0-.667zM12.001 4A12.997 12.997 0 0 0 .629 10.696a2.686 2.686 0 0 0 0 2.609A12.997 12.997 0 0 0 12 20c4.894 0 9.155-2.705 11.372-6.696.45-.812.45-1.797 0-2.609A12.997 12.997 0 0 0 12.001 4zM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 0a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"
           fill={
-            Object {
+            {
               "type": 2,
             }
           }
           fillRule={0}
           propList={
-            Array [
+            [
               "fill",
               "fillRule",
             ]
@@ -669,7 +687,7 @@ exports[`when rendering on match snapshot for static code 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "height": 16,
       }
     }
@@ -678,50 +696,50 @@ exports[`when rendering on match snapshot for static code 1`] = `
     accessibilityRole="header"
     accessible={true}
     color="bluegreyDark"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 22,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 22,
         },
-        Object {
+        {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
     weightColorFactory={[Function]}
   >
     Validity
   </Text>
   <Text
     color="bluegreyDark"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 22,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 22,
         },
-        Object {
+        {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -734,14 +752,14 @@ exports[`when rendering on match snapshot for static code 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 16,
       }
     }
   />
   <View
     style={
-      Object {
+      {
         "height": 16,
       }
     }

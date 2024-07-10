@@ -3,7 +3,7 @@
 exports[`NotificationsPreferencesPreview should match snapshot, preview off, reminder off 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,7 +326,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -322,7 +334,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                       <View
                         accessibilityIgnoresInvertColors={true}
                         style={
-                          Object {
+                          {
                             "justifyContent": "center",
                             "minHeight": 200,
                           }
@@ -331,20 +343,20 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                         <Image
                           resizeMode="contain"
                           source={
-                            Object {
+                            {
                               "testUri": "../../../img/onboarding/notification_white.png",
                             }
                           }
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "bottom": 0,
                                 "left": 0,
                                 "position": "absolute",
                                 "right": 0,
                                 "top": 0,
                               },
-                              Object {
+                              {
                                 "height": undefined,
                                 "width": undefined,
                               },
@@ -354,7 +366,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                         />
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "backgroundColor": "#FFFFFF",
                               "borderColor": "#CCD4DC",
@@ -382,15 +394,15 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                             minX={0}
                             minY={0}
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "transparent",
                                   "borderWidth": 0,
                                 },
-                                Object {
+                                {
                                   "color": "#2351E6",
                                 },
-                                Object {
+                                {
                                   "flex": 0,
                                   "height": 24,
                                   "width": 24,
@@ -404,7 +416,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                           >
                             <RNSVGGroup
                               fill={
-                                Object {
+                                {
                                   "payload": 4278190080,
                                   "type": 0,
                                 }
@@ -413,12 +425,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               <RNSVGPath
                                 d="M2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                   ]
                                 }
@@ -427,13 +439,13 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                 clipRule={0}
                                 d="M23.5 14c0 4.418-3.582 8-7.619 8-4.8 0-8.381-3.582-8.381-8s3.582-8 8.381-8c4.037 0 7.619 3.582 7.619 8Zm-6.035-.84h1.065v-1.048h-1.057v-1.267h-1.157v4.216c0 .667.092 1.122.283 1.365.184.252.537.374 1.058.374.2 0 .498-.049.881-.138l-.054-.975-.659.016c-.114 0-.199-.024-.252-.081a.328.328 0 0 1-.092-.195 4.118 4.118 0 0 1-.016-.39V13.16Zm-3.486-1.04v4.574h1.157v-4.573h-1.157Zm-1.737-.113c.203 0 .374.068.506.204a.692.692 0 0 1 .194.507.675.675 0 0 1-.194.5.684.684 0 0 1-.498.189.693.693 0 0 1-.708-.704.72.72 0 0 1 .195-.5.672.672 0 0 1 .505-.196Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 fillRule={0}
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                     "fillRule",
                                   ]
@@ -442,12 +454,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               <RNSVGPath
                                 d="M4.5 11.5a2 2 0 1 0-4 0V20a2 2 0 1 0 4 0v-8.5ZM2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                   ]
                                 }
@@ -456,13 +468,13 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                 clipRule={0}
                                 d="M23.5 14c0 4.418-3.582 8-7.619 8-4.8 0-8.381-3.582-8.381-8s3.582-8 8.381-8c4.037 0 7.619 3.582 7.619 8Zm-6.035-.84h1.065v-1.048h-1.057v-1.267h-1.157v4.216c0 .667.092 1.122.283 1.365.184.252.537.374 1.058.374.2 0 .498-.049.881-.138l-.054-.975-.659.016c-.114 0-.199-.024-.252-.081a.328.328 0 0 1-.092-.195 4.118 4.118 0 0 1-.016-.39V13.16Zm-3.486-1.04v4.574h1.157v-4.573h-1.157Zm-1.737-.113c.203 0 .374.068.506.204a.692.692 0 0 1 .194.507.675.675 0 0 1-.194.5.684.684 0 0 1-.498.189.693.693 0 0 1-.708-.704.72.72 0 0 1 .195-.5.672.672 0 0 1 .505-.196Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 fillRule={0}
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                     "fillRule",
                                   ]
@@ -471,12 +483,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               <RNSVGPath
                                 d="M4.5 11.5a2 2 0 1 0-4 0V20a2 2 0 1 0 4 0v-8.5Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                   ]
                                 }
@@ -485,14 +497,14 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                           </RNSVGSvgView>
                           <View
                             style={
-                              Object {
+                              {
                                 "width": 16,
                               }
                             }
                           />
                           <View
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                               }
                             }
@@ -501,29 +513,29 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              defaultWeight="Semibold"
+                              font="TitilliumSansPro"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 }
                               }
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               You have a new message
                             </Text>
@@ -532,22 +544,22 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               color="black"
                               defaultColor="black"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 14,
                                   "lineHeight": 24,
                                 }
                               }
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "fontSize": 14,
                                     "lineHeight": 24,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -566,8 +578,8 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -576,7 +588,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
 exports[`NotificationsPreferencesPreview should match snapshot, preview off, reminder on 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -584,8 +596,8 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -594,8 +606,8 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -607,7 +619,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -623,7 +635,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -637,12 +649,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -656,7 +668,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -668,7 +680,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -676,7 +688,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -687,7 +699,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -701,7 +713,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -716,7 +728,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -730,7 +742,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -744,21 +756,34 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -770,7 +795,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -788,12 +813,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -803,10 +828,10 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -815,9 +840,9 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -833,27 +858,26 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -863,13 +887,13 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -879,7 +903,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -887,7 +911,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -895,7 +919,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                       <View
                         accessibilityIgnoresInvertColors={true}
                         style={
-                          Object {
+                          {
                             "justifyContent": "center",
                             "minHeight": 200,
                           }
@@ -904,20 +928,20 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                         <Image
                           resizeMode="contain"
                           source={
-                            Object {
+                            {
                               "testUri": "../../../img/onboarding/notification_white.png",
                             }
                           }
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "bottom": 0,
                                 "left": 0,
                                 "position": "absolute",
                                 "right": 0,
                                 "top": 0,
                               },
-                              Object {
+                              {
                                 "height": undefined,
                                 "width": undefined,
                               },
@@ -927,7 +951,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                         />
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "backgroundColor": "#FFFFFF",
                               "borderColor": "#CCD4DC",
@@ -955,15 +979,15 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                             minX={0}
                             minY={0}
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "transparent",
                                   "borderWidth": 0,
                                 },
-                                Object {
+                                {
                                   "color": "#2351E6",
                                 },
-                                Object {
+                                {
                                   "flex": 0,
                                   "height": 24,
                                   "width": 24,
@@ -977,7 +1001,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                           >
                             <RNSVGGroup
                               fill={
-                                Object {
+                                {
                                   "payload": 4278190080,
                                   "type": 0,
                                 }
@@ -986,12 +1010,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               <RNSVGPath
                                 d="M2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                   ]
                                 }
@@ -1000,13 +1024,13 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                 clipRule={0}
                                 d="M23.5 14c0 4.418-3.582 8-7.619 8-4.8 0-8.381-3.582-8.381-8s3.582-8 8.381-8c4.037 0 7.619 3.582 7.619 8Zm-6.035-.84h1.065v-1.048h-1.057v-1.267h-1.157v4.216c0 .667.092 1.122.283 1.365.184.252.537.374 1.058.374.2 0 .498-.049.881-.138l-.054-.975-.659.016c-.114 0-.199-.024-.252-.081a.328.328 0 0 1-.092-.195 4.118 4.118 0 0 1-.016-.39V13.16Zm-3.486-1.04v4.574h1.157v-4.573h-1.157Zm-1.737-.113c.203 0 .374.068.506.204a.692.692 0 0 1 .194.507.675.675 0 0 1-.194.5.684.684 0 0 1-.498.189.693.693 0 0 1-.708-.704.72.72 0 0 1 .195-.5.672.672 0 0 1 .505-.196Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 fillRule={0}
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                     "fillRule",
                                   ]
@@ -1015,12 +1039,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               <RNSVGPath
                                 d="M4.5 11.5a2 2 0 1 0-4 0V20a2 2 0 1 0 4 0v-8.5ZM2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                   ]
                                 }
@@ -1029,13 +1053,13 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                 clipRule={0}
                                 d="M23.5 14c0 4.418-3.582 8-7.619 8-4.8 0-8.381-3.582-8.381-8s3.582-8 8.381-8c4.037 0 7.619 3.582 7.619 8Zm-6.035-.84h1.065v-1.048h-1.057v-1.267h-1.157v4.216c0 .667.092 1.122.283 1.365.184.252.537.374 1.058.374.2 0 .498-.049.881-.138l-.054-.975-.659.016c-.114 0-.199-.024-.252-.081a.328.328 0 0 1-.092-.195 4.118 4.118 0 0 1-.016-.39V13.16Zm-3.486-1.04v4.574h1.157v-4.573h-1.157Zm-1.737-.113c.203 0 .374.068.506.204a.692.692 0 0 1 .194.507.675.675 0 0 1-.194.5.684.684 0 0 1-.498.189.693.693 0 0 1-.708-.704.72.72 0 0 1 .195-.5.672.672 0 0 1 .505-.196Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 fillRule={0}
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                     "fillRule",
                                   ]
@@ -1044,12 +1068,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               <RNSVGPath
                                 d="M4.5 11.5a2 2 0 1 0-4 0V20a2 2 0 1 0 4 0v-8.5Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                   ]
                                 }
@@ -1058,14 +1082,14 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                           </RNSVGSvgView>
                           <View
                             style={
-                              Object {
+                              {
                                 "width": 16,
                               }
                             }
                           />
                           <View
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                               }
                             }
@@ -1074,29 +1098,29 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              defaultWeight="Semibold"
+                              font="TitilliumSansPro"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 }
                               }
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               You have a notice due tomorrow
                             </Text>
@@ -1105,22 +1129,22 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               color="black"
                               defaultColor="black"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 14,
                                   "lineHeight": 24,
                                 }
                               }
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "fontSize": 14,
                                     "lineHeight": 24,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -1139,8 +1163,8 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1149,7 +1173,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
 exports[`NotificationsPreferencesPreview should match snapshot, preview on, reminder off 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1157,8 +1181,8 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1167,8 +1191,8 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1180,7 +1204,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1196,7 +1220,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1210,12 +1234,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1229,7 +1253,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1241,7 +1265,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1249,7 +1273,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1260,7 +1284,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1274,7 +1298,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1289,7 +1313,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1303,7 +1327,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1317,21 +1341,34 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1343,7 +1380,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1361,12 +1398,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1376,10 +1413,10 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1388,9 +1425,9 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1406,27 +1443,26 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1436,13 +1472,13 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1452,7 +1488,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1460,7 +1496,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -1468,7 +1504,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                       <View
                         accessibilityIgnoresInvertColors={true}
                         style={
-                          Object {
+                          {
                             "justifyContent": "center",
                             "minHeight": 200,
                           }
@@ -1477,20 +1513,20 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                         <Image
                           resizeMode="contain"
                           source={
-                            Object {
+                            {
                               "testUri": "../../../img/onboarding/notification_white.png",
                             }
                           }
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "bottom": 0,
                                 "left": 0,
                                 "position": "absolute",
                                 "right": 0,
                                 "top": 0,
                               },
-                              Object {
+                              {
                                 "height": undefined,
                                 "width": undefined,
                               },
@@ -1500,7 +1536,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                         />
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "backgroundColor": "#FFFFFF",
                               "borderColor": "#CCD4DC",
@@ -1528,15 +1564,15 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                             minX={0}
                             minY={0}
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "transparent",
                                   "borderWidth": 0,
                                 },
-                                Object {
+                                {
                                   "color": "#2351E6",
                                 },
-                                Object {
+                                {
                                   "flex": 0,
                                   "height": 24,
                                   "width": 24,
@@ -1550,7 +1586,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                           >
                             <RNSVGGroup
                               fill={
-                                Object {
+                                {
                                   "payload": 4278190080,
                                   "type": 0,
                                 }
@@ -1559,12 +1595,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               <RNSVGPath
                                 d="M2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                   ]
                                 }
@@ -1573,13 +1609,13 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                 clipRule={0}
                                 d="M23.5 14c0 4.418-3.582 8-7.619 8-4.8 0-8.381-3.582-8.381-8s3.582-8 8.381-8c4.037 0 7.619 3.582 7.619 8Zm-6.035-.84h1.065v-1.048h-1.057v-1.267h-1.157v4.216c0 .667.092 1.122.283 1.365.184.252.537.374 1.058.374.2 0 .498-.049.881-.138l-.054-.975-.659.016c-.114 0-.199-.024-.252-.081a.328.328 0 0 1-.092-.195 4.118 4.118 0 0 1-.016-.39V13.16Zm-3.486-1.04v4.574h1.157v-4.573h-1.157Zm-1.737-.113c.203 0 .374.068.506.204a.692.692 0 0 1 .194.507.675.675 0 0 1-.194.5.684.684 0 0 1-.498.189.693.693 0 0 1-.708-.704.72.72 0 0 1 .195-.5.672.672 0 0 1 .505-.196Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 fillRule={0}
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                     "fillRule",
                                   ]
@@ -1588,12 +1624,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               <RNSVGPath
                                 d="M4.5 11.5a2 2 0 1 0-4 0V20a2 2 0 1 0 4 0v-8.5ZM2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                   ]
                                 }
@@ -1602,13 +1638,13 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                 clipRule={0}
                                 d="M23.5 14c0 4.418-3.582 8-7.619 8-4.8 0-8.381-3.582-8.381-8s3.582-8 8.381-8c4.037 0 7.619 3.582 7.619 8Zm-6.035-.84h1.065v-1.048h-1.057v-1.267h-1.157v4.216c0 .667.092 1.122.283 1.365.184.252.537.374 1.058.374.2 0 .498-.049.881-.138l-.054-.975-.659.016c-.114 0-.199-.024-.252-.081a.328.328 0 0 1-.092-.195 4.118 4.118 0 0 1-.016-.39V13.16Zm-3.486-1.04v4.574h1.157v-4.573h-1.157Zm-1.737-.113c.203 0 .374.068.506.204a.692.692 0 0 1 .194.507.675.675 0 0 1-.194.5.684.684 0 0 1-.498.189.693.693 0 0 1-.708-.704.72.72 0 0 1 .195-.5.672.672 0 0 1 .505-.196Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 fillRule={0}
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                     "fillRule",
                                   ]
@@ -1617,12 +1653,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               <RNSVGPath
                                 d="M4.5 11.5a2 2 0 1 0-4 0V20a2 2 0 1 0 4 0v-8.5Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                   ]
                                 }
@@ -1631,14 +1667,14 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                           </RNSVGSvgView>
                           <View
                             style={
-                              Object {
+                              {
                                 "width": 16,
                               }
                             }
                           />
                           <View
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                               }
                             }
@@ -1647,29 +1683,29 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              defaultWeight="Semibold"
+                              font="TitilliumSansPro"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 }
                               }
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Comune di Ipazia
                             </Text>
@@ -1678,22 +1714,22 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               color="black"
                               defaultColor="black"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 14,
                                   "lineHeight": 24,
                                 }
                               }
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "fontSize": 14,
                                     "lineHeight": 24,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -1712,8 +1748,8 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1722,7 +1758,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
 exports[`NotificationsPreferencesPreview should match snapshot, preview on, reminder on 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1730,8 +1766,8 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1740,8 +1776,8 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1753,7 +1789,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1769,7 +1805,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1783,12 +1819,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1802,7 +1838,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1814,7 +1850,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1822,7 +1858,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1833,7 +1869,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1847,7 +1883,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1862,7 +1898,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1876,7 +1912,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1890,21 +1926,34 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1916,7 +1965,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1934,12 +1983,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1949,10 +1998,10 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1961,9 +2010,9 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1979,27 +2028,26 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -2009,13 +2057,13 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -2025,7 +2073,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -2033,7 +2081,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -2041,7 +2089,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                       <View
                         accessibilityIgnoresInvertColors={true}
                         style={
-                          Object {
+                          {
                             "justifyContent": "center",
                             "minHeight": 200,
                           }
@@ -2050,20 +2098,20 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                         <Image
                           resizeMode="contain"
                           source={
-                            Object {
+                            {
                               "testUri": "../../../img/onboarding/notification_white.png",
                             }
                           }
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "bottom": 0,
                                 "left": 0,
                                 "position": "absolute",
                                 "right": 0,
                                 "top": 0,
                               },
-                              Object {
+                              {
                                 "height": undefined,
                                 "width": undefined,
                               },
@@ -2073,7 +2121,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                         />
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "backgroundColor": "#FFFFFF",
                               "borderColor": "#CCD4DC",
@@ -2101,15 +2149,15 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                             minX={0}
                             minY={0}
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "transparent",
                                   "borderWidth": 0,
                                 },
-                                Object {
+                                {
                                   "color": "#2351E6",
                                 },
-                                Object {
+                                {
                                   "flex": 0,
                                   "height": 24,
                                   "width": 24,
@@ -2123,7 +2171,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                           >
                             <RNSVGGroup
                               fill={
-                                Object {
+                                {
                                   "payload": 4278190080,
                                   "type": 0,
                                 }
@@ -2132,12 +2180,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               <RNSVGPath
                                 d="M2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                   ]
                                 }
@@ -2146,13 +2194,13 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                 clipRule={0}
                                 d="M23.5 14c0 4.418-3.582 8-7.619 8-4.8 0-8.381-3.582-8.381-8s3.582-8 8.381-8c4.037 0 7.619 3.582 7.619 8Zm-6.035-.84h1.065v-1.048h-1.057v-1.267h-1.157v4.216c0 .667.092 1.122.283 1.365.184.252.537.374 1.058.374.2 0 .498-.049.881-.138l-.054-.975-.659.016c-.114 0-.199-.024-.252-.081a.328.328 0 0 1-.092-.195 4.118 4.118 0 0 1-.016-.39V13.16Zm-3.486-1.04v4.574h1.157v-4.573h-1.157Zm-1.737-.113c.203 0 .374.068.506.204a.692.692 0 0 1 .194.507.675.675 0 0 1-.194.5.684.684 0 0 1-.498.189.693.693 0 0 1-.708-.704.72.72 0 0 1 .195-.5.672.672 0 0 1 .505-.196Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 fillRule={0}
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                     "fillRule",
                                   ]
@@ -2161,12 +2209,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               <RNSVGPath
                                 d="M4.5 11.5a2 2 0 1 0-4 0V20a2 2 0 1 0 4 0v-8.5ZM2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                   ]
                                 }
@@ -2175,13 +2223,13 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                 clipRule={0}
                                 d="M23.5 14c0 4.418-3.582 8-7.619 8-4.8 0-8.381-3.582-8.381-8s3.582-8 8.381-8c4.037 0 7.619 3.582 7.619 8Zm-6.035-.84h1.065v-1.048h-1.057v-1.267h-1.157v4.216c0 .667.092 1.122.283 1.365.184.252.537.374 1.058.374.2 0 .498-.049.881-.138l-.054-.975-.659.016c-.114 0-.199-.024-.252-.081a.328.328 0 0 1-.092-.195 4.118 4.118 0 0 1-.016-.39V13.16Zm-3.486-1.04v4.574h1.157v-4.573h-1.157Zm-1.737-.113c.203 0 .374.068.506.204a.692.692 0 0 1 .194.507.675.675 0 0 1-.194.5.684.684 0 0 1-.498.189.693.693 0 0 1-.708-.704.72.72 0 0 1 .195-.5.672.672 0 0 1 .505-.196Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 fillRule={0}
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                     "fillRule",
                                   ]
@@ -2190,12 +2238,12 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               <RNSVGPath
                                 d="M4.5 11.5a2 2 0 1 0-4 0V20a2 2 0 1 0 4 0v-8.5Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                   ]
                                 }
@@ -2204,14 +2252,14 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                           </RNSVGSvgView>
                           <View
                             style={
-                              Object {
+                              {
                                 "width": 16,
                               }
                             }
                           />
                           <View
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                               }
                             }
@@ -2220,29 +2268,29 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              defaultWeight="Semibold"
+                              font="TitilliumSansPro"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 }
                               }
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               You have a notice due soon
                             </Text>
@@ -2251,22 +2299,22 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               color="black"
                               defaultColor="black"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 14,
                                   "lineHeight": 24,
                                 }
                               }
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "fontSize": 14,
                                     "lineHeight": 24,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -2285,8 +2333,8 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

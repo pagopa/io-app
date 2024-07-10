@@ -36,7 +36,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 //     backgroundColor: customVariables.contentPrimaryBackground
 //   },
 //   activeTextStyle: {
-//     ...makeFontStyleObject("SemiBold"),
+//     ...makeFontStyleObject("Semibold"),
 //     fontSize: Platform.OS === "android" ? 16 : undefined,
 //     fontWeight: Platform.OS === "android" ? "normal" : "bold",
 //     color: customVariables.brandPrimary
@@ -82,7 +82,7 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (_: Props) => {
       isSearchAvailable={{ enabled: true, onSearchTap: openFiltersModal }}
     >
       <SafeAreaView style={IOStyles.flex}>
-        {/* TABS component should be replaced with MaterialTopTab Navigator as done in Services and Messages home */}
+        {/* TABS component should be replaced with MaterialTopTab Navigator as done in Messages home */}
         {/* <Tabs
           tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
           tabBarUnderlineStyle={styles.tabBarUnderlineActive}
@@ -107,7 +107,7 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (_: Props) => {
             heading={I18n.t("bonus.cgn.merchantsList.places")}
           >
             <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-               TODO PLACEHOLDER HERE GOES THE MAP 
+               TODO PLACEHOLDER HERE GOES THE MAP
               <H1>{`${I18n.t("bonus.cgn.merchantsList.places")} TAB`}</H1>
             </View>
           </Tab>

@@ -3,7 +3,7 @@
 exports[`MessageFooter should match snapshot for cancelled PN notification 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,7 +326,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -324,8 +336,8 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -334,7 +346,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
 exports[`MessageFooter should match snapshot for hidden button 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -342,8 +354,8 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -352,8 +364,8 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -365,7 +377,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -381,7 +393,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -395,12 +407,12 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -414,7 +426,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -426,7 +438,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -434,7 +446,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -445,7 +457,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -459,7 +471,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -474,7 +486,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -488,7 +500,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -502,21 +514,34 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -528,7 +553,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -546,12 +571,12 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -561,10 +586,10 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -573,9 +598,9 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -591,27 +616,26 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -621,13 +645,13 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -637,7 +661,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -645,7 +669,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -655,8 +679,8 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -665,7 +689,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
 exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -673,8 +697,8 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -683,8 +707,8 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -696,7 +720,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -712,7 +736,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -726,12 +750,12 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -745,7 +769,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -757,7 +781,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -765,7 +789,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -776,7 +800,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -790,7 +814,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -805,7 +829,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -819,7 +843,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -833,21 +857,34 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -859,7 +896,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -877,12 +914,12 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -892,10 +929,10 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -904,9 +941,9 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -922,27 +959,26 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -952,13 +988,13 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -968,7 +1004,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -976,29 +1012,29 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "backgroundColor": "#FFFFFF",
                               "elevation": 20,
                               "paddingBottom": 16,
                               "paddingHorizontal": 24,
                               "paddingTop": 16,
                               "shadowColor": "#0E0F13",
-                              "shadowOffset": Object {
+                              "shadowOffset": {
                                 "height": 50,
                                 "width": 0,
                               },
                               "shadowOpacity": 0.5,
                               "shadowRadius": 37,
                             },
-                            Object {
+                            {
                               "paddingBottom": 16,
                             },
                           ]
@@ -1008,9 +1044,20 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                           accessibilityLabel="Go to payment"
                           accessibilityRole="button"
                           accessibilityState={
-                            Object {
+                            {
                               "busy": false,
+                              "checked": undefined,
                               "disabled": false,
+                              "expanded": undefined,
+                              "selected": undefined,
+                            }
+                          }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
                             }
                           }
                           accessible={true}
@@ -1025,12 +1072,12 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={Object {}}
+                          style={{}}
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "alignItems": "center",
                                   "borderRadius": 4,
                                   "elevation": 0,
@@ -1039,20 +1086,20 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                   "paddingHorizontal": 16,
                                   "textAlignVertical": "center",
                                 },
-                                Object {
+                                {
                                   "overflow": "hidden",
                                 },
                                 false,
-                                Object {
+                                {
                                   "height": 40,
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#0073E6",
                                 },
-                                Object {
+                                {
                                   "backgroundColor": undefined,
-                                  "transform": Array [
-                                    Object {
+                                  "transform": [
+                                    {
                                       "scale": undefined,
                                     },
                                   ],
@@ -1062,8 +1109,8 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                           >
                             <View
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "center",
@@ -1080,9 +1127,9 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                 defaultColor="white"
                                 defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 16,
                                   }
                                 }
@@ -1090,16 +1137,16 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                 maxFontSizeMultiplier={1.3}
                                 numberOfLines={1}
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "alignSelf": "center",
                                     },
-                                    Object {
+                                    {
                                       "fontSize": 16,
                                     },
-                                    Object {
+                                    {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
                                     },
@@ -1119,8 +1166,8 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1129,7 +1176,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
 exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1137,8 +1184,8 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1147,8 +1194,8 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1160,7 +1207,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1176,7 +1223,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1190,12 +1237,12 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1209,7 +1256,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1221,7 +1268,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1229,7 +1276,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1240,7 +1287,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1254,7 +1301,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1269,7 +1316,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1283,7 +1330,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1297,21 +1344,34 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1323,7 +1383,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1341,12 +1401,12 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1356,10 +1416,10 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1368,9 +1428,9 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1386,27 +1446,26 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1416,13 +1475,13 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1432,7 +1491,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1440,29 +1499,29 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "backgroundColor": "#FFFFFF",
                               "elevation": 20,
                               "paddingBottom": 16,
                               "paddingHorizontal": 24,
                               "paddingTop": 16,
                               "shadowColor": "#0E0F13",
-                              "shadowOffset": Object {
+                              "shadowOffset": {
                                 "height": 50,
                                 "width": 0,
                               },
                               "shadowOpacity": 0.5,
                               "shadowRadius": 37,
                             },
-                            Object {
+                            {
                               "paddingBottom": 16,
                             },
                           ]
@@ -1472,9 +1531,20 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                           accessibilityLabel="Go to payment"
                           accessibilityRole="button"
                           accessibilityState={
-                            Object {
+                            {
                               "busy": true,
+                              "checked": undefined,
                               "disabled": true,
+                              "expanded": undefined,
+                              "selected": undefined,
+                            }
+                          }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
                             }
                           }
                           accessible={true}
@@ -1489,12 +1559,12 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={Object {}}
+                          style={{}}
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "alignItems": "center",
                                   "borderRadius": 4,
                                   "elevation": 0,
@@ -1503,14 +1573,14 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                   "paddingHorizontal": 16,
                                   "textAlignVertical": "center",
                                 },
-                                Object {
+                                {
                                   "overflow": "hidden",
                                 },
                                 false,
-                                Object {
+                                {
                                   "height": 40,
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#CCD4DC",
                                 },
                                 false,
@@ -1520,7 +1590,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                             <View
                               exiting={[Function]}
                               style={
-                                Object {
+                                {
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "justifyContent": "center",
@@ -1532,7 +1602,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                 accessible={true}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
-                                  Object {
+                                  {
                                     "height": 24,
                                     "width": 24,
                                   }
@@ -1542,9 +1612,9 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                 <View
                                   collapsable={false}
                                   style={
-                                    Object {
-                                      "transform": Array [
-                                        Object {
+                                    {
+                                      "transform": [
+                                        {
                                           "rotateZ": "0deg",
                                         },
                                       ],
@@ -1563,12 +1633,12 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                     minX={0}
                                     minY={0}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "backgroundColor": "transparent",
                                           "borderWidth": 0,
                                         },
-                                        Object {
+                                        {
                                           "flex": 0,
                                           "height": 24,
                                           "width": 24,
@@ -1582,7 +1652,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                     <RNSVGGroup
                                       fill={null}
                                       propList={
-                                        Array [
+                                        [
                                           "fill",
                                         ]
                                       }
@@ -1590,7 +1660,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                       <RNSVGDefs>
                                         <RNSVGLinearGradient
                                           gradient={
-                                            Array [
+                                            [
                                               0,
                                               16777215,
                                               1,
@@ -1607,7 +1677,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                         />
                                         <RNSVGLinearGradient
                                           gradient={
-                                            Array [
+                                            [
                                               0,
                                               -1,
                                               1,
@@ -1625,13 +1695,13 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                       </RNSVGDefs>
                                       <RNSVGGroup
                                         fill={
-                                          Object {
+                                          {
                                             "payload": 4278190080,
                                             "type": 0,
                                           }
                                         }
                                         propList={
-                                          Array [
+                                          [
                                             "strokeWidth",
                                           ]
                                         }
@@ -1640,18 +1710,18 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                         <RNSVGPath
                                           d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "stroke",
                                             ]
                                           }
                                           stroke={
-                                            Object {
+                                            {
                                               "brushRef": "spinner-secondHalf",
                                               "type": 1,
                                             }
@@ -1660,18 +1730,18 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                         <RNSVGPath
                                           d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "stroke",
                                             ]
                                           }
                                           stroke={
-                                            Object {
+                                            {
                                               "brushRef": "spinner-firstHalf",
                                               "type": 1,
                                             }
@@ -1680,19 +1750,19 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                         <RNSVGPath
                                           d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "stroke",
                                               "strokeLinecap",
                                             ]
                                           }
                                           stroke={
-                                            Object {
+                                            {
                                               "payload": 4294967295,
                                               "type": 0,
                                             }
@@ -1714,8 +1784,8 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

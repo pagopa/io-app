@@ -33,6 +33,7 @@ export const FeaturedServiceList = () => {
     ({ id, name, organization_name }: FeaturedService) => {
       analytics.trackServiceSelected({
         organization_name: organization_name ?? "",
+        service_id: id,
         service_name: name,
         source: "featured_services"
       });
@@ -74,7 +75,7 @@ export const FeaturedServiceList = () => {
       ) : (
         <FeaturedServicesCarousel services={mappedFeaturedServices} />
       )}
-      <VSpacer size={24} />
+      <VSpacer size={16} />
     </>
   );
 };

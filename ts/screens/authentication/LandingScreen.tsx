@@ -13,7 +13,6 @@ import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
 import * as React from "react";
 import DeviceInfo from "react-native-device-info";
-import { useDispatch, useStore } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Alert, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
@@ -38,11 +37,10 @@ import {
   idpSelected,
   resetAuthenticationState
 } from "../../store/actions/authentication";
-import { useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { isCieSupportedSelector } from "../../store/reducers/cie";
 import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
-import { ComponentProps } from "../../types/react";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../utils/url";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
@@ -81,9 +79,9 @@ export const LandingScreen = () => {
     setHasTabletCompatibilityAlertAlreadyShown
   ] = React.useState<boolean>(false);
 
-  const store = useStore();
+  const store = useIOStore();
 
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
   const isSessionExpired = useIOSelector(isSessionExpiredSelector);
@@ -112,8 +110,8 @@ export const LandingScreen = () => {
 
   useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
 
-  useOnFirstRender(async () => {
-    const isRootedOrJailbrokenFromJailMonkey = await JailMonkey.isJailBroken();
+  useOnFirstRender(() => {
+    const isRootedOrJailbrokenFromJailMonkey = JailMonkey.isJailBroken();
     setIsRootedOrJailbroken(O.some(isRootedOrJailbrokenFromJailMonkey));
     if (isSessionExpired) {
       // eslint-disable-next-line functional/immutable-data
@@ -197,7 +195,7 @@ export const LandingScreen = () => {
     }
   }, [isCieSupported, navigation]);
 
-  const LandingScreen = () => {
+  const LandingScreenComponent = () => {
     useHeaderSecondLevel({
       title: "",
       supportRequest: true,
@@ -213,7 +211,7 @@ export const LandingScreen = () => {
     );
 
     const carouselCards: ReadonlyArray<
-      ComponentProps<typeof LandingCardComponent>
+      React.ComponentProps<typeof LandingCardComponent>
     > = React.useMemo(
       () => [
         {
@@ -379,6 +377,6 @@ export const LandingScreen = () => {
     if (DeviceInfo.isTablet()) {
       displayTabletAlert();
     }
-    return <LandingScreen />;
+    return <LandingScreenComponent />;
   }
 };

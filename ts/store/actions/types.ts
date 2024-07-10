@@ -22,12 +22,13 @@ import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/acti
 import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
 import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal/store/actions";
-import { ServicesActions as NewServicesActions } from "../../features/services/common/store/actions";
+import { ServicesActions } from "../../features/services/common/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { NotificationsActions } from "../../features/pushNotifications/store/actions/notifications";
 import { GlobalState } from "../reducers/types";
-import { FimsActions } from "../../features/fims/store/actions";
+import { CieLoginConfigActions } from "../../features/cieLogin/store/actions";
+import { FimsActions } from "../../features/fims/common/store/actions";
 import { ItwActions } from "../../features/itwallet/common/store/actions";
 import { TrialSystemActions } from "../../features/trialSystem/store/actions";
 import { ProfileSettingsActions } from "../../features/profileSettings/store/actions";
@@ -52,10 +53,8 @@ import { PreferencesActions } from "./preferences";
 import { ProfileActions } from "./profile";
 import { ProfileEmailValidationAction } from "./profileEmailValidationChange";
 import { SearchActions } from "./search";
-import { ServicesActions } from "./services";
 import { StartupActions } from "./startup";
 import { UserDataProcessingActions } from "./userDataProcessing";
-import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
 import { OutcomeCodeActions } from "./wallet/outcomeCode";
 
@@ -74,7 +73,6 @@ export type Action =
   | PreferencesActions
   | PersistedPreferencesActions
   | ProfileActions
-  | UserMetadataActions
   | ServicesActions
   | WalletActions
   | ContentActions
@@ -105,7 +103,7 @@ export type Action =
   | WhatsNewActions
   | PaymentsFeatureActions
   | NewWalletActions
-  | NewServicesActions
+  | CieLoginConfigActions
   | FimsActions
   | ItwActions
   | TrialSystemActions

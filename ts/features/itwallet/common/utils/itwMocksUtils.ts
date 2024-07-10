@@ -1,11 +1,8 @@
 import { IOIcons } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
 import dc from "../../__mocks__/dc.json";
 import eid from "../../__mocks__/eid.json";
 import mdl from "../../__mocks__/mdl.json";
 import ts from "../../__mocks__/ts.json";
-import { BulletItem } from "../components/ItwBulletList";
-import { ItwOptionalClaimItem } from "../components/ItwOptionalClaimsList";
 import { StoredCredential } from "./itwTypesUtils";
 
 export const ISSUER_URL = "https://www.interno.gov.it/pid/";
@@ -76,84 +73,6 @@ export type PidCredentialCatalogItem = {
   issuerUrl: string;
 } & CredentialCatalogDisplay;
 
-export const getRequestedClaims = (
-  credentialSource: string
-): ReadonlyArray<BulletItem> => [
-  {
-    title: I18n.t("features.itWallet.generic.dataSource.multi", {
-      credentialSource
-    }),
-    data: [
-      I18n.t("features.itWallet.verifiableCredentials.claims.givenName"),
-      I18n.t("features.itWallet.verifiableCredentials.claims.familyName"),
-      I18n.t("features.itWallet.verifiableCredentials.claims.taxIdCode"),
-      I18n.t("features.itWallet.verifiableCredentials.claims.birthdate"),
-      I18n.t("features.itWallet.verifiableCredentials.claims.placeOfBirth")
-    ]
-  }
-];
-
-const getMultipleRequestedClaims = (
-  credentialSource: string
-): ReadonlyArray<BulletItem> => [
-  {
-    title: I18n.t("features.itWallet.generic.dataSource.multi", {
-      credentialSource
-    }),
-    data: [
-      I18n.t("features.itWallet.verifiableCredentials.claims.givenName"),
-      I18n.t("features.itWallet.verifiableCredentials.claims.familyName"),
-      I18n.t("features.itWallet.verifiableCredentials.claims.taxIdCode"),
-      I18n.t("features.itWallet.verifiableCredentials.claims.birthdate"),
-      I18n.t("features.itWallet.verifiableCredentials.claims.placeOfBirth")
-    ]
-  },
-  {
-    title: I18n.t("features.itWallet.generic.dataSource.multi", {
-      credentialSource: `${I18n.t("features.itWallet.generic.credential")} 1`
-    }),
-    data: [`${I18n.t("features.itWallet.generic.attribute")} 1`]
-  }
-];
-
-export type RpMock = {
-  organizationName: string;
-  requestedClaims: (credentialSource: string) => ReadonlyArray<BulletItem>;
-  optionalClaims: ReadonlyArray<ItwOptionalClaimItem>;
-};
-
-export const getRpMock = (): RpMock => ({
-  organizationName: "eFarma",
-  requestedClaims: (credentialSource: string) =>
-    getMultipleRequestedClaims(credentialSource),
-  optionalClaims: [
-    {
-      credential: `${I18n.t("features.itWallet.generic.credential")} 1`,
-      claim: I18n.t("global.media.phone")
-    },
-    {
-      credential: `${I18n.t("features.itWallet.generic.credential")} 1`,
-      claim: I18n.t("global.media.email")
-    }
-  ]
-});
-
-export const rpPidMock: RpMock = {
-  organizationName: "Comune di Milano",
-  requestedClaims: (credentialSource: string) =>
-    getRequestedClaims(credentialSource),
-  optionalClaims: [
-    {
-      credential: `${I18n.t("features.itWallet.generic.credential")} 1`,
-      claim: I18n.t("global.media.phone")
-    },
-    {
-      credential: `${I18n.t("features.itWallet.generic.credential")} 1`,
-      claim: I18n.t("global.media.email")
-    }
-  ]
-};
-
 /**
  * Regex to validate the date format of a credential.
  * This is mocked because the date format is not yet defined.
@@ -166,8 +85,8 @@ export const mockedmDLResponse = Buffer.from(
 );
 
 export const ItwCredentialsMocks = {
-  eid: eid as StoredCredential,
-  dc: dc as StoredCredential,
-  mdl: mdl as StoredCredential,
-  ts: ts as StoredCredential
+  eid: eid as unknown as StoredCredential,
+  dc: dc as unknown as StoredCredential,
+  mdl: mdl as unknown as StoredCredential,
+  ts: ts as unknown as StoredCredential
 };

@@ -91,7 +91,7 @@ export const MainTabNavigator = () => {
             ...makeFontStyleObject(
               "Regular",
               false,
-              isDesignSystemEnabled ? "ReadexPro" : "TitilliumWeb"
+              isDesignSystemEnabled ? "ReadexPro" : "TitilliumSansPro"
             )
           },
           tabBarHideOnKeyboard: true,
@@ -194,8 +194,6 @@ export const MainTabNavigator = () => {
                 iconNameFocused="navServicesFocused"
                 color={color}
                 focused={focused}
-                // Badge counter has been disabled
-                // https://www.pivotaltracker.com/story/show/176919053
               />
             )
           }}
