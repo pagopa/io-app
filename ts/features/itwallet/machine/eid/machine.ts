@@ -48,6 +48,7 @@ export const itwEidIssuanceMachine = setup({
   initial: "Idle",
   states: {
     Idle: {
+      entry: assign(() => InitialContext),
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
@@ -221,6 +222,9 @@ export const itwEidIssuanceMachine = setup({
         },
         "go-to-wallet": {
           actions: "navigateToWallet"
+        },
+        reset: {
+          target: "Idle"
         }
       }
     },
@@ -232,6 +236,9 @@ export const itwEidIssuanceMachine = setup({
         },
         "request-assistance": {
           actions: "requestAssistance"
+        },
+        reset: {
+          target: "Idle"
         }
       }
     }
