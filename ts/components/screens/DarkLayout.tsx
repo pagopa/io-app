@@ -66,7 +66,9 @@ const styles = StyleSheet.create({
  * which is marked as deprecated. Please read the `BaseScreenComponent` deprecation note
  * to understand how to replace it.
  */
-export default class DarkLayout extends React.Component<Props> {
+export default class DarkLayout extends React.Component<
+  React.PropsWithChildren<Props>
+> {
   screenContent() {
     const wrapper = (children: React.ReactNode) =>
       this.props.gradientHeader ? (

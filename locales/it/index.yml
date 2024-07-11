@@ -376,12 +376,25 @@ profile:
           body: Il tuo profilo verrà eliminato entro 30 giorni. Puoi tornare nuovamente su IO in qualsiasi momento entrando con SPID o CIE.
           cta: Chiudi
       exportData:
-        cta: Richiedi copia dei tuoi dati
+        cta: Richiedi una copia dei dati
         title: Accedi ai tuoi dati
+        subtitle: Puoi scaricare i dati principali del tuo profilo IO in qualsiasi momento.
         description: Ricevi una copia dei dati associati al tuo profilo IO
-        info:
-          title: Puoi scaricare le informazioni relative al tuo profilo IO in qualsiasi momento.
-          body: !include profile/profile_download_data.md
+        detail:
+          bulletList:
+            title: "I dati sono:"
+            item1: il tuo codice fiscale;
+            item2: l’indirizzo email da te indicato e, nel caso, la conferma della sua validazione;
+            item3: il testo dei Messaggi che hai ricevuto;
+            item4: le tue preferenze di notifica.
+          paragraph1: Le informazioni saranno scaricate in formato YAML, un formato standard che in informatica consente lo scambio di dati fra applicazioni diverse.
+          paragraph2: 
+            part1: "Riceverai un "
+            part2: "messaggio su IO "
+            part3: in cui sono presenti un link e una password validi per 15 giorni. 
+          paragraph3: 
+            part1: Per maggiori informazioni consulta l’
+            link: Informativa privacy di IO.
         alert:
           requestTitle: Vuoi davvero esportare tutti i tuoi dati?
           oldRequest: Abbiamo già preso in carico una richiesta di esportazione dei dati.
@@ -571,9 +584,6 @@ profile:
           content: "Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.\nQueste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando."
           cta: Ho capito!
       error: Si è verificato un errore con la tua richiesta
-userMetadata:
-  errors:
-    upsertVersion: Impossibile creare o aggiornare i metadata utente con questa versione
 navigation:
   messages: Messaggi
   profile: Profilo
@@ -2004,6 +2014,9 @@ messages:
     archive:
       success: "Archiviazione riuscita!"
       failure: "L’archiviazione non è andata a buon fine"
+    generic:
+      failure: "L'operazione non è andata a buon fine"
+      success: "Operazione riuscita!"
     restore:
       success: "Ripristino effettuato."
       failure: "Il ripristino non è andato a buon fine"
@@ -2110,8 +2123,6 @@ send_email_messages:
     title: Invia un’anteprima via email
     subtitle: Riceverai un'anteprima del messaggio al tuo indirizzo email, se il servizio lo consente.
 services:
-  accessibility:
-    edit: Modifica l'impostazione dei servizi
   optIn:
     preferences:
       completed:
@@ -2142,41 +2153,8 @@ services:
           title: "Se confermi, non riceverai alcun messaggio"
           body: "Con la configurazione manuale i servizi di IO, presenti o futuri, non possono inviarti messaggi. Per permettere ai servizi che ti interessano di contattarti, dovrai configurarli uno a uno abilitando la voce “Contattarti in app” che trovi in ogni scheda servizio."
   title: Servizi
-  subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
   contextualHelpTitle: Cosa puoi fare nei tuoi Servizi
   contextualHelpContent: !include services/services_home.md
-  serviceIsEnabled: Contattarti in app
-  serviceNotEnabled: Il servizio non è attivo
-  pushNotifications: Inviarti notifiche push
-  messageReadStatus: Ricevere conferme di lettura
-  emailForwarding: Inviarti e-mail
-  tosAndPrivacy: Termini e Privacy
-  tosLink: Termini e condizioni d'uso
-  privacyLink: Informativa sulla privacy
-  otherAppsInfo: Puoi usare questo servizio anche
-  otherAppWeb: Online su
-  otherAppIos: App iOS
-  otherAppAndroid: App Android
-  contactsAndInfo: Contatti ed informazioni
-  visitWebsite: Visita il sito
-  askForAssistance: Richiedi assistenza
-  contactAddress: Indirizzo
-  contactPhone: Telefono
-  contactSupport: Assistenza
-  tab:
-    locals: Locali
-    national: Nazionali
-    all: Tutti
-  loading:
-    title: Sto caricando l'elenco dei servizi
-    subtitle: attendi qualche secondo...
-  enableAll: Usa configurazione rapida
-  disableAll: Usa configurazione manuale
-  updatingServiceMode: Attendi...
-  disableAllTitle: Vuoi davvero disattivare tutti i servizi?
-  disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finché non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
-  close: Chiudi
-  emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
   new: Nuovo
   home:
     featured:
@@ -2230,23 +2208,6 @@ services:
       title: "Termini e Privacy"
       tosLink: "Termini e condizioni d'uso"
       privacyLink: "Informativa sulla privacy"
-serviceDetail:
-  fiscalCode: "C.F. Ente"
-  fiscalCodeAccessibility: "Codice fiscale Ente"
-  fiscalCodeAccessibilityCopy: "Copia codice fiscale Ente"
-  contacts:
-    title: "Questo servizio può:"
-  headerTitle: "Dettagli del Servizio"
-  contextualHelpContent: !include services/service_detail.md
-  onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."
-  disableTitle: "Vuoi davvero disattivare il servizio?"
-  disableMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi il servizio, questo non potrà più contattarti tramite IO (finché non lo riattiverai). Potrai continuare a fruire il servizio attraverso altri canali (sportello, sito, etc.)"
-  lockedMailAlert: "L'inoltro dei messaggi via email è {{enabled}} globalmente:"
-  updatePreferences: Modifica le preferenze
-  goTo: Vai alle preferenze
-  enabled: abilitato
-  disabled: disabilitato
-  notValidated: Per poter abilitare le notifiche via email devi validare il tuo indirizzo email."
 identification:
   instructions:
     unlockCode: codice di sblocco
@@ -2676,7 +2637,7 @@ bonus:
         error:
           noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
-        deals: Agevolazioni e opportunità
+        deals: Opportunità
         description: Descrizione
         services: Servizi
         contactInfo: Contatti e informazioni
@@ -2688,7 +2649,7 @@ bonus:
         label: Vai al sito dell'operatore
         landingPage: Accedi all’opportunità
         discountUrl: Vai all'opportunità
-        website: Vai al sito dell'esercente
+        website: Vai al sito del partner
       categories:
         all: Tutti gli operatori
         counting: e altre {{count}}
@@ -2711,14 +2672,14 @@ bonus:
       goToDetail: Visualizza la Carta
     detail:
       cta:
-        buyers: Vedi le opportunità CGN
+        buyers: Scopri le opportunità CGN
         discover: Scopri le opportunità
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA
-          pending: Vedi le opportunità EYCA
+          pending: Scopri le opportunità EYCA
           bottomSheet: Visita il sito di EYCA
-          showEycaDiscounts: Vedi le opportunità EYCA
+          showEycaDiscounts: Scopri le opportunità EYCA
       information:
         active: "La carta è attiva e può essere usata fino al {{date}}"
         warning: "Attenzione! "
@@ -2733,7 +2694,7 @@ bonus:
         eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
         eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
         eycaBottomSheetTitle: "Numero di carta EYCA"
-        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nUsando la carta presso gli esercenti aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
+        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nPuoi usare la Carta presso i partner aderenti, per usufruire delle opportunità disponibili per attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
         badge:
           active: Attiva
           revoked: Revocata
@@ -2779,7 +2740,7 @@ bonus:
         toast: "La richiesta di disattivazione è avvenuta correttamente"
         alert:
           title: "Disattiva carta"
-          message: "Sei sicuro di voler disattivare la tua Carta Giovani Nazionale? Se confermi, perderai la possibilità di accedere alle agevolazioni previste dall’iniziativa e la carta scomparirà dal Portafoglio."
+          message: "Vuoi davvero disattivare la tua Carta Giovani Nazionale? Se confermi, non potrai più accedere alle opportunità e la carta scomparirà dal Portafoglio."
     otp:
       error: "Per un problema tecnico non siamo riusciti a generare un codice sconto. Ti chiediamo di riprovare."
       code:
@@ -3125,7 +3086,7 @@ features:
           title: Nessuna ricevuta trovata
           body: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
         banner:
-          content: Stiamo generando le ricevute di pagamento in formato PDF.
+          content: "Stiamo generando le ricevute in formato PDF: se in questa lista trovi dei doppioni, ignorali pure!"
           action: Scopri di più
         title: Operazioni precedenti
         bottomSheet:
@@ -3133,7 +3094,7 @@ features:
           noticeHeading: Avvisi pagati di recente
           noticeBody: "Stiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
           allNoticesHeading: Tutti gli altri avvisi
-          allNoticesBody: Per ottenere le ricevute di operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
+          allNoticesBody: Per ottenere le ricevute in formato PDF di operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
       multiplePayment: Pagamento multiplo
       title: Ricevute pagoPA
       button: Vedi tutte
@@ -3890,7 +3851,7 @@ bonusCard:
 transaction:
   details:
     error:
-      title: É stato riscontrato un errore
+      title: Non siamo riusciti a caricare la ricevuta
     title: Dettaglio operazione
     totalAmount: Totale
     totalFee: Il totale comprende

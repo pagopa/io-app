@@ -41,7 +41,8 @@ export const pnMessageAttachmentSelector =
           pnMessageAttachment =>
             pnMessageAttachment.id === pnMessageAttachmentId
         )
-      )
+      ),
+      O.toUndefined
     );
 
 export const pnUserSelectedPaymentRptIdSelector = (

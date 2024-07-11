@@ -17,13 +17,13 @@ import {
   isUpdatingTrialStatusSelector,
   trialStatusSelector
 } from "../../features/trialSystem/store/reducers";
-import { TrialId } from "../../../definitions/trial_systwem/TrialId";
+import { TrialId } from "../../../definitions/trial_system/TrialId";
 import {
   trialSystemActivationStatus,
   trialSystemActivationStatusUpsert
 } from "../../features/trialSystem/store/actions";
 import I18n from "../../i18n";
-import { SubscriptionStateEnum } from "../../../definitions/trial_systwem/SubscriptionState";
+import { SubscriptionStateEnum } from "../../../definitions/trial_system/SubscriptionState";
 
 const styles = StyleSheet.create({
   row: {
