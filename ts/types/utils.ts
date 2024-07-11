@@ -110,4 +110,9 @@ export function computedProp<K extends PropertyKey, V>(
  */
 export type ReduxSagaEffect = Effect;
 
+/**
+ * This type helper allows you to define a type where either all properties are present
+ * or all properties are absent (set to `undefined`). This is useful for enforcing that an
+ * object must be either fully populated or completely empty.
+ */
 export type AllOrNothing<T> = T | { [key in keyof T]?: undefined };
