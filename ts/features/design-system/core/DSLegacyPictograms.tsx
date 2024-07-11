@@ -23,7 +23,6 @@ import Question from "../../../../img/pictograms/doubt.png";
 import CompletedRaster from "../../../../img/pictograms/payment-completed.png";
 import BeerMug from "../../../../img/search/beer-mug.png";
 import Search from "../../../../img/search/search-icon.png";
-import Puzzle from "../../../../img/services/icon-loading-services.png";
 import ABILogo from "../../../../img/wallet/cards-icons/abiLogoFallback.png";
 import Umbrella from "../../../../img/wallet/errors/generic-error-icon.png";
 import NotAvailable from "../../../../img/wallet/errors/payment-unavailable-icon.png";
@@ -118,11 +117,6 @@ export const DSLegacyPictograms = () => {
           type="raster"
           name={"Search"}
           image={renderRasterImage(Search)}
-        />
-        <DSAssetViewerBox
-          type="raster"
-          name={"Puzzle"}
-          image={renderRasterImage(Puzzle)}
         />
         <DSAssetViewerBox
           type="raster"

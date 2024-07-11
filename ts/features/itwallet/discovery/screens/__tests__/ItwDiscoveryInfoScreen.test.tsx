@@ -1,16 +1,13 @@
 import * as React from "react";
 import { createStore } from "redux";
-import { ItwDiscoveryInfoScreen } from "../ItwDiscoveryInfoScreen";
-import { ITW_ROUTES } from "../../../navigation/routes";
-import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  ItwEidIssuanceMachineContext,
-  ItwCredentialIssuanceMachineContext
-} from "../../../machine/provider";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
+import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { ITW_ROUTES } from "../../../navigation/routes";
+import { ItwDiscoveryInfoScreen } from "../ItwDiscoveryInfoScreen";
 
 describe("Test ItwDiscoveryInfo screen", () => {
   it("it should render the screen correctly", () => {
@@ -31,9 +28,7 @@ const renderComponent = () => {
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwEidIssuanceMachineContext.Provider logic={logic}>
-        <ItwCredentialIssuanceMachineContext.Provider>
-          <ItwDiscoveryInfoScreen />
-        </ItwCredentialIssuanceMachineContext.Provider>
+        <ItwDiscoveryInfoScreen />
       </ItwEidIssuanceMachineContext.Provider>
     ),
     ITW_ROUTES.DISCOVERY.INFO,

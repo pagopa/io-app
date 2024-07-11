@@ -12,7 +12,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { serviceMetadataByIdSelector } from "../store/reducers/servicesById";
+import { serviceMetadataByIdSelector } from "../store/reducers";
 import { handleItemOnPress } from "../../../../utils/url";
 import * as analytics from "../../common/analytics";
 

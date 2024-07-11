@@ -1,0 +1,686 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItwMarkdown should match snapshot 1`] = `
+<View
+  style={{}}
+>
+  <Text
+    allowFontScaling={false}
+    color="black"
+    defaultColor="black"
+    defaultWeight="Semibold"
+    font="TitilliumSansPro"
+    fontStyle={
+      {
+        "fontSize": 31,
+        "lineHeight": 43,
+      }
+    }
+    style={
+      [
+        {
+          "fontSize": 31,
+          "lineHeight": 43,
+        },
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="Semibold"
+  >
+    <Text
+      style={{}}
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 28,
+            },
+            {},
+          ]
+        }
+      >
+        I am a Header 1
+      </Text>
+    </Text>
+  </Text>
+  <View
+    style={
+      {
+        "height": 8,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="black"
+    defaultColor="black"
+    defaultWeight="Semibold"
+    font="TitilliumSansPro"
+    fontStyle={
+      {
+        "fontSize": 28,
+        "lineHeight": 40,
+      }
+    }
+    style={
+      [
+        {
+          "fontSize": 28,
+          "lineHeight": 40,
+        },
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="Semibold"
+  >
+    <Text
+      style={{}}
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 26,
+            },
+            {},
+          ]
+        }
+      >
+        I am a Header 2
+      </Text>
+    </Text>
+  </Text>
+  <View
+    style={
+      {
+        "height": 8,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="bluegreyDark"
+    defaultColor="bluegreyDark"
+    defaultWeight="Semibold"
+    font="TitilliumSansPro"
+    fontStyle={
+      {
+        "fontSize": 24,
+        "lineHeight": 34,
+      }
+    }
+    style={
+      [
+        {
+          "fontSize": 24,
+          "lineHeight": 34,
+        },
+        {
+          "color": "#17324D",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="Semibold"
+  >
+    <Text
+      style={{}}
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 22,
+            },
+            {},
+          ]
+        }
+      >
+        I am a Header 3
+      </Text>
+    </Text>
+  </Text>
+  <View
+    style={
+      {
+        "height": 8,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="bluegreyDark"
+    defaultColor="bluegreyDark"
+    defaultWeight="Semibold"
+    font="TitilliumSansPro"
+    fontStyle={
+      {
+        "fontSize": 22,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      [
+        {
+          "fontSize": 22,
+          "lineHeight": 24,
+        },
+        {
+          "color": "#17324D",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="Semibold"
+  >
+    <Text
+      style={{}}
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 20,
+            },
+            {},
+          ]
+        }
+      >
+        I am a Header 4
+      </Text>
+    </Text>
+  </Text>
+  <View
+    style={
+      {
+        "height": 8,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="black"
+    defaultColor="black"
+    defaultWeight="Semibold"
+    font="TitilliumSansPro"
+    fontStyle={
+      {
+        "fontSize": 14,
+        "letterSpacing": 0.5,
+        "lineHeight": 16,
+        "textTransform": "uppercase",
+      }
+    }
+    style={
+      [
+        {
+          "fontSize": 14,
+          "letterSpacing": 0.5,
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+        },
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="Semibold"
+  >
+    <Text
+      style={{}}
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 14,
+            },
+            {},
+          ]
+        }
+      >
+        I am a Header 5
+      </Text>
+    </Text>
+  </Text>
+  <View
+    style={
+      {
+        "height": 8,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="black"
+    defaultColor="black"
+    defaultWeight="Semibold"
+    font="TitilliumSansPro"
+    fontStyle={
+      {
+        "fontSize": 18,
+        "lineHeight": 25,
+      }
+    }
+    style={
+      [
+        {
+          "fontSize": 18,
+          "lineHeight": 25,
+        },
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="Semibold"
+  >
+    <Text
+      style={{}}
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 16,
+            },
+            {},
+          ]
+        }
+      >
+        I am a Header 6
+      </Text>
+    </Text>
+  </Text>
+  <View
+    style={
+      {
+        "height": 8,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumSansPro"
+    fontStyle={
+      {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      [
+        {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+  >
+    <Text
+      style={{}}
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 16,
+            },
+            {},
+          ]
+        }
+      >
+        A simple paragraph.
+      </Text>
+      <Text
+        style={{}}
+      >
+        
+
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "fontSize": 16,
+            },
+            {},
+          ]
+        }
+      >
+        Text can be emphasized with 
+      </Text>
+      <Text
+        style={
+          {
+            "fontStyle": "italic",
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "fontSize": 16,
+                "fontStyle": "italic",
+              },
+              {},
+            ]
+          }
+        >
+          asterisk
+        </Text>
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "fontSize": 16,
+            },
+            {},
+          ]
+        }
+      >
+         or 
+      </Text>
+      <Text
+        style={
+          {
+            "fontStyle": "italic",
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "fontSize": 16,
+                "fontStyle": "italic",
+              },
+              {},
+            ]
+          }
+        >
+          underscore
+        </Text>
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "fontSize": 16,
+            },
+            {},
+          ]
+        }
+      >
+        .
+      </Text>
+      <Text
+        style={{}}
+      >
+        
+
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "fontSize": 16,
+            },
+            {},
+          ]
+        }
+      >
+        If you need bold use 
+      </Text>
+      <Text
+        allowFontScaling={false}
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumSansPro"
+        fontStyle={
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          [
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+            },
+          ]
+        }
+        weight="Bold"
+      >
+        <Text
+          style={
+            [
+              {
+                "fontSize": 16,
+                "fontWeight": "bold",
+              },
+              {},
+            ]
+          }
+        >
+          double asterisk
+        </Text>
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "fontSize": 16,
+            },
+            {},
+          ]
+        }
+      >
+        .
+      </Text>
+      <Text
+        style={{}}
+      >
+        
+
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "fontSize": 16,
+            },
+            {},
+          ]
+        }
+      >
+        A worked link to 
+      </Text>
+      <Text
+        accessibilityRole="link"
+        allowFontScaling={false}
+        color="blue"
+        defaultColor="blue"
+        defaultWeight="Semibold"
+        font="TitilliumSansPro"
+        fontStyle={
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+            "textDecorationLine": "underline",
+          }
+        }
+        numberOfLines={1}
+        onPress={[Function]}
+        style={
+          [
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+              "textDecorationLine": "underline",
+            },
+            {
+              "color": "#0073E6",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="Semibold"
+      >
+        <Text
+          style={
+            [
+              {
+                "fontSize": 16,
+                "textDecorationLine": "underline",
+              },
+              {},
+            ]
+          }
+        >
+          Google
+        </Text>
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "fontSize": 16,
+            },
+            {},
+          ]
+        }
+      >
+         with some text.
+      </Text>
+      <Text
+        style={{}}
+      >
+        
+
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "fontSize": 16,
+            },
+            {},
+          ]
+        }
+      >
+        A malformed link 
+      </Text>
+      <Text
+        accessibilityRole="link"
+        allowFontScaling={false}
+        color="blue"
+        defaultColor="blue"
+        defaultWeight="Semibold"
+        font="TitilliumSansPro"
+        fontStyle={
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+            "textDecorationLine": "underline",
+          }
+        }
+        numberOfLines={1}
+        onPress={[Function]}
+        style={
+          [
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+              "textDecorationLine": "underline",
+            },
+            {
+              "color": "#0073E6",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="Semibold"
+      >
+        <Text
+          style={
+            [
+              {
+                "fontSize": 16,
+                "textDecorationLine": "underline",
+              },
+              {},
+            ]
+          }
+        >
+          Error
+        </Text>
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "fontSize": 16,
+            },
+            {},
+          ]
+        }
+      >
+         that show toast error.
+      </Text>
+    </Text>
+  </Text>
+  <View
+    style={
+      {
+        "height": 24,
+      }
+    }
+  />
+</View>
+`;

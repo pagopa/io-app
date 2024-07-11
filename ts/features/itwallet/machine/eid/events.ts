@@ -2,6 +2,10 @@ import { LocalIdpsFallback } from "../../../../utils/idps";
 
 export type IdentificationMode = "spid" | "ciePin" | "cieId";
 
+export type Reset = {
+  type: "reset";
+};
+
 export type Start = {
   type: "start";
 };
@@ -49,6 +53,7 @@ export type Close = {
 };
 
 export type EidIssuanceEvents =
+  | Reset
   | Start
   | AcceptTos
   | SelectIdentificationMode

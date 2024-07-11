@@ -3,7 +3,7 @@ import {
   decodeAssertion,
   generateHardwareKey,
   generateHardwareSignatureWithAssertion,
-  getAttestation,
+  getAttestation as getAttestationIntegrity,
   isAttestationServiceAvailable,
   isPlayServicesAvailable,
   prepareIntegrityToken,
@@ -13,6 +13,7 @@ import { IntegrityContext } from "@pagopa/io-react-native-wallet";
 import { Platform } from "react-native";
 import uuid from "react-native-uuid";
 import sha from "sha.js";
+import { addPadding, removePadding } from "@pagopa/io-react-native-jwt";
 import { itwGoogleCloudProjectNumber } from "../../../../config";
 
 /**
@@ -36,9 +37,10 @@ const getHardwareSignatureWithAuthData = (
 ): Promise<HardwareSignatureWithAuthData> =>
   Platform.select({
     ios: async () => {
+      const base64KeyTag = addPadding(hardwareKeyTag);
       const assertion = await generateHardwareSignatureWithAssertion(
         clientData,
-        hardwareKeyTag
+        base64KeyTag
       );
       return await decodeAssertion(assertion);
     },
@@ -57,7 +59,10 @@ const getHardwareSignatureWithAuthData = (
  */
 const generateIntegrityHardwareKeyTag = () =>
   Platform.select({
-    ios: async () => await generateHardwareKey(),
+    ios: async () => {
+      const key = await generateHardwareKey();
+      return removePadding(key);
+    },
     android: async () => {
       const keyTag = uuid.v4().toString();
       await generate(keyTag);
@@ -81,6 +86,16 @@ const ensureIntegrityServiceIsReady = () =>
       await prepareIntegrityToken(itwGoogleCloudProjectNumber);
       return true;
     },
+    default: () => Promise.reject(new Error("Unsupported platform"))
+  })();
+
+/**
+ * Ensures that the hardwareKeyTag as padding added before calling {@see getAttestationIntegrity}
+ */
+const getAttestation = (challenge: string, hardwareKeyTag: string) =>
+  Platform.select({
+    ios: () => getAttestationIntegrity(challenge, addPadding(hardwareKeyTag)),
+    android: () => getAttestationIntegrity(challenge, hardwareKeyTag),
     default: () => Promise.reject(new Error("Unsupported platform"))
   })();
 
