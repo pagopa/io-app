@@ -1,6 +1,5 @@
-import { assertEvent, assign, fromPromise, setup } from "xstate5";
+import { assign, fromPromise, setup } from "xstate5";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { type IdentificationResult } from "../../common/utils/itwIdentificationUtils";
 import { ItwTags } from "../tags";
 import { Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
