@@ -1,8 +1,11 @@
 import { fromPromise } from "xstate5";
-import * as attestationUtils from "../../common/utils/itwAttestationUtils";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { assert } from "../../../../utils/assert";
+import {
+  getIntegrityHardwareKeyTag,
+  registerWalletInstance
+} from "../../common/utils/itwAttestationUtils";
 import { type Identification } from "./context";
 
 export type RequestEidActorParams = {
@@ -13,9 +16,8 @@ export type RequestEidActorParams = {
 export const createEidIssuanceActorsImplementation = () => ({
   createWalletInstance: fromPromise<string>(async () => {
     try {
-      const hardwareKeyTag =
-        await attestationUtils.getIntegrityHardwareKeyTag();
-      await attestationUtils.registerWalletInstance(hardwareKeyTag);
+      const hardwareKeyTag = await getIntegrityHardwareKeyTag();
+      await registerWalletInstance(hardwareKeyTag);
       return Promise.resolve(hardwareKeyTag);
     } catch (e) {
       return Promise.reject(e);
