@@ -226,7 +226,7 @@ export const isIdPayTestEnabledSelector = (state: GlobalState) =>
 export const isDesignSystemEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isDesignSystemEnabled ?? false;
 
-export const isNewWalletSectionEnabledSelector = (state: GlobalState) =>
+export const isNewWalletSectionLocallyEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences?.isNewWalletSectionEnabled ?? false;
 
 export const isItWalletTestEnabledSelector = (state: GlobalState) =>
