@@ -2,15 +2,18 @@ import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import { fromPromise } from "xstate5";
 import { LocalIdpsFallback } from "../../../../utils/idps";
 import { getIdpLoginUri } from "../../../../utils/login";
-import * as attestationUtils from "../../common/utils/itwAttestationUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import {
+  getAttestation,
+  getIntegrityHardwareKeyTag,
+  registerWalletInstance
+} from "../../common/utils/itwAttestationUtils";
 
 export const createEidIssuanceActorsImplementation = () => ({
   createWalletInstance: fromPromise<string>(async () => {
     try {
-      const hardwareKeyTag =
-        await attestationUtils.getIntegrityHardwareKeyTag();
-      await attestationUtils.registerWalletInstance(hardwareKeyTag);
+      const hardwareKeyTag = await getIntegrityHardwareKeyTag();
+      await registerWalletInstance(hardwareKeyTag);
       return Promise.resolve(hardwareKeyTag);
     } catch (e) {
       return Promise.reject(e);
@@ -26,9 +29,7 @@ export const createEidIssuanceActorsImplementation = () => ({
     }
 
     try {
-      const walletAttestation = attestationUtils.getAttestation(
-        input.hardwareKeyTag
-      );
+      const walletAttestation = getAttestation(input.hardwareKeyTag);
       return Promise.resolve(walletAttestation);
     } catch (e) {
       return Promise.reject(e);
