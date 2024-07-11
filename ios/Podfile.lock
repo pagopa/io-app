@@ -1068,8 +1068,8 @@ SPEC CHECKSUMS:
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
-  pagopa-io-react-native-http-client: 8ed571ea31ec9e6216688f63056e5c92bcbe484d
-  pagopa-io-react-native-jwt: f89a378bbc5ebfd93c24ec5993e97545a4815157
+  pagopa-io-react-native-http-client: cbdfb83c92432efb0de22b7c3c85cffa391870f8
+  pagopa-io-react-native-jwt: 662d4e722715996758b079774abea1996b057467
   pagopa-io-react-native-login-utils: 9fb43fd59dcc864a24343209e74bd7429659456a
   pagopa-react-native-zendesk: 60a26f8a8072234789c34bb7c8a769c156eb57dc
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
