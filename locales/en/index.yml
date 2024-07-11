@@ -376,12 +376,25 @@ profile:
           body: "We've taken over your request and we will delete your account within 30 days. You can re-subscribe to the IO App at any time with SPID or CIE."
           cta: Close
       exportData:
-        cta: Request a copy of your data
+        cta: Ask for a copy of the data
         title: Access your data
+        subtitle: You can download your IO profile data at any time.
         description: Receive a copy of the data associated with your IO profile
-        info:
-          title: You can download your IO profile information at any time.
-          body: !include profile/profile_download_data.md
+        detail:
+          bulletList:
+            title: "Your data are:"
+            item1: your tax code;
+            item2: your email address and, if applicable, confirmation of its validation;
+            item3: the text of the Messages you received;
+            item4: your notification preferences.
+          paragraph1: The information will be downloaded in YAML format, a standard format for exchanging data between different applications.
+          paragraph2: 
+            part1: "You will get "
+            part2: "a message on IO "
+            part3: with a link and password that lasts 15 days. 
+          paragraph3: 
+            part1: For more information see the.
+            link:  IO Privacy Policy.
         alert:
           requestTitle: Are you sure you want to export all your data?
           oldRequest: We are already proceeding to export all your data
@@ -571,9 +584,6 @@ profile:
           content: If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
           cta: Ok!
       error: An error occurred with your request
-userMetadata:
-  errors:
-    upsertVersion: Can't upsert user metadata with this version
 navigation:
   messages: Messages
   profile: Profile
@@ -2004,6 +2014,9 @@ messages:
     archive:
       success: "Successfully archived!"
       failure: "Failed to archive"
+    generic:
+      failure: "Operation failed"
+      success: "Operazione successful!"
     restore:
       success: "Successfully unarchived."
       failure: "Failed to unarchive"
@@ -2110,8 +2123,6 @@ send_email_messages:
     title: Email a preview
     subtitle: You will get a preview of the message at your email address if the service allows.
 services:
-  accessibility:
-    edit: Edit services setup
   optIn:
     preferences:
       completed:
@@ -2142,41 +2153,8 @@ services:
           title: "If you confirm, you won't receive any message"
           body: "With manual configuration the services on IO, present and future, will not be able to contact you. To allow the services you are interested in to contact you, you will have to configure them one by one by enabling “Contact you in app” in each service detail page."
   title: Services
-  subTitle: Enable or disable the services that are allowed to send you messages
   contextualHelpTitle: About this section
   contextualHelpContent: !include services/services_home.md
-  serviceIsEnabled: Contact you in app
-  serviceNotEnabled: The service is not enabled
-  pushNotifications: Send you push notifications
-  messageReadStatus: Receive read receipts
-  emailForwarding: Send you e-mail
-  tosAndPrivacy: Terms of use and Privacy
-  tosLink: Terms and conditions
-  privacyLink: Privacy information
-  otherAppsInfo: You can find this service also
-  otherAppWeb: Online on
-  otherAppIos: iOS App
-  otherAppAndroid: Android App
-  contactsAndInfo: Contacts and info
-  visitWebsite: Browse Website
-  askForAssistance: Get support
-  contactAddress: Address
-  contactPhone: Phone
-  contactSupport: Support
-  tab:
-    locals: Local
-    national: National
-    all: All
-  loading:
-    title: Loading the services list
-    subtitle: Please wait...
-  enableAll: Use quick setup
-  disableAll: Use manual setup
-  updatingServiceMode: Please wait...
-  disableAllTitle: "Do you really want to disable all the services?"
-  disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
-  close: Close
-  emptyListMessage: There are no services available at this time, pull down to refresh
   new: New
   home:
     featured:
@@ -2230,23 +2208,6 @@ services:
       title: "Terms of use and Privacy"
       tosLink: "Terms and conditions"
       privacyLink: "Privacy information"
-serviceDetail:
-  fiscalCode: "Institution's fiscal code"
-  fiscalCodeAccessibility: "Institution's fiscal code"
-  fiscalCodeAccessibilityCopy: "Copy Institution's fiscal code"
-  contacts:
-    title: "This service can:"
-  headerTitle: "Service details"
-  contextualHelpContent: !include services/service_detail.md
-  onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
-  disableTitle: "Do you really want to disable the service?"
-  disableMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"
-  lockedMailAlert: "The email forwarding of messages is globally {{enabled}}:"
-  updatePreferences: Update your preferences
-  goTo: Go to preferences
-  enabled: enabled
-  disabled: disabled
-  notValidated: To enable the email forwarding you must validate your email address.
 identification:
   instructions:
     unlockCode: unlock code
@@ -2676,7 +2637,7 @@ bonus:
         error:
           noCode: Codes for this discount are temporary over, please try again later
       title:
-        deals: Deals and opportunities
+        deals: Opportunities
         description: Description
         services: Services
         contactInfo: Addresses
@@ -2685,10 +2646,10 @@ bonus:
         discountCode: Discount code
         conditions: Conditions
       cta:
-        label: Navigate to operator website
+        label: Go to partner's website
         landingPage: Get the benefit
         discountUrl: Go to the benefit
-        website: Go to the website
+        website: Go to partner's website
       categories:
         all: All the operators
         counting: and other {{count}}
@@ -2711,14 +2672,14 @@ bonus:
       goToDetail: View your Carta Giovani
     detail:
       cta:
-        buyers: Discover the CGN benefits
+        buyers: Discover CGN opportunities.
         discover: Discover the benefits
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number
-          pending: Check EYCA discounts
+          pending: Discover EYCA opportunities.
           bottomSheet: Check the EYCA website
-          showEycaDiscounts: Check EYCA discounts
+          showEycaDiscounts: Discover EYCA opportunities.
       information:
         active: "Your card is active and can be used until {{date}}"
         warning: "Attention! "
@@ -2732,7 +2693,7 @@ bonus:
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
         eycaError: "We had some issues with EYCA's systems."
         eycaBottomSheetTitle: "EYCA card number"
-        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy using the card at participating merchants, you will be able to obtain discounts and concessions on cultural activities, shops, transport, catering and accommodation even in European countries participating in the circuit."
+        eycaDescription: "Until 31 years old, your **Carta Giovani Nazionale is a member of the EYCA circuit**(European Youth Card Association).\n\n Use the Card at partners to enjoy cultural activities, shopping, transport, restaurants and accommodation in European countries partecipating in the circuit."
         eycaNumber: Card number
         badge:
           active: Active
@@ -2779,7 +2740,7 @@ bonus:
         toast: "The request to deactivate the card has been successfully executed"
         alert:
           title: "Deactivate card"
-          message: "Are you sure to deactivate your Carta Giovani Nazionale? If you confirm, you will lose the possibility to access the benefits provided by the initiative and the card will disappear from your Wallet."
+          message: "Do you really want to deactivate your Carta Giovani Nazionale? If you confirm, you will no longer be able to access the opportunities and the card will disappear from your Wallet."
     otp:
       error: "Due to a technical problem we were unable to generate a discount code. Please try again."
       code:
@@ -3125,7 +3086,7 @@ features:
           title: Nessuna ricevuta trovata
           body: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
         banner:
-          content: Stiamo generando le ricevute di pagamento in formato PDF.
+          content: "Stiamo generando le ricevute in formato PDF: se in questa lista trovi dei doppioni, ignorali pure!"
           action: Scopri di più
         title: Operazioni precedenti
         bottomSheet:
@@ -3133,7 +3094,7 @@ features:
           noticeHeading: Avvisi pagati di recente
           noticeBody: "Stiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
           allNoticesHeading: Tutti gli altri avvisi
-          allNoticesBody: Per ottenere le ricevute di operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
+          allNoticesBody: Per ottenere le ricevute in formato PDF di operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
       multiplePayment: Pagamento multiplo
       title: Ricevute pagoPA
       button: Vedi tutte
@@ -3886,7 +3847,7 @@ bonusCard:
 transaction:
   details:
     error:
-      title: É stato riscontrato un errore
+      title: We couldn't retrieve the receipt
     title: Dettaglio operazione
     totalAmount: Totale
     totalFee: Il totale comprende

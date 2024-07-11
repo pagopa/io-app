@@ -6,11 +6,13 @@ import {
   areSystemsDeadReducer,
   BackendStatusState,
   barcodesScannerConfigSelector,
+  isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
   isUaDonationsEnabledSelector,
   uaDonationsBannerConfigSelector
 } from "../backendStatus";
 import { GlobalState } from "../types";
+import * as appVersion from "../../../utils/appVersion";
 
 describe("backend service status reducer", () => {
   // smoke tests: valid / invalid
@@ -332,5 +334,74 @@ describe("test selectors", () => {
 
       expect(output.dataMatrixPosteEnabled).toBe(true);
     });
+  });
+});
+
+describe("isPnAppVersionSupportedSelector", () => {
+  it("should return false, when 'backendStatus' is O.none", () => {
+    const state = {
+      backendStatus: {
+        status: O.none
+      }
+    } as GlobalState;
+    const isSupported = isPnAppVersionSupportedSelector(state);
+    expect(isSupported).toBe(false);
+  });
+  it("should return false, when min_app_version is greater than `getAppVersion`", () => {
+    const state = {
+      backendStatus: {
+        status: O.some({
+          config: {
+            pn: {
+              min_app_version: {
+                android: "2.0.0.0",
+                ios: "2.0.0.0"
+              }
+            }
+          }
+        })
+      }
+    } as GlobalState;
+    jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "1.0.0.0");
+    const isSupported = isPnAppVersionSupportedSelector(state);
+    expect(isSupported).toBe(false);
+  });
+  it("should return true, when min_app_version is equal to `getAppVersion`", () => {
+    const state = {
+      backendStatus: {
+        status: O.some({
+          config: {
+            pn: {
+              min_app_version: {
+                android: "2.0.0.0",
+                ios: "2.0.0.0"
+              }
+            }
+          }
+        })
+      }
+    } as GlobalState;
+    jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "2.0.0.0");
+    const isSupported = isPnAppVersionSupportedSelector(state);
+    expect(isSupported).toBe(true);
+  });
+  it("should return true, when min_app_version is less than `getAppVersion`", () => {
+    const state = {
+      backendStatus: {
+        status: O.some({
+          config: {
+            pn: {
+              min_app_version: {
+                android: "2.0.0.0",
+                ios: "2.0.0.0"
+              }
+            }
+          }
+        })
+      }
+    } as GlobalState;
+    jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "3.0.0.0");
+    const isSupported = isPnAppVersionSupportedSelector(state);
+    expect(isSupported).toBe(true);
   });
 });

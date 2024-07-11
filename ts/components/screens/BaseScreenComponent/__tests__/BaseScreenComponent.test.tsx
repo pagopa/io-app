@@ -54,6 +54,13 @@ describe("BaseScreenComponent", () => {
               config: {
                 assistanceTool: { tool },
                 cgn: { enabled: true },
+                newPaymentSection: {
+                  enabled: false,
+                  min_app_version: {
+                    android: "0.0.0.0",
+                    ios: "0.0.0.0"
+                  }
+                },
                 fims: { enabled: true }
               } as Config
             } as BackendStatus)
@@ -74,6 +81,13 @@ describe("BaseScreenComponent", () => {
             config: {
               assistanceTool: { tool: ToolEnum.zendesk },
               cgn: { enabled: true },
+              newPaymentSection: {
+                enabled: false,
+                min_app_version: {
+                  android: "0.0.0.0",
+                  ios: "0.0.0.0"
+                }
+              },
               fims: { enabled: true }
             } as Config
           } as BackendStatus)

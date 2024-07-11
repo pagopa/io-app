@@ -13,7 +13,8 @@ import { preferredLanguageSelector } from "../../../store/reducers/persistedPref
 // Mock the useIOSelector hook
 jest.mock("../../../store/hooks", () => ({
   useIOSelector: jest.fn(),
-  useIODispatch: jest.fn()
+  useIODispatch: jest.fn(),
+  useIOStore: jest.fn()
 }));
 
 describe("LanguagesPreferencesScreen", () => {
