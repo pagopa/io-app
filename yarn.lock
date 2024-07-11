@@ -2611,7 +2611,7 @@
     recyclerlistview "4.2.0"
     tslib "2.4.0"
 
-"@shopify/react-native-skia@^1.2.3", "@shopify/react-native-skia@^1.3.8":
+"@shopify/react-native-skia@^1.3.8":
   version "1.3.8"
   resolved "https://registry.yarnpkg.com/@shopify/react-native-skia/-/react-native-skia-1.3.8.tgz#603f7e854eeb7570e69158ac63ca9ab85528c54c"
   integrity sha512-6B0TaQiTQHpG44eTybh+ZZ1dxe02ubPmAKiNJOhxnFCSd9ermHwE+TlJ4s45MO5zK0EdFb2YcLd1dY+/f184Ig==
@@ -10451,6 +10451,11 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.3.1, loose-envify@^1.4
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
+lottie-react-native@^6.7.2:
+  version "6.7.2"
+  resolved "https://registry.yarnpkg.com/lottie-react-native/-/lottie-react-native-6.7.2.tgz#615fc16f88970fcbdf63699537f499b5937afe8a"
+  integrity sha512-MZVx6N1EeO/EaSx8T44mJ0aHc5Mqee+xIfWwszni0oz8U2wlHdaWGjES44dHxaxgAp/0dRaFt3PkpZ6egTzcBg==
+
 loud-rejection@^1.0.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/loud-rejection/-/loud-rejection-1.6.0.tgz#5b46f80147edee578870f086d04821cf998e551f"
@@ -13136,13 +13141,6 @@ react-native-share@7.3.9:
   version "7.3.9"
   resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-7.3.9.tgz#e745421027b96e78ade9794bddaf441ff4c19718"
   integrity sha512-doPOUSQAkiIOZarFZvwrxVmfK3789CWsuZ6SNGzNCEGt7dA349vv2uSKDFUP5M7p+GIY+YqFaD3RSIt1Oct+PQ==
-
-react-native-skottie@^2.1.4:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/react-native-skottie/-/react-native-skottie-2.1.4.tgz#eaf5105abc763aa64b35bf3e10025eeb8b5664a4"
-  integrity sha512-2oTvvyDy5Yj0dOwALP9x+Ijxya58hC8zAEQNS/z7uWr/63i/OYzkVkvsG0POJQDyeKvbbuLKDHia0sjUcpy4FQ==
-  dependencies:
-    "@shopify/react-native-skia" "^1.2.3"
 
 react-native-splash-screen@^3.2.0:
   version "3.2.0"

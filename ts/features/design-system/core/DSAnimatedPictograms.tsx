@@ -13,7 +13,7 @@ import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Skottie } from "react-native-skottie";
+import LottieView from "lottie-react-native";
 
 /* Animated Pictograms */
 import empty from "../../../../assets/animated-pictograms/Empty.json";
@@ -88,7 +88,7 @@ export const DSAnimatedPictograms = () => {
           alignItems: "center"
         }}
       >
-        <Skottie
+        <LottieView
           autoPlay={true}
           style={{
             width: pictogramSize,
