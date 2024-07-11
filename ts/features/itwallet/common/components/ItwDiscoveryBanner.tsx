@@ -48,6 +48,7 @@ export const ItwDiscoveryBanner = ({
     >
       <VSpacer size={16} />
       <Banner
+        testID="itwDiscoveryBannerTestID"
         viewRef={bannerRef}
         title={
           withTitle
