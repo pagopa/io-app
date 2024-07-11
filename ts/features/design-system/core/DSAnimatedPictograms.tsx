@@ -1,6 +1,7 @@
 import {
   ContentWrapper,
   IOColors,
+  IOPictogramSizeScale,
   IOVisualCostants,
   RadioGroup,
   hexToRgba,
@@ -32,7 +33,7 @@ export const DSAnimatedPictograms = () => {
   const theme = useIOTheme();
 
   const scrollGradientHeight: number = 32;
-  const pictogramSize: number = 200;
+  const pictogramSize: IOPictogramSizeScale = 180;
 
   const pictogramsRefs = [
     { name: welcome, label: "Welcome", loop: false },
@@ -70,16 +71,21 @@ export const DSAnimatedPictograms = () => {
   const getCurrentPictogram = () =>
     pictogramsRefs.find(ref => ref.label === selectedPictogram);
 
+  const pictogramAreaHeight =
+    pictogramSize +
+    IOVisualCostants.appMarginDefault * 2 -
+    scrollGradientHeight;
+
   return (
     <>
       <View
         style={{
           width: "100%",
-          minHeight: pictogramSize,
+          zIndex: 1,
+          minHeight: pictogramAreaHeight,
           backgroundColor: IOColors[theme["appBackground-primary"]],
           position: "absolute",
-          alignItems: "center",
-          top: 0
+          alignItems: "center"
         }}
       >
         <Skottie
@@ -109,7 +115,7 @@ export const DSAnimatedPictograms = () => {
 
       <ScrollView
         contentContainerStyle={{
-          paddingTop: pictogramSize,
+          paddingTop: pictogramAreaHeight + scrollGradientHeight * 2,
           paddingBottom: 32 + insets.bottom
         }}
       >
