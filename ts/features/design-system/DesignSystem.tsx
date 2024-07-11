@@ -68,7 +68,7 @@ const DESIGN_SYSTEM_SECTION_DATA: Array<SectionDataProps> = [
     data: DATA_ROUTES_SCREENS
   },
   {
-    title: "Experimental Lab",
+    title: "Experimental lab",
     data: DATA_ROUTES_EXPERIMENTAL_LAB
   },
   {
