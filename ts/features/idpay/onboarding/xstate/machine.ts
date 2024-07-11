@@ -1,5 +1,5 @@
 import { pipe } from "fp-ts/lib/function";
-/* eslint-disable no-underscore-dangle */
+
 import * as O from "fp-ts/lib/Option";
 import { assign, createMachine } from "xstate";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";

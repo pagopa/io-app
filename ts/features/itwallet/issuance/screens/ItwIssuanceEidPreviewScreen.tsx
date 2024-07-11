@@ -1,27 +1,50 @@
+import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { FooterActions } from "../../../../components/ui/FooterActions";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { identificationRequest } from "../../../../store/actions/identification";
+import { useIODispatch } from "../../../../store/hooks";
+import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
+import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import {
   ItWalletError,
   getItwGenericMappedError
 } from "../../common/utils/itwErrorsUtils";
 import { ItwCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { ItwCredentialPreviewScreenContent } from "../components/ItwCredentialPreviewScreenContent";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
 export const ItwIssuanceEidPreviewScreen = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
   const eidOption = O.some(ItwCredentialsMocks.eid);
+  const dismissDialog = useItwDismissalDialog();
 
-  const handleStoreCredentialSuccess = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.RESULT
-    });
+  const handleStoreEidSuccess = () => {
+    machineRef.send({ type: "add-to-wallet" });
+  };
+
+  const handleSaveToWallet = () => {
+    dispatch(
+      identificationRequest(
+        false,
+        true,
+        undefined,
+        {
+          label: I18n.t("global.buttons.cancel"),
+          onCancel: () => undefined
+        },
+        {
+          onSuccess: handleStoreEidSuccess
+        }
+      )
+    );
   };
 
   /**
@@ -39,14 +62,31 @@ export const ItwIssuanceEidPreviewScreen = () => {
       <IOScrollViewWithLargeHeader
         excludeEndContentMargin
         title={{
-          label: I18n.t("features.itWallet.issuance.credentialPreview.title", {
+          label: I18n.t("features.itWallet.issuance.eidPreview.title", {
             credential: eid.displayData.title
           })
         }}
       >
-        <ItwCredentialPreviewScreenContent
-          data={eid}
-          onStoreSuccess={handleStoreCredentialSuccess}
+        <ContentWrapper>
+          <ItwCredentialClaimsList data={eid} isPreview={true} />
+        </ContentWrapper>
+        <FooterActions
+          fixed={false}
+          actions={{
+            type: "TwoButtons",
+            primary: {
+              label: I18n.t(
+                "features.itWallet.issuance.eidPreview.actions.primary"
+              ),
+              onPress: handleSaveToWallet
+            },
+            secondary: {
+              label: I18n.t(
+                "features.itWallet.issuance.eidPreview.actions.secondary"
+              ),
+              onPress: dismissDialog.show
+            }
+          }}
         />
       </IOScrollViewWithLargeHeader>
     );

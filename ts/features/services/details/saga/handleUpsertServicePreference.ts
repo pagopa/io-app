@@ -14,10 +14,9 @@ import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { trackPNPushSettings } from "../../../pn/analytics";
 import { upsertServicePreference } from "../store/actions/preference";
 import {
-  ServicePreferenceState,
-  servicePreferenceSelector
-} from "../store/reducers/servicePreference";
-import { serviceMetadataInfoSelector } from "../store/reducers/servicesById";
+  serviceMetadataInfoSelector,
+  servicePreferencePotSelector
+} from "../store/reducers";
 import { isServicePreferenceResponseSuccess } from "../types/ServicePreferenceResponse";
 import { mapKinds } from "./handleGetServicePreference";
 
@@ -29,7 +28,9 @@ import { mapKinds } from "./handleGetServicePreference";
  * @param action
  */
 const calculateUpdatingPreference = (
-  currentServicePreferenceState: ServicePreferenceState,
+  currentServicePreferenceState: ReturnType<
+    typeof servicePreferencePotSelector
+  >,
   action: ActionType<typeof upsertServicePreference.request>
 ): ServicePreference => {
   if (
@@ -96,11 +97,10 @@ export function* handleUpsertServicePreference(
 ) {
   yield* call(trackPNPushNotificationSettings, action);
 
-  const currentPreferences: ReturnType<typeof servicePreferenceSelector> =
-    yield* select(servicePreferenceSelector);
+  const servicePreferencePot = yield* select(servicePreferencePotSelector);
 
   const updatingPreference = calculateUpdatingPreference(
-    currentPreferences,
+    servicePreferencePot,
     action
   );
 

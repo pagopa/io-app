@@ -175,7 +175,7 @@ export const DoubleAvatar = ({ backgroundLogoUri }: DoubleAvatarProps) => {
             }
           ]}
         >
-          <Icon name="productPagoPA" color="blueIO-500" size={20} />
+          <Icon name="productPagoPA" color="blueItalia-500" size={20} />
         </View>
       </View>
     </View>

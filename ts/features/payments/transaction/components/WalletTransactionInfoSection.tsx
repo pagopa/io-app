@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
