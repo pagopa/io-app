@@ -5,7 +5,7 @@ import { getIdpLoginUri } from "../../../../utils/login";
 import * as attestationUtils from "../../common/utils/itwAttestationUtils";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { IdentificationMode } from "./events";
+import { type Identification } from "./context";
 
 export type GetWalletAttestationActorParams = {
   hardwareKeyTag: string | undefined;
@@ -13,7 +13,7 @@ export type GetWalletAttestationActorParams = {
 
 export type RequestEidActorParams = {
   hardwareKeyTag: string;
-  identificationMode: IdentificationMode;
+  identification: Identification;
 };
 
 export const createEidIssuanceActorsImplementation = () => ({
@@ -52,11 +52,17 @@ export const createEidIssuanceActorsImplementation = () => ({
 
   requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
     async ({ input }) => {
-      // @ts-expect-error unused variable
-      const eidCredential = await issuanceUtils.getPid(input);
-
-      // TODO: create stored credential
-      return {} as StoredCredential;
+      try {
+        const eidCredential = await issuanceUtils.getPid(input);
+        // eslint-disable-next-line no-console
+        console.log(eidCredential);
+        // TODO: create stored credential
+        return {} as StoredCredential;
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+        return {} as StoredCredential;
+      }
     }
   )
 });

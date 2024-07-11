@@ -12,6 +12,7 @@ import {
   itwWalletProviderBaseUrl,
   itwPidProviderBaseUrl
 } from "../../../../config";
+import { type Identification } from "../../machine/eid/context";
 import { type IdentificationMode } from "../../machine/eid/events";
 import { getIntegrityContext } from "./itwIntegrityUtils";
 
@@ -27,27 +28,14 @@ const idpHintsMap: Record<IdentificationMode, string> = {
 };
 
 export async function getPid({
-  identificationMode,
-  hardwareKeyTag
+  hardwareKeyTag,
+  identification
 }: {
   hardwareKeyTag: string;
-  identificationMode: IdentificationMode;
+  identification: Identification;
 }) {
-  const integrityContext = getIntegrityContext(hardwareKeyTag);
-
-  const wiaKeyTag = uuid.v4().toString();
-  await generate(wiaKeyTag);
-  const wiaCryptoContext = createCryptoContextFor(wiaKeyTag);
-
-  const walletInstanceAttestation =
-    await WalletInstanceAttestation.getAttestation({
-      wiaCryptoContext,
-      integrityContext,
-      walletProviderBaseUrl: itwWalletProviderBaseUrl
-    });
-
   const authorizationContext: AuthorizationContext | undefined =
-    identificationMode === "spid"
+    identification.mode === "spid"
       ? { authorize: openAuthenticationSession }
       : undefined;
 
@@ -63,10 +51,21 @@ export async function getPid({
     issuerUrl
   );
 
-  const credentialKeyTag = uuid.v4().toString();
-  await generate(credentialKeyTag);
-  const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
+  /* ---------------- Get a Wallet Instance Attestation ---------------- */
+  const integrityContext = getIntegrityContext(hardwareKeyTag);
 
+  const wiaKeyTag = uuid.v4().toString();
+  await generate(wiaKeyTag);
+  const wiaCryptoContext = createCryptoContextFor(wiaKeyTag);
+
+  const walletInstanceAttestation =
+    await WalletInstanceAttestation.getAttestation({
+      wiaCryptoContext,
+      integrityContext,
+      walletProviderBaseUrl: itwWalletProviderBaseUrl
+    });
+
+  /* ---------------- Authorize user and get access token ---------------- */
   const { issuerRequestUri, clientId, codeVerifier, credentialDefinition } =
     await Credential.Issuance.startUserAuthorization(
       issuerConf,
@@ -83,7 +82,7 @@ export async function getPid({
       issuerRequestUri,
       clientId,
       issuerConf,
-      idpHintsMap[identificationMode],
+      idpHintsMap[identification.mode], // TODO: use idp ID to get the proper hint?
       itWalletPidIssuanceRedirectUri,
       authorizationContext
     );
@@ -100,6 +99,11 @@ export async function getPid({
         wiaCryptoContext
       }
     );
+
+  /* ---------------- Get PID ---------------- */
+  const credentialKeyTag = uuid.v4().toString();
+  await generate(credentialKeyTag);
+  const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
 
   const { credential, format } = await Credential.Issuance.obtainCredential(
     issuerConf,

@@ -1,12 +1,15 @@
 import { type StoredCredential } from "../../common/utils/itwTypesUtils";
-import { type IdentificationMode } from "./events";
+
+export type Identification =
+  | { mode: "ciePin" | "cieId" }
+  | { mode: "spid"; idpId: string };
 
 export type Context = {
   hardwareKeyTag: string | undefined;
   walletAttestation: string | undefined;
   userToken: string | undefined;
   eid: StoredCredential | undefined;
-  identificationMode: IdentificationMode | undefined;
+  identification: Identification | undefined;
 };
 
 export const InitialContext: Context = {
@@ -14,5 +17,5 @@ export const InitialContext: Context = {
   walletAttestation: undefined,
   userToken: undefined,
   eid: undefined,
-  identificationMode: undefined
+  identification: undefined
 };

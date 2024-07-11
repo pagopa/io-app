@@ -1,6 +1,6 @@
 import { assertEvent, assign, fromPromise, setup } from "xstate5";
-import { LocalIdpsFallback } from "../../../../utils/idps";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { type IdentificationResult } from "../../common/utils/itwIdentificationUtils";
 import { ItwTags } from "../tags";
 import { Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -37,9 +37,6 @@ export const itwEidIssuanceMachine = setup({
   actors: {
     registerWalletInstance: fromPromise<string>(notImplemented),
     getWalletAttestation: fromPromise<string, GetWalletAttestationActorParams>(
-      notImplemented
-    ),
-    showSpidIdentificationWebView: fromPromise<string, LocalIdpsFallback>(
       notImplemented
     ),
     requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
@@ -129,11 +126,6 @@ export const itwEidIssuanceMachine = setup({
           on: {
             "select-identification-mode": [
               {
-                actions: assign(({ event }) => ({
-                  identificationMode: event.mode
-                }))
-              },
-              {
                 guard: ({ event }) => event.mode === "spid",
                 target: "Spid"
               },
@@ -156,28 +148,36 @@ export const itwEidIssuanceMachine = setup({
               entry: "navigateToIdpSelectionScreen",
               on: {
                 "select-spid-idp": {
-                  target: "IdpIdentification"
+                  target: "#itwEidIssuanceMachine.UserIdentification.Completed",
+                  actions: assign(({ event }) => ({
+                    identification: { mode: "spid", idpId: event.idp.id }
+                  }))
                 },
                 back: {
                   target:
                     "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
                 }
               }
-            },
-            IdpIdentification: {
+            }
+            /* IdpIdentification: {
               tags: [ItwTags.Loading],
               invoke: {
-                input: ({ event }) => {
+                src: "getIdentificationData",
+                input: ({ event, context }) => {
                   assertEvent(event, "select-spid-idp");
-                  return event.idp;
+                  return {
+                    hardwareKeyTag: context.hardwareKeyTag!,
+                    identification: { mode: "spid", idpId: event.idp.id }
+                  };
                 },
-                src: "showSpidIdentificationWebView",
                 onDone: {
-                  actions: assign(({ event }) => ({ userToken: event.output })),
+                  actions: assign(({ event }) => ({
+                    identificationResult: event.output
+                  })),
                   target: "#itwEidIssuanceMachine.UserIdentification.Completed"
                 }
               }
-            }
+            } */
           }
         },
         CiePin: {
@@ -203,9 +203,8 @@ export const itwEidIssuanceMachine = setup({
           invoke: {
             src: "requestEid",
             input: ({ context }) => ({
-              userToken: context.userToken!,
               hardwareKeyTag: context.hardwareKeyTag!,
-              identificationMode: context.identificationMode!
+              identification: context.identification!
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),
