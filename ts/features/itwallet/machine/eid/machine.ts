@@ -23,14 +23,15 @@ export const itwEidIssuanceMachine = setup({
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToCredentialCatalog: notImplemented,
-    storeWalletAttestation: notImplemented,
+    storeHardwareKeyTag: (_ctx, _params: { keyTag: string }) =>
+      notImplemented(),
     storeEidCredential: notImplemented,
     closeIssuance: notImplemented,
     requestAssistance: notImplemented
   },
   actors: {
-    registerWalletInstance: fromPromise<string>(notImplemented),
-    getWalletAttestation: fromPromise<
+    createWalletInstance: fromPromise<string>(notImplemented),
+    obtainWalletAttestation: fromPromise<
       string,
       { hardwareKeyTag: string | undefined }
     >(notImplemented),
@@ -69,34 +70,34 @@ export const itwEidIssuanceMachine = setup({
     WalletInitialization: {
       tags: [ItwTags.Loading],
       description: "Wallet instance registration and attestation retrieval",
-      initial: "WalletInstanceRegistration",
+      initial: "WalletInstanceCreation",
       states: {
-        WalletInstanceRegistration: {
+        WalletInstanceCreation: {
           description:
             "This state generates the integry hardware key and registers the wallet instance. The generated integrity hardware key is then stored and persisted to the redux store.",
           invoke: {
-            src: "registerWalletInstance",
+            src: "createWalletInstance",
             onDone: {
               actions: [
                 assign(({ event }) => ({
                   hardwareKeyTag: event.output
                 })),
-                ({ event }) => ({
+                {
                   type: "storeHardwareKeyTag",
-                  params: { keyTag: event.output }
-                })
+                  params: ({ event }) => ({ keyTag: event.output })
+                }
               ],
-              target: "WalletAttestationRetrieval"
+              target: "WalletAttestationObtainment"
             },
             onError: {
               target: "#itwEidIssuanceMachine.Failure"
             }
           }
         },
-        WalletAttestationRetrieval: {
+        WalletAttestationObtainment: {
           description: "Obtainment of the wallet attestation",
           invoke: {
-            src: "getWalletAttestation",
+            src: "obtainWalletAttestation",
             input: ({ context }) => ({
               hardwareKeyTag: context.hardwareKeyTag
             }),

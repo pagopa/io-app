@@ -6,7 +6,7 @@ import * as attestationUtils from "../../common/utils/itwAttestationUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
 export const createEidIssuanceActorsImplementation = () => ({
-  registerWalletInstance: fromPromise<string>(async () => {
+  createWalletInstance: fromPromise<string>(async () => {
     try {
       const hardwareKeyTag =
         await attestationUtils.getIntegrityHardwareKeyTag();
@@ -17,7 +17,7 @@ export const createEidIssuanceActorsImplementation = () => ({
     }
   }),
 
-  getWalletAttestation: fromPromise<
+  obtainWalletAttestation: fromPromise<
     string,
     { hardwareKeyTag: string | undefined }
   >(async ({ input }) => {

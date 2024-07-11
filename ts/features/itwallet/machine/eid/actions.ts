@@ -5,9 +5,12 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { useIODispatch } from "../../../../store/hooks";
+import { itwStoreHardwareKeyTag } from "../../issuance/store/actions";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
+  dispatch: ReturnType<typeof useIODispatch>,
   toast: IOToast
 ) => ({
   navigateToTosScreen: () => {
@@ -83,7 +86,9 @@ export const createEidIssuanceActionsImplementation = (
     navigation.popToTop();
   },
 
-  storeWalletAttestation: () => {},
+  storeHardwareKeyTag: (_: unknown, params: { keyTag: string }) => {
+    dispatch(itwStoreHardwareKeyTag(params.keyTag));
+  },
 
   storeEidCredential: () => {},
 
