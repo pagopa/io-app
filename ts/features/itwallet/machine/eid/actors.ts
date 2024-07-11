@@ -25,22 +25,6 @@ export const createEidIssuanceActorsImplementation = () => ({
     }
   }),
 
-  /*   obtainWalletAttestation: fromPromise<
-    string,
-    ObtainWalletAttestationActorParams
-  >(async ({ input }) => {
-    assert(input.hardwareKeyTag, "hardwareKeyTag is undefined");
-
-    try {
-      const walletAttestation = attestationUtils.getAttestation(
-        input.hardwareKeyTag
-      );
-      return Promise.resolve(walletAttestation);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  }), */
-
   showSpidIdentificationWebView: fromPromise<string, LocalIdpsFallback>(
     async ({ input }) =>
       openAuthenticationSession(getIdpLoginUri(input.id, 2), "iologin")
@@ -51,7 +35,7 @@ export const createEidIssuanceActorsImplementation = () => ({
       assert(input.integrityKeyTag, "integrityKeyTag is undefined");
       assert(input.identification, "identification is undefined");
 
-      return issuanceUtils.getPid({
+      return await issuanceUtils.getPid({
         integrityKeyTag: input.integrityKeyTag,
         identification: input.identification
       });

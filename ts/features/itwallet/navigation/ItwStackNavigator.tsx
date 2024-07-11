@@ -7,6 +7,7 @@ import { ItwIdentificationModeSelectionScreen } from "../identification/screens/
 import { ItwIdentificationNfcInstructionsScreen } from "../identification/screens/ItwIdentificationNfcInstructionsScreen";
 import { ItwIssuanceCredentialAuthScreen } from "../issuance/screens/ItwIssuanceCredentialAuthScreen";
 import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssuanceCredentialPreviewScreen";
+import { ItwIssuanceEidRequestScreen } from "../issuance/screens/ItwIssuanceEidRequestScreen";
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import {
@@ -70,6 +71,11 @@ const InnerNavigator = () => {
         component={ItwIdentificationIdpSelectionScreen}
       />
       {/* ISSUANCE */}
+      <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.EID_REQUEST}
+        component={ItwIssuanceEidRequestScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.EID_PREVIEW}
         component={ItwIssuanceEidPreviewScreen}

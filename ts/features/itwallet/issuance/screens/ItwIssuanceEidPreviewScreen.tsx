@@ -2,6 +2,7 @@ import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
+import { useSelector } from "@xstate5/react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -15,7 +16,6 @@ import {
   ItWalletError,
   getItwGenericMappedError
 } from "../../common/utils/itwErrorsUtils";
-import { ItwCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
@@ -23,7 +23,9 @@ export const ItwIssuanceEidPreviewScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const eidOption = O.some(ItwCredentialsMocks.eid);
+  const eidOption = useSelector(machineRef, snapshot =>
+    O.fromNullable(snapshot.context.eid)
+  );
   const dismissDialog = useItwDismissalDialog();
 
   const handleStoreEidSuccess = () => {
@@ -62,9 +64,7 @@ export const ItwIssuanceEidPreviewScreen = () => {
       <IOScrollViewWithLargeHeader
         excludeEndContentMargin
         title={{
-          label: I18n.t("features.itWallet.issuance.eidPreview.title", {
-            credential: eid.displayData.title
-          })
+          label: I18n.t("features.itWallet.issuance.eidPreview.title")
         }}
       >
         <ContentWrapper>

@@ -18,6 +18,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToTosScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
     navigateToIdpSelectionScreen: notImplemented,
+    navigateToEidRequestScreen: notImplemented,
     navigateToEidPreviewScreen: notImplemented,
     navigateToSuccessScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
@@ -151,7 +152,7 @@ export const itwEidIssuanceMachine = setup({
       }
     },
     Issuance: {
-      entry: "navigateToEidPreviewScreen",
+      entry: "navigateToEidRequestScreen",
       initial: "RequestingEid",
       states: {
         RequestingEid: {
@@ -172,6 +173,7 @@ export const itwEidIssuanceMachine = setup({
           }
         },
         DisplayingPreview: {
+          entry: "navigateToEidPreviewScreen",
           on: {
             "add-to-wallet": {
               actions: ["storeEidCredential", "setWalletInstanceToValid"],

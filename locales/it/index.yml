@@ -3134,9 +3134,10 @@ features:
         title: "C'è un problema sui nostri sistemi"
         body: "Riprova tra qualche minuto. Se si ripete, contatta l'assistenza."
       alert:
-        title: "Vuoi interrompere l’operazione?"
-        confirm: "Sì, interrompi"
-        cancel: "No, vai indietro"
+        title: Vuoi interrompere l'operazione?
+        body: Dovrai ripetere di nuovo tutti i passaggi
+        confirm: Sì, interrompi
+        cancel: No, riprendi
       dataSource:
         multi: "Forniti da {{credentialSource}}"
         single: "Fornito da {{credentialSource}}"

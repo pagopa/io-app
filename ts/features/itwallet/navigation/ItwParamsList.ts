@@ -17,4 +17,5 @@ export type ItwParamsList = {
   [ITW_ROUTES.PRESENTATION.EID_DETAIL]: undefined;
   // PLAYGROUNDS
   [ITW_ROUTES.PLAYGROUNDS]: undefined;
+  [ITW_ROUTES.ISSUANCE.EID_REQUEST]: undefined;
 };

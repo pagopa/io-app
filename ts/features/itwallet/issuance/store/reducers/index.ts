@@ -1,14 +1,17 @@
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { itwStoreIntegrityKeyTag } from "../actions";
+import { itwResetPid, itwStoreIntegrityKeyTag, itwStorePid } from "../actions";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 
 export type ItwIssuanceState = {
   integrityKeyTag: O.Option<string>;
+  pid: O.Option<StoredCredential>;
 };
 
 const INITIAL_STATE: ItwIssuanceState = {
-  integrityKeyTag: O.none
+  integrityKeyTag: O.none,
+  pid: O.none
 };
 
 const reducer = (
@@ -20,6 +23,16 @@ const reducer = (
       return {
         ...state,
         integrityKeyTag: O.some(action.payload)
+      };
+    case getType(itwStorePid):
+      return {
+        ...state,
+        pid: O.some(action.payload)
+      };
+    case getType(itwResetPid):
+      return {
+        ...state,
+        pid: O.none
       };
   }
   return state;
