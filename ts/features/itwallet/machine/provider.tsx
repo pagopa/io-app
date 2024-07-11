@@ -30,8 +30,8 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
   const eidIssuanceMachine = itwEidIssuanceMachine.provide({
     actions: createEidIssuanceActionsImplementation(
       navigation,
-      toast,
-      dispatch
+      dispatch,
+      toast
     ),
     actors: createEidIssuanceActorsImplementation()
   });

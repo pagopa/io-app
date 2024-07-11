@@ -12,8 +12,8 @@ import { itwStoreHardwareKeyTag } from "../../issuance/store/actions";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
-  toast: IOToast,
-  dispatch: ReturnType<typeof useIODispatch>
+  dispatch: ReturnType<typeof useIODispatch>,
+  toast: IOToast
 ) => ({
   navigateToTosScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -100,11 +100,11 @@ export const createEidIssuanceActionsImplementation = (
 
   storeWalletAttestation: () => {},
 
+  storeHardwareKeyTag: (_: unknown, params: { keyTag: string }) => {
+    dispatch(itwStoreHardwareKeyTag(params.keyTag));
+  },
+
   storeEidCredential: () => {},
 
-  requestAssistance: () => {},
-
-  storeHardwareKeyTag: ({ keyTag }: { keyTag: string }) => {
-    dispatch(itwStoreHardwareKeyTag(keyTag));
-  }
+  requestAssistance: () => {}
 });

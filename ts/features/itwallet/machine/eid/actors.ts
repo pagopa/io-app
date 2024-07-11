@@ -7,7 +7,7 @@ import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { type Identification } from "./context";
 
-export type GetWalletAttestationActorParams = {
+export type ObtainWalletAttestationActorParams = {
   hardwareKeyTag: string | undefined;
 };
 
@@ -17,7 +17,7 @@ export type RequestEidActorParams = {
 };
 
 export const createEidIssuanceActorsImplementation = () => ({
-  registerWalletInstance: fromPromise<string>(async () => {
+  createWalletInstance: fromPromise<string>(async () => {
     try {
       const hardwareKeyTag =
         await attestationUtils.getIntegrityHardwareKeyTag();
@@ -28,22 +28,23 @@ export const createEidIssuanceActorsImplementation = () => ({
     }
   }),
 
-  getWalletAttestation: fromPromise<string, GetWalletAttestationActorParams>(
-    async ({ input }) => {
-      if (input.hardwareKeyTag === undefined) {
-        return Promise.reject(new Error("hardwareKeyTag is undefined"));
-      }
-
-      try {
-        const walletAttestation = attestationUtils.getAttestation(
-          input.hardwareKeyTag
-        );
-        return Promise.resolve(walletAttestation);
-      } catch (e) {
-        return Promise.reject(e);
-      }
+  obtainWalletAttestation: fromPromise<
+    string,
+    ObtainWalletAttestationActorParams
+  >(async ({ input }) => {
+    if (input.hardwareKeyTag === undefined) {
+      return Promise.reject(new Error("hardwareKeyTag is undefined"));
     }
-  ),
+
+    try {
+      const walletAttestation = attestationUtils.getAttestation(
+        input.hardwareKeyTag
+      );
+      return Promise.resolve(walletAttestation);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  }),
 
   showSpidIdentificationWebView: fromPromise<string, LocalIdpsFallback>(
     async ({ input }) =>
