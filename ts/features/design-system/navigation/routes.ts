@@ -114,6 +114,10 @@ const DESIGN_SYSTEM_ROUTES = {
     DYNAMIC_BACKGROUND: {
       route: "DS_DYNAMIC_BACKGROUND",
       title: "Dynamic header background"
+    },
+    ANIMATED_PICTOGRAMS: {
+      route: "DS_ANIMATED_PICTOGRAMS",
+      title: "Animated Pictograms"
     }
   },
   LEGACY: {
