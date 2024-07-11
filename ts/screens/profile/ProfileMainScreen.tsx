@@ -2,6 +2,7 @@ import {
   Banner,
   ContentWrapper,
   Divider,
+  HeaderSecondLevel,
   IOVisualCostants,
   ListItemAction,
   ListItemNav,
@@ -17,7 +18,8 @@ import React, {
   ComponentProps,
   useMemo,
   memo,
-  useEffect
+  useEffect,
+  useLayoutEffect
 } from "react";
 import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
 import AppVersion from "../../components/AppVersion";
@@ -32,7 +34,7 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { showProfileBannerSelector } from "../../features/profileSettings/store/selectors";
 import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
 import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
-import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import { useHeaderProps } from "../../hooks/useHeaderProps";
 import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus";
 import DeveloperModeSection from "./DeveloperModeSection";
 
@@ -57,11 +59,11 @@ const ProfileMainScreen = () => {
   const navigation = useIONavigation();
   const theme = useIOTheme();
   const { show } = useIOToast();
-  const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
-  const showProfileBanner = useIOSelector(showProfileBannerSelector);
   const isSettingsVisibleAndHideProfile = useIOSelector(
     isSettingsVisibleAndHideProfileSelector
   );
+  const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
+  const showProfileBanner = useIOSelector(showProfileBannerSelector);
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
   const scrollViewContentRef = useRef<ScrollView>(null);
   const idResetTap = useRef<number>();
@@ -222,9 +224,12 @@ const ProfileMainScreen = () => {
   );
 
   const logoutLabel = I18n.t("profile.logout.menulabel");
-  useHeaderSecondLevel({
+
+  const headerProps = useHeaderProps({
     title: "",
-    supportRequest: true,
+    backAccessibilityLabel: I18n.t("global.buttons.back"),
+    goBack: () => navigation.goBack(),
+    showHelp: true,
     faqCategories: ["profile"],
     contextualHelpMarkdown: {
       title: "profile.main.contextualHelpTitle",
@@ -233,6 +238,14 @@ const ProfileMainScreen = () => {
         : "profile.main.contextualHelpContent"
     }
   });
+
+  useLayoutEffect(() => {
+    if (isSettingsVisibleAndHideProfile) {
+      navigation.setOptions({
+        header: () => <HeaderSecondLevel {...headerProps} />
+      });
+    }
+  }, [headerProps, isSettingsVisibleAndHideProfile, navigation]);
 
   return (
     <ScrollView

@@ -92,11 +92,42 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     isSettingsVisibleAndHideProfileSelector
   );
 
+  const canNavigateIfIsArchivingCallback = useCallback(() => {
+    const state = store.getState();
+    // If the system is busy archiving or restoring messages, do not start a search
+    const isProcessingArchiveQueue = isArchivingInProcessingModeSelector(state);
+    if (isProcessingArchiveQueue) {
+      return false;
+    }
+    // If the user was choosing which messages to archive/restore, disable it
+    // before starting the search, since the bottom tab bar is hidden and the
+    // search may trigger a navigation flow that leads back to another main
+    // screen tab details with no such tab bar shown
+    const isSchedulingArchiving = isArchivingInSchedulingModeSelector(state);
+    if (isSchedulingArchiving) {
+      // Auto-reset does not provide feedback to the user
+      dispatch(resetMessageArchivingAction(undefined));
+    }
+    return true;
+  }, [dispatch, store]);
+
+  const messageSearchCallback = useCallback(() => {
+    if (canNavigateIfIsArchivingCallback()) {
+      dispatch(searchMessagesEnabled(true));
+    }
+  }, [canNavigateIfIsArchivingCallback, dispatch]);
+
   const navigateToSettingMainScreen = useCallback(() => {
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
       screen: ROUTES.SETTINGS_MAIN
     });
   }, [navigation]);
+
+  const navigateToSettingMainScreenFromMessageSection = useCallback(() => {
+    if (canNavigateIfIsArchivingCallback()) {
+      navigateToSettingMainScreen();
+    }
+  }, [canNavigateIfIsArchivingCallback, navigateToSettingMainScreen]);
 
   const navigateToProfilePrefercesScreen = useCallback(() => {
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
@@ -111,6 +142,15 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
       onPress: navigateToSettingMainScreen
     }),
     [navigateToSettingMainScreen]
+  );
+
+  const settingsActionInMessageSection: ActionProp = useMemo(
+    () => ({
+      icon: "coggle",
+      accessibilityLabel: I18n.t("global.buttons.settings"),
+      onPress: navigateToSettingMainScreenFromMessageSection
+    }),
+    [navigateToSettingMainScreenFromMessageSection]
   );
 
   const requestParams = useMemo(
@@ -148,27 +188,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     }),
     [presentWalletHomeHeaderBottomsheet]
   );
-
-  // eslint-disable-next-line sonarjs/cognitive-complexity
-  const messageSearchCallback = useCallback(() => {
-    const state = store.getState();
-    // If the system is busy archiving or restoring messages, do not start a search
-    const isProcessingArchiveQueue = isArchivingInProcessingModeSelector(state);
-    if (isProcessingArchiveQueue) {
-      return;
-    }
-    // If the user was choosing which messages to archive/restore, disable it
-    // before starting the search, since the bottom tab bar is hidden and the
-    // search may trigger a navigation flow that leads back to another main
-    // screen tab details with no such tab bar shown
-    const isSchedulingArchiving = isArchivingInSchedulingModeSelector(state);
-    if (isSchedulingArchiving) {
-      // Auto-reset does not provide feedback to the user
-      dispatch(resetMessageArchivingAction(undefined));
-    }
-
-    dispatch(searchMessagesEnabled(true));
-  }, [dispatch, store]);
 
   const searchMessageAction: ActionProp = useMemo(
     () => ({
@@ -257,7 +276,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           ...(isSettingsVisibleAndHideProfile
             ? {
                 type: "threeActions",
-                secondAction: settingsAction,
+                secondAction: settingsActionInMessageSection,
                 thirdAction: searchMessageAction
               }
             : {
@@ -274,6 +293,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     isSettingsVisibleAndHideProfile,
     settingsAction,
     walletAction,
+    settingsActionInMessageSection,
     searchMessageAction,
     navigation
   ]);
