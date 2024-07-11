@@ -985,7 +985,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                   weight="Regular"
                                 >
-                                  You can change this choice anytime in Profile &gt; Privacy Policy and Terms of Service
+                                  You can change this choice anytime in [missing {{pageName}} value] &gt; Privacy Policy and Terms of Service
                                 </Text>
                               </View>
                               <View
@@ -2633,7 +2633,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                   weight="Regular"
                                 >
-                                  You can change this choice anytime in Profile &gt; Privacy Policy and Terms of Service
+                                  You can change this choice anytime in [missing {{pageName}} value] &gt; Privacy Policy and Terms of Service
                                 </Text>
                               </View>
                               <View
@@ -4282,7 +4282,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                   weight="Regular"
                                 >
-                                  You can change this choice anytime in Profile &gt; Privacy Policy and Terms of Service
+                                  You can change this choice anytime in [missing {{pageName}} value] &gt; Privacy Policy and Terms of Service
                                 </Text>
                               </View>
                               <View
@@ -5931,7 +5931,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                   weight="Regular"
                                 >
-                                  You can change this choice anytime in Profile &gt; Privacy Policy and Terms of Service
+                                  You can change this choice anytime in [missing {{pageName}} value] &gt; Privacy Policy and Terms of Service
                                 </Text>
                               </View>
                               <View
@@ -7874,7 +7874,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   }
                                   weight="Regular"
                                 >
-                                  You can change this choice anytime in Profile &gt; Privacy Policy and Terms of Service
+                                  You can change this choice anytime in [missing {{pageName}} value] &gt; Privacy Policy and Terms of Service
                                 </Text>
                               </View>
                               <View
