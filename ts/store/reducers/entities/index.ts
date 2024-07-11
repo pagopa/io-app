@@ -24,12 +24,10 @@ import messagesStatusReducer, {
 import calendarEventsReducer, { CalendarEventsState } from "./calendarEvents";
 import organizationsReducer, { OrganizationsState } from "./organizations";
 import { paymentByRptIdReducer, PaymentByRptIdState } from "./payments";
-import servicesReducer, { ServicesState } from "./services";
 
 export type EntitiesState = Readonly<{
   messages: MessagesState;
   messagesStatus: MessagesStatus;
-  services: ServicesState;
   organizations: OrganizationsState;
   paymentByRptId: PaymentByRptIdState;
   calendarEvents: CalendarEventsState;
@@ -37,17 +35,12 @@ export type EntitiesState = Readonly<{
 
 export type PersistedEntitiesState = EntitiesState & PersistPartial;
 
-const CURRENT_REDUX_ENTITIES_STORE_VERSION = 2;
+const CURRENT_REDUX_ENTITIES_STORE_VERSION = 3;
 const migrations: MigrationManifest = {
   // version 0
   // remove "currentSelectedService" section
-  "0": (state: PersistedState): PersistedEntitiesState => {
-    const entities = state as PersistedEntitiesState;
-    return {
-      ...entities,
-      services: { ..._.omit(entities.services, "currentSelectedService") }
-    };
-  },
+  "0": (state: PersistedState) =>
+    _.omit(state, "services.currentSelectedService"),
   // version 1
   // remove services section from persisted entities
   // TO avoid the proliferation of too many API requests until paged messages' API has been introduced
@@ -67,7 +60,10 @@ const migrations: MigrationManifest = {
         ..._.omit(entities.messages, "allIds", "idsByServiceId", "byId")
       }
     };
-  }
+  },
+  // version 3
+  // remove services from persisted entities
+  "3": (state: PersistedState) => _.omit(state, "services")
 };
 
 // A custom configuration to avoid persisting messages section
@@ -83,7 +79,6 @@ export const entitiesPersistConfig: PersistConfig = {
 const reducer = combineReducers<EntitiesState, Action>({
   messages: messagesReducer,
   messagesStatus: messagesStatusReducer,
-  services: servicesReducer,
   organizations: organizationsReducer,
   paymentByRptId: paymentByRptIdReducer,
   calendarEvents: calendarEventsReducer

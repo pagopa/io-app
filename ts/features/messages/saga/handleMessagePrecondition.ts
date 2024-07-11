@@ -1,57 +1,34 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
-import { call, put, race, take } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
+import { call, put, race, select, take } from "typed-redux-saga/macro";
+import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../../api/backend";
 import { convertUnknownToError } from "../../../utils/errors";
-import {
-  getMessagePrecondition,
-  clearMessagePrecondition
-} from "../store/actions";
 import { isTestEnv } from "../../../utils/environment";
 import { withRefreshApiCall } from "../../fastLogin/saga/utils";
-import { SagaCallReturnType } from "../../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
 import { trackDisclaimerLoadError } from "../analytics";
-
-export const testMessagePreconditionWorker = isTestEnv
-  ? messagePreconditionWorker
-  : undefined;
-
-function* messagePreconditionWorker(
-  getThirdPartyMessagePrecondition: ReturnType<
-    BackendClient["getThirdPartyMessagePrecondition"]
-  >,
-  action: ActionType<typeof getMessagePrecondition.request>
-) {
-  const { id, categoryTag } = action.payload;
-
-  try {
-    const result = (yield* call(
-      withRefreshApiCall,
-      getThirdPartyMessagePrecondition({ id }),
-      action
-    )) as unknown as SagaCallReturnType<
-      typeof getThirdPartyMessagePrecondition
-    >;
-
-    if (E.isRight(result)) {
-      if (result.right.status === 200) {
-        yield* put(getMessagePrecondition.success(result.right.value));
-        return;
-      }
-      throw Error(`response status ${result.right.status}`);
-    } else {
-      throw Error(readableReport(result.left));
-    }
-  } catch (e) {
-    trackDisclaimerLoadError(categoryTag);
-    yield* put(getMessagePrecondition.failure(convertUnknownToError(e)));
-  }
-}
+import {
+  clearLegacyMessagePrecondition,
+  errorPreconditionStatusAction,
+  getLegacyMessagePrecondition,
+  loadingContentPreconditionStatusAction,
+  retrievingDataPreconditionStatusAction,
+  toErrorPayload,
+  toLoadingContentPayload
+} from "../store/actions/preconditions";
+import { UIMessageId } from "../types";
+import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
+import {
+  preconditionsCategoryTagSelector,
+  preconditionsMessageIdSelector
+} from "../store/reducers/messagePrecondition";
 
 export function* handleMessagePrecondition(
   getThirdPartyMessagePrecondition: BackendClient["getThirdPartyMessagePrecondition"],
-  action: ActionType<typeof getMessagePrecondition.request>
+  action:
+    | ActionType<typeof getLegacyMessagePrecondition.request>
+    | ActionType<typeof retrievingDataPreconditionStatusAction>
 ) {
   yield* race({
     response: call(
@@ -59,6 +36,92 @@ export function* handleMessagePrecondition(
       getThirdPartyMessagePrecondition(),
       action
     ),
-    cancel: take(clearMessagePrecondition)
+    cancel: take(clearLegacyMessagePrecondition)
   });
 }
+
+function* messagePreconditionWorker(
+  getThirdPartyMessagePrecondition: ReturnType<
+    BackendClient["getThirdPartyMessagePrecondition"]
+  >,
+  action:
+    | ActionType<typeof getLegacyMessagePrecondition.request>
+    | ActionType<typeof retrievingDataPreconditionStatusAction>
+) {
+  const messageIdAndCategoryTag = yield* call(
+    getMessageIdAndCategoryTag,
+    action
+  );
+  try {
+    if (!messageIdAndCategoryTag) {
+      throw Error("Unable to get `messageId` or `categoryTag`");
+    }
+
+    const result = (yield* call(
+      withRefreshApiCall,
+      getThirdPartyMessagePrecondition({
+        id: messageIdAndCategoryTag.messageId
+      }),
+      action
+    )) as unknown as SagaCallReturnType<
+      typeof getThirdPartyMessagePrecondition
+    >;
+
+    if (E.isRight(result)) {
+      if (result.right.status === 200) {
+        const content = result.right.value;
+        yield* put(getLegacyMessagePrecondition.success(content));
+        yield* put(
+          loadingContentPreconditionStatusAction(
+            toLoadingContentPayload(content)
+          )
+        );
+        return;
+      }
+      throw Error(`response status ${result.right.status}`);
+    } else {
+      throw Error(readableReport(result.left));
+    }
+  } catch (e) {
+    const categoryTag = messageIdAndCategoryTag?.categoryTag;
+    if (categoryTag) {
+      trackDisclaimerLoadError(categoryTag);
+    }
+    yield* put(getLegacyMessagePrecondition.failure(convertUnknownToError(e)));
+    yield* put(
+      errorPreconditionStatusAction(
+        toErrorPayload(`${convertUnknownToError(e)}`)
+      )
+    );
+  }
+}
+
+export function* getMessageIdAndCategoryTag(
+  action:
+    | ActionType<typeof getLegacyMessagePrecondition.request>
+    | ActionType<typeof retrievingDataPreconditionStatusAction>
+): Generator<
+  ReduxSagaEffect,
+  { messageId: UIMessageId; categoryTag: MessageCategory["tag"] } | undefined,
+  any
+> {
+  if (action.type === getType(getLegacyMessagePrecondition.request)) {
+    return {
+      messageId: action.payload.id,
+      categoryTag: action.payload.categoryTag
+    };
+  }
+
+  const messageId = yield* select(preconditionsMessageIdSelector);
+  const categoryTag = yield* select(preconditionsCategoryTagSelector);
+  return messageId && categoryTag
+    ? {
+        messageId,
+        categoryTag
+      }
+    : undefined;
+}
+
+export const testMessagePreconditionWorker = isTestEnv
+  ? messagePreconditionWorker
+  : undefined;

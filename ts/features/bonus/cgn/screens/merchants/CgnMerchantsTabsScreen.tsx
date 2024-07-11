@@ -82,7 +82,7 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (_: Props) => {
       isSearchAvailable={{ enabled: true, onSearchTap: openFiltersModal }}
     >
       <SafeAreaView style={IOStyles.flex}>
-        {/* TABS component should be replaced with MaterialTopTab Navigator as done in Services and Messages home */}
+        {/* TABS component should be replaced with MaterialTopTab Navigator as done in Messages home */}
         {/* <Tabs
           tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
           tabBarUnderlineStyle={styles.tabBarUnderlineActive}

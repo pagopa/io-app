@@ -15,6 +15,7 @@ import {
   ItwEidIssuanceMachineContext
 } from "../machine/provider";
 import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
+import ItwPlayground from "../playgrounds/screens/ItwPlayground";
 import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
@@ -84,7 +85,7 @@ const InnerNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.RESULT}
+        name={ITW_ROUTES.ISSUANCE.EID_RESULT}
         component={ItwIssuanceEidResultScreen}
         options={{ headerShown: false }}
       />
@@ -94,6 +95,8 @@ const InnerNavigator = () => {
         component={ItwPresentationEidDetailScreen}
         options={{ headerShown: false }}
       />
+      {/* PLAYGROUNDS */}
+      <Stack.Screen name={ITW_ROUTES.PLAYGROUNDS} component={ItwPlayground} />
     </Stack.Navigator>
   );
 };
