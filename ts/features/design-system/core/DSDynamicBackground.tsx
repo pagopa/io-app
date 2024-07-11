@@ -157,11 +157,11 @@ export const DSDynamicBackground = () => {
               logoUri={{ uri: entityData?.imageSource }}
             />
             <View style={{ alignSelf: "center" }}>
-              <H3 color="grey-850">{entityData?.name}</H3>
+              <H3 color={theme["textBody-secondary"]}>{entityData?.name}</H3>
               <LabelSmall
                 fontSize="regular"
                 weight="Regular"
-                color="grey-850"
+                color={theme["textBody-secondary"]}
                 style={{ opacity: 0.8 }}
               >
                 {entityData?.name}
@@ -173,13 +173,16 @@ export const DSDynamicBackground = () => {
             style={{
               borderRadius: IOVisualCostants.avatarRadiusSizeMedium,
               borderCurve: "continuous",
-              backgroundColor: IOColors.white,
+              backgroundColor: IOColors[theme["appBackground-primary"]],
               borderWidth: 1,
-              borderColor: hexToRgba(IOColors["grey-850"], 0.1),
+              borderColor: hexToRgba(
+                IOColors[theme["textBody-secondary"]],
+                0.1
+              ),
               padding: 24
             }}
           >
-            <Body>
+            <Body color={theme["textBody-secondary"]}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
               interdum fringilla ex id viverra. In fringilla, orci sed placerat
               egestas, nibh ligula pellentesque ex, ac ultrices orci massa
