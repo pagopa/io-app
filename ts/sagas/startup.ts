@@ -146,11 +146,6 @@ import {
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
-import {
-  loadUserMetadata,
-  watchLoadUserMetadata,
-  watchUpserUserMetadata
-} from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
@@ -299,9 +294,6 @@ export function* initializeApplicationSaga(
   // Note that the following sagas will be automatically cancelled each time
   // this parent saga gets restarted.
 
-  yield* fork(watchLoadUserMetadata, backendClient.getUserMetadata);
-  yield* fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
-
   yield* fork(
     watchUserDataProcessingSaga,
     backendClient.getUserDataProcessingRequest,
@@ -309,7 +301,7 @@ export function* initializeApplicationSaga(
     backendClient.deleteUserDataProcessingRequest
   );
 
-  // Start watching for services actions
+  // Start watching for Services actions
   yield* fork(watchServicesSaga, backendClient, sessionToken);
 
   // Start watching for Messages actions
@@ -560,9 +552,6 @@ export function* initializeApplicationSaga(
 
   // Start watching for Wallet V3 actions
   yield* fork(watchPaymentsSaga, maybeSessionInformation.value.walletToken);
-
-  // Load the user metadata
-  yield* call(loadUserMetadata, backendClient.getUserMetadata, true);
 
   // the wallet token is available,
   // proceed with starting the "watch wallet" saga

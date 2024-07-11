@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
 import { GlobalState } from "../../store/reducers/types";
@@ -36,14 +37,12 @@ describe("Check the addition for new fields to the persisted store. If one of th
   it("Freeze 'content' state", () => {
     expect(globalState.content).toMatchSnapshot();
   });
-  it("Freeze 'userMetadata' state", () => {
-    expect(globalState.userMetadata).toMatchSnapshot();
-  });
   it("Freeze 'crossSessions' state", () => {
     expect(globalState.crossSessions).toMatchSnapshot();
   });
   it("Freeze 'entities' state", () => {
-    expect(globalState.entities).toMatchSnapshot();
+    const entitiesWithoutMessages = _.omit(globalState.entities, "messages");
+    expect(entitiesWithoutMessages).toMatchSnapshot();
   });
   it("Freeze 'authentication' state", () => {
     expect(globalState.authentication).toMatchSnapshot();

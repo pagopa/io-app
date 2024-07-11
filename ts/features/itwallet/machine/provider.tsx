@@ -1,3 +1,4 @@
+import { useIOToast } from "@pagopa/io-app-design-system";
 import { createActorContext } from "@xstate5/react";
 import * as React from "react";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
@@ -24,9 +25,14 @@ export const ItwCredentialIssuanceMachineContext = createActorContext(
 export const ItWalletIssuanceMachineProvider = (props: Props) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
+  const toast = useIOToast();
 
   const eidIssuanceMachine = itwEidIssuanceMachine.provide({
-    actions: createEidIssuanceActionsImplementation(navigation, dispatch),
+    actions: createEidIssuanceActionsImplementation(
+      navigation,
+      dispatch,
+      toast
+    ),
     actors: createEidIssuanceActorsImplementation()
   });
 

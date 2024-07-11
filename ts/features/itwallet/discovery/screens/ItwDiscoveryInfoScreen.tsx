@@ -1,13 +1,18 @@
-import { ContentWrapper } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  ForceScrollDownView,
+  H1,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
+import { Image, StyleSheet } from "react-native";
+import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { FooterStackButton } from "../../common/components/FooterStackButton";
+import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import ItwMarkdown from "../components/ItwMarkdown";
 import { ItwTags } from "../../machine/tags";
 
 /**
@@ -27,40 +32,47 @@ const ItwDiscoveryInfoScreen = () => {
   });
 
   useHeaderSecondLevel({
-    title: I18n.t("features.itWallet.discovery.info.title"),
+    title: "",
     contextualHelp: emptyContextualHelp,
     supportRequest: true
   });
 
   return (
-    <RNavScreenWithLargeHeader
-      title={{ label: I18n.t("features.itWallet.discovery.info.title") }}
-      fixedBottomSlot={
-        <FooterStackButton
-          primaryActionProps={{
+    <ForceScrollDownView threshold={50}>
+      <Image
+        source={require("../../../../../img/features/itWallet/discovery/itw_hero.png")}
+        accessibilityIgnoresInvertColors={true}
+        style={styles.hero}
+      />
+      <VSpacer size={24} />
+      <ContentWrapper>
+        <H1>{I18n.t("features.itWallet.discovery.title")}</H1>
+        <VSpacer size={24} />
+        <ItwMarkdown>
+          {I18n.t("features.itWallet.discovery.content")}
+        </ItwMarkdown>
+        <ItwMarkdown styles={{ body: { fontSize: 14 } }}>
+          {I18n.t("features.itWallet.discovery.tos")}
+        </ItwMarkdown>
+      </ContentWrapper>
+      <FooterActions
+        fixed={false}
+        actions={{
+          type: "SingleButton",
+          primary: {
+            loading: isLoading,
             label: I18n.t("global.buttons.continue"),
             accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: () => {
-              machineRef.send({ type: "accept-tos" });
-            },
-            loading: isLoading
-          }}
-          secondaryActionProps={{
-            label: I18n.t("global.buttons.cancel"),
-            accessibilityLabel: I18n.t("global.buttons.cancel"),
-            onPress: () => undefined
-          }}
-        />
-      }
-    >
-      <ContentWrapper>
-        {/* Info activation */}
-        <ItwMarkdown
-          content={I18n.t("features.itWallet.discovery.info.content")}
-        />
-      </ContentWrapper>
-    </RNavScreenWithLargeHeader>
+            onPress: () => machineRef.send({ type: "accept-tos" })
+          }
+        }}
+      />
+    </ForceScrollDownView>
   );
 };
+
+const styles = StyleSheet.create({
+  hero: { resizeMode: "cover", width: "100%" }
+});
 
 export { ItwDiscoveryInfoScreen };

@@ -17,16 +17,18 @@ export const ItwIssuanceEidResultScreen = () => {
   return (
     <OperationResultScreenContent
       pictogram="success"
-      title={I18n.t("features.itWallet.issuance.success.title")}
-      subtitle={I18n.t("features.itWallet.issuance.success.subtitle", {
-        credentialName: "{Credential.name}"
-      })}
+      title={I18n.t("features.itWallet.issuance.eidResult.success.title")}
+      subtitle={I18n.t("features.itWallet.issuance.eidResult.success.subtitle")}
       action={{
-        label: I18n.t("global.buttons.continue"),
+        label: I18n.t(
+          "features.itWallet.issuance.eidResult.success.actions.continue"
+        ),
         onPress: handleContinue
       }}
       secondaryAction={{
-        label: I18n.t("global.buttons.close"),
+        label: I18n.t(
+          "features.itWallet.issuance.eidResult.success.actions.close"
+        ),
         onPress: handleClose
       }}
     />

@@ -2080,10 +2080,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-crypto/-/io-react-native-crypto-0.3.0.tgz#4181a53e36d4cd142b93ef133d3d227d9d360f96"
   integrity sha512-3H5CqJwpEYX14QNUhqbSizJBFBeIQRFv8Bw/46+YILTZpvCloVDjfSrPDsKNLZdC1d05wfUSTGGRncMQOB2kMg==
 
-"@pagopa/io-react-native-http-client@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-http-client/-/io-react-native-http-client-1.0.2.tgz#8d92a7ea920f1fe01f5632ccb939bb7961392bd6"
-  integrity sha512-UVd0S8gV8RUf6ZlHhQDb2jvEyMlc+XQ76j44ewRiP4xGNDX9QmYGfr+QNUmg0PwJ55OoeH6j5lbWiW2Mh1QCtQ==
+"@pagopa/io-react-native-http-client@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-http-client/-/io-react-native-http-client-1.0.5.tgz#5dbc4812732e7842ade594f3a29b8ff32b621628"
+  integrity sha512-JGQX9UxZY22LqZd+hAb+O+7jB4z6EAbUqkIBSAm6wqb71k282RtyJgWGDYdYsig2DPKeWbs66nF240csqDAOtw==
   dependencies:
     auto-changelog "^2.4.0"
 
@@ -2105,11 +2105,12 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.1.tgz#cf6bb709f1613419486b7453a15ba63f0e2784ac"
   integrity sha512-tea892roPm42NQIeTCw4WRSVtfuCkr/i+ussj03PttM3BFdCi6y2Kvg1HITxXcDukLza3b+kENzQFRuKRKhPAQ==
 
-"@pagopa/io-react-native-wallet@^0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.12.0.tgz#6822bfb41cd0e4cf09530e916ffaa1a67cb227b4"
-  integrity sha512-bL0IISSm6FJBP/Q4QdKPPXavUJnc9hVp1w8rbj/KKZAXxuuho9QiMlhsGHwyNUdVRVHGXPdtwIjuaqcGq7hr1Q==
+"@pagopa/io-react-native-wallet@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.13.0.tgz#149685a35fe8992dab4ea6d2ea116f69d17204af"
+  integrity sha512-Bg3Zi5jInbphN7PPGmasfEU+h2aJPyzIqcAOfYC+P5tpZ6BRc87oEzuh1YkDXQxsqhjJAkspu8DheQ7kIwHi+Q==
   dependencies:
+    parse-url "^9.2.0"
     react-native-url-polyfill "^2.0.0"
     react-native-uuid "^2.0.1"
     zod "^3.21.4"
@@ -3047,6 +3048,11 @@
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
+
+"@types/parse-path@^7.0.0":
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/@types/parse-path/-/parse-path-7.0.3.tgz#cec2da2834ab58eb2eb579122d9a1fc13bd7ef36"
+  integrity sha512-LriObC2+KYZD3FzCrgWGv/qufdUy4eXrxcLgQMfYXgPbLIecKIsVBaQgUPmxSSLcjmYbDTQbMgr6qr6l/eb7Bg==
 
 "@types/prettier@^2.0.0", "@types/prettier@^2.7.3":
   version "2.7.3"
@@ -12216,10 +12222,25 @@ parse-passwd@^1.0.0:
   resolved "https://registry.yarnpkg.com/parse-passwd/-/parse-passwd-1.0.0.tgz#6d5b934a456993b23d37f40a382d6f1666a8e5c6"
   integrity sha1-bVuTSkVpk7I9N/QKOC1vFmao5cY=
 
+parse-path@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/parse-path/-/parse-path-7.0.0.tgz#605a2d58d0a749c8594405d8cc3a2bf76d16099b"
+  integrity sha512-Euf9GG8WT9CdqwuWJGdf3RkUcTBArppHABkO7Lm8IzRQp0e2r/kkFnmhu4TSK30Wcu5rVAZLmfPKSBBi9tWFog==
+  dependencies:
+    protocols "^2.0.0"
+
 parse-svg-path@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/parse-svg-path/-/parse-svg-path-0.1.2.tgz#7a7ec0d1eb06fa5325c7d3e009b859a09b5d49eb"
   integrity sha1-en7A0esG+lMlx9PgCbhZoJtdSes=
+
+parse-url@^9.2.0:
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/parse-url/-/parse-url-9.2.0.tgz#d75da32b3bbade66e4eb0763fb4851d27526b97b"
+  integrity sha512-bCgsFI+GeGWPAvAiUv63ZorMeif3/U0zaXABGJbOWt5OH2KCaPHF6S+0ok4aqM9RuIPGyZdx9tR9l13PsW4AYQ==
+  dependencies:
+    "@types/parse-path" "^7.0.0"
+    parse-path "^7.0.0"
 
 parse5@6.0.1:
   version "6.0.1"
@@ -12622,6 +12643,11 @@ property-information@^6.0.0:
   resolved "https://registry.yarnpkg.com/property-information/-/property-information-6.0.1.tgz#7c668d9f2b9cb63bc3e105d8b8dfee7221a17800"
   integrity sha512-F4WUUAF7fMeF4/JUFHNBWDaKDXi2jbvqBW/y6o5wsf3j19wTZ7S60TmtB5HoBhtgw7NKQRMWuz5vk2PR0CygUg==
 
+protocols@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/protocols/-/protocols-2.0.1.tgz#8f155da3fc0f32644e83c5782c8e8212ccf70a86"
+  integrity sha512-/XJ368cyBJ7fzLMwLKv1e4vLxOju2MNAIokcr7meSaNcVbWz/CPcW22cP04mwxOErdA5mwjA8Q6w/cdAQxVn7Q==
+
 proxy-addr@~2.0.7:
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-2.0.7.tgz#f19fe69ceab311eeb94b42e70e8c2070f9ba1025"
@@ -13020,10 +13046,10 @@ react-native-pdf-thumbnail@^1.2.1:
   resolved "https://registry.yarnpkg.com/react-native-pdf-thumbnail/-/react-native-pdf-thumbnail-1.2.1.tgz#edf4e13a43098a0004503b2e617f0866f6d4d5a4"
   integrity sha512-MuEKMYRbLj8oxnhe247Ze1yI3tH4u24gLzQ0g8VxdZ47/9sUL7RPlv4Br+2IWX8kcX6/VerP/Mxfh1D61ri+Hw==
 
-react-native-pdf@^6.7.5:
-  version "6.7.5"
-  resolved "https://registry.yarnpkg.com/react-native-pdf/-/react-native-pdf-6.7.5.tgz#1bc5479f2161189f938912b4080ea9eef8a9d84d"
-  integrity sha512-d1S76p2Vwax2iG+kTnjINiUMvpjtJJvtMiYwHRbgGczT8GJjtXH49YCWOd+HfnUAU29cB+knzsKGYoZBMQM8Ow==
+react-native-pdf@6.7.4:
+  version "6.7.4"
+  resolved "https://registry.yarnpkg.com/react-native-pdf/-/react-native-pdf-6.7.4.tgz#f350af350074ee0a93fff578caefec16867781b4"
+  integrity sha512-sBeNcsrTRnLjmiU9Wx7Uk0K2kPSQtKIIG+FECdrEG16TOdtmQ3iqqEwt0dmy0pJegpg07uES5BXqiKsKkRUIFw==
   dependencies:
     crypto-js "4.2.0"
     deprecated-react-native-prop-types "^2.3.0"
@@ -15978,7 +16004,7 @@ xss@1.0.10:
     commander "^2.20.3"
     cssfilter "0.0.10"
 
-"xstate5@npm:xstate@5":
+"xstate5@npm:xstate@5", xstate@^5.13.0:
   version "5.13.0"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.13.0.tgz#7f7092d813a89d94024b083fe23a86b6cf4a323a"
   integrity sha512-Z0om784N5u8sAzUvQJBa32jiTCIGGF/2ZsmKkerQEqeeUktAeOMK20FIHFUMywC4GcAkNksSvaeX7lwoRNXPEQ==
@@ -15987,11 +16013,6 @@ xstate@^4.29.0, xstate@^4.33.6:
   version "4.35.4"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.35.4.tgz#87b2a45b6c7e84d820f56378408c6531ca5c4662"
   integrity sha512-mqRBYHhljP1xIItI4xnSQNHEv6CKslSM1cOGmvhmxeoDPAZgNbhSUYAL5N6DZIxRfpYY+M+bSm3mUFHD63iuvg==
-
-xstate@^5.13.0:
-  version "5.13.0"
-  resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.13.0.tgz#7f7092d813a89d94024b083fe23a86b6cf4a323a"
-  integrity sha512-Z0om784N5u8sAzUvQJBa32jiTCIGGF/2ZsmKkerQEqeeUktAeOMK20FIHFUMywC4GcAkNksSvaeX7lwoRNXPEQ==
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.2"
