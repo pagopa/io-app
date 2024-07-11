@@ -22,6 +22,7 @@ import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedire
 import { WalletRoutes } from "../navigation/routes";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { selectWalletCards } from "../store/selectors";
+import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
@@ -49,17 +50,18 @@ const WalletHomeScreen = ({ route }: Props) => {
   );
 
   return (
-    <WalletHomeScreenContainer>
-      <VSpacer size={16} />
-      <WalletPaymentsRedirectBanner />
-      <WalletCardsContainer />
-    </WalletHomeScreenContainer>
+    <>
+      <WalletScrollView>
+        <VSpacer size={16} />
+        <ItwDiscoveryBanner ignoreMargins={true} />
+        <WalletPaymentsRedirectBanner />
+        <WalletCardsContainer />
+      </WalletScrollView>
+    </>
   );
 };
 
-const WalletHomeScreenContainer = ({
-  children
-}: React.PropsWithChildren<any>) => {
+const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
   const navigation = useIONavigation();
   const cards = useIOSelector(selectWalletCards);
 

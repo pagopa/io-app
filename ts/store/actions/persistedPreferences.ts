@@ -62,7 +62,6 @@ export const preferencesNewHomeSectionSetEnabled = createStandardAction(
 )<{ isNewHomeSectionEnabled: boolean }>();
 
 export type PersistedPreferencesActions = ActionType<
-  // eslint-disable-next-line
   | typeof preferenceFingerprintIsEnabledSaveSuccess
   | typeof preferredCalendarSaveSuccess
   | typeof preferredCalendarRemoveSuccess

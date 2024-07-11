@@ -130,7 +130,6 @@ export type LogoutT = IPostApiRequestType<
 // Create client
 //
 
-// eslint-disable-next-line
 export function BackendClient(
   baseUrl: string,
   token: SessionToken,

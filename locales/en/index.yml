@@ -354,9 +354,9 @@ profile:
           title: Delete your profile
           description: You can delete your IO profile at any time.
           banner: Your profile will be deleted within 30 days of your request.
-          body: 
+          body:
             p1: If you decide to continue, you will no longer be able to retrieve the messages or preferences you have set in the app.
-            p2: 
+            p2:
               firstPart: "Any bonuses or discounts you get via the IO app "
               lastPart: won't be available anymore.
             p3: You can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE.
@@ -2672,14 +2672,14 @@ bonus:
       goToDetail: View your Carta Giovani
     detail:
       cta:
-        buyers: Discover the CGN benefits
+        buyers: Discover CGN opportunities.
         discover: Discover the benefits
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number
-          pending: Check EYCA discounts
+          pending: Discover EYCA opportunities.
           bottomSheet: Check the EYCA website
-          showEycaDiscounts: Check EYCA discounts
+          showEycaDiscounts: Discover EYCA opportunities.
       information:
         active: "Your card is active and can be used until {{date}}"
         warning: "Attention! "
@@ -2693,7 +2693,7 @@ bonus:
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
         eycaError: "We had some issues with EYCA's systems."
         eycaBottomSheetTitle: "EYCA card number"
-        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy using the card at participating merchants, you will be able to obtain discounts and concessions on cultural activities, shops, transport, catering and accommodation even in European countries participating in the circuit."
+        eycaDescription: "Until 31 years old, your **Carta Giovani Nazionale is a member of the EYCA circuit**(European Youth Card Association).\n\n Use the Card at partners to enjoy cultural activities, shopping, transport, restaurants and accommodation in European countries partecipating in the circuit."
         eycaNumber: Card number
         badge:
           active: Active
@@ -2740,7 +2740,7 @@ bonus:
         toast: "The request to deactivate the card has been successfully executed"
         alert:
           title: "Deactivate card"
-          message: "Are you sure to deactivate your Carta Giovani Nazionale? If you confirm, you will lose the possibility to access the benefits provided by the initiative and the card will disappear from your Wallet."
+          message: "Do you really want to deactivate your Carta Giovani Nazionale? If you confirm, you will no longer be able to access the opportunities and the card will disappear from your Wallet."
     otp:
       error: "Due to a technical problem we were unable to generate a discount code. Please try again."
       code:
@@ -3086,7 +3086,7 @@ features:
           title: Nessuna ricevuta trovata
           body: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
         banner:
-          content: Stiamo generando le ricevute di pagamento in formato PDF.
+          content: "Stiamo generando le ricevute in formato PDF: se in questa lista trovi dei doppioni, ignorali pure!"
           action: Scopri di più
         title: Operazioni precedenti
         bottomSheet:
@@ -3094,7 +3094,7 @@ features:
           noticeHeading: Avvisi pagati di recente
           noticeBody: "Stiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
           allNoticesHeading: Tutti gli altri avvisi
-          allNoticesBody: Per ottenere le ricevute di operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
+          allNoticesBody: Per ottenere le ricevute in formato PDF di operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
       multiplePayment: Pagamento multiplo
       title: Ricevute pagoPA
       button: Vedi tutte
@@ -3172,6 +3172,10 @@ features:
         body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
         cta: "Chiedi informazioni o segnala errori"
     discovery:
+      banner:
+        title: È arrivato IT Wallet
+        content: Attiva IT Wallet per aggiungere al Portafoglio di IO la versione  digitale dei tuoi documenti!
+        action: Inizia
       title: Attiva IT Wallet
       content: "###### Cos'è e come funziona? \n IT Wallet è la nuova funzionalità di IO che ti permette di aggiungere al Portafoglio la tua **Identità Digitale** e di portare sempre con te **la versione digitale dei documenti fisici** che già possiedi, come la Tessera Sanitaria e presto molti altri. \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
       tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()

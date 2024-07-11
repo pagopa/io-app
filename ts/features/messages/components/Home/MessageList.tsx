@@ -17,6 +17,7 @@ import {
   shouldShowRefreshControllOnListSelector
 } from "../../store/reducers/allPaginated";
 import { UIMessage } from "../../types";
+import { ItwDiscoveryBanner } from "../../../itwallet/common/components/ItwDiscoveryBanner";
 import {
   getLoadNextPageMessagesActionIfAllowed,
   getReloadAllMessagesActionForRefreshIfAllowed,
@@ -72,20 +73,17 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         dispatch(reloadAllMessagesAction);
       }
     }, [category, dispatch, store]);
-    const onEndReachedCallback = useCallback(
-      _ => {
-        const state = store.getState();
-        const loadNextPageMessages = getLoadNextPageMessagesActionIfAllowed(
-          state,
-          category,
-          new Date()
-        );
-        if (loadNextPageMessages) {
-          dispatch(loadNextPageMessages);
-        }
-      },
-      [category, dispatch, store]
-    );
+    const onEndReachedCallback = useCallback(() => {
+      const state = store.getState();
+      const loadNextPageMessages = getLoadNextPageMessagesActionIfAllowed(
+        state,
+        category,
+        new Date()
+      );
+      if (loadNextPageMessages) {
+        dispatch(loadNextPageMessages);
+      }
+    }, [category, dispatch, store]);
     return (
       <FlatList
         ref={ref}
@@ -95,6 +93,9 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         }
         ListEmptyComponent={<EmptyList category={category} />}
         ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
+        ListHeaderComponent={
+          category === "INBOX" ? <ItwDiscoveryBanner /> : undefined
+        }
         renderItem={({ index, item }) => {
           if (typeof item === "number") {
             return (
