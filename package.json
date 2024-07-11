@@ -185,6 +185,7 @@
     "react-native-screen-brightness": "^2.0.0-alpha",
     "react-native-screens": "^3.31.1",
     "react-native-share": "7.3.9",
+    "react-native-skottie": "^2.1.4",
     "react-native-splash-screen": "^3.2.0",
     "react-native-svg": "^15.1.0",
     "react-native-tab-view": "3.5.2",
