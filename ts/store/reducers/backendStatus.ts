@@ -435,9 +435,8 @@ export const isNewPaymentSectionEnabledSelector = createSelector(
 // showBarcodeScanSection will be deleted
 export const isSettingsVisibleAndHideProfileSelector = createSelector(
   isNewPaymentSectionEnabledSelector,
-  () => showBarcodeScanSection,
-  (isNewPaymentSectionEnabled, showBarcodeScan) =>
-    isNewPaymentSectionEnabled && showBarcodeScan
+  isNewPaymentSectionEnable =>
+    isNewPaymentSectionEnable && showBarcodeScanSection
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
