@@ -17,15 +17,14 @@ import {
   getItwGenericMappedError
 } from "../../common/utils/itwErrorsUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { selectEidOption } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const eidOption = useSelector(machineRef, snapshot =>
-    O.fromNullable(snapshot.context.eid)
-  );
+  const eidOption = useSelector(machineRef, selectEidOption);
   const dismissDialog = useItwDismissalDialog();
 
   const handleStoreEidSuccess = () => {

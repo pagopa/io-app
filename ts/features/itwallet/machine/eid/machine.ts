@@ -4,6 +4,7 @@ import { ItwTags } from "../tags";
 import { Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { type RequestEidActorParams } from "./actors";
+import { IssuanceFailureType } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -71,7 +72,7 @@ export const itwEidIssuanceMachine = setup({
     },
     WalletInstanceCreation: {
       description:
-        "This state generates the integry hardware key and registers the wallet instance. The generated integrity hardware key is then stored and persisted to the redux store.",
+        "This state generates the integrity hardware key and registers the wallet instance. The generated integrity hardware key is then stored and persisted to the redux store.",
       tags: [ItwTags.Loading],
       invoke: {
         src: "createWalletInstance",
@@ -88,6 +89,9 @@ export const itwEidIssuanceMachine = setup({
           target: "UserIdentification"
         },
         onError: {
+          actions: assign(() => ({
+            failure: IssuanceFailureType.UNSUPPORTED_DEVICE
+          })),
           target: "#itwEidIssuanceMachine.Failure"
         }
       }
@@ -168,6 +172,9 @@ export const itwEidIssuanceMachine = setup({
               target: "#itwEidIssuanceMachine.Issuance.DisplayingPreview"
             },
             onError: {
+              actions: assign(() => ({
+                failure: IssuanceFailureType.GENERIC
+              })),
               target: "#itwEidIssuanceMachine.Failure"
             }
           }
@@ -216,3 +223,5 @@ export const itwEidIssuanceMachine = setup({
     }
   }
 });
+
+export type ItwEidIssuanceMachine = typeof itwEidIssuanceMachine;

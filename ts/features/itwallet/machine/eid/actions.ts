@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { IOToast } from "@pagopa/io-app-design-system";
-import { Alert } from "react-native";
 import { ActionArgs, EventObject } from "xstate5";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -58,7 +57,9 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   navigateToFailureScreen: () => {
-    Alert.alert("Failure");
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.EID_FAILURE
+    });
   },
 
   navigateToWallet: () => {
