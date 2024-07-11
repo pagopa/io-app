@@ -6,7 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { constNull } from "fp-ts/lib/function";
 import * as React from "react";
-import { SubscriptionStateEnum } from "../../../../../definitions/trial_systwem/SubscriptionState";
+import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
