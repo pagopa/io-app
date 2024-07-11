@@ -117,7 +117,7 @@ const DESIGN_SYSTEM_ROUTES = {
     },
     ANIMATED_PICTOGRAMS: {
       route: "DS_ANIMATED_PICTOGRAMS",
-      title: "Animated Pictograms"
+      title: "Animated pictograms"
     }
   },
   LEGACY: {
