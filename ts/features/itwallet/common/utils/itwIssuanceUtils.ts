@@ -1,10 +1,11 @@
-import { generate } from "@pagopa/io-react-native-crypto";
+import { deleteKey, generate } from "@pagopa/io-react-native-crypto";
 import {
   type AuthorizationContext,
   createCryptoContextFor,
   WalletInstanceAttestation,
   Credential
 } from "@pagopa/io-react-native-wallet";
+import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import uuid from "react-native-uuid";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import {
@@ -15,6 +16,17 @@ import {
 import { type Identification } from "../../machine/eid/context";
 import { type IdentificationMode } from "../../machine/eid/events";
 import { getIntegrityContext } from "./itwIntegrityUtils";
+import { StoredCredential } from "./itwTypesUtils";
+
+// TODO: use withEphemeralKey imported from @pagopa/io-react-native-wallet
+export const withEphemeralKey = async <R>(
+  fn: (ephemeralContext: CryptoContext) => Promise<R>
+): Promise<R> => {
+  const keytag = `ephemeral-${uuid.v4()}`;
+  await generate(keytag);
+  const ephemeralContext = createCryptoContextFor(keytag);
+  return fn(ephemeralContext).finally(() => deleteKey(keytag));
+};
 
 // TODO: read from env
 const SPID_HINT = "https://demo.spid.gov.it";
@@ -28,12 +40,12 @@ const idpHintsMap: Record<IdentificationMode, string> = {
 };
 
 export async function getPid({
-  hardwareKeyTag,
+  integrityKeyTag,
   identification
 }: {
-  hardwareKeyTag: string;
+  integrityKeyTag: string;
   identification: Identification;
-}) {
+}): Promise<StoredCredential> {
   const authorizationContext: AuthorizationContext | undefined =
     identification.mode === "spid"
       ? { authorize: openAuthenticationSession }
@@ -51,76 +63,81 @@ export async function getPid({
     issuerUrl
   );
 
-  /* ---------------- Get a Wallet Instance Attestation ---------------- */
-  const integrityContext = getIntegrityContext(hardwareKeyTag);
+  return withEphemeralKey(async wiaCryptoContext => {
+    /* ---------------- Get a Wallet Instance Attestation ---------------- */
+    const integrityContext = getIntegrityContext(integrityKeyTag);
 
-  const wiaKeyTag = uuid.v4().toString();
-  await generate(wiaKeyTag);
-  const wiaCryptoContext = createCryptoContextFor(wiaKeyTag);
+    const walletInstanceAttestation =
+      await WalletInstanceAttestation.getAttestation({
+        wiaCryptoContext,
+        integrityContext,
+        walletProviderBaseUrl: itwWalletProviderBaseUrl
+      });
 
-  const walletInstanceAttestation =
-    await WalletInstanceAttestation.getAttestation({
-      wiaCryptoContext,
-      integrityContext,
-      walletProviderBaseUrl: itwWalletProviderBaseUrl
-    });
+    /* ---------------- Authorize user and get access token ---------------- */
+    const { issuerRequestUri, clientId, codeVerifier, credentialDefinition } =
+      await Credential.Issuance.startUserAuthorization(
+        issuerConf,
+        credentialType,
+        {
+          walletInstanceAttestation,
+          redirectUri: itWalletPidIssuanceRedirectUri,
+          wiaCryptoContext
+        }
+      );
 
-  /* ---------------- Authorize user and get access token ---------------- */
-  const { issuerRequestUri, clientId, codeVerifier, credentialDefinition } =
-    await Credential.Issuance.startUserAuthorization(
+    const { code } =
+      await Credential.Issuance.completeUserAuthorizationWithQueryMode(
+        issuerRequestUri,
+        clientId,
+        issuerConf,
+        idpHintsMap[identification.mode], // TODO: use idp ID to get the proper hint?
+        itWalletPidIssuanceRedirectUri,
+        authorizationContext
+      );
+
+    const { accessToken, tokenRequestSignedDPop } =
+      await Credential.Issuance.authorizeAccess(
+        issuerConf,
+        code,
+        clientId,
+        itWalletPidIssuanceRedirectUri,
+        codeVerifier,
+        {
+          walletInstanceAttestation,
+          wiaCryptoContext
+        }
+      );
+
+    /* ---------------- Get PID ---------------- */
+    const credentialKeyTag = uuid.v4().toString();
+    await generate(credentialKeyTag);
+    const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
+
+    const { credential, format } = await Credential.Issuance.obtainCredential(
       issuerConf,
-      credentialType,
-      {
-        walletInstanceAttestation,
-        redirectUri: itWalletPidIssuanceRedirectUri,
-        wiaCryptoContext
-      }
-    );
-
-  const { code } =
-    await Credential.Issuance.completeUserAuthorizationWithQueryMode(
-      issuerRequestUri,
+      accessToken,
       clientId,
-      issuerConf,
-      idpHintsMap[identification.mode], // TODO: use idp ID to get the proper hint?
-      itWalletPidIssuanceRedirectUri,
-      authorizationContext
-    );
-
-  const { accessToken, tokenRequestSignedDPop } =
-    await Credential.Issuance.authorizeAccess(
-      issuerConf,
-      code,
-      clientId,
-      itWalletPidIssuanceRedirectUri,
-      codeVerifier,
-      {
-        walletInstanceAttestation,
-        wiaCryptoContext
-      }
-    );
-
-  /* ---------------- Get PID ---------------- */
-  const credentialKeyTag = uuid.v4().toString();
-  await generate(credentialKeyTag);
-  const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
-
-  const { credential, format } = await Credential.Issuance.obtainCredential(
-    issuerConf,
-    accessToken,
-    clientId,
-    credentialDefinition,
-    tokenRequestSignedDPop,
-    { credentialCryptoContext }
-  );
-
-  const { parsedCredential } =
-    await Credential.Issuance.verifyAndParseCredential(
-      issuerConf,
-      credential,
-      format,
+      credentialDefinition,
+      tokenRequestSignedDPop,
       { credentialCryptoContext }
     );
 
-  return parsedCredential;
+    const { parsedCredential } =
+      await Credential.Issuance.verifyAndParseCredential(
+        issuerConf,
+        credential,
+        format,
+        { credentialCryptoContext }
+      );
+
+    return {
+      parsedCredential,
+      issuerConf,
+      keyTag: credentialKeyTag,
+      credentialType,
+      format,
+      credential
+    };
+  });
 }

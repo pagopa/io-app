@@ -5,15 +5,12 @@ import { getIdpLoginUri } from "../../../../utils/login";
 import * as attestationUtils from "../../common/utils/itwAttestationUtils";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { assert } from "../../../../utils/assert";
 import { type Identification } from "./context";
 
-export type ObtainWalletAttestationActorParams = {
-  hardwareKeyTag: string | undefined;
-};
-
 export type RequestEidActorParams = {
-  hardwareKeyTag: string;
-  identification: Identification;
+  integrityKeyTag: string | undefined;
+  identification: Identification | undefined;
 };
 
 export const createEidIssuanceActorsImplementation = () => ({
@@ -28,13 +25,11 @@ export const createEidIssuanceActorsImplementation = () => ({
     }
   }),
 
-  obtainWalletAttestation: fromPromise<
+  /*   obtainWalletAttestation: fromPromise<
     string,
     ObtainWalletAttestationActorParams
   >(async ({ input }) => {
-    if (input.hardwareKeyTag === undefined) {
-      return Promise.reject(new Error("hardwareKeyTag is undefined"));
-    }
+    assert(input.hardwareKeyTag, "hardwareKeyTag is undefined");
 
     try {
       const walletAttestation = attestationUtils.getAttestation(
@@ -44,7 +39,7 @@ export const createEidIssuanceActorsImplementation = () => ({
     } catch (e) {
       return Promise.reject(e);
     }
-  }),
+  }), */
 
   showSpidIdentificationWebView: fromPromise<string, LocalIdpsFallback>(
     async ({ input }) =>
@@ -53,17 +48,13 @@ export const createEidIssuanceActorsImplementation = () => ({
 
   requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
     async ({ input }) => {
-      try {
-        const eidCredential = await issuanceUtils.getPid(input);
-        // eslint-disable-next-line no-console
-        console.log(eidCredential);
-        // TODO: create stored credential
-        return {} as StoredCredential;
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(err);
-        return {} as StoredCredential;
-      }
+      assert(input.integrityKeyTag, "integrityKeyTag is undefined");
+      assert(input.identification, "identification is undefined");
+
+      return issuanceUtils.getPid({
+        integrityKeyTag: input.integrityKeyTag,
+        identification: input.identification
+      });
     }
   )
 });

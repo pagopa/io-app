@@ -5,17 +5,15 @@ export type Identification =
   | { mode: "spid"; idpId: string };
 
 export type Context = {
-  hardwareKeyTag: string | undefined;
+  integrityKeyTag: string | undefined;
   walletAttestation: string | undefined;
-  userToken: string | undefined;
   eid: StoredCredential | undefined;
   identification: Identification | undefined;
 };
 
 export const InitialContext: Context = {
-  hardwareKeyTag: undefined,
+  integrityKeyTag: undefined,
   walletAttestation: undefined,
-  userToken: undefined,
   eid: undefined,
   identification: undefined
 };

@@ -3,10 +3,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
-import {
-  type ObtainWalletAttestationActorParams,
-  type RequestEidActorParams
-} from "./actors";
+import { type RequestEidActorParams } from "./actors";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -26,7 +23,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToCredentialCatalog: notImplemented,
-    storeHardwareKeyTag: (_ctx, _params: { keyTag: string }) =>
+    storeIntegrityKeyTag: (_ctx, _params: { keyTag: string }) =>
       notImplemented(),
     storeEidCredential: notImplemented,
     closeIssuance: notImplemented,
@@ -36,10 +33,6 @@ export const itwEidIssuanceMachine = setup({
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
-    obtainWalletAttestation: fromPromise<
-      string,
-      ObtainWalletAttestationActorParams
-    >(notImplemented),
     requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
       notImplemented
     )
@@ -64,56 +57,37 @@ export const itwEidIssuanceMachine = setup({
         "Display of the ToS to the user who must accept in order to proceed with the issuance of the eID",
       entry: "navigateToTosScreen",
       on: {
-        "accept-tos": {
-          target: "WalletInitialization"
-        }
+        "accept-tos": [
+          {
+            guard: ({ context }) => !context.walletAttestation,
+            target: "WalletInstanceCreation"
+          },
+          {
+            target: "UserIdentification"
+          }
+        ]
       }
     },
-    WalletInitialization: {
+    WalletInstanceCreation: {
+      description:
+        "This state generates the integry hardware key and registers the wallet instance. The generated integrity hardware key is then stored and persisted to the redux store.",
       tags: [ItwTags.Loading],
-      description: "Wallet instance registration and attestation retrieval",
-      initial: "WalletInstanceCreation",
-      states: {
-        WalletInstanceCreation: {
-          description:
-            "This state generates the integry hardware key and registers the wallet instance. The generated integrity hardware key is then stored and persisted to the redux store.",
-          invoke: {
-            src: "createWalletInstance",
-            onDone: {
-              actions: [
-                assign(({ event }) => ({
-                  hardwareKeyTag: event.output
-                })),
-                {
-                  type: "storeHardwareKeyTag",
-                  params: ({ event }) => ({ keyTag: event.output })
-                }
-              ],
-              target: "WalletAttestationObtainment"
-            },
-            onError: {
-              target: "#itwEidIssuanceMachine.Failure"
+      invoke: {
+        src: "createWalletInstance",
+        onDone: {
+          actions: [
+            assign(({ event }) => ({
+              integrityKeyTag: event.output
+            })),
+            {
+              type: "storeIntegrityKeyTag",
+              params: ({ event }) => ({ keyTag: event.output })
             }
-          }
+          ],
+          target: "UserIdentification"
         },
-        WalletAttestationObtainment: {
-          description: "Obtainment of the wallet attestation",
-          invoke: {
-            src: "obtainWalletAttestation",
-            input: ({ context }) => ({
-              hardwareKeyTag: context.hardwareKeyTag
-            }),
-            onDone: {
-              actions: [
-                assign(({ event }) => ({ walletAttestation: event.output })),
-                "setWalletInstanceToOperational"
-              ],
-              target: "#itwEidIssuanceMachine.UserIdentification"
-            },
-            onError: {
-              target: "#itwEidIssuanceMachine.Failure"
-            }
-          }
+        onError: {
+          target: "#itwEidIssuanceMachine.Failure"
         }
       }
     },
@@ -160,25 +134,6 @@ export const itwEidIssuanceMachine = setup({
                 }
               }
             }
-            /* IdpIdentification: {
-              tags: [ItwTags.Loading],
-              invoke: {
-                src: "getIdentificationData",
-                input: ({ event, context }) => {
-                  assertEvent(event, "select-spid-idp");
-                  return {
-                    hardwareKeyTag: context.hardwareKeyTag!,
-                    identification: { mode: "spid", idpId: event.idp.id }
-                  };
-                },
-                onDone: {
-                  actions: assign(({ event }) => ({
-                    identificationResult: event.output
-                  })),
-                  target: "#itwEidIssuanceMachine.UserIdentification.Completed"
-                }
-              }
-            } */
           }
         },
         CiePin: {
@@ -204,8 +159,8 @@ export const itwEidIssuanceMachine = setup({
           invoke: {
             src: "requestEid",
             input: ({ context }) => ({
-              hardwareKeyTag: context.hardwareKeyTag!,
-              identification: context.identification!
+              integrityKeyTag: context.integrityKeyTag,
+              identification: context.identification
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),
