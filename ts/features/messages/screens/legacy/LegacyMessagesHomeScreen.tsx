@@ -41,7 +41,7 @@ import {
   MessagesStatus,
   messagesStatusSelector
 } from "../../store/reducers/messagesStatus";
-import { AndroidVersionLessThen25UnsupportedDevicesStatusComponent } from "../../../../screens/authentication/LandingScreen";
+import { AndroidVersionLessThan25UnsupportedDevicesStatusComponent } from "../../../../screens/authentication/LandingScreen";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -135,7 +135,7 @@ const LegacyMessagesHomeScreen = ({
       />
       {isScreenReaderEnabled && statusComponent}
       {isScreenReaderEnabled && (
-        <AndroidVersionLessThen25UnsupportedDevicesStatusComponent />
+        <AndroidVersionLessThan25UnsupportedDevicesStatusComponent />
       )}
       {!isSearchEnabled && (
         <React.Fragment>
@@ -178,7 +178,7 @@ const LegacyMessagesHomeScreen = ({
         )}
       {!isScreenReaderEnabled && statusComponent}
       {!isScreenReaderEnabled && (
-        <AndroidVersionLessThen25UnsupportedDevicesStatusComponent />
+        <AndroidVersionLessThan25UnsupportedDevicesStatusComponent />
       )}
       {bottomSheet}
       {securitySuggestionBottomSheet}

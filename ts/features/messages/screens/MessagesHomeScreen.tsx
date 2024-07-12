@@ -7,7 +7,7 @@ import { TabNavigationContainer } from "../components/Home/TabNavigationContaine
 import { SecuritySuggestions } from "../components/Home/SecuritySuggestions";
 import { Toasts } from "../components/Home/Toasts";
 import { Preconditions } from "../components/Home/Preconditions";
-import { AndroidVersionLessThen25UnsupportedDevicesStatusComponent } from "../../../screens/authentication/LandingScreen";
+import { AndroidVersionLessThan25UnsupportedDevicesStatusComponent } from "../../../screens/authentication/LandingScreen";
 
 export const MessagesHomeScreen = () => {
   const pagerViewRef = useRef<PagerView>(null);
@@ -17,7 +17,7 @@ export const MessagesHomeScreen = () => {
       <TabNavigationContainer pagerViewRef={pagerViewRef} />
       <PagerViewContainer ref={pagerViewRef} />
       <Preconditions />
-      <AndroidVersionLessThen25UnsupportedDevicesStatusComponent />
+      <AndroidVersionLessThan25UnsupportedDevicesStatusComponent />
       <SecuritySuggestions />
     </View>
   );

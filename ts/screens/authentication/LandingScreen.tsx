@@ -70,11 +70,11 @@ export const IdpCIE: SpidIdp = {
 const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
 
-// TODO: remove AndroidVersionLessThen25UnsupportedDevicesStatusComponent
+// TODO: remove AndroidVersionLessThan25UnsupportedDevicesStatusComponent
 // when the minimum supported Android version is 25
 const isAndroidVersionLessThan25 =
   Platform.OS === "android" && Platform.Version < 25;
-export const AndroidVersionLessThen25UnsupportedDevicesStatusComponent = () =>
+export const AndroidVersionLessThan25UnsupportedDevicesStatusComponent = () =>
   isAndroidVersionLessThan25 && (
     <>
       <InnerSectionStatus
@@ -289,7 +289,7 @@ export const LandingScreen = () => {
 
     return (
       <View style={IOStyles.flex}>
-        <AndroidVersionLessThen25UnsupportedDevicesStatusComponent />
+        <AndroidVersionLessThan25UnsupportedDevicesStatusComponent />
         {isSessionExpiredRef.current ? (
           <LandingCardComponent
             id={0}
