@@ -30,10 +30,7 @@ const reducer = (
         pid: O.some(action.payload)
       };
     case getType(itwResetPid):
-      return {
-        ...state,
-        pid: O.none
-      };
+      return { ...INITIAL_STATE };
   }
   return state;
 };

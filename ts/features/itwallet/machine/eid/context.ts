@@ -1,5 +1,5 @@
 import { type StoredCredential } from "../../common/utils/itwTypesUtils";
-import { IssuanceFailureType } from "./failure";
+import { IssuanceFailure } from "./failure";
 
 export type Identification =
   | { mode: "ciePin" | "cieId" }
@@ -10,7 +10,7 @@ export type Context = {
   walletAttestation: string | undefined;
   eid: StoredCredential | undefined;
   identification: Identification | undefined;
-  failure: IssuanceFailureType | undefined;
+  failure: IssuanceFailure | undefined;
 };
 
 export const InitialContext: Context = {

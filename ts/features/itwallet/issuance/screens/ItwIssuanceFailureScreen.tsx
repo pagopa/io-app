@@ -7,7 +7,10 @@ import {
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
-import { IssuanceFailureType } from "../../machine/eid/failure";
+import {
+  IssuanceFailure,
+  IssuanceFailureType
+} from "../../machine/eid/failure";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { selectFailureOption } from "../../machine/eid/selectors";
 
@@ -17,7 +20,7 @@ export const ItwIssuanceFailureScreen = () => {
 
   const closeIssuance = () => machineRef.send({ type: "close" });
 
-  const ContentView = ({ failure }: { failure: IssuanceFailureType }) => {
+  const ContentView = ({ failure }: { failure: IssuanceFailure }) => {
     const resultScreensMap: Record<
       IssuanceFailureType,
       OperationResultScreenContentProps
@@ -30,7 +33,7 @@ export const ItwIssuanceFailureScreen = () => {
           label: I18n.t(
             "features.itWallet.issuance.genericError.primaryAction"
           ),
-          onPress: () => undefined
+          onPress: () => machineRef.send({ type: "reset" })
         },
         secondaryAction: {
           label: I18n.t(
@@ -80,7 +83,7 @@ export const ItwIssuanceFailureScreen = () => {
     };
 
     const resultScreenProps =
-      resultScreensMap[failure] ?? resultScreensMap.GENERIC;
+      resultScreensMap[failure.type] ?? resultScreensMap.GENERIC;
 
     return <OperationResultScreenContent {...resultScreenProps} />;
   };

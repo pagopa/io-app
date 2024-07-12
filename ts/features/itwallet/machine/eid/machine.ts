@@ -92,8 +92,11 @@ export const itwEidIssuanceMachine = setup({
           target: "UserIdentification"
         },
         onError: {
-          actions: assign(() => ({
-            failure: IssuanceFailureType.UNSUPPORTED_DEVICE
+          actions: assign(({ event }) => ({
+            failure: {
+              type: IssuanceFailureType.UNSUPPORTED_DEVICE,
+              reason: event.error
+            }
           })),
           target: "#itwEidIssuanceMachine.Failure"
         }
@@ -175,8 +178,11 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.UserIdentification"
               },
               {
-                actions: assign(() => ({
-                  failure: IssuanceFailureType.GENERIC
+                actions: assign(({ event }) => ({
+                  failure: {
+                    type: IssuanceFailureType.GENERIC,
+                    reason: event.error
+                  }
                 })),
                 target: "#itwEidIssuanceMachine.Failure"
               }
@@ -193,7 +199,7 @@ export const itwEidIssuanceMachine = setup({
             },
             {
               actions: assign(() => ({
-                failure: IssuanceFailureType.NOT_MATCHING_IDENTITY
+                failure: { type: IssuanceFailureType.NOT_MATCHING_IDENTITY }
               })),
               target: "#itwEidIssuanceMachine.Failure"
             }

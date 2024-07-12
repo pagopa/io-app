@@ -9,7 +9,7 @@ import { profileFiscalCodeSelector } from "../../../../store/reducers/profile";
 import { EidIssuanceEvents } from "./events";
 import { Context } from "./context";
 
-export const NativeAuthSessionClosed = t.type({
+const NativeAuthSessionClosed = t.type({
   error: t.literal("NativeAuthSessionClosed")
 });
 
