@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-identical-functions */
 /* eslint-disable functional/no-let */
 import { waitFor } from "@testing-library/react-native";
 import { interpret } from "xstate";

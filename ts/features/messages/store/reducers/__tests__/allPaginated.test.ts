@@ -118,7 +118,7 @@ describe("allPaginated reducer", () => {
           pot.isLoading(reducer(undefined, actionRequest).archive.data)
         ).toBe(false);
       });
-      // eslint-disable-next-line sonarjs/no-identical-functions
+
       it("should set the Inbox lastRequest to 'all'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
           O.some("all")
@@ -234,7 +234,7 @@ describe("allPaginated reducer", () => {
           pot.isLoading(reducer(undefined, actionRequest).archive.data)
         ).toBe(false);
       });
-      // eslint-disable-next-line sonarjs/no-identical-functions
+
       it("should set the Inbox lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
           O.some("next")
@@ -389,7 +389,7 @@ describe("allPaginated reducer", () => {
           pot.isLoading(reducer(undefined, actionRequest).archive.data)
         ).toBe(false);
       });
-      // eslint-disable-next-line sonarjs/no-identical-functions
+
       it("should set the Inbox lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
           O.some("previous")
@@ -1751,14 +1751,13 @@ describe("shouldShowRefreshControllOnListSelector", () => {
   categories.forEach(category =>
     messagePagePotData.forEach(messagePagePot =>
       messageRequests.forEach(messageRequest => {
-        // eslint-disable-next-line no-underscore-dangle
         const expectedOutput =
           (messagePagePot.kind === "PotSomeLoading" ||
             messagePagePot.kind === "PotSomeUpdating") &&
           O.isSome(messageRequest) &&
           (messageRequest.value === "all" ||
             messageRequest.value === "previous");
-        // eslint-disable-next-line no-underscore-dangle
+
         it(`should return ${expectedOutput}, ${category}, '${
           O.isSome(messageRequest) ? messageRequest.value : "None"
         }' lastRequest, ${messagePagePot.kind}`, () => {

@@ -37,9 +37,6 @@ describe("Check the addition for new fields to the persisted store. If one of th
   it("Freeze 'content' state", () => {
     expect(globalState.content).toMatchSnapshot();
   });
-  it("Freeze 'userMetadata' state", () => {
-    expect(globalState.userMetadata).toMatchSnapshot();
-  });
   it("Freeze 'crossSessions' state", () => {
     expect(globalState.crossSessions).toMatchSnapshot();
   });

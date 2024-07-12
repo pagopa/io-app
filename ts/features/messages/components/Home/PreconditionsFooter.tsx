@@ -33,7 +33,7 @@ export const PreconditionsFooter = ({
     case "update":
       return <PreconditionsFooterUpdate onDismiss={onDismiss} />;
     case "view":
-      return <View></View>;
+      return <View />;
   }
   return null;
 };
