@@ -4,7 +4,7 @@
 import { isActionOf } from "typesafe-actions";
 import { sessionExpired, sessionInvalid } from "../actions/authentication";
 
-import { startupLoadSuccess } from "../actions/startup";
+import { startupLoadSuccess, startupTransientError } from "../actions/startup";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -15,12 +15,20 @@ export enum StartupStatusEnum {
   AUTHENTICATED = "authenticated"
 }
 
+export enum StartupTransientErrorEnum {
+  NOT_SET = "NOT_SET",
+  GET_SESSION_DOWN = "GET_SESSION_DOWN",
+  GET_PROFILE_DOWN = "GET_PROFILE_DOWN"
+}
+
 export type StartupState = {
   status: StartupStatusEnum;
+  transientError: StartupTransientErrorEnum;
 };
 
 const initialStartupState: StartupState = {
-  status: StartupStatusEnum.INITIAL
+  status: StartupStatusEnum.INITIAL,
+  transientError: StartupTransientErrorEnum.NOT_SET
 };
 
 export default function startupReducer(
@@ -42,9 +50,19 @@ export default function startupReducer(
       status: StartupStatusEnum.NOT_AUTHENTICATED
     };
   }
+  if (isActionOf(startupTransientError, action)) {
+    return {
+      ...state,
+      transientError: action.payload
+    };
+  }
   return state;
 }
 
 // Selector
 export const isStartupLoaded = (state: GlobalState): StartupStatusEnum =>
   state.startup.status;
+
+export const startupTransientErrorSelector = (
+  state: GlobalState
+): StartupTransientErrorEnum => state.startup.transientError;

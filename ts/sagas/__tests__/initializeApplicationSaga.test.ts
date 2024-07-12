@@ -36,8 +36,6 @@ import {
   getKeyInfo
 } from "../../features/lollipop/saga";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
-import { startupLoadSuccess } from "../../store/actions/startup";
-import { StartupStatusEnum } from "../../store/reducers/startup";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
 import { backendStatusSelector } from "../../store/reducers/backendStatus";
@@ -110,7 +108,6 @@ describe("initializeApplicationSaga", () => {
       .select(sessionInfoSelector)
       .next(O.none)
       .next(O.none) // loadSessionInformationSaga
-      .put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED))
       .next()
       .put(startApplicationInitialization());
   });

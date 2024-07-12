@@ -69,7 +69,10 @@ import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { navigateToPrivacyScreen } from "../store/actions/navigation";
 import { clearOnboarding } from "../store/actions/onboarding";
 import { clearCache, resetProfileState } from "../store/actions/profile";
-import { startupLoadSuccess } from "../store/actions/startup";
+import {
+  startupLoadSuccess,
+  startupTransientError
+} from "../store/actions/startup";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
   sessionInfoSelector,
@@ -88,7 +91,10 @@ import {
   isProfileFirstOnBoarding,
   profileSelector
 } from "../store/reducers/profile";
-import { StartupStatusEnum } from "../store/reducers/startup";
+import {
+  StartupStatusEnum,
+  StartupTransientErrorEnum
+} from "../store/reducers/startup";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
@@ -149,6 +155,13 @@ import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
+const STARTUP_TRANSIENT_ERROR_MAX_RETRIES = 3;
+// eslint-disable-next-line functional/no-let
+let startupTransientErrorRetriesCount = {
+  profile: 0,
+  session: 0
+};
+
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
 const warningWaitNavigatorTime = 2000 as Millisecond;
@@ -158,13 +171,13 @@ const warningWaitNavigatorTime = 2000 as Millisecond;
  */
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
 export function* initializeApplicationSaga(
-  action?: ActionType<typeof startApplicationInitialization>
+  starupAction?: ActionType<typeof startApplicationInitialization>
 ): Generator<ReduxSagaEffect, void, any> {
   const handleSessionExpiration = !!(
-    action?.payload && action.payload.handleSessionExpiration
+    starupAction?.payload && starupAction.payload.handleSessionExpiration
   );
   const showIdentificationModal =
-    action?.payload?.showIdentificationModalAtStartup ?? true;
+    starupAction?.payload?.showIdentificationModalAtStartup ?? true;
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
@@ -325,7 +338,7 @@ export function* initializeApplicationSaga(
   // eslint-disable-next-line functional/no-let
   let maybeSessionInformation: ReturnType<typeof sessionInfoSelector> =
     yield* select(sessionInfoSelector);
-  if (isSessionRefreshed || O.isNone(maybeSessionInformation)) {
+  if (O.isNone(maybeSessionInformation)) {
     // let's try to load the session information from the backend.
 
     maybeSessionInformation = yield* call(
@@ -336,11 +349,29 @@ export function* initializeApplicationSaga(
     if (O.isNone(maybeSessionInformation)) {
       // we can't go further without session info, let's restart
       // the initialization process
-      yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
-      yield* put(startApplicationInitialization());
-
-      return;
+      if (
+        startupTransientErrorRetriesCount.session <
+        STARTUP_TRANSIENT_ERROR_MAX_RETRIES
+      ) {
+        startupTransientErrorRetriesCount = {
+          ...startupTransientErrorRetriesCount,
+          session: startupTransientErrorRetriesCount.session + 1
+        };
+        yield* delay(WAIT_INITIALIZE_SAGA);
+        yield* put(startApplicationInitialization());
+        return;
+      } else {
+        yield* put(
+          startupTransientError(StartupTransientErrorEnum.GET_SESSION_DOWN)
+        );
+        return;
+      }
     }
+  } else {
+    startupTransientErrorRetriesCount = {
+      ...startupTransientErrorRetriesCount,
+      session: 0
+    };
   }
 
   const publicKey = yield* select(lollipopPublicKeySelector);
@@ -374,11 +405,29 @@ export function* initializeApplicationSaga(
   );
 
   if (O.isNone(maybeUserProfile)) {
-    // Start again if we can't load the profile but wait a while
-    yield* delay(WAIT_INITIALIZE_SAGA);
-    yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
-    yield* put(startApplicationInitialization());
-    return;
+    if (
+      startupTransientErrorRetriesCount.profile <
+      STARTUP_TRANSIENT_ERROR_MAX_RETRIES
+    ) {
+      startupTransientErrorRetriesCount = {
+        ...startupTransientErrorRetriesCount,
+        profile: startupTransientErrorRetriesCount.profile + 1
+      };
+      // Start again if we can't load the profile but wait a while
+      yield* delay(WAIT_INITIALIZE_SAGA);
+      yield* put(startApplicationInitialization());
+      return;
+    } else {
+      yield* put(
+        startupTransientError(StartupTransientErrorEnum.GET_PROFILE_DOWN)
+      );
+      return;
+    }
+  } else {
+    startupTransientErrorRetriesCount = {
+      ...startupTransientErrorRetriesCount,
+      profile: 0
+    };
   }
 
   // eslint-disable-next-line functional/no-let

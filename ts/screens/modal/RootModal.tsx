@@ -18,6 +18,12 @@ import {
   trackLoginSessionTimeoutPostPin,
   trackLoginSessionTimeoutPrePin
 } from "../../features/fastLogin/analytics";
+import {
+  StartupTransientErrorEnum,
+  startupTransientErrorSelector
+} from "../../store/reducers/startup";
+import { GetProfileEndpointTransientError } from "../../features/startup/screens/errors/GetProfileEndpointTransientError";
+import { GetSessionEndpointTransientError } from "../../features/startup/screens/errors/GetSessionEndpointTransientError";
 import IdentificationModal from "./IdentificationModal";
 import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
@@ -61,6 +67,18 @@ const RootModal: React.FunctionComponent<Props> = (props: Props) => {
     return fastLoginModals;
   }
 
+  if (
+    props.startupTransientError === StartupTransientErrorEnum.GET_SESSION_DOWN
+  ) {
+    return <GetSessionEndpointTransientError />;
+  }
+
+  if (
+    props.startupTransientError === StartupTransientErrorEnum.GET_PROFILE_DOWN
+  ) {
+    return <GetProfileEndpointTransientError />;
+  }
+
   return <IdentificationModal />;
 };
 
@@ -71,7 +89,8 @@ const mapStateToProps = (state: GlobalState) => ({
   isDeviceSupported: isDeviceSupportedSelector(state),
   isFastLoginUserInteractionNeeded:
     isFastLoginUserInteractionNeededForSessionExpiredSelector(state),
-  tokenRefreshing: tokenRefreshSelector(state)
+  tokenRefreshing: tokenRefreshSelector(state),
+  startupTransientError: startupTransientErrorSelector(state)
 });
 
 export default connect(mapStateToProps)(RootModal);
