@@ -3,6 +3,7 @@ import * as React from "react";
 import { View } from "react-native";
 import Animated, { Layout } from "react-native-reanimated";
 import { useIOSelector } from "../../../store/hooks";
+import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
 import { ITW_TRIAL_ID } from "../../itwallet/common/utils/itwTrialUtils";
 import { trialStatusSelector } from "../../trialSystem/store/reducers";
 import {
@@ -73,6 +74,7 @@ const ItwCardsContainer = ({
   return (
     <>
       <ListItemHeader label="IT Wallet" endElement={endElement} />
+      <ItwDiscoveryBanner ignoreMargins={true} />
       <WalletCardsCategoryContainer
         key={`cards_category_itw`}
         testID={`walletCardsCategoryTestID_itw`}

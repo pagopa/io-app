@@ -53,7 +53,6 @@ const WalletHomeScreen = ({ route }: Props) => {
     <>
       <WalletScrollView>
         <VSpacer size={16} />
-        <ItwDiscoveryBanner ignoreMargins={true} />
         <WalletPaymentsRedirectBanner />
         <WalletCardsContainer />
       </WalletScrollView>

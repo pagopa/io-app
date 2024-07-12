@@ -1,10 +1,6 @@
-import {
-  Banner,
-  IOVisualCostants,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SubscriptionStateEnum } from "../../../../../definitions/trial_systwem/SubscriptionState";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -39,14 +35,7 @@ export const ItwDiscoveryBanner = ({
   };
 
   return (
-    <View
-      style={
-        !ignoreMargins
-          ? { marginHorizontal: IOVisualCostants.appMarginDefault }
-          : {}
-      }
-    >
-      <VSpacer size={16} />
+    <View style={!ignoreMargins && styles.margins}>
       <Banner
         testID="itwDiscoveryBannerTestID"
         viewRef={bannerRef}
@@ -64,7 +53,13 @@ export const ItwDiscoveryBanner = ({
         labelClose={I18n.t("global.buttons.close")}
         onPress={handleOnPress}
       />
-      <VSpacer size={16} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  margins: {
+    marginHorizontal: IOVisualCostants.appMarginDefault,
+    marginVertical: 16
+  }
+});

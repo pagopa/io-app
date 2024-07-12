@@ -25,6 +25,6 @@ export const WalletCardsCategoryContainer = ({
         {renderWalletCardFn(card, isStacked && index < cards.length - 1)}
       </React.Fragment>
     ))}
-    <VSpacer size={16} />
+    <VSpacer size={24} />
   </Animated.View>
 );
