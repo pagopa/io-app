@@ -30,6 +30,8 @@ import { DSBottomSheet } from "../core/DSBottomSheet";
 import { DSButtons } from "../core/DSButtons";
 import { DSCards } from "../core/DSCards";
 import { DSColors } from "../core/DSColors";
+import { DSDynamicBackground } from "../core/DSDynamicBackground";
+import { DSDynamicCardRotation } from "../core/DSDynamicCardRotation";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
 import { DSFooterActions } from "../core/DSFooterActions";
 import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
@@ -45,6 +47,7 @@ import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActio
 import { DSIcons } from "../core/DSIcons";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyAccordion } from "../core/DSLegacyAccordion";
+import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
 import { DSLegacyAlert } from "../core/DSLegacyAlert";
 import { DSLegacyBadges } from "../core/DSLegacyBadges";
 import { DSLegacyButtons } from "../core/DSLegacyButtons";
@@ -72,8 +75,6 @@ import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
-import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
-import { DSDynamicBackground } from "../core/DSDynamicBackground";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -384,6 +385,17 @@ export const DesignSystemNavigator = () => {
             headerShown: false,
             headerTitle:
               DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_BACKGROUND.title
+          }}
+        />
+
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_CARD_ROTATION.route
+          }
+          component={DSDynamicCardRotation}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_CARD_ROTATION.title
           }}
         />
 
