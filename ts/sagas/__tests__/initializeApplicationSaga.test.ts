@@ -41,6 +41,7 @@ import { refreshSessionToken } from "../../features/fastLogin/store/actions/toke
 import { backendStatusSelector } from "../../store/reducers/backendStatus";
 import { watchLogoutSaga } from "../startup/watchLogoutSaga";
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
+import { startupTransientErrorSelector } from "../../store/reducers/startup";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -108,6 +109,9 @@ describe("initializeApplicationSaga", () => {
       .select(sessionInfoSelector)
       .next(O.none)
       .next(O.none) // loadSessionInformationSaga
+      .select(startupTransientErrorSelector)
+      .next({ kind: "NOT_SET", retry: 0 })
+      .next()
       .next()
       .put(startApplicationInitialization());
   });
