@@ -8,6 +8,7 @@ import createCredentialIssuanceActorsImplementation from "./credential/actors";
 import { itwCredentialIssuanceMachine } from "./credential/machine";
 import { createEidIssuanceActionsImplementation } from "./eid/actions";
 import { createEidIssuanceActorsImplementation } from "./eid/actors";
+import { createEidIssuanceGuardsImplementation } from "./eid/guards";
 import { itwEidIssuanceMachine } from "./eid/machine";
 
 type Props = {
@@ -28,6 +29,7 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
   const toast = useIOToast();
 
   const eidIssuanceMachine = itwEidIssuanceMachine.provide({
+    guards: createEidIssuanceGuardsImplementation(),
     actions: createEidIssuanceActionsImplementation(
       navigation,
       dispatch,

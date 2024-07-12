@@ -1,14 +1,10 @@
 import { assign, fromPromise, setup } from "xstate5";
-import { Errors } from "@pagopa/io-react-native-wallet";
-import { pipe } from "fp-ts/lib/function";
-import * as J from "fp-ts/lib/Json";
-import * as E from "fp-ts/lib/Either";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { type RequestEidActorParams } from "./actors";
-import { IssuanceFailureType, NativeAuthSessionClosed } from "./failure";
+import { IssuanceFailureType } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -44,20 +40,7 @@ export const itwEidIssuanceMachine = setup({
     )
   },
   guards: {
-    isNativeAuthSessionClosed: ({ event }) => {
-      if (
-        "error" in event &&
-        event.error instanceof Errors.AuthorizationError
-      ) {
-        return pipe(
-          event.error.message,
-          J.parse,
-          E.map(NativeAuthSessionClosed.is),
-          E.getOrElse(() => false)
-        );
-      }
-      return false;
-    }
+    isNativeAuthSessionClosed: notImplemented
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",

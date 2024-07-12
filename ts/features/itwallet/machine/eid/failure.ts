@@ -11,7 +11,3 @@ export const IssuanceFailure = enumType<IssuanceFailureType>(
   IssuanceFailureType,
   "IssuanceFailureType"
 );
-
-export const NativeAuthSessionClosed = t.type({
-  error: t.literal("NativeAuthSessionClosed")
-});

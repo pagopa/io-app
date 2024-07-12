@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { IOToast } from "@pagopa/io-app-design-system";
-import { ActionArgs, EventObject } from "xstate5";
+import { ActionArgs } from "xstate5";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
@@ -14,6 +14,7 @@ import {
 } from "../../issuance/store/actions";
 import { assert } from "../../../../utils/assert";
 import { Context } from "./context";
+import { EidIssuanceEvents } from "./events";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -113,13 +114,13 @@ export const createEidIssuanceActionsImplementation = (
 
   storeWalletAttestation: () => {},
 
-  storeIntegrityKeyTag: (_: Context, params: { keyTag: string }) => {
+  storeIntegrityKeyTag: (_: unknown, params: { keyTag: string }) => {
     dispatch(itwStoreIntegrityKeyTag(params.keyTag));
   },
 
   storeEidCredential: ({
     context
-  }: ActionArgs<Context, EventObject, EventObject>) => {
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assert(context.eid, "eID is undefined");
 
     dispatch(itwStorePid(context.eid));
