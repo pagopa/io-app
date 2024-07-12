@@ -19,6 +19,7 @@ import {
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { selectEidOption } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -26,6 +27,8 @@ export const ItwIssuanceEidPreviewScreen = () => {
   const dispatch = useIODispatch();
   const eidOption = useSelector(machineRef, selectEidOption);
   const dismissDialog = useItwDismissalDialog();
+
+  useAvoidHardwareBackButton();
 
   const handleStoreEidSuccess = () => {
     machineRef.send({ type: "add-to-wallet" });

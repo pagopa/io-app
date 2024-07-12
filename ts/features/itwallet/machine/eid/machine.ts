@@ -1,10 +1,14 @@
 import { assign, fromPromise, setup } from "xstate5";
+import { Errors } from "@pagopa/io-react-native-wallet";
+import { pipe } from "fp-ts/lib/function";
+import * as J from "fp-ts/lib/Json";
+import * as E from "fp-ts/lib/Either";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { type RequestEidActorParams } from "./actors";
-import { IssuanceFailureType } from "./failure";
+import { IssuanceFailureType, NativeAuthSessionClosed } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -39,7 +43,22 @@ export const itwEidIssuanceMachine = setup({
       notImplemented
     )
   },
-  guards: {}
+  guards: {
+    isNativeAuthSessionClosed: ({ event }) => {
+      if (
+        "error" in event &&
+        event.error instanceof Errors.AuthorizationError
+      ) {
+        return pipe(
+          event.error.message,
+          J.parse,
+          E.map(NativeAuthSessionClosed.is),
+          E.getOrElse(() => false)
+        );
+      }
+      return false;
+    }
+  }
 }).createMachine({
   id: "itwEidIssuanceMachine",
   context: InitialContext,
@@ -61,7 +80,7 @@ export const itwEidIssuanceMachine = setup({
       on: {
         "accept-tos": [
           {
-            guard: ({ context }) => !context.walletAttestation,
+            guard: ({ context }) => !context.integrityKeyTag,
             target: "WalletInstanceCreation"
           },
           {
@@ -115,36 +134,28 @@ export const itwEidIssuanceMachine = setup({
               },
               {
                 guard: ({ event }) => event.mode === "cieId",
-                target: "CieId"
+                actions: assign(() => ({ identification: { mode: "cieId" } })),
+                target: "#itwEidIssuanceMachine.UserIdentification.Completed"
               }
             ],
             back: "#itwEidIssuanceMachine.TosAcceptance"
           }
         },
         Spid: {
-          initial: "IdpSelection",
-          states: {
-            IdpSelection: {
-              entry: "navigateToIdpSelectionScreen",
-              on: {
-                "select-spid-idp": {
-                  target: "#itwEidIssuanceMachine.UserIdentification.Completed",
-                  actions: assign(({ event }) => ({
-                    identification: { mode: "spid", idpId: event.idp.id }
-                  }))
-                },
-                back: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
-                }
-              }
+          entry: "navigateToIdpSelectionScreen",
+          on: {
+            "select-spid-idp": {
+              target: "#itwEidIssuanceMachine.UserIdentification.Completed",
+              actions: assign(({ event }) => ({
+                identification: { mode: "spid", idpId: event.idp.id }
+              }))
+            },
+            back: {
+              target: "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
             }
           }
         },
         CiePin: {
-          // TODO
-        },
-        CieId: {
           // TODO
         },
         Completed: {
@@ -160,6 +171,9 @@ export const itwEidIssuanceMachine = setup({
       initial: "RequestingEid",
       states: {
         RequestingEid: {
+          on: {
+            back: { target: "#itwEidIssuanceMachine.UserIdentification" }
+          },
           tags: [ItwTags.Loading],
           invoke: {
             src: "requestEid",
@@ -171,12 +185,18 @@ export const itwEidIssuanceMachine = setup({
               actions: assign(({ event }) => ({ eid: event.output })),
               target: "#itwEidIssuanceMachine.Issuance.DisplayingPreview"
             },
-            onError: {
-              actions: assign(() => ({
-                failure: IssuanceFailureType.GENERIC
-              })),
-              target: "#itwEidIssuanceMachine.Failure"
-            }
+            onError: [
+              {
+                guard: "isNativeAuthSessionClosed",
+                target: "#itwEidIssuanceMachine.UserIdentification"
+              },
+              {
+                actions: assign(() => ({
+                  failure: IssuanceFailureType.GENERIC
+                })),
+                target: "#itwEidIssuanceMachine.Failure"
+              }
+            ]
           }
         },
         DisplayingPreview: {

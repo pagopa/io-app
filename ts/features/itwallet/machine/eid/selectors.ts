@@ -9,3 +9,6 @@ export const selectEidOption = (snapshot: MachineSnapshot) =>
 
 export const selectFailureOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.failure);
+
+export const selectIdentification = (snapshot: MachineSnapshot) =>
+  snapshot.context.identification;
