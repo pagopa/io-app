@@ -195,11 +195,18 @@ const WalletPaymentPickMethodScreen = () => {
   );
 
   React.useEffect(() => {
-    if (isError) {
+    if (isError && !pot.isError(transactionPot)) {
       navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
         screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
         params: {
           outcome: WalletPaymentOutcomeEnum.GENERIC_ERROR
+        }
+      });
+    } else if (isError && pot.isError(transactionPot)) {
+      navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+        screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_FAILURE,
+        params: {
+          error: transactionPot.error
         }
       });
     }
