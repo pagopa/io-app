@@ -3,7 +3,6 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import React, { MutableRefObject } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "i18n-js";
 import {
   ButtonLink,
   ModulePaymentNotice,
@@ -11,6 +10,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import Placeholder from "rn-placeholder";
+import I18n from "../../../i18n";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { InfoBox } from "../../../components/box/InfoBox";

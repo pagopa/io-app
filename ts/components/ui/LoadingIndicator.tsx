@@ -1,6 +1,6 @@
 import * as React from "react";
 import { LoadingSpinner } from "@pagopa/io-app-design-system";
-import I18n from "i18n-js";
+import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
 import { useInteractiveElementDefaultColor } from "../../utils/hooks/theme";
 
