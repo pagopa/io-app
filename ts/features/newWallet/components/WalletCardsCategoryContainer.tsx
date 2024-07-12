@@ -4,7 +4,11 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import Animated, { LinearTransition } from "react-native-reanimated";
+import Animated, {
+  FadeInDown,
+  FadeOutDown,
+  LinearTransition
+} from "react-native-reanimated";
 import { WalletCard } from "../types";
 import { renderWalletCardFn } from "../utils";
 
@@ -28,12 +32,17 @@ export const WalletCardsCategoryContainer = ({
 }: WalletCardsCategoryContainerProps) => (
   <Animated.View testID={testID} layout={LinearTransition.duration(200)}>
     {header && <ListItemHeader {...header} />}
-    {cards.map((card, index) => (
-      <React.Fragment key={`wallet_card_${card.key}`}>
-        {!isStacked && index !== 0 && <VSpacer size={16} />}
-        {renderWalletCardFn(card, isStacked && index < cards.length - 1)}
-      </React.Fragment>
-    ))}
+    <Animated.FlatList
+      scrollEnabled={false}
+      data={cards}
+      ItemSeparatorComponent={() => (!isStacked ? <VSpacer size={16} /> : null)}
+      renderItem={({ index, item }) =>
+        renderWalletCardFn(item, isStacked && index < cards.length - 1)
+      }
+      itemLayoutAnimation={LinearTransition.duration(200)}
+      entering={FadeInDown.duration(150)}
+      exiting={FadeOutDown.duration(150)}
+    />
     {React.isValidElement(footer) && React.cloneElement(footer)}
     <VSpacer size={24} />
   </Animated.View>
