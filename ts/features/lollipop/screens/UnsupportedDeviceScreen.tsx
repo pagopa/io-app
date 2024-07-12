@@ -1,6 +1,6 @@
-import I18n from "i18n-js";
 import * as React from "react";
 import { Modal } from "react-native";
+import I18n from "../../../i18n";
 import { unsupportedDeviceLearnMoreUrl } from "../../../config";
 import { openWebUrl } from "../../../utils/url";
 import { useAvoidHardwareBackButton } from "../../../utils/useAvoidHardwareBackButton";
