@@ -6,6 +6,7 @@ import {
   walletRemoveCards,
   walletUpsertCard
 } from "../actions/cards";
+import { walletResetPlaceholders } from "../actions/placeholders";
 
 export type WalletCardsState = { [key: string]: WalletCard };
 
@@ -34,6 +35,11 @@ const reducer = (
     case getType(walletRemoveCards):
       return Object.fromEntries(
         Object.entries(state).filter(([key]) => !action.payload.includes(key))
+      );
+
+    case getType(walletResetPlaceholders):
+      return Object.fromEntries(
+        Object.entries(state).filter(([_, card]) => card.type !== "placeholder")
       );
   }
   return state;

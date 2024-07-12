@@ -24,7 +24,7 @@ const WalletCardsContainer = () => {
   const cards = useIOSelector(selectSortedWalletCards);
   const stackCards = cards.length > 4;
 
-  if (isLoading) {
+  if (isLoading && cards.length === 0) {
     return (
       <WalletCardSkeleton
         testID="walletCardSkeletonTestID"
