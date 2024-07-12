@@ -10,7 +10,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { WalletCardsState } from "../../store/reducers/cards";
 import { WalletCardsContainer } from "../WalletCardsContainer";
-import { WalletCardCategory, walletCardCategories } from "../../types";
+import { walletCardCategories } from "../../types";
 import { WalletPlaceholdersState } from "../../store/reducers/placeholders";
 
 jest.mock("react-native-reanimated", () => ({
@@ -162,43 +162,11 @@ describe("WalletCardsContainer", () => {
 
     jest.runOnlyPendingTimers();
   });
-
-  it("should render only the selected category in the filter tabs", () => {
-    const { queryByText, queryByTestId } = renderComponent(
-      T_CARDS,
-      {
-        items: {},
-        isLoading: false
-      },
-      "payment"
-    );
-
-    expect(
-      queryByText(I18n.t(`features.wallet.cards.categories.payment`))
-    ).not.toBeNull();
-
-    expect(queryByTestId(`walletCardsCategoryTestID_payment`)).not.toBeNull();
-
-    expect(
-      queryByText(I18n.t(`features.wallet.cards.categories.bonus`))
-    ).toBeNull();
-
-    expect(queryByTestId(`walletCardsCategoryTestID_bonus`)).toBeNull();
-
-    expect(
-      queryByText(I18n.t(`features.wallet.cards.categories.cgn`))
-    ).toBeNull();
-
-    expect(queryByTestId(`walletCardsCategoryTestID_cgn`)).toBeNull();
-
-    jest.runOnlyPendingTimers();
-  });
 });
 
 const renderComponent = (
   cards: WalletCardsState,
-  placeholders: WalletPlaceholdersState,
-  categoryFilter?: WalletCardCategory
+  placeholders: WalletPlaceholdersState
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
@@ -208,9 +176,6 @@ const renderComponent = (
       features: {
         wallet: {
           cards,
-          preferences: {
-            categoryFilter
-          },
           placeholders
         }
       }

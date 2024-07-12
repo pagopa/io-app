@@ -29,8 +29,9 @@ describe("WalletCardsCategoryContainer", () => {
       cards: [
         { key: T_KEY, type: "payment", category: "payment", walletId: "" }
       ],
-      iconName: "bonus",
-      label: T_CATEGORY_LABEL
+      header: {
+        label: T_CATEGORY_LABEL
+      }
     });
     expect(queryByText(T_CATEGORY_LABEL)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_${T_KEY}`)).not.toBeNull();
@@ -39,8 +40,9 @@ describe("WalletCardsCategoryContainer", () => {
   it("should not render the component if no cards are provided", () => {
     const { queryByTestId, queryByText } = renderComponent({
       cards: [],
-      iconName: "bonus",
-      label: T_CATEGORY_LABEL
+      header: {
+        label: T_CATEGORY_LABEL
+      }
     });
     expect(queryByText(T_CATEGORY_LABEL)).toBeNull();
     expect(queryByTestId(`walletCardTestID_${T_KEY}`)).toBeNull();
