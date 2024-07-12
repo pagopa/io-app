@@ -68,11 +68,11 @@ export const ItwIssuanceFailureScreen = () => {
           label: I18n.t(
             "features.itWallet.issuance.notMatchingIdentityError.primaryAction"
           ),
-          onPress: () => undefined
+          onPress: () => machineRef.send({ type: "close" })
         },
         secondaryAction: {
           label: I18n.t(
-            "features.itWallet.issuance.notMatchingIdentityError.primaryAction"
+            "features.itWallet.issuance.notMatchingIdentityError.secondaryAction"
           ),
           onPress: () => undefined
         }

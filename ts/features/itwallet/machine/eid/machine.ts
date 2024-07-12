@@ -40,7 +40,8 @@ export const itwEidIssuanceMachine = setup({
     )
   },
   guards: {
-    isNativeAuthSessionClosed: notImplemented
+    isNativeAuthSessionClosed: notImplemented,
+    issuedEidMatchesAuthenticatedUser: notImplemented
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -166,7 +167,7 @@ export const itwEidIssuanceMachine = setup({
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),
-              target: "#itwEidIssuanceMachine.Issuance.DisplayingPreview"
+              target: "#itwEidIssuanceMachine.Issuance.CheckingIdentityMatch"
             },
             onError: [
               {
@@ -181,6 +182,22 @@ export const itwEidIssuanceMachine = setup({
               }
             ]
           }
+        },
+        CheckingIdentityMatch: {
+          description:
+            "Checking whether the issued eID matches the identity of the currently logged-in user.",
+          always: [
+            {
+              guard: "issuedEidMatchesAuthenticatedUser",
+              target: "#itwEidIssuanceMachine.Issuance.DisplayingPreview"
+            },
+            {
+              actions: assign(() => ({
+                failure: IssuanceFailureType.NOT_MATCHING_IDENTITY
+              })),
+              target: "#itwEidIssuanceMachine.Failure"
+            }
+          ]
         },
         DisplayingPreview: {
           entry: "navigateToEidPreviewScreen",

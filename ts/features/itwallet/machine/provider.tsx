@@ -2,7 +2,7 @@ import { useIOToast } from "@pagopa/io-app-design-system";
 import { createActorContext } from "@xstate5/react";
 import * as React from "react";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import createCredentialIssuanceActionsImplementation from "./credential/actions";
 import createCredentialIssuanceActorsImplementation from "./credential/actors";
 import { itwCredentialIssuanceMachine } from "./credential/machine";
@@ -24,12 +24,13 @@ export const ItwCredentialIssuanceMachineContext = createActorContext(
 );
 
 export const ItWalletIssuanceMachineProvider = (props: Props) => {
+  const store = useIOStore();
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const toast = useIOToast();
 
   const eidIssuanceMachine = itwEidIssuanceMachine.provide({
-    guards: createEidIssuanceGuardsImplementation(),
+    guards: createEidIssuanceGuardsImplementation(store),
     actions: createEidIssuanceActionsImplementation(
       navigation,
       dispatch,
