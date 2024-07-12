@@ -37,6 +37,9 @@ const DATA_ROUTES_DEBUG: RoutesProps = Object.values(
 const DATA_ROUTES_SCREENS: RoutesProps = Object.values(
   DESIGN_SYSTEM_ROUTES.SCREENS
 );
+const DATA_ROUTES_EXPERIMENTAL_LAB: RoutesProps = Object.values(
+  DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB
+);
 const DATA_ROUTES_LEGACY: RoutesProps = Object.values(
   DESIGN_SYSTEM_ROUTES.LEGACY
 );
@@ -63,6 +66,10 @@ const DESIGN_SYSTEM_SECTION_DATA: Array<SectionDataProps> = [
   {
     title: "Screens",
     data: DATA_ROUTES_SCREENS
+  },
+  {
+    title: "Experimental Lab",
+    data: DATA_ROUTES_EXPERIMENTAL_LAB
   },
   {
     title: "Debug",

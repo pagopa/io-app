@@ -73,6 +73,7 @@ import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
 import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
+import { DSDynamicBackground } from "../core/DSDynamicBackground";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -371,6 +372,18 @@ export const DesignSystemNavigator = () => {
           component={DSWallet}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.WALLET.title
+          }}
+        />
+
+        {/* EXPERIMENTAL LAB */}
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_BACKGROUND.route}
+          component={DSDynamicBackground}
+          options={{
+            headerShown: false,
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_BACKGROUND.title
           }}
         />
 
