@@ -117,6 +117,7 @@
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
         <data android:scheme="ioit" android:host="ioit" />
+        <data android:scheme="iowallet" android:host="iowallet" />
       </intent-filter>
 
       <intent-filter android:autoVerify="true">
