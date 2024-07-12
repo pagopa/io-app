@@ -14,15 +14,17 @@ import JailMonkey from "jail-monkey";
 import * as React from "react";
 import DeviceInfo from "react-native-device-info";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Alert, View } from "react-native";
+import { Alert, Platform, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import SectionStatusComponent from "../../components/SectionStatus";
+import SectionStatusComponent, {
+  InnerSectionStatus
+} from "../../components/SectionStatus";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import { privacyUrl } from "../../config";
+import { privacyUrl, unsupportedDeviceMoreInfoUrl } from "../../config";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
 import {
@@ -45,6 +47,7 @@ import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../utils/url";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { setAccessibilityFocus } from "../../utils/accessibility";
+import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import {
   trackCieLoginSelected,
   trackMethodInfo,
@@ -66,6 +69,31 @@ export const IdpCIE: SpidIdp = {
 
 const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
+
+// TODO: remove AndroidVersionLessThen25UnsupportedDevicesStatusComponent
+// when the minimum supported Android version is 25
+const isAndroidVersionLessThan25 =
+  Platform.OS === "android" && Platform.Version < 25;
+export const AndroidVersionLessThen25UnsupportedDevicesStatusComponent = () =>
+  isAndroidVersionLessThan25 && (
+    <>
+      <InnerSectionStatus
+        sectionKey="login"
+        sectionStatus={{
+          is_visible: true,
+          level: LevelEnum.warning,
+          web_url: {
+            "it-IT": unsupportedDeviceMoreInfoUrl,
+            "en-EN": unsupportedDeviceMoreInfoUrl
+          },
+          message: {
+            "it-IT": I18n.t("features.login.unsupportedDevice.text"),
+            "en-EN": I18n.t("features.login.unsupportedDevice.text")
+          }
+        }}
+      />
+    </>
+  );
 
 export const LandingScreen = () => {
   const accessibilityFirstFocuseViewRef = React.useRef<View>(null);
@@ -261,6 +289,7 @@ export const LandingScreen = () => {
 
     return (
       <View style={IOStyles.flex}>
+        <AndroidVersionLessThen25UnsupportedDevicesStatusComponent />
         {isSessionExpiredRef.current ? (
           <LandingCardComponent
             id={0}
@@ -279,7 +308,6 @@ export const LandingScreen = () => {
             dotEasterEggCallback={navigateToCieUatSelectionScreen}
           />
         )}
-
         <SectionStatusComponent sectionKey={"login"} />
         <ContentWrapper>
           <ButtonSolid
