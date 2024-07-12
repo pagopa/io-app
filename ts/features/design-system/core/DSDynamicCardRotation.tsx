@@ -124,8 +124,8 @@ export const DSDynamicCardRotation = () => {
   };
 
   const getLightSize = (event: LayoutChangeEvent) => {
-    const { width: lightSize } = event.nativeEvent.layout;
-    setLightSize({ value: lightSize });
+    const { width: newLightSize } = event.nativeEvent.layout;
+    setLightSize({ value: newLightSize });
   };
 
   /* Set translate boundaries */
@@ -145,16 +145,6 @@ export const DSDynamicCardRotation = () => {
 
   /* Calculate the light position using quaternions */
   const lightAnimatedStyle = useAnimatedStyle(() => {
-    const maxTranslateX =
-      ((cardSize?.width ?? 0) -
-        (lightSize?.value ?? 0) * visibleLightPercentage) /
-      2;
-
-    const maxTranslateY =
-      ((cardSize?.height ?? 0) -
-        (lightSize?.value ?? 0) * visibleLightPercentage) /
-      2;
-
     const translateX = interpolate(
       relativeQx.value,
       [-quaternionRange, quaternionRange],
@@ -206,16 +196,16 @@ export const DSDynamicCardRotation = () => {
     ];
   });
 
-  const CardMask = () => (
-    <RoundedRect
-      x={0}
-      y={0}
-      width={cardSize?.width ?? 0}
-      height={cardSize?.height ?? 0}
-      r={cardBorderRadius}
-      color={IOColors.black}
-    />
-  );
+  // const CardMask = () => (
+  //   <RoundedRect
+  //     x={0}
+  //     y={0}
+  //     width={cardSize?.width ?? 0}
+  //     height={cardSize?.height ?? 0}
+  //     r={cardBorderRadius}
+  //     color={IOColors.black}
+  //   />
+  // );
 
   // Inner card (border excluded)
   const CardInnerMask = () => (
