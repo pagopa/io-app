@@ -33,7 +33,7 @@ import { Action } from "../actions/types";
 
 import {
   isIdPayTestEnabledSelector,
-  isNewWalletSectionEnabledSelector
+  isNewWalletSectionLocallyEnabledSelector
 } from "./persistedPreferences";
 import { GlobalState } from "./types";
 
@@ -414,12 +414,19 @@ export const isIdPayEnabledSelector = createSelector(
  */
 export const isNewPaymentSectionEnabledSelector = createSelector(
   backendStatusSelector,
-  isNewWalletSectionEnabledSelector,
+  isNewWalletSectionLocallyEnabledSelector,
   (backendStatus, isNeWalletSectionEnabled): boolean =>
     isNeWalletSectionEnabled ||
     pipe(
       backendStatus,
-      O.map(bs => bs.config.newPaymentSection?.enabled),
+      O.map(bs =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? bs.config.newPaymentSection.min_app_version.ios
+            : bs.config.newPaymentSection.min_app_version.android,
+          getAppVersion()
+        )
+      ),
       O.getOrElse(() => false)
     )
 );
