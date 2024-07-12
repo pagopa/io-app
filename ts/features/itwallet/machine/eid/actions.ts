@@ -6,7 +6,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { useIODispatch } from "../../../../store/hooks";
-import { itwStoreHardwareKeyTag } from "../../issuance/store/actions";
+import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -86,8 +86,8 @@ export const createEidIssuanceActionsImplementation = (
     navigation.popToTop();
   },
 
-  storeHardwareKeyTag: (_: unknown, params: { keyTag: string }) => {
-    dispatch(itwStoreHardwareKeyTag(params.keyTag));
+  storeIntegrityKeyTag: (_: unknown, params: { keyTag: string }) => {
+    dispatch(itwStoreIntegrityKeyTag(params.keyTag));
   },
 
   storeEidCredential: () => {},
