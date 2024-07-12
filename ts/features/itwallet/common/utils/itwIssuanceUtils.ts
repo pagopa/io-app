@@ -9,9 +9,10 @@ import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import uuid from "react-native-uuid";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import {
-  itWalletPidIssuanceRedirectUri,
   itwWalletProviderBaseUrl,
-  itwPidProviderBaseUrl
+  itwPidProviderBaseUrl,
+  itWalletIssuanceRedirectUri,
+  itWalletIssuanceRedirectUriCie
 } from "../../../../config";
 import { type Identification } from "../../machine/eid/context";
 import { type IdentificationMode } from "../../machine/eid/events";
@@ -38,6 +39,13 @@ const idpHintsMap: Record<IdentificationMode, string> = {
   ciePin: CIE_HINT,
   spid: SPID_HINT
 };
+
+// Different scheme to avoid conflicts with the scheme
+// handled by io-react-native-login-utils's activity
+const getRedirectUri = (identificationMode: IdentificationMode) =>
+  identificationMode === "cieId"
+    ? itWalletIssuanceRedirectUriCie
+    : itWalletIssuanceRedirectUri;
 
 export async function getPid({
   integrityKeyTag,
@@ -75,13 +83,15 @@ export async function getPid({
       });
 
     /* ---------------- Authorize user and get access token ---------------- */
+    const redirectUri = getRedirectUri(identification.mode);
+
     const { issuerRequestUri, clientId, codeVerifier, credentialDefinition } =
       await Credential.Issuance.startUserAuthorization(
         issuerConf,
         credentialType,
         {
           walletInstanceAttestation,
-          redirectUri: itWalletPidIssuanceRedirectUri,
+          redirectUri,
           wiaCryptoContext
         }
       );
@@ -92,7 +102,7 @@ export async function getPid({
         clientId,
         issuerConf,
         idpHintsMap[identification.mode], // TODO: use idp ID to get the proper hint?
-        itWalletPidIssuanceRedirectUri,
+        redirectUri,
         authorizationContext
       );
 
@@ -101,7 +111,7 @@ export async function getPid({
         issuerConf,
         code,
         clientId,
-        itWalletPidIssuanceRedirectUri,
+        redirectUri,
         codeVerifier,
         {
           walletInstanceAttestation,
