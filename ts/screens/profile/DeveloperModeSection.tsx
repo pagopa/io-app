@@ -50,7 +50,7 @@ import {
   isIdPayTestEnabledSelector,
   isItWalletTestEnabledSelector,
   isNewHomeSectionEnabledSelector,
-  isNewWalletSectionEnabledSelector,
+  isNewWalletSectionLocallyEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -303,8 +303,8 @@ const DesignSystemSection = () => {
   const { themeType, setTheme } = useIOThemeContext();
   const dispatch = useIODispatch();
 
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewWalletSectionEnabledSelector
+  const isNewWalletSectionLocallyEnabled = useIOSelector(
+    isNewWalletSectionLocallyEnabledSelector
   );
   const isNewHomeSectionEnabled = useIOSelector(
     isNewHomeSectionEnabledSelector
@@ -352,7 +352,7 @@ const DesignSystemSection = () => {
       <Divider />
       <ListItemSwitch
         label={I18n.t("profile.main.newWalletSection")}
-        value={isNewWalletSectionEnabled}
+        value={isNewWalletSectionLocallyEnabled}
         onSwitchValueChange={onNewWalletSectionToggle}
       />
       <Divider />
