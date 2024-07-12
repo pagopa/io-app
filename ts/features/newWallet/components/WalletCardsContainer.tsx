@@ -1,7 +1,7 @@
 import { IOStyles, ListItemHeader } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
-import Animated, { Layout } from "react-native-reanimated";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import { useIOSelector } from "../../../store/hooks";
 import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
 import { ITW_TRIAL_ID } from "../../itwallet/common/utils/itwTrialUtils";
@@ -41,7 +41,10 @@ const WalletCardsContainer = () => {
   }
 
   return (
-    <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
+    <Animated.View
+      style={IOStyles.flex}
+      layout={LinearTransition.duration(200)}
+    >
       <View testID="walletCardsContainerTestID">
         <ItwCardsContainer isStacked={stackCards} />
         <OtherCardsContainer isStacked={stackCards} />
@@ -72,16 +75,14 @@ const ItwCardsContainer = ({
       };
 
   return (
-    <>
-      <ListItemHeader label="IT Wallet" endElement={endElement} />
-      <ItwDiscoveryBanner ignoreMargins={true} />
-      <WalletCardsCategoryContainer
-        key={`cards_category_itw`}
-        testID={`walletCardsCategoryTestID_itw`}
-        cards={cards}
-        isStacked={isStacked}
-      />
-    </>
+    <WalletCardsCategoryContainer
+      key={`cards_category_itw`}
+      testID={`walletCardsCategoryTestID_itw`}
+      cards={cards}
+      isStacked={isStacked}
+      header={{ label: "IT Wallet", endElement }}
+      footer={<ItwDiscoveryBanner ignoreMargins={true} />}
+    />
   );
 };
 
@@ -96,15 +97,13 @@ const OtherCardsContainer = ({
   }
 
   return (
-    <>
-      {isItwTrialEnabled && <ListItemHeader label="Altro" />}
-      <WalletCardsCategoryContainer
-        key={`cards_category_other`}
-        testID={`walletCardsCategoryTestID_other`}
-        cards={cards}
-        isStacked={isStacked}
-      />
-    </>
+    <WalletCardsCategoryContainer
+      key={`cards_category_other`}
+      testID={`walletCardsCategoryTestID_other`}
+      cards={cards}
+      isStacked={isStacked}
+      header={isItwTrialEnabled && { label: "Altro" }}
+    />
   );
 };
 

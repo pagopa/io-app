@@ -3,6 +3,7 @@ import { WalletCardsCategoryContainer } from "../../newWallet/components/WalletC
 import { WalletCard, WalletCardCategory } from "../../newWallet/types";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
+import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
 
 export const DSWallet = () => {
   const cards: ReadonlyArray<WalletCard> = [
@@ -20,6 +21,18 @@ export const DSWallet = () => {
     },
     {
       key: "2",
+      type: "idPay",
+      category: "bonus",
+      initiativeId: "1",
+      amount: 412.69,
+      avatarSource: {
+        uri: "https://vtlogo.com/wp-content/uploads/2021/08/18app-vector-logo.png"
+      },
+      expireDate: new Date(),
+      name: "18 App"
+    },
+    {
+      key: "3",
       type: "payment",
       category: "payment",
       walletId: "1",
@@ -36,7 +49,7 @@ export const DSWallet = () => {
       holderEmail: "anna_v********@**hoo.it"
     },
     {
-      key: "2",
+      key: "5",
       type: "payment",
       category: "payment",
       walletId: "1",
@@ -58,19 +71,25 @@ export const DSWallet = () => {
 
   return (
     <DesignSystemScreen title={"Wallet"}>
-      <DesignSystemSection title="Single card">
+      <DesignSystemSection title="Stacked">
         <WalletCardsCategoryContainer
-          label="Iniziative welfare"
-          iconName="bonus"
           cards={cardsByCategory.bonus}
+          header={{
+            label: "Iniziative welfare",
+            iconName: "bonus"
+          }}
+          isStacked={true}
         />
       </DesignSystemSection>
 
-      <DesignSystemSection title="Multiple cards">
+      <DesignSystemSection title="Unstacked">
         <WalletCardsCategoryContainer
-          label="Metodi di pagamento"
-          iconName="creditCard"
           cards={cardsByCategory.payment}
+          header={{
+            label: "Metodi di pagamento",
+            iconName: "creditCard"
+          }}
+          footer={<ItwDiscoveryBanner ignoreMargins />}
         />
       </DesignSystemSection>
     </DesignSystemScreen>

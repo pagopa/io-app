@@ -1,12 +1,18 @@
-import { VSpacer, WithTestID } from "@pagopa/io-app-design-system";
+import {
+  ListItemHeader,
+  VSpacer,
+  WithTestID
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
-import Animated, { Layout } from "react-native-reanimated";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import { WalletCard } from "../types";
 import { renderWalletCardFn } from "../utils";
 
 export type WalletCardsCategoryContainerProps = WithTestID<{
   cards: ReadonlyArray<WalletCard>;
   isStacked?: boolean;
+  header?: ListItemHeader;
+  footer?: JSX.Element;
 }>;
 
 /**
@@ -16,15 +22,19 @@ export type WalletCardsCategoryContainerProps = WithTestID<{
 export const WalletCardsCategoryContainer = ({
   cards,
   isStacked = false,
+  header,
+  footer,
   testID
 }: WalletCardsCategoryContainerProps) => (
-  <Animated.View testID={testID} layout={Layout.duration(200)}>
+  <Animated.View testID={testID} layout={LinearTransition.duration(200)}>
+    {header && <ListItemHeader {...header} />}
     {cards.map((card, index) => (
       <React.Fragment key={`wallet_card_${card.key}`}>
         {!isStacked && index !== 0 && <VSpacer size={16} />}
         {renderWalletCardFn(card, isStacked && index < cards.length - 1)}
       </React.Fragment>
     ))}
+    {React.isValidElement(footer) && React.cloneElement(footer)}
     <VSpacer size={24} />
   </Animated.View>
 );
