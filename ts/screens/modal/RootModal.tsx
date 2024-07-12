@@ -18,10 +18,7 @@ import {
   trackLoginSessionTimeoutPostPin,
   trackLoginSessionTimeoutPrePin
 } from "../../features/fastLogin/analytics";
-import {
-  StartupTransientErrorEnum,
-  startupTransientErrorSelector
-} from "../../store/reducers/startup";
+import { startupTransientErrorSelector } from "../../store/reducers/startup";
 import { GetProfileEndpointTransientError } from "../../features/startup/screens/errors/GetProfileEndpointTransientError";
 import { GetSessionEndpointTransientError } from "../../features/startup/screens/errors/GetSessionEndpointTransientError";
 import IdentificationModal from "./IdentificationModal";
@@ -68,13 +65,15 @@ const RootModal: React.FunctionComponent<Props> = (props: Props) => {
   }
 
   if (
-    props.startupTransientError === StartupTransientErrorEnum.GET_SESSION_DOWN
+    props.startupTransientError.kind === "GET_SESSION_DOWN" &&
+    props.startupTransientError.showError
   ) {
     return <GetSessionEndpointTransientError />;
   }
 
   if (
-    props.startupTransientError === StartupTransientErrorEnum.GET_PROFILE_DOWN
+    props.startupTransientError.kind === "GET_PROFILE_DOWN" &&
+    props.startupTransientError.showError
   ) {
     return <GetProfileEndpointTransientError />;
   }

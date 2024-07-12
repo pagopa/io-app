@@ -93,7 +93,7 @@ import {
 } from "../store/reducers/profile";
 import {
   StartupStatusEnum,
-  StartupTransientErrorEnum
+  startupTransientErrorSelector
 } from "../store/reducers/startup";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainGetFailure } from "../utils/analytics";
@@ -156,11 +156,6 @@ import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
 const STARTUP_TRANSIENT_ERROR_MAX_RETRIES = 3;
-// eslint-disable-next-line functional/no-let
-let startupTransientErrorRetriesCount = {
-  profile: 0,
-  session: 0
-};
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -347,31 +342,35 @@ export function* initializeApplicationSaga(
     );
 
     if (O.isNone(maybeSessionInformation)) {
+      const transientError = yield* select(startupTransientErrorSelector);
       // we can't go further without session info, let's restart
       // the initialization process
       if (
-        startupTransientErrorRetriesCount.session <
-        STARTUP_TRANSIENT_ERROR_MAX_RETRIES
+        (transientError.kind === "GET_SESSION_DOWN" ||
+          transientError.kind === "NOT_SET") &&
+        transientError.retry < STARTUP_TRANSIENT_ERROR_MAX_RETRIES
       ) {
-        startupTransientErrorRetriesCount = {
-          ...startupTransientErrorRetriesCount,
-          session: startupTransientErrorRetriesCount.session + 1
-        };
+        yield* put(
+          startupTransientError({
+            kind: "GET_SESSION_DOWN",
+            retry: transientError.retry + 1,
+            showError: false
+          })
+        );
         yield* delay(WAIT_INITIALIZE_SAGA);
         yield* put(startApplicationInitialization());
         return;
       } else {
         yield* put(
-          startupTransientError(StartupTransientErrorEnum.GET_SESSION_DOWN)
+          startupTransientError({
+            kind: "GET_SESSION_DOWN",
+            retry: 0,
+            showError: true
+          })
         );
         return;
       }
     }
-  } else {
-    startupTransientErrorRetriesCount = {
-      ...startupTransientErrorRetriesCount,
-      session: 0
-    };
   }
 
   const publicKey = yield* select(lollipopPublicKeySelector);
@@ -405,30 +404,35 @@ export function* initializeApplicationSaga(
   );
 
   if (O.isNone(maybeUserProfile)) {
+    const transientError = yield* select(startupTransientErrorSelector);
     if (
-      startupTransientErrorRetriesCount.profile <
-      STARTUP_TRANSIENT_ERROR_MAX_RETRIES
+      (transientError.kind === "GET_PROFILE_DOWN" ||
+        transientError.kind === "NOT_SET") &&
+      transientError.retry < STARTUP_TRANSIENT_ERROR_MAX_RETRIES
     ) {
-      startupTransientErrorRetriesCount = {
-        ...startupTransientErrorRetriesCount,
-        profile: startupTransientErrorRetriesCount.profile + 1
-      };
+      yield* put(
+        startupTransientError({
+          kind: "GET_PROFILE_DOWN",
+          retry: transientError.retry + 1,
+          showError: false
+        })
+      );
       // Start again if we can't load the profile but wait a while
       yield* delay(WAIT_INITIALIZE_SAGA);
       yield* put(startApplicationInitialization());
       return;
     } else {
       yield* put(
-        startupTransientError(StartupTransientErrorEnum.GET_PROFILE_DOWN)
+        startupTransientError({
+          kind: "GET_PROFILE_DOWN",
+          retry: 0,
+          showError: true
+        })
       );
       return;
     }
-  } else {
-    startupTransientErrorRetriesCount = {
-      ...startupTransientErrorRetriesCount,
-      profile: 0
-    };
   }
+  yield* put(startupTransientError({ kind: "NOT_SET", retry: 0 }));
 
   // eslint-disable-next-line functional/no-let
   let userProfile = maybeUserProfile.value;
@@ -483,6 +487,10 @@ export function* initializeApplicationSaga(
       // If we are here the user had chosen to reset the unlock code
       yield* put(startApplicationInitialization());
       return;
+    }
+
+    if (!handleSessionExpiration) {
+      yield* call(setLanguageFromProfileIfExists);
     }
 
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
