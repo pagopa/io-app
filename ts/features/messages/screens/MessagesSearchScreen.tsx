@@ -6,8 +6,20 @@ import {
   SearchInputRef,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { FlatList, ListRenderItemInfo, Platform, View } from "react-native";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  Platform,
+  View,
+  ViewStyle
+} from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../../i18n";
@@ -30,6 +42,15 @@ export const MessagesSearchScreen = () => {
   const [filteredMessages, setFilteredMessages] = useState<
     ReadonlyArray<UIMessage>
   >([]);
+
+  const containerStyle: ViewStyle = useMemo(
+    () => ({
+      ...IOStyles.horizontalContentPadding,
+      marginTop: insets.top,
+      paddingVertical: INPUT_PADDING
+    }),
+    [insets.top]
+  );
 
   const renderItemCallback = useCallback(
     (itemInfo: ListRenderItemInfo<UIMessage>) => (
@@ -73,15 +94,7 @@ export const MessagesSearchScreen = () => {
 
   return (
     <>
-      <View
-        style={[
-          {
-            marginTop: insets.top,
-            paddingVertical: INPUT_PADDING
-          },
-          IOStyles.horizontalContentPadding
-        ]}
-      >
+      <View style={containerStyle}>
         <SearchInput
           accessibilityLabel={I18n.t("messages.search.input.placeholderShort")}
           autoFocus={true}
