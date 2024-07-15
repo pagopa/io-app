@@ -10,9 +10,9 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useLinkTo } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18n-js";
 import React, { useCallback } from "react";
 import { ScrollView, StyleSheet, TextInput, View } from "react-native";
+import I18n from "../../../i18n";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import { ExtractedCtaButton } from "../../../components/cta/ExtractedCtaButton";
 import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
