@@ -5,7 +5,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { View } from "react-native";
-import { SubscriptionStateEnum } from "../../../../../definitions/trial_systwem/SubscriptionState";
+import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
