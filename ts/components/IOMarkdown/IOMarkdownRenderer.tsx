@@ -29,7 +29,7 @@ import {
   AnyTxtNode
 } from "@textlint/ast-node-types";
 import React, { Fragment } from "react";
-import { View, Image } from "react-native";
+import { View, Image, Text } from "react-native";
 import { openWebUrl } from "../../utils/url";
 import I18n from "../../i18n";
 import { AnyTxtNodeWiSpacer, Renderer, IOMarkdownRules } from "./types";
@@ -66,6 +66,29 @@ export function getTxtNodeKey(txtNode: AnyTxtNode) {
 
 class IOMarkdownRenderer {
   render: Renderer;
+
+  constructor(rules?: Partial<IOMarkdownRules>) {
+    const getMarkdownRenderer = (rules: IOMarkdownRules): Renderer => {
+      return (content: AnyTxtNodeWiSpacer) =>
+        // @ts-ignore
+        rules[content.type]?.(content, getMarkdownRenderer(rules)) ?? null;
+    };
+    this.render = getMarkdownRenderer({
+      Header: this.renderHeader,
+      Paragraph: this.renderParagraph,
+      Str: this.renderStr,
+      Strong: this.renderStrong,
+      Emphasis: this.renderEmphasis,
+      Comment: () => null,
+      Link: this.renderLink,
+      List: this.renderList,
+      ListItem: this.renderListItem,
+      Image: this.renderImage,
+      Spacer: content => <VSpacer size={content.size} />,
+      ...(rules || {})
+    });
+  }
+
   parse(content: string) {
     return parse(content).children.reduce<Array<AnyTxtNodeWiSpacer>>(
       (acc, currNode, idx, self) => {
@@ -84,34 +107,14 @@ class IOMarkdownRenderer {
     );
   }
 
-  constructor(rules?: Partial<IOMarkdownRules>) {
-    const getMarkdownRenderer = (rules: IOMarkdownRules): Renderer => {
-      return (content: AnyTxtNodeWiSpacer) =>
-        // @ts-ignore
-        rules[content.type]?.(content, getMarkdownRenderer(rules)) ?? null;
-    };
-
-    this.render = getMarkdownRenderer({
-      Header: this.renderHeader,
-      Paragraph: this.renderParagraph,
-      Str: this.renderStr,
-      Strong: this.renderStrong,
-      Emphasis: this.renderEmphasis,
-      Comment: () => null,
-      Link: this.renderLink,
-      List: this.renderList,
-      ListItem: this.renderListItem,
-      Image: this.renderImage,
-      Spacer: content => <VSpacer size={content.size} />,
-      ...(rules || {})
-    });
-  }
-
-  private renderHeader(header: TxtHeaderNode) {
+  private renderHeader(header: TxtHeaderNode, render: Renderer) {
     const Heading = HEADINGS_MAP[header.depth];
-    const text = getStrValue(header);
 
-    return <Heading key={getTxtNodeKey(header)}>{text}</Heading>;
+    return (
+      <Heading key={getTxtNodeKey(header)}>
+        {header.children.map(render)}
+      </Heading>
+    );
   }
 
   private renderParagraph(paragraph: TxtParagraphNode, render: Renderer) {
@@ -123,16 +126,16 @@ class IOMarkdownRenderer {
   }
   private renderEmphasis(emphasis: TxtEmphasisNode, render: Renderer) {
     return (
-      <Body key={getTxtNodeKey(emphasis)} weight="Light">
+      <Text key={getTxtNodeKey(emphasis)} style={{ fontStyle: "italic" }}>
         {emphasis.children.map(render)}
-      </Body>
+      </Text>
     );
   }
   private renderStrong(strong: TxtStrongNode, render: Renderer) {
     return (
-      <Body key={getTxtNodeKey(strong)} weight="Bold">
+      <Text key={getTxtNodeKey(strong)} style={{ fontWeight: "800" }}>
         {strong.children.map(render)}
-      </Body>
+      </Text>
     );
   }
   private renderStr(str: TxtStrNode) {

@@ -9,12 +9,12 @@ type Props = {
 };
 
 const IOMarkdown = ({ content, rules }: Props) => {
-  const markdownContent = useMemo(() => {
+  const markdownContent = () => {
     const markdownRenderer = new IOMarkdownRenderer(rules);
     const parsedContent = markdownRenderer.parse(content);
 
     return parsedContent.map(markdownRenderer.render);
-  }, [rules, content]);
+  };
 
   return <View>{markdownContent}</View>;
 };
