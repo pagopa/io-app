@@ -4,7 +4,6 @@ import { testSaga } from "redux-saga-test-plan";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import mockedProfile from "../../__mocks__/initializedProfile";
 
-import { startApplicationInitialization } from "../../store/actions/application";
 import { sessionExpired } from "../../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../../store/actions/installation";
 import { resetProfileState } from "../../store/actions/profile";
@@ -41,7 +40,7 @@ import { refreshSessionToken } from "../../features/fastLogin/store/actions/toke
 import { backendStatusSelector } from "../../store/reducers/backendStatus";
 import { watchLogoutSaga } from "../startup/watchLogoutSaga";
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
-import { startupTransientErrorSelector } from "../../store/reducers/startup";
+import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -64,7 +63,7 @@ const profile: InitializedProfile = {
 };
 
 describe("initializeApplicationSaga", () => {
-  it("should dispatch startApplicationInitialization if check session response is 200 but session is none", () => {
+  it("should call handleTransientError if check session response is 200 but session is none", () => {
     testSaga(initializeApplicationSaga)
       .next()
       .call(checkAppHistoryVersionSaga)
@@ -109,11 +108,8 @@ describe("initializeApplicationSaga", () => {
       .select(sessionInfoSelector)
       .next(O.none)
       .next(O.none) // loadSessionInformationSaga
-      .select(startupTransientErrorSelector)
-      .next({ kind: "NOT_SET", retry: 0 })
-      .next()
-      .next()
-      .put(startApplicationInitialization());
+      .next(handleApplicationStartupTransientError)
+      .next({ kind: "NOT_SET", retry: 0 });
   });
 
   it("should dispatch sessionExpired if check session response is 401 & FastLogin disabled", () => {

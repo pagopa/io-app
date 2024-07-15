@@ -91,10 +91,7 @@ import {
   isProfileFirstOnBoarding,
   profileSelector
 } from "../store/reducers/profile";
-import {
-  StartupStatusEnum,
-  startupTransientErrorSelector
-} from "../store/reducers/startup";
+import { StartupStatusEnum } from "../store/reducers/startup";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
@@ -113,10 +110,7 @@ import {
 } from "../features/pushNotifications/sagas/notifications";
 import { checkNotificationsPreferencesSaga } from "../features/pushNotifications/sagas/checkNotificationsPreferencesSaga";
 import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
-import {
-  trackGetProfileEndpointTransientError,
-  trackGetSessionEndpointTransientError
-} from "../features/startup/analytics";
+import { handleApplicationStartupTransientError } from "../features/startup/sagas";
 import {
   clearKeychainError,
   keychainError
@@ -159,9 +153,7 @@ import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
-const STARTUP_TRANSIENT_ERROR_MAX_RETRIES = 3;
-
-const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
+export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
 const warningWaitNavigatorTime = 2000 as Millisecond;
 
@@ -346,35 +338,8 @@ export function* initializeApplicationSaga(
     );
 
     if (O.isNone(maybeSessionInformation)) {
-      const transientError = yield* select(startupTransientErrorSelector);
-      // we can't go further without session info, let's restart
-      // the initialization process
-      if (
-        (transientError.kind === "GET_SESSION_DOWN" ||
-          transientError.kind === "NOT_SET") &&
-        transientError.retry < STARTUP_TRANSIENT_ERROR_MAX_RETRIES
-      ) {
-        yield* put(
-          startupTransientError({
-            kind: "GET_SESSION_DOWN",
-            retry: transientError.retry + 1,
-            showError: false
-          })
-        );
-        yield* delay(WAIT_INITIALIZE_SAGA);
-        yield* put(startApplicationInitialization());
-        return;
-      } else {
-        void trackGetSessionEndpointTransientError();
-        yield* put(
-          startupTransientError({
-            kind: "GET_SESSION_DOWN",
-            retry: 0,
-            showError: true
-          })
-        );
-        return;
-      }
+      yield* call(handleApplicationStartupTransientError, "GET_SESSION_DOWN");
+      return;
     }
   }
 
@@ -409,34 +374,8 @@ export function* initializeApplicationSaga(
   );
 
   if (O.isNone(maybeUserProfile)) {
-    const transientError = yield* select(startupTransientErrorSelector);
-    if (
-      (transientError.kind === "GET_PROFILE_DOWN" ||
-        transientError.kind === "NOT_SET") &&
-      transientError.retry < STARTUP_TRANSIENT_ERROR_MAX_RETRIES
-    ) {
-      yield* put(
-        startupTransientError({
-          kind: "GET_PROFILE_DOWN",
-          retry: transientError.retry + 1,
-          showError: false
-        })
-      );
-      // Start again if we can't load the profile but wait a while
-      yield* delay(WAIT_INITIALIZE_SAGA);
-      yield* put(startApplicationInitialization());
-      return;
-    } else {
-      void trackGetProfileEndpointTransientError();
-      yield* put(
-        startupTransientError({
-          kind: "GET_PROFILE_DOWN",
-          retry: 0,
-          showError: true
-        })
-      );
-      return;
-    }
+    yield* call(handleApplicationStartupTransientError, "GET_PROFILE_DOWN");
+    return;
   }
   yield* put(startupTransientError({ kind: "NOT_SET", retry: 0 }));
 
