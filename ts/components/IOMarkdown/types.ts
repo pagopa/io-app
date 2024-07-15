@@ -14,12 +14,14 @@ import {
 } from "@textlint/ast-node-types";
 import { ReactNode, ComponentProps } from "react";
 
-export type Renderer = (txtNode: AnyTxtNodeWiSpacer) => ReactNode;
+export type Renderer = (txtNode: AnyTxtNodeWithSpacer) => ReactNode;
 export type RuleRenderer<P, F extends Renderer | void = void> = (
   param: P,
   renderer: F
 ) => ReactNode;
-export type AnyTxtNodeWiSpacer = AnyTxtNode | { type: "Spacer"; size: number };
+export type AnyTxtNodeWithSpacer =
+  | AnyTxtNode
+  | { type: "Spacer"; size: number };
 
 export type IOMarkdownRules = {
   [ASTNodeTypes.Header]: RuleRenderer<TxtHeaderNode, Renderer>;

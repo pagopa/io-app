@@ -32,7 +32,7 @@ import React, { Fragment } from "react";
 import { View, Image, Text } from "react-native";
 import { openWebUrl } from "../../utils/url";
 import I18n from "../../i18n";
-import { AnyTxtNodeWiSpacer, Renderer, IOMarkdownRules } from "./types";
+import { AnyTxtNodeWithSpacer, Renderer, IOMarkdownRules } from "./types";
 
 const BULLET_ITEM = "\u2022";
 const HEADINGS_MAP = {
@@ -69,7 +69,7 @@ class IOMarkdownRenderer {
 
   constructor(rules?: Partial<IOMarkdownRules>) {
     const getMarkdownRenderer = (rules: IOMarkdownRules): Renderer => {
-      return (content: AnyTxtNodeWiSpacer) =>
+      return (content: AnyTxtNodeWithSpacer) =>
         // @ts-ignore
         rules[content.type]?.(content, getMarkdownRenderer(rules)) ?? null;
     };
@@ -90,7 +90,7 @@ class IOMarkdownRenderer {
   }
 
   parse(content: string) {
-    return parse(content).children.reduce<Array<AnyTxtNodeWiSpacer>>(
+    return parse(content).children.reduce<Array<AnyTxtNodeWithSpacer>>(
       (acc, currNode, idx, self) => {
         const nextNode = self[idx + 1];
         const diff = nextNode?.loc.start.line - currNode.loc.end.line;
