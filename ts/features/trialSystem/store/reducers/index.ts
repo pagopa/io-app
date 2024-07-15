@@ -108,6 +108,9 @@ export const isUpdatingTrialStatusSelector =
       pot.isUpdating
     );
 
+/**
+ * Allows to know if the user has the access to the specified trial
+ */
 export const isTrialActiveSelector = (id: TrialId) =>
   createSelector(
     trialStatusSelector(id),
