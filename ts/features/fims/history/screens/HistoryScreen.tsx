@@ -70,7 +70,7 @@ const HistoryListItem = ({ item }: HistoryListItemProps) => {
     <ListItemNav
       key={item.id}
       onPress={() => null}
-      value={serviceData?.service_name ?? "MISSING_ORG_NAME"}
+      value={serviceData?.organization_name ?? "MISSING_SERVICE_NAME"}
       topElement={{
         dateValue: dateToAccessibilityReadableFormat(item.timestamp)
       }}
