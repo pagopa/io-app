@@ -1975,7 +1975,7 @@ bonus:
   active: "Aktiv"
   failed: "Fehlgeschlagen"
   redeemed: "Eingelöst"
-  termsAndConditionFooter: "Durch Drücken von {{ctaText}} erklärst du, dass du den [Leitfaden]({{regulationLink}}) und die [Datenschutzrichtlinie]({{tosUrl}}) gelesen und verstanden hast."
+  termsAndConditionFooter: 'Premendo "{{ctaText}}" dichiari di essere in possesso dei requisiti e di aver letto e compreso la [Guida]({{regulationLink}}) e l''[Informativa Privacy]({{tosUrl}})'
   tos:
     title: "Datenschutzbestimmungen"
   cgn:
@@ -2048,9 +2048,10 @@ bonus:
         mobility: "Nachhaltige Mobilität"
         job: "Jobs und Ausbildungsplätze"
     cta:
-      activeBonus: "Die Karte beantragen"
+      activeBonus: Attiva Carta Giovani Nazionale
+      back: Non ora
       deactivateBonus: "Die Karte deaktivieren"
-      goToDetail: "Die Karte anzeigen"
+      goToDetail: Usa la Carta
     detail:
       cta:
         buyers: "CGN Ermäßigungen anzeigen"
@@ -2096,7 +2097,7 @@ bonus:
           body: "Wir entschuldigen uns für die Unannehmlichkeiten.\nBitte versuche es später noch einmal."
       loading:
         caption: "Wir aktivieren deine Nationale Jugendkarte"
-        subCaption: "Bitte warte etwas."
+        subCaption: "Attendi qualche secondo..."
       error:
         title: "Der Dienst Nationale Jugendkarte ist derzeit nicht verfügbar."
         body: "Wir entschuldigen uns für die Unannehmlichkeiten.\nBitte versuche es später noch einmal."

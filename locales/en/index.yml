@@ -2579,7 +2579,7 @@ bonus:
   active: Active
   failed: Failed
   redeemed: Consumed
-  termsAndConditionFooter: 'By pressing "{{ctaText}}" you declare that you have read and understood the [Guide]({{regulationLink}}) and the [Privacy Policy]({{tosUrl}})'
+  termsAndConditionFooter: 'Premendo "{{ctaText}}" dichiari di essere in possesso dei requisiti e di aver letto e compreso la [Guida]({{regulationLink}}) e l''[Informativa Privacy]({{tosUrl}})'
   tos:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -2667,9 +2667,10 @@ bonus:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
     cta:
-      activeBonus: Request your Card
+      activeBonus: Attiva Carta Giovani Nazionale
+      back: Non ora
       deactivateBonus: Deactivate Carta Giovani Nazionale
-      goToDetail: View your Carta Giovani
+      goToDetail: Usa la Carta
     detail:
       cta:
         buyers: Discover the CGN benefits
@@ -2717,7 +2718,7 @@ bonus:
           body: "We apologize for the issue.\nWe invite you to retry again later."
       loading:
         caption: "We're activating your Carta Giovani Nazionale"
-        subCaption: "Please wait."
+        subCaption: "Attendi qualche secondo..."
       error:
         title: "The Carta Giovani Nazionale service is not available at the moment."
         body: "We apologize for the issue.\nWe invite you to retry again later."
