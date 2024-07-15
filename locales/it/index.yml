@@ -297,6 +297,8 @@ profile:
     description: Usa il codice a barre per comunicare il tuo codice fiscale quando ti viene richiesto.
     help: !include profile/profile_fiscal_code.md
     facSimile: FAC-SIMILE
+    copyCode: Copia codice fiscale
+    codeCopied: Codice copiato!
   sections:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
