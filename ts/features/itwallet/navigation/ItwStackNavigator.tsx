@@ -10,7 +10,7 @@ import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssua
 import { ItwIssuanceEidRequestScreen } from "../issuance/screens/ItwIssuanceEidRequestScreen";
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
-import { ItwIssuanceFailureScreen } from "../issuance/screens/ItwIssuanceFailureScreen";
+import { ItwIssuanceEidFailureScreen } from "../issuance/screens/ItwIssuanceEidFailureScreen";
 import {
   ItWalletIssuanceMachineProvider,
   ItwCredentialIssuanceMachineContext,
@@ -98,7 +98,7 @@ const InnerNavigator = () => {
       />
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.EID_FAILURE}
-        component={ItwIssuanceFailureScreen}
+        component={ItwIssuanceEidFailureScreen}
         options={{ headerShown: false }}
       />
       {/* CREDENTIAL PRESENTATION */}

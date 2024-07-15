@@ -14,7 +14,7 @@ import {
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { selectFailureOption } from "../../machine/eid/selectors";
 
-export const ItwIssuanceFailureScreen = () => {
+export const ItwIssuanceEidFailureScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const failureOption = useSelector(machineRef, selectFailureOption);
 
