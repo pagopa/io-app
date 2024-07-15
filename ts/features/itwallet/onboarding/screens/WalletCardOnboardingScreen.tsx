@@ -85,6 +85,7 @@ const WalletCardOnboardingScreen = () => {
           <>
             <ListItemHeader label="IT Wallet" />
             <ModuleCredential
+              testID="itwDrivingLicenseModuleTestID"
               icon="driverLicense"
               label={"Patente di guida"}
               onPress={beginCredentialIssuance(CredentialType.DRIVING_LICENSE)}
@@ -96,6 +97,7 @@ const WalletCardOnboardingScreen = () => {
 
             <VSpacer size={8} />
             <ModuleCredential
+              testID="itwDisabilityCardModuleTestID"
               icon="disabilityCard"
               label={"Carta Europea della Disabilità"}
               onPress={beginCredentialIssuance(
@@ -111,6 +113,7 @@ const WalletCardOnboardingScreen = () => {
           </>
         ) : null}
         <ModuleCredential
+          testID="cgnModuleTestID"
           image={cgnLogo}
           label={I18n.t("features.wallet.onboarding.options.cgn")}
           onPress={!isCgnAlreadyActive ? startCgnActiviation : undefined}
@@ -124,6 +127,7 @@ const WalletCardOnboardingScreen = () => {
         {isIdPayEnabled && (
           <>
             <ModuleCredential
+              testID="idPayModuleTestID"
               icon="bonus"
               label={I18n.t("features.wallet.onboarding.options.welfare")}
               onPress={navigateToInitiativesList}
@@ -132,6 +136,7 @@ const WalletCardOnboardingScreen = () => {
           </>
         )}
         <ModuleCredential
+          testID="paymentsModuleTestID"
           icon="creditCard"
           label={I18n.t("features.wallet.onboarding.options.payments")}
           onPress={navigateToPaymentMethodOnboarding}
