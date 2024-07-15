@@ -297,6 +297,8 @@ profile:
     description: Use the barcode to communicate your fiscal code when asked.
     help: !include profile/profile_fiscal_code.md
     facSimile: FAC-SIMILE
+    copyCode: Copy fiscal code
+    codeCopied: Fiscal code copied!
   sections:
     spid: SPID PROFILE
   unknown: UNKNOWN
@@ -2129,6 +2131,7 @@ services:
         title: "Preferences saved!"
         body: "You can always see the list of available services by visiting the Services section."
         cta: "Check available services"
+      banner: Puoi modificare la tua scelta in ogni momento da Profilo > Preferenze
       oldUsersBadge: "Current setup"
       choiceLabel: "You chose the"
       unavailable: "Not defined"
@@ -3861,8 +3864,8 @@ transaction:
       paymentMethod: Metodo di pagamento
       authCode: Codice autorizzativo
       rrn: RRN
-      executedBy: Eseguito da
-      headedTo: Intestato a
+      executedBy: Eseguita da
+      headedTo: Metodo intestato a
       alert:
         content: Rivolgiti all’Ente Creditore se hai bisogno della ricevuta.
     operation:

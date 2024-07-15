@@ -297,6 +297,8 @@ profile:
     description: Usa il codice a barre per comunicare il tuo codice fiscale quando ti viene richiesto.
     help: !include profile/profile_fiscal_code.md
     facSimile: FAC-SIMILE
+    copyCode: Copia codice fiscale
+    codeCopied: Codice copiato!
   sections:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
@@ -2129,6 +2131,7 @@ services:
         title: "Preferenze salvate!"
         body: "Potrai sempre vedere la lista dei servizi disponibili visitando la sezione Servizi."
         cta: "Vedi i servizi disponibili"
+      banner: Puoi modificare la tua scelta in ogni momento da Profilo > Preferenze
       oldUsersBadge: "Impostazione attuale"
       choiceLabel: "Hai scelto la"
       unavailable: "Non selezionato"
@@ -3861,8 +3864,8 @@ transaction:
       paymentMethod: Metodo di pagamento
       authCode: Codice autorizzativo
       rrn: RRN
-      executedBy: Eseguito da
-      headedTo: Intestato a
+      executedBy: Eseguita da
+      headedTo: Metodo intestato a
       alert:
         content: Rivolgiti all’Ente Creditore se hai bisogno della ricevuta.
     operation:

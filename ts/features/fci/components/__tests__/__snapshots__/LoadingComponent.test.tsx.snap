@@ -11,8 +11,8 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
   }
 >
   <View
-    accessibilityHint="[missing "en.global.accessibility.activityIndicator.hint" translation]"
-    accessibilityLabel="[missing "en.global.accessibility.activityIndicator.label" translation]"
+    accessibilityHint="Wait for the content load"
+    accessibilityLabel="Loading"
     accessibilityRole="progressbar"
     accessible={true}
     importantForAccessibility="no-hide-descendants"

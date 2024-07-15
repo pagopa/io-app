@@ -15,7 +15,10 @@ import { SERVICES_ROUTES } from "../../features/services/common/navigation/route
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
 import { useIONavigation } from "../params/AppParamsList";
-import { isNewPaymentSectionEnabledSelector } from "../../store/reducers/backendStatus";
+import {
+  isNewPaymentSectionEnabledSelector,
+  isSettingsVisibleAndHideProfileSelector
+} from "../../store/reducers/backendStatus";
 import * as analytics from "../../features/services/common/analytics";
 import {
   isArchivingInProcessingModeSelector,
@@ -34,6 +37,8 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
       body: "messages.contextualHelpContent"
     }
   },
+  // TODO: delete this route when the showBarcodeScanSection
+  // and isSettingsVisibleAndHideProfileSelector FF will be deleted
   [ROUTES.PROFILE_MAIN]: {
     faqCategories: ["profile"],
     contextualHelpMarkdown: {
@@ -83,6 +88,73 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     isNewPaymentSectionEnabledSelector
   );
 
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
+
+  const canNavigateIfIsArchivingCallback = useCallback(() => {
+    const state = store.getState();
+    // If the system is busy archiving or restoring messages,
+    // a new action (e.g. searching or navigating to settings) cannot be initiated
+    const isProcessingArchiveQueue = isArchivingInProcessingModeSelector(state);
+    if (isProcessingArchiveQueue) {
+      return false;
+    }
+    // If the user was choosing which messages to archive/restore,
+    // disable it before starting a new action (e.g. searching or
+    // navigating to settings), as the tab bar at the bottom is
+    // hidden and the new action could trigger a navigation flow back
+    // to another tab on the main screen without this bar being displayed.
+    const isSchedulingArchiving = isArchivingInSchedulingModeSelector(state);
+    if (isSchedulingArchiving) {
+      // Auto-reset does not provide feedback to the user
+      dispatch(resetMessageArchivingAction(undefined));
+    }
+    return true;
+  }, [dispatch, store]);
+
+  const messageSearchCallback = useCallback(() => {
+    if (canNavigateIfIsArchivingCallback()) {
+      dispatch(searchMessagesEnabled(true));
+    }
+  }, [canNavigateIfIsArchivingCallback, dispatch]);
+
+  const navigateToSettingMainScreen = useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.SETTINGS_MAIN
+    });
+  }, [navigation]);
+
+  const navigateToSettingMainScreenFromMessageSection = useCallback(() => {
+    if (canNavigateIfIsArchivingCallback()) {
+      navigateToSettingMainScreen();
+    }
+  }, [canNavigateIfIsArchivingCallback, navigateToSettingMainScreen]);
+
+  const navigateToProfilePrefercesScreen = useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.PROFILE_PREFERENCES_SERVICES
+    });
+  }, [navigation]);
+
+  const settingsAction: ActionProp = useMemo(
+    () => ({
+      icon: "coggle",
+      accessibilityLabel: I18n.t("global.buttons.settings"),
+      onPress: navigateToSettingMainScreen
+    }),
+    [navigateToSettingMainScreen]
+  );
+
+  const settingsActionInMessageSection: ActionProp = useMemo(
+    () => ({
+      icon: "coggle",
+      accessibilityLabel: I18n.t("global.buttons.settings"),
+      onPress: navigateToSettingMainScreenFromMessageSection
+    }),
+    [navigateToSettingMainScreenFromMessageSection]
+  );
+
   const requestParams = useMemo(
     () =>
       pipe(
@@ -109,25 +181,24 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     present: presentWalletHomeHeaderBottomsheet
   } = useWalletHomeHeaderBottomSheet();
 
-  const messageSearchCallback = useCallback(() => {
-    const state = store.getState();
-    // If the system is busy archiving or restoring messages, do not start a search
-    const isProcessingArchiveQueue = isArchivingInProcessingModeSelector(state);
-    if (isProcessingArchiveQueue) {
-      return;
-    }
-    // If the user was choosing which messages to archive/restore, disable it
-    // before starting the search, since the bottom tab bar is hidden and the
-    // search may trigger a navigation flow that leads back to another main
-    // screen tab details with no such tab bar shown
-    const isSchedulingArchiving = isArchivingInSchedulingModeSelector(state);
-    if (isSchedulingArchiving) {
-      // Auto-reset does not provide feedback to the user
-      dispatch(resetMessageArchivingAction(undefined));
-    }
+  const walletAction: ActionProp = useMemo(
+    () => ({
+      icon: "add",
+      accessibilityLabel: I18n.t("wallet.accessibility.addElement"),
+      onPress: presentWalletHomeHeaderBottomsheet,
+      testID: "walletAddNewPaymentMethodTestId"
+    }),
+    [presentWalletHomeHeaderBottomsheet]
+  );
 
-    dispatch(searchMessagesEnabled(true));
-  }, [dispatch, store]);
+  const searchMessageAction: ActionProp = useMemo(
+    () => ({
+      icon: "search",
+      accessibilityLabel: I18n.t("global.accessibility.search"),
+      onPress: messageSearchCallback
+    }),
+    [messageSearchCallback]
+  );
 
   const headerProps: HeaderFirstLevelProps = useMemo(() => {
     switch (currentRouteName) {
@@ -139,10 +210,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           secondAction: {
             icon: "coggle",
             accessibilityLabel: I18n.t("global.buttons.edit"),
-            onPress: () =>
-              navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                screen: ROUTES.PROFILE_PREFERENCES_SERVICES
-              })
+            onPress: navigateToProfilePrefercesScreen
           },
           thirdAction: {
             icon: "search",
@@ -153,6 +221,8 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
             }
           }
         };
+      // TODO: delete this route when the showBarcodeScanSection
+      // and isSettingsVisibleAndHideProfileSelector FF will be deleted
       case ROUTES.PROFILE_MAIN:
         return {
           title: I18n.t("profile.main.title"),
@@ -163,49 +233,70 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         if (isNewWalletSectionEnabled) {
           return {
             title: I18n.t("wallet.wallet"),
-            type: "singleAction",
             firstAction: helpAction,
-            testID: "wallet-home-header-title"
+            testID: "wallet-home-header-title",
+            ...(isSettingsVisibleAndHideProfile
+              ? {
+                  type: "twoActions",
+                  secondAction: settingsAction
+                }
+              : { type: "singleAction" })
           };
         }
         return {
           title: I18n.t("wallet.wallet"),
-          type: "twoActions",
           firstAction: helpAction,
           backgroundColor: "dark",
           testID: "wallet-home-header-title",
-          secondAction: {
-            icon: "add",
-            accessibilityLabel: I18n.t("wallet.accessibility.addElement"),
-            onPress: presentWalletHomeHeaderBottomsheet,
-            testID: "walletAddNewPaymentMethodTestId"
-          }
+          ...(isSettingsVisibleAndHideProfile
+            ? {
+                type: "threeActions",
+                secondAction: settingsAction,
+                thirdAction: walletAction
+              }
+            : {
+                type: "twoActions",
+                secondAction: walletAction
+              })
         };
       case ROUTES.PAYMENTS_HOME:
         return {
           title: I18n.t("features.payments.title"),
-          type: "singleAction",
-          firstAction: helpAction
+          firstAction: helpAction,
+          ...(isSettingsVisibleAndHideProfile
+            ? {
+                type: "twoActions",
+                secondAction: settingsAction
+              }
+            : { type: "singleAction" })
         };
       case MESSAGES_ROUTES.MESSAGES_HOME:
       default:
         return {
           title: I18n.t("messages.contentTitle"),
-          type: "twoActions",
           firstAction: helpAction,
-          secondAction: {
-            icon: "search",
-            accessibilityLabel: I18n.t("global.accessibility.search"),
-            onPress: messageSearchCallback
-          }
+          ...(isSettingsVisibleAndHideProfile
+            ? {
+                type: "threeActions",
+                secondAction: settingsActionInMessageSection,
+                thirdAction: searchMessageAction
+              }
+            : {
+                type: "twoActions",
+                secondAction: searchMessageAction
+              })
         };
     }
   }, [
     currentRouteName,
     helpAction,
-    presentWalletHomeHeaderBottomsheet,
+    navigateToProfilePrefercesScreen,
     isNewWalletSectionEnabled,
-    messageSearchCallback,
+    isSettingsVisibleAndHideProfile,
+    settingsAction,
+    walletAction,
+    settingsActionInMessageSection,
+    searchMessageAction,
     navigation
   ]);
 
