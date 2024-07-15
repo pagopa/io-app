@@ -3,14 +3,8 @@ import { View, StyleSheet, Text } from "react-native";
 import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 
 const styles = StyleSheet.create({
-  componentWrapper: {
-    marginBottom: 24
-  },
   componentWrapperFullWidth: {
     flexGrow: 1
-  },
-  lastItem: {
-    marginBottom: 0
   },
   labelWrapper: {
     display: "flex",
@@ -30,26 +24,19 @@ type DSComponentViewerBoxProps = {
   name: string;
   colorMode?: "dark" | "light";
   fullWidth?: boolean;
-  last?: boolean;
   children: React.ReactNode;
 };
 
 export const DSComponentViewerBox = ({
   name,
   colorMode = "light",
-  last = false,
   fullWidth = false,
   children
 }: DSComponentViewerBoxProps) => {
   const theme = useIOTheme();
 
   return (
-    <View
-      style={[
-        last ? styles.lastItem : styles.componentWrapper,
-        fullWidth && styles.componentWrapperFullWidth
-      ]}
-    >
+    <View style={fullWidth && styles.componentWrapperFullWidth}>
       {children}
       <View style={styles.labelWrapper}>
         {name && (
