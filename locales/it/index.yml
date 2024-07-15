@@ -2022,6 +2022,13 @@ messages:
     restore:
       success: "Ripristino effettuato."
       failure: "Il ripristino non è andato a buon fine"
+  search:
+    emptyState:
+      title: "Inserisci almeno tre caratteri"
+    input:
+      cancel: "Annulla"
+      clear: "Cancella"
+      placeholderShort: "Inserisci testo"
 messageDetails:
   accessibilityAttachmentIcon: "Contiene allegati"
   contextualHelpTitle: Dettagli del messaggio
