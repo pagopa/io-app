@@ -1,4 +1,4 @@
-import { createClient } from "../../../../definitions/trial_systwem/client";
+import { createClient } from "../../../../definitions/trial_system/client";
 import { SessionToken } from "../../../types/SessionToken";
 import { defaultRetryingFetch } from "../../../utils/fetch";
 
