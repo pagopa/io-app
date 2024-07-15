@@ -173,7 +173,7 @@ const renderComponent = (
     () => (
       <WrappedMessageListItem
         index={0}
-        listCategory="INBOX"
+        archiveRestoreSourceCategory="INBOX"
         message={message}
       />
     ),
