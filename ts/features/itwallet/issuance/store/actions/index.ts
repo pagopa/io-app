@@ -5,7 +5,7 @@ export const itwStoreIntegrityKeyTag = createStandardAction(
 )<string>();
 
 export const itwRemoveIntegrityKeyTag = createStandardAction(
-  "ITW_REMOVE_HARDWARE_KEY_TAG"
+  "ITW_REMOVE_INTEGRITY_KEY_TAG"
 )<void>();
 
 export type ItwIssuanceActions =
