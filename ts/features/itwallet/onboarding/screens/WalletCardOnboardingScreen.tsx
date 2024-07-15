@@ -16,11 +16,10 @@ import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation"
 import { isCgnInformationAvailableSelector } from "../../../bonus/cgn/store/reducers/details";
 import { loadAvailableBonuses } from "../../../bonus/common/store/actions/availableBonusesTypes";
 import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
-import { trialStatusSelector } from "../../../trialSystem/store/reducers";
+import { isTrialActiveSelector } from "../../../trialSystem/store/reducers";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { ITW_TRIAL_ID } from "../../common/utils/itwTrialUtils";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
 import { ItwTags } from "../../machine/tags";
 
 const WalletCardOnboardingScreen = () => {
@@ -30,12 +29,8 @@ const WalletCardOnboardingScreen = () => {
 
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const isCgnAlreadyActive = useIOSelector(isCgnInformationAvailableSelector);
-  const itwTrialStatus = useIOSelector(trialStatusSelector(ITW_TRIAL_ID));
-  const isItwActive = React.useMemo(
-    // TODO add itw activation check
-    () => itwTrialStatus === SubscriptionStateEnum.SUBSCRIBED,
-    [itwTrialStatus]
-  );
+  // TODO add itw activation status check
+  const isItwTrialActive = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
 
   const isCredentialLoading = ItwCredentialIssuanceMachineContext.useSelector(
     snapshot => snapshot.hasTag(ItwTags.Loading)
@@ -86,7 +81,7 @@ const WalletCardOnboardingScreen = () => {
     >
       <ContentWrapper>
         <VSpacer size={16} />
-        {isItwActive ? (
+        {isItwTrialActive ? (
           <>
             <ListItemHeader label="IT Wallet" />
             <ModuleCredential

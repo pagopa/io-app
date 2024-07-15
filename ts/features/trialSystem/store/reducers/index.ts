@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
+import { createSelector } from "reselect";
 import { TrialId } from "../../../../../definitions/trial_system/TrialId";
 import {
   SubscriptionState,
@@ -106,3 +107,9 @@ export const isUpdatingTrialStatusSelector =
       status => status[id] ?? pot.none,
       pot.isUpdating
     );
+
+export const isTrialActiveSelector = (id: TrialId) =>
+  createSelector(
+    trialStatusSelector(id),
+    status => status === SubscriptionStateEnum.ACTIVE
+  );
