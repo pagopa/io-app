@@ -1,4 +1,3 @@
-import I18n from "i18n-js";
 import * as React from "react";
 import {
   GestureResponderEvent,
@@ -6,6 +5,7 @@ import {
   StyleSheet,
   View
 } from "react-native";
+import I18n from "../i18n";
 import { WithTestID } from "../types/WithTestID";
 import { getAppVersion } from "../utils/appVersion";
 import { LabelSmall } from "./core/typography/LabelSmall";

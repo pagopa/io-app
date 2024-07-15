@@ -953,54 +953,49 @@ export const paginatedMessageFromIdForCategorySelector = (
     O.toUndefined
   );
 
-export const searchMessagesCachedSelector = createSelector(
-  [
-    (state: GlobalState) => state.entities.messages.allPaginated.inbox.data,
-    (state: GlobalState) => state.entities.messages.allPaginated.archive.data,
-    (_state: GlobalState, searchText: string) => searchText,
-    (_state: GlobalState, _searchText: string, minQueryLength: number) =>
-      minQueryLength
-  ],
-  (inboxData, archiveData, searchText, minQueryLength) =>
-    pipe(searchText.trim(), trimmedSearchText =>
-      pipe(
-        trimmedSearchText.length >= minQueryLength,
-        B.fold(
-          () => [] as ReadonlyArray<UIMessage>,
-          () =>
-            pipe(
-              inboxData,
-              pot.toOption,
-              O.map(inboxData => inboxData.page),
-              O.getOrElse(() => [] as ReadonlyArray<UIMessage>),
-              inboxMessages =>
-                pipe(
-                  archiveData,
-                  pot.toOption,
-                  O.map(archiveData => archiveData.page),
-                  O.getOrElseW(() => [] as ReadonlyArray<UIMessage>),
-                  archiveMessages => inboxMessages.concat(archiveMessages)
-                ),
-              inboxAndArchiveMessages =>
-                inboxAndArchiveMessages.filter(message =>
-                  isTextIncludedCaseInsensitive(
-                    [
-                      message.title,
-                      message.organizationName,
-                      message.serviceName
-                    ].join(" "),
-                    searchText
-                  )
-                ),
-              filteredMessages =>
-                [...filteredMessages].sort((a, b) =>
-                  b.id.localeCompare(a.id, "en")
+export const searchMessagesUncachedSelector = (
+  state: GlobalState,
+  searchText: string,
+  minQueryLength: number
+) =>
+  pipe(searchText.trim(), trimmedSearchText =>
+    pipe(
+      trimmedSearchText.length >= minQueryLength,
+      B.fold(
+        () => [] as ReadonlyArray<UIMessage>,
+        () =>
+          pipe(
+            state.entities.messages.allPaginated.inbox.data,
+            pot.toOption,
+            O.map(inboxData => inboxData.page),
+            O.getOrElse(() => [] as ReadonlyArray<UIMessage>),
+            inboxMessages =>
+              pipe(
+                state.entities.messages.allPaginated.archive.data,
+                pot.toOption,
+                O.map(archiveData => archiveData.page),
+                O.getOrElseW(() => [] as ReadonlyArray<UIMessage>),
+                archiveMessages => inboxMessages.concat(archiveMessages)
+              ),
+            inboxAndArchiveMessages =>
+              inboxAndArchiveMessages.filter(message =>
+                isTextIncludedCaseInsensitive(
+                  [
+                    message.title,
+                    message.organizationName,
+                    message.serviceName
+                  ].join(" "),
+                  searchText
                 )
-            )
-        )
+              ),
+            filteredMessages =>
+              [...filteredMessages].sort((a, b) =>
+                b.id.localeCompare(a.id, "en")
+              )
+          )
       )
     )
-);
+  );
 
 const messagePotToToastReportableErrorOrUndefined = (
   messagePagePot: MessagePagePot
