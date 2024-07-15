@@ -1,6 +1,7 @@
 import {
   IOVisualCostants,
   IconButton,
+  useIOExperimentalDesign,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { ThemeProvider, useNavigation } from "@react-navigation/native";
@@ -45,6 +46,7 @@ import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActio
 import { DSIcons } from "../core/DSIcons";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyAccordion } from "../core/DSLegacyAccordion";
+import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
 import { DSLegacyAlert } from "../core/DSLegacyAlert";
 import { DSLegacyBadges } from "../core/DSLegacyBadges";
 import { DSLegacyButtons } from "../core/DSLegacyButtons";
@@ -52,6 +54,7 @@ import { DSLegacyListItems } from "../core/DSLegacyListItems";
 import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
 import { DSLegacySelection } from "../core/DSLegacySelection";
 import { DSLegacyTextFields } from "../core/DSLegacyTextFields";
+import { DSLegacyTypography } from "../core/DSLegacyTypography";
 import DSListItemScreen from "../core/DSListItemScreen";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
@@ -72,8 +75,6 @@ import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
-import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
-import { DSLegacyTypography } from "../core/DSLegacyTypography";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -86,7 +87,10 @@ const RNNBackButton = () => {
   return (
     <View style={{ marginLeft: IOVisualCostants.appMarginDefault }}>
       <IconButton
-        icon="backiOS"
+        icon={Platform.select({
+          android: "backAndroid",
+          default: "backiOS"
+        })}
         color={themeType === "dark" ? "contrast" : "neutral"}
         onPress={() => {
           navigation.goBack();
@@ -147,23 +151,19 @@ const customModalHeaderConf: StackNavigationOptions = {
 };
 
 export const DesignSystemNavigator = () => {
+  const { isExperimental } = useIOExperimentalDesign();
   const { themeType } = useIOThemeContext();
-  const insets = useSafeAreaInsets();
 
-  const customHeaderConf: StackNavigationOptions = useMemo(
-    () => ({
-      headerTitleStyle: {
-        ...makeFontStyleObject("Regular", false, "ReadexPro"),
-        fontSize: 14
-      },
-      headerTitleAlign: "center",
-
-      headerStyle: { height: insets.top + IOVisualCostants.headerHeight },
-      headerLeft: RNNBackButton,
-      headerMode: "screen"
-    }),
-    [insets]
-  );
+  const customHeaderConf: StackNavigationOptions = {
+    headerTitleStyle: {
+      ...(isExperimental
+        ? makeFontStyleObject("Regular", false, "ReadexPro")
+        : makeFontStyleObject("Semibold", false, "TitilliumSansPro")),
+      fontSize: 14
+    },
+    headerTitleAlign: "center",
+    headerLeft: RNNBackButton
+  };
 
   return (
     <ThemeProvider
