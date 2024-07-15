@@ -1,4 +1,4 @@
 import { GlobalState } from "../../../../../store/reducers/types";
 
-export const itwHardwareKeyTagSelector = (state: GlobalState) =>
-  state.features.itWallet.issuance.hardwareKeyTag;
+export const itwIntegrityKeyTagSelector = (state: GlobalState) =>
+  state.features.itWallet.issuance.integrityKeyTag;

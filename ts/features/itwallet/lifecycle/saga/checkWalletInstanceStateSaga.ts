@@ -2,62 +2,53 @@ import { Errors } from "@pagopa/io-react-native-wallet";
 import { deleteKey } from "@pagopa/io-react-native-crypto";
 import { call, put, select } from "typed-redux-saga/macro";
 import * as O from "fp-ts/lib/Option";
-import { itwLifecycleSelector } from "../store/selectors";
 import { getAttestation } from "../../common/utils/itwAttestationUtils";
-import { itwHardwareKeyTagSelector } from "../../issuance/store/selectors";
-import { itwRemoveHardwareKeyTag } from "../../issuance/store/actions";
+import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { itwRemoveIntegrityKeyTag } from "../../issuance/store/actions";
 import { ReduxSagaEffect } from "../../../../types/utils";
+import { itwLifecycleIsInstalledSelector } from "../store/selectors";
 import { ItwLifecycleState } from "../store/reducers";
 import { itwLifecycleStateUpdated } from "../store/actions";
 
-/**
- * The wallet instance's state check is performed
- * only when the instance is in one the following states.
- */
-const activeStates = [
-  ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL,
-  ItwLifecycleState.ITW_LIFECYCLE_VALID
-];
-
-function* handleWalletInstanceReset(hardwareKeyTag: string) {
-  yield* call(deleteKey, hardwareKeyTag);
-  yield* put(itwRemoveHardwareKeyTag());
+function* handleWalletInstanceReset(integrityKeyTag: string) {
+  yield* call(deleteKey, integrityKeyTag);
+  yield* put(itwRemoveIntegrityKeyTag());
   yield* put(
     itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_INSTALLED)
   );
+  // TODO: remove credentials as well
+}
+
+/**
+ * Get a wallet attestation to check whether
+ * the wallet instance was revoked or does not exist at all.
+ * If that happened, the wallet is reset.
+ */
+function* getAttestationOrResetWalletInstance(integrityKeyTag: string) {
+  try {
+    yield* call(getAttestation, integrityKeyTag);
+  } catch (err) {
+    if (
+      err instanceof Errors.WalletInstanceRevokedError ||
+      err instanceof Errors.WalletInstanceNotFoundError
+    ) {
+      yield* call(handleWalletInstanceReset, integrityKeyTag);
+    }
+  }
 }
 
 export function* checkWalletInstanceStateSaga(): Generator<
   ReduxSagaEffect,
   void
 > {
-  const walletInstanceState = yield* select(itwLifecycleSelector);
-
-  if (!activeStates.includes(walletInstanceState)) {
+  const isItWalletInstalled = yield* select(itwLifecycleIsInstalledSelector);
+  // No need to check the wallet state if it was never activated
+  if (isItWalletInstalled) {
     return;
   }
 
-  const hardwareKeyTag = yield* select(itwHardwareKeyTagSelector);
-
-  if (O.isNone(hardwareKeyTag)) {
-    throw new Error(
-      "[IT Wallet] Missing hardware key tag but the instance is operational/valid"
-    );
-  }
-
-  try {
-    /**
-     * Get a wallet attestation to check whether
-     * the wallet instance was revoked or does not exist at all.
-     */
-    yield* call(getAttestation, hardwareKeyTag.value);
-  } catch (err) {
-    if (
-      err instanceof Errors.WalletInstanceAttestationIssuingError // TODO: use the commented errors when io-react-native-wallet will export them
-      // err instanceof Errors.WalletInstanceRevokedError ||
-      // err instanceof Errors.WalletInstanceNotFoundError
-    ) {
-      yield* call(handleWalletInstanceReset, hardwareKeyTag.value);
-    }
+  const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
+  if (O.isSome(integrityKeyTag)) {
+    yield* call(getAttestationOrResetWalletInstance, integrityKeyTag.value);
   }
 }
