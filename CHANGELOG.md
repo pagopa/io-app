@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.65.0-rc.0](https://github.com/pagopa/io-app/compare/2.64.0-rc.1...2.65.0-rc.0) (2024-07-12)
+
+
+### Bug Fixes
+
+* Payment total amount and transaction error status ([c6bb807](https://github.com/pagopa/io-app/commit/c6bb8072c62c83dcbd065518493c15d13e04bc75))
+
+## [2.64.0-rc.1](https://github.com/pagopa/io-app/compare/2.63.0-rc.5...2.64.0-rc.1) (2024-07-11)
+
+
+### Chores
+
+* **release:** 2.64.0-rc.0 ([01fbf43](https://github.com/pagopa/io-app/commit/01fbf43fd34302b5f153964c802ef5b6c6a633d9))
+
 ## [2.64.0-rc.0](https://github.com/pagopa/io-app/compare/2.63.0-rc.5...2.64.0-rc.0) (2024-07-10)
 
 
