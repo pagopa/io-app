@@ -87,7 +87,8 @@ export const itwEidIssuanceMachine = setup({
             {
               type: "storeIntegrityKeyTag",
               params: ({ event }) => ({ keyTag: event.output })
-            }
+            },
+            { type: "setWalletInstanceToOperational" }
           ],
           target: "UserIdentification"
         },
@@ -243,7 +244,7 @@ export const itwEidIssuanceMachine = setup({
           actions: "requestAssistance"
         },
         reset: {
-          target: "Idle"
+          target: "Idle" // TODO: handle navigation to an initial screen (TOS?)
         }
       }
     }
