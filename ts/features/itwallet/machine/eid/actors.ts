@@ -37,11 +37,8 @@ export const createEidIssuanceActorsImplementation = (
 
   requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
     async ({ input }) => {
-      assert(
-        input.integrityKeyTag !== undefined,
-        "integrityKeyTag is undefined"
-      );
-      assert(input.identification !== undefined, "identification is undefined");
+      assert(input.integrityKeyTag, "integrityKeyTag is undefined");
+      assert(input.identification, "identification is undefined");
 
       return await issuanceUtils.getPid({
         integrityKeyTag: input.integrityKeyTag,

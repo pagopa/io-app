@@ -1,5 +1,8 @@
-export function assert(condition: unknown, msg?: string): asserts condition {
-  if (condition === false) {
+export function assert(
+  condition: unknown,
+  msg: string = "Assertion failed"
+): asserts condition {
+  if (!condition) {
     throw new Error(msg);
   }
 }
