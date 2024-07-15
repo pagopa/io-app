@@ -210,7 +210,7 @@ const WalletPaymentPickMethodScreen = () => {
         }
       });
     }
-  }, [isError, navigation]);
+  }, [isError, navigation, transactionPot]);
 
   const canContinue = O.isSome(selectedPaymentMethodIdOption);
 
