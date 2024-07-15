@@ -8,6 +8,8 @@ import {
   Pictogram,
   PictogramBleed,
   SVGPictogramProps,
+  VStack,
+  H4,
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -28,10 +30,11 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     marginLeft: (assetItemGutter / 2) * -1,
     marginRight: (assetItemGutter / 2) * -1,
-    marginBottom: 24
+    rowGap: 16
   },
   agnosticPictogramWrapper: {
-    borderRadius: 8,
+    borderRadius: 24,
+    borderCurve: "continuous",
     padding: 16,
     alignContent: "center",
     justifyContent: "center",
@@ -74,114 +77,110 @@ const filteredIOPictograms = filterPictogramSet(
   IOPictograms
 );
 
+const sectionMargin = 40;
+const sectionTitleMargin = 16;
+
 export const DSPictograms = () => {
   const theme = useIOTheme();
   return (
     <DesignSystemScreen title={"Pictograms"}>
-      <View style={styles.itemsWrapper}>
-        {Object.entries(filteredIOPictograms).map(([pictogramItemName]) => (
-          <DSAssetViewerBox
-            key={pictogramItemName}
-            name={pictogramItemName}
-            spacing="small"
-            type={
-              Object.keys(IOPictogramsBleed).includes(pictogramItemName)
-                ? "hasBleed"
-                : "vector"
-            }
-            image={
-              <Pictogram name={pictogramItemName as IOPictograms} size="100%" />
-            }
-          />
-        ))}
-      </View>
-
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{
-          marginBottom: 16
-        }}
-      >
-        Bleed Pictograms
-      </H2>
-      <View style={styles.itemsWrapper}>
-        {Object.entries(IOPictogramsBleed).map(([pictogramItemName]) => (
-          <DSAssetViewerBox
-            type="bleed"
-            key={pictogramItemName}
-            name={pictogramItemName}
-            size="small"
-            image={
-              <PictogramBleed
-                name={pictogramItemName as IOPictogramsBleed}
-                size="100%"
-              />
-            }
-          />
-        ))}
-      </View>
-
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{
-          marginBottom: 16
-        }}
-      >
-        Object Pictograms
-      </H2>
-      <View style={styles.itemsWrapper}>
-        {Object.entries(IOPictogramsObject).map(([pictogramItemName]) => (
-          <DSAssetViewerBox
-            key={pictogramItemName}
-            name={pictogramItemName}
-            spacing="small"
-            size="small"
-            image={
-              <Pictogram
-                name={pictogramItemName as IOPictogramsObject}
-                size="100%"
-              />
-            }
-          />
-        ))}
-      </View>
-
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{
-          marginBottom: 16
-        }}
-      >
-        Color mode agnostic
-      </H2>
-      <DSComponentViewerBox name={`pictogramStyle = "light-content"`}>
-        <View
-          style={[
-            styles.agnosticPictogramWrapper,
-            styles.agnosticPictogramWrapperBlue
-          ]}
-        >
-          <Pictogram name="feature" pictogramStyle="light-content" />
-          <HSpacer size={24} />
-          <Pictogram name="umbrellaNew" pictogramStyle="light-content" />
+      <VStack space={sectionMargin}>
+        {/* General Pictogram set */}
+        <View style={styles.itemsWrapper}>
+          {Object.entries(filteredIOPictograms).map(([pictogramItemName]) => (
+            <DSAssetViewerBox
+              key={pictogramItemName}
+              name={pictogramItemName}
+              spacing="small"
+              type={
+                Object.keys(IOPictogramsBleed).includes(pictogramItemName)
+                  ? "hasBleed"
+                  : "vector"
+              }
+              image={
+                <Pictogram
+                  name={pictogramItemName as IOPictograms}
+                  size="100%"
+                />
+              }
+            />
+          ))}
         </View>
-      </DSComponentViewerBox>
 
-      <DSComponentViewerBox name={`pictogramStyle = "dark-content"`}>
-        <View
-          style={[
-            styles.agnosticPictogramWrapper,
-            styles.agnosticPictogramWrapperWhite
-          ]}
-        >
-          <Pictogram name="feedback" pictogramStyle="dark-content" />
-          <HSpacer size={24} />
-          <Pictogram name="charity" pictogramStyle="dark-content" />
-        </View>
-      </DSComponentViewerBox>
+        {/* Bleed */}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Bleed</H4>
+          <View style={styles.itemsWrapper}>
+            {Object.entries(IOPictogramsBleed).map(([pictogramItemName]) => (
+              <DSAssetViewerBox
+                type="bleed"
+                key={pictogramItemName}
+                name={pictogramItemName}
+                size="small"
+                image={
+                  <PictogramBleed
+                    name={pictogramItemName as IOPictogramsBleed}
+                    size="100%"
+                  />
+                }
+              />
+            ))}
+          </View>
+        </VStack>
+
+        {/* Objects */}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Objects</H4>
+          <View style={styles.itemsWrapper}>
+            {Object.entries(IOPictogramsObject).map(([pictogramItemName]) => (
+              <DSAssetViewerBox
+                key={pictogramItemName}
+                name={pictogramItemName}
+                spacing="small"
+                size="small"
+                image={
+                  <Pictogram
+                    name={pictogramItemName as IOPictogramsObject}
+                    size="100%"
+                  />
+                }
+              />
+            ))}
+          </View>
+        </VStack>
+
+        {/* Color mode agnostic */}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Color mode agnostic</H4>
+          <VStack space={24}>
+            <DSComponentViewerBox name={`pictogramStyle = "light-content"`}>
+              <View
+                style={[
+                  styles.agnosticPictogramWrapper,
+                  styles.agnosticPictogramWrapperBlue
+                ]}
+              >
+                <Pictogram name="feature" pictogramStyle="light-content" />
+                <HSpacer size={24} />
+                <Pictogram name="umbrellaNew" pictogramStyle="light-content" />
+              </View>
+            </DSComponentViewerBox>
+
+            <DSComponentViewerBox name={`pictogramStyle = "dark-content"`}>
+              <View
+                style={[
+                  styles.agnosticPictogramWrapper,
+                  styles.agnosticPictogramWrapperWhite
+                ]}
+              >
+                <Pictogram name="feedback" pictogramStyle="dark-content" />
+                <HSpacer size={24} />
+                <Pictogram name="charity" pictogramStyle="dark-content" />
+              </View>
+            </DSComponentViewerBox>
+          </VStack>
+        </VStack>
+      </VStack>
     </DesignSystemScreen>
   );
 };
