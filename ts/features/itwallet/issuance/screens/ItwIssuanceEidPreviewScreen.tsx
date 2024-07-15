@@ -65,6 +65,7 @@ export const ItwIssuanceEidPreviewScreen = () => {
     return (
       <IOScrollViewWithLargeHeader
         excludeEndContentMargin
+        canGoback={false}
         title={{
           label: I18n.t("features.itWallet.issuance.eidPreview.title")
         }}
