@@ -1,6 +1,5 @@
 import {
   H3,
-  H4,
   H6,
   IOColorGradients,
   IOColors,

@@ -111,6 +111,10 @@ const DESIGN_SYSTEM_ROUTES = {
     }
   },
   LEGACY: {
+    TYPOGRAPHY: {
+      route: "DESIGN_SYSTEM_LEGACY_TYPOGRAPHY",
+      title: "Typography"
+    },
     PICTOGRAMS: {
       route: "DESIGN_SYSTEM_LEGACY_PICTOGRAMS",
       title: "Pictograms"
