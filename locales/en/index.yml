@@ -297,8 +297,8 @@ profile:
     description: Use the barcode to communicate your fiscal code when asked.
     help: !include profile/profile_fiscal_code.md
     facSimile: FAC-SIMILE
-    copyCode: Copia codice fiscale
-    codeCopied: Codice copiato!
+    copyCode: Copy fiscal code
+    codeCopied: Fiscal code copied!
   sections:
     spid: SPID PROFILE
   unknown: UNKNOWN
