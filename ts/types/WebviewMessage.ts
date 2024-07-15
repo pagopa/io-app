@@ -1,5 +1,5 @@
 /**
- * these models describe the incoming data sent from web pages that include app injected JS (see RegionServiceWebView)
+ * these models describe the incoming data sent from web pages that include app injected JS
  */
 import * as t from "io-ts";
 
