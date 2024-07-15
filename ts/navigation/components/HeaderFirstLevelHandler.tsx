@@ -190,6 +190,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
       case MESSAGES_ROUTES.MESSAGES_HOME:
       default:
         return {
+          skipHeaderAutofocus: true,
           title: I18n.t("messages.contentTitle"),
           type: "twoActions",
           firstAction: helpAction,
