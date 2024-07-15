@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Modal } from "react-native";
 import I18n from "../../../../i18n";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
@@ -7,14 +7,17 @@ import {
   StartupStatusEnum
 } from "../../../../store/reducers/startup";
 import { useIOSelector } from "../../../../store/hooks";
+import { trackGetProfileEndpointTransientErrorScreen } from "../../analytics";
 
 export const GetProfileEndpointTransientError = () => {
   const startupStatus = useIOSelector(isStartupLoaded);
-  // TODO: use this constant in MP event
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   const afterIdentificationWithIdp =
     startupStatus === StartupStatusEnum.NOT_AUTHENTICATED;
+
+  useEffect(() => {
+    trackGetProfileEndpointTransientErrorScreen(afterIdentificationWithIdp);
+  }, [afterIdentificationWithIdp]);
+
   return (
     <Modal>
       <OperationResultScreenContent

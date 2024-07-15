@@ -114,6 +114,10 @@ import {
 import { checkNotificationsPreferencesSaga } from "../features/pushNotifications/sagas/checkNotificationsPreferencesSaga";
 import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
 import {
+  trackGetProfileEndpointTransientError,
+  trackGetSessionEndpointTransientError
+} from "../features/startup/analytics";
+import {
   clearKeychainError,
   keychainError
 } from "./../store/storages/keychain";
@@ -361,6 +365,7 @@ export function* initializeApplicationSaga(
         yield* put(startApplicationInitialization());
         return;
       } else {
+        void trackGetSessionEndpointTransientError();
         yield* put(
           startupTransientError({
             kind: "GET_SESSION_DOWN",
@@ -422,6 +427,7 @@ export function* initializeApplicationSaga(
       yield* put(startApplicationInitialization());
       return;
     } else {
+      void trackGetProfileEndpointTransientError();
       yield* put(
         startupTransientError({
           kind: "GET_PROFILE_DOWN",
