@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.63.0-rc.5",
+  "version": "2.65.0-rc.0",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.34/definitions.yml",
@@ -81,7 +81,7 @@
     "generate:services": "npm-run-all generate:services-api",
     "generate:lollipop-api": "rimraf definitions/lollipop && mkdir -p definitions/lollipop && gen-api-models --api-spec $npm_package_lollipop_api --out-dir ./definitions/lollipop --no-strict --response-decoders --request-types --client",
     "generate:fast-login-api": "rimraf definitions/fast_login && mkdir -p definitions/fast_login && gen-api-models --api-spec $npm_package_fast_login_api --out-dir ./definitions/fast_login --no-strict --response-decoders --request-types --client",
-    "generate:trial-system-api": "rimraf definitions/trial_systwem && mkdir -p definitions/trial_systwem && gen-api-models --api-spec $npm_package_trial_system --out-dir ./definitions/trial_systwem --no-strict --response-decoders --request-types --client",
+    "generate:trial-system-api": "rimraf definitions/trial_system && mkdir -p definitions/trial_system && gen-api-models --api-spec $npm_package_trial_system --out-dir ./definitions/trial_system --no-strict --response-decoders --request-types --client",
     "generate:pagopa-walletv3-api": "rimraf definitions/pagopa/walletv3 && mkdir -p definitions/pagopa/walletv3 && gen-api-models --api-spec $npm_package_pagopa_api_walletv3 --out-dir ./definitions/pagopa/walletv3 --no-strict --response-decoders --request-types --client",
     "generate:pagopa-ecommerce-api": "rimraf definitions/pagopa/ecommerce && mkdir -p definitions/pagopa/ecommerce && gen-api-models --api-spec $npm_package_pagopa_api_ecommerce --out-dir ./definitions/pagopa/ecommerce --no-strict --response-decoders --request-types --client",
     "generate:pagopa-biz-events-api": "rimraf definitions/pagopa/biz-events && mkdir -p definitions/pagopa/biz-events && gen-api-models --api-spec $npm_package_pagopa_api_biz_events --out-dir ./definitions/pagopa/biz-events --no-strict --response-decoders --request-types --client",
@@ -126,6 +126,7 @@
     "@redux-saga/testing-utils": "^1.1.3",
     "@shopify/flash-list": "~1.4.3",
     "@xstate/react": "^3.0.1",
+    "@xstate5/react": "npm:@xstate/react@4",
     "async-mutex": "^0.1.3",
     "buffer": "^4.9.1",
     "color": "^3.0.0",
@@ -220,7 +221,8 @@
     "vision-camera-code-scanner": "^0.2.0",
     "xml2js": "^0.5.0",
     "xss": "1.0.10",
-    "xstate": "^4.33.6"
+    "xstate": "^4.33.6",
+    "xstate5": "npm:xstate@5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -312,7 +314,8 @@
     "@babel/preset-typescript": "^7.23.3",
     "@babel/plugin-transform-typescript": "^7.23.6",
     "@babel/plugin-syntax-typescript": "^7.23.3",
-    "@babel/types": "^7.23.6"
+    "@babel/types": "^7.23.6",
+    "@xstate5/react/xstate": "^5.13.0"
   },
   "react-native": {
     "path": "path-browserify",
