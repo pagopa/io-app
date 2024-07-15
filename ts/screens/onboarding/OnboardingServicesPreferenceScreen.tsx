@@ -205,9 +205,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
               size="small"
               color="neutral"
               pictogramName="activate"
-              content={I18n.t(
-                "profile.main.privacy.shareData.screen.profileSettings"
-              )}
+              content={I18n.t("services.optIn.preferences.banner")}
             />
           </ContentWrapper>
           {manualConfigBottomSheet}
