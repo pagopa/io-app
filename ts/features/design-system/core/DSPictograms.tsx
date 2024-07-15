@@ -1,4 +1,5 @@
 import {
+  H4,
   HSpacer,
   IOColors,
   IOPictograms,
@@ -9,13 +10,11 @@ import {
   PictogramBleed,
   SVGPictogramProps,
   VStack,
-  H4,
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { H2 } from "../../../components/core/typography/H2";
 import {
   DSAssetViewerBox,
   assetItemGutter
