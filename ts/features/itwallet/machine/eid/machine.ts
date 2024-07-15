@@ -23,7 +23,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToCredentialCatalog: notImplemented,
-    storeHardwareKeyTag: (_ctx, _params: { keyTag: string }) =>
+    storeIntegrityKeyTag: (_ctx, _params: { keyTag: string }) =>
       notImplemented(),
     storeEidCredential: notImplemented,
     closeIssuance: notImplemented,
@@ -82,10 +82,10 @@ export const itwEidIssuanceMachine = setup({
             onDone: {
               actions: [
                 assign(({ event }) => ({
-                  hardwareKeyTag: event.output
+                  integrityKeyTag: event.output
                 })),
                 {
-                  type: "storeHardwareKeyTag",
+                  type: "storeIntegrityKeyTag",
                   params: ({ event }) => ({ keyTag: event.output })
                 }
               ],
@@ -101,7 +101,7 @@ export const itwEidIssuanceMachine = setup({
           invoke: {
             src: "obtainWalletAttestation",
             input: ({ context }) => ({
-              hardwareKeyTag: context.hardwareKeyTag
+              hardwareKeyTag: context.integrityKeyTag
             }),
             onDone: {
               actions: [

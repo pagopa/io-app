@@ -1,14 +1,14 @@
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { itwRemoveHardwareKeyTag, itwStoreHardwareKeyTag } from "../actions";
+import { itwRemoveIntegrityKeyTag, itwStoreIntegrityKeyTag } from "../actions";
 
 export type ItwIssuanceState = {
-  hardwareKeyTag: O.Option<string>;
+  integrityKeyTag: O.Option<string>;
 };
 
 const INITIAL_STATE: ItwIssuanceState = {
-  hardwareKeyTag: O.none
+  integrityKeyTag: O.none
 };
 
 const reducer = (
@@ -16,15 +16,15 @@ const reducer = (
   action: Action
 ): ItwIssuanceState => {
   switch (action.type) {
-    case getType(itwStoreHardwareKeyTag):
+    case getType(itwStoreIntegrityKeyTag):
       return {
         ...state,
-        hardwareKeyTag: O.some(action.payload)
+        integrityKeyTag: O.some(action.payload)
       };
-    case getType(itwRemoveHardwareKeyTag):
+    case getType(itwRemoveIntegrityKeyTag):
       return {
         ...state,
-        hardwareKeyTag: O.none
+        integrityKeyTag: O.none
       };
   }
   return state;
