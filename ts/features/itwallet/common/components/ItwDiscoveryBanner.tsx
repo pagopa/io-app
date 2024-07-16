@@ -25,16 +25,15 @@ export const ItwDiscoveryBanner = ({
   const bannerRef = React.createRef<View>();
   const navigation = useIONavigation();
   const [isVisible, setVisible] = React.useState(true);
-  const isTrialActive = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
+  const isItwTrialActive = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
 
-  /**
-   * Banner shold be hidden if:
-   * - The user closed it by pressing the `x`
-   * - The user is not part of the trial
-   * - The user already activated the wallet
-   */
-  if (!isVisible || !isTrialActive || isItwValid) {
+  // Banner should be hidden if:
+  if (
+    !isVisible || // The user closed it by pressing the `x`
+    !isItwTrialActive || // The user is not part of the trial
+    isItwValid // The user already activated the wallet
+  ) {
     return null;
   }
 
