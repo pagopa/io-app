@@ -4,7 +4,7 @@ import {
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import * as React from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
@@ -23,11 +23,15 @@ import {
   isDesignSystemEnabledSelector,
   isNewHomeSectionEnabledSelector
 } from "../store/reducers/persistedPreferences";
-import { isNewPaymentSectionEnabledSelector } from "../store/reducers/backendStatus";
+import {
+  isNewPaymentSectionEnabledSelector,
+  isSettingsVisibleAndHideProfileSelector
+} from "../store/reducers/backendStatus";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
+import { showBarcodeScanSection } from "../config";
 import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
@@ -69,7 +73,10 @@ export const MainTabNavigator = () => {
   const isNewHomeSectionEnabled = useIOSelector(
     isNewHomeSectionEnabledSelector
   );
-  const showBarcodeScanSection = false; // Currently disabled
+
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
 
   const tabBarHeight = 54;
   const additionalPadding = 10;
@@ -208,21 +215,23 @@ export const MainTabNavigator = () => {
             )
           }}
         />
-        <Tab.Screen
-          name={ROUTES.PROFILE_MAIN}
-          component={ProfileMainScreen}
-          options={{
-            title: I18n.t("global.navigator.profile"),
-            tabBarIcon: ({ color, focused }) => (
-              <TabIconComponent
-                iconName="navProfile"
-                iconNameFocused="navProfileFocused"
-                color={color}
-                focused={focused}
-              />
-            )
-          }}
-        />
+        {!isSettingsVisibleAndHideProfile && (
+          <Tab.Screen
+            name={ROUTES.PROFILE_MAIN}
+            component={ProfileMainScreen}
+            options={{
+              title: I18n.t("global.navigator.profile"),
+              tabBarIcon: ({ color, focused }) => (
+                <TabIconComponent
+                  iconName="navProfile"
+                  iconNameFocused="navProfileFocused"
+                  color={color}
+                  focused={focused}
+                />
+              )
+            }}
+          />
+        )}
       </Tab.Navigator>
     </LoadingSpinnerOverlay>
   );

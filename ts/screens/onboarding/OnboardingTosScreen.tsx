@@ -12,7 +12,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import React, { createRef, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Alert, View } from "react-native";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import TosWebviewComponent from "../../components/TosWebviewComponent";
@@ -42,7 +42,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const OnboardingTosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const viewRef = createRef<View>();
 
   const store = useIOStore();
   const dispatch = useIODispatch();
@@ -142,7 +141,6 @@ const OnboardingTosScreen = () => {
           testID={"currentToSNotAcceptedView"}
         >
           <AlertDS
-            viewRef={viewRef}
             testID="currentToSNotAcceptedText"
             variant="info"
             content={

@@ -23,13 +23,18 @@ export const itwEidIssuanceMachine = setup({
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToCredentialCatalog: notImplemented,
-    storeWalletAttestation: notImplemented,
+    storeIntegrityKeyTag: (_ctx, _params: { keyTag: string }) =>
+      notImplemented(),
     storeEidCredential: notImplemented,
     closeIssuance: notImplemented,
     requestAssistance: notImplemented
   },
   actors: {
-    registerWalletInstance: fromPromise<string>(notImplemented),
+    createWalletInstance: fromPromise<string>(notImplemented),
+    obtainWalletAttestation: fromPromise<
+      string,
+      { hardwareKeyTag: string | undefined }
+    >(notImplemented),
     showSpidIdentificationWebView: fromPromise<string, LocalIdpsFallback>(
       notImplemented
     ),
@@ -44,6 +49,7 @@ export const itwEidIssuanceMachine = setup({
   initial: "Idle",
   states: {
     Idle: {
+      entry: assign(() => InitialContext),
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
@@ -63,15 +69,48 @@ export const itwEidIssuanceMachine = setup({
     },
     WalletInitialization: {
       tags: [ItwTags.Loading],
-      description: "Wallet instance registration and attestation issuance",
-      invoke: {
-        src: "registerWalletInstance",
-        onDone: {
-          target: "UserIdentification",
-          actions: "storeWalletAttestation"
+      description: "Wallet instance registration and attestation retrieval",
+      initial: "WalletInstanceCreation",
+      states: {
+        WalletInstanceCreation: {
+          description:
+            "This state generates the integry hardware key and registers the wallet instance. The generated integrity hardware key is then stored and persisted to the redux store.",
+          invoke: {
+            src: "createWalletInstance",
+            onDone: {
+              actions: [
+                assign(({ event }) => ({
+                  integrityKeyTag: event.output
+                })),
+                {
+                  type: "storeIntegrityKeyTag",
+                  params: ({ event }) => ({ keyTag: event.output })
+                }
+              ],
+              target: "WalletAttestationObtainment"
+            },
+            onError: {
+              target: "#itwEidIssuanceMachine.Failure"
+            }
+          }
         },
-        onError: {
-          target: "Failure"
+        WalletAttestationObtainment: {
+          description: "Obtainment of the wallet attestation",
+          invoke: {
+            src: "obtainWalletAttestation",
+            input: ({ context }) => ({
+              hardwareKeyTag: context.integrityKeyTag
+            }),
+            onDone: {
+              actions: assign(({ event }) => ({
+                walletAttestation: event.output
+              })),
+              target: "#itwEidIssuanceMachine.UserIdentification"
+            },
+            onError: {
+              target: "#itwEidIssuanceMachine.Failure"
+            }
+          }
         }
       }
     },
@@ -184,6 +223,9 @@ export const itwEidIssuanceMachine = setup({
         },
         "go-to-wallet": {
           actions: "navigateToWallet"
+        },
+        reset: {
+          target: "Idle"
         }
       }
     },
@@ -195,6 +237,9 @@ export const itwEidIssuanceMachine = setup({
         },
         "request-assistance": {
           actions: "requestAssistance"
+        },
+        reset: {
+          target: "Idle"
         }
       }
     }

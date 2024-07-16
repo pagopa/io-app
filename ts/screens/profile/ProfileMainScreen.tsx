@@ -2,6 +2,7 @@ import {
   Banner,
   ContentWrapper,
   Divider,
+  HeaderSecondLevel,
   IOVisualCostants,
   ListItemAction,
   ListItemNav,
@@ -14,35 +15,30 @@ import React, {
   memo,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState
 } from "react";
 import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
 import AppVersion from "../../components/AppVersion";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
+import { LightModalContext } from "../../components/ui/LightModal";
 import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
 import { showProfileBannerSelector } from "../../features/profileSettings/store/selectors";
+import { useHeaderProps } from "../../hooks/useHeaderProps";
 import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../i18n";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../navigation/params/AppParamsList";
-import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { isDevEnv } from "../../utils/environment";
 import DeveloperModeSection from "./DeveloperModeSection";
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
-
-type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
-  LightModalContextInterface;
 
 type ProfileNavListItem = {
   value: string;
@@ -56,10 +52,14 @@ const ListItem = memo(ListItemNav);
 /**
  * A screen to show all the options related to the user profile
  */
-const ProfileMainScreen = ({ hideModal }: Props) => {
+const ProfileMainScreen = () => {
+  const { hideModal } = React.useContext(LightModalContext);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const { show } = useIOToast();
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
   const showProfileBanner = useIOSelector(showProfileBannerSelector);
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
@@ -223,6 +223,26 @@ const ProfileMainScreen = ({ hideModal }: Props) => {
 
   const logoutLabel = I18n.t("profile.logout.menulabel");
 
+  const headerProps = useHeaderProps({
+    title: "",
+    backAccessibilityLabel: I18n.t("global.buttons.back"),
+    goBack: () => navigation.goBack(),
+    showHelp: true,
+    faqCategories: ["profile"],
+    contextualHelpMarkdown: {
+      title: "profile.main.contextualHelpTitle",
+      body: "profile.main.contextualHelpContent"
+    }
+  });
+
+  useLayoutEffect(() => {
+    if (isSettingsVisibleAndHideProfile) {
+      navigation.setOptions({
+        header: () => <HeaderSecondLevel {...headerProps} />
+      });
+    }
+  }, [headerProps, isSettingsVisibleAndHideProfile, navigation]);
+
   return (
     <ScrollView ref={scrollViewContentRef}>
       {showProfileBanner && (
@@ -271,4 +291,4 @@ const ProfileMainScreen = ({ hideModal }: Props) => {
   );
 };
 
-export default withLightModalContext(ProfileMainScreen);
+export default ProfileMainScreen;

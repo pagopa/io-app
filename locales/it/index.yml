@@ -81,7 +81,7 @@ global:
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
   unknown: sconosciuto
   sectionStatus:
-    moreInfo: più info
+    moreInfo: "Vuoi saperne di più?"
   accessibility:
     minusSymbol: meno
     reload: "Ricarica"
@@ -297,6 +297,8 @@ profile:
     description: Usa il codice a barre per comunicare il tuo codice fiscale quando ti viene richiesto.
     help: !include profile/profile_fiscal_code.md
     facSimile: FAC-SIMILE
+    copyCode: Copia codice fiscale
+    codeCopied: Codice copiato!
   sections:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
@@ -354,9 +356,9 @@ profile:
           title: Elimina il tuo profilo
           description: Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento.
           banner: Il tuo profilo sarà eliminato definitivamente entro 30 giorni dalla richiesta.
-          body: 
+          body:
             p1: Se decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.
-            p2: 
+            p2:
               firstPart: "Eventuali bonus o sconti ottenuti tramite l'app IO "
               lastPart: non saranno più accessibili.
             p3: Potrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova registrazione tramite SPID o CIE.
@@ -388,11 +390,11 @@ profile:
             item3: il testo dei Messaggi che hai ricevuto;
             item4: le tue preferenze di notifica.
           paragraph1: Le informazioni saranno scaricate in formato YAML, un formato standard che in informatica consente lo scambio di dati fra applicazioni diverse.
-          paragraph2: 
+          paragraph2:
             part1: "Riceverai un "
             part2: "messaggio su IO "
-            part3: in cui sono presenti un link e una password validi per 15 giorni. 
-          paragraph3: 
+            part3: in cui sono presenti un link e una password validi per 15 giorni.
+          paragraph3:
             part1: Per maggiori informazioni consulta l’
             link: Informativa privacy di IO.
         alert:
@@ -2020,6 +2022,13 @@ messages:
     restore:
       success: "Ripristino effettuato."
       failure: "Il ripristino non è andato a buon fine"
+  search:
+    emptyState:
+      title: "Inserisci almeno tre caratteri"
+    input:
+      cancel: "Annulla"
+      clear: "Cancella"
+      placeholderShort: "Inserisci testo"
 messageDetails:
   accessibilityAttachmentIcon: "Contiene allegati"
   contextualHelpTitle: Dettagli del messaggio
@@ -2129,6 +2138,7 @@ services:
         title: "Preferenze salvate!"
         body: "Potrai sempre vedere la lista dei servizi disponibili visitando la sezione Servizi."
         cta: "Vedi i servizi disponibili"
+      banner: Puoi modificare la tua scelta in ogni momento da Profilo > Preferenze
       oldUsersBadge: "Impostazione attuale"
       choiceLabel: "Hai scelto la"
       unavailable: "Non selezionato"
@@ -3177,8 +3187,9 @@ features:
       tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()
     identification:
       mode:
-        title: Con quale metodo vuoi identificarti?
-        header: Metodi disponibili
+        title: Attiva IT Wallet con la tua identità digitale
+        description: È un passaggio necessario solo la prima volta per garantire la sicurezza dei tuoi dati.
+        header: Scegli come identificarti
         method:
           spid:
             title: SPID
@@ -3189,6 +3200,7 @@ features:
           cieId:
             title: CieID
             subtitle: Usa credenziali e app CieID
+        privacy: Identificandoti dichiari di aver letto e compreso l’[Informativa Privacy]() di **Istituto Poligrafico e Zecca dello Stato**.
       nfc:
         title: Attiva l'NFC per continuare
         description: La funzionalità NFC permette al dispositivo di leggere la tua CIE.
@@ -3861,8 +3873,8 @@ transaction:
       paymentMethod: Metodo di pagamento
       authCode: Codice autorizzativo
       rrn: RRN
-      executedBy: Eseguito da
-      headedTo: Intestato a
+      executedBy: Eseguita da
+      headedTo: Metodo intestato a
       alert:
         content: Rivolgiti all’Ente Creditore se hai bisogno della ricevuta.
     operation:
