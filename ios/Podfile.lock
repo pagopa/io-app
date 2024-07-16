@@ -1042,7 +1042,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
-  boost: 9fa78656d705f55b1220151d997e57e2a3f2cde0
+  boost: 7dcd2de282d72e344012f7d6564d024930a6a440
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
@@ -1083,7 +1083,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-login-utils: 9fb43fd59dcc864a24343209e74bd7429659456a
   pagopa-react-native-zendesk: 60a26f8a8072234789c34bb7c8a769c156eb57dc
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
-  RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
+  RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 264adaca1d8b1a9c078761891898d4142df05313
   RCTTypeSafety: 279a89da7058a69899778a127be73fab38b84499
   React: 725b4e11f6ffb43d6f9b14e82879073623db4071
