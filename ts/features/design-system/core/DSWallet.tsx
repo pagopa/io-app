@@ -1,4 +1,5 @@
 import * as React from "react";
+import { VStack } from "@pagopa/io-app-design-system";
 import { WalletCardsCategoryContainer } from "../../newWallet/components/WalletCardsCategoryContainer";
 import { WalletCard, WalletCardCategory } from "../../newWallet/types";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -56,23 +57,27 @@ export const DSWallet = () => {
     {} as { [category in WalletCardCategory]: ReadonlyArray<WalletCard> }
   );
 
+  const blockMargin = 48;
+
   return (
     <DesignSystemScreen title={"Wallet"}>
-      <DesignSystemSection title="Single card">
-        <WalletCardsCategoryContainer
-          label="Iniziative welfare"
-          iconName="bonus"
-          cards={cardsByCategory.bonus}
-        />
-      </DesignSystemSection>
+      <VStack space={blockMargin}>
+        <DesignSystemSection title="Single card">
+          <WalletCardsCategoryContainer
+            label="Iniziative welfare"
+            iconName="bonus"
+            cards={cardsByCategory.bonus}
+          />
+        </DesignSystemSection>
 
-      <DesignSystemSection title="Multiple cards">
-        <WalletCardsCategoryContainer
-          label="Metodi di pagamento"
-          iconName="creditCard"
-          cards={cardsByCategory.payment}
-        />
-      </DesignSystemSection>
+        <DesignSystemSection title="Multiple cards">
+          <WalletCardsCategoryContainer
+            label="Metodi di pagamento"
+            iconName="creditCard"
+            cards={cardsByCategory.payment}
+          />
+        </DesignSystemSection>
+      </VStack>
     </DesignSystemScreen>
   );
 };
