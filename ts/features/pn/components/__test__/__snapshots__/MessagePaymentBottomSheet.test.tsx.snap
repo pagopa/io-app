@@ -803,7 +803,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         "paddingHorizontal": 16,
                                         "paddingVertical": 16,
                                       },
-                                      Object {
+                                      {
                                         "borderColor": "#E8EBF1",
                                       },
                                       false,
@@ -848,7 +848,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             "lineHeight": 21,
                                           },
                                           {
-                                            "color": "#475A6D",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -868,7 +868,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "lineHeight": 21,
                                         }
                                       }
@@ -877,11 +877,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           },
                                           {
-                                            "color": "#475A6D",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -1056,7 +1056,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         "paddingHorizontal": 16,
                                         "paddingVertical": 16,
                                       },
-                                      Object {
+                                      {
                                         "borderColor": "#E8EBF1",
                                       },
                                       false,
@@ -1101,7 +1101,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             "lineHeight": 21,
                                           },
                                           {
-                                            "color": "#475A6D",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -1121,7 +1121,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "lineHeight": 21,
                                         }
                                       }
@@ -1130,11 +1130,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           },
                                           {
-                                            "color": "#475A6D",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -1321,7 +1321,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         "paddingHorizontal": 16,
                                         "paddingVertical": 16,
                                       },
-                                      Object {
+                                      {
                                         "borderColor": "#E8EBF1",
                                       },
                                       false,
@@ -1366,7 +1366,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             "lineHeight": 21,
                                           },
                                           {
-                                            "color": "#475A6D",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -1386,7 +1386,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "lineHeight": 21,
                                         }
                                       }
@@ -1395,11 +1395,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           },
                                           {
-                                            "color": "#475A6D",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -1586,7 +1586,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         "paddingHorizontal": 16,
                                         "paddingVertical": 16,
                                       },
-                                      Object {
+                                      {
                                         "borderColor": "#E8EBF1",
                                       },
                                       false,
@@ -1631,7 +1631,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             "lineHeight": 21,
                                           },
                                           {
-                                            "color": "#475A6D",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -1651,7 +1651,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "lineHeight": 21,
                                         }
                                       }
@@ -1660,11 +1660,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           },
                                           {
-                                            "color": "#475A6D",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -1851,7 +1851,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         "paddingHorizontal": 16,
                                         "paddingVertical": 16,
                                       },
-                                      Object {
+                                      {
                                         "borderColor": "#E8EBF1",
                                       },
                                       false,
@@ -1896,7 +1896,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             "lineHeight": 21,
                                           },
                                           {
-                                            "color": "#475A6D",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -1916,7 +1916,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "lineHeight": 21,
                                         }
                                       }
@@ -1925,11 +1925,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           },
                                           {
-                                            "color": "#475A6D",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -2116,7 +2116,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         "paddingHorizontal": 16,
                                         "paddingVertical": 16,
                                       },
-                                      Object {
+                                      {
                                         "borderColor": "#E8EBF1",
                                       },
                                       false,
@@ -2161,7 +2161,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             "lineHeight": 21,
                                           },
                                           {
-                                            "color": "#475A6D",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -2181,7 +2181,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "lineHeight": 21,
                                         }
                                       }
@@ -2190,11 +2190,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           },
                                           {
-                                            "color": "#475A6D",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -2381,7 +2381,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         "paddingHorizontal": 16,
                                         "paddingVertical": 16,
                                       },
-                                      Object {
+                                      {
                                         "borderColor": "#E8EBF1",
                                       },
                                       false,
@@ -2426,7 +2426,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             "lineHeight": 21,
                                           },
                                           {
-                                            "color": "#475A6D",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -2446,7 +2446,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "lineHeight": 21,
                                         }
                                       }
@@ -2455,11 +2455,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           },
                                           {
-                                            "color": "#475A6D",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",

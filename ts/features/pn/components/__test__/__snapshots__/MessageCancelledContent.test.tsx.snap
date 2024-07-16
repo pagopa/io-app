@@ -431,7 +431,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                           style={
                             [
                               {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               {
                                 "flex": 1,
@@ -919,7 +919,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                           style={
                             [
                               {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               {
                                 "flex": 1,
@@ -1407,7 +1407,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                           style={
                             [
                               {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               {
                                 "flex": 1,
@@ -1895,7 +1895,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                           style={
                             [
                               {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               {
                                 "flex": 1,
@@ -2383,7 +2383,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                           style={
                             [
                               {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               {
                                 "flex": 1,
@@ -2871,7 +2871,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                           style={
                             [
                               {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               {
                                 "flex": 1,
@@ -3359,7 +3359,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                           style={
                             [
                               {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               {
                                 "flex": 1,
@@ -3847,7 +3847,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                           style={
                             [
                               {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               {
                                 "flex": 1,
@@ -4335,7 +4335,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                           style={
                             [
                               {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               {
                                 "flex": 1,

@@ -797,7 +797,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                           style={
                             [
                               {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               {
                                 "flex": 1,

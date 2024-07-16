@@ -463,7 +463,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                             style={
                               [
                                 {
-                                  "marginTop": -5,
+                                  "marginTop": -10,
                                 },
                                 {
                                   "flex": 1,
