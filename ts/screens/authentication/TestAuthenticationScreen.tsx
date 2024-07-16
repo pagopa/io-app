@@ -67,32 +67,21 @@ const LoadingView = () => (
   </View>
 );
 
-const ErrorView = (title: string, content: string) => {
-  const viewRef = React.createRef<View>();
-  return (
-    <View style={IOStyles.flex} testID="errorView">
-      <VSpacer size={16} />
-      <Alert
-        viewRef={viewRef}
-        variant="error"
-        title={title}
-        content={content}
-      />
-      <VSpacer size={16} />
-    </View>
-  );
-};
+const ErrorView = (title: string, content: string) => (
+  <View style={IOStyles.flex} testID="errorView">
+    <VSpacer size={16} />
+    <Alert variant="error" title={title} content={content} />
+    <VSpacer size={16} />
+  </View>
+);
 
-const SuccessfulView = () => {
-  const viewRef = React.createRef<View>();
-  return (
-    <View style={IOStyles.flex} testID="successView">
-      <VSpacer size={16} />
-      <Alert viewRef={viewRef} variant="success" content={"Success"} />
-      <VSpacer size={16} />
-    </View>
-  );
-};
+const SuccessfulView = () => (
+  <View style={IOStyles.flex} testID="successView">
+    <VSpacer size={16} />
+    <Alert variant="success" content={"Success"} />
+    <VSpacer size={16} />
+  </View>
+);
 
 const isConfirmButtonDisabled = (
   username: string,

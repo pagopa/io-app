@@ -84,7 +84,7 @@ const SectionStatusComponent = ({ sectionKey, onSectionRef }: Props) => {
       variant={variant}
       action={action}
       onPress={onPressCallback}
-      viewRef={viewRef}
+      ref={viewRef}
     />
   );
 };
