@@ -1,5 +1,9 @@
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 
+export type Reset = {
+  type: "reset";
+};
+
 export type SelecteCredential = {
   type: "select-credential";
   credentialType: CredentialType;
@@ -26,6 +30,7 @@ export type Close = {
 };
 
 export type CredentialIssuanceEvents =
+  | Reset
   | SelecteCredential
   | ConfirmAuthData
   | AddToWallet
