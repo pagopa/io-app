@@ -29,14 +29,14 @@ import { accessibilityLabelForMessageItem } from "./homeUtils";
 import { MessageListItem } from "./DS/MessageListItem";
 
 type WrappedMessageListItemProps = {
+  archiveRestoreSourceCategory?: MessageListCategory;
   index: number;
-  listCategory: MessageListCategory;
   message: UIMessage;
 };
 
 export const WrappedMessageListItem = ({
+  archiveRestoreSourceCategory,
   index,
-  listCategory,
   message
 }: WrappedMessageListItemProps) => {
   const dispatch = useIODispatch();
@@ -88,21 +88,30 @@ export const WrappedMessageListItem = ({
 
   const toggleScheduledMessageArchivingCallback = useCallback(() => {
     const state = store.getState();
-    if (!isArchivingInProcessingModeSelector(state)) {
+    if (
+      archiveRestoreSourceCategory &&
+      !isArchivingInProcessingModeSelector(state)
+    ) {
       dispatch(
         toggleScheduledMessageArchivingAction({
           messageId: message.id,
-          fromInboxToArchive: listCategory === "INBOX"
+          fromInboxToArchive: archiveRestoreSourceCategory === "INBOX"
         })
       );
     }
-  }, [dispatch, listCategory, message, store]);
+  }, [archiveRestoreSourceCategory, dispatch, message, store]);
 
   const onPressCallback = useCallback(() => {
     const state = store.getState();
-    if (isArchivingInSchedulingModeSelector(state)) {
+    if (
+      archiveRestoreSourceCategory &&
+      isArchivingInSchedulingModeSelector(state)
+    ) {
       toggleScheduledMessageArchivingCallback();
-    } else if (isArchivingDisabledSelector(state)) {
+    } else if (
+      !archiveRestoreSourceCategory ||
+      isArchivingDisabledSelector(state)
+    ) {
       if (message.hasPrecondition) {
         dispatch(
           scheduledPreconditionStatusAction(
@@ -120,6 +129,7 @@ export const WrappedMessageListItem = ({
       }
     }
   }, [
+    archiveRestoreSourceCategory,
     dispatch,
     message,
     navigation,

@@ -8,18 +8,21 @@ import {
   accessibilityLabelForMessageItem,
   getInitialReloadAllMessagesActionIfNeeded,
   getLoadNextPageMessagesActionIfAllowed,
+  getLoadPreviousPageMessagesActionIfAllowed,
   getLoadServiceDetailsActionIfNeeded,
   getMessagesViewPagerInitialPageIndex,
   getReloadAllMessagesActionForRefreshIfAllowed,
   messageListCategoryToViewPageIndex,
   messageListItemHeight,
   messageViewPageIndexToListCategory,
-  nextPageLoadingWaitMillisecondsGenerator
+  nextPageLoadingWaitMillisecondsGenerator,
+  refreshIntervalMillisecondsGenerator
 } from "../homeUtils";
-import { pageSize } from "../../../../../config";
+import { maximumItemsFromAPI, pageSize } from "../../../../../config";
 import { Action } from "../../../../../store/actions/types";
 import {
   loadNextPageMessages,
+  loadPreviousPageMessages,
   reloadAllMessages
 } from "../../../store/actions";
 import { UIMessage } from "../../../types";
@@ -729,6 +732,13 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
   );
 });
 
+describe("refreshIntervalMillisecondsGenerator", () => {
+  it("should return 60000 milliseconds", () => {
+    const refreshInterval = refreshIntervalMillisecondsGenerator();
+    expect(refreshInterval).toBe(60000);
+  });
+});
+
 describe("getReloadAllMessagesActionForRefreshIfAllowed", () => {
   const pots = [
     pot.none,
@@ -776,6 +786,131 @@ describe("getReloadAllMessagesActionForRefreshIfAllowed", () => {
           expect(reloadAllMessagesAction).toStrictEqual(expectedOutput);
         });
       })
+    )
+  );
+});
+
+describe("getLoadNextPreviousPageMessagesActionIfAllowed", () => {
+  const generateMessagePots = (previousPageMessageId?: string) => [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating({ page: [], previous: previousPageMessageId }),
+    pot.noneError(""),
+    pot.some({ page: [], previous: previousPageMessageId }),
+    pot.someLoading({ page: [], previous: previousPageMessageId }),
+    pot.someUpdating(
+      { page: [], previous: previousPageMessageId },
+      { page: [], previous: previousPageMessageId }
+    ),
+    pot.someError({ page: [], previous: previousPageMessageId }, "")
+  ];
+  const lastUpdateTimes = [
+    new Date(new Date().getTime() - refreshIntervalMillisecondsGenerator() - 1), // Can update
+    new Date(new Date().getTime() + 60 * 60 * 1000) // Cannot update
+  ];
+  const expectedOutputGenerator = (
+    shownCategoryMessagePot: pot.Pot<{ previous?: string }, unknown>,
+    previousPageMessageId: string | undefined,
+    dateIndex: number,
+    archivingStatus: string,
+    otherCategoryMessagePot: pot.Pot<unknown, unknown>,
+    shownCategory: string
+  ) => {
+    const shownCategoryMessageOption = pot.toOption(shownCategoryMessagePot);
+    if (
+      !previousPageMessageId ||
+      dateIndex === 1 ||
+      O.isNone(shownCategoryMessageOption) ||
+      !shownCategoryMessageOption.value.previous ||
+      archivingStatus === "processing" ||
+      pot.isLoading(shownCategoryMessagePot) ||
+      pot.isUpdating(shownCategoryMessagePot) ||
+      pot.isLoading(otherCategoryMessagePot) ||
+      pot.isUpdating(otherCategoryMessagePot)
+    ) {
+      return undefined;
+    }
+    return loadPreviousPageMessages.request({
+      pageSize: maximumItemsFromAPI,
+      cursor: previousPageMessageId,
+      filter: {
+        getArchived: shownCategory === "ARCHIVE"
+      }
+    });
+  };
+  // eslint-disable-next-line sonarjs/cognitive-complexity
+  ["INBOX", "ARCHIVE"].forEach(shownCategory =>
+    [undefined, "01J2C0Z8H1XFTNRHRJHB20QZHG"].forEach(previousPageMessageId =>
+      generateMessagePots(previousPageMessageId).forEach(
+        shownCategoryMessagePot =>
+          generateMessagePots().forEach(otherCategoryMessagePot =>
+            ["disabled", "enabled", "processing"].forEach(archivingStatus =>
+              lastUpdateTimes.forEach((lastUpdateTime, dateIndex) => {
+                const expectedOutput = expectedOutputGenerator(
+                  shownCategoryMessagePot,
+                  previousPageMessageId,
+                  dateIndex,
+                  archivingStatus,
+                  otherCategoryMessagePot,
+                  shownCategory
+                );
+                it(`should return '${
+                  expectedOutput
+                    ? "loadPreviousPageMessages.request"
+                    : "undefined"
+                }' for category '${shownCategory}' with pot '${
+                  shownCategoryMessagePot.kind
+                }' previous Id '${previousPageMessageId}' date that '${
+                  dateIndex === 0 ? "allows" : "denies"
+                }' update, while other category is '${
+                  otherCategoryMessagePot.kind
+                }' and archving status is '${archivingStatus}'`, () => {
+                  const state = {
+                    entities: {
+                      messages: {
+                        allPaginated: {
+                          archive:
+                            shownCategory === "ARCHIVE"
+                              ? {
+                                  data: shownCategoryMessagePot,
+                                  lastRequest: O.none,
+                                  lastUpdateTime
+                                }
+                              : {
+                                  data: otherCategoryMessagePot,
+                                  lastRequest: O.none,
+                                  lastUpdateTime: new Date(0)
+                                },
+                          inbox:
+                            shownCategory === "INBOX"
+                              ? {
+                                  data: shownCategoryMessagePot,
+                                  lastRequest: O.none,
+                                  lastUpdateTime
+                                }
+                              : {
+                                  data: otherCategoryMessagePot,
+                                  lastRequest: O.none,
+                                  lastUpdateTime: new Date(0)
+                                },
+                          shownCategory
+                        },
+                        archiving: {
+                          status: archivingStatus
+                        }
+                      }
+                    }
+                  } as GlobalState;
+                  const loadPreviousPageMessagesAction =
+                    getLoadPreviousPageMessagesActionIfAllowed(state);
+                  expect(loadPreviousPageMessagesAction).toStrictEqual(
+                    expectedOutput
+                  );
+                });
+              })
+            )
+          )
+      )
     )
   );
 });
