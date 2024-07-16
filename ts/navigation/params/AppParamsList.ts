@@ -51,8 +51,6 @@ import { ItwParamsList } from "../../features/itwallet/navigation/ItwParamsList"
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import { MessagesParamsList } from "../../features/messages/navigation/params";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
-import { WalletParamsList as NewWalletParamsList } from "../../features/newWallet/navigation/params";
-import { WalletRoutes as NewWalletRoutes } from "../../features/newWallet/navigation/routes";
 import { PaymentsBarcodeParamsList } from "../../features/payments/barcode/navigation/params";
 import { PaymentsBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
 import { PaymentsTransactionBizEventsParamsList } from "../../features/payments/bizEventsTransaction/navigation/params";
@@ -123,8 +121,6 @@ export type AppParamsList = {
   [IdPayCodeRoutes.IDPAY_CODE_MAIN]: NavigatorScreenParams<IdPayCodeParamsList>;
 
   [IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN]: NavigatorScreenParams<IdPayBarcodeParamsList>;
-
-  [NewWalletRoutes.WALLET_NAVIGATOR]: NavigatorScreenParams<NewWalletParamsList>;
 
   [PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR]: NavigatorScreenParams<PaymentsOnboardingParamsList>;
   [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR]: NavigatorScreenParams<PaymentsCheckoutParamsList>;

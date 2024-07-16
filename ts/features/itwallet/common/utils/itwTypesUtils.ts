@@ -32,12 +32,6 @@ export type RpEntityConfiguration =
   Trust.RelyingPartyEntityConfiguration["payload"]["metadata"];
 
 /**
- * Alias for the CredentialConfigurationSchema type.
- */
-export type CredentialConfigurationSchema =
-  Trust.CredentialIssuerEntityConfiguration["payload"]["metadata"]["openid_credential_issuer"]["credentials_supported"][number]["credential_definition"]["credentialSubject"];
-
-/**
  * Alias for the IssuerConfiguration type
  */
 export type IssuerConfiguration = Awaited<
@@ -59,7 +53,6 @@ export type StoredCredential = {
   credential: string;
   format: string;
   parsedCredential: ParsedCredential;
-  credentialConfigurationSchema: CredentialConfigurationSchema;
   credentialType: string;
   issuerConf: IssuerConfiguration;
 } & CredentialDefinition;
