@@ -435,8 +435,8 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -446,8 +446,8 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",

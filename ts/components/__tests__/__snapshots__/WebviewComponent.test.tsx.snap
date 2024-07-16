@@ -239,8 +239,8 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
           font="TitilliumSansPro"
           fontStyle={
             {
-              "fontSize": 24,
-              "lineHeight": 34,
+              "fontSize": 22,
+              "lineHeight": 33,
             }
           }
           maxFontSizeMultiplier={1.25}
@@ -250,8 +250,8 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
                 "textAlign": "center",
               },
               {
-                "fontSize": 24,
-                "lineHeight": 34,
+                "fontSize": 22,
+                "lineHeight": 33,
               },
               {
                 "color": "#17324D",

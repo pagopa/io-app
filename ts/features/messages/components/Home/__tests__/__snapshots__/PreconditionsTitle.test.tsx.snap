@@ -692,8 +692,8 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
                           font="TitilliumSansPro"
                           fontStyle={
                             {
-                              "fontSize": 24,
-                              "lineHeight": 34,
+                              "fontSize": 22,
+                              "lineHeight": 33,
                             }
                           }
                           maxFontSizeMultiplier={1.25}
@@ -704,8 +704,8 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
                                 "flexWrap": "wrap",
                               },
                               {
-                                "fontSize": 24,
-                                "lineHeight": 34,
+                                "fontSize": 22,
+                                "lineHeight": 33,
                               },
                               {
                                 "color": "#17324D",

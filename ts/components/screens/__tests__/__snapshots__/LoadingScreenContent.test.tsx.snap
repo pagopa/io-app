@@ -564,8 +564,8 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -575,8 +575,8 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -1173,8 +1173,8 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -1184,8 +1184,8 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -1782,8 +1782,8 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -1793,8 +1793,8 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -2388,8 +2388,8 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -2399,8 +2399,8 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
