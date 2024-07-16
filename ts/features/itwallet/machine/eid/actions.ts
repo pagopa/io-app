@@ -112,8 +112,6 @@ export const createEidIssuanceActionsImplementation = (
     dispatch(itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_VALID));
   },
 
-  storeWalletAttestation: () => {},
-
   storeIntegrityKeyTag: (_: unknown, params: { keyTag: string }) => {
     dispatch(itwStoreIntegrityKeyTag(params.keyTag));
   },
