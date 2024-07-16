@@ -110,8 +110,14 @@ export const PagerViewContainer = React.forwardRef<PagerView>((_, ref) => {
   useFocusEffect(
     useCallback(() => {
       // This is called to automatically refresh after coming back
-      // to this screen from another one
-      loadNewlyReceivedMessagesIfNeededCallback();
+      // to this screen from another one. The timeout is needed to avoid
+      // a glitch with the FlatList that does not update the pull-to-refresh
+      // margins after the check has completed (what happens is that the
+      // pull-to-refresh control disappears but the list keeps its blank
+      // view placeholder visible)
+      setTimeout(() => {
+        loadNewlyReceivedMessagesIfNeededCallback();
+      }, 100);
     }, [loadNewlyReceivedMessagesIfNeededCallback])
   );
   useEffect(() => {
