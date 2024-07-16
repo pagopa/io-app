@@ -46,8 +46,6 @@ import {
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import { WalletNavigator as NewWalletNavigator } from "../features/newWallet/navigation";
-import { WalletRoutes as NewWalletRoutes } from "../features/newWallet/navigation/routes";
 import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
 import { PaymentsBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
 import { PaymentsCheckoutNavigator } from "../features/payments/checkout/navigation/navigator";
@@ -73,8 +71,7 @@ import {
   isCGNEnabledSelector,
   isFciEnabledSelector,
   isFIMSEnabledSelector,
-  isIdPayEnabledSelector,
-  isNewPaymentSectionEnabledSelector
+  isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isItWalletTestEnabledSelector } from "../store/reducers/persistedPreferences";
 import { isGestureEnabled } from "../utils/navigation";
@@ -104,9 +101,6 @@ const AuthenticatedStackNavigator = () => {
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewPaymentSectionEnabledSelector
-  );
   const isItWalletEnabled = useIOSelector(isItWalletTestEnabledSelector);
 
   return (
@@ -161,19 +155,11 @@ const AuthenticatedStackNavigator = () => {
           })
         }}
       />
-      {isNewWalletSectionEnabled ? (
-        <Stack.Screen
-          name={NewWalletRoutes.WALLET_NAVIGATOR}
-          options={hideHeaderOptions}
-          component={NewWalletNavigator}
-        />
-      ) : (
-        <Stack.Screen
-          name={ROUTES.WALLET_NAVIGATOR}
-          options={hideHeaderOptions}
-          component={WalletNavigator}
-        />
-      )}
+      <Stack.Screen
+        name={ROUTES.WALLET_NAVIGATOR}
+        options={hideHeaderOptions}
+        component={WalletNavigator}
+      />
       <Stack.Screen
         name={SERVICES_ROUTES.SERVICES_NAVIGATOR}
         options={{ ...hideHeaderOptions, gestureEnabled: isGestureEnabled }}
