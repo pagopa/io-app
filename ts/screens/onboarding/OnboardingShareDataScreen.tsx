@@ -104,7 +104,7 @@ const OnboardingShareDataScreen = (): ReactElement => {
             content={content}
             accessibilityLabel={content}
             color="neutral"
-            pictogramName="activate"
+            pictogramName="settings"
             size="small"
           />
         </View>

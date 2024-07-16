@@ -119,7 +119,7 @@ const FingerprintScreen = () => {
         content={content}
         color="neutral"
         size="small"
-        pictogramName="activate"
+        pictogramName="settings"
       />
     </IOScrollView>
   );

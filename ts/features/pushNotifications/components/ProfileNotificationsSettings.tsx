@@ -75,7 +75,7 @@ export const ProfileNotificationSettings = ({
       {showSettingsPath && <VSpacer size={40} />}
       {showSettingsPath && (
         <Banner
-          pictogramName="reactivate"
+          pictogramName="settings"
           content={content}
           size="small"
           color="neutral"
