@@ -2,9 +2,11 @@ import { IOStyles, ListItemHeader } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
+import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
 import { ITW_TRIAL_ID } from "../../itwallet/common/utils/itwTrialUtils";
+import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import { trialStatusSelector } from "../../trialSystem/store/reducers";
 import {
   selectIsWalletCardsLoading,
@@ -58,20 +60,26 @@ const ItwCardsContainer = ({
 }: Pick<WalletCardsCategoryContainerProps, "isStacked">) => {
   const cards = useIOSelector(selectWalletItwCards);
   const isItwTrialEnabled = useIOSelector(trialStatusSelector(ITW_TRIAL_ID));
-  const isItwActive = false; // TODO replace with eID status
+  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
 
   if (!isItwTrialEnabled) {
     return null;
   }
 
-  const endElement: ListItemHeader["endElement"] = isItwActive
+  const endElement: ListItemHeader["endElement"] = isItwValid
     ? {
         type: "badge",
-        componentProps: { text: "Attivo", variant: "blue" }
+        componentProps: {
+          text: I18n.t("features.itWallet.wallet.active"),
+          variant: "blue"
+        }
       }
     : {
         type: "badge",
-        componentProps: { text: "Non attivo", variant: "default" }
+        componentProps: {
+          text: I18n.t("features.itWallet.wallet.inactive"),
+          variant: "default"
+        }
       };
 
   return (
@@ -80,7 +88,10 @@ const ItwCardsContainer = ({
       testID={`walletCardsCategoryTestID_itw`}
       cards={cards}
       isStacked={isStacked}
-      header={{ label: "IT Wallet", endElement }}
+      header={{
+        label: I18n.t("features.wallet.cards.categories.itw"),
+        endElement
+      }}
       footer={<ItwDiscoveryBanner ignoreMargins={true} />}
     />
   );
@@ -102,7 +113,11 @@ const OtherCardsContainer = ({
       testID={`walletCardsCategoryTestID_other`}
       cards={cards}
       isStacked={isStacked}
-      header={isItwTrialEnabled && { label: "Altro" }}
+      header={
+        isItwTrialEnabled && {
+          label: I18n.t("features.wallet.cards.categories.other")
+        }
+      }
     />
   );
 };

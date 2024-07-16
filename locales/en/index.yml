@@ -3070,6 +3070,7 @@ features:
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
         payment: Payment methods
+        other: Altro
     onboarding:
       title: Cosa vuoi aggiungere al portafoglio?
       options:
@@ -3128,6 +3129,9 @@ features:
     errors:
       transactionCreationError: C’è un problema con i sistemi di pagamento.
   itWallet:
+    wallet:
+      active: Attivo
+      inactive: Non attivo
     card:
       status:
         expired: Non valida
