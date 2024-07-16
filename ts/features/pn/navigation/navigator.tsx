@@ -1,6 +1,5 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { isGestureEnabled } from "../../../utils/navigation";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
@@ -10,14 +9,7 @@ import PN_ROUTES from "./routes";
 const Stack = createStackNavigator<PnParamsList>();
 
 export const PnStackNavigator = () => (
-  <Stack.Navigator
-    initialRouteName={PN_ROUTES.MESSAGE_DETAILS}
-    screenOptions={{
-      gestureEnabled: isGestureEnabled,
-      headerMode: "screen",
-      headerShown: true
-    }}
-  >
+  <Stack.Navigator initialRouteName={PN_ROUTES.MESSAGE_DETAILS}>
     <Stack.Screen
       name={PN_ROUTES.MESSAGE_DETAILS}
       component={MessageDetailsScreen}

@@ -8,7 +8,6 @@ import { MessageRouterScreen } from "../screens/MessageRouterScreen";
 import { PnStackNavigator } from "../../pn/navigation/navigator";
 import PN_ROUTES from "../../pn/navigation/routes";
 import { useIOSelector } from "../../../store/hooks";
-import { isGestureEnabled } from "../../../utils/navigation";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessagesParamsList } from "./params";
@@ -23,9 +22,8 @@ export const MessagesStackNavigator = () => {
     <Stack.Navigator
       initialRouteName={MESSAGES_ROUTES.MESSAGE_ROUTER}
       screenOptions={{
-        gestureEnabled: isGestureEnabled,
-        headerMode: "screen",
-        headerShown: true
+        gestureEnabled: false,
+        headerMode: "screen"
       }}
     >
       <Stack.Group>
@@ -48,6 +46,7 @@ export const MessagesStackNavigator = () => {
           name={EUCOVIDCERT_ROUTES.MAIN}
           component={EUCovidCertStackNavigator}
           options={{
+            gestureEnabled: false,
             headerShown: false
           }}
         />
@@ -57,6 +56,7 @@ export const MessagesStackNavigator = () => {
             name={PN_ROUTES.MAIN}
             component={PnStackNavigator}
             options={{
+              gestureEnabled: false,
               headerShown: false
             }}
           />
@@ -68,6 +68,7 @@ export const MessagesStackNavigator = () => {
           name={MESSAGES_ROUTES.MESSAGE_DETAIL_CALENDAR}
           component={MessageCalendarScreen}
           options={{
+            gestureEnabled: false,
             headerShown: false
           }}
         />
