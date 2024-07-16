@@ -3,7 +3,7 @@
 exports[`FeaturedServiceCard should match the snapshot 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,13 +326,30 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
                         accessibilityLabel="### Accessibility Label ###"
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
                         accessible={true}
                         collapsable={false}
                         focusable={true}
@@ -335,7 +364,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          Object {
+                          {
                             "flexGrow": 1,
                           }
                         }
@@ -343,15 +372,15 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                       >
                         <View
                           style={
-                            Array [
-                              Object {
-                                "transform": Array [
-                                  Object {
+                            [
+                              {
+                                "transform": [
+                                  {
                                     "scale": undefined,
                                   },
                                 ],
                               },
-                              Object {
+                              {
                                 "flexGrow": 1,
                               },
                             ]
@@ -359,8 +388,8 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "alignItems": "flex-start",
                                   "backgroundColor": "#F4F5F8",
                                   "borderColor": "#E8EBF1",
@@ -380,7 +409,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                           >
                             <View
                               style={
-                                Object {
+                                {
                                   "alignItems": "flex-start",
                                   "flexDirection": "row",
                                   "justifyContent": "space-between",
@@ -391,14 +420,14 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                               <View
                                 accessibilityIgnoresInvertColors={true}
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "borderColor": "rgba(14,15,19,0.1)",
                                       "borderCurve": "continuous",
                                       "borderWidth": 1,
                                       "overflow": "hidden",
                                     },
-                                    Object {
+                                    {
                                       "backgroundColor": "#FFFFFF",
                                       "borderRadius": 12,
                                       "height": 66,
@@ -410,13 +439,13 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                               >
                                 <View
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "backgroundColor": "#FFFFFF",
                                         "borderCurve": "continuous",
                                         "overflow": "hidden",
                                       },
-                                      Object {
+                                      {
                                         "borderRadius": 3,
                                       },
                                     ]
@@ -426,12 +455,12 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                     accessibilityIgnoresInvertColors={true}
                                     onError={[Function]}
                                     source={
-                                      Object {
+                                      {
                                         "uri": "https://assets.cdn.io.pagopa.it/logos/services/1.png",
                                       }
                                     }
                                     style={
-                                      Object {
+                                      {
                                         "height": "100%",
                                         "resizeMode": "contain",
                                         "width": "100%",
@@ -443,7 +472,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                             </View>
                             <View
                               style={
-                                Object {
+                                {
                                   "marginTop": 16,
                                   "width": "100%",
                                 }
@@ -457,7 +486,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                 dynamicTypeRamp="title3"
                                 font="TitilliumSansPro"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 22,
                                     "lineHeight": 24,
                                   }
@@ -466,12 +495,12 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={3}
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "fontSize": 22,
                                       "lineHeight": 24,
                                     },
-                                    Object {
+                                    {
                                       "color": "#031344",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
@@ -493,8 +522,8 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -503,7 +532,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
 exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -511,8 +540,8 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -521,8 +550,8 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -534,7 +563,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -550,7 +579,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -564,12 +593,12 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -583,7 +612,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -595,7 +624,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -603,7 +632,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -614,7 +643,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -628,7 +657,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -643,7 +672,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -657,7 +686,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -671,21 +700,34 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -697,7 +739,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -715,12 +757,12 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -730,10 +772,10 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -742,9 +784,9 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -760,27 +802,26 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -790,13 +831,13 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -806,7 +847,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -814,13 +855,30 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
                         accessibilityLabel="### Accessibility Label ###"
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
                         accessible={true}
                         collapsable={false}
                         focusable={true}
@@ -835,7 +893,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          Object {
+                          {
                             "flexGrow": 1,
                           }
                         }
@@ -843,15 +901,15 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                       >
                         <View
                           style={
-                            Array [
-                              Object {
-                                "transform": Array [
-                                  Object {
+                            [
+                              {
+                                "transform": [
+                                  {
                                     "scale": undefined,
                                   },
                                 ],
                               },
-                              Object {
+                              {
                                 "flexGrow": 1,
                               },
                             ]
@@ -859,8 +917,8 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "alignItems": "flex-start",
                                   "backgroundColor": "#F4F5F8",
                                   "borderColor": "#E8EBF1",
@@ -873,7 +931,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                   "padding": 16,
                                   "width": 210,
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#EEE8FC",
                                   "borderColor": "#DDD1F9",
                                 },
@@ -883,7 +941,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                           >
                             <View
                               style={
-                                Object {
+                                {
                                   "alignItems": "flex-start",
                                   "flexDirection": "row",
                                   "justifyContent": "space-between",
@@ -894,14 +952,14 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                               <View
                                 accessibilityIgnoresInvertColors={true}
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "borderColor": "rgba(14,15,19,0.1)",
                                       "borderCurve": "continuous",
                                       "borderWidth": 1,
                                       "overflow": "hidden",
                                     },
-                                    Object {
+                                    {
                                       "backgroundColor": "#FFFFFF",
                                       "borderRadius": 12,
                                       "height": 66,
@@ -913,13 +971,13 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                               >
                                 <View
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "backgroundColor": "#FFFFFF",
                                         "borderCurve": "continuous",
                                         "overflow": "hidden",
                                       },
-                                      Object {
+                                      {
                                         "borderRadius": 3,
                                       },
                                     ]
@@ -929,12 +987,12 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                     accessibilityIgnoresInvertColors={true}
                                     onError={[Function]}
                                     source={
-                                      Object {
+                                      {
                                         "uri": "https://assets.cdn.io.pagopa.it/logos/services/1.png",
                                       }
                                     }
                                     style={
-                                      Object {
+                                      {
                                         "height": "100%",
                                         "resizeMode": "contain",
                                         "width": "100%",
@@ -945,8 +1003,8 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                               </View>
                               <View
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
                                       "borderRadius": 24,
@@ -955,7 +1013,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                       "paddingHorizontal": 8,
                                       "paddingVertical": 4,
                                     },
-                                    Object {
+                                    {
                                       "backgroundColor": "#DDD1F9",
                                     },
                                   ]
@@ -967,20 +1025,20 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "alignSelf": "center",
                                         "flexShrink": 1,
                                         "fontSize": 12,
                                         "lineHeight": 16,
                                         "textTransform": "uppercase",
                                       },
-                                      Object {
+                                      {
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
-                                      Object {
+                                      {
                                         "color": "#1A0744",
                                       },
                                     ]
@@ -992,7 +1050,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                             </View>
                             <View
                               style={
-                                Object {
+                                {
                                   "marginTop": 16,
                                   "width": "100%",
                                 }
@@ -1006,7 +1064,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                 dynamicTypeRamp="title3"
                                 font="TitilliumSansPro"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 22,
                                     "lineHeight": 24,
                                   }
@@ -1015,12 +1073,12 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={3}
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "fontSize": 22,
                                       "lineHeight": 24,
                                     },
-                                    Object {
+                                    {
                                       "color": "#1A0744",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
@@ -1042,8 +1100,8 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

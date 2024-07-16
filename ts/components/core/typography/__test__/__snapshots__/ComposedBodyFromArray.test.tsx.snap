@@ -9,22 +9,22 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, auto text alig
   dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   maxFontSizeMultiplier={1.25}
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "auto",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
@@ -45,22 +45,22 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, center text al
   dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   maxFontSizeMultiplier={1.25}
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "center",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
@@ -81,22 +81,22 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, default text a
   dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   maxFontSizeMultiplier={1.25}
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "center",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
@@ -117,22 +117,22 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, justify text a
   dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   maxFontSizeMultiplier={1.25}
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "justify",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
@@ -153,22 +153,22 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, left text alig
   dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   maxFontSizeMultiplier={1.25}
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "left",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
@@ -189,22 +189,22 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, right text ali
   dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   maxFontSizeMultiplier={1.25}
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "right",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
@@ -225,22 +225,22 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
   dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   maxFontSizeMultiplier={1.25}
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "auto",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
@@ -258,19 +258,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -290,19 +290,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -322,19 +322,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -354,19 +354,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -386,19 +386,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -422,22 +422,22 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
   dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   maxFontSizeMultiplier={1.25}
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "center",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
@@ -455,19 +455,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -487,19 +487,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -519,19 +519,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -551,19 +551,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -583,19 +583,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -619,22 +619,22 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
   dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   maxFontSizeMultiplier={1.25}
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "center",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
@@ -652,19 +652,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -684,19 +684,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -716,19 +716,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -748,19 +748,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -780,19 +780,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -816,22 +816,22 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
   dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   maxFontSizeMultiplier={1.25}
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "justify",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
@@ -849,19 +849,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -881,19 +881,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -913,19 +913,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -945,19 +945,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -977,19 +977,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -1013,22 +1013,22 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
   dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   maxFontSizeMultiplier={1.25}
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "left",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
@@ -1046,19 +1046,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -1078,19 +1078,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -1110,19 +1110,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -1142,19 +1142,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -1174,19 +1174,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -1210,22 +1210,22 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
   dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   maxFontSizeMultiplier={1.25}
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "right",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
@@ -1243,19 +1243,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -1275,19 +1275,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -1307,19 +1307,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -1339,19 +1339,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -1371,19 +1371,19 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",

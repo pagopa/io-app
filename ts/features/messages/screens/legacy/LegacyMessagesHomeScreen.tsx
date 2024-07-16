@@ -64,7 +64,7 @@ const LegacyMessagesHomeScreen = ({
   messagesStatus,
   migrateMessages,
   migrationStatus,
-  resetMigrationStatus,
+  requestResetMigrationStatus,
   latestMessageOperation
 }: Props) => {
   const needsMigration = Object.keys(messagesStatus).length > 0;
@@ -139,7 +139,7 @@ const LegacyMessagesHomeScreen = ({
             <MigratingMessage
               status={migrationStatus}
               onRetry={() => migrateMessages(messagesStatus)}
-              onEnd={resetMigrationStatus}
+              onEnd={requestResetMigrationStatus}
             />
           ) : (
             <MessagesHomeTabNavigator />
@@ -151,8 +151,10 @@ const LegacyMessagesHomeScreen = ({
           searchText,
           O.map(_ =>
             _.length < MIN_CHARACTER_SEARCH_TEXT ? (
+              // eslint-disable-next-line react/jsx-key
               <SearchNoResultMessage errorType="InvalidSearchBarText" />
             ) : (
+              // eslint-disable-next-line react/jsx-key
               <MessagesSearch
                 messages={searchMessages}
                 searchText={_}
@@ -192,7 +194,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   migrateMessages: (messageStatus: MessagesStatus) => {
     dispatch(migrateToPaginatedMessages.request(messageStatus));
   },
-  resetMigrationStatus: () => dispatch(resetMigrationStatus())
+  requestResetMigrationStatus: () => dispatch(resetMigrationStatus())
 });
 
 export default connect(

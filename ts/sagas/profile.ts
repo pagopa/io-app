@@ -74,7 +74,7 @@ export function* loadProfile(
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
       // BEWARE: we need to cast to UserProfileUnion to make UserProfile a
       // discriminated union!
-      // eslint-disable-next-line
+
       yield* put(
         profileLoadSuccess(response.right.value as InitializedProfile)
       );

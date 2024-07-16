@@ -204,7 +204,6 @@ const CgnMerchantsListByCategory = () => {
               <VSpacer size={32} />
               <View style={[IOStyles.row, { alignItems: "center" }]}>
                 <View
-                  // eslint-disable-next-line react-native/no-color-literals
                   style={{
                     justifyContent: "center",
                     alignItems: "center",

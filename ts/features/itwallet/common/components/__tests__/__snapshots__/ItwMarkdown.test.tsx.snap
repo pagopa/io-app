@@ -2,7 +2,7 @@
 
 exports[`ItwMarkdown should match snapshot 1`] = `
 <View
-  style={Object {}}
+  style={{}}
 >
   <Text
     allowFontScaling={false}
@@ -12,19 +12,19 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     dynamicTypeRamp="largeTitle"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 31,
         "lineHeight": 43,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 31,
           "lineHeight": 43,
         },
-        Object {
+        {
           "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -35,15 +35,15 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     weight="Semibold"
   >
     <Text
-      style={Object {}}
+      style={{}}
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 28,
             },
-            Object {},
+            {},
           ]
         }
       >
@@ -53,7 +53,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 8,
       }
     }
@@ -66,19 +66,19 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     dynamicTypeRamp="title1"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 28,
         "lineHeight": 40,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 28,
           "lineHeight": 40,
         },
-        Object {
+        {
           "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -89,15 +89,15 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     weight="Semibold"
   >
     <Text
-      style={Object {}}
+      style={{}}
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 26,
             },
-            Object {},
+            {},
           ]
         }
       >
@@ -107,7 +107,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 8,
       }
     }
@@ -120,19 +120,19 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     dynamicTypeRamp="title2"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 24,
         "lineHeight": 34,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 24,
           "lineHeight": 34,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -143,15 +143,15 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     weight="Semibold"
   >
     <Text
-      style={Object {}}
+      style={{}}
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 22,
             },
-            Object {},
+            {},
           ]
         }
       >
@@ -161,7 +161,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 8,
       }
     }
@@ -174,19 +174,19 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     dynamicTypeRamp="title3"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 22,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 22,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -197,15 +197,15 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     weight="Semibold"
   >
     <Text
-      style={Object {}}
+      style={{}}
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 20,
             },
-            Object {},
+            {},
           ]
         }
       >
@@ -215,7 +215,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 8,
       }
     }
@@ -228,7 +228,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     dynamicTypeRamp="subheadline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 14,
         "letterSpacing": 0.5,
         "lineHeight": 16,
@@ -237,14 +237,14 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 14,
           "letterSpacing": 0.5,
           "lineHeight": 16,
           "textTransform": "uppercase",
         },
-        Object {
+        {
           "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -255,15 +255,15 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     weight="Semibold"
   >
     <Text
-      style={Object {}}
+      style={{}}
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 14,
             },
-            Object {},
+            {},
           ]
         }
       >
@@ -273,7 +273,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 8,
       }
     }
@@ -286,19 +286,19 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -309,15 +309,15 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     weight="Semibold"
   >
     <Text
-      style={Object {}}
+      style={{}}
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
             },
-            Object {},
+            {},
           ]
         }
       >
@@ -327,7 +327,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 8,
       }
     }
@@ -340,19 +340,19 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -363,33 +363,33 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     weight="Regular"
   >
     <Text
-      style={Object {}}
+      style={{}}
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
             },
-            Object {},
+            {},
           ]
         }
       >
         A simple paragraph.
       </Text>
       <Text
-        style={Object {}}
+        style={{}}
       >
         
 
       </Text>
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
             },
-            Object {},
+            {},
           ]
         }
       >
@@ -397,19 +397,19 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       </Text>
       <Text
         style={
-          Object {
+          {
             "fontStyle": "italic",
           }
         }
       >
         <Text
           style={
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 16,
                 "fontStyle": "italic",
               },
-              Object {},
+              {},
             ]
           }
         >
@@ -418,11 +418,11 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       </Text>
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
             },
-            Object {},
+            {},
           ]
         }
       >
@@ -430,19 +430,19 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       </Text>
       <Text
         style={
-          Object {
+          {
             "fontStyle": "italic",
           }
         }
       >
         <Text
           style={
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 16,
                 "fontStyle": "italic",
               },
-              Object {},
+              {},
             ]
           }
         >
@@ -451,29 +451,29 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       </Text>
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
             },
-            Object {},
+            {},
           ]
         }
       >
         .
       </Text>
       <Text
-        style={Object {}}
+        style={{}}
       >
         
 
       </Text>
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
             },
-            Object {},
+            {},
           ]
         }
       >
@@ -487,19 +487,19 @@ exports[`ItwMarkdown should match snapshot 1`] = `
         dynamicTypeRamp="body"
         font="TitilliumSansPro"
         fontStyle={
-          Object {
+          {
             "fontSize": 16,
             "lineHeight": 24,
           }
         }
         maxFontSizeMultiplier={1.25}
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
               "lineHeight": 24,
             },
-            Object {
+            {
               "color": "#475A6D",
               "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
@@ -511,12 +511,12 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       >
         <Text
           style={
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 16,
                 "fontWeight": "bold",
               },
-              Object {},
+              {},
             ]
           }
         >
@@ -525,29 +525,29 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       </Text>
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
             },
-            Object {},
+            {},
           ]
         }
       >
         .
       </Text>
       <Text
-        style={Object {}}
+        style={{}}
       >
         
 
       </Text>
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
             },
-            Object {},
+            {},
           ]
         }
       >
@@ -562,7 +562,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
         dynamicTypeRamp="footnote"
         font="TitilliumSansPro"
         fontStyle={
-          Object {
+          {
             "fontSize": 16,
             "lineHeight": 24,
             "textDecorationLine": "underline",
@@ -572,13 +572,13 @@ exports[`ItwMarkdown should match snapshot 1`] = `
         numberOfLines={1}
         onPress={[Function]}
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
               "lineHeight": 24,
               "textDecorationLine": "underline",
             },
-            Object {
+            {
               "color": "#0073E6",
               "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
@@ -590,12 +590,12 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       >
         <Text
           style={
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 16,
                 "textDecorationLine": "underline",
               },
-              Object {},
+              {},
             ]
           }
         >
@@ -604,29 +604,29 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       </Text>
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
             },
-            Object {},
+            {},
           ]
         }
       >
          with some text.
       </Text>
       <Text
-        style={Object {}}
+        style={{}}
       >
         
 
       </Text>
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
             },
-            Object {},
+            {},
           ]
         }
       >
@@ -641,7 +641,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
         dynamicTypeRamp="footnote"
         font="TitilliumSansPro"
         fontStyle={
-          Object {
+          {
             "fontSize": 16,
             "lineHeight": 24,
             "textDecorationLine": "underline",
@@ -651,13 +651,13 @@ exports[`ItwMarkdown should match snapshot 1`] = `
         numberOfLines={1}
         onPress={[Function]}
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
               "lineHeight": 24,
               "textDecorationLine": "underline",
             },
-            Object {
+            {
               "color": "#0073E6",
               "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
@@ -669,12 +669,12 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       >
         <Text
           style={
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 16,
                 "textDecorationLine": "underline",
               },
-              Object {},
+              {},
             ]
           }
         >
@@ -683,11 +683,11 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       </Text>
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
             },
-            Object {},
+            {},
           ]
         }
       >
@@ -697,7 +697,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 24,
       }
     }

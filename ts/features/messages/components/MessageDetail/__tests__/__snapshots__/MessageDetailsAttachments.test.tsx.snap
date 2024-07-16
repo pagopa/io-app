@@ -3,7 +3,7 @@
 exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,7 +326,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -323,7 +335,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                         accessibilityLabel="Attachments"
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -333,7 +345,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                         <View
                           importantForAccessibility="no-hide-descendants"
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "flexDirection": "row",
                               "justifyContent": "space-between",
@@ -342,7 +354,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "marginRight": 8,
                               }
                             }
@@ -361,15 +373,15 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                               minX={0}
                               minY={0}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "backgroundColor": "transparent",
                                     "borderWidth": 0,
                                   },
-                                  Object {
+                                  {
                                     "color": "#BBC2D6",
                                   },
-                                  Object {
+                                  {
                                     "flex": 0,
                                     "height": 24,
                                     "width": 24,
@@ -383,7 +395,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                             >
                               <RNSVGGroup
                                 fill={
-                                  Object {
+                                  {
                                     "payload": 4278190080,
                                     "type": 0,
                                   }
@@ -392,12 +404,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                 <RNSVGPath
                                   d="M22.95 9.5997a.9999.9999 0 0 0-.707-.29279c-.2651 0-.5195.10532-.707.29279l-10.892 10.939a4.99896 4.99896 0 0 1-1.62212 1.084 4.99813 4.99813 0 0 1-1.9135.3808 5.00017 5.00017 0 0 1-3.53586-1.4643 5.00042 5.00042 0 0 1-1.4648-3.5357 5.00026 5.00026 0 0 1 1.4643-3.5358L14.121 2.8757a3.00005 3.00005 0 0 1 4.2253.0167 2.99985 2.99985 0 0 1 .8789 2.109 2.99996 2.99996 0 0 1-.8612 2.1163L7.81502 17.7097a1.0218 1.0218 0 0 1-.707.284 1.02182 1.02182 0 0 1-.707-.284.99989.99989 0 0 1-.29278-.707c0-.2652.10531-.5195.29278-.707l9.39198-9.435a.99975.99975 0 0 0 .2807-.7034 1.00018 1.00018 0 0 0-.2929-.69842.99994.99994 0 0 0-1.4018-.01218l-9.39198 9.435a3.00022 3.00022 0 0 0-.65045.9733 3.00027 3.00027 0 0 0 0 2.2964c.1508.364.37182.6947.65045.9733a3.07287 3.07287 0 0 0 2.1215.8498 3.07287 3.07287 0 0 0 2.1215-.8498L19.778 8.5317a5.0001 5.0001 0 0 0 1.4196-3.52223 4.99983 4.99983 0 0 0-1.4646-3.50375A5.0001 5.0001 0 0 0 16.229.0416a5.00012 5.00012 0 0 0-3.522 1.4201L2.15802 12.0537C.8452 13.3665.10767 15.1471.10767 17.0037c0 1.8566.73753 3.6372 2.05035 4.95 1.31282 1.3128 3.09339 2.0504 4.95 2.0504 1.85661 0 3.63718-.7376 4.94998-2.0504l10.892-10.936a.99968.99968 0 0 0 .2948-.709c0-.1318-.026-.2623-.0766-.38392a.999.999 0 0 0-.2182-.32508Z"
                                   fill={
-                                    Object {
+                                    {
                                       "type": 2,
                                     }
                                   }
                                   propList={
-                                    Array [
+                                    [
                                       "fill",
                                     ]
                                   }
@@ -407,7 +419,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                               }
                             }
@@ -425,7 +437,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                 dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
@@ -433,12 +445,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                 maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "fontSize": 18,
                                       "lineHeight": 25,
                                     },
-                                    Object {
+                                    {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
@@ -460,8 +472,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -470,7 +482,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
 exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that is disabled 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -478,8 +490,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -488,8 +500,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -501,7 +513,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -517,7 +529,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -531,12 +543,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -550,7 +562,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -562,7 +574,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -570,7 +582,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -581,7 +593,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -595,7 +607,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -610,7 +622,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -624,7 +636,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -638,21 +650,34 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -664,7 +689,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -682,12 +707,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -697,10 +722,10 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -709,9 +734,9 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -727,27 +752,26 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -757,13 +781,13 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -773,7 +797,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -781,7 +805,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -790,7 +814,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                         accessibilityLabel="Attachments"
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -800,7 +824,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                         <View
                           importantForAccessibility="no-hide-descendants"
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "flexDirection": "row",
                               "justifyContent": "space-between",
@@ -809,7 +833,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "marginRight": 8,
                               }
                             }
@@ -828,15 +852,15 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                               minX={0}
                               minY={0}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "backgroundColor": "transparent",
                                     "borderWidth": 0,
                                   },
-                                  Object {
+                                  {
                                     "color": "#BBC2D6",
                                   },
-                                  Object {
+                                  {
                                     "flex": 0,
                                     "height": 24,
                                     "width": 24,
@@ -850,7 +874,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                             >
                               <RNSVGGroup
                                 fill={
-                                  Object {
+                                  {
                                     "payload": 4278190080,
                                     "type": 0,
                                   }
@@ -859,12 +883,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                 <RNSVGPath
                                   d="M22.95 9.5997a.9999.9999 0 0 0-.707-.29279c-.2651 0-.5195.10532-.707.29279l-10.892 10.939a4.99896 4.99896 0 0 1-1.62212 1.084 4.99813 4.99813 0 0 1-1.9135.3808 5.00017 5.00017 0 0 1-3.53586-1.4643 5.00042 5.00042 0 0 1-1.4648-3.5357 5.00026 5.00026 0 0 1 1.4643-3.5358L14.121 2.8757a3.00005 3.00005 0 0 1 4.2253.0167 2.99985 2.99985 0 0 1 .8789 2.109 2.99996 2.99996 0 0 1-.8612 2.1163L7.81502 17.7097a1.0218 1.0218 0 0 1-.707.284 1.02182 1.02182 0 0 1-.707-.284.99989.99989 0 0 1-.29278-.707c0-.2652.10531-.5195.29278-.707l9.39198-9.435a.99975.99975 0 0 0 .2807-.7034 1.00018 1.00018 0 0 0-.2929-.69842.99994.99994 0 0 0-1.4018-.01218l-9.39198 9.435a3.00022 3.00022 0 0 0-.65045.9733 3.00027 3.00027 0 0 0 0 2.2964c.1508.364.37182.6947.65045.9733a3.07287 3.07287 0 0 0 2.1215.8498 3.07287 3.07287 0 0 0 2.1215-.8498L19.778 8.5317a5.0001 5.0001 0 0 0 1.4196-3.52223 4.99983 4.99983 0 0 0-1.4646-3.50375A5.0001 5.0001 0 0 0 16.229.0416a5.00012 5.00012 0 0 0-3.522 1.4201L2.15802 12.0537C.8452 13.3665.10767 15.1471.10767 17.0037c0 1.8566.73753 3.6372 2.05035 4.95 1.31282 1.3128 3.09339 2.0504 4.95 2.0504 1.85661 0 3.63718-.7376 4.94998-2.0504l10.892-10.936a.99968.99968 0 0 0 .2948-.709c0-.1318-.026-.2623-.0766-.38392a.999.999 0 0 0-.2182-.32508Z"
                                   fill={
-                                    Object {
+                                    {
                                       "type": 2,
                                     }
                                   }
                                   propList={
-                                    Array [
+                                    [
                                       "fill",
                                     ]
                                   }
@@ -874,7 +898,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                               }
                             }
@@ -892,7 +916,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                 dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
@@ -900,12 +924,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                 maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "fontSize": 18,
                                       "lineHeight": 25,
                                     },
-                                    Object {
+                                    {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
@@ -927,8 +951,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -937,7 +961,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
 exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that is disabled and F24 have been removed 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -945,8 +969,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -955,8 +979,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -968,7 +992,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -984,7 +1008,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -998,12 +1022,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1017,7 +1041,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1029,7 +1053,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1037,7 +1061,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1048,7 +1072,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1062,7 +1086,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1077,7 +1101,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1091,7 +1115,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1105,21 +1129,34 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1131,7 +1168,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1149,12 +1186,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1164,10 +1201,10 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1176,9 +1213,9 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1194,27 +1231,26 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1224,13 +1260,13 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1240,7 +1276,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1248,7 +1284,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -1258,8 +1294,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1268,7 +1304,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
 exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that are disabled and F24 have been removed 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1276,8 +1312,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1286,8 +1322,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1299,7 +1335,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1315,7 +1351,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1329,12 +1365,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1348,7 +1384,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1360,7 +1396,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1368,7 +1404,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1379,7 +1415,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1393,7 +1429,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1408,7 +1444,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1422,7 +1458,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1436,21 +1472,34 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1462,7 +1511,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1480,12 +1529,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1495,10 +1544,10 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1507,9 +1556,9 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1525,27 +1574,26 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={9}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1555,13 +1603,13 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1571,7 +1619,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1579,7 +1627,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -1589,8 +1637,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1599,7 +1647,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
 exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1607,8 +1655,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1617,8 +1665,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1630,7 +1678,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1646,7 +1694,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1660,12 +1708,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1679,7 +1727,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1691,7 +1739,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1699,7 +1747,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1710,7 +1758,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1724,7 +1772,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1739,7 +1787,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1753,7 +1801,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1767,21 +1815,34 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1793,7 +1854,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1811,12 +1872,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1826,10 +1887,10 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1838,9 +1899,9 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1856,27 +1917,26 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={7}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1886,13 +1946,13 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1902,7 +1962,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1910,7 +1970,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -1919,7 +1979,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                         accessibilityLabel="Attachments"
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -1929,7 +1989,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                         <View
                           importantForAccessibility="no-hide-descendants"
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "flexDirection": "row",
                               "justifyContent": "space-between",
@@ -1938,7 +1998,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "marginRight": 8,
                               }
                             }
@@ -1957,15 +2017,15 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                               minX={0}
                               minY={0}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "backgroundColor": "transparent",
                                     "borderWidth": 0,
                                   },
-                                  Object {
+                                  {
                                     "color": "#BBC2D6",
                                   },
-                                  Object {
+                                  {
                                     "flex": 0,
                                     "height": 24,
                                     "width": 24,
@@ -1979,7 +2039,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                             >
                               <RNSVGGroup
                                 fill={
-                                  Object {
+                                  {
                                     "payload": 4278190080,
                                     "type": 0,
                                   }
@@ -1988,12 +2048,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                 <RNSVGPath
                                   d="M22.95 9.5997a.9999.9999 0 0 0-.707-.29279c-.2651 0-.5195.10532-.707.29279l-10.892 10.939a4.99896 4.99896 0 0 1-1.62212 1.084 4.99813 4.99813 0 0 1-1.9135.3808 5.00017 5.00017 0 0 1-3.53586-1.4643 5.00042 5.00042 0 0 1-1.4648-3.5357 5.00026 5.00026 0 0 1 1.4643-3.5358L14.121 2.8757a3.00005 3.00005 0 0 1 4.2253.0167 2.99985 2.99985 0 0 1 .8789 2.109 2.99996 2.99996 0 0 1-.8612 2.1163L7.81502 17.7097a1.0218 1.0218 0 0 1-.707.284 1.02182 1.02182 0 0 1-.707-.284.99989.99989 0 0 1-.29278-.707c0-.2652.10531-.5195.29278-.707l9.39198-9.435a.99975.99975 0 0 0 .2807-.7034 1.00018 1.00018 0 0 0-.2929-.69842.99994.99994 0 0 0-1.4018-.01218l-9.39198 9.435a3.00022 3.00022 0 0 0-.65045.9733 3.00027 3.00027 0 0 0 0 2.2964c.1508.364.37182.6947.65045.9733a3.07287 3.07287 0 0 0 2.1215.8498 3.07287 3.07287 0 0 0 2.1215-.8498L19.778 8.5317a5.0001 5.0001 0 0 0 1.4196-3.52223 4.99983 4.99983 0 0 0-1.4646-3.50375A5.0001 5.0001 0 0 0 16.229.0416a5.00012 5.00012 0 0 0-3.522 1.4201L2.15802 12.0537C.8452 13.3665.10767 15.1471.10767 17.0037c0 1.8566.73753 3.6372 2.05035 4.95 1.31282 1.3128 3.09339 2.0504 4.95 2.0504 1.85661 0 3.63718-.7376 4.94998-2.0504l10.892-10.936a.99968.99968 0 0 0 .2948-.709c0-.1318-.026-.2623-.0766-.38392a.999.999 0 0 0-.2182-.32508Z"
                                   fill={
-                                    Object {
+                                    {
                                       "type": 2,
                                     }
                                   }
                                   propList={
-                                    Array [
+                                    [
                                       "fill",
                                     ]
                                   }
@@ -2003,7 +2063,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                               }
                             }
@@ -2021,7 +2081,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                 dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
@@ -2029,12 +2089,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                 maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "fontSize": 18,
                                       "lineHeight": 25,
                                     },
-                                    Object {
+                                    {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
@@ -2056,8 +2116,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2066,7 +2126,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
 exports[`MessageDetailsAttachments Should match snapshot with 10 attachments that are disabled 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -2074,8 +2134,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -2084,8 +2144,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -2097,7 +2157,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -2113,7 +2173,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -2127,12 +2187,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -2146,7 +2206,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -2158,7 +2218,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -2166,7 +2226,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -2177,7 +2237,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -2191,7 +2251,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -2206,7 +2266,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -2220,7 +2280,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -2234,21 +2294,34 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -2260,7 +2333,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -2278,12 +2351,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -2293,10 +2366,10 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -2305,9 +2378,9 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -2323,27 +2396,26 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={8}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -2353,13 +2425,13 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -2369,7 +2441,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -2377,7 +2449,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -2386,7 +2458,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                         accessibilityLabel="Attachments"
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -2396,7 +2468,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                         <View
                           importantForAccessibility="no-hide-descendants"
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "flexDirection": "row",
                               "justifyContent": "space-between",
@@ -2405,7 +2477,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "marginRight": 8,
                               }
                             }
@@ -2424,15 +2496,15 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                               minX={0}
                               minY={0}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "backgroundColor": "transparent",
                                     "borderWidth": 0,
                                   },
-                                  Object {
+                                  {
                                     "color": "#BBC2D6",
                                   },
-                                  Object {
+                                  {
                                     "flex": 0,
                                     "height": 24,
                                     "width": 24,
@@ -2446,7 +2518,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                             >
                               <RNSVGGroup
                                 fill={
-                                  Object {
+                                  {
                                     "payload": 4278190080,
                                     "type": 0,
                                   }
@@ -2455,12 +2527,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                 <RNSVGPath
                                   d="M22.95 9.5997a.9999.9999 0 0 0-.707-.29279c-.2651 0-.5195.10532-.707.29279l-10.892 10.939a4.99896 4.99896 0 0 1-1.62212 1.084 4.99813 4.99813 0 0 1-1.9135.3808 5.00017 5.00017 0 0 1-3.53586-1.4643 5.00042 5.00042 0 0 1-1.4648-3.5357 5.00026 5.00026 0 0 1 1.4643-3.5358L14.121 2.8757a3.00005 3.00005 0 0 1 4.2253.0167 2.99985 2.99985 0 0 1 .8789 2.109 2.99996 2.99996 0 0 1-.8612 2.1163L7.81502 17.7097a1.0218 1.0218 0 0 1-.707.284 1.02182 1.02182 0 0 1-.707-.284.99989.99989 0 0 1-.29278-.707c0-.2652.10531-.5195.29278-.707l9.39198-9.435a.99975.99975 0 0 0 .2807-.7034 1.00018 1.00018 0 0 0-.2929-.69842.99994.99994 0 0 0-1.4018-.01218l-9.39198 9.435a3.00022 3.00022 0 0 0-.65045.9733 3.00027 3.00027 0 0 0 0 2.2964c.1508.364.37182.6947.65045.9733a3.07287 3.07287 0 0 0 2.1215.8498 3.07287 3.07287 0 0 0 2.1215-.8498L19.778 8.5317a5.0001 5.0001 0 0 0 1.4196-3.52223 4.99983 4.99983 0 0 0-1.4646-3.50375A5.0001 5.0001 0 0 0 16.229.0416a5.00012 5.00012 0 0 0-3.522 1.4201L2.15802 12.0537C.8452 13.3665.10767 15.1471.10767 17.0037c0 1.8566.73753 3.6372 2.05035 4.95 1.31282 1.3128 3.09339 2.0504 4.95 2.0504 1.85661 0 3.63718-.7376 4.94998-2.0504l10.892-10.936a.99968.99968 0 0 0 .2948-.709c0-.1318-.026-.2623-.0766-.38392a.999.999 0 0 0-.2182-.32508Z"
                                   fill={
-                                    Object {
+                                    {
                                       "type": 2,
                                     }
                                   }
                                   propList={
-                                    Array [
+                                    [
                                       "fill",
                                     ]
                                   }
@@ -2470,7 +2542,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                               }
                             }
@@ -2488,7 +2560,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                 dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
@@ -2496,12 +2568,12 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                 maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "fontSize": 18,
                                       "lineHeight": 25,
                                     },
-                                    Object {
+                                    {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
@@ -2523,8 +2595,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2533,7 +2605,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
 exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -2541,8 +2613,8 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -2551,8 +2623,8 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -2564,7 +2636,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -2580,7 +2652,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -2594,12 +2666,12 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -2613,7 +2685,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -2625,7 +2697,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -2633,7 +2705,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -2644,7 +2716,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -2658,7 +2730,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -2673,7 +2745,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -2687,7 +2759,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -2701,21 +2773,34 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -2727,7 +2812,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -2745,12 +2830,12 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -2760,10 +2845,10 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -2772,9 +2857,9 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -2790,27 +2875,26 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -2820,13 +2904,13 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -2836,7 +2920,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -2844,7 +2928,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -2854,8 +2938,8 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2864,7 +2948,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
 exports[`MessageDetailsAttachments Should match snapshot with no attachments and disabled UI 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -2872,8 +2956,8 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -2882,8 +2966,8 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -2895,7 +2979,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -2911,7 +2995,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -2925,12 +3009,12 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -2944,7 +3028,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -2956,7 +3040,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -2964,7 +3048,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -2975,7 +3059,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -2989,7 +3073,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -3004,7 +3088,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -3018,7 +3102,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -3032,21 +3116,34 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -3058,7 +3155,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -3076,12 +3173,12 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -3091,10 +3188,10 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -3103,9 +3200,9 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -3121,27 +3218,26 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -3151,13 +3247,13 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -3167,7 +3263,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -3175,7 +3271,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -3185,8 +3281,8 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -3195,7 +3291,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
 exports[`MessageDetailsAttachments Should match snapshot with no attachments, where F24 have been removed and disabled UI 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -3203,8 +3299,8 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -3213,8 +3309,8 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -3226,7 +3322,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -3242,7 +3338,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -3256,12 +3352,12 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -3275,7 +3371,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -3287,7 +3383,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -3295,7 +3391,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -3306,7 +3402,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -3320,7 +3416,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -3335,7 +3431,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -3349,7 +3445,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -3363,21 +3459,34 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -3389,7 +3498,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -3407,12 +3516,12 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -3422,10 +3531,10 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -3434,9 +3543,9 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -3452,27 +3561,26 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -3482,13 +3590,13 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -3498,7 +3606,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -3506,7 +3614,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -3516,8 +3624,8 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

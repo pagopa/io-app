@@ -3,7 +3,7 @@
 exports[`F24Section should match snapshot when there are more than one F24 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,7 +326,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -323,7 +335,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                         accessibilityLabel="Modelli F24"
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -333,7 +345,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                         <View
                           importantForAccessibility="no-hide-descendants"
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "flexDirection": "row",
                               "justifyContent": "space-between",
@@ -342,7 +354,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "marginRight": 8,
                               }
                             }
@@ -361,15 +373,15 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                               minX={0}
                               minY={0}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "backgroundColor": "transparent",
                                     "borderWidth": 0,
                                   },
-                                  Object {
+                                  {
                                     "color": "#BBC2D6",
                                   },
-                                  Object {
+                                  {
                                     "flex": 0,
                                     "height": 24,
                                     "width": 24,
@@ -383,7 +395,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                             >
                               <RNSVGGroup
                                 fill={
-                                  Object {
+                                  {
                                     "payload": 4278190080,
                                     "type": 0,
                                   }
@@ -393,13 +405,13 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                   clipRule={0}
                                   d="M22 6.96129V19.5684C22 20.9481 20.913 22 19.6535 22H4.34646C3.08696 22 2 20.9481 2 19.5684V3C2 2.44772 2.44771 2 3 2H6.33457C6.67726 2 6.99609 2.17548 7.17942 2.46501L7.92109 3.63624C8.83777 5.08388 10.4319 5.96129 12.1454 5.96129H21C21.5523 5.96129 22 6.40901 22 6.96129ZM12.1454 3.96129C11.1173 3.96129 10.1608 3.43485 9.6108 2.56626L8.86914 1.39503C8.31913 0.526447 7.36265 0 6.33457 0H3C1.34315 0 0 1.34314 0 3V19.5684C0 22.0159 1.94598 24 4.34646 24H19.6535C22.054 24 24 22.0159 24 19.5684V6.96129C24 5.30444 22.6569 3.96129 21 3.96129H12.1454ZM7 17C6.44772 17 6 17.4477 6 18C6 18.5523 6.44772 19 7 19H17C17.5523 19 18 18.5523 18 18C18 17.4477 17.5523 17 17 17H7Z"
                                   fill={
-                                    Object {
+                                    {
                                       "type": 2,
                                     }
                                   }
                                   fillRule={0}
                                   propList={
-                                    Array [
+                                    [
                                       "fill",
                                       "fillRule",
                                     ]
@@ -410,7 +422,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                               }
                             }
@@ -428,7 +440,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                 dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
@@ -436,12 +448,12 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                 maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "fontSize": 18,
                                       "lineHeight": 25,
                                     },
-                                    Object {
+                                    {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
@@ -465,19 +477,19 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                         dynamicTypeRamp="body"
                         font="TitilliumSansPro"
                         fontStyle={
-                          Object {
+                          {
                             "fontSize": 16,
                             "lineHeight": 24,
                           }
                         }
                         maxFontSizeMultiplier={1.25}
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "fontSize": 16,
                               "lineHeight": 24,
                             },
-                            Object {
+                            {
                               "color": "#2B2E38",
                               "fontFamily": "Titillium Sans Pro",
                               "fontStyle": "normal",
@@ -491,14 +503,14 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                       </Text>
                       <View
                         style={
-                          Object {
+                          {
                             "height": 24,
                           }
                         }
                       />
                       <View
                         style={
-                          Object {
+                          {
                             "alignSelf": "flex-start",
                             "justifyContent": "center",
                           }
@@ -508,15 +520,27 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                           accessibilityLabel="Vedi modelli F24"
                           accessibilityRole="button"
                           accessibilityState={
-                            Object {
+                            {
+                              "busy": undefined,
+                              "checked": undefined,
                               "disabled": false,
+                              "expanded": undefined,
+                              "selected": undefined,
+                            }
+                          }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
                             }
                           }
                           accessible={true}
                           collapsable={false}
                           focusable={true}
                           hitSlop={
-                            Object {
+                            {
                               "bottom": 14,
                               "left": 24,
                               "right": 24,
@@ -534,15 +558,15 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                           onStartShouldSetResponder={[Function]}
                           onTouchEnd={[Function]}
                           style={
-                            Object {
+                            {
                               "alignSelf": "flex-start",
                             }
                           }
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "alignItems": "center",
                                   "elevation": 0,
                                   "flexDirection": "row",
@@ -550,10 +574,10 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                   "textAlignVertical": "center",
                                 },
                                 false,
-                                Object {},
-                                Object {
-                                  "transform": Array [
-                                    Object {
+                                {},
+                                {
+                                  "transform": [
+                                    {
                                       "scale": undefined,
                                     },
                                   ],
@@ -570,17 +594,17 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                               maxFontSizeMultiplier={1.3}
                               numberOfLines={1}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "700",
                                   },
-                                  Object {
+                                  {
                                     "color": "#0073E6",
                                   },
-                                  Object {
+                                  {
                                     "color": undefined,
                                   },
                                 ]
@@ -598,7 +622,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                           footerComponent={[Function]}
                           handleComponent={[Function]}
                           handleComponentAccessibility={
-                            Object {
+                            {
                               "accessible": false,
                             }
                           }
@@ -606,12 +630,12 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                           importantForAccessibility="yes"
                           onDismiss={[Function]}
                           snapPoints={
-                            Array [
+                            [
                               1,
                             ]
                           }
                           style={
-                            Object {
+                            {
                               "borderCurve": "continuous",
                               "borderTopLeftRadius": 24,
                               "borderTopRightRadius": 24,
@@ -622,7 +646,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                         >
                           <RCTScrollView
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                                 "paddingHorizontal": 24,
                               }
@@ -636,6 +660,23 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                   accessibilityHint="pdf"
                                   accessibilityLabel="2"
                                   accessibilityRole="button"
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": false,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
                                   accessible={true}
                                   collapsable={false}
                                   focusable={true}
@@ -652,8 +693,8 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                 >
                                   <View
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "alignItems": "center",
                                           "borderColor": "#E8EBF1",
                                           "borderCurve": "continuous",
@@ -664,25 +705,24 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
-                                        Object {
-                                          "borderColor": "#E8EBF1",
-                                        },
-                                        false,
-                                        Object {
-                                          "transform": Array [
-                                            Object {
+                                        {
+                                          "transform": [
+                                            {
                                               "scale": undefined,
                                             },
                                           ],
+                                        },
+                                        {
+                                          "opacity": 1,
                                         },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
-                                        Object {
-                                          "alignItems": "flex-start",
-                                          "flexShrink": 1,
+                                        {
+                                          "flex": 1,
+                                          "flexDirection": "column",
                                         }
                                       }
                                     >
@@ -694,7 +734,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                         dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
-                                          Object {
+                                          {
                                             "fontSize": 16,
                                             "lineHeight": 21,
                                           }
@@ -702,12 +742,12 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "fontSize": 16,
                                               "lineHeight": 21,
                                             },
-                                            Object {
+                                            {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
@@ -721,27 +761,16 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       </Text>
                                       <View
                                         style={
-                                          Object {
+                                          {
                                             "height": 4,
                                           }
                                         }
                                       />
                                       <View
                                         style={
-                                          Array [
-                                            Object {
-                                              "alignItems": "center",
-                                              "borderCurve": "continuous",
-                                              "borderRadius": 24,
-                                              "flexDirection": "row",
-                                              "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
-                                            },
-                                            Object {
-                                              "backgroundColor": "#F4F5F8",
-                                            },
-                                          ]
+                                          {
+                                            "width": 44,
+                                          }
                                         }
                                       >
                                         <Text
@@ -750,32 +779,54 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={1}
                                           style={
-                                            Array [
-                                              Object {
-                                                "alignSelf": "center",
-                                                "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
-                                                "textTransform": "uppercase",
+                                            [
+                                              {
+                                                "alignItems": "center",
+                                                "borderCurve": "continuous",
+                                                "borderRadius": 24,
+                                                "flexDirection": "row",
+                                                "justifyContent": "center",
+                                                "paddingHorizontal": 8,
+                                                "paddingVertical": 4,
                                               },
-                                              Object {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              Object {
-                                                "color": "#555C70",
+                                              {
+                                                "backgroundColor": "#F4F5F8",
                                               },
                                             ]
                                           }
                                         >
-                                          PDF
-                                        </Text>
+                                          <Text
+                                            ellipsizeMode="tail"
+                                            numberOfLines={1}
+                                            style={
+                                              [
+                                                {
+                                                  "alignSelf": "center",
+                                                  "flexShrink": 1,
+                                                  "fontSize": 12,
+                                                  "lineHeight": 16,
+                                                  "textTransform": "uppercase",
+                                                },
+                                                {
+                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                },
+                                                {
+                                                  "color": "#555C70",
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            PDF
+                                          </Text>
+                                        </View>
                                       </View>
                                     </View>
                                     <View
                                       style={
-                                        Object {
+                                        {
+                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -794,15 +845,15 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                         minX={0}
                                         minY={0}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "backgroundColor": "transparent",
                                               "borderWidth": 0,
                                             },
-                                            Object {
+                                            {
                                               "color": "#0B3EE3",
                                             },
-                                            Object {
+                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
@@ -816,7 +867,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       >
                                         <RNSVGGroup
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
@@ -826,13 +877,13 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                             clipRule={0}
                                             d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                             fill={
-                                              Object {
+                                              {
                                                 "type": 2,
                                               }
                                             }
                                             fillRule={0}
                                             propList={
-                                              Array [
+                                              [
                                                 "fill",
                                                 "fillRule",
                                               ]
@@ -845,7 +896,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                 </View>
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "height": 8,
                                     }
                                   }
@@ -854,6 +905,23 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                   accessibilityHint="pdf"
                                   accessibilityLabel="4"
                                   accessibilityRole="button"
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": false,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
                                   accessible={true}
                                   collapsable={false}
                                   focusable={true}
@@ -870,8 +938,8 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                 >
                                   <View
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "alignItems": "center",
                                           "borderColor": "#E8EBF1",
                                           "borderCurve": "continuous",
@@ -882,25 +950,24 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
-                                        Object {
-                                          "borderColor": "#E8EBF1",
-                                        },
-                                        false,
-                                        Object {
-                                          "transform": Array [
-                                            Object {
+                                        {
+                                          "transform": [
+                                            {
                                               "scale": undefined,
                                             },
                                           ],
+                                        },
+                                        {
+                                          "opacity": 1,
                                         },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
-                                        Object {
-                                          "alignItems": "flex-start",
-                                          "flexShrink": 1,
+                                        {
+                                          "flex": 1,
+                                          "flexDirection": "column",
                                         }
                                       }
                                     >
@@ -912,7 +979,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                         dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
-                                          Object {
+                                          {
                                             "fontSize": 16,
                                             "lineHeight": 21,
                                           }
@@ -920,12 +987,12 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "fontSize": 16,
                                               "lineHeight": 21,
                                             },
-                                            Object {
+                                            {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
@@ -939,27 +1006,16 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       </Text>
                                       <View
                                         style={
-                                          Object {
+                                          {
                                             "height": 4,
                                           }
                                         }
                                       />
                                       <View
                                         style={
-                                          Array [
-                                            Object {
-                                              "alignItems": "center",
-                                              "borderCurve": "continuous",
-                                              "borderRadius": 24,
-                                              "flexDirection": "row",
-                                              "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
-                                            },
-                                            Object {
-                                              "backgroundColor": "#F4F5F8",
-                                            },
-                                          ]
+                                          {
+                                            "width": 44,
+                                          }
                                         }
                                       >
                                         <Text
@@ -968,32 +1024,54 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={1}
                                           style={
-                                            Array [
-                                              Object {
-                                                "alignSelf": "center",
-                                                "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
-                                                "textTransform": "uppercase",
+                                            [
+                                              {
+                                                "alignItems": "center",
+                                                "borderCurve": "continuous",
+                                                "borderRadius": 24,
+                                                "flexDirection": "row",
+                                                "justifyContent": "center",
+                                                "paddingHorizontal": 8,
+                                                "paddingVertical": 4,
                                               },
-                                              Object {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              Object {
-                                                "color": "#555C70",
+                                              {
+                                                "backgroundColor": "#F4F5F8",
                                               },
                                             ]
                                           }
                                         >
-                                          PDF
-                                        </Text>
+                                          <Text
+                                            ellipsizeMode="tail"
+                                            numberOfLines={1}
+                                            style={
+                                              [
+                                                {
+                                                  "alignSelf": "center",
+                                                  "flexShrink": 1,
+                                                  "fontSize": 12,
+                                                  "lineHeight": 16,
+                                                  "textTransform": "uppercase",
+                                                },
+                                                {
+                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                },
+                                                {
+                                                  "color": "#555C70",
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            PDF
+                                          </Text>
+                                        </View>
                                       </View>
                                     </View>
                                     <View
                                       style={
-                                        Object {
+                                        {
+                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -1012,15 +1090,15 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                         minX={0}
                                         minY={0}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "backgroundColor": "transparent",
                                               "borderWidth": 0,
                                             },
-                                            Object {
+                                            {
                                               "color": "#0B3EE3",
                                             },
-                                            Object {
+                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
@@ -1034,7 +1112,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       >
                                         <RNSVGGroup
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
@@ -1044,13 +1122,13 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                             clipRule={0}
                                             d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                             fill={
-                                              Object {
+                                              {
                                                 "type": 2,
                                               }
                                             }
                                             fillRule={0}
                                             propList={
-                                              Array [
+                                              [
                                                 "fill",
                                                 "fillRule",
                                               ]
@@ -1068,7 +1146,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                       </View>
                       <View
                         style={
-                          Object {
+                          {
                             "height": 16,
                           }
                         }
@@ -1079,8 +1157,8 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1089,7 +1167,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
 exports[`F24Section should match snapshot when there are more than one F24 and the message is cancelled 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1097,8 +1175,8 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1107,8 +1185,8 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1120,7 +1198,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1136,7 +1214,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1150,12 +1228,12 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1169,7 +1247,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1181,7 +1259,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1189,7 +1267,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1200,7 +1278,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1214,7 +1292,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1229,7 +1307,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1243,7 +1321,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1257,21 +1335,34 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1283,7 +1374,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1301,12 +1392,12 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1316,10 +1407,10 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1328,9 +1419,9 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1346,27 +1437,26 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1376,13 +1466,13 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1392,7 +1482,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1400,7 +1490,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -1410,8 +1500,8 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1420,7 +1510,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
 exports[`F24Section should match snapshot when there are no F24 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1428,8 +1518,8 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1438,8 +1528,8 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1451,7 +1541,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1467,7 +1557,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1481,12 +1571,12 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1500,7 +1590,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1512,7 +1602,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1520,7 +1610,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1531,7 +1621,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1545,7 +1635,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1560,7 +1650,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1574,7 +1664,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1588,21 +1678,34 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1614,7 +1717,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1632,12 +1735,12 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1647,10 +1750,10 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1659,9 +1762,9 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1677,27 +1780,26 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1707,13 +1809,13 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1723,7 +1825,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1731,7 +1833,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -1741,8 +1843,8 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1751,7 +1853,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
 exports[`F24Section should match snapshot when there are no F24 and the message is cancelled 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1759,8 +1861,8 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1769,8 +1871,8 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1782,7 +1884,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1798,7 +1900,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1812,12 +1914,12 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1831,7 +1933,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1843,7 +1945,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1851,7 +1953,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1862,7 +1964,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1876,7 +1978,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1891,7 +1993,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1905,7 +2007,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1919,21 +2021,34 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1945,7 +2060,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1963,12 +2078,12 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1978,10 +2093,10 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1990,9 +2105,9 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -2008,27 +2123,26 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -2038,13 +2152,13 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -2054,7 +2168,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -2062,7 +2176,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -2072,8 +2186,8 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2082,7 +2196,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
 exports[`F24Section should match snapshot when there is a single F24 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -2090,8 +2204,8 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -2100,8 +2214,8 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -2113,7 +2227,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -2129,7 +2243,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -2143,12 +2257,12 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -2162,7 +2276,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -2174,7 +2288,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -2182,7 +2296,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -2193,7 +2307,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -2207,7 +2321,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -2222,7 +2336,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -2236,7 +2350,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -2250,21 +2364,34 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -2276,7 +2403,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -2294,12 +2421,12 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -2309,10 +2436,10 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -2321,9 +2448,9 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -2339,27 +2466,26 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -2369,13 +2495,13 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -2385,7 +2511,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -2393,7 +2519,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -2402,7 +2528,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                         accessibilityLabel="Modelli F24"
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -2412,7 +2538,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                         <View
                           importantForAccessibility="no-hide-descendants"
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "flexDirection": "row",
                               "justifyContent": "space-between",
@@ -2421,7 +2547,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "marginRight": 8,
                               }
                             }
@@ -2440,15 +2566,15 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                               minX={0}
                               minY={0}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "backgroundColor": "transparent",
                                     "borderWidth": 0,
                                   },
-                                  Object {
+                                  {
                                     "color": "#BBC2D6",
                                   },
-                                  Object {
+                                  {
                                     "flex": 0,
                                     "height": 24,
                                     "width": 24,
@@ -2462,7 +2588,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                             >
                               <RNSVGGroup
                                 fill={
-                                  Object {
+                                  {
                                     "payload": 4278190080,
                                     "type": 0,
                                   }
@@ -2472,13 +2598,13 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                   clipRule={0}
                                   d="M22 6.96129V19.5684C22 20.9481 20.913 22 19.6535 22H4.34646C3.08696 22 2 20.9481 2 19.5684V3C2 2.44772 2.44771 2 3 2H6.33457C6.67726 2 6.99609 2.17548 7.17942 2.46501L7.92109 3.63624C8.83777 5.08388 10.4319 5.96129 12.1454 5.96129H21C21.5523 5.96129 22 6.40901 22 6.96129ZM12.1454 3.96129C11.1173 3.96129 10.1608 3.43485 9.6108 2.56626L8.86914 1.39503C8.31913 0.526447 7.36265 0 6.33457 0H3C1.34315 0 0 1.34314 0 3V19.5684C0 22.0159 1.94598 24 4.34646 24H19.6535C22.054 24 24 22.0159 24 19.5684V6.96129C24 5.30444 22.6569 3.96129 21 3.96129H12.1454ZM7 17C6.44772 17 6 17.4477 6 18C6 18.5523 6.44772 19 7 19H17C17.5523 19 18 18.5523 18 18C18 17.4477 17.5523 17 17 17H7Z"
                                   fill={
-                                    Object {
+                                    {
                                       "type": 2,
                                     }
                                   }
                                   fillRule={0}
                                   propList={
-                                    Array [
+                                    [
                                       "fill",
                                       "fillRule",
                                     ]
@@ -2489,7 +2615,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                               }
                             }
@@ -2507,7 +2633,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                 dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
@@ -2515,12 +2641,12 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                 maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "fontSize": 18,
                                       "lineHeight": 25,
                                     },
-                                    Object {
+                                    {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
@@ -2544,19 +2670,19 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                         dynamicTypeRamp="body"
                         font="TitilliumSansPro"
                         fontStyle={
-                          Object {
+                          {
                             "fontSize": 16,
                             "lineHeight": 24,
                           }
                         }
                         maxFontSizeMultiplier={1.25}
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "fontSize": 16,
                               "lineHeight": 24,
                             },
-                            Object {
+                            {
                               "color": "#2B2E38",
                               "fontFamily": "Titillium Sans Pro",
                               "fontStyle": "normal",
@@ -2570,7 +2696,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                       </Text>
                       <View
                         style={
-                          Object {
+                          {
                             "height": 24,
                           }
                         }
@@ -2579,6 +2705,23 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                         accessibilityHint="pdf"
                         accessibilityLabel="2"
                         accessibilityRole="button"
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": false,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
                         accessible={true}
                         collapsable={false}
                         focusable={true}
@@ -2595,8 +2738,8 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                       >
                         <View
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "alignItems": "center",
                                 "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
@@ -2607,25 +2750,24 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                 "paddingHorizontal": 16,
                                 "paddingVertical": 16,
                               },
-                              Object {
-                                "borderColor": "#E8EBF1",
-                              },
-                              false,
-                              Object {
-                                "transform": Array [
-                                  Object {
+                              {
+                                "transform": [
+                                  {
                                     "scale": undefined,
                                   },
                                 ],
+                              },
+                              {
+                                "opacity": 1,
                               },
                             ]
                           }
                         >
                           <View
                             style={
-                              Object {
-                                "alignItems": "flex-start",
-                                "flexShrink": 1,
+                              {
+                                "flex": 1,
+                                "flexDirection": "column",
                               }
                             }
                           >
@@ -2637,7 +2779,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                               dynamicTypeRamp="footnote"
                               font="TitilliumSansPro"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 16,
                                   "lineHeight": 21,
                                 }
@@ -2645,12 +2787,12 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                               maxFontSizeMultiplier={1.25}
                               numberOfLines={2}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "fontSize": 16,
                                     "lineHeight": 21,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0B3EE3",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
@@ -2664,27 +2806,16 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                             </Text>
                             <View
                               style={
-                                Object {
+                                {
                                   "height": 4,
                                 }
                               }
                             />
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "borderCurve": "continuous",
-                                    "borderRadius": 24,
-                                    "flexDirection": "row",
-                                    "justifyContent": "center",
-                                    "paddingHorizontal": 8,
-                                    "paddingVertical": 4,
-                                  },
-                                  Object {
-                                    "backgroundColor": "#F4F5F8",
-                                  },
-                                ]
+                                {
+                                  "width": 44,
+                                }
                               }
                             >
                               <Text
@@ -2693,32 +2824,54 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
-                                  Array [
-                                    Object {
-                                      "alignSelf": "center",
-                                      "flexShrink": 1,
-                                      "fontSize": 12,
-                                      "lineHeight": 16,
-                                      "textTransform": "uppercase",
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "borderCurve": "continuous",
+                                      "borderRadius": 24,
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                      "paddingHorizontal": 8,
+                                      "paddingVertical": 4,
                                     },
-                                    Object {
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                    },
-                                    Object {
-                                      "color": "#555C70",
+                                    {
+                                      "backgroundColor": "#F4F5F8",
                                     },
                                   ]
                                 }
                               >
-                                PDF
-                              </Text>
+                                <Text
+                                  ellipsizeMode="tail"
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {
+                                        "alignSelf": "center",
+                                        "flexShrink": 1,
+                                        "fontSize": 12,
+                                        "lineHeight": 16,
+                                        "textTransform": "uppercase",
+                                      },
+                                      {
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                      },
+                                      {
+                                        "color": "#555C70",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  PDF
+                                </Text>
+                              </View>
                             </View>
                           </View>
                           <View
                             style={
-                              Object {
+                              {
+                                "alignItems": "center",
                                 "marginLeft": 12,
                               }
                             }
@@ -2737,15 +2890,15 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                               minX={0}
                               minY={0}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "backgroundColor": "transparent",
                                     "borderWidth": 0,
                                   },
-                                  Object {
+                                  {
                                     "color": "#0B3EE3",
                                   },
-                                  Object {
+                                  {
                                     "flex": 0,
                                     "height": 24,
                                     "width": 24,
@@ -2759,7 +2912,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                             >
                               <RNSVGGroup
                                 fill={
-                                  Object {
+                                  {
                                     "payload": 4278190080,
                                     "type": 0,
                                   }
@@ -2769,13 +2922,13 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                   clipRule={0}
                                   d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                   fill={
-                                    Object {
+                                    {
                                       "type": 2,
                                     }
                                   }
                                   fillRule={0}
                                   propList={
-                                    Array [
+                                    [
                                       "fill",
                                       "fillRule",
                                     ]
@@ -2788,7 +2941,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                       </View>
                       <View
                         style={
-                          Object {
+                          {
                             "height": 16,
                           }
                         }
@@ -2799,8 +2952,8 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2809,7 +2962,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
 exports[`F24Section should match snapshot when there is a single F24 and the message is cancelled 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -2817,8 +2970,8 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -2827,8 +2980,8 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -2840,7 +2993,7 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -2856,7 +3009,7 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -2870,12 +3023,12 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -2889,7 +3042,7 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -2901,7 +3054,7 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -2909,7 +3062,7 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -2920,7 +3073,7 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -2934,7 +3087,7 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -2949,7 +3102,7 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -2963,7 +3116,7 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -2977,21 +3130,34 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -3003,7 +3169,7 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -3021,12 +3187,12 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -3036,10 +3202,10 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -3048,9 +3214,9 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -3066,27 +3232,26 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -3096,13 +3261,13 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -3112,7 +3277,7 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -3120,7 +3285,7 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -3130,8 +3295,8 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

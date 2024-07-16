@@ -9,19 +9,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
   dynamicTypeRamp="title3"
   font="TitilliumSansPro"
   fontStyle={
-    Object {
+    {
       "fontSize": 22,
       "lineHeight": 24,
     }
   }
   maxFontSizeMultiplier={1.25}
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 22,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#17324D",
         "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
@@ -39,19 +39,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -69,19 +69,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -101,19 +101,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -133,19 +133,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -165,19 +165,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -197,19 +197,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -229,19 +229,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -261,19 +261,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -293,19 +293,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -325,19 +325,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -357,19 +357,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -389,19 +389,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -421,19 +421,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -453,19 +453,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -485,19 +485,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -517,19 +517,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",

@@ -3,7 +3,7 @@
 exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,7 +326,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -324,7 +336,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
                           height={84}
                           radius={8}
                           style={
-                            Object {
+                            {
                               "backgroundColor": "#efefef",
                               "borderRadius": 8,
                               "height": 84,
@@ -336,7 +348,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
                         <View
                           collapsable={false}
                           style={
-                            Object {
+                            {
                               "backgroundColor": "#ffffff",
                               "height": "100%",
                               "marginLeft": "0%",
@@ -353,8 +365,8 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -363,7 +375,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
 exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -371,8 +383,8 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -381,8 +393,8 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -394,7 +406,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -410,7 +422,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -424,12 +436,12 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -443,7 +455,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -455,7 +467,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -463,7 +475,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -474,7 +486,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -488,7 +500,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -503,7 +515,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -517,7 +529,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -531,21 +543,34 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -557,7 +582,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -575,12 +600,12 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -590,10 +615,10 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -602,9 +627,9 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -620,27 +645,26 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -650,13 +674,13 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -666,7 +690,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -674,7 +698,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -683,18 +707,18 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                         accessibilityRole="alert"
                         accessible={false}
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "alignContent": "center",
                               "alignItems": "flex-start",
                               "flexDirection": "row",
                             },
-                            Object {
+                            {
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "padding": 16,
                             },
-                            Object {
+                            {
                               "backgroundColor": "#FFF5DA",
                             },
                           ]
@@ -703,7 +727,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "marginRight": 12,
                             }
                           }
@@ -722,15 +746,15 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                             minX={0}
                             minY={0}
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "transparent",
                                   "borderWidth": 0,
                                 },
-                                Object {
+                                {
                                   "color": "#614C15",
                                 },
-                                Object {
+                                {
                                   "flex": 0,
                                   "height": 24,
                                   "width": 24,
@@ -744,7 +768,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                           >
                             <RNSVGGroup
                               fill={
-                                Object {
+                                {
                                   "payload": 4278190080,
                                   "type": 0,
                                 }
@@ -754,13 +778,13 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                                 clipRule={0}
                                 d="m15.523 3.047 7.926 13.813c1.566 2.73-.392 6.14-3.523 6.14H4.074C.942 23-1.015 19.59.55 16.86L8.477 3.047c1.566-2.73 5.48-2.73 7.046 0Zm-3.495 13.458a1.528 1.528 0 1 1 0 3.056 1.528 1.528 0 0 1 0-3.056Zm0-1.944c.568 0 1.029-.46 1.029-1.028V5.528a1.028 1.028 0 0 0-2.057 0v8.005c0 .567.46 1.028 1.029 1.028Z"
                                 fill={
-                                  Object {
+                                  {
                                     "type": 2,
                                   }
                                 }
                                 fillRule={0}
                                 propList={
-                                  Array [
+                                  [
                                     "fill",
                                     "fillRule",
                                   ]
@@ -771,11 +795,11 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                         </View>
                         <View
                           style={
-                            Array [
-                              Object {
-                                "marginTop": -10,
+                            [
+                              {
+                                "marginTop": -5,
                               },
-                              Object {
+                              {
                                 "flex": 1,
                                 "marginBottom": -6,
                               },
@@ -791,19 +815,19 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                             dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 16,
                                 "lineHeight": 24,
                               }
                             }
                             maxFontSizeMultiplier={1.25}
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 16,
                                   "lineHeight": 24,
                                 },
-                                Object {
+                                {
                                   "color": "#614C15",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -823,8 +847,8 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

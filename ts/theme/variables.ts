@@ -5,8 +5,6 @@
  * directory).
  */
 
-/* eslint-disable no-invalid-this */
-
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { Platform } from "react-native";
 import { IOColors } from "@pagopa/io-app-design-system";
@@ -17,7 +15,6 @@ export const VIBRATION_LONG_PRESS_DURATION = 50 as Millisecond;
 
 export const VIBRATION_BARCODE_SCANNED_DURATION = 50 as Millisecond;
 
-// eslint-disable-next-line
 const customVariables = {
   minTouchableAreaSize: 48,
 

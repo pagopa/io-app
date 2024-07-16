@@ -3,7 +3,7 @@
 exports[`ScreenWithListItems Rendering renders correctly with default props 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,7 +326,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -322,7 +334,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          Object {
+                          {
                             "paddingBottom": 56,
                             "paddingHorizontal": 24,
                           }
@@ -332,12 +344,12 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                         scrollEventThrottle={8}
                         snapToEnd={false}
                         snapToOffsets={
-                          Array [
+                          [
                             0,
                             0,
                           ]
                         }
-                        style={Object {}}
+                        style={{}}
                       >
                         <View>
                           <Text
@@ -348,19 +360,19 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                             dynamicTypeRamp="title1"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 28,
                                 "lineHeight": 40,
                               }
                             }
                             maxFontSizeMultiplier={1.25}
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 28,
                                   "lineHeight": 40,
                                 },
-                                Object {
+                                {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -374,7 +386,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 8,
                               }
                             }
@@ -387,19 +399,19 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                             dynamicTypeRamp="body"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 16,
                                 "lineHeight": 24,
                               }
                             }
                             maxFontSizeMultiplier={1.25}
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 16,
                                   "lineHeight": 24,
                                 },
-                                Object {
+                                {
                                   "color": "#475A6D",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -413,7 +425,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 16,
                               }
                             }
@@ -422,7 +434,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                             accessibilityLabel="List Header"
                             accessible={true}
                             style={
-                              Object {
+                              {
                                 "marginHorizontal": -24,
                                 "paddingHorizontal": 24,
                                 "paddingVertical": 12,
@@ -432,7 +444,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                             <View
                               importantForAccessibility="no-hide-descendants"
                               style={
-                                Object {
+                                {
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "justifyContent": "space-between",
@@ -441,7 +453,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                             >
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "flex": 1,
                                   }
                                 }
@@ -459,7 +471,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                     dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
-                                      Object {
+                                      {
                                         "fontSize": 18,
                                         "lineHeight": 25,
                                       }
@@ -467,12 +479,12 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                     maxFontSizeMultiplier={1.25}
                                     role="heading"
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "fontSize": 18,
                                           "lineHeight": 25,
                                         },
-                                        Object {
+                                        {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
@@ -494,7 +506,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                 accessibilityLabel="Item 1; Value 1"
                                 accessible={true}
                                 style={
-                                  Object {
+                                  {
                                     "marginHorizontal": -24,
                                     "paddingHorizontal": 24,
                                     "paddingVertical": 12,
@@ -504,7 +516,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                               >
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "space-between",
@@ -513,7 +525,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                 >
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "flex": 1,
                                       }
                                     }
@@ -531,19 +543,19 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                         dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
-                                          Object {
+                                          {
                                             "fontSize": 14,
                                             "lineHeight": 21,
                                           }
                                         }
                                         maxFontSizeMultiplier={1.25}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "fontSize": 14,
                                               "lineHeight": 21,
                                             },
-                                            Object {
+                                            {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
@@ -563,7 +575,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                         dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
-                                          Object {
+                                          {
                                             "fontSize": 18,
                                             "lineHeight": 25,
                                           }
@@ -571,12 +583,12 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "fontSize": 18,
                                               "lineHeight": 25,
                                             },
-                                            Object {
+                                            {
                                               "color": "#0E0F13",
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
@@ -594,7 +606,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                               </View>
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "backgroundColor": "#D2D6E3",
                                     "height": 0.5,
                                   }
@@ -606,7 +618,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                 accessibilityLabel="Item 2; Value 2"
                                 accessible={true}
                                 style={
-                                  Object {
+                                  {
                                     "marginHorizontal": -24,
                                     "paddingHorizontal": 24,
                                     "paddingVertical": 12,
@@ -616,7 +628,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                               >
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "space-between",
@@ -625,7 +637,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                 >
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "flex": 1,
                                       }
                                     }
@@ -643,19 +655,19 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                         dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
-                                          Object {
+                                          {
                                             "fontSize": 14,
                                             "lineHeight": 21,
                                           }
                                         }
                                         maxFontSizeMultiplier={1.25}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "fontSize": 14,
                                               "lineHeight": 21,
                                             },
-                                            Object {
+                                            {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
@@ -675,7 +687,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                         dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
-                                          Object {
+                                          {
                                             "fontSize": 18,
                                             "lineHeight": 25,
                                           }
@@ -683,12 +695,12 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "fontSize": 18,
                                               "lineHeight": 25,
                                             },
-                                            Object {
+                                            {
                                               "color": "#0E0F13",
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
@@ -711,14 +723,14 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                       <View
                         pointerEvents="box-none"
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "bottom": 0,
                               "justifyContent": "flex-end",
                               "position": "absolute",
                               "width": "100%",
                             },
-                            Object {
+                            {
                               "height": 120,
                               "paddingBottom": 24,
                             },
@@ -728,8 +740,8 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                         <View
                           pointerEvents="none"
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "bottom": 0,
                                 "left": 0,
                                 "position": "absolute",
@@ -742,8 +754,8 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "opacity": undefined,
                                 },
                                 false,
@@ -752,7 +764,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                           >
                             <BVLinearGradient
                               colors={
-                                Array [
+                                [
                                   16777215,
                                   218103807,
                                   419430399,
@@ -778,13 +790,13 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                 ]
                               }
                               endPoint={
-                                Object {
+                                {
                                   "x": 0.5,
                                   "y": 1,
                                 }
                               }
                               locations={
-                                Array [
+                                [
                                   0,
                                   0.047619047619047616,
                                   0.09523809523809523,
@@ -810,13 +822,13 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                 ]
                               }
                               startPoint={
-                                Object {
+                                {
                                   "x": 0.5,
                                   "y": 0,
                                 }
                               }
                               style={
-                                Object {
+                                {
                                   "height": 99.6,
                                 }
                               }
@@ -824,7 +836,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
                                 "height": 20.4,
@@ -836,7 +848,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                           onLayout={[Function]}
                           pointerEvents="box-none"
                           style={
-                            Object {
+                            {
                               "flexShrink": 0,
                               "paddingHorizontal": 24,
                               "width": "100%",
@@ -847,9 +859,20 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                             accessibilityLabel="Press me button"
                             accessibilityRole="button"
                             accessibilityState={
-                              Object {
+                              {
                                 "busy": false,
+                                "checked": undefined,
                                 "disabled": false,
+                                "expanded": undefined,
+                                "selected": undefined,
+                              }
+                            }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
                               }
                             }
                             accessible={true}
@@ -864,13 +887,13 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={Object {}}
+                            style={{}}
                             testID="action-button"
                           >
                             <View
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "alignItems": "center",
                                     "borderRadius": 4,
                                     "elevation": 0,
@@ -879,20 +902,20 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                     "paddingHorizontal": 16,
                                     "textAlignVertical": "center",
                                   },
-                                  Object {
+                                  {
                                     "overflow": "hidden",
                                   },
                                   false,
-                                  Object {
+                                  {
                                     "height": 40,
                                   },
-                                  Object {
+                                  {
                                     "backgroundColor": "#0073E6",
                                   },
-                                  Object {
+                                  {
                                     "backgroundColor": undefined,
-                                    "transform": Array [
-                                      Object {
+                                    "transform": [
+                                      {
                                         "scale": undefined,
                                       },
                                     ],
@@ -902,8 +925,8 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                             >
                               <View
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
@@ -922,7 +945,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                   ellipsizeMode="tail"
                                   font="TitilliumSansPro"
                                   fontStyle={
-                                    Object {
+                                    {
                                       "fontSize": 16,
                                     }
                                   }
@@ -930,14 +953,14 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "alignSelf": "center",
                                       },
-                                      Object {
+                                      {
                                         "fontSize": 16,
                                       },
-                                      Object {
+                                      {
                                         "color": "#FFFFFF",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
@@ -960,8 +983,8 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -970,7 +993,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
 exports[`ScreenWithListItems Rendering renders correctly without optional props 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -978,8 +1001,8 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -988,8 +1011,8 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1001,7 +1024,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1017,7 +1040,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1031,12 +1054,12 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1050,7 +1073,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1062,7 +1085,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1070,7 +1093,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1081,7 +1104,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1095,7 +1118,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1110,7 +1133,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1124,7 +1147,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1138,21 +1161,34 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1164,7 +1200,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1182,12 +1218,12 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1197,10 +1233,10 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1209,9 +1245,9 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1227,27 +1263,26 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1257,13 +1292,13 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1273,7 +1308,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1281,7 +1316,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -1289,7 +1324,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          Object {
+                          {
                             "paddingBottom": 56,
                             "paddingHorizontal": 24,
                           }
@@ -1299,12 +1334,12 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                         scrollEventThrottle={8}
                         snapToEnd={false}
                         snapToOffsets={
-                          Array [
+                          [
                             0,
                             0,
                           ]
                         }
-                        style={Object {}}
+                        style={{}}
                       >
                         <View>
                           <Text
@@ -1315,19 +1350,19 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                             dynamicTypeRamp="title1"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 28,
                                 "lineHeight": 40,
                               }
                             }
                             maxFontSizeMultiplier={1.25}
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 28,
                                   "lineHeight": 40,
                                 },
-                                Object {
+                                {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1343,14 +1378,14 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                       <View
                         pointerEvents="box-none"
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "bottom": 0,
                               "justifyContent": "flex-end",
                               "position": "absolute",
                               "width": "100%",
                             },
-                            Object {
+                            {
                               "height": 120,
                               "paddingBottom": 24,
                             },
@@ -1360,8 +1395,8 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                         <View
                           pointerEvents="none"
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "bottom": 0,
                                 "left": 0,
                                 "position": "absolute",
@@ -1374,8 +1409,8 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "opacity": undefined,
                                 },
                                 false,
@@ -1384,7 +1419,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                           >
                             <BVLinearGradient
                               colors={
-                                Array [
+                                [
                                   16777215,
                                   218103807,
                                   419430399,
@@ -1410,13 +1445,13 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                                 ]
                               }
                               endPoint={
-                                Object {
+                                {
                                   "x": 0.5,
                                   "y": 1,
                                 }
                               }
                               locations={
-                                Array [
+                                [
                                   0,
                                   0.047619047619047616,
                                   0.09523809523809523,
@@ -1442,13 +1477,13 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                                 ]
                               }
                               startPoint={
-                                Object {
+                                {
                                   "x": 0.5,
                                   "y": 0,
                                 }
                               }
                               style={
-                                Object {
+                                {
                                   "height": 99.6,
                                 }
                               }
@@ -1456,7 +1491,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
                                 "height": 20.4,
@@ -1468,7 +1503,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                           onLayout={[Function]}
                           pointerEvents="box-none"
                           style={
-                            Object {
+                            {
                               "flexShrink": 0,
                               "paddingHorizontal": 24,
                               "width": "100%",
@@ -1479,9 +1514,20 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                             accessibilityLabel="Press me button"
                             accessibilityRole="button"
                             accessibilityState={
-                              Object {
+                              {
                                 "busy": false,
+                                "checked": undefined,
                                 "disabled": false,
+                                "expanded": undefined,
+                                "selected": undefined,
+                              }
+                            }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
                               }
                             }
                             accessible={true}
@@ -1496,13 +1542,13 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={Object {}}
+                            style={{}}
                             testID="action-button"
                           >
                             <View
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "alignItems": "center",
                                     "borderRadius": 4,
                                     "elevation": 0,
@@ -1511,20 +1557,20 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                                     "paddingHorizontal": 16,
                                     "textAlignVertical": "center",
                                   },
-                                  Object {
+                                  {
                                     "overflow": "hidden",
                                   },
                                   false,
-                                  Object {
+                                  {
                                     "height": 40,
                                   },
-                                  Object {
+                                  {
                                     "backgroundColor": "#0073E6",
                                   },
-                                  Object {
+                                  {
                                     "backgroundColor": undefined,
-                                    "transform": Array [
-                                      Object {
+                                    "transform": [
+                                      {
                                         "scale": undefined,
                                       },
                                     ],
@@ -1534,8 +1580,8 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                             >
                               <View
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
@@ -1554,7 +1600,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                                   ellipsizeMode="tail"
                                   font="TitilliumSansPro"
                                   fontStyle={
-                                    Object {
+                                    {
                                       "fontSize": 16,
                                     }
                                   }
@@ -1562,14 +1608,14 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "alignSelf": "center",
                                       },
-                                      Object {
+                                      {
                                         "fontSize": 16,
                                       },
-                                      Object {
+                                      {
                                         "color": "#FFFFFF",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
@@ -1592,8 +1638,8 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1602,7 +1648,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
 exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1610,8 +1656,8 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1620,8 +1666,8 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1633,7 +1679,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1649,7 +1695,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1663,12 +1709,12 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1682,7 +1728,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1694,7 +1740,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1702,7 +1748,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1713,7 +1759,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1727,7 +1773,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1742,7 +1788,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1756,7 +1802,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1770,21 +1816,34 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1796,7 +1855,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1814,12 +1873,12 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1829,10 +1888,10 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1841,9 +1900,9 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1859,27 +1918,26 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1889,13 +1947,13 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1905,7 +1963,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1913,7 +1971,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -1921,7 +1979,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          Object {
+                          {
                             "paddingBottom": 56,
                             "paddingHorizontal": 24,
                           }
@@ -1931,12 +1989,12 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                         scrollEventThrottle={8}
                         snapToEnd={false}
                         snapToOffsets={
-                          Array [
+                          [
                             0,
                             0,
                           ]
                         }
-                        style={Object {}}
+                        style={{}}
                       >
                         <View>
                           <Text
@@ -1947,19 +2005,19 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                             dynamicTypeRamp="title1"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 28,
                                 "lineHeight": 40,
                               }
                             }
                             maxFontSizeMultiplier={1.25}
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 28,
                                   "lineHeight": 40,
                                 },
-                                Object {
+                                {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1973,7 +2031,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 8,
                               }
                             }
@@ -1986,22 +2044,22 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                             dynamicTypeRamp="body"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 16,
                                 "lineHeight": 24,
                               }
                             }
                             maxFontSizeMultiplier={1.25}
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "textAlign": "center",
                                 },
-                                Object {
+                                {
                                   "fontSize": 16,
                                   "lineHeight": 24,
                                 },
-                                Object {
+                                {
                                   "color": "#475A6D",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2019,22 +2077,22 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                               dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 16,
                                   "lineHeight": 24,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "textAlign": "center",
                                   },
-                                  Object {
+                                  {
                                     "fontSize": 16,
                                     "lineHeight": 24,
                                   },
-                                  Object {
+                                  {
                                     "color": "#475A6D",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
@@ -2054,22 +2112,22 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                               dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 16,
                                   "lineHeight": 24,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "textAlign": "center",
                                   },
-                                  Object {
+                                  {
                                     "fontSize": 16,
                                     "lineHeight": 24,
                                   },
-                                  Object {
+                                  {
                                     "color": "#475A6D",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
@@ -2084,7 +2142,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 16,
                               }
                             }
@@ -2093,7 +2151,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                             accessibilityLabel="List Header"
                             accessible={true}
                             style={
-                              Object {
+                              {
                                 "marginHorizontal": -24,
                                 "paddingHorizontal": 24,
                                 "paddingVertical": 12,
@@ -2103,7 +2161,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                             <View
                               importantForAccessibility="no-hide-descendants"
                               style={
-                                Object {
+                                {
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "justifyContent": "space-between",
@@ -2112,7 +2170,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                             >
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "flex": 1,
                                   }
                                 }
@@ -2130,7 +2188,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                     dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
-                                      Object {
+                                      {
                                         "fontSize": 18,
                                         "lineHeight": 25,
                                       }
@@ -2138,12 +2196,12 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                     maxFontSizeMultiplier={1.25}
                                     role="heading"
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "fontSize": 18,
                                           "lineHeight": 25,
                                         },
-                                        Object {
+                                        {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
@@ -2165,7 +2223,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                 accessibilityLabel="Item 1; Value 1"
                                 accessible={true}
                                 style={
-                                  Object {
+                                  {
                                     "marginHorizontal": -24,
                                     "paddingHorizontal": 24,
                                     "paddingVertical": 12,
@@ -2175,7 +2233,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                               >
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "space-between",
@@ -2184,7 +2242,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                 >
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "flex": 1,
                                       }
                                     }
@@ -2202,19 +2260,19 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                         dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
-                                          Object {
+                                          {
                                             "fontSize": 14,
                                             "lineHeight": 21,
                                           }
                                         }
                                         maxFontSizeMultiplier={1.25}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "fontSize": 14,
                                               "lineHeight": 21,
                                             },
-                                            Object {
+                                            {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
@@ -2234,7 +2292,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                         dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
-                                          Object {
+                                          {
                                             "fontSize": 18,
                                             "lineHeight": 25,
                                           }
@@ -2242,12 +2300,12 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "fontSize": 18,
                                               "lineHeight": 25,
                                             },
-                                            Object {
+                                            {
                                               "color": "#0E0F13",
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
@@ -2265,7 +2323,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                               </View>
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "backgroundColor": "#D2D6E3",
                                     "height": 0.5,
                                   }
@@ -2277,7 +2335,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                 accessibilityLabel="Item 2; Value 2"
                                 accessible={true}
                                 style={
-                                  Object {
+                                  {
                                     "marginHorizontal": -24,
                                     "paddingHorizontal": 24,
                                     "paddingVertical": 12,
@@ -2287,7 +2345,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                               >
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "space-between",
@@ -2296,7 +2354,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                 >
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "flex": 1,
                                       }
                                     }
@@ -2314,19 +2372,19 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                         dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
-                                          Object {
+                                          {
                                             "fontSize": 14,
                                             "lineHeight": 21,
                                           }
                                         }
                                         maxFontSizeMultiplier={1.25}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "fontSize": 14,
                                               "lineHeight": 21,
                                             },
-                                            Object {
+                                            {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
@@ -2346,7 +2404,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                         dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
-                                          Object {
+                                          {
                                             "fontSize": 18,
                                             "lineHeight": 25,
                                           }
@@ -2354,12 +2412,12 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "fontSize": 18,
                                               "lineHeight": 25,
                                             },
-                                            Object {
+                                            {
                                               "color": "#0E0F13",
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
@@ -2382,14 +2440,14 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                       <View
                         pointerEvents="box-none"
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "bottom": 0,
                               "justifyContent": "flex-end",
                               "position": "absolute",
                               "width": "100%",
                             },
-                            Object {
+                            {
                               "height": 120,
                               "paddingBottom": 24,
                             },
@@ -2399,8 +2457,8 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                         <View
                           pointerEvents="none"
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "bottom": 0,
                                 "left": 0,
                                 "position": "absolute",
@@ -2413,8 +2471,8 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "opacity": undefined,
                                 },
                                 false,
@@ -2423,7 +2481,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                           >
                             <BVLinearGradient
                               colors={
-                                Array [
+                                [
                                   16777215,
                                   218103807,
                                   419430399,
@@ -2449,13 +2507,13 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                 ]
                               }
                               endPoint={
-                                Object {
+                                {
                                   "x": 0.5,
                                   "y": 1,
                                 }
                               }
                               locations={
-                                Array [
+                                [
                                   0,
                                   0.047619047619047616,
                                   0.09523809523809523,
@@ -2481,13 +2539,13 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                 ]
                               }
                               startPoint={
-                                Object {
+                                {
                                   "x": 0.5,
                                   "y": 0,
                                 }
                               }
                               style={
-                                Object {
+                                {
                                   "height": 99.6,
                                 }
                               }
@@ -2495,7 +2553,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
                                 "height": 20.4,
@@ -2507,7 +2565,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                           onLayout={[Function]}
                           pointerEvents="box-none"
                           style={
-                            Object {
+                            {
                               "flexShrink": 0,
                               "paddingHorizontal": 24,
                               "width": "100%",
@@ -2518,9 +2576,20 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                             accessibilityLabel="Press me button"
                             accessibilityRole="button"
                             accessibilityState={
-                              Object {
+                              {
                                 "busy": false,
+                                "checked": undefined,
                                 "disabled": false,
+                                "expanded": undefined,
+                                "selected": undefined,
+                              }
+                            }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
                               }
                             }
                             accessible={true}
@@ -2535,13 +2604,13 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={Object {}}
+                            style={{}}
                             testID="action-button"
                           >
                             <View
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "alignItems": "center",
                                     "borderRadius": 4,
                                     "elevation": 0,
@@ -2550,20 +2619,20 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                     "paddingHorizontal": 16,
                                     "textAlignVertical": "center",
                                   },
-                                  Object {
+                                  {
                                     "overflow": "hidden",
                                   },
                                   false,
-                                  Object {
+                                  {
                                     "height": 40,
                                   },
-                                  Object {
+                                  {
                                     "backgroundColor": "#0073E6",
                                   },
-                                  Object {
+                                  {
                                     "backgroundColor": undefined,
-                                    "transform": Array [
-                                      Object {
+                                    "transform": [
+                                      {
                                         "scale": undefined,
                                       },
                                     ],
@@ -2573,8 +2642,8 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                             >
                               <View
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
@@ -2593,7 +2662,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                   ellipsizeMode="tail"
                                   font="TitilliumSansPro"
                                   fontStyle={
-                                    Object {
+                                    {
                                       "fontSize": 16,
                                     }
                                   }
@@ -2601,14 +2670,14 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "alignSelf": "center",
                                       },
-                                      Object {
+                                      {
                                         "fontSize": 16,
                                       },
-                                      Object {
+                                      {
                                         "color": "#FFFFFF",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
@@ -2631,8 +2700,8 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

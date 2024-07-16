@@ -3,7 +3,7 @@
 exports[`PaymentCardSmall should match the snapshot 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,12 +326,29 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
                         accessible={true}
                         collapsable={false}
                         focusable={true}
@@ -337,9 +366,9 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                       >
                         <View
                           style={
-                            Object {
-                              "transform": Array [
-                                Object {
+                            {
+                              "transform": [
+                                {
                                   "scale": undefined,
                                 },
                               ],
@@ -348,8 +377,8 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "aspectRatio": 1.6,
                                   "backgroundColor": "#E8EBF1",
                                   "borderRadius": 8,
@@ -367,12 +396,12 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                           >
                             <View
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "flexDirection": "row",
                                     "justifyContent": "space-between",
                                   },
-                                  Object {
+                                  {
                                     "alignItems": "center",
                                   },
                                 ]
@@ -388,12 +417,12 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                                 minX={0}
                                 minY={0}
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "backgroundColor": "transparent",
                                       "borderWidth": 0,
                                     },
-                                    Object {
+                                    {
                                       "flex": 0,
                                       "height": 24,
                                       "width": 24,
@@ -406,7 +435,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                               >
                                 <RNSVGGroup
                                   fill={
-                                    Object {
+                                    {
                                       "payload": 4278190080,
                                       "type": 0,
                                     }
@@ -415,13 +444,13 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                                   <RNSVGPath
                                     d="M8.75415 6.58813h6.48917v11.662H8.75415z"
                                     fill={
-                                      Object {
+                                      {
                                         "payload": 4285952960,
                                         "type": 0,
                                       }
                                     }
                                     propList={
-                                      Array [
+                                      [
                                         "fill",
                                       ]
                                     }
@@ -429,13 +458,13 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                                   <RNSVGPath
                                     d="M9.16616 12.4181c-.0018-2.2753 1.04274-4.42514 2.83254-5.82997-3.04065-2.38965-7.4072-2.04157-10.03091.79961-2.62372 2.84116-2.62372 7.22156 0 10.06276 2.62371 2.8412 6.99026 3.1892 10.03091.7996-1.7904-1.4053-2.83497-3.556-2.83254-5.832Z"
                                     fill={
-                                      Object {
+                                      {
                                         "payload": 4293591067,
                                         "type": 0,
                                       }
                                     }
                                     propList={
-                                      Array [
+                                      [
                                         "fill",
                                       ]
                                     }
@@ -443,13 +472,13 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                                   <RNSVGPath
                                     d="M23.2411 17.4813v-.4132h.1534v-.0841h-.3908v.0841h.1535v.4132h.0839Zm.7588 0v-.4981h-.1198l-.1378.3426-.1378-.3426h-.1199v.4981h.0846v-.3758l.1292.324h.0877l.1293-.3248v.3766h.0845ZM23.9986 12.4181c-.0001 2.8395-1.6214 5.4296-4.1754 6.6705-2.554 1.2408-5.5922.9144-7.8244-.8405 1.7891-1.406 2.8336-3.5555 2.8336-5.831 0-2.2754-1.0445-4.42495-2.8336-5.83097 2.2322-1.75494 5.2704-2.0813 7.8244-.84048 2.554 1.24082 4.1753 3.83098 4.1754 6.67045v.002Z"
                                     fill={
-                                      Object {
+                                      {
                                         "payload": 4278231519,
                                         "type": 0,
                                       }
                                     }
                                     propList={
-                                      Array [
+                                      [
                                         "fill",
                                       ]
                                     }
@@ -459,7 +488,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                             </View>
                             <View
                               style={
-                                Object {
+                                {
                                   "height": 8,
                                 }
                               }
@@ -473,18 +502,18 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                               ellipsizeMode="tail"
                               font="TitilliumSansPro"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 12,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
                               numberOfLines={1}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "fontSize": 12,
                                   },
-                                  Object {
+                                  {
                                     "color": "#555C70",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
@@ -505,8 +534,8 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
