@@ -520,8 +520,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -531,8 +531,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -1124,8 +1124,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -1135,8 +1135,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -2513,8 +2513,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -2524,8 +2524,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -3460,8 +3460,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -3471,8 +3471,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -4407,8 +4407,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -4418,8 +4418,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -5354,8 +5354,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -5365,8 +5365,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -6301,8 +6301,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -6312,8 +6312,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -6905,8 +6905,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -6916,8 +6916,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -8294,8 +8294,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -8305,8 +8305,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -9241,8 +9241,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -9252,8 +9252,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -10188,8 +10188,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -10199,8 +10199,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -11135,8 +11135,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -11146,8 +11146,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",

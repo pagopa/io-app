@@ -358,7 +358,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                             font="TitilliumSansPro"
                             fontStyle={
                               {
-                                "fontSize": 22,
+                                "fontSize": 20,
                                 "lineHeight": 24,
                               }
                             }
@@ -366,7 +366,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                             style={
                               [
                                 {
-                                  "fontSize": 22,
+                                  "fontSize": 20,
                                   "lineHeight": 24,
                                 },
                                 {

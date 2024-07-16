@@ -1222,8 +1222,8 @@ exports[`PreconditionsContent should match snapshot when content category is 'er
                           font="TitilliumSansPro"
                           fontStyle={
                             {
-                              "fontSize": 24,
-                              "lineHeight": 34,
+                              "fontSize": 22,
+                              "lineHeight": 33,
                             }
                           }
                           maxFontSizeMultiplier={1.25}
@@ -1233,8 +1233,8 @@ exports[`PreconditionsContent should match snapshot when content category is 'er
                                 "textAlign": "center",
                               },
                               {
-                                "fontSize": 24,
-                                "lineHeight": 34,
+                                "fontSize": 22,
+                                "lineHeight": 33,
                               },
                               {
                                 "color": "#17324D",
@@ -2405,8 +2405,8 @@ exports[`PreconditionsContent should match snapshot when content category is 'up
                           font="TitilliumSansPro"
                           fontStyle={
                             {
-                              "fontSize": 24,
-                              "lineHeight": 34,
+                              "fontSize": 22,
+                              "lineHeight": 33,
                             }
                           }
                           maxFontSizeMultiplier={1.25}
@@ -2416,8 +2416,8 @@ exports[`PreconditionsContent should match snapshot when content category is 'up
                                 "textAlign": "center",
                               },
                               {
-                                "fontSize": 24,
-                                "lineHeight": 34,
+                                "fontSize": 22,
+                                "lineHeight": 33,
                               },
                               {
                                 "color": "#17324D",

@@ -205,8 +205,8 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
     font="TitilliumSansPro"
     fontStyle={
       {
-        "fontSize": 24,
-        "lineHeight": 34,
+        "fontSize": 22,
+        "lineHeight": 33,
       }
     }
     maxFontSizeMultiplier={1.25}
@@ -216,8 +216,8 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
           "textAlign": "center",
         },
         {
-          "fontSize": 24,
-          "lineHeight": 34,
+          "fontSize": 22,
+          "lineHeight": 33,
         },
         {
           "color": "#17324D",

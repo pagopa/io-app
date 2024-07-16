@@ -10,7 +10,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
   font="TitilliumSansPro"
   fontStyle={
     {
-      "fontSize": 22,
+      "fontSize": 20,
       "lineHeight": 24,
     }
   }
@@ -18,7 +18,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
   style={
     [
       {
-        "fontSize": 22,
+        "fontSize": 20,
         "lineHeight": 24,
       },
       {

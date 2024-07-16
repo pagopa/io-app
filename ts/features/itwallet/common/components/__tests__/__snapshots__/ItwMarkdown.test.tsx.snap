@@ -121,16 +121,16 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     font="TitilliumSansPro"
     fontStyle={
       {
-        "fontSize": 24,
-        "lineHeight": 34,
+        "fontSize": 22,
+        "lineHeight": 33,
       }
     }
     maxFontSizeMultiplier={1.25}
     style={
       [
         {
-          "fontSize": 24,
-          "lineHeight": 34,
+          "fontSize": 22,
+          "lineHeight": 33,
         },
         {
           "color": "#17324D",
@@ -175,7 +175,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     font="TitilliumSansPro"
     fontStyle={
       {
-        "fontSize": 22,
+        "fontSize": 20,
         "lineHeight": 24,
       }
     }
@@ -183,7 +183,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     style={
       [
         {
-          "fontSize": 22,
+          "fontSize": 20,
           "lineHeight": 24,
         },
         {

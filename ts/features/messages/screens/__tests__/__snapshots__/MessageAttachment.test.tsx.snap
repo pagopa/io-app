@@ -428,8 +428,8 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   }
                                 }
                                 maxFontSizeMultiplier={1.25}
@@ -439,8 +439,8 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                       "textAlign": "center",
                                     },
                                     {
-                                      "fontSize": 24,
-                                      "lineHeight": 34,
+                                      "fontSize": 22,
+                                      "lineHeight": 33,
                                     },
                                     {
                                       "color": "#17324D",
@@ -1456,8 +1456,8 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -1467,8 +1467,8 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",

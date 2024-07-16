@@ -528,8 +528,8 @@ exports[`PreconditionsFeedback should match snapshot with title and no subtitle 
                           font="TitilliumSansPro"
                           fontStyle={
                             {
-                              "fontSize": 24,
-                              "lineHeight": 34,
+                              "fontSize": 22,
+                              "lineHeight": 33,
                             }
                           }
                           maxFontSizeMultiplier={1.25}
@@ -539,8 +539,8 @@ exports[`PreconditionsFeedback should match snapshot with title and no subtitle 
                                 "textAlign": "center",
                               },
                               {
-                                "fontSize": 24,
-                                "lineHeight": 34,
+                                "fontSize": 22,
+                                "lineHeight": 33,
                               },
                               {
                                 "color": "#17324D",
@@ -1096,8 +1096,8 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
                           font="TitilliumSansPro"
                           fontStyle={
                             {
-                              "fontSize": 24,
-                              "lineHeight": 34,
+                              "fontSize": 22,
+                              "lineHeight": 33,
                             }
                           }
                           maxFontSizeMultiplier={1.25}
@@ -1107,8 +1107,8 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
                                 "textAlign": "center",
                               },
                               {
-                                "fontSize": 24,
-                                "lineHeight": 34,
+                                "fontSize": 22,
+                                "lineHeight": 33,
                               },
                               {
                                 "color": "#17324D",

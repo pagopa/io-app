@@ -423,8 +423,8 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -434,8 +434,8 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -1297,8 +1297,8 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -1308,8 +1308,8 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -2175,8 +2175,8 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -2186,8 +2186,8 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -3257,8 +3257,8 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -3268,8 +3268,8 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -4131,8 +4131,8 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
                               maxFontSizeMultiplier={1.25}
@@ -4142,8 +4142,8 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                     "textAlign": "center",
                                   },
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
