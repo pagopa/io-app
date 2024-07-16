@@ -1,13 +1,10 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import configureMockStore from "redux-mock-store";
-import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { ITW_TRIAL_ID } from "../../../itwallet/common/utils/itwTrialUtils";
 import { WalletCardsState } from "../../store/reducers/cards";
 import { WalletHomeScreen } from "../WalletHomeScreen";
 
@@ -60,7 +57,6 @@ describe("WalletHomeScreen", () => {
     expect(queryByTestId("walletEmptyScreenContentTestID")).not.toBeNull();
     expect(queryByTestId("walletCardsContainerTestID")).toBeNull();
     expect(queryByTestId("walletAddCardButtonTestID")).toBeNull();
-    expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
   });
 
   it("should correctly render empty screen with redirect banner", () => {
@@ -79,7 +75,6 @@ describe("WalletHomeScreen", () => {
     expect(queryByTestId("walletEmptyScreenContentTestID")).not.toBeNull();
     expect(queryByTestId("walletCardsContainerTestID")).toBeNull();
     expect(queryByTestId("walletAddCardButtonTestID")).toBeNull();
-    expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
   });
 
   it("should correctly render card list screen", () => {
@@ -91,7 +86,6 @@ describe("WalletHomeScreen", () => {
     expect(queryByTestId("walletEmptyScreenContentTestID")).toBeNull();
     expect(queryByTestId("walletCardsContainerTestID")).not.toBeNull();
     expect(queryByTestId("walletAddCardButtonTestID")).not.toBeNull();
-    expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
   });
 
   it("should correctly render card list screen with redirect banner", () => {
@@ -103,19 +97,6 @@ describe("WalletHomeScreen", () => {
     expect(queryByTestId("walletEmptyScreenContentTestID")).toBeNull();
     expect(queryByTestId("walletCardsContainerTestID")).not.toBeNull();
     expect(queryByTestId("walletAddCardButtonTestID")).not.toBeNull();
-    expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
-  });
-
-  it("should correctly render card list screen with IT Wallet banner", () => {
-    const {
-      component: { queryByTestId }
-    } = renderComponent(T_CARDS, { isItwTrial: true });
-
-    expect(queryByTestId("walletPaymentsRedirectBannerTestID")).toBeNull();
-    expect(queryByTestId("walletEmptyScreenContentTestID")).toBeNull();
-    expect(queryByTestId("walletCardsContainerTestID")).not.toBeNull();
-    expect(queryByTestId("walletAddCardButtonTestID")).not.toBeNull();
-    expect(queryByTestId("itwDiscoveryBannerTestID")).not.toBeNull();
   });
 });
 
@@ -124,15 +105,11 @@ const renderComponent = (
   options: {
     shouldShowPaymentsRedirectBanner?: boolean;
     isLoading?: boolean;
-    isItwTrial?: boolean;
   } = {}
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const {
-    shouldShowPaymentsRedirectBanner = false,
-    isLoading = false,
-    isItwTrial = false
-  } = options;
+  const { shouldShowPaymentsRedirectBanner = false, isLoading = false } =
+    options;
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(
@@ -147,12 +124,7 @@ const renderComponent = (
             isLoading
           }
         }
-      },
-      trialSystem: isItwTrial
-        ? {
-            [ITW_TRIAL_ID]: pot.some(SubscriptionStateEnum.SUBSCRIBED)
-          }
-        : {}
+      }
     })
   );
 

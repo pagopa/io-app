@@ -27,7 +27,7 @@ export const ItwDiscoveryBanner = ({
   const isTrialActive = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
 
   // TODO If ITW already active do not show banner
-  if (!isVisible || isTrialActive) {
+  if (!isVisible || !isTrialActive) {
     return null;
   }
 
