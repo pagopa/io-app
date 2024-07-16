@@ -559,6 +559,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -566,6 +567,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -589,6 +591,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -596,6 +599,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -680,6 +684,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -687,6 +692,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -717,6 +723,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -724,6 +731,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -770,6 +778,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -777,6 +786,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -800,6 +810,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -807,6 +818,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -889,6 +901,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -896,6 +909,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -926,6 +940,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -933,6 +948,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -979,6 +995,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -986,6 +1003,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1009,6 +1027,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1016,6 +1035,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1098,6 +1118,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1105,6 +1126,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1135,6 +1157,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1142,6 +1165,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1188,6 +1212,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1195,6 +1220,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1218,6 +1244,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1225,6 +1252,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1307,6 +1335,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1314,6 +1343,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1344,6 +1374,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1351,6 +1382,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1397,6 +1429,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1404,6 +1437,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1427,6 +1461,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1434,6 +1469,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1516,6 +1552,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1523,6 +1560,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1553,6 +1591,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1560,6 +1599,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1606,6 +1646,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1613,6 +1654,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1636,6 +1678,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1643,6 +1686,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1725,6 +1769,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1732,6 +1777,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1762,6 +1808,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1769,6 +1816,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1815,6 +1863,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1822,6 +1871,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1845,6 +1895,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1852,6 +1903,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1934,6 +1986,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1941,6 +1994,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1971,6 +2025,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -1978,6 +2033,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -2024,6 +2080,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -2031,6 +2088,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -2054,6 +2112,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -2061,6 +2120,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -2143,6 +2203,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -2150,6 +2211,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -2180,6 +2242,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -2187,6 +2250,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -2233,6 +2297,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -2240,6 +2305,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -2263,6 +2329,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -2270,6 +2337,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -2352,6 +2420,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -2359,6 +2428,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -2389,6 +2459,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -2396,6 +2467,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -2442,6 +2514,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -2449,6 +2522,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -2472,6 +2546,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -2479,6 +2554,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -2563,6 +2639,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -2570,6 +2647,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -2600,6 +2678,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -2607,6 +2686,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -3202,6 +3282,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -3209,6 +3290,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -3232,6 +3314,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -3239,6 +3322,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -3323,6 +3407,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -3330,6 +3415,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -3360,6 +3446,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -3367,6 +3454,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -3413,6 +3501,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -3420,6 +3509,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -3443,6 +3533,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -3450,6 +3541,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -3532,6 +3624,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -3539,6 +3632,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -3569,6 +3663,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -3576,6 +3671,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -3622,6 +3718,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -3629,6 +3726,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -3652,6 +3750,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -3659,6 +3758,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -3741,6 +3841,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -3748,6 +3849,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -3778,6 +3880,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -3785,6 +3888,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -3831,6 +3935,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -3838,6 +3943,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -3861,6 +3967,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -3868,6 +3975,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -3950,6 +4058,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -3957,6 +4066,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -3987,6 +4097,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -3994,6 +4105,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4040,6 +4152,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4047,6 +4160,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4070,6 +4184,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4077,6 +4192,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4159,6 +4275,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4166,6 +4283,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4196,6 +4314,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4203,6 +4322,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4249,6 +4369,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4256,6 +4377,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4279,6 +4401,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4286,6 +4409,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4368,6 +4492,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4375,6 +4500,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4405,6 +4531,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4412,6 +4539,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4458,6 +4586,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4465,6 +4594,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4488,6 +4618,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4495,6 +4626,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4577,6 +4709,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4584,6 +4717,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4614,6 +4748,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4621,6 +4756,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4667,6 +4803,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4674,6 +4811,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4697,6 +4835,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4704,6 +4843,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4786,6 +4926,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4793,6 +4934,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4823,6 +4965,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4830,6 +4973,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4876,6 +5020,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4883,6 +5028,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4906,6 +5052,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4913,6 +5060,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4995,6 +5143,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -5002,6 +5151,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -5032,6 +5182,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -5039,6 +5190,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -5085,6 +5237,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -5092,6 +5245,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -5115,6 +5269,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -5122,6 +5277,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -5206,6 +5362,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -5213,6 +5370,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "lineHeight": 25,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -5243,6 +5401,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   color="grey-450"
                                   defaultColor="black"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="caption1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -5250,6 +5409,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "textTransform": "uppercase",
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
