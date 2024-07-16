@@ -34,7 +34,6 @@ Sentry.init({
   beforeSend(event) {
     return removeUserFromEvent(event);
   },
-  // eslint-disable-next-line sonarjs/no-identical-functions
   beforeSendTransaction(event) {
     return removeUserFromEvent(event);
   },
