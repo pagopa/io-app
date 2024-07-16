@@ -7,7 +7,7 @@ import { useIOSelector } from "../../../store/hooks";
 import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
 import { ITW_TRIAL_ID } from "../../itwallet/common/utils/itwTrialUtils";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
-import { trialStatusSelector } from "../../trialSystem/store/reducers";
+import { isTrialActiveSelector } from "../../trialSystem/store/reducers";
 import {
   selectIsWalletCardsLoading,
   selectSortedWalletCards,
@@ -59,7 +59,7 @@ const ItwCardsContainer = ({
   isStacked
 }: Pick<WalletCardsCategoryContainerProps, "isStacked">) => {
   const cards = useIOSelector(selectWalletItwCards);
-  const isItwTrialEnabled = useIOSelector(trialStatusSelector(ITW_TRIAL_ID));
+  const isItwTrialEnabled = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
 
   if (!isItwTrialEnabled) {
@@ -101,7 +101,7 @@ const OtherCardsContainer = ({
   isStacked
 }: Pick<WalletCardsCategoryContainerProps, "isStacked">) => {
   const cards = useIOSelector(selectWalletOtherCards);
-  const isItwTrialEnabled = useIOSelector(trialStatusSelector(ITW_TRIAL_ID));
+  const isItwTrialEnabled = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
 
   if (cards.length === 0) {
     return null;
@@ -114,9 +114,11 @@ const OtherCardsContainer = ({
       cards={cards}
       isStacked={isStacked}
       header={
-        isItwTrialEnabled && {
-          label: I18n.t("features.wallet.cards.categories.other")
-        }
+        isItwTrialEnabled
+          ? {
+              label: I18n.t("features.wallet.cards.categories.other")
+            }
+          : undefined
       }
     />
   );
