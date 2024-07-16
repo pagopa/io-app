@@ -698,10 +698,6 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
                           style={
                             [
                               {
-                                "flex": 1,
-                                "flexWrap": "wrap",
-                              },
-                              {
                                 "fontSize": 24,
                                 "lineHeight": 34,
                               },

@@ -199,12 +199,16 @@ const UNKNOWN_SERVICE_DATA = {
 const announceMessage = (
   message: UIMessage,
   isRead: boolean,
+  isSelected: boolean,
   maybeItemBadge: O.Option<ItemBadge>
 ): string =>
   I18n.t("messages.accessibility.message.description", {
     newMessage: isRead
       ? I18n.t("messages.accessibility.message.read")
       : I18n.t("messages.accessibility.message.unread"),
+    selected: isSelected
+      ? I18n.t("messages.accessibility.message.selected")
+      : "",
     organizationName: message.organizationName,
     serviceName: message.serviceName,
     subject: message.title,
@@ -254,7 +258,12 @@ const MessageListItem = ({
       onLongPress={onLongPress}
       style={styles.verticalPad}
       accessible={true}
-      accessibilityLabel={announceMessage(message, isRead, maybeItemBadge)}
+      accessibilityLabel={announceMessage(
+        message,
+        isRead,
+        isSelectionModeEnabled && isSelected,
+        maybeItemBadge
+      )}
       accessibilityRole="button"
       testID={`MessageListItem_${message.id}`}
     >
