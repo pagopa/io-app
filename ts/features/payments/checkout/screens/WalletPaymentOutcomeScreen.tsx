@@ -35,6 +35,7 @@ import {
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getPaymentPhaseFromStep } from "../utils";
 import { paymentCompletedSuccess } from "../store/actions/orchestration";
+import { walletPaymentSelectedPspSelector } from "../store/selectors/psps";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -59,6 +60,7 @@ const WalletPaymentOutcomeScreen = () => {
   const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
+  const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
 
   const supportModal = usePaymentFailureSupportModal({
     outcome
@@ -76,10 +78,18 @@ const WalletPaymentOutcomeScreen = () => {
     };
   }, [navigation]);
 
+  const taxFeeAmount = pipe(
+    selectedPspOption,
+    O.chainNullableK(psp => psp.taxPayerFee),
+    O.getOrElse(() => 0)
+  );
+
   const paymentAmount = pipe(
     paymentDetailsPot,
     pot.toOption,
-    O.map(({ amount }) => formatNumberCentsToAmount(amount, true, "right")),
+    O.map(({ amount }) =>
+      formatNumberCentsToAmount(Number(amount) + taxFeeAmount, true, "right")
+    ),
     O.getOrElse(() => "-")
   );
 

@@ -22,18 +22,20 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
       color="bluegreyDark"
       defaultColor="bluegreyDark"
       defaultWeight="Semibold"
+      dynamicTypeRamp="title2"
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 24,
-          "lineHeight": 34,
+          "fontSize": 22,
+          "lineHeight": 33,
         }
       }
+      maxFontSizeMultiplier={1.25}
       style={
         [
           {
-            "fontSize": 24,
-            "lineHeight": 34,
+            "fontSize": 22,
+            "lineHeight": 33,
           },
           {
             "color": "#17324D",
@@ -53,17 +55,19 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
       color="bluegreyDark"
       defaultColor="bluegreyDark"
       defaultWeight="Semibold"
+      dynamicTypeRamp="title3"
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 22,
+          "fontSize": 20,
           "lineHeight": 24,
         }
       }
+      maxFontSizeMultiplier={1.25}
       style={
         [
           {
-            "fontSize": 22,
+            "fontSize": 20,
             "lineHeight": 24,
           },
           {

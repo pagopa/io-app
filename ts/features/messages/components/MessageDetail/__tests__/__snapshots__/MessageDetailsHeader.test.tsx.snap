@@ -354,18 +354,20 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         color="bluegreyDark"
                         defaultColor="bluegreyDark"
                         defaultWeight="Semibold"
+                        dynamicTypeRamp="title2"
                         font="TitilliumSansPro"
                         fontStyle={
                           {
-                            "fontSize": 24,
-                            "lineHeight": 34,
+                            "fontSize": 22,
+                            "lineHeight": 33,
                           }
                         }
+                        maxFontSizeMultiplier={1.25}
                         style={
                           [
                             {
-                              "fontSize": 24,
-                              "lineHeight": 34,
+                              "fontSize": 22,
+                              "lineHeight": 33,
                             },
                             {
                               "color": "#17324D",
@@ -392,6 +394,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         color="grey-700"
                         defaultColor="blue"
                         defaultWeight="Bold"
+                        dynamicTypeRamp="footnote"
                         font="TitilliumSansPro"
                         fontStyle={
                           {
@@ -399,6 +402,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                             "lineHeight": 21,
                           }
                         }
+                        maxFontSizeMultiplier={1.25}
                         style={
                           [
                             {
@@ -454,6 +458,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -461,6 +466,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                 "lineHeight": 21,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
@@ -484,6 +490,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                             color="blueIO-500"
                             defaultColor="blue"
                             defaultWeight="Bold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -491,6 +498,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                 "lineHeight": 21,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             onPress={[Function]}
                             style={
                               [
