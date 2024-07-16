@@ -81,7 +81,7 @@ global:
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
   unknown: sconosciuto
   sectionStatus:
-    moreInfo: più info
+    moreInfo: "Vuoi saperne di più?"
   accessibility:
     minusSymbol: meno
     reload: "Ricarica"
