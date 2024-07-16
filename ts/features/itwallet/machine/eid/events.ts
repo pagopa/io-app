@@ -7,10 +7,6 @@ export type Reset = {
   type: "reset";
 };
 
-export type Reset = {
-  type: "reset";
-};
-
 export type Start = {
   type: "start";
 };
