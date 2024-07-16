@@ -10,12 +10,12 @@ import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 export type ItwCredentialsState = {
-  pid: O.Option<StoredCredential>;
+  eid: O.Option<StoredCredential>;
   credentials: Array<O.Option<StoredCredential>>;
 };
 
 const initialState: ItwCredentialsState = {
-  pid: O.none,
+  eid: O.none,
   credentials: []
 };
 
@@ -26,12 +26,12 @@ const reducer = (
   switch (action.type) {
     case getType(itwCredentialsStore): {
       if (action.payload.credentialType === CredentialType.PID) {
-        return { pid: O.some(action.payload), credentials: [] };
+        return { eid: O.some(action.payload), credentials: [] };
       }
 
-      if (O.isSome(state.pid)) {
+      if (O.isSome(state.eid)) {
         return {
-          pid: state.pid,
+          eid: state.eid,
           credentials: [...state.credentials, O.some(action.payload)]
         };
       }
@@ -40,7 +40,7 @@ const reducer = (
     }
 
     case getType(itwCredentialsRemove): {
-      // Do not remove the PID singularly
+      // Do not remove the eID singularly
       if (action.payload.credentialType === CredentialType.PID) {
         return state;
       }
