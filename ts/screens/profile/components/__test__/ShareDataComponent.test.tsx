@@ -1,8 +1,13 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { fireEvent } from "@testing-library/react-native";
 import React from "react";
+import { createStore } from "redux";
 import { openWebUrl } from "../../../../utils/url";
 import { ShareDataComponent } from "../ShareDataComponent";
 import I18n from "../../../../i18n";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { GlobalState } from "../../../../store/reducers/types";
+import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
 
 const mockPresentFn = jest.fn();
 const mockTrackInfo = jest.fn();
@@ -76,5 +81,11 @@ describe("Test ShareDataComponent", () => {
   });
 });
 
+const globalState = appReducer(undefined, applicationChangeState("active"));
 const renderComponent = () =>
-  render(<ShareDataComponent trackAction={mockTrackInfo} />);
+  renderScreenWithNavigationStoreContext<GlobalState>(
+    () => <ShareDataComponent trackAction={mockTrackInfo} />,
+    "FAKE_ROUTE",
+    {},
+    createStore(appReducer, globalState as any)
+  );
