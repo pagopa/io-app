@@ -13,6 +13,7 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { ItwTags } from "../../machine/tags";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -22,6 +23,9 @@ import { ItwEidIssuanceMachineContext } from "../../machine/provider";
  */
 const ItwDiscoveryInfoScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(snap =>
+    snap.hasTag(ItwTags.Loading)
+  );
 
   useOnFirstRender(() => {
     machineRef.send({ type: "start" });
@@ -56,6 +60,7 @@ const ItwDiscoveryInfoScreen = () => {
         actions={{
           type: "SingleButton",
           primary: {
+            loading: isLoading,
             label: I18n.t("global.buttons.continue"),
             accessibilityLabel: I18n.t("global.buttons.continue"),
             onPress: () => machineRef.send({ type: "accept-tos" })
