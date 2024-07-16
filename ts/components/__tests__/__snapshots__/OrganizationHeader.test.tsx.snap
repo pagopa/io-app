@@ -3,7 +3,7 @@
 exports[`OrganizationHeader should match the snapshot 1`] = `
 <View
   style={
-    Object {
+    {
       "alignItems": "flex-start",
       "flexDirection": "row",
       "justifyContent": "space-between",
@@ -12,7 +12,7 @@ exports[`OrganizationHeader should match the snapshot 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
       }
     }
@@ -22,20 +22,22 @@ exports[`OrganizationHeader should match the snapshot 1`] = `
       color="bluegreyDark"
       defaultColor="bluegreyDark"
       defaultWeight="Semibold"
+      dynamicTypeRamp="title2"
       font="TitilliumSansPro"
       fontStyle={
-        Object {
-          "fontSize": 24,
-          "lineHeight": 34,
+        {
+          "fontSize": 22,
+          "lineHeight": 33,
         }
       }
+      maxFontSizeMultiplier={1.25}
       style={
-        Array [
-          Object {
-            "fontSize": 24,
-            "lineHeight": 34,
+        [
+          {
+            "fontSize": 22,
+            "lineHeight": 33,
           },
-          Object {
+          {
             "color": "#17324D",
             "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
@@ -52,20 +54,22 @@ exports[`OrganizationHeader should match the snapshot 1`] = `
       color="bluegrey"
       defaultColor="bluegrey"
       defaultWeight="Regular"
+      dynamicTypeRamp="body"
       font="TitilliumSansPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 16,
           "lineHeight": 24,
         }
       }
+      maxFontSizeMultiplier={1.25}
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 16,
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#475A6D",
             "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
@@ -83,12 +87,12 @@ exports[`OrganizationHeader should match the snapshot 1`] = `
       accessibilityIgnoresInvertColors={true}
       onError={[Function]}
       source={
-        Object {
+        {
           "uri": "https://eo.wikipedia.org/wiki/Universala_Esperanto-Asocio#/media/Dosiero:Universala_Esperanto-Asocio.png",
         }
       }
       style={
-        Object {
+        {
           "height": 60,
           "width": 60,
         }

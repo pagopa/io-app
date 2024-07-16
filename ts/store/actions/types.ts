@@ -55,7 +55,6 @@ import { ProfileEmailValidationAction } from "./profileEmailValidationChange";
 import { SearchActions } from "./search";
 import { StartupActions } from "./startup";
 import { UserDataProcessingActions } from "./userDataProcessing";
-import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
 import { OutcomeCodeActions } from "./wallet/outcomeCode";
 
@@ -74,7 +73,6 @@ export type Action =
   | PreferencesActions
   | PersistedPreferencesActions
   | ProfileActions
-  | UserMetadataActions
   | ServicesActions
   | WalletActions
   | ContentActions

@@ -3,7 +3,7 @@
 exports[`Test LoadingComponent component should render a LoadingComponent component with props correctly 1`] = `
 <RCTSafeAreaView
   style={
-    Object {
+    {
       "alignItems": "center",
       "flex": 1,
       "justifyContent": "center",
@@ -11,13 +11,13 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
   }
 >
   <View
-    accessibilityHint="[missing \\"en.global.accessibility.activityIndicator.hint\\" translation]"
-    accessibilityLabel="[missing \\"en.global.accessibility.activityIndicator.label\\" translation]"
+    accessibilityHint="Wait for the content load"
+    accessibilityLabel="Loading"
     accessibilityRole="progressbar"
     accessible={true}
     importantForAccessibility="no-hide-descendants"
     style={
-      Object {
+      {
         "height": 48,
         "width": 48,
       }
@@ -27,9 +27,9 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
     <View
       collapsable={false}
       style={
-        Object {
-          "transform": Array [
-            Object {
+        {
+          "transform": [
+            {
               "rotateZ": "0deg",
             },
           ],
@@ -48,12 +48,12 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
         minX={0}
         minY={0}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "borderWidth": 0,
             },
-            Object {
+            {
               "flex": 0,
               "height": 48,
               "width": 48,
@@ -67,7 +67,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
         <RNSVGGroup
           fill={null}
           propList={
-            Array [
+            [
               "fill",
             ]
           }
@@ -75,7 +75,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
           <RNSVGDefs>
             <RNSVGLinearGradient
               gradient={
-                Array [
+                [
                   0,
                   736995,
                   1,
@@ -92,7 +92,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
             />
             <RNSVGLinearGradient
               gradient={
-                Array [
+                [
                   0,
                   -16040221,
                   1,
@@ -110,13 +110,13 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
           </RNSVGDefs>
           <RNSVGGroup
             fill={
-              Object {
+              {
                 "payload": 4278190080,
                 "type": 0,
               }
             }
             propList={
-              Array [
+              [
                 "strokeWidth",
               ]
             }
@@ -125,18 +125,18 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
             <RNSVGPath
               d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
               fill={
-                Object {
+                {
                   "payload": 4278190080,
                   "type": 0,
                 }
               }
               propList={
-                Array [
+                [
                   "stroke",
                 ]
               }
               stroke={
-                Object {
+                {
                   "brushRef": "spinner-secondHalf",
                   "type": 1,
                 }
@@ -145,18 +145,18 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
             <RNSVGPath
               d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
               fill={
-                Object {
+                {
                   "payload": 4278190080,
                   "type": 0,
                 }
               }
               propList={
-                Array [
+                [
                   "stroke",
                 ]
               }
               stroke={
-                Object {
+                {
                   "brushRef": "spinner-firstHalf",
                   "type": 1,
                 }
@@ -165,19 +165,19 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
             <RNSVGPath
               d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
               fill={
-                Object {
+                {
                   "payload": 4278190080,
                   "type": 0,
                 }
               }
               propList={
-                Array [
+                [
                   "stroke",
                   "strokeLinecap",
                 ]
               }
               stroke={
-                Object {
+                {
                   "payload": 4278927075,
                   "type": 0,
                 }
@@ -191,7 +191,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
   </View>
   <View
     style={
-      Object {
+      {
         "height": 48,
       }
     }
@@ -201,23 +201,25 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
     color="bluegreyDark"
     defaultColor="bluegreyDark"
     defaultWeight="Semibold"
+    dynamicTypeRamp="title2"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
-        "fontSize": 24,
-        "lineHeight": 34,
+      {
+        "fontSize": 22,
+        "lineHeight": 33,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "textAlign": "center",
         },
-        Object {
-          "fontSize": 24,
-          "lineHeight": 34,
+        {
+          "fontSize": 22,
+          "lineHeight": 33,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -232,7 +234,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 16,
       }
     }
@@ -242,23 +244,25 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "textAlign": "center",
         },
-        Object {
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",

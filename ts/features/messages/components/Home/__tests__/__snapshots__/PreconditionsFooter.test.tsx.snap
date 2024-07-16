@@ -3,7 +3,7 @@
 exports[`PreconditionsFooter should match snapshot for 'content' footer category 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,19 +326,19 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "paddingBottom": 24,
                               "width": "100%",
                             },
-                            Object {
+                            {
                               "bottom": 0,
                               "position": "absolute",
                             },
@@ -338,14 +350,14 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                         <View
                           pointerEvents="none"
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
                                 "height": 4,
                                 "position": "absolute",
                                 "shadowColor": "#0E0F13",
-                                "shadowOffset": Object {
+                                "shadowOffset": {
                                   "height": -4,
                                   "width": 0,
                                 },
@@ -361,7 +373,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                           onLayout={[Function]}
                           pointerEvents="box-none"
                           style={
-                            Object {
+                            {
                               "flexShrink": 0,
                               "paddingHorizontal": 24,
                               "width": "100%",
@@ -372,9 +384,20 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                             accessibilityLabel="Continue"
                             accessibilityRole="button"
                             accessibilityState={
-                              Object {
+                              {
                                 "busy": false,
+                                "checked": undefined,
                                 "disabled": false,
+                                "expanded": undefined,
+                                "selected": undefined,
+                              }
+                            }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
                               }
                             }
                             accessible={true}
@@ -389,13 +412,13 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={Object {}}
+                            style={{}}
                             testID="message_preconditions_footer_continue"
                           >
                             <View
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "alignItems": "center",
                                     "borderRadius": 4,
                                     "elevation": 0,
@@ -404,20 +427,20 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                     "paddingHorizontal": 16,
                                     "textAlignVertical": "center",
                                   },
-                                  Object {
+                                  {
                                     "overflow": "hidden",
                                   },
                                   false,
-                                  Object {
+                                  {
                                     "height": 40,
                                   },
-                                  Object {
+                                  {
                                     "backgroundColor": "#0073E6",
                                   },
-                                  Object {
+                                  {
                                     "backgroundColor": undefined,
-                                    "transform": Array [
-                                      Object {
+                                    "transform": [
+                                      {
                                         "scale": undefined,
                                       },
                                     ],
@@ -427,8 +450,8 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                             >
                               <View
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
@@ -447,22 +470,22 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                   ellipsizeMode="tail"
                                   font="TitilliumSansPro"
                                   fontStyle={
-                                    Object {
+                                    {
                                       "fontSize": 16,
                                     }
                                   }
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.3}
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "alignSelf": "center",
                                       },
-                                      Object {
+                                      {
                                         "fontSize": 16,
                                       },
-                                      Object {
+                                      {
                                         "color": "#FFFFFF",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
@@ -479,7 +502,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "alignSelf": "center",
                                 "marginBottom": 0,
                               }
@@ -487,7 +510,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                           >
                             <View
                               style={
-                                Object {
+                                {
                                   "height": 16,
                                 }
                               }
@@ -496,15 +519,27 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                               accessibilityLabel="Cancel"
                               accessibilityRole="button"
                               accessibilityState={
-                                Object {
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
                                   "disabled": false,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
+                              }
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
                                 }
                               }
                               accessible={true}
                               collapsable={false}
                               focusable={true}
                               hitSlop={
-                                Object {
+                                {
                                   "bottom": 14,
                                   "left": 24,
                                   "right": 24,
@@ -522,7 +557,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                               onStartShouldSetResponder={[Function]}
                               onTouchEnd={[Function]}
                               style={
-                                Object {
+                                {
                                   "alignSelf": "flex-start",
                                 }
                               }
@@ -530,8 +565,8 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                             >
                               <View
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "alignItems": "center",
                                       "elevation": 0,
                                       "flexDirection": "row",
@@ -539,10 +574,10 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    Object {},
-                                    Object {
-                                      "transform": Array [
-                                        Object {
+                                    {},
+                                    {
+                                      "transform": [
+                                        {
                                           "scale": undefined,
                                         },
                                       ],
@@ -559,17 +594,17 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                   maxFontSizeMultiplier={1.3}
                                   numberOfLines={1}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "700",
                                       },
-                                      Object {
+                                      {
                                         "color": "#0073E6",
                                       },
-                                      Object {
+                                      {
                                         "color": undefined,
                                       },
                                     ]
@@ -588,8 +623,8 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -598,7 +633,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
 exports[`PreconditionsFooter should match snapshot for 'undefined' footer category 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -606,8 +641,8 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -616,8 +651,8 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -629,7 +664,7 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -645,7 +680,7 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -659,12 +694,12 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -678,7 +713,7 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -690,7 +725,7 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -698,7 +733,7 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -709,7 +744,7 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -723,7 +758,7 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -738,7 +773,7 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -752,7 +787,7 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -766,21 +801,34 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -792,7 +840,7 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -810,12 +858,12 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -825,10 +873,10 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -837,9 +885,9 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -855,27 +903,26 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -885,13 +932,13 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -901,7 +948,7 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -909,7 +956,7 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -919,8 +966,8 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -929,7 +976,7 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
 exports[`PreconditionsFooter should match snapshot for 'update' footer category 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -937,8 +984,8 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -947,8 +994,8 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -960,7 +1007,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -976,7 +1023,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -990,12 +1037,12 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1009,7 +1056,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1021,7 +1068,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1029,7 +1076,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1040,7 +1087,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1054,7 +1101,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1069,7 +1116,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1083,7 +1130,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1097,21 +1144,34 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1123,7 +1183,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1141,12 +1201,12 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1156,10 +1216,10 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1168,9 +1228,9 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1186,27 +1246,26 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1216,13 +1275,13 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1232,7 +1291,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1240,19 +1299,19 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "paddingBottom": 24,
                               "width": "100%",
                             },
-                            Object {
+                            {
                               "bottom": 0,
                               "position": "absolute",
                             },
@@ -1264,14 +1323,14 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                         <View
                           pointerEvents="none"
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
                                 "height": 4,
                                 "position": "absolute",
                                 "shadowColor": "#0E0F13",
-                                "shadowOffset": Object {
+                                "shadowOffset": {
                                   "height": -4,
                                   "width": 0,
                                 },
@@ -1287,7 +1346,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                           onLayout={[Function]}
                           pointerEvents="box-none"
                           style={
-                            Object {
+                            {
                               "flexShrink": 0,
                               "paddingHorizontal": 24,
                               "width": "100%",
@@ -1298,9 +1357,20 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                             accessibilityLabel="Update IO"
                             accessibilityRole="button"
                             accessibilityState={
-                              Object {
+                              {
                                 "busy": false,
+                                "checked": undefined,
                                 "disabled": false,
+                                "expanded": undefined,
+                                "selected": undefined,
+                              }
+                            }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
                               }
                             }
                             accessible={true}
@@ -1315,13 +1385,13 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={Object {}}
+                            style={{}}
                             testID="message_preconditions_footer_update"
                           >
                             <View
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "alignItems": "center",
                                     "borderRadius": 4,
                                     "elevation": 0,
@@ -1330,20 +1400,20 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                     "paddingHorizontal": 16,
                                     "textAlignVertical": "center",
                                   },
-                                  Object {
+                                  {
                                     "overflow": "hidden",
                                   },
                                   false,
-                                  Object {
+                                  {
                                     "height": 40,
                                   },
-                                  Object {
+                                  {
                                     "backgroundColor": "#0073E6",
                                   },
-                                  Object {
+                                  {
                                     "backgroundColor": undefined,
-                                    "transform": Array [
-                                      Object {
+                                    "transform": [
+                                      {
                                         "scale": undefined,
                                       },
                                     ],
@@ -1353,8 +1423,8 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                             >
                               <View
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
@@ -1373,22 +1443,22 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                   ellipsizeMode="tail"
                                   font="TitilliumSansPro"
                                   fontStyle={
-                                    Object {
+                                    {
                                       "fontSize": 16,
                                     }
                                   }
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.3}
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "alignSelf": "center",
                                       },
-                                      Object {
+                                      {
                                         "fontSize": 16,
                                       },
-                                      Object {
+                                      {
                                         "color": "#FFFFFF",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
@@ -1405,7 +1475,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "alignSelf": "center",
                                 "marginBottom": 0,
                               }
@@ -1413,7 +1483,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                           >
                             <View
                               style={
-                                Object {
+                                {
                                   "height": 16,
                                 }
                               }
@@ -1422,15 +1492,27 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                               accessibilityLabel="Cancel"
                               accessibilityRole="button"
                               accessibilityState={
-                                Object {
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
                                   "disabled": false,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
+                              }
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
                                 }
                               }
                               accessible={true}
                               collapsable={false}
                               focusable={true}
                               hitSlop={
-                                Object {
+                                {
                                   "bottom": 14,
                                   "left": 24,
                                   "right": 24,
@@ -1448,7 +1530,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                               onStartShouldSetResponder={[Function]}
                               onTouchEnd={[Function]}
                               style={
-                                Object {
+                                {
                                   "alignSelf": "flex-start",
                                 }
                               }
@@ -1456,8 +1538,8 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                             >
                               <View
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "alignItems": "center",
                                       "elevation": 0,
                                       "flexDirection": "row",
@@ -1465,10 +1547,10 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    Object {},
-                                    Object {
-                                      "transform": Array [
-                                        Object {
+                                    {},
+                                    {
+                                      "transform": [
+                                        {
                                           "scale": undefined,
                                         },
                                       ],
@@ -1485,17 +1567,17 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                   maxFontSizeMultiplier={1.3}
                                   numberOfLines={1}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "700",
                                       },
-                                      Object {
+                                      {
                                         "color": "#0073E6",
                                       },
-                                      Object {
+                                      {
                                         "color": undefined,
                                       },
                                     ]
@@ -1514,8 +1596,8 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1524,7 +1606,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
 exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1532,8 +1614,8 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1542,8 +1624,8 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1555,7 +1637,7 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1571,7 +1653,7 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1585,12 +1667,12 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1604,7 +1686,7 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1616,7 +1698,7 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1624,7 +1706,7 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1635,7 +1717,7 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1649,7 +1731,7 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1664,7 +1746,7 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1678,7 +1760,7 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1692,21 +1774,34 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1718,7 +1813,7 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1736,12 +1831,12 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1751,10 +1846,10 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1763,9 +1858,9 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1781,27 +1876,26 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1811,13 +1905,13 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1827,7 +1921,7 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1835,7 +1929,7 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -1847,8 +1941,8 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

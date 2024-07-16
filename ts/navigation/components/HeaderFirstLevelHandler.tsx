@@ -1,7 +1,7 @@
 import { ActionProp, HeaderFirstLevel } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { ComponentProps, useMemo } from "react";
+import React, { ComponentProps, useCallback, useMemo } from "react";
 import { useWalletHomeHeaderBottomSheet } from "../../components/wallet/WalletHomeHeader";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 import {
@@ -10,13 +10,25 @@ import {
 } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
 import { searchMessagesEnabled } from "../../store/actions/search";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
 import { useIONavigation } from "../params/AppParamsList";
-import { isNewPaymentSectionEnabledSelector } from "../../store/reducers/backendStatus";
+import {
+  isNewPaymentSectionEnabledSelector,
+  isSettingsVisibleAndHideProfileSelector
+} from "../../store/reducers/backendStatus";
 import * as analytics from "../../features/services/common/analytics";
+import {
+  isArchivingInProcessingModeSelector,
+  isArchivingInSchedulingModeSelector
+} from "../../features/messages/store/reducers/archiving";
+import { resetMessageArchivingAction } from "../../features/messages/store/actions/archiving";
+import {
+  isDesignSystemEnabledSelector,
+  isNewHomeSectionEnabledSelector
+} from "../../store/reducers/persistedPreferences";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
@@ -29,6 +41,8 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
       body: "messages.contextualHelpContent"
     }
   },
+  // TODO: delete this route when the showBarcodeScanSection
+  // and isSettingsVisibleAndHideProfileSelector FF will be deleted
   [ROUTES.PROFILE_MAIN]: {
     faqCategories: ["profile"],
     contextualHelpMarkdown: {
@@ -72,9 +86,91 @@ type Props = {
 export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
+  const store = useIOStore();
 
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  const isNewHomeSectionEnabled = useIOSelector(
+    isNewHomeSectionEnabledSelector
+  );
   const isNewWalletSectionEnabled = useIOSelector(
     isNewPaymentSectionEnabledSelector
+  );
+
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
+
+  const canNavigateIfIsArchivingCallback = useCallback(() => {
+    const state = store.getState();
+    // If the system is busy archiving or restoring messages,
+    // a new action (e.g. searching or navigating to settings) cannot be initiated
+    const isProcessingArchiveQueue = isArchivingInProcessingModeSelector(state);
+    if (isProcessingArchiveQueue) {
+      return false;
+    }
+    // If the user was choosing which messages to archive/restore,
+    // disable it before starting a new action (e.g. searching or
+    // navigating to settings), as the tab bar at the bottom is
+    // hidden and the new action could trigger a navigation flow back
+    // to another tab on the main screen without this bar being displayed.
+    const isSchedulingArchiving = isArchivingInSchedulingModeSelector(state);
+    if (isSchedulingArchiving) {
+      // Auto-reset does not provide feedback to the user
+      dispatch(resetMessageArchivingAction(undefined));
+    }
+    return true;
+  }, [dispatch, store]);
+
+  const messageSearchCallback = useCallback(() => {
+    if (canNavigateIfIsArchivingCallback()) {
+      if (isDesignSystemEnabled && isNewHomeSectionEnabled) {
+        navigation.navigate(MESSAGES_ROUTES.MESSAGES_SEARCH);
+      } else {
+        dispatch(searchMessagesEnabled(true));
+      }
+    }
+  }, [
+    canNavigateIfIsArchivingCallback,
+    dispatch,
+    isDesignSystemEnabled,
+    isNewHomeSectionEnabled,
+    navigation
+  ]);
+
+  const navigateToSettingMainScreen = useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.SETTINGS_MAIN
+    });
+  }, [navigation]);
+
+  const navigateToSettingMainScreenFromMessageSection = useCallback(() => {
+    if (canNavigateIfIsArchivingCallback()) {
+      navigateToSettingMainScreen();
+    }
+  }, [canNavigateIfIsArchivingCallback, navigateToSettingMainScreen]);
+
+  const navigateToProfilePrefercesScreen = useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.PROFILE_PREFERENCES_SERVICES
+    });
+  }, [navigation]);
+
+  const settingsAction: ActionProp = useMemo(
+    () => ({
+      icon: "coggle",
+      accessibilityLabel: I18n.t("global.buttons.settings"),
+      onPress: navigateToSettingMainScreen
+    }),
+    [navigateToSettingMainScreen]
+  );
+
+  const settingsActionInMessageSection: ActionProp = useMemo(
+    () => ({
+      icon: "coggle",
+      accessibilityLabel: I18n.t("global.buttons.settings"),
+      onPress: navigateToSettingMainScreenFromMessageSection
+    }),
+    [navigateToSettingMainScreenFromMessageSection]
   );
 
   const requestParams = useMemo(
@@ -103,6 +199,25 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     present: presentWalletHomeHeaderBottomsheet
   } = useWalletHomeHeaderBottomSheet();
 
+  const walletAction: ActionProp = useMemo(
+    () => ({
+      icon: "add",
+      accessibilityLabel: I18n.t("wallet.accessibility.addElement"),
+      onPress: presentWalletHomeHeaderBottomsheet,
+      testID: "walletAddNewPaymentMethodTestId"
+    }),
+    [presentWalletHomeHeaderBottomsheet]
+  );
+
+  const searchMessageAction: ActionProp = useMemo(
+    () => ({
+      icon: "search",
+      accessibilityLabel: I18n.t("global.accessibility.search"),
+      onPress: messageSearchCallback
+    }),
+    [messageSearchCallback]
+  );
+
   const headerProps: HeaderFirstLevelProps = useMemo(() => {
     switch (currentRouteName) {
       case SERVICES_ROUTES.SERVICES_HOME:
@@ -113,10 +228,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           secondAction: {
             icon: "coggle",
             accessibilityLabel: I18n.t("global.buttons.edit"),
-            onPress: () =>
-              navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                screen: ROUTES.PROFILE_PREFERENCES_SERVICES
-              })
+            onPress: navigateToProfilePrefercesScreen
           },
           thirdAction: {
             icon: "search",
@@ -127,6 +239,8 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
             }
           }
         };
+      // TODO: delete this route when the showBarcodeScanSection
+      // and isSettingsVisibleAndHideProfileSelector FF will be deleted
       case ROUTES.PROFILE_MAIN:
         return {
           title: I18n.t("profile.main.title"),
@@ -137,51 +251,70 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         if (isNewWalletSectionEnabled) {
           return {
             title: I18n.t("wallet.wallet"),
-            type: "singleAction",
             firstAction: helpAction,
-            testID: "wallet-home-header-title"
+            testID: "wallet-home-header-title",
+            ...(isSettingsVisibleAndHideProfile
+              ? {
+                  type: "twoActions",
+                  secondAction: settingsAction
+                }
+              : { type: "singleAction" })
           };
         }
         return {
           title: I18n.t("wallet.wallet"),
-          type: "twoActions",
           firstAction: helpAction,
           backgroundColor: "dark",
           testID: "wallet-home-header-title",
-          secondAction: {
-            icon: "add",
-            accessibilityLabel: I18n.t("wallet.accessibility.addElement"),
-            onPress: presentWalletHomeHeaderBottomsheet,
-            testID: "walletAddNewPaymentMethodTestId"
-          }
+          ...(isSettingsVisibleAndHideProfile
+            ? {
+                type: "threeActions",
+                secondAction: settingsAction,
+                thirdAction: walletAction
+              }
+            : {
+                type: "twoActions",
+                secondAction: walletAction
+              })
         };
       case ROUTES.PAYMENTS_HOME:
         return {
           title: I18n.t("features.payments.title"),
-          type: "singleAction",
-          firstAction: helpAction
+          firstAction: helpAction,
+          ...(isSettingsVisibleAndHideProfile
+            ? {
+                type: "twoActions",
+                secondAction: settingsAction
+              }
+            : { type: "singleAction" })
         };
       case MESSAGES_ROUTES.MESSAGES_HOME:
       default:
         return {
           title: I18n.t("messages.contentTitle"),
-          type: "twoActions",
           firstAction: helpAction,
-          secondAction: {
-            icon: "search",
-            accessibilityLabel: I18n.t("global.accessibility.search"),
-            onPress: () => {
-              dispatch(searchMessagesEnabled(true));
-            }
-          }
+          ...(isSettingsVisibleAndHideProfile
+            ? {
+                type: "threeActions",
+                secondAction: settingsActionInMessageSection,
+                thirdAction: searchMessageAction
+              }
+            : {
+                type: "twoActions",
+                secondAction: searchMessageAction
+              })
         };
     }
   }, [
     currentRouteName,
     helpAction,
-    presentWalletHomeHeaderBottomsheet,
+    navigateToProfilePrefercesScreen,
     isNewWalletSectionEnabled,
-    dispatch,
+    isSettingsVisibleAndHideProfile,
+    settingsAction,
+    walletAction,
+    settingsActionInMessageSection,
+    searchMessageAction,
     navigation
   ]);
 

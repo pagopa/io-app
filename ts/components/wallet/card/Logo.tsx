@@ -67,7 +67,7 @@ type Props = Readonly<{
   pspLogo?: string;
 }>;
 
-const Logo: React.SFC<Props> = props => {
+const Logo = (props: Props) => {
   const getSource = () => {
     if (props.pspLogo && props.pspLogo.trim().length > 0) {
       return { uri: props.pspLogo };
