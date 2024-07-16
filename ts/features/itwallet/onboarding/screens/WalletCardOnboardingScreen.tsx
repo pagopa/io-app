@@ -21,6 +21,7 @@ import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { ITW_TRIAL_ID } from "../../common/utils/itwTrialUtils";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwTags } from "../../machine/tags";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 
 const WalletCardOnboardingScreen = () => {
   const dispatch = useIODispatch();
@@ -29,8 +30,12 @@ const WalletCardOnboardingScreen = () => {
 
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const isCgnAlreadyActive = useIOSelector(isCgnInformationAvailableSelector);
-  // TODO add itw activation status check
-  const isItwTrialActive = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
+  const isItwTrialEnabled = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
+  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
+  const isItwSectionVisible = React.useMemo(
+    () => isItwTrialEnabled && isItwValid,
+    [isItwTrialEnabled, isItwValid]
+  );
 
   const isCredentialLoading = ItwCredentialIssuanceMachineContext.useSelector(
     snapshot => snapshot.hasTag(ItwTags.Loading)
@@ -81,7 +86,7 @@ const WalletCardOnboardingScreen = () => {
     >
       <ContentWrapper>
         <VSpacer size={16} />
-        {isItwTrialActive ? (
+        {isItwSectionVisible ? (
           <>
             <ListItemHeader label="IT Wallet" />
             <ModuleCredential
