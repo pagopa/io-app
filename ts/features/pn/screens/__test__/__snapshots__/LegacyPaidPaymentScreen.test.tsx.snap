@@ -844,6 +844,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -851,6 +852,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -874,6 +876,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -881,6 +884,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -1833,6 +1837,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -1840,6 +1845,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -1863,6 +1869,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -1870,6 +1877,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -2039,6 +2047,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -2046,6 +2055,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -2069,6 +2079,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -2076,6 +2087,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
