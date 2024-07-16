@@ -10,7 +10,6 @@ import {
 import { navigateBack } from "../../../../../../store/actions/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { MESSAGES_ROUTES } from "../../../../../messages/navigation/routes";
-import { WalletRoutes } from "../../../../../newWallet/navigation/routes";
 import { BONUS_ROUTES } from "../../../../common/navigation/navigator";
 import {
   navigateToCgnActivationInformationTos,
@@ -23,6 +22,7 @@ import {
   cgnActivationComplete,
   cgnActivationFailure
 } from "../../../store/actions/activation";
+import { ITW_ROUTES } from "../../../../../itwallet/navigation/routes";
 
 function* cgnActivationWorkUnit() {
   return yield* call(executeWorkUnit, {
@@ -56,7 +56,7 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
     if (initialScreen?.name === BONUS_ROUTES.BONUS_AVAILABLE_LIST) {
       yield* call(navigateBack);
       yield* call(navigateToCgnDetails);
-    } else if (initialScreen?.name === WalletRoutes.WALLET_CARD_ONBOARDING) {
+    } else if (initialScreen?.name === ITW_ROUTES.ONBOARDING) {
       yield* call(
         NavigationService.dispatchNavigationAction,
         CommonActions.reset({
