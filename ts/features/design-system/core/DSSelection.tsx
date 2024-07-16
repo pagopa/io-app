@@ -2,6 +2,7 @@ import {
   AnimatedMessageCheckbox,
   CheckboxLabel,
   Divider,
+  H4,
   HSpacer,
   IOColors,
   LabelSmall,
@@ -12,65 +13,85 @@ import {
   RadioGroup,
   RadioItem,
   SwitchLabel,
-  VSpacer
+  VSpacer,
+  VStack,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useState } from "react";
 import { Alert, Text, View } from "react-native";
-import { H2 } from "../../../components/core/typography/H2";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
-export const DSSelection = () => (
-  <DesignSystemScreen title={"Selection"}>
-    <H2 weight={"Bold"} style={{ marginBottom: 16 }}>
-      Checkbox
-    </H2>
-    {/* CheckboxLabel */}
-    {renderCheckboxLabel()}
-    {/* ListItemCheckbox */}
-    {renderListItemCheckbox()}
-    {/* AnimatedMessageCheckbox */}
-    <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
-      Checkbox (Messages)
-    </H2>
-    <AnimatedMessageCheckboxShowroom />
-    {/* RadioListItem */}
-    <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
-      Radio
-    </H2>
-    <RadioListItemsShowroom />
+const sectionTitleMargin = 16;
+const sectionMargin = 40;
+const componentMargin = 32;
+const componentInnerMargin = 8;
 
-    <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
-      Switch
-    </H2>
-    {/* Native Switch */}
-    <NativeSwitchShowroom />
-    {/* ListItemSwitch */}
-    <ListItemSwitchShowroom />
-    {/* SwitchLabel */}
-    {renderAnimatedSwitch()}
-  </DesignSystemScreen>
-);
+export const DSSelection = () => {
+  const theme = useIOTheme();
+  return (
+    <DesignSystemScreen title={"Selection"}>
+      <VStack space={sectionMargin}>
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Checkbox</H4>
+          <VStack space={componentMargin}>
+            {/* CheckboxLabel */}
+            {renderCheckboxLabel()}
+            {/* ListItemCheckbox */}
+            {renderListItemCheckbox()}
+          </VStack>
+        </VStack>
+
+        {/* AnimatedMessageCheckbox */}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Checkbox (Messages)</H4>
+          <AnimatedMessageCheckboxShowroom />
+        </VStack>
+
+        {/* RadioListItem */}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Radio</H4>
+          <RadioListItemsShowroom />
+        </VStack>
+
+        {/* Switch */}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Switch</H4>
+          <VStack space={componentMargin}>
+            {/* Native Switch */}
+            <NativeSwitchShowroom />
+            {/* ListItemSwitch */}
+            <ListItemSwitchShowroom />
+            {/* SwitchLabel */}
+            {renderAnimatedSwitch()}
+          </VStack>
+        </VStack>
+      </VStack>
+    </DesignSystemScreen>
+  );
+};
 
 const renderCheckboxLabel = () => (
-  <>
+  <VStack space={componentMargin}>
     <DSComponentViewerBox name="CheckboxLabel">
-      <CheckboxLabel label="This is a test" />
-      <VSpacer size={16} />
-      <CheckboxLabel label="This is a test with a very loooong looooooooong loooooooong text" />
+      <VStack space={componentInnerMargin}>
+        <CheckboxLabel label="This is a test" />
+        <CheckboxLabel label="This is a test with a very loooong looooooooong loooooooong text" />
+      </VStack>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="CheckboxLabel (disabled)">
-      <CheckboxLabel disabled checked={true} label="This is a test" />
-      <VSpacer size={16} />
-      <CheckboxLabel disabled label="This is a test" />
+      <VStack space={componentInnerMargin}>
+        <CheckboxLabel disabled checked={true} label="This is a test" />
+        <CheckboxLabel disabled label="This is a test" />
+      </VStack>
     </DSComponentViewerBox>
-  </>
+  </VStack>
 );
 
 const renderListItemCheckbox = () => (
-  <>
+  <VStack space={componentMargin}>
     <DSComponentViewerBox name="ListItemCheckbox">
       <ListItemCheckbox
         value="Usa configurazione rapida"
@@ -142,7 +163,7 @@ const renderListItemCheckbox = () => (
         accessibilityLabel={""}
       />
     </DSComponentViewerBox>
-  </>
+  </VStack>
 );
 
 // RADIO ITEMS
@@ -248,7 +269,7 @@ const RadioListItemsShowroom = () => {
   );
 
   return (
-    <>
+    <VStack space={componentMargin}>
       <DSComponentViewerBox name="RadioListItem">
         <RadioGroup<string>
           type="radioListItem"
@@ -274,14 +295,13 @@ const RadioListItemsShowroom = () => {
           suggestReason="Perché sei già cliente"
           isSuggested={true}
         />
-
         <Divider />
         <ListItemRadioWithAmount
           label="Banca un po' costosa"
           formattedAmountString={"4,50 €"}
         />
       </DSComponentViewerBox>
-    </>
+    </VStack>
   );
 };
 
@@ -306,9 +326,10 @@ const AnimatedMessageCheckboxShowroom = () => {
 
 const renderAnimatedSwitch = () => (
   <DSComponentViewerBox name="AnimatedSwitch, dismissed in favor of the native one">
-    <SwitchLabel label="This is a test" />
-    <VSpacer size={16} />
-    <SwitchLabel label="This is a test with a very loooong looooooong loooooooong text" />
+    <VStack space={componentInnerMargin}>
+      <SwitchLabel label="This is a test" />
+      <SwitchLabel label="This is a test with a very loooong looooooong loooooooong text" />
+    </VStack>
   </DSComponentViewerBox>
 );
 
@@ -375,7 +396,7 @@ const ListItemSwitchSample = ({
 };
 
 const ListItemSwitchShowroom = () => (
-  <>
+  <VStack space={componentMargin}>
     <DSComponentViewerBox name="ListItemSwitch">
       <ListItemSwitchSample label="Testo molto breve" value={true} />
       <Divider />
@@ -481,5 +502,5 @@ const ListItemSwitchShowroom = () => (
         }
       />
     </DSComponentViewerBox>
-  </>
+  </VStack>
 );
