@@ -11,6 +11,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { isTrialActiveSelector } from "../../../trialSystem/store/reducers";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ITW_TRIAL_ID } from "../utils/itwTrialUtils";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 
 type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
@@ -25,9 +26,15 @@ export const ItwDiscoveryBanner = ({
   const navigation = useIONavigation();
   const [isVisible, setVisible] = React.useState(true);
   const isTrialActive = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
+  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
 
-  // TODO If ITW already active do not show banner
-  if (!isVisible || !isTrialActive) {
+  /**
+   * Banner shold be hidden if:
+   * - The user closed it by pressing the `x`
+   * - The user is not part of the trial
+   * - The user already activated the wallet
+   */
+  if (!isVisible || !isTrialActive || isItwValid) {
     return null;
   }
 
