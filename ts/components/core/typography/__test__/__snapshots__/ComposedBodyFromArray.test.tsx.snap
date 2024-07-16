@@ -6,6 +6,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, auto text alig
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
+  dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
     {
@@ -13,6 +14,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, auto text alig
       "lineHeight": 24,
     }
   }
+  maxFontSizeMultiplier={1.25}
   style={
     [
       {
@@ -40,6 +42,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, center text al
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
+  dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
     {
@@ -47,6 +50,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, center text al
       "lineHeight": 24,
     }
   }
+  maxFontSizeMultiplier={1.25}
   style={
     [
       {
@@ -74,6 +78,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, default text a
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
+  dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
     {
@@ -81,6 +86,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, default text a
       "lineHeight": 24,
     }
   }
+  maxFontSizeMultiplier={1.25}
   style={
     [
       {
@@ -108,6 +114,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, justify text a
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
+  dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
     {
@@ -115,6 +122,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, justify text a
       "lineHeight": 24,
     }
   }
+  maxFontSizeMultiplier={1.25}
   style={
     [
       {
@@ -142,6 +150,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, left text alig
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
+  dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
     {
@@ -149,6 +158,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, left text alig
       "lineHeight": 24,
     }
   }
+  maxFontSizeMultiplier={1.25}
   style={
     [
       {
@@ -176,6 +186,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, right text ali
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
+  dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
     {
@@ -183,6 +194,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, right text ali
       "lineHeight": 24,
     }
   }
+  maxFontSizeMultiplier={1.25}
   style={
     [
       {
@@ -210,6 +222,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
+  dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
     {
@@ -217,6 +230,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
       "lineHeight": 24,
     }
   }
+  maxFontSizeMultiplier={1.25}
   style={
     [
       {
@@ -241,6 +255,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -248,6 +263,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -271,6 +287,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -278,6 +295,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -301,6 +319,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -308,6 +327,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -331,6 +351,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -338,6 +359,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -361,6 +383,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -368,6 +391,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -395,6 +419,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
+  dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
     {
@@ -402,6 +427,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
       "lineHeight": 24,
     }
   }
+  maxFontSizeMultiplier={1.25}
   style={
     [
       {
@@ -426,6 +452,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -433,6 +460,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -456,6 +484,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -463,6 +492,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -486,6 +516,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -493,6 +524,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -516,6 +548,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -523,6 +556,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -546,6 +580,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -553,6 +588,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -580,6 +616,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
+  dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
     {
@@ -587,6 +624,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
       "lineHeight": 24,
     }
   }
+  maxFontSizeMultiplier={1.25}
   style={
     [
       {
@@ -611,6 +649,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -618,6 +657,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -641,6 +681,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -648,6 +689,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -671,6 +713,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -678,6 +721,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -701,6 +745,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -708,6 +753,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -731,6 +777,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -738,6 +785,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -765,6 +813,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
+  dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
     {
@@ -772,6 +821,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
       "lineHeight": 24,
     }
   }
+  maxFontSizeMultiplier={1.25}
   style={
     [
       {
@@ -796,6 +846,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -803,6 +854,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -826,6 +878,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -833,6 +886,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -856,6 +910,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -863,6 +918,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -886,6 +942,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -893,6 +950,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -916,6 +974,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -923,6 +982,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -950,6 +1010,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
+  dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
     {
@@ -957,6 +1018,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
       "lineHeight": 24,
     }
   }
+  maxFontSizeMultiplier={1.25}
   style={
     [
       {
@@ -981,6 +1043,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -988,6 +1051,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -1011,6 +1075,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -1018,6 +1083,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -1041,6 +1107,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -1048,6 +1115,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -1071,6 +1139,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -1078,6 +1147,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -1101,6 +1171,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -1108,6 +1179,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -1135,6 +1207,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
+  dynamicTypeRamp="body"
   font="TitilliumSansPro"
   fontStyle={
     {
@@ -1142,6 +1215,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
       "lineHeight": 24,
     }
   }
+  maxFontSizeMultiplier={1.25}
   style={
     [
       {
@@ -1166,6 +1240,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -1173,6 +1248,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -1196,6 +1272,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -1203,6 +1280,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -1226,6 +1304,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -1233,6 +1312,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -1256,6 +1336,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -1263,6 +1344,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -1286,6 +1368,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -1293,6 +1376,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
