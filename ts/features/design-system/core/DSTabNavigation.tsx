@@ -69,7 +69,7 @@ export const DSTabNavigation = () => {
             </View>
           </DSComponentViewerBox>
 
-          <DSComponentViewerBox name="Light Disabled" last={true}>
+          <DSComponentViewerBox name="Light Disabled">
             <View style={{ flexDirection: "row" }}>
               <TabItem
                 label="Label tab"
@@ -131,11 +131,7 @@ export const DSTabNavigation = () => {
               />
             </View>
           </DSComponentViewerBox>
-          <DSComponentViewerBox
-            name="Dark Disabled"
-            colorMode="dark"
-            last={true}
-          >
+          <DSComponentViewerBox name="Dark Disabled" colorMode="dark">
             <View style={{ flexDirection: "row" }}>
               <TabItem
                 label="Label tab"
