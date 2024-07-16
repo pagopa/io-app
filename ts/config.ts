@@ -227,6 +227,9 @@ export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
 export const idPayTestToken =
   Config.IDPAY_API_TEST_TOKEN !== "" ? Config.IDPAY_API_TEST_TOKEN : undefined;
 
+export const showBarcodeScanSection =
+  Config.SHOW_BARCODE_SCAN_SECTION === "YES";
+
 export const idPayApiUatBaseUrl = Config.IDPAY_API_UAT_BASEURL;
 
 export const idPayApiBaseUrl = Config.IDPAY_API_BASEURL;
@@ -236,3 +239,8 @@ export const walletApiUatBaseUrl = Config.WALLET_API_UAT_BASEURL;
 
 // Default pin for dev mode
 export const defaultPin = "162534";
+
+// IT Wallet
+export const itwWalletProviderBaseUrl = Config.ITW_WALLET_PROVIDER_BASE_URL;
+export const itwGoogleCloudProjectNumber =
+  Config.ITW_GOOGLE_CLOUD_PROJECT_NUMBER;

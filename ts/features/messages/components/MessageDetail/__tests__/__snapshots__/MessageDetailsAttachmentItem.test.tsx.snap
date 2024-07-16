@@ -332,272 +332,241 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                       }
                     >
                       <View
-                        accessibilityHint="pdf"
-                        accessibilityLabel="Download in progress"
-                        accessibilityRole="button"
-                        accessibilityState={
-                          {
-                            "busy": undefined,
-                            "checked": undefined,
-                            "disabled": true,
-                            "expanded": undefined,
-                            "selected": undefined,
-                          }
+                        accessible={false}
+                        style={
+                          [
+                            {
+                              "alignItems": "center",
+                              "borderColor": "#E8EBF1",
+                              "borderCurve": "continuous",
+                              "borderRadius": 8,
+                              "borderWidth": 1,
+                              "flexDirection": "row",
+                              "justifyContent": "space-between",
+                              "paddingHorizontal": 16,
+                              "paddingVertical": 16,
+                            },
+                            {
+                              "borderColor": "#E8EBF1",
+                              "opacity": 1,
+                            },
+                          ]
                         }
-                        accessibilityValue={
-                          {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
                       >
                         <View
-                          accessibilityElementsHidden={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
-                            [
-                              {
-                                "alignItems": "center",
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "#CCD4DC",
-                                "borderRadius": 8,
-                                "borderStyle": "solid",
-                                "borderWidth": 1,
-                                "flexDirection": "row",
-                                "paddingHorizontal": 16,
-                                "paddingVertical": 16,
-                              },
-                              {
-                                "transform": [
-                                  {
-                                    "scale": undefined,
-                                  },
-                                ],
-                              },
-                              {
-                                "opacity": 1,
-                              },
-                            ]
+                            {
+                              "alignItems": "flex-start",
+                              "flexShrink": 1,
+                            }
                           }
                         >
+                          <Text
+                            allowFontScaling={false}
+                            color="blueIO-500"
+                            defaultColor="black"
+                            defaultWeight="Semibold"
+                            dynamicTypeRamp="footnote"
+                            font="TitilliumSansPro"
+                            fontStyle={
+                              {
+                                "fontSize": 16,
+                                "lineHeight": 21,
+                              }
+                            }
+                            maxFontSizeMultiplier={1.25}
+                            numberOfLines={2}
+                            style={
+                              [
+                                {
+                                  "fontSize": 16,
+                                  "lineHeight": 21,
+                                },
+                                {
+                                  "color": "#0B3EE3",
+                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="Semibold"
+                          >
+                            1
+                          </Text>
                           <View
                             style={
                               {
-                                "flex": 1,
-                                "flexDirection": "column",
+                                "height": 4,
                               }
+                            }
+                          />
+                          <View
+                            style={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 24,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "paddingHorizontal": 8,
+                                  "paddingVertical": 4,
+                                },
+                                {
+                                  "backgroundColor": "#F4F5F8",
+                                },
+                              ]
                             }
                           >
                             <Text
                               allowFontScaling={false}
-                              color="blueIO-500"
-                              defaultColor="black"
-                              defaultWeight="Semibold"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 21,
-                                }
-                              }
+                              ellipsizeMode="tail"
+                              maxFontSizeMultiplier={1.25}
                               numberOfLines={1}
                               style={
                                 [
                                   {
-                                    "fontSize": 16,
-                                    "lineHeight": 21,
+                                    "alignSelf": "center",
+                                    "flexShrink": 1,
+                                    "fontSize": 12,
+                                    "lineHeight": 16,
+                                    "textTransform": "uppercase",
                                   },
                                   {
-                                    "color": "#0B3EE3",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
+                                  {
+                                    "color": "#555C70",
+                                  },
                                 ]
                               }
-                              weight="Semibold"
                             >
-                              1
+                              PDF
                             </Text>
+                          </View>
+                        </View>
+                        <View
+                          style={
+                            {
+                              "marginLeft": 12,
+                            }
+                          }
+                        >
+                          <View
+                            accessibilityRole="progressbar"
+                            accessible={true}
+                            importantForAccessibility="no-hide-descendants"
+                            style={
+                              {
+                                "height": 24,
+                                "width": 24,
+                              }
+                            }
+                            testID="LoadingSpinnerTestID"
+                          >
                             <View
+                              collapsable={false}
                               style={
                                 {
-                                  "height": 4,
+                                  "transform": [
+                                    {
+                                      "rotateZ": "0deg",
+                                    },
+                                  ],
                                 }
                               }
-                            />
-                            <View
-                              style={
-                                {
-                                  "width": 44,
-                                }
-                              }
+                              testID="LoadingSpinnerAnimatedTestID"
                             >
-                              <View
+                              <RNSVGSvgView
+                                align="xMidYMid"
+                                bbHeight={24}
+                                bbWidth={24}
+                                fill="none"
+                                focusable={false}
+                                height={24}
+                                meetOrSlice={0}
+                                minX={0}
+                                minY={0}
                                 style={
                                   [
                                     {
-                                      "alignItems": "center",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 24,
-                                      "flexDirection": "row",
-                                      "justifyContent": "center",
-                                      "paddingHorizontal": 8,
-                                      "paddingVertical": 4,
+                                      "backgroundColor": "transparent",
+                                      "borderWidth": 0,
                                     },
                                     {
-                                      "backgroundColor": "#F4F5F8",
+                                      "flex": 0,
+                                      "height": 24,
+                                      "width": 24,
                                     },
                                   ]
                                 }
+                                vbHeight={24}
+                                vbWidth={24}
+                                width={24}
                               >
-                                <Text
-                                  ellipsizeMode="tail"
-                                  numberOfLines={1}
-                                  style={
+                                <RNSVGGroup
+                                  fill={null}
+                                  propList={
                                     [
-                                      {
-                                        "alignSelf": "center",
-                                        "flexShrink": 1,
-                                        "fontSize": 12,
-                                        "lineHeight": 16,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                      },
-                                      {
-                                        "color": "#555C70",
-                                      },
+                                      "fill",
                                     ]
                                   }
                                 >
-                                  PDF
-                                </Text>
-                              </View>
-                            </View>
-                          </View>
-                          <View
-                            style={
-                              {
-                                "alignItems": "center",
-                                "marginLeft": 12,
-                              }
-                            }
-                          >
-                            <View
-                              accessibilityRole="progressbar"
-                              accessible={true}
-                              importantForAccessibility="no-hide-descendants"
-                              style={
-                                {
-                                  "height": 24,
-                                  "width": 24,
-                                }
-                              }
-                              testID="LoadingSpinnerTestID"
-                            >
-                              <View
-                                collapsable={false}
-                                style={
-                                  {
-                                    "transform": [
-                                      {
-                                        "rotateZ": "0deg",
-                                      },
-                                    ],
-                                  }
-                                }
-                                testID="LoadingSpinnerAnimatedTestID"
-                              >
-                                <RNSVGSvgView
-                                  align="xMidYMid"
-                                  bbHeight={24}
-                                  bbWidth={24}
-                                  fill="none"
-                                  focusable={false}
-                                  height={24}
-                                  meetOrSlice={0}
-                                  minX={0}
-                                  minY={0}
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "transparent",
-                                        "borderWidth": 0,
-                                      },
-                                      {
-                                        "flex": 0,
-                                        "height": 24,
-                                        "width": 24,
-                                      },
-                                    ]
-                                  }
-                                  vbHeight={24}
-                                  vbWidth={24}
-                                  width={24}
-                                >
+                                  <RNSVGDefs>
+                                    <RNSVGLinearGradient
+                                      gradient={
+                                        [
+                                          0,
+                                          736995,
+                                          1,
+                                          -16040221,
+                                        ]
+                                      }
+                                      gradientTransform={null}
+                                      gradientUnits={0}
+                                      name="spinner-secondHalf"
+                                      x1="0%"
+                                      x2="100%"
+                                      y1="0%"
+                                      y2="0%"
+                                    />
+                                    <RNSVGLinearGradient
+                                      gradient={
+                                        [
+                                          0,
+                                          -16040221,
+                                          1,
+                                          -16040221,
+                                        ]
+                                      }
+                                      gradientTransform={null}
+                                      gradientUnits={0}
+                                      name="spinner-firstHalf"
+                                      x1="0%"
+                                      x2="100%"
+                                      y1="0%"
+                                      y2="0%"
+                                    />
+                                  </RNSVGDefs>
                                   <RNSVGGroup
-                                    fill={null}
+                                    fill={
+                                      {
+                                        "payload": 4278190080,
+                                        "type": 0,
+                                      }
+                                    }
                                     propList={
                                       [
-                                        "fill",
+                                        "strokeWidth",
                                       ]
                                     }
+                                    strokeWidth={3}
                                   >
-                                    <RNSVGDefs>
-                                      <RNSVGLinearGradient
-                                        gradient={
-                                          [
-                                            0,
-                                            736995,
-                                            1,
-                                            -16040221,
-                                          ]
-                                        }
-                                        gradientTransform={null}
-                                        gradientUnits={0}
-                                        name="spinner-secondHalf"
-                                        x1="0%"
-                                        x2="100%"
-                                        y1="0%"
-                                        y2="0%"
-                                      />
-                                      <RNSVGLinearGradient
-                                        gradient={
-                                          [
-                                            0,
-                                            -16040221,
-                                            1,
-                                            -16040221,
-                                          ]
-                                        }
-                                        gradientTransform={null}
-                                        gradientUnits={0}
-                                        name="spinner-firstHalf"
-                                        x1="0%"
-                                        x2="100%"
-                                        y1="0%"
-                                        y2="0%"
-                                      />
-                                    </RNSVGDefs>
-                                    <RNSVGGroup
+                                    <RNSVGPath
+                                      d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -606,77 +575,61 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                       }
                                       propList={
                                         [
-                                          "strokeWidth",
+                                          "stroke",
                                         ]
                                       }
-                                      strokeWidth={3}
-                                    >
-                                      <RNSVGPath
-                                        d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
-                                        fill={
-                                          {
-                                            "payload": 4278190080,
-                                            "type": 0,
-                                          }
+                                      stroke={
+                                        {
+                                          "brushRef": "spinner-secondHalf",
+                                          "type": 1,
                                         }
-                                        propList={
-                                          [
-                                            "stroke",
-                                          ]
+                                      }
+                                    />
+                                    <RNSVGPath
+                                      d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+                                      fill={
+                                        {
+                                          "payload": 4278190080,
+                                          "type": 0,
                                         }
-                                        stroke={
-                                          {
-                                            "brushRef": "spinner-secondHalf",
-                                            "type": 1,
-                                          }
+                                      }
+                                      propList={
+                                        [
+                                          "stroke",
+                                        ]
+                                      }
+                                      stroke={
+                                        {
+                                          "brushRef": "spinner-firstHalf",
+                                          "type": 1,
                                         }
-                                      />
-                                      <RNSVGPath
-                                        d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
-                                        fill={
-                                          {
-                                            "payload": 4278190080,
-                                            "type": 0,
-                                          }
+                                      }
+                                    />
+                                    <RNSVGPath
+                                      d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+                                      fill={
+                                        {
+                                          "payload": 4278190080,
+                                          "type": 0,
                                         }
-                                        propList={
-                                          [
-                                            "stroke",
-                                          ]
+                                      }
+                                      propList={
+                                        [
+                                          "stroke",
+                                          "strokeLinecap",
+                                        ]
+                                      }
+                                      stroke={
+                                        {
+                                          "payload": 4278927075,
+                                          "type": 0,
                                         }
-                                        stroke={
-                                          {
-                                            "brushRef": "spinner-firstHalf",
-                                            "type": 1,
-                                          }
-                                        }
-                                      />
-                                      <RNSVGPath
-                                        d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
-                                        fill={
-                                          {
-                                            "payload": 4278190080,
-                                            "type": 0,
-                                          }
-                                        }
-                                        propList={
-                                          [
-                                            "stroke",
-                                            "strokeLinecap",
-                                          ]
-                                        }
-                                        stroke={
-                                          {
-                                            "payload": 4278927075,
-                                            "type": 0,
-                                          }
-                                        }
-                                        strokeLinecap={1}
-                                      />
-                                    </RNSVGGroup>
+                                      }
+                                      strokeLinecap={1}
+                                    />
                                   </RNSVGGroup>
-                                </RNSVGSvgView>
-                              </View>
+                                </RNSVGGroup>
+                              </RNSVGSvgView>
                             </View>
                           </View>
                         </View>
@@ -1033,7 +986,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                           {
                             "busy": undefined,
                             "checked": undefined,
-                            "disabled": false,
+                            "disabled": undefined,
                             "expanded": undefined,
                             "selected": undefined,
                           }
@@ -1058,23 +1011,26 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                         onResponderTerminate={[Function]}
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
+                        onTouchEnd={[Function]}
                       >
                         <View
-                          accessibilityElementsHidden={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             [
                               {
                                 "alignItems": "center",
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "#CCD4DC",
+                                "borderColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
-                                "borderStyle": "solid",
                                 "borderWidth": 1,
                                 "flexDirection": "row",
+                                "justifyContent": "space-between",
                                 "paddingHorizontal": 16,
                                 "paddingVertical": 16,
                               },
+                              {
+                                "borderColor": "#E8EBF1",
+                              },
+                              false,
                               {
                                 "transform": [
                                   {
@@ -1082,17 +1038,14 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                   },
                                 ],
                               },
-                              {
-                                "opacity": 1,
-                              },
                             ]
                           }
                         >
                           <View
                             style={
                               {
-                                "flex": 1,
-                                "flexDirection": "column",
+                                "alignItems": "flex-start",
+                                "flexShrink": 1,
                               }
                             }
                           >
@@ -1101,6 +1054,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                               color="blueIO-500"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="footnote"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -1108,7 +1062,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                   "lineHeight": 21,
                                 }
                               }
-                              numberOfLines={1}
+                              maxFontSizeMultiplier={1.25}
+                              numberOfLines={2}
                               style={
                                 [
                                   {
@@ -1136,61 +1091,54 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                             />
                             <View
                               style={
-                                {
-                                  "width": 44,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 24,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "paddingHorizontal": 8,
+                                    "paddingVertical": 4,
+                                  },
+                                  {
+                                    "backgroundColor": "#F4F5F8",
+                                  },
+                                ]
                               }
                             >
-                              <View
+                              <Text
+                                allowFontScaling={false}
+                                ellipsizeMode="tail"
+                                maxFontSizeMultiplier={1.25}
+                                numberOfLines={1}
                                 style={
                                   [
                                     {
-                                      "alignItems": "center",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 24,
-                                      "flexDirection": "row",
-                                      "justifyContent": "center",
-                                      "paddingHorizontal": 8,
-                                      "paddingVertical": 4,
+                                      "alignSelf": "center",
+                                      "flexShrink": 1,
+                                      "fontSize": 12,
+                                      "lineHeight": 16,
+                                      "textTransform": "uppercase",
                                     },
                                     {
-                                      "backgroundColor": "#F4F5F8",
+                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                    },
+                                    {
+                                      "color": "#555C70",
                                     },
                                   ]
                                 }
                               >
-                                <Text
-                                  ellipsizeMode="tail"
-                                  numberOfLines={1}
-                                  style={
-                                    [
-                                      {
-                                        "alignSelf": "center",
-                                        "flexShrink": 1,
-                                        "fontSize": 12,
-                                        "lineHeight": 16,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                      },
-                                      {
-                                        "color": "#555C70",
-                                      },
-                                    ]
-                                  }
-                                >
-                                  PDF
-                                </Text>
-                              </View>
+                                PDF
+                              </Text>
                             </View>
                           </View>
                           <View
                             style={
                               {
-                                "alignItems": "center",
                                 "marginLeft": 12,
                               }
                             }
@@ -1603,236 +1551,189 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                       }
                     >
                       <View
-                        accessibilityHint="pdf"
-                        accessibilityLabel="A PDF File"
-                        accessibilityRole="button"
-                        accessibilityState={
-                          {
-                            "busy": undefined,
-                            "checked": undefined,
-                            "disabled": true,
-                            "expanded": undefined,
-                            "selected": undefined,
-                          }
+                        accessible={false}
+                        style={
+                          [
+                            {
+                              "alignItems": "center",
+                              "borderColor": "#E8EBF1",
+                              "borderCurve": "continuous",
+                              "borderRadius": 8,
+                              "borderWidth": 1,
+                              "flexDirection": "row",
+                              "justifyContent": "space-between",
+                              "paddingHorizontal": 16,
+                              "paddingVertical": 16,
+                            },
+                            {
+                              "borderColor": "#E8EBF1",
+                              "opacity": 0.5,
+                            },
+                          ]
                         }
-                        accessibilityValue={
-                          {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
                       >
                         <View
-                          accessibilityElementsHidden={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
-                            [
-                              {
-                                "alignItems": "center",
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "#CCD4DC",
-                                "borderRadius": 8,
-                                "borderStyle": "solid",
-                                "borderWidth": 1,
-                                "flexDirection": "row",
-                                "paddingHorizontal": 16,
-                                "paddingVertical": 16,
-                              },
-                              {
-                                "transform": [
-                                  {
-                                    "scale": undefined,
-                                  },
-                                ],
-                              },
-                              {
-                                "opacity": 0.5,
-                              },
-                            ]
+                            {
+                              "alignItems": "flex-start",
+                              "flexShrink": 1,
+                            }
                           }
                         >
+                          <Text
+                            allowFontScaling={false}
+                            color="blueIO-500"
+                            defaultColor="black"
+                            defaultWeight="Semibold"
+                            dynamicTypeRamp="footnote"
+                            font="TitilliumSansPro"
+                            fontStyle={
+                              {
+                                "fontSize": 16,
+                                "lineHeight": 21,
+                              }
+                            }
+                            maxFontSizeMultiplier={1.25}
+                            numberOfLines={2}
+                            style={
+                              [
+                                {
+                                  "fontSize": 16,
+                                  "lineHeight": 21,
+                                },
+                                {
+                                  "color": "#0B3EE3",
+                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="Semibold"
+                          >
+                            A PDF File
+                          </Text>
                           <View
                             style={
                               {
-                                "flex": 1,
-                                "flexDirection": "column",
+                                "height": 4,
                               }
+                            }
+                          />
+                          <View
+                            style={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 24,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "paddingHorizontal": 8,
+                                  "paddingVertical": 4,
+                                },
+                                {
+                                  "backgroundColor": "#F4F5F8",
+                                },
+                              ]
                             }
                           >
                             <Text
                               allowFontScaling={false}
-                              color="blueIO-500"
-                              defaultColor="black"
-                              defaultWeight="Semibold"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 21,
-                                }
-                              }
+                              ellipsizeMode="tail"
+                              maxFontSizeMultiplier={1.25}
                               numberOfLines={1}
                               style={
                                 [
                                   {
-                                    "fontSize": 16,
-                                    "lineHeight": 21,
+                                    "alignSelf": "center",
+                                    "flexShrink": 1,
+                                    "fontSize": 12,
+                                    "lineHeight": 16,
+                                    "textTransform": "uppercase",
                                   },
                                   {
-                                    "color": "#0B3EE3",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
+                                  {
+                                    "color": "#555C70",
+                                  },
                                 ]
                               }
-                              weight="Semibold"
                             >
-                              A PDF File
+                              PDF
                             </Text>
-                            <View
-                              style={
-                                {
-                                  "height": 4,
-                                }
-                              }
-                            />
-                            <View
-                              style={
-                                {
-                                  "width": 44,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  [
-                                    {
-                                      "alignItems": "center",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 24,
-                                      "flexDirection": "row",
-                                      "justifyContent": "center",
-                                      "paddingHorizontal": 8,
-                                      "paddingVertical": 4,
-                                    },
-                                    {
-                                      "backgroundColor": "#F4F5F8",
-                                    },
-                                  ]
-                                }
-                              >
-                                <Text
-                                  ellipsizeMode="tail"
-                                  numberOfLines={1}
-                                  style={
-                                    [
-                                      {
-                                        "alignSelf": "center",
-                                        "flexShrink": 1,
-                                        "fontSize": 12,
-                                        "lineHeight": 16,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                      },
-                                      {
-                                        "color": "#555C70",
-                                      },
-                                    ]
-                                  }
-                                >
-                                  PDF
-                                </Text>
-                              </View>
-                            </View>
                           </View>
-                          <View
-                            style={
-                              {
-                                "alignItems": "center",
-                                "marginLeft": 12,
-                              }
+                        </View>
+                        <View
+                          style={
+                            {
+                              "marginLeft": 12,
                             }
+                          }
+                        >
+                          <RNSVGSvgView
+                            accessibilityElementsHidden={true}
+                            accessibilityLabel=""
+                            accessible={false}
+                            align="xMidYMid"
+                            bbHeight={24}
+                            bbWidth={24}
+                            focusable={false}
+                            height={24}
+                            importantForAccessibility="no-hide-descendants"
+                            meetOrSlice={0}
+                            minX={0}
+                            minY={0}
+                            style={
+                              [
+                                {
+                                  "backgroundColor": "transparent",
+                                  "borderWidth": 0,
+                                },
+                                {
+                                  "color": "#0B3EE3",
+                                },
+                                {
+                                  "flex": 0,
+                                  "height": 24,
+                                  "width": 24,
+                                },
+                              ]
+                            }
+                            tintColor="#0B3EE3"
+                            vbHeight={24}
+                            vbWidth={24}
+                            width={24}
                           >
-                            <RNSVGSvgView
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessible={false}
-                              align="xMidYMid"
-                              bbHeight={24}
-                              bbWidth={24}
-                              focusable={false}
-                              height={24}
-                              importantForAccessibility="no-hide-descendants"
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
-                              style={
-                                [
-                                  {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
-                                    "flex": 0,
-                                    "height": 24,
-                                    "width": 24,
-                                  },
-                                ]
+                            <RNSVGGroup
+                              fill={
+                                {
+                                  "payload": 4278190080,
+                                  "type": 0,
+                                }
                               }
-                              tintColor="#0B3EE3"
-                              vbHeight={24}
-                              vbWidth={24}
-                              width={24}
                             >
-                              <RNSVGGroup
+                              <RNSVGPath
+                                clipRule={0}
+                                d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                 fill={
                                   {
-                                    "payload": 4278190080,
-                                    "type": 0,
+                                    "type": 2,
                                   }
                                 }
-                              >
-                                <RNSVGPath
-                                  clipRule={0}
-                                  d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  fillRule={0}
-                                  propList={
-                                    [
-                                      "fill",
-                                      "fillRule",
-                                    ]
-                                  }
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
-                          </View>
+                                fillRule={0}
+                                propList={
+                                  [
+                                    "fill",
+                                    "fillRule",
+                                  ]
+                                }
+                              />
+                            </RNSVGGroup>
+                          </RNSVGSvgView>
                         </View>
                       </View>
                       <View
@@ -2194,7 +2095,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                           {
                             "busy": undefined,
                             "checked": undefined,
-                            "disabled": false,
+                            "disabled": undefined,
                             "expanded": undefined,
                             "selected": undefined,
                           }
@@ -2219,23 +2120,26 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                         onResponderTerminate={[Function]}
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
+                        onTouchEnd={[Function]}
                       >
                         <View
-                          accessibilityElementsHidden={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             [
                               {
                                 "alignItems": "center",
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "#CCD4DC",
+                                "borderColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
-                                "borderStyle": "solid",
                                 "borderWidth": 1,
                                 "flexDirection": "row",
+                                "justifyContent": "space-between",
                                 "paddingHorizontal": 16,
                                 "paddingVertical": 16,
                               },
+                              {
+                                "borderColor": "#E8EBF1",
+                              },
+                              false,
                               {
                                 "transform": [
                                   {
@@ -2243,17 +2147,14 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                   },
                                 ],
                               },
-                              {
-                                "opacity": 1,
-                              },
                             ]
                           }
                         >
                           <View
                             style={
                               {
-                                "flex": 1,
-                                "flexDirection": "column",
+                                "alignItems": "flex-start",
+                                "flexShrink": 1,
                               }
                             }
                           >
@@ -2262,6 +2163,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                               color="blueIO-500"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="footnote"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -2269,7 +2171,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                   "lineHeight": 21,
                                 }
                               }
-                              numberOfLines={1}
+                              maxFontSizeMultiplier={1.25}
+                              numberOfLines={2}
                               style={
                                 [
                                   {
@@ -2297,61 +2200,54 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                             />
                             <View
                               style={
-                                {
-                                  "width": 44,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 24,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "paddingHorizontal": 8,
+                                    "paddingVertical": 4,
+                                  },
+                                  {
+                                    "backgroundColor": "#F4F5F8",
+                                  },
+                                ]
                               }
                             >
-                              <View
+                              <Text
+                                allowFontScaling={false}
+                                ellipsizeMode="tail"
+                                maxFontSizeMultiplier={1.25}
+                                numberOfLines={1}
                                 style={
                                   [
                                     {
-                                      "alignItems": "center",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 24,
-                                      "flexDirection": "row",
-                                      "justifyContent": "center",
-                                      "paddingHorizontal": 8,
-                                      "paddingVertical": 4,
+                                      "alignSelf": "center",
+                                      "flexShrink": 1,
+                                      "fontSize": 12,
+                                      "lineHeight": 16,
+                                      "textTransform": "uppercase",
                                     },
                                     {
-                                      "backgroundColor": "#F4F5F8",
+                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                    },
+                                    {
+                                      "color": "#555C70",
                                     },
                                   ]
                                 }
                               >
-                                <Text
-                                  ellipsizeMode="tail"
-                                  numberOfLines={1}
-                                  style={
-                                    [
-                                      {
-                                        "alignSelf": "center",
-                                        "flexShrink": 1,
-                                        "fontSize": 12,
-                                        "lineHeight": 16,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                      },
-                                      {
-                                        "color": "#555C70",
-                                      },
-                                    ]
-                                  }
-                                >
-                                  PDF
-                                </Text>
-                              </View>
+                                PDF
+                              </Text>
                             </View>
                           </View>
                           <View
                             style={
                               {
-                                "alignItems": "center",
                                 "marginLeft": 12,
                               }
                             }

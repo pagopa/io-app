@@ -16,10 +16,11 @@ import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList"
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
+import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
+import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
-import { WalletRoutes } from "../navigation/routes";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { selectWalletCards } from "../store/selectors";
 
@@ -62,8 +63,8 @@ const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
   const cards = useIOSelector(selectWalletCards);
 
   const handleAddToWalletButtonPress = () => {
-    navigation.navigate(WalletRoutes.WALLET_NAVIGATOR, {
-      screen: WalletRoutes.WALLET_CARD_ONBOARDING
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ONBOARDING
     });
   };
 

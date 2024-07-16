@@ -1,13 +1,13 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { SubscriptionStateEnum } from "../../../../../definitions/trial_systwem/SubscriptionState";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { trialStatusSelector } from "../../../trialSystem/store/reducers";
+import { isTrialActiveSelector } from "../../../trialSystem/store/reducers";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ITW_TRIAL_ID } from "../utils/itwTrialUtils";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 
 type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
@@ -21,10 +21,15 @@ export const ItwDiscoveryBanner = ({
   const bannerRef = React.createRef<View>();
   const navigation = useIONavigation();
   const [isVisible, setVisible] = React.useState(true);
-  const trialStatus = useIOSelector(trialStatusSelector(ITW_TRIAL_ID));
-  // TODO If ITW already active do not show banner
+  const isItwTrialActive = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
+  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
 
-  if (!isVisible || trialStatus !== SubscriptionStateEnum.SUBSCRIBED) {
+  // Banner should be hidden if:
+  if (
+    !isVisible || // The user closed it by pressing the `x`
+    !isItwTrialActive || // The user is not part of the trial
+    isItwValid // The user already activated the wallet
+  ) {
     return null;
   }
 
