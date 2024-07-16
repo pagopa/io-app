@@ -21,9 +21,9 @@ export type RuleRenderer<P, F extends Renderer | void = void> = (
 ) => ReactNode;
 export type AnyTxtNodeWithSpacer =
   | AnyTxtNode
-  | { type: "Spacer"; size: number };
+  | { type: "Spacer"; size: number; key: string };
 
-export type IOMarkdownRules = {
+export type IOMarkdownRenderRules = {
   [ASTNodeTypes.Header]: RuleRenderer<TxtHeaderNode, Renderer>;
   [ASTNodeTypes.Paragraph]: RuleRenderer<TxtParagraphNode, Renderer>;
   [ASTNodeTypes.Str]: RuleRenderer<TxtStrNode, Renderer>;
@@ -34,5 +34,5 @@ export type IOMarkdownRules = {
   [ASTNodeTypes.List]: RuleRenderer<TxtListNode, Renderer>;
   [ASTNodeTypes.ListItem]: RuleRenderer<TxtListItemNode, Renderer>;
   [ASTNodeTypes.Image]: RuleRenderer<TxtImageNode, Renderer>;
-  Spacer: RuleRenderer<ComponentProps<typeof VSpacer>>;
+  Spacer: RuleRenderer<ComponentProps<typeof VSpacer> & { key: string }>;
 };

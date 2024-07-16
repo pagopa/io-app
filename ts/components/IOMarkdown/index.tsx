@@ -1,21 +1,32 @@
-import React, { memo, useMemo } from "react";
+import React, { memo } from "react";
 import { View } from "react-native";
-import IOMarkdownRenderer from "./IOMarkdownRenderer";
-import { IOMarkdownRules } from "./types";
+import { IOMarkdownRenderRules } from "./types";
+import { getRenderMarkdown, parse } from "./markdownRenderer";
+import { DEFAULT_RULES } from "./renderRules";
 
 type Props = {
+  /**
+   * The `markdown` string to render.
+   */
   content: string;
-  rules?: IOMarkdownRules;
+  /**
+   * The render rules that can be used to override the `DEFAULT_RULES`.
+   */
+  rules?: Partial<IOMarkdownRenderRules>;
 };
 
+/**
+ * This component parses a markdown string and render it using the `DS` components.
+ *
+ * It's possible to override every single rule by passing a custom `rules` object.
+ */
 const IOMarkdown = ({ content, rules }: Props) => {
-  const markdownContent = () => {
-    const markdownRenderer = new IOMarkdownRenderer(rules);
-    const parsedContent = markdownRenderer.parse(content);
+  const parsedContent = parse(content);
+  const renderMarkdown = getRenderMarkdown({
+    ...DEFAULT_RULES,
+    ...(rules || {})
+  });
 
-    return parsedContent.map(markdownRenderer.render);
-  };
-
-  return <View>{markdownContent}</View>;
+  return <View>{parsedContent.map(renderMarkdown)}</View>;
 };
 export default memo(IOMarkdown);
