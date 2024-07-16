@@ -17,6 +17,7 @@ import {
   ItwEidIssuanceMachineContext
 } from "../../machine/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { ItwTrialSystemSection } from "../components/ItwTrialSystemSection";
 
 // Sample markdown text
 const sampleMarkdown = `
@@ -142,6 +143,9 @@ const ItwPlayground = () => {
           description="Open the eID credential detail screen"
           onPress={navigateToCredentialAuth}
         />
+        <VSpacer size={16} />
+        {/* F&F Experimentation */}
+        <ItwTrialSystemSection />
         <VSpacer size={16} />
         {/* Other Playgrounds */}
         <ListItemHeader label="Miscellaneous" />

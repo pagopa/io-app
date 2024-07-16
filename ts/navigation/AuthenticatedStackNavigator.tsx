@@ -80,6 +80,7 @@ import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import FIMS_LEGACY_ROUTES from "../features/fimsLegacy/navigation/routes";
 import { SearchScreen } from "../features/services/search/screens/SearchScreen";
 import { FIMS_ROUTES, FimsNavigator } from "../features/fims/common/navigation";
+import { MessagesSearchScreen } from "../features/messages/screens/MessagesSearchScreen";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -139,6 +140,21 @@ const AuthenticatedStackNavigator = () => {
         options={hideHeaderOptions}
         component={MessagesStackNavigator}
       />
+      {/* This screen is outside the MessagesNavigator to change gesture and transion behaviour. */}
+      <Stack.Screen
+        name={MESSAGES_ROUTES.MESSAGES_SEARCH}
+        component={MessagesSearchScreen}
+        options={{
+          ...hideHeaderOptions,
+          gestureEnabled: false,
+          ...Platform.select({
+            ios: {
+              animationEnabled: false
+            },
+            default: undefined
+          })
+        }}
+      />
       <Stack.Screen
         name={ROUTES.WALLET_NAVIGATOR}
         options={hideHeaderOptions}
@@ -167,7 +183,10 @@ const AuthenticatedStackNavigator = () => {
 
       <Stack.Screen
         name={ROUTES.PROFILE_NAVIGATOR}
-        options={hideHeaderOptions}
+        options={{
+          ...hideHeaderOptions,
+          ...TransitionPresets.SlideFromRightIOS
+        }}
         component={ProfileStackNavigator}
       />
 

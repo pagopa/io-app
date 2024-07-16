@@ -7,6 +7,7 @@ import {
 } from "@pagopa/io-react-native-wallet";
 import uuid from "react-native-uuid";
 import { itwWalletProviderBaseUrl } from "../../../../config";
+import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   ensureIntegrityServiceIsReady,
   generateIntegrityHardwareKeyTag,
@@ -31,7 +32,8 @@ export const registerWalletInstance = async (hardwareKeyTag: string) => {
   // Check if the wallet instance has been revoked
   await WalletInstance.createWalletInstance({
     integrityContext,
-    walletProviderBaseUrl: itwWalletProviderBaseUrl
+    walletProviderBaseUrl: itwWalletProviderBaseUrl,
+    appFetch: defaultRetryingFetch()
   });
 };
 
@@ -53,6 +55,7 @@ export const getAttestation = async (
   return WalletInstanceAttestation.getAttestation({
     wiaCryptoContext,
     integrityContext,
-    walletProviderBaseUrl: itwWalletProviderBaseUrl
+    walletProviderBaseUrl: itwWalletProviderBaseUrl,
+    appFetch: defaultRetryingFetch()
   });
 };

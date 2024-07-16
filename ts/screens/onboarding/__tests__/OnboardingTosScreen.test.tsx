@@ -2,7 +2,7 @@ import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import configureMockStore from "redux-mock-store";
-import I18n from "i18n-js";
+import I18n from "../../../i18n";
 // import WebView from "react-native-webview";
 // import {
 //   WebViewErrorEvent,
