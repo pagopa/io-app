@@ -107,7 +107,7 @@ const AuthenticatedStackNavigator = () => {
     <Stack.Navigator
       initialRouteName={ROUTES.MAIN}
       screenOptions={{
-        gestureEnabled: false,
+        gestureEnabled: isGestureEnabled,
         headerMode: "screen"
       }}
     >
@@ -137,7 +137,7 @@ const AuthenticatedStackNavigator = () => {
 
       <Stack.Screen
         name={MESSAGES_ROUTES.MESSAGES_NAVIGATOR}
-        options={hideHeaderOptions}
+        options={{ ...hideHeaderOptions, gestureEnabled: false }}
         component={MessagesStackNavigator}
       />
       {/* This screen is outside the MessagesNavigator to change gesture and transion behaviour. */}
@@ -162,7 +162,7 @@ const AuthenticatedStackNavigator = () => {
       />
       <Stack.Screen
         name={SERVICES_ROUTES.SERVICES_NAVIGATOR}
-        options={{ ...hideHeaderOptions, gestureEnabled: isGestureEnabled }}
+        options={hideHeaderOptions}
         component={ServicesNavigator}
       />
       {/* This screen is outside the ServicesNavigator to change gesture and transion behaviour. */}
