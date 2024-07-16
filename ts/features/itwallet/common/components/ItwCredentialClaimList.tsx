@@ -4,7 +4,6 @@ import { parseClaims, sortClaims } from "../utils/itwClaimsUtils";
 import { StoredCredential } from "../utils/itwTypesUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 import { ItwReleaserName } from "./ItwReleaserName";
-import { ItwPidAssuranceLevel } from "./ItwPidAssuranceLevel";
 
 /**
  * This component renders the list of claims for a credential.
@@ -30,7 +29,6 @@ export const ItwCredentialClaimsList = ({
         </View>
       ))}
       <ItwReleaserName credential={data} />
-      <ItwPidAssuranceLevel credential={data} />
     </>
   );
 };

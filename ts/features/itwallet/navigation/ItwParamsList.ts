@@ -1,6 +1,7 @@
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
+  [ITW_ROUTES.ONBOARDING]: undefined;
   // DISCOVERY
   [ITW_ROUTES.DISCOVERY.INFO]: undefined;
   // IDENTIFICATION

@@ -356,9 +356,9 @@ profile:
           title: Elimina il tuo profilo
           description: Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento.
           banner: Il tuo profilo sarà eliminato definitivamente entro 30 giorni dalla richiesta.
-          body: 
+          body:
             p1: Se decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.
-            p2: 
+            p2:
               firstPart: "Eventuali bonus o sconti ottenuti tramite l'app IO "
               lastPart: non saranno più accessibili.
             p3: Potrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova registrazione tramite SPID o CIE.
@@ -390,11 +390,11 @@ profile:
             item3: il testo dei Messaggi che hai ricevuto;
             item4: le tue preferenze di notifica.
           paragraph1: Le informazioni saranno scaricate in formato YAML, un formato standard che in informatica consente lo scambio di dati fra applicazioni diverse.
-          paragraph2: 
+          paragraph2:
             part1: "Riceverai un "
             part2: "messaggio su IO "
-            part3: in cui sono presenti un link e una password validi per 15 giorni. 
-          paragraph3: 
+            part3: in cui sono presenti un link e una password validi per 15 giorni.
+          paragraph3:
             part1: Per maggiori informazioni consulta l’
             link: Informativa privacy di IO.
         alert:
@@ -3187,8 +3187,9 @@ features:
       tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()
     identification:
       mode:
-        title: Con quale metodo vuoi identificarti?
-        header: Metodi disponibili
+        title: Attiva IT Wallet con la tua identità digitale
+        description: È un passaggio necessario solo la prima volta per garantire la sicurezza dei tuoi dati.
+        header: Scegli come identificarti
         method:
           spid:
             title: SPID
@@ -3199,6 +3200,7 @@ features:
           cieId:
             title: CieID
             subtitle: Usa credenziali e app CieID
+        privacy: Identificandoti dichiari di aver letto e compreso l’[Informativa Privacy]() di **Istituto Poligrafico e Zecca dello Stato**.
       nfc:
         title: Attiva l'NFC per continuare
         description: La funzionalità NFC permette al dispositivo di leggere la tua CIE.
