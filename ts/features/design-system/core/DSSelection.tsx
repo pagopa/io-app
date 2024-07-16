@@ -13,7 +13,6 @@ import {
   RadioGroup,
   RadioItem,
   SwitchLabel,
-  VSpacer,
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
