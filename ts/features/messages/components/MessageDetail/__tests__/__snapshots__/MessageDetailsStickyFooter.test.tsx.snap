@@ -454,7 +454,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                   }
                                 }
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.3}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1062,7 +1062,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                   }
                                 }
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.3}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -2121,7 +2121,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                   }
                                 }
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.3}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -3588,7 +3588,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                   }
                                 }
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.3}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -4081,7 +4081,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                   }
                                 }
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.3}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
