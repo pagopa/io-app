@@ -25,6 +25,10 @@ import {
   isArchivingInSchedulingModeSelector
 } from "../../features/messages/store/reducers/archiving";
 import { resetMessageArchivingAction } from "../../features/messages/store/actions/archiving";
+import {
+  isDesignSystemEnabledSelector,
+  isNewHomeSectionEnabledSelector
+} from "../../store/reducers/persistedPreferences";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
@@ -84,6 +88,10 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   const navigation = useIONavigation();
   const store = useIOStore();
 
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  const isNewHomeSectionEnabled = useIOSelector(
+    isNewHomeSectionEnabledSelector
+  );
   const isNewWalletSectionEnabled = useIOSelector(
     isNewPaymentSectionEnabledSelector
   );
@@ -94,15 +102,17 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
 
   const canNavigateIfIsArchivingCallback = useCallback(() => {
     const state = store.getState();
-    // If the system is busy archiving or restoring messages, do not start a search
+    // If the system is busy archiving or restoring messages,
+    // a new action (e.g. searching or navigating to settings) cannot be initiated
     const isProcessingArchiveQueue = isArchivingInProcessingModeSelector(state);
     if (isProcessingArchiveQueue) {
       return false;
     }
-    // If the user was choosing which messages to archive/restore, disable it
-    // before starting the search, since the bottom tab bar is hidden and the
-    // search may trigger a navigation flow that leads back to another main
-    // screen tab details with no such tab bar shown
+    // If the user was choosing which messages to archive/restore,
+    // disable it before starting a new action (e.g. searching or
+    // navigating to settings), as the tab bar at the bottom is
+    // hidden and the new action could trigger a navigation flow back
+    // to another tab on the main screen without this bar being displayed.
     const isSchedulingArchiving = isArchivingInSchedulingModeSelector(state);
     if (isSchedulingArchiving) {
       // Auto-reset does not provide feedback to the user
@@ -113,9 +123,19 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
 
   const messageSearchCallback = useCallback(() => {
     if (canNavigateIfIsArchivingCallback()) {
-      dispatch(searchMessagesEnabled(true));
+      if (isDesignSystemEnabled && isNewHomeSectionEnabled) {
+        navigation.navigate(MESSAGES_ROUTES.MESSAGES_SEARCH);
+      } else {
+        dispatch(searchMessagesEnabled(true));
+      }
     }
-  }, [canNavigateIfIsArchivingCallback, dispatch]);
+  }, [
+    canNavigateIfIsArchivingCallback,
+    dispatch,
+    isDesignSystemEnabled,
+    isNewHomeSectionEnabled,
+    navigation
+  ]);
 
   const navigateToSettingMainScreen = useCallback(() => {
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {

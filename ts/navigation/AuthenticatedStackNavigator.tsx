@@ -83,6 +83,7 @@ import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import FIMS_LEGACY_ROUTES from "../features/fimsLegacy/navigation/routes";
 import { SearchScreen } from "../features/services/search/screens/SearchScreen";
 import { FIMS_ROUTES, FimsNavigator } from "../features/fims/common/navigation";
+import { MessagesSearchScreen } from "../features/messages/screens/MessagesSearchScreen";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -144,6 +145,21 @@ const AuthenticatedStackNavigator = () => {
         name={MESSAGES_ROUTES.MESSAGES_NAVIGATOR}
         options={hideHeaderOptions}
         component={MessagesStackNavigator}
+      />
+      {/* This screen is outside the MessagesNavigator to change gesture and transion behaviour. */}
+      <Stack.Screen
+        name={MESSAGES_ROUTES.MESSAGES_SEARCH}
+        component={MessagesSearchScreen}
+        options={{
+          ...hideHeaderOptions,
+          gestureEnabled: false,
+          ...Platform.select({
+            ios: {
+              animationEnabled: false
+            },
+            default: undefined
+          })
+        }}
       />
       {isNewWalletSectionEnabled ? (
         <Stack.Screen

@@ -297,6 +297,8 @@ profile:
     description: Use the barcode to communicate your fiscal code when asked.
     help: !include profile/profile_fiscal_code.md
     facSimile: FAC-SIMILE
+    copyCode: Copy fiscal code
+    codeCopied: Fiscal code copied!
   sections:
     spid: SPID PROFILE
   unknown: UNKNOWN
@@ -2022,6 +2024,13 @@ messages:
     restore:
       success: "Successfully unarchived."
       failure: "Failed to unarchive"
+  search:
+    emptyState:
+      title: "Enter at least three letters"
+    input:
+      cancel: "Cancel"
+      clear: "Erase"
+      placeholderShort: "Enter text"
 messageDetails:
   accessibilityAttachmentIcon: "Includes attachments"
   contextualHelpTitle: Message details
