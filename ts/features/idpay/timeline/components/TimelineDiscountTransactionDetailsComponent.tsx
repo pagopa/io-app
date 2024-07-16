@@ -1,8 +1,8 @@
+import { Alert, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Alert, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import {
   TransactionDetailDTO,
   StatusEnum as TransactionStatusEnum
@@ -23,8 +23,6 @@ type Props = {
 const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
   const { transaction } = props;
 
-  const alertViewRef = React.createRef<View>();
-
   const statusAlertComponent = pipe(
     transaction.status,
     O.of,
@@ -34,7 +32,6 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
           return (
             <>
               <Alert
-                viewRef={alertViewRef}
                 variant="error"
                 content={I18n.t(
                   "idpay.initiative.operationDetails.discount.details.alerts.CANCELLED"
