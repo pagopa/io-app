@@ -1,11 +1,11 @@
+import { Alert } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
 import React, { ComponentProps, useCallback } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
-import { Alert } from "@pagopa/io-app-design-system";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import I18n from "../../i18n";
 import {
@@ -68,7 +68,7 @@ export const InnerSectionStatus = (
           fullWidth
           content={`${sectionStatus.message[locale]}`}
           variant={statusVariantMap[sectionStatus.level]}
-          viewRef={viewRef}
+          ref={viewRef}
         />
       ),
       webUrl => (
@@ -80,7 +80,7 @@ export const InnerSectionStatus = (
           variant={statusVariantMap[sectionStatus.level]}
           action={I18n.t("global.sectionStatus.moreInfo")}
           onPress={() => openWebUrl(webUrl)}
-          viewRef={viewRef}
+          ref={viewRef}
         />
       )
     )

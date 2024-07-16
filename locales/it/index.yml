@@ -297,6 +297,8 @@ profile:
     description: Usa il codice a barre per comunicare il tuo codice fiscale quando ti viene richiesto.
     help: !include profile/profile_fiscal_code.md
     facSimile: FAC-SIMILE
+    copyCode: Copia codice fiscale
+    codeCopied: Codice copiato!
   sections:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
@@ -2021,6 +2023,13 @@ messages:
     restore:
       success: "Ripristino effettuato."
       failure: "Il ripristino non è andato a buon fine"
+  search:
+    emptyState:
+      title: "Inserisci almeno tre caratteri"
+    input:
+      cancel: "Annulla"
+      clear: "Cancella"
+      placeholderShort: "Inserisci testo"
 messageDetails:
   accessibilityAttachmentIcon: "Contiene allegati"
   contextualHelpTitle: Dettagli del messaggio
@@ -2130,6 +2139,7 @@ services:
         title: "Preferenze salvate!"
         body: "Potrai sempre vedere la lista dei servizi disponibili visitando la sezione Servizi."
         cta: "Vedi i servizi disponibili"
+      banner: Puoi modificare la tua scelta in ogni momento da Profilo > Preferenze
       oldUsersBadge: "Impostazione attuale"
       choiceLabel: "Hai scelto la"
       unavailable: "Non selezionato"

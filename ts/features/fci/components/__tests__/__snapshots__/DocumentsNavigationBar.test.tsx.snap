@@ -158,6 +158,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     color="black"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -165,6 +166,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -320,6 +322,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     color="black"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -327,6 +330,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
