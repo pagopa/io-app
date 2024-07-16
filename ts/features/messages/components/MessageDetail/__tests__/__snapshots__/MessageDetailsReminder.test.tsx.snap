@@ -1528,11 +1528,11 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                             style={
                               [
                                 {
-                                  "marginTop": -5,
+                                  "marginTop": -10,
                                 },
                                 {
                                   "flex": 1,
-                                  "marginBottom": -4,
+                                  "marginBottom": -6,
                                 },
                               ]
                             }
@@ -1543,6 +1543,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                               color="warning-850"
                               defaultColor="black"
                               defaultWeight="Bold"
+                              dynamicTypeRamp="footnote"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -1550,6 +1551,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -2042,11 +2044,11 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                           style={
                             [
                               {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               {
                                 "flex": 1,
-                                "marginBottom": -4,
+                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -2057,6 +2059,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -2064,6 +2067,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {

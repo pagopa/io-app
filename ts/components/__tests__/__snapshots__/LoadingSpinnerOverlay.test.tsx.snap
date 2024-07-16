@@ -235,6 +235,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
           color="bluegreyDark"
           defaultColor="bluegreyDark"
           defaultWeight="Semibold"
+          dynamicTypeRamp="title2"
           font="TitilliumSansPro"
           fontStyle={
             {
@@ -242,6 +243,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
               "lineHeight": 34,
             }
           }
+          maxFontSizeMultiplier={1.25}
           style={
             [
               {
@@ -662,6 +664,7 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
           color="bluegreyDark"
           defaultColor="bluegreyDark"
           defaultWeight="Semibold"
+          dynamicTypeRamp="title2"
           font="TitilliumSansPro"
           fontStyle={
             {
@@ -669,6 +672,7 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
               "lineHeight": 34,
             }
           }
+          maxFontSizeMultiplier={1.25}
           style={
             [
               {

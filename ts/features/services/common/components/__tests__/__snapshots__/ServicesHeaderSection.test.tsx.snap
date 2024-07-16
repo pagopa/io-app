@@ -273,6 +273,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
           color="bluegreyDark"
           defaultColor="bluegreyDark"
           defaultWeight="Semibold"
+          dynamicTypeRamp="title2"
           font="TitilliumSansPro"
           fontStyle={
             {
@@ -280,6 +281,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
               "lineHeight": 34,
             }
           }
+          maxFontSizeMultiplier={1.25}
           style={
             [
               {
@@ -303,6 +305,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
           color="grey-700"
           defaultColor="blue"
           defaultWeight="Bold"
+          dynamicTypeRamp="footnote"
           font="TitilliumSansPro"
           fontSize="regular"
           fontStyle={
@@ -311,6 +314,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
               "lineHeight": 21,
             }
           }
+          maxFontSizeMultiplier={1.25}
           style={
             [
               {

@@ -1218,6 +1218,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'er
                           color="bluegreyDark"
                           defaultColor="bluegreyDark"
                           defaultWeight="Semibold"
+                          dynamicTypeRamp="title2"
                           font="TitilliumSansPro"
                           fontStyle={
                             {
@@ -1225,6 +1226,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'er
                               "lineHeight": 34,
                             }
                           }
+                          maxFontSizeMultiplier={1.25}
                           style={
                             [
                               {
@@ -2399,6 +2401,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'up
                           color="bluegreyDark"
                           defaultColor="bluegreyDark"
                           defaultWeight="Semibold"
+                          dynamicTypeRamp="title2"
                           font="TitilliumSansPro"
                           fontStyle={
                             {
@@ -2406,6 +2409,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'up
                               "lineHeight": 34,
                             }
                           }
+                          maxFontSizeMultiplier={1.25}
                           style={
                             [
                               {
@@ -2439,6 +2443,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'up
                           color="grey-650"
                           defaultColor="blue"
                           defaultWeight="Bold"
+                          dynamicTypeRamp="footnote"
                           font="TitilliumSansPro"
                           fontStyle={
                             {
@@ -2446,6 +2451,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'up
                               "lineHeight": 21,
                             }
                           }
+                          maxFontSizeMultiplier={1.25}
                           style={
                             [
                               {

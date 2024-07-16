@@ -516,6 +516,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -523,6 +524,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -556,6 +558,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -563,6 +566,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -1116,6 +1120,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -1123,6 +1128,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -1258,7 +1264,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                           }
                                         }
                                         importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.3}
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2503,6 +2509,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -2510,6 +2517,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -2543,6 +2551,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -2550,6 +2559,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -3446,6 +3456,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -3453,6 +3464,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -3486,6 +3498,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -3493,6 +3506,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -4389,6 +4403,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -4396,6 +4411,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -4429,6 +4445,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -4436,6 +4453,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -5332,6 +5350,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -5339,6 +5358,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -5372,6 +5392,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -5379,6 +5400,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -6275,6 +6297,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -6282,6 +6305,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -6315,6 +6339,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -6322,6 +6347,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -6875,6 +6901,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -6882,6 +6909,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -7017,7 +7045,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                           }
                                         }
                                         importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.3}
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -8262,6 +8290,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -8269,6 +8298,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -8302,6 +8332,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -8309,6 +8340,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -9205,6 +9237,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -9212,6 +9245,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -9245,6 +9279,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -9252,6 +9287,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -10148,6 +10184,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -10155,6 +10192,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -10188,6 +10226,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -10195,6 +10234,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -11091,6 +11131,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -11098,6 +11139,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -11131,6 +11173,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -11138,6 +11181,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {

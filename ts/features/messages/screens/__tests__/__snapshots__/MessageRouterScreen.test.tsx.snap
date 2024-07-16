@@ -419,6 +419,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -426,6 +427,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -468,6 +470,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                             color="bluegrey"
                             defaultColor="bluegrey"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="body"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -475,6 +478,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
@@ -1289,6 +1293,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -1296,6 +1301,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -1338,6 +1344,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                             color="bluegrey"
                             defaultColor="bluegrey"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="body"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -1345,6 +1352,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
@@ -2163,6 +2171,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -2170,6 +2179,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -2304,7 +2314,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                           }
                                         }
                                         importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.3}
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -3243,6 +3253,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -3250,6 +3261,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -3292,6 +3304,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                             color="bluegrey"
                             defaultColor="bluegrey"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="body"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -3299,6 +3312,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
@@ -4113,6 +4127,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -4120,6 +4135,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -4162,6 +4178,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                             color="bluegrey"
                             defaultColor="bluegrey"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="body"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -4169,6 +4186,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {

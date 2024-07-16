@@ -9,6 +9,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     color="black"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="largeTitle"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -16,6 +17,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
         "lineHeight": 43,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -61,6 +63,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     color="black"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="title1"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -68,6 +71,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
         "lineHeight": 40,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -113,6 +117,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     color="bluegreyDark"
     defaultColor="bluegreyDark"
     defaultWeight="Semibold"
+    dynamicTypeRamp="title2"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -120,6 +125,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
         "lineHeight": 34,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -165,6 +171,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     color="bluegreyDark"
     defaultColor="bluegreyDark"
     defaultWeight="Semibold"
+    dynamicTypeRamp="title3"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -172,6 +179,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -217,6 +225,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     color="black"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="subheadline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -226,6 +235,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
         "textTransform": "uppercase",
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -273,6 +283,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     color="black"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -280,6 +291,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -325,6 +337,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -332,6 +345,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -470,6 +484,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
         color="bluegrey"
         defaultColor="bluegrey"
         defaultWeight="Regular"
+        dynamicTypeRamp="body"
         font="TitilliumSansPro"
         fontStyle={
           {
@@ -477,6 +492,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
             "lineHeight": 24,
           }
         }
+        maxFontSizeMultiplier={1.25}
         style={
           [
             {
@@ -543,6 +559,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
         color="blue"
         defaultColor="blue"
         defaultWeight="Semibold"
+        dynamicTypeRamp="footnote"
         font="TitilliumSansPro"
         fontStyle={
           {
@@ -551,6 +568,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
             "textDecorationLine": "underline",
           }
         }
+        maxFontSizeMultiplier={1.25}
         numberOfLines={1}
         onPress={[Function]}
         style={
@@ -620,6 +638,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
         color="blue"
         defaultColor="blue"
         defaultWeight="Semibold"
+        dynamicTypeRamp="footnote"
         font="TitilliumSansPro"
         fontStyle={
           {
@@ -628,6 +647,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
             "textDecorationLine": "underline",
           }
         }
+        maxFontSizeMultiplier={1.25}
         numberOfLines={1}
         onPress={[Function]}
         style={
