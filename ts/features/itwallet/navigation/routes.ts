@@ -1,5 +1,6 @@
 export const ITW_ROUTES = {
   MAIN: "ITW_MAIN" as const,
+  ONBOARDING: "ONBOARDING" as const,
   DISCOVERY: {
     INFO: "ITW_DISCOVERY_INFO"
   } as const,

@@ -11,7 +11,6 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { ItwPidAssuranceLevel } from "../../common/components/ItwPidAssuranceLevel";
 import { ItwReleaserName } from "../../common/components/ItwReleaserName";
 import {
   ItWalletError,
@@ -68,7 +67,6 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
 
         <ContentWrapper>
           <ItwClaimsSections credential={eid} />
-          <ItwPidAssuranceLevel credential={eid} />
           <Divider />
           <ItwReleaserName credential={eid} />
           <VSpacer size={40} />
