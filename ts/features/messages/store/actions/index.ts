@@ -315,6 +315,10 @@ export const setShownMessageCategoryAction = createStandardAction(
   "SET_SHOWN_MESSAGE_CATEGORY"
 )<MessageListCategory>();
 
+export const requestAutomaticMessagesRefresh = createStandardAction(
+  "REQUEST_AUOMATIC_MESSAGE_REFRESH"
+)<MessageListCategory>();
+
 export type MessagesActions = ActionType<
   | typeof reloadAllMessages
   | typeof loadNextPageMessages
@@ -351,4 +355,5 @@ export type MessagesActions = ActionType<
   | typeof startProcessingMessageArchivingAction
   | typeof removeScheduledMessageArchivingAction
   | typeof interruptMessageArchivingProcessingAction
+  | typeof requestAutomaticMessagesRefresh
 >;
