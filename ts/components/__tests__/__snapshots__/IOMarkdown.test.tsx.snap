@@ -7,20 +7,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     color="black"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="largeTitle"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 31,
         "lineHeight": 43,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 31,
           "lineHeight": 43,
         },
-        Object {
+        {
           "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -34,7 +36,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 8,
       }
     }
@@ -44,20 +46,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     color="black"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="title1"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 28,
         "lineHeight": 40,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 28,
           "lineHeight": 40,
         },
-        Object {
+        {
           "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -71,7 +75,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 8,
       }
     }
@@ -81,20 +85,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -107,7 +113,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     This is an example of 
     <Text
       style={
-        Object {
+        {
           "fontWeight": "800",
         }
       }
@@ -117,7 +123,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
      and this is an example of 
     <Text
       style={
-        Object {
+        {
           "fontStyle": "italic",
         }
       }
@@ -128,7 +134,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 8,
       }
     }
@@ -138,20 +144,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -165,14 +173,14 @@ exports[`IOMarkdown Should match snapshot 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "flexDirection": "row",
       }
     }
   >
     <View
       style={
-        Object {
+        {
           "width": 8,
         }
       }
@@ -183,7 +191,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "flexDirection": "row",
           }
         }
@@ -193,20 +201,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
+          dynamicTypeRamp="body"
           font="TitilliumSansPro"
           fontStyle={
-            Object {
+            {
               "fontSize": 16,
               "lineHeight": 24,
             }
           }
+          maxFontSizeMultiplier={1.25}
           style={
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               },
-              Object {
+              {
                 "color": "#475A6D",
                 "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
@@ -220,7 +230,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
         </Text>
         <View
           style={
-            Object {
+            {
               "width": 8,
             }
           }
@@ -231,20 +241,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             color="bluegrey"
             defaultColor="bluegrey"
             defaultWeight="Regular"
+            dynamicTypeRamp="body"
             font="TitilliumSansPro"
             fontStyle={
-              Object {
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               }
             }
+            maxFontSizeMultiplier={1.25}
             style={
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 16,
                   "lineHeight": 24,
                 },
-                Object {
+                {
                   "color": "#475A6D",
                   "fontFamily": "Titillium Sans Pro",
                   "fontStyle": "normal",
@@ -260,7 +272,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "flexDirection": "row",
           }
         }
@@ -270,20 +282,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
+          dynamicTypeRamp="body"
           font="TitilliumSansPro"
           fontStyle={
-            Object {
+            {
               "fontSize": 16,
               "lineHeight": 24,
             }
           }
+          maxFontSizeMultiplier={1.25}
           style={
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               },
-              Object {
+              {
                 "color": "#475A6D",
                 "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
@@ -297,7 +311,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
         </Text>
         <View
           style={
-            Object {
+            {
               "width": 8,
             }
           }
@@ -308,20 +322,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             color="bluegrey"
             defaultColor="bluegrey"
             defaultWeight="Regular"
+            dynamicTypeRamp="body"
             font="TitilliumSansPro"
             fontStyle={
-              Object {
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               }
             }
+            maxFontSizeMultiplier={1.25}
             style={
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 16,
                   "lineHeight": 24,
                 },
-                Object {
+                {
                   "color": "#475A6D",
                   "fontFamily": "Titillium Sans Pro",
                   "fontStyle": "normal",
@@ -337,7 +353,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "flexDirection": "row",
           }
         }
@@ -347,20 +363,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
+          dynamicTypeRamp="body"
           font="TitilliumSansPro"
           fontStyle={
-            Object {
+            {
               "fontSize": 16,
               "lineHeight": 24,
             }
           }
+          maxFontSizeMultiplier={1.25}
           style={
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               },
-              Object {
+              {
                 "color": "#475A6D",
                 "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
@@ -374,7 +392,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
         </Text>
         <View
           style={
-            Object {
+            {
               "width": 8,
             }
           }
@@ -385,20 +403,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             color="bluegrey"
             defaultColor="bluegrey"
             defaultWeight="Regular"
+            dynamicTypeRamp="body"
             font="TitilliumSansPro"
             fontStyle={
-              Object {
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               }
             }
+            maxFontSizeMultiplier={1.25}
             style={
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 16,
                   "lineHeight": 24,
                 },
-                Object {
+                {
                   "color": "#475A6D",
                   "fontFamily": "Titillium Sans Pro",
                   "fontStyle": "normal",
@@ -416,7 +436,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "height": 8,
       }
     }
@@ -426,20 +446,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -453,14 +475,14 @@ exports[`IOMarkdown Should match snapshot 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "flexDirection": "row",
       }
     }
   >
     <View
       style={
-        Object {
+        {
           "width": 8,
         }
       }
@@ -471,7 +493,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "flexDirection": "row",
           }
         }
@@ -481,20 +503,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
+          dynamicTypeRamp="body"
           font="TitilliumSansPro"
           fontStyle={
-            Object {
+            {
               "fontSize": 16,
               "lineHeight": 24,
             }
           }
+          maxFontSizeMultiplier={1.25}
           style={
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               },
-              Object {
+              {
                 "color": "#475A6D",
                 "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
@@ -509,7 +533,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
         </Text>
         <View
           style={
-            Object {
+            {
               "width": 8,
             }
           }
@@ -520,20 +544,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             color="bluegrey"
             defaultColor="bluegrey"
             defaultWeight="Regular"
+            dynamicTypeRamp="body"
             font="TitilliumSansPro"
             fontStyle={
-              Object {
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               }
             }
+            maxFontSizeMultiplier={1.25}
             style={
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 16,
                   "lineHeight": 24,
                 },
-                Object {
+                {
                   "color": "#475A6D",
                   "fontFamily": "Titillium Sans Pro",
                   "fontStyle": "normal",
@@ -549,7 +575,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "flexDirection": "row",
           }
         }
@@ -559,20 +585,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
+          dynamicTypeRamp="body"
           font="TitilliumSansPro"
           fontStyle={
-            Object {
+            {
               "fontSize": 16,
               "lineHeight": 24,
             }
           }
+          maxFontSizeMultiplier={1.25}
           style={
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               },
-              Object {
+              {
                 "color": "#475A6D",
                 "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
@@ -587,7 +615,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
         </Text>
         <View
           style={
-            Object {
+            {
               "width": 8,
             }
           }
@@ -598,20 +626,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             color="bluegrey"
             defaultColor="bluegrey"
             defaultWeight="Regular"
+            dynamicTypeRamp="body"
             font="TitilliumSansPro"
             fontStyle={
-              Object {
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               }
             }
+            maxFontSizeMultiplier={1.25}
             style={
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 16,
                   "lineHeight": 24,
                 },
-                Object {
+                {
                   "color": "#475A6D",
                   "fontFamily": "Titillium Sans Pro",
                   "fontStyle": "normal",
@@ -627,7 +657,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "flexDirection": "row",
           }
         }
@@ -637,20 +667,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
+          dynamicTypeRamp="body"
           font="TitilliumSansPro"
           fontStyle={
-            Object {
+            {
               "fontSize": 16,
               "lineHeight": 24,
             }
           }
+          maxFontSizeMultiplier={1.25}
           style={
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               },
-              Object {
+              {
                 "color": "#475A6D",
                 "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
@@ -665,7 +697,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
         </Text>
         <View
           style={
-            Object {
+            {
               "width": 8,
             }
           }
@@ -676,20 +708,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             color="bluegrey"
             defaultColor="bluegrey"
             defaultWeight="Regular"
+            dynamicTypeRamp="body"
             font="TitilliumSansPro"
             fontStyle={
-              Object {
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               }
             }
+            maxFontSizeMultiplier={1.25}
             style={
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 16,
                   "lineHeight": 24,
                 },
-                Object {
+                {
                   "color": "#475A6D",
                   "fontFamily": "Titillium Sans Pro",
                   "fontStyle": "normal",
@@ -707,7 +741,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "height": 8,
       }
     }
@@ -717,20 +751,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -747,23 +783,25 @@ exports[`IOMarkdown Should match snapshot 1`] = `
       color="blue"
       defaultColor="blue"
       defaultWeight="Semibold"
+      dynamicTypeRamp="footnote"
       font="TitilliumSansPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 16,
           "lineHeight": 24,
           "textDecorationLine": "underline",
         }
       }
+      maxFontSizeMultiplier={1.25}
       onPress={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 16,
             "lineHeight": 24,
             "textDecorationLine": "underline",
           },
-          Object {
+          {
             "color": "#0073E6",
             "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
@@ -778,7 +816,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 8,
       }
     }
@@ -788,20 +826,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
@@ -817,7 +857,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
       accessibilityIgnoresInvertColors={true}
       accessibilityLabel="Alt text"
       source={
-        Object {
+        {
           "uri": "https://via.placeholder.com/150",
         }
       }
@@ -825,7 +865,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "height": 8,
       }
     }
@@ -835,20 +875,22 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
