@@ -498,6 +498,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                               color="grey-700"
                               defaultColor="black"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="caption2"
                               ellipsizeMode="tail"
                               font="TitilliumSansPro"
                               fontStyle={
@@ -505,6 +506,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                                   "fontSize": 12,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               numberOfLines={1}
                               style={
                                 [
