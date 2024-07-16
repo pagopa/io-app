@@ -583,6 +583,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -590,6 +591,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -617,6 +619,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
@@ -625,6 +628,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -659,6 +663,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -666,6 +671,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
@@ -691,6 +697,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -699,6 +706,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -722,6 +730,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="caption1"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -729,6 +738,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                           "textTransform": "uppercase",
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -752,6 +762,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -760,6 +771,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -1596,6 +1608,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -1603,6 +1616,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -1630,6 +1644,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
@@ -1638,6 +1653,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -1672,6 +1688,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -1679,6 +1696,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
@@ -1704,6 +1722,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -1712,6 +1731,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -1735,6 +1755,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="caption1"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -1742,6 +1763,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                           "textTransform": "uppercase",
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -1765,6 +1787,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -1773,6 +1796,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -2785,6 +2809,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -2792,6 +2817,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -2819,6 +2845,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
@@ -2827,6 +2854,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -2861,6 +2889,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -2868,6 +2897,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
@@ -2893,6 +2923,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -2901,6 +2932,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -2924,6 +2956,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="caption1"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -2931,6 +2964,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "textTransform": "uppercase",
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -2954,6 +2988,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -2962,6 +2997,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -3829,6 +3865,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -3836,6 +3873,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -3863,6 +3901,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
@@ -3871,6 +3910,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -3905,6 +3945,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -3912,6 +3953,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
@@ -3937,6 +3979,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -3945,6 +3988,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -3968,6 +4012,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="caption1"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -3975,6 +4020,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "textTransform": "uppercase",
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -3998,6 +4044,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -4006,6 +4053,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -4928,6 +4976,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -4935,6 +4984,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -4962,6 +5012,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
@@ -4970,6 +5021,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -5004,6 +5056,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -5011,6 +5064,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
@@ -5036,6 +5090,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -5044,6 +5099,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -5067,6 +5123,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="caption1"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -5074,6 +5131,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "textTransform": "uppercase",
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -5097,6 +5155,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -5105,6 +5164,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -5847,6 +5907,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -5854,6 +5915,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -5881,6 +5943,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
@@ -5889,6 +5952,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -5923,6 +5987,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -5930,6 +5995,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
@@ -5955,6 +6021,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -5963,6 +6030,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -5986,6 +6054,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="caption1"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -5993,6 +6062,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "textTransform": "uppercase",
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -6016,6 +6086,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -6024,6 +6095,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -6700,6 +6772,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -6707,6 +6780,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -6734,6 +6808,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
@@ -6742,6 +6817,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -6776,6 +6852,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -6783,6 +6860,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
@@ -6808,6 +6886,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -6816,6 +6895,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -6839,6 +6919,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="caption1"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -6846,6 +6927,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "textTransform": "uppercase",
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -6869,6 +6951,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -6877,6 +6960,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -7498,6 +7582,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -7505,6 +7590,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -7532,6 +7618,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
@@ -7540,6 +7627,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -7574,6 +7662,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -7581,6 +7670,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
@@ -7606,6 +7696,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -7614,6 +7705,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -7637,6 +7729,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="caption1"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -7644,6 +7737,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "textTransform": "uppercase",
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -7667,6 +7761,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -7675,6 +7770,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {

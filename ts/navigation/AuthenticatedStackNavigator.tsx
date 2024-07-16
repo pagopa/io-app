@@ -46,8 +46,6 @@ import {
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import { WalletNavigator as NewWalletNavigator } from "../features/newWallet/navigation";
-import { WalletRoutes as NewWalletRoutes } from "../features/newWallet/navigation/routes";
 import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
 import { PaymentsBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
 import { PaymentsCheckoutNavigator } from "../features/payments/checkout/navigation/navigator";
@@ -73,8 +71,7 @@ import {
   isCGNEnabledSelector,
   isFciEnabledSelector,
   isFIMSEnabledSelector,
-  isIdPayEnabledSelector,
-  isNewPaymentSectionEnabledSelector
+  isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isItWalletTestEnabledSelector } from "../store/reducers/persistedPreferences";
 import { isGestureEnabled } from "../utils/navigation";
@@ -83,6 +80,7 @@ import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import FIMS_LEGACY_ROUTES from "../features/fimsLegacy/navigation/routes";
 import { SearchScreen } from "../features/services/search/screens/SearchScreen";
 import { FIMS_ROUTES, FimsNavigator } from "../features/fims/common/navigation";
+import { MessagesSearchScreen } from "../features/messages/screens/MessagesSearchScreen";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -103,9 +101,6 @@ const AuthenticatedStackNavigator = () => {
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewPaymentSectionEnabledSelector
-  );
   const isItWalletEnabled = useIOSelector(isItWalletTestEnabledSelector);
 
   return (
@@ -145,19 +140,26 @@ const AuthenticatedStackNavigator = () => {
         options={hideHeaderOptions}
         component={MessagesStackNavigator}
       />
-      {isNewWalletSectionEnabled ? (
-        <Stack.Screen
-          name={NewWalletRoutes.WALLET_NAVIGATOR}
-          options={hideHeaderOptions}
-          component={NewWalletNavigator}
-        />
-      ) : (
-        <Stack.Screen
-          name={ROUTES.WALLET_NAVIGATOR}
-          options={hideHeaderOptions}
-          component={WalletNavigator}
-        />
-      )}
+      {/* This screen is outside the MessagesNavigator to change gesture and transion behaviour. */}
+      <Stack.Screen
+        name={MESSAGES_ROUTES.MESSAGES_SEARCH}
+        component={MessagesSearchScreen}
+        options={{
+          ...hideHeaderOptions,
+          gestureEnabled: false,
+          ...Platform.select({
+            ios: {
+              animationEnabled: false
+            },
+            default: undefined
+          })
+        }}
+      />
+      <Stack.Screen
+        name={ROUTES.WALLET_NAVIGATOR}
+        options={hideHeaderOptions}
+        component={WalletNavigator}
+      />
       <Stack.Screen
         name={SERVICES_ROUTES.SERVICES_NAVIGATOR}
         options={{ ...hideHeaderOptions, gestureEnabled: isGestureEnabled }}
@@ -181,7 +183,10 @@ const AuthenticatedStackNavigator = () => {
 
       <Stack.Screen
         name={ROUTES.PROFILE_NAVIGATOR}
-        options={hideHeaderOptions}
+        options={{
+          ...hideHeaderOptions,
+          ...TransitionPresets.SlideFromRightIOS
+        }}
         component={ProfileStackNavigator}
       />
 
