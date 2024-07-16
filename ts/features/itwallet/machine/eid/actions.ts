@@ -8,10 +8,8 @@ import ROUTES from "../../../../navigation/routes";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwLifecycleStateUpdated } from "../../lifecycle/store/actions";
 import { ItwLifecycleState } from "../../lifecycle/store/reducers";
-import {
-  itwStoreIntegrityKeyTag,
-  itwStorePid
-} from "../../issuance/store/actions";
+import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
+import { itwCredentialsStore } from "../../credentials/store/actions";
 import { assert } from "../../../../utils/assert";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -123,7 +121,7 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assert(context.eid, "eID is undefined");
 
-    dispatch(itwStorePid(context.eid));
+    dispatch(itwCredentialsStore(context.eid));
   },
 
   requestAssistance: () => {}
