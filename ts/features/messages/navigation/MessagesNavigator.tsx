@@ -2,7 +2,6 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { EUCovidCertStackNavigator } from "../../euCovidCert/navigation/navigator";
 import EUCOVIDCERT_ROUTES from "../../euCovidCert/navigation/routes";
-import LegacyMessageDetailScreen from "../screens/legacy/LegacyMessageDetailScreen";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { MessageCalendarScreen } from "../screens/MessageCalendarScreen";
 import { MessageRouterScreen } from "../screens/MessageRouterScreen";
@@ -11,8 +10,6 @@ import PN_ROUTES from "../../pn/navigation/routes";
 import { useIOSelector } from "../../../store/hooks";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
-import { LegacyMessageDetailAttachment } from "../screens/legacy/LegacyMessageAttachment";
-import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessagesParamsList } from "./params";
 import { MESSAGES_ROUTES } from "./routes";
@@ -20,7 +17,6 @@ import { MESSAGES_ROUTES } from "./routes";
 const Stack = createStackNavigator<MessagesParamsList>();
 
 export const MessagesStackNavigator = () => {
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isPnEnabled = useIOSelector(isPnEnabledSelector);
 
   return (
@@ -29,34 +25,23 @@ export const MessagesStackNavigator = () => {
       screenOptions={{
         gestureEnabled: isGestureEnabled,
         headerMode: "screen",
-        headerShown: isDesignSystemEnabled
+        headerShown: true
       }}
     >
       <Stack.Group>
         <Stack.Screen
           name={MESSAGES_ROUTES.MESSAGE_ROUTER}
           component={MessageRouterScreen}
-          options={{
-            headerShown: true
-          }}
         />
 
         <Stack.Screen
           name={MESSAGES_ROUTES.MESSAGE_DETAIL}
-          component={
-            isDesignSystemEnabled
-              ? MessageDetailsScreen
-              : LegacyMessageDetailScreen
-          }
+          component={MessageDetailsScreen}
         />
 
         <Stack.Screen
           name={MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT}
-          component={
-            isDesignSystemEnabled
-              ? MessageAttachmentScreen
-              : LegacyMessageDetailAttachment
-          }
+          component={MessageAttachmentScreen}
         />
 
         <Stack.Screen

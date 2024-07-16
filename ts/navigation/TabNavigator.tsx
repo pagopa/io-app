@@ -6,7 +6,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { makeFontStyleObject } from "../components/core/fonts";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
-import LegacyMessagesHomeScreen from "../features/messages/screens/legacy/LegacyMessagesHomeScreen";
 import { MessagesHomeScreen } from "../features/messages/screens/MessagesHomeScreen";
 import { WalletHomeScreen as NewWalletHomeScreen } from "../features/newWallet/screens/WalletHomeScreen";
 import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";
@@ -15,10 +14,7 @@ import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
-import {
-  isDesignSystemEnabledSelector,
-  isNewHomeSectionEnabledSelector
-} from "../store/reducers/persistedPreferences";
+import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
 import {
   isNewPaymentSectionEnabledSelector,
   isSettingsVisibleAndHideProfileSelector
@@ -64,9 +60,6 @@ export const MainTabNavigator = () => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isNewWalletSectionEnabled = useIOSelector(
     isNewPaymentSectionEnabledSelector
-  );
-  const isNewHomeSectionEnabled = useIOSelector(
-    isNewHomeSectionEnabledSelector
   );
 
   const isSettingsVisibleAndHideProfile = useIOSelector(
@@ -116,11 +109,7 @@ export const MainTabNavigator = () => {
       >
         <Tab.Screen
           name={MESSAGES_ROUTES.MESSAGES_HOME}
-          component={
-            isDesignSystemEnabled && isNewHomeSectionEnabled
-              ? MessagesHomeScreen
-              : LegacyMessagesHomeScreen
-          }
+          component={MessagesHomeScreen}
           options={{
             title: I18n.t("global.navigator.messages"),
             tabBarIcon: ({ color, focused }) => (
