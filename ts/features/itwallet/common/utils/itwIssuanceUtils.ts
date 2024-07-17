@@ -29,7 +29,7 @@ export const withEphemeralKey = async <R>(
   return fn(ephemeralContext).finally(() => deleteKey(keytag));
 };
 
-// TODO: read from env
+// TODO [SIW-1359]: get the correct urls for production
 const SPID_HINT = "https://demo.spid.gov.it";
 const CIE_HINT =
   "https://collaudo.idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO";
@@ -101,7 +101,7 @@ export async function getPid({
         issuerRequestUri,
         clientId,
         issuerConf,
-        idpHintsMap[identification.mode], // TODO: use idp ID to get the proper hint?
+        idpHintsMap[identification.mode], // TODO [SIW-1359]: pass the IDP id to the SPID hint
         redirectUri,
         authorizationContext
       );
