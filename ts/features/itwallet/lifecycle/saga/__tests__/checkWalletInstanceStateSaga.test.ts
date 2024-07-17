@@ -11,6 +11,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { itwRemoveIntegrityKeyTag } from "../../../issuance/store/actions";
 import { itwLifecycleStateUpdated } from "../../store/actions";
 import { getAttestation } from "../../../common/utils/itwAttestationUtils";
+import { ensureIntegrityServiceIsReady } from "../../../common/utils/itwIntegrityUtils";
 import { itwCredentialsWalletReset } from "../../../credentials/store/actions";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({
@@ -29,6 +30,7 @@ describe("checkWalletInstanceStateSaga", () => {
     };
     return expectSaga(checkWalletInstanceStateSaga)
       .withState(store)
+      .not.call.fn(ensureIntegrityServiceIsReady)
       .not.call.fn(getAttestation)
       .run();
   });
@@ -48,11 +50,13 @@ describe("checkWalletInstanceStateSaga", () => {
     return expectSaga(checkWalletInstanceStateSaga)
       .withState(store)
       .provide([
+        [matchers.call.fn(ensureIntegrityServiceIsReady), true],
         [
           matchers.call.fn(getAttestation),
           "aac6e82a-e27e-4293-9b55-94a9fab22763"
         ]
       ])
+      .call.fn(ensureIntegrityServiceIsReady)
       .call.fn(getAttestation)
       .not.put(itwRemoveIntegrityKeyTag())
       .not.put(itwCredentialsWalletReset())
@@ -74,6 +78,7 @@ describe("checkWalletInstanceStateSaga", () => {
     return expectSaga(checkWalletInstanceStateSaga)
       .withState(store)
       .provide([
+        [matchers.call.fn(ensureIntegrityServiceIsReady), true],
         [
           matchers.call.fn(getAttestation),
           throwError(
@@ -81,6 +86,7 @@ describe("checkWalletInstanceStateSaga", () => {
           )
         ]
       ])
+      .call.fn(ensureIntegrityServiceIsReady)
       .call.fn(getAttestation)
       .call.fn(deleteKey)
       .put(itwRemoveIntegrityKeyTag())
