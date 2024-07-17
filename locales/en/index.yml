@@ -2815,7 +2815,7 @@ bonus:
 features:
   login:
     unsupportedDevice:
-      text: A breve potrai usare l’app IO solo con Android 7.1.1 o superiore. Assicurati di avere un dispositivo compatibile.
+      text: A breve potrai usare l’app IO solo con Android 7.1 o superiore. Assicurati di avere un dispositivo compatibile.
       moreInfo: Vuoi saperne di più?
   messages:
     attachmentDownloadFeedback: "Download in progress"
