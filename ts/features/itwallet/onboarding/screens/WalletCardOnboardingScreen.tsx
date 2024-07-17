@@ -93,7 +93,7 @@ const WalletCardOnboardingScreen = () => {
             <ListItemHeader label="IT Wallet" />
             <ModuleCredential
               testID="itwDrivingLicenseModuleTestID"
-              icon="driverLicense"
+              icon="car"
               label={"Patente di guida"}
               onPress={beginCredentialIssuance(CredentialType.DRIVING_LICENSE)}
               isFetching={
@@ -105,7 +105,7 @@ const WalletCardOnboardingScreen = () => {
             <VSpacer size={8} />
             <ModuleCredential
               testID="itwDisabilityCardModuleTestID"
-              icon="disabilityCard"
+              icon="accessibility"
               label={"Carta Europea della Disabilità"}
               onPress={beginCredentialIssuance(
                 CredentialType.EUROPEAN_DISABILITY_CARD
