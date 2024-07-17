@@ -34,6 +34,7 @@ export const itwCredentialIssuanceMachine = setup({
   initial: "Idle",
   states: {
     Idle: {
+      entry: assign(() => InitialContext),
       on: {
         "select-credential": {
           target: "WalletInitialization",
@@ -114,6 +115,9 @@ export const itwCredentialIssuanceMachine = setup({
       on: {
         close: {
           actions: "closeIssuance"
+        },
+        reset: {
+          target: "Idle"
         }
       }
     }
