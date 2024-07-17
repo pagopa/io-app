@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { IOColors } from "@pagopa/io-app-design-system";
-import { Animated, StyleProp, ViewStyle } from "react-native";
+import { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import variables from "../theme/variables";
 
@@ -11,7 +11,7 @@ export const useBottomTabNavigatorStyle = () => {
   const additionalPadding = 10;
   const bottomInset = insets.bottom === 0 ? additionalPadding : insets.bottom;
 
-  const tabBarStyle: Animated.WithAnimatedValue<StyleProp<ViewStyle>> = useMemo(
+  const tabBarStyle: BottomTabNavigationOptions["tabBarStyle"] = useMemo(
     () => [
       {
         backgroundColor: IOColors.white,
