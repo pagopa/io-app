@@ -27,7 +27,9 @@ export const itwEidIssuanceMachine = setup({
       notImplemented(),
     storeEidCredential: notImplemented,
     closeIssuance: notImplemented,
-    requestAssistance: notImplemented
+    requestAssistance: notImplemented,
+    setWalletInstanceToOperational: notImplemented,
+    setWalletInstanceToValid: notImplemented
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
@@ -102,9 +104,10 @@ export const itwEidIssuanceMachine = setup({
               hardwareKeyTag: context.integrityKeyTag
             }),
             onDone: {
-              actions: assign(({ event }) => ({
-                walletAttestation: event.output
-              })),
+              actions: [
+                assign(({ event }) => ({ walletAttestation: event.output })),
+                "setWalletInstanceToOperational"
+              ],
               target: "#itwEidIssuanceMachine.UserIdentification"
             },
             onError: {
@@ -205,7 +208,7 @@ export const itwEidIssuanceMachine = setup({
         DisplayingPreview: {
           on: {
             "add-to-wallet": {
-              actions: "storeEidCredential",
+              actions: ["storeEidCredential", "setWalletInstanceToValid"],
               target: "#itwEidIssuanceMachine.Success"
             },
             close: {
