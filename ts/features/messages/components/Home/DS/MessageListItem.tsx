@@ -109,7 +109,14 @@ export const MessageListItem = ({
           ) : (
             <Avatar logoUri={serviceLogos} size="small" />
           )}
-          <View style={StyleSheet.absoluteFill}>
+          <View
+            style={[
+              StyleSheet.absoluteFill,
+              {
+                pointerEvents: "none"
+              }
+            ]}
+          >
             <AnimatedMessageCheckbox checked={selected} />
           </View>
         </View>

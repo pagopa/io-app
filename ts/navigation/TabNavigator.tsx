@@ -31,7 +31,7 @@ import ROUTES from "./routes";
 
 const Tab = createBottomTabNavigator<MainTabParamsList>();
 
-const styles = StyleSheet.create({
+export const MyStyles = StyleSheet.create({
   tabBarStyle: {
     backgroundColor: IOColors.white,
     paddingLeft: 3,
@@ -101,7 +101,7 @@ export const MainTabNavigator = () => {
             : IOColors.blue,
           tabBarInactiveTintColor: IOColors["grey-850"],
           tabBarStyle: [
-            styles.tabBarStyle,
+            MyStyles.tabBarStyle,
             { height: tabBarHeight + bottomInset },
             insets.bottom === 0 ? { paddingBottom: additionalPadding } : {}
           ]

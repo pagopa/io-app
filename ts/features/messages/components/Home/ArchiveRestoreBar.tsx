@@ -21,6 +21,8 @@ import {
 } from "../../store/actions/archiving";
 import { MessageListCategory } from "../../types/messageListCategory";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
+import { MyStyles } from "../../../../navigation/TabNavigator";
+import { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
 
 const styles = StyleSheet.create({
   container: {
@@ -45,6 +47,11 @@ type ArchiveRestoreCTAsProps = {
 export const ArchiveRestoreBar = () => {
   const store = useIOStore();
   const tabNavigation = useIOTabNavigation();
+  const insets = useSafeAreaInsets();
+
+  const tabBarHeight = 54;
+  const additionalPadding = 10;
+  const bottomInset = insets.bottom === 0 ? additionalPadding : insets.bottom;
 
   const isArchivingDisabled = useIOSelector(isArchivingDisabledSelector);
   const shownCategory = useIOSelector(shownMessageCategorySelector);
@@ -57,12 +64,18 @@ export const ArchiveRestoreBar = () => {
   useHardwareBackButton(androidBackButtonCallback);
 
   useEffect(() => {
-    tabNavigation.setOptions({
-      tabBarStyle: {
-        display: isArchivingDisabled ? "flex" : "none"
-      }
-    });
-  }, [isArchivingDisabled, tabNavigation]);
+    const tabBarOptions: BottomTabNavigationOptions = {
+      tabBarStyle: [
+        {
+          ...MyStyles.tabBarStyle,
+          height: tabBarHeight + bottomInset,
+          display: isArchivingDisabled ? "flex" : "none"
+        },
+        insets.bottom === 0 ? { paddingBottom: additionalPadding } : {}
+      ]
+    };
+    tabNavigation.setOptions(tabBarOptions);
+  }, [bottomInset, insets, isArchivingDisabled, tabNavigation]);
 
   if (isArchivingDisabled) {
     return null;
