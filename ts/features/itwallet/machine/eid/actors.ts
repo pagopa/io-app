@@ -10,11 +10,11 @@ import {
 } from "../../common/utils/itwAttestationUtils";
 import { useIOStore } from "../../../../store/hooks";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { type Identification } from "./context";
+import { type IdentificationContext } from "./context";
 
 export type RequestEidActorParams = {
   integrityKeyTag: string | undefined;
-  identification: Identification | undefined;
+  identification: IdentificationContext | undefined;
 };
 
 export const createEidIssuanceActorsImplementation = (
