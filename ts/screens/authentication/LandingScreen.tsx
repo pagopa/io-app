@@ -3,6 +3,7 @@
  * It includes a carousel with highlights on the app functionalities
  */
 import {
+  Alert as IOAlert,
   ButtonLink,
   ButtonSolid,
   ContentWrapper,
@@ -19,9 +20,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import SectionStatusComponent, {
-  InnerSectionStatus
-} from "../../components/SectionStatus";
+import SectionStatusComponent from "../../components/SectionStatus";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { privacyUrl, unsupportedDeviceMoreInfoUrl } from "../../config";
@@ -47,7 +46,6 @@ import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../utils/url";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import {
   trackCieLoginSelected,
   trackMethodInfo,
@@ -77,20 +75,12 @@ const isAndroidVersionLessThan25 =
 export const AndroidVersionLessThan25UnsupportedDevicesStatusComponent = () =>
   isAndroidVersionLessThan25 && (
     <>
-      <InnerSectionStatus
-        sectionKey="login"
-        sectionStatus={{
-          is_visible: true,
-          level: LevelEnum.warning,
-          web_url: {
-            "it-IT": unsupportedDeviceMoreInfoUrl,
-            "en-EN": unsupportedDeviceMoreInfoUrl
-          },
-          message: {
-            "it-IT": I18n.t("features.login.unsupportedDevice.text"),
-            "en-EN": I18n.t("features.login.unsupportedDevice.text")
-          }
-        }}
+      <IOAlert
+        fullWidth
+        content={I18n.t("features.login.unsupportedDevice.text")}
+        variant="warning"
+        action={I18n.t("features.login.unsupportedDevice.moreInfo")}
+        onPress={() => openWebUrl(unsupportedDeviceMoreInfoUrl)}
       />
     </>
   );
