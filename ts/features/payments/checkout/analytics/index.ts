@@ -58,8 +58,10 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
       return "PAYMENT_TURNED_OFF_METHOD_ERROR";
     case WalletPaymentOutcomeEnum.GENERIC_ERROR:
       return "PAYMENT_GENERIC_ERROR";
+    case WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE:
+      return "PAYMENT_NO_METHOD_SAVED_ERROR";
     default:
-      return "PAYMENT_UNKNOWN_OUTCOME_ERROR";
+      return outcome;
   }
 };
 
@@ -324,9 +326,21 @@ export const trackPaymentNoticeDataEntry = () => {
     buildEventProperties("UX", "screen_view")
   );
 };
+
 export const trackPaymentOrganizationDataEntry = () => {
   void mixpanelTrack(
     "PAYMENT_ORGANIZATION_DATA_ENTRY",
     buildEventProperties("UX", "screen_view")
+  );
+};
+
+export const trackPaymentStartFlow = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "PAYMENT_START_FLOW",
+    buildEventProperties("UX", "action", {
+      ...props
+    })
   );
 };

@@ -94,6 +94,13 @@ const WalletPaymentOutcomeScreen = () => {
   );
 
   const handleContactSupport = () => {
+    analytics.trackPaymentErrorHelp({
+      error: outcome,
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
+    });
     supportModal.present();
   };
 

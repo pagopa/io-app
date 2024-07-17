@@ -301,7 +301,7 @@ const SelectedPspModuleCheckout = () => {
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const pspList = pot.getOrElse(pspListPot, []);
-  const pspBusinessName = pipe(
+  const pspName = pipe(
     selectedPspOption,
     O.chainNullableK(({ pspBusinessName }) => pspBusinessName),
     O.getOrElse(() => "")
@@ -331,7 +331,7 @@ const SelectedPspModuleCheckout = () => {
         pspList.length > 1 ? I18n.t("payment.confirm.editButton") : undefined
       }
       title={formatNumberCentsToAmount(taxFee, true, "right")}
-      subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${pspBusinessName}`}
+      subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${pspName}`}
       onPress={handleOnPress}
     />
   );
