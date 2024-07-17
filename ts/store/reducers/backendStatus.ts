@@ -502,7 +502,7 @@ export const isBackendServicesStatusOffSelector = createSelector(
  * if there is no data or the local Feature Flag is disabled,
  * false is the default value -> (IT-WALLET disabled)
  */
-export const isITWEnabledSelector = createSelector(
+export const isItwEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
     itwEnabled &&
