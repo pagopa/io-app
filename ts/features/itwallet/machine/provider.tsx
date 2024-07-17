@@ -3,6 +3,7 @@ import { createActorContext } from "@xstate5/react";
 import * as React from "react";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOStore } from "../../../store/hooks";
+import { itwBypassIdentityMatch } from "../../../config";
 import createCredentialIssuanceActionsImplementation from "./credential/actions";
 import createCredentialIssuanceActorsImplementation from "./credential/actors";
 import { itwCredentialIssuanceMachine } from "./credential/machine";
@@ -30,7 +31,9 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
   const toast = useIOToast();
 
   const eidIssuanceMachine = itwEidIssuanceMachine.provide({
-    guards: createEidIssuanceGuardsImplementation(store),
+    guards: createEidIssuanceGuardsImplementation(store, {
+      bypassIdentityMatch: itwBypassIdentityMatch
+    }),
     actions: createEidIssuanceActionsImplementation(
       navigation,
       dispatch,
