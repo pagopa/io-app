@@ -15,8 +15,13 @@ const NativeAuthSessionClosed = t.type({
 
 const EID_FISCAL_CODE_KEY = "tax_id_code";
 
+type GuardsImplementationOptions = Partial<{
+  bypassIdentityMatch: boolean;
+}>;
+
 export const createEidIssuanceGuardsImplementation = (
-  store: ReturnType<typeof useIOStore>
+  store: ReturnType<typeof useIOStore>,
+  options?: GuardsImplementationOptions
 ) => ({
   /**
    * Guard to check whether a native authentication session
@@ -39,6 +44,10 @@ export const createEidIssuanceGuardsImplementation = (
    * is the same that is currently authenticated in app.
    */
   issuedEidMatchesAuthenticatedUser: ({ context }: { context: Context }) => {
+    if (options?.bypassIdentityMatch) {
+      return true;
+    }
+
     const authenticatedUserFiscalCode = profileFiscalCodeSelector(
       store.getState()
     );
