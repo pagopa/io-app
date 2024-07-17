@@ -54,22 +54,19 @@ export const DSWallet = () => {
       key: "7",
       type: "itw",
       category: "itw",
-      credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
-      data: ["Anna Verdi", "A - B"]
+      credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
     },
     {
       key: "6",
       type: "itw",
       category: "itw",
-      credentialType: CredentialType.DRIVING_LICENSE,
-      data: ["Anna Verdi", "A - B"]
+      credentialType: CredentialType.DRIVING_LICENSE
     },
     {
       key: "5",
       type: "itw",
       category: "itw",
-      credentialType: CredentialType.PID,
-      data: []
+      credentialType: CredentialType.PID
     }
   ];
 
