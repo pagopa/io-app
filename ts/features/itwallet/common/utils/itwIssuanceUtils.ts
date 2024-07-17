@@ -14,8 +14,7 @@ import {
   itWalletIssuanceRedirectUri,
   itWalletIssuanceRedirectUriCie
 } from "../../../../config";
-import { type Identification } from "../../machine/eid/context";
-import { type IdentificationMode } from "../../machine/eid/events";
+import { type IdentificationContext } from "../../machine/eid/context";
 import { getIntegrityContext } from "./itwIntegrityUtils";
 import { StoredCredential } from "./itwTypesUtils";
 
@@ -34,7 +33,7 @@ const SPID_HINT = "https://demo.spid.gov.it";
 const CIE_HINT =
   "https://collaudo.idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO";
 
-const idpHintsMap: Record<IdentificationMode, string> = {
+const idpHintsMap: Record<IdentificationContext["mode"], string> = {
   cieId: CIE_HINT,
   ciePin: CIE_HINT,
   spid: SPID_HINT
@@ -42,7 +41,7 @@ const idpHintsMap: Record<IdentificationMode, string> = {
 
 // Different scheme to avoid conflicts with the scheme
 // handled by io-react-native-login-utils's activity
-const getRedirectUri = (identificationMode: IdentificationMode) =>
+const getRedirectUri = (identificationMode: IdentificationContext["mode"]) =>
   identificationMode === "cieId"
     ? itWalletIssuanceRedirectUriCie
     : itWalletIssuanceRedirectUri;
@@ -52,7 +51,7 @@ export async function getPid({
   identification
 }: {
   integrityKeyTag: string;
-  identification: Identification;
+  identification: IdentificationContext;
 }): Promise<StoredCredential> {
   const authorizationContext: AuthorizationContext | undefined =
     identification.mode === "spid"
