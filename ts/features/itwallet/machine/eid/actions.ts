@@ -3,9 +3,11 @@ import { IOToast } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch } from "../../../../store/hooks";
 import ROUTES from "../../../../navigation/routes";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { useIODispatch } from "../../../../store/hooks";
+import { itwLifecycleStateUpdated } from "../../lifecycle/store/actions";
+import { ItwLifecycleState } from "../../lifecycle/store/reducers";
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 
 export const createEidIssuanceActionsImplementation = (
@@ -85,6 +87,18 @@ export const createEidIssuanceActionsImplementation = (
   closeIssuance: () => {
     navigation.popToTop();
   },
+
+  setWalletInstanceToOperational: () => {
+    dispatch(
+      itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL)
+    );
+  },
+
+  setWalletInstanceToValid: () => {
+    dispatch(itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_VALID));
+  },
+
+  storeWalletAttestation: () => {},
 
   storeIntegrityKeyTag: (_: unknown, params: { keyTag: string }) => {
     dispatch(itwStoreIntegrityKeyTag(params.keyTag));
