@@ -11,6 +11,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { itwRemoveIntegrityKeyTag } from "../../../issuance/store/actions";
 import { itwLifecycleStateUpdated } from "../../store/actions";
 import { getAttestation } from "../../../common/utils/itwAttestationUtils";
+import { itwCredentialsWalletReset } from "../../../credentials/store/actions";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({
   deleteKey: jest.fn
@@ -54,6 +55,7 @@ describe("checkWalletInstanceStateSaga", () => {
       ])
       .call.fn(getAttestation)
       .not.put(itwRemoveIntegrityKeyTag())
+      .not.put(itwCredentialsWalletReset())
       .run();
   });
 
@@ -82,6 +84,7 @@ describe("checkWalletInstanceStateSaga", () => {
       .call.fn(getAttestation)
       .call.fn(deleteKey)
       .put(itwRemoveIntegrityKeyTag())
+      .put(itwCredentialsWalletReset())
       .put(itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_INSTALLED))
       .run();
   });

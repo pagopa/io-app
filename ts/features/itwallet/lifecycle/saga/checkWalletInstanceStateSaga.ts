@@ -9,14 +9,15 @@ import { ReduxSagaEffect } from "../../../../types/utils";
 import { itwLifecycleIsInstalledSelector } from "../store/selectors";
 import { ItwLifecycleState } from "../store/reducers";
 import { itwLifecycleStateUpdated } from "../store/actions";
+import { itwCredentialsWalletReset } from "../../credentials/store/actions";
 
 function* handleWalletInstanceReset(integrityKeyTag: string) {
   yield* call(deleteKey, integrityKeyTag);
   yield* put(itwRemoveIntegrityKeyTag());
+  yield* put(itwCredentialsWalletReset());
   yield* put(
     itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_INSTALLED)
   );
-  // TODO: remove credentials as well
 }
 
 /**
