@@ -138,7 +138,6 @@
     "front-matter": "^4.0.2",
     "hastscript": "^7.0.2",
     "hoist-non-react-statics": "^3.0.1",
-    "io-react-native-secure-storage": "^0.1.1",
     "io-ts": "^2.2.16",
     "jail-monkey": "^2.8.0",
     "jwk-thumbprint": "^0.1.4",
