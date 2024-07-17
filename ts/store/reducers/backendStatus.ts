@@ -21,6 +21,7 @@ import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
   fciEnabled,
+  itwEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled,
   showBarcodeScanSection,
@@ -494,6 +495,30 @@ export const DEAD_COUNTER_THRESHOLD = 2;
 export const isBackendServicesStatusOffSelector = createSelector(
   backendServicesStatusSelector,
   bss => bss.areSystemsDead
+);
+
+/**
+ * Return the remote config about IT-WALLET enabled/disabled
+ * if there is no data or the local Feature Flag is disabled,
+ * false is the default value -> (IT-WALLET disabled)
+ */
+export const isITWEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    itwEnabled &&
+    pipe(
+      backendStatus,
+      O.map(
+        bs =>
+          isVersionSupported(
+            Platform.OS === "ios"
+              ? bs.config.itw.min_app_version.ios
+              : bs.config.itw.min_app_version.android,
+            getAppVersion()
+          ) && bs.config.itw.enabled
+      ),
+      O.getOrElse(() => false)
+    )
 );
 
 export const areSystemsDeadReducer = (
