@@ -14,17 +14,21 @@ export const useItwDismissalDialog = () => {
   };
 
   const show = () =>
-    Alert.alert(I18n.t("features.itWallet.generic.alert.title"), undefined, [
-      {
-        text: I18n.t("features.itWallet.generic.alert.confirm"),
-        style: "destructive",
-        onPress: handleDismiss
-      },
-      {
-        text: I18n.t("features.itWallet.generic.alert.cancel"),
-        style: "cancel"
-      }
-    ]);
+    Alert.alert(
+      I18n.t("features.itWallet.generic.alert.title"),
+      I18n.t("features.itWallet.generic.alert.body"),
+      [
+        {
+          text: I18n.t("features.itWallet.generic.alert.confirm"),
+          style: "destructive",
+          onPress: handleDismiss
+        },
+        {
+          text: I18n.t("features.itWallet.generic.alert.cancel"),
+          style: "cancel"
+        }
+      ]
+    );
 
   return { show };
 };

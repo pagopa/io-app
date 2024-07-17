@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { IOToast } from "@pagopa/io-app-design-system";
-import { Alert } from "react-native";
+import { ActionArgs } from "xstate5";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
@@ -9,6 +9,10 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { itwLifecycleStateUpdated } from "../../lifecycle/store/actions";
 import { ItwLifecycleState } from "../../lifecycle/store/reducers";
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
+import { itwCredentialsStore } from "../../credentials/store/actions";
+import { assert } from "../../../../utils/assert";
+import { Context } from "./context";
+import { EidIssuanceEvents } from "./events";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -33,6 +37,12 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
+  navigateToEidRequestScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.EID_REQUEST
+    });
+  },
+
   navigateToEidPreviewScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ISSUANCE.EID_PREVIEW
@@ -46,7 +56,9 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   navigateToFailureScreen: () => {
-    Alert.alert("Failure");
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.EID_FAILURE
+    });
   },
 
   navigateToWallet: () => {
@@ -98,13 +110,17 @@ export const createEidIssuanceActionsImplementation = (
     dispatch(itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_VALID));
   },
 
-  storeWalletAttestation: () => {},
-
   storeIntegrityKeyTag: (_: unknown, params: { keyTag: string }) => {
     dispatch(itwStoreIntegrityKeyTag(params.keyTag));
   },
 
-  storeEidCredential: () => {},
+  storeEidCredential: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.eid, "eID is undefined");
+
+    dispatch(itwCredentialsStore(context.eid));
+  },
 
   requestAssistance: () => {}
 });

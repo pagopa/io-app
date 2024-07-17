@@ -2,7 +2,8 @@ import {
   ContentWrapper,
   ListItemHeader,
   ModuleNavigation,
-  VSpacer
+  VSpacer,
+  VStack
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
@@ -18,6 +19,7 @@ import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwNfcIsEnabled } from "../store/actions";
 import { itwIsNfcEnabledSelector } from "../store/selectors";
+import ItwMarkdown from "../../common/components/ItwMarkdown";
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const navigation = useIONavigation();
@@ -52,7 +54,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
   };
 
   const handleCieIdPress = () => {
-    Alert.alert("Not implemented");
+    machineRef.send({ type: "select-identification-mode", mode: "cieId" });
   };
 
   useFocusEffect(
@@ -64,24 +66,24 @@ export const ItwIdentificationModeSelectionScreen = () => {
   return (
     <IOScrollViewWithLargeHeader
       title={{ label: I18n.t("features.itWallet.identification.mode.title") }}
+      description={I18n.t("features.itWallet.identification.mode.description")}
     >
       <ContentWrapper>
         <ListItemHeader
           label={I18n.t("features.itWallet.identification.mode.header")}
         />
-        <ModuleNavigation
-          title={I18n.t(
-            "features.itWallet.identification.mode.method.spid.title"
-          )}
-          subtitle={I18n.t(
-            "features.itWallet.identification.mode.method.spid.subtitle"
-          )}
-          icon="spid"
-          onPress={handleSpidPress}
-        />
-        <VSpacer size={8} />
-        {isCieSupported && (
-          <>
+        <VStack space={8}>
+          <ModuleNavigation
+            title={I18n.t(
+              "features.itWallet.identification.mode.method.spid.title"
+            )}
+            subtitle={I18n.t(
+              "features.itWallet.identification.mode.method.spid.subtitle"
+            )}
+            icon="spid"
+            onPress={handleSpidPress}
+          />
+          {isCieSupported && (
             <ModuleNavigation
               title={I18n.t(
                 "features.itWallet.identification.mode.method.ciePin.title"
@@ -92,19 +94,22 @@ export const ItwIdentificationModeSelectionScreen = () => {
               icon="fiscalCodeIndividual"
               onPress={handleCiePinPress}
             />
-            <VSpacer size={8} />
-          </>
-        )}
-        <ModuleNavigation
-          title={I18n.t(
-            "features.itWallet.identification.mode.method.cieId.title"
           )}
-          subtitle={I18n.t(
-            "features.itWallet.identification.mode.method.cieId.subtitle"
-          )}
-          icon="device"
-          onPress={handleCieIdPress}
-        />
+          <ModuleNavigation
+            title={I18n.t(
+              "features.itWallet.identification.mode.method.cieId.title"
+            )}
+            subtitle={I18n.t(
+              "features.itWallet.identification.mode.method.cieId.subtitle"
+            )}
+            icon="device"
+            onPress={handleCieIdPress}
+          />
+        </VStack>
+        <VSpacer size={24} />
+        <ItwMarkdown>
+          {I18n.t("features.itWallet.identification.mode.privacy")}
+        </ItwMarkdown>
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
   );
