@@ -14,7 +14,7 @@ import lifecycleReducer, {
 import itwCredentialsReducer, {
   ItwCredentialsState
 } from "../../../credentials/store/reducers";
-import itwCreateCredentialsStorage from "../../../storage/itwCredentialsStorage";
+import itwCreateCredentialsStorage from "../storages/itwCredentialsStorage";
 
 export type ItWalletState = {
   identification: ItwIdentificationState;
