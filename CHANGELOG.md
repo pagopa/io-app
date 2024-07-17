@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.66.0-rc.1](https://github.com/pagopa/io-app/compare/2.66.0-rc.0...2.66.0-rc.1) (2024-07-17)
+
+
+### Features
+
+* [[IOCOM-1418](https://pagopa.atlassian.net/browse/IOCOM-1418)] Improved accessibility for new messages flows ([#5976](https://github.com/pagopa/io-app/issues/5976)) ([4ae3af1](https://github.com/pagopa/io-app/commit/4ae3af1b57853a20716cbe1808cf85d8a7bd664f))
+* [[IOCOM-834](https://pagopa.atlassian.net/browse/IOCOM-834)] Auto refresh on new messages home ([#5945](https://github.com/pagopa/io-app/issues/5945)) ([f2cb01e](https://github.com/pagopa/io-app/commit/f2cb01e2b5ed2f280d472cc871b9349cf6aaa3ba))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1361](https://pagopa.atlassian.net/browse/SIW-1361)] Fix wallet onboarding screen ([#5980](https://github.com/pagopa/io-app/issues/5980)) ([93038ac](https://github.com/pagopa/io-app/commit/93038ac832c4910562c23419252b5b0288917749))
+
+
+### Chores
+
+* [[IOCOM-1595](https://pagopa.atlassian.net/browse/IOCOM-1595)] New messages flows as default ([#5984](https://github.com/pagopa/io-app/issues/5984)) ([d9fc8f6](https://github.com/pagopa/io-app/commit/d9fc8f62297cd8c1dbd718adb69c01acb0dca133))
+* **IT Wallet:** [[SIW-1319](https://pagopa.atlassian.net/browse/SIW-1319)] Wallet Instance lifecycle reducer ([#5934](https://github.com/pagopa/io-app/issues/5934)) ([5a3b637](https://github.com/pagopa/io-app/commit/5a3b637b7ec99ca774a4519bcd5e0b85d730aa85))
+
 ## [2.66.0-rc.0](https://github.com/pagopa/io-app/compare/2.64.0-rc.0...2.66.0-rc.0) (2024-07-16)
 
 
