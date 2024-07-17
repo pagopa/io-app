@@ -7,21 +7,20 @@ import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/ba
 
 const useContentWithFF = (i18nString: TranslationKeys) => {
   const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector,
-    _.isEqual
+    isSettingsVisibleAndHideProfileSelector
   );
 
   const getContentWithFF = useCallback(
-    (i18nString: TranslationKeys, selector: boolean) =>
+    (isSettingsVisible: boolean) =>
       I18n.t(i18nString, {
-        pageName: selector
+        pageName: isSettingsVisible
           ? I18n.t("global.buttons.settings")
           : I18n.t("navigation.profile")
       }),
-    []
+    [i18nString]
   );
 
-  return getContentWithFF(i18nString, isSettingsVisibleAndHideProfile);
+  return getContentWithFF(isSettingsVisibleAndHideProfile);
 };
 
 export default useContentWithFF;
