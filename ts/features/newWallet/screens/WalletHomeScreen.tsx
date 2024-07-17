@@ -20,9 +20,9 @@ import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/action
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
-import { WalletRoutes } from "../navigation/routes";
 import { selectWalletCards } from "../store/selectors";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
+import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
@@ -67,8 +67,8 @@ const WalletHomeScreenContainer = ({
   const cards = useIOSelector(selectWalletCards);
 
   const handleAddToWalletButtonPress = () => {
-    navigation.navigate(WalletRoutes.WALLET_NAVIGATOR, {
-      screen: WalletRoutes.WALLET_CARD_ONBOARDING
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ONBOARDING
     });
   };
 
