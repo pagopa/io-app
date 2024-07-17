@@ -18,6 +18,7 @@ import { loadAvailableBonuses } from "../../../bonus/common/store/actions/availa
 import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import { isItWalletTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 
 const WalletCardOnboardingScreen = () => {
   const dispatch = useIODispatch();
@@ -26,6 +27,7 @@ const WalletCardOnboardingScreen = () => {
 
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const isCgnAlreadyActive = useIOSelector(isCgnInformationAvailableSelector);
+  const isItWalletEnabled = useIOSelector(isItWalletTestEnabledSelector);
 
   const startCgnActiviation = () => {
     dispatch(loadAvailableBonuses.request());
@@ -56,37 +58,42 @@ const WalletCardOnboardingScreen = () => {
       headerActionsProp={{ showHelp: true }}
     >
       <ContentWrapper>
-        <ListItemHeader label="IT Wallet" />
-        <ModuleCredential
-          icon="fingerprint"
-          label={"Identità Digitale"}
-          onPress={beginCredentialIssuance(CredentialType.PID)}
-        />
-        <VSpacer size={8} />
-        <ModuleCredential
-          icon="categTravel"
-          label={"Patente di guida"}
-          onPress={beginCredentialIssuance(CredentialType.DRIVING_LICENSE)}
-        />
+        <VSpacer size={12} />
+        {isItWalletEnabled && (
+          <>
+            <ListItemHeader label="IT Wallet" />
+            <ModuleCredential
+              icon="fingerprint"
+              label={"Identità Digitale"}
+              onPress={beginCredentialIssuance(CredentialType.PID)}
+            />
+            <VSpacer size={8} />
+            <ModuleCredential
+              icon="categTravel"
+              label={"Patente di guida"}
+              onPress={beginCredentialIssuance(CredentialType.DRIVING_LICENSE)}
+            />
 
-        <VSpacer size={8} />
-        <ModuleCredential
-          icon="archiveFilled"
-          label={"Carta Europea della Disabilità"}
-          onPress={beginCredentialIssuance(
-            CredentialType.EUROPEAN_DISABILITY_CARD
-          )}
-        />
-        <VSpacer size={8} />
-        <ModuleCredential
-          icon="healthCard"
-          label={"Tessera Sanitaria"}
-          onPress={beginCredentialIssuance(
-            CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
-          )}
-        />
-        <VSpacer size={24} />
-        <ListItemHeader label="Altro" />
+            <VSpacer size={8} />
+            <ModuleCredential
+              icon="archiveFilled"
+              label={"Carta Europea della Disabilità"}
+              onPress={beginCredentialIssuance(
+                CredentialType.EUROPEAN_DISABILITY_CARD
+              )}
+            />
+            <VSpacer size={8} />
+            <ModuleCredential
+              icon="healthCard"
+              label={"Tessera Sanitaria"}
+              onPress={beginCredentialIssuance(
+                CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+              )}
+            />
+            <VSpacer size={16} />
+            <ListItemHeader label="Altro" />
+          </>
+        )}
         <ModuleCredential
           image={cgnLogo}
           label={I18n.t("features.wallet.onboarding.options.cgn")}
