@@ -2,7 +2,7 @@
 
 exports[`MessageList Item component when \`isRead\` is true should match the snapshot 1`] = `
 <View
-  accessibilityLabel="Message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+  accessibilityLabel="Message , received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
   . "
   accessibilityRole="button"
@@ -260,7 +260,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
 
 exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and \`isSelected\` is false should match the snapshot 1`] = `
 <View
-  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+  accessibilityLabel="Unread message , received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
   . "
   accessibilityRole="button"
@@ -651,7 +651,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
 
 exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and \`isSelected\` is true should match the snapshot 1`] = `
 <View
-  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+  accessibilityLabel="Unread message selected, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
   . "
   accessibilityRole="button"
@@ -1084,7 +1084,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
 
 exports[`MessageList Item component when category is LEGAL_MESSAGE should match the snapshot 1`] = `
 <View
-  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+  accessibilityLabel="Unread message , received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
   . "
   accessibilityRole="button"
@@ -1402,7 +1402,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
 
 exports[`MessageList Item component when category is PN should match the snapshot 1`] = `
 <View
-  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+  accessibilityLabel="Unread message , received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
   . "
   accessibilityRole="button"
@@ -1720,7 +1720,7 @@ exports[`MessageList Item component when category is PN should match the snapsho
 
 exports[`MessageList Item component when category=EU_COVID_CERT and rptId matches=false should match the snapshot 1`] = `
 <View
-  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+  accessibilityLabel="Unread message , received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
   . "
   accessibilityRole="button"
@@ -2119,7 +2119,7 @@ exports[`MessageList Item component when category=EU_COVID_CERT and rptId matche
 
 exports[`MessageList Item component when category=GENERIC and rptId matches=false should match the snapshot 1`] = `
 <View
-  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+  accessibilityLabel="Unread message , received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
   . "
   accessibilityRole="button"
@@ -2437,7 +2437,7 @@ exports[`MessageList Item component when category=GENERIC and rptId matches=fals
 
 exports[`MessageList Item component when category=PAYMENT and rptId matches=false should match the snapshot 1`] = `
 <View
-  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+  accessibilityLabel="Unread message , received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
   . "
   accessibilityRole="button"
@@ -2755,7 +2755,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=fals
 
 exports[`MessageList Item component when category=PAYMENT and rptId matches=true should match the snapshot 1`] = `
 <View
-  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+  accessibilityLabel="Unread message , received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
   . Paid"
   accessibilityRole="button"
@@ -3121,7 +3121,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=true
 
 exports[`MessageList Item component with all the flags set to false should match the snapshot 1`] = `
 <View
-  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+  accessibilityLabel="Unread message , received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
   . "
   accessibilityRole="button"
