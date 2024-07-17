@@ -3,6 +3,7 @@ import { deleteKey } from "@pagopa/io-react-native-crypto";
 import { call, put, select } from "typed-redux-saga/macro";
 import * as O from "fp-ts/lib/Option";
 import { getAttestation } from "../../common/utils/itwAttestationUtils";
+import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwRemoveIntegrityKeyTag } from "../../issuance/store/actions";
 import { ReduxSagaEffect } from "../../../../types/utils";
@@ -27,6 +28,7 @@ function* handleWalletInstanceReset(integrityKeyTag: string) {
  */
 function* getAttestationOrResetWalletInstance(integrityKeyTag: string) {
   try {
+    yield* call(ensureIntegrityServiceIsReady);
     yield* call(getAttestation, integrityKeyTag);
   } catch (err) {
     if (
