@@ -481,7 +481,6 @@ profile:
       itWalletTest: IT Wallet
     designSystemEnvironment: Experimental Design System
     newWalletSection: New wallet section
-    newHomeSection: New messages home
     appVersion: Version
     backendVersion: Backend Version
     debugMode: Debug mode

@@ -483,7 +483,6 @@ profile:
       titleSection: Partecipa alla sperimentazione
     designSystemEnvironment: Design System sperimentale
     newWalletSection: Nuova sezione portafoglio
-    newHomeSection: Nuova home messaggi
     appVersion: Versione
     backendVersion: Versione Backend
     debugMode: Modalità debug
