@@ -22,6 +22,7 @@ import { ITW_TRIAL_ID } from "../../common/utils/itwTrialUtils";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwTags } from "../../machine/tags";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { isItWalletTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 
 const WalletCardOnboardingScreen = () => {
   const dispatch = useIODispatch();
@@ -30,11 +31,12 @@ const WalletCardOnboardingScreen = () => {
 
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const isCgnAlreadyActive = useIOSelector(isCgnInformationAvailableSelector);
+  const isItWalletEnabled = useIOSelector(isItWalletTestEnabledSelector);
   const isItwTrialEnabled = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwSectionVisible = React.useMemo(
-    () => isItwTrialEnabled && isItwValid,
-    [isItwTrialEnabled, isItwValid]
+    () => isItWalletEnabled && isItwTrialEnabled && isItwValid,
+    [isItWalletEnabled, isItwTrialEnabled, isItwValid]
   );
 
   const isCredentialLoading = ItwCredentialIssuanceMachineContext.useSelector(
@@ -85,7 +87,7 @@ const WalletCardOnboardingScreen = () => {
       headerActionsProp={{ showHelp: true }}
     >
       <ContentWrapper>
-        <VSpacer size={16} />
+        <VSpacer size={12} />
         {isItwSectionVisible ? (
           <>
             <ListItemHeader label="IT Wallet" />
