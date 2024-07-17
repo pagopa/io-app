@@ -4,6 +4,7 @@ import {
   ButtonText,
   Caption,
   Chip,
+  Divider,
   H1,
   H2,
   H3,
@@ -16,15 +17,24 @@ import {
   Label,
   LabelLink,
   LabelSmall,
+  MdH1,
+  MdH2,
+  MdH3,
+  MdH4,
+  MdH5,
+  MdH6,
+  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, View } from "react-native";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
+const blockMargin = 40;
+
 export const DSTypography = () => (
   <DesignSystemScreen title={"Typography"}>
-    <VStack space={40}>
+    <VStack space={blockMargin}>
       <HeroRow />
       <H1Row />
       <H2Row />
@@ -42,6 +52,17 @@ export const DSTypography = () => (
       <LabelLink onPress={() => Alert.alert("onPress LabelLink!")}>
         LabelLink
       </LabelLink>
+    </VStack>
+    <VSpacer size={blockMargin} />
+    <Divider />
+    <VSpacer size={blockMargin} />
+    <VStack space={blockMargin}>
+      <MdH1Row />
+      <MdH2Row />
+      <MdH3Row />
+      <MdH4Row />
+      <MdH5Row />
+      <MdH6Row />
     </VStack>
   </DesignSystemScreen>
 );
@@ -164,4 +185,46 @@ const LabelRow = () => (
       <Label color={"white"}>Label</Label>
     </View>
   </HStack>
+);
+
+export const MdH1Row = () => (
+  <VStack space={8}>
+    <MdH1>{getTitle("Markdown H1")}</MdH1>
+    <MdH1>{getLongerTitle("Markdown H1")}</MdH1>
+  </VStack>
+);
+
+export const MdH2Row = () => (
+  <VStack space={4}>
+    <MdH2>{getTitle("Markdown H2")}</MdH2>
+    <MdH2>{getLongerTitle("Markdown H2")}</MdH2>
+  </VStack>
+);
+
+export const MdH3Row = () => (
+  <VStack space={4}>
+    <MdH3>{getTitle("Markdown H3")}</MdH3>
+    <MdH3>{getLongerTitle("Markdown H3")}</MdH3>
+  </VStack>
+);
+
+export const MdH4Row = () => (
+  <VStack space={4}>
+    <MdH4>{getTitle("Markdown H4")}</MdH4>
+    <MdH4>{getLongerTitle("Markdown H4")}</MdH4>
+  </VStack>
+);
+
+export const MdH5Row = () => (
+  <VStack space={4}>
+    <MdH5>{getTitle("Markdown H5")}</MdH5>
+    <MdH5>{getLongerTitle("Markdown H5")}</MdH5>
+  </VStack>
+);
+
+export const MdH6Row = () => (
+  <VStack space={4}>
+    <MdH6>{getTitle("Markdown H6")}</MdH6>
+    <MdH6>{getLongerTitle("Markdown H6")}</MdH6>
+  </VStack>
 );
