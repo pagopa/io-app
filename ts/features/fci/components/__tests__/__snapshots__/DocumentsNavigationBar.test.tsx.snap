@@ -3,13 +3,13 @@
 exports[`Test DocumentsNavigationBar component should render a DocumentsNavigationBar Component with props correctly 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "borderBottomWidth": 0,
         "elevation": 8,
         "position": "relative",
         "shadowColor": "#0E0F13",
-        "shadowOffset": Object {
+        "shadowOffset": {
           "height": 2,
           "width": 0,
         },
@@ -17,7 +17,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         "shadowRadius": 3,
         "zIndex": 999,
       },
-      Object {
+      {
         "alignItems": "center",
         "backgroundColor": "#FFFFFF",
         "borderColor": "#CCD4DC",
@@ -32,8 +32,20 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     accessibilityLabel="previous"
     accessibilityRole="button"
     accessibilityState={
-      Object {
+      {
+        "busy": undefined,
+        "checked": undefined,
         "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
       }
     }
     accessible={true}
@@ -53,20 +65,20 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "height": 24,
             "width": 24,
           },
-          Object {
+          {
             "alignItems": "center",
           },
-          Object {
+          {
             "justifyContent": "center",
           },
-          Object {
-            "transform": Array [
-              Object {
+          {
+            "transform": [
+              {
                 "scale": undefined,
               },
             ],
@@ -80,7 +92,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         accessible={false}
         align="xMidYMid"
         animatedProps={
-          Object {
+          {
             "color": undefined,
           }
         }
@@ -93,15 +105,15 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         minX={0}
         minY={0}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "borderWidth": 0,
             },
-            Object {
+            {
               "color": "#0073E6",
             },
-            Object {
+            {
               "flex": 0,
               "height": 24,
               "width": 24,
@@ -115,7 +127,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
       >
         <RNSVGGroup
           fill={
-            Object {
+            {
               "payload": 4278190080,
               "type": 0,
             }
@@ -125,13 +137,13 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
             clipRule={0}
             d="M15.7071 5.29289c-.3905-.39052-1.0237-.39052-1.4142 0L8.29289 11.2929c-.39052.3905-.39052 1.0237 0 1.4142l6.00001 6c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L10.4142 12l5.2929-5.29289c.3905-.39053.3905-1.02369 0-1.41422Z"
             fill={
-              Object {
+              {
                 "type": 2,
               }
             }
             fillRule={0}
             propList={
-              Array [
+              [
                 "fill",
                 "fillRule",
               ]
@@ -145,29 +157,31 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     allowFontScaling={false}
     color="black"
     defaultColor="black"
-    defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
+    font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
   >
     Documento 1 di 2
   </Text>
@@ -175,8 +189,20 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     accessibilityLabel="next"
     accessibilityRole="button"
     accessibilityState={
-      Object {
+      {
+        "busy": undefined,
+        "checked": undefined,
         "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
       }
     }
     accessible={true}
@@ -196,20 +222,20 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "height": 24,
             "width": 24,
           },
-          Object {
+          {
             "alignItems": "center",
           },
-          Object {
+          {
             "justifyContent": "center",
           },
-          Object {
-            "transform": Array [
-              Object {
+          {
+            "transform": [
+              {
                 "scale": undefined,
               },
             ],
@@ -223,7 +249,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         accessible={false}
         align="xMidYMid"
         animatedProps={
-          Object {
+          {
             "color": undefined,
           }
         }
@@ -236,15 +262,15 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         minX={0}
         minY={0}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "borderWidth": 0,
             },
-            Object {
+            {
               "color": "#0073E6",
             },
-            Object {
+            {
               "flex": 0,
               "height": 24,
               "width": 24,
@@ -258,7 +284,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
       >
         <RNSVGGroup
           fill={
-            Object {
+            {
               "payload": 4278190080,
               "type": 0,
             }
@@ -268,13 +294,13 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
             clipRule={0}
             d="M8.29289 5.29289c.39053-.39052 1.02369-.39052 1.41422 0l5.99999 6.00001c.3905.3905.3905 1.0237 0 1.4142l-5.99999 6c-.39053.3905-1.02369.3905-1.41422 0-.39052-.3905-.39052-1.0237 0-1.4142L13.5858 12 8.29289 6.70711c-.39052-.39053-.39052-1.02369 0-1.41422Z"
             fill={
-              Object {
+              {
                 "type": 2,
               }
             }
             fillRule={0}
             propList={
-              Array [
+              [
                 "fill",
                 "fillRule",
               ]
@@ -286,7 +312,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
   </View>
   <View
     style={
-      Object {
+      {
         "flex": 1,
       }
     }
@@ -295,32 +321,34 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     allowFontScaling={false}
     color="black"
     defaultColor="black"
-    defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
+    font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 18,
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "paddingHorizontal": 24,
         },
-        Object {
+        {
           "fontSize": 18,
           "lineHeight": 25,
         },
-        Object {
+        {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
   >
     Pagina 1 di 2
   </Text>

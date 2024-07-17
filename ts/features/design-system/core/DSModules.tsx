@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Alert, View, ImageSourcePropType } from "react-native";
 import {
-  ButtonExtendedOutline,
+  ModuleSummary,
   ModuleAttachment,
   ModuleCheckout,
   ModuleCredential,
@@ -45,7 +45,7 @@ export const DSModules = () => {
     <DesignSystemScreen title="Modules">
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ModuleAttachment
@@ -56,7 +56,7 @@ export const DSModules = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ModulePaymentNotice
@@ -67,7 +67,7 @@ export const DSModules = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ModuleCheckout
@@ -78,7 +78,7 @@ export const DSModules = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ModuleCredential
@@ -89,7 +89,7 @@ export const DSModules = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ModuleNavigation
@@ -100,18 +100,18 @@ export const DSModules = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
-        ButtonExtendedOutline
+        ModuleSummary
       </H2>
-      {renderButtonExtendedOutline()}
+      {renderModuleSummary()}
 
       <VSpacer size={40} />
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ModuleIDP
@@ -282,33 +282,37 @@ const renderModuleCheckout = () => (
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleCheckout, loading">
-      <ModuleCheckout isLoading ctaText="Loading" />
+      <ModuleCheckout isLoading />
     </DSComponentViewerBox>
   </>
 );
 
-const renderButtonExtendedOutline = () => (
-  <DSComponentViewerBox name="ButtonExtendedOutline (using Pressable API)">
-    <View>
-      <ButtonExtendedOutline
+const renderModuleSummary = () => (
+  <>
+    <DSComponentViewerBox name="ModuleSummary, default variant">
+      <ModuleSummary
         label={"Label name"}
         description={"This is a description of the element"}
-        onPress={() => {
-          alert("Action triggered");
-        }}
+        onPress={onButtonPress}
       />
-    </View>
-    <VSpacer size={16} />
-    <View>
-      <ButtonExtendedOutline
-        icon="chevronRightListItem"
-        label={"Label only"}
-        onPress={() => {
-          alert("Action triggered");
-        }}
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleSummary, custom icon, label only">
+      <View>
+        <ModuleSummary
+          icon="chevronRightListItem"
+          label={"Label only"}
+          onPress={onButtonPress}
+        />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleSummary, stress test">
+      <ModuleSummary
+        label={"A very looong loooooooong looooooooooooooong label"}
+        description={"This is a very looooooong description of the element"}
+        onPress={onButtonPress}
       />
-    </View>
-  </DSComponentViewerBox>
+    </DSComponentViewerBox>
+  </>
 );
 
 const mockIDPProviderItem = {

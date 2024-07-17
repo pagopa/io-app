@@ -1,12 +1,12 @@
 import React, { MutableRefObject } from "react";
 import { Dimensions, View } from "react-native";
-import { useDispatch } from "react-redux";
 import I18n from "../../../i18n";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { UIMessageId } from "../../messages/types";
+import { useIODispatch } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import { cancelQueuedPaymentUpdates } from "../../messages/store/actions";
 import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
+import { cancelQueuedPaymentUpdates } from "../../messages/store/actions";
+import { UIMessageId } from "../../messages/types";
 import { getRptIdStringFromPayment } from "../utils/rptId";
 
 export type MessagePaymentBottomSheetProps = {
@@ -20,7 +20,7 @@ export const MessagePaymentBottomSheet = ({
   payments,
   presentPaymentsBottomSheetRef
 }: MessagePaymentBottomSheetProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const windowHeight = Dimensions.get("window").height;
   const snapPoint = (payments.length > 5 ? 0.75 : 0.5) * windowHeight;
   // TODO replace with FlatList, check IOCOM-636 for further details
@@ -46,7 +46,7 @@ export const MessagePaymentBottomSheet = ({
     ),
     title: I18n.t("features.pn.details.paymentSection.bottomSheetTitle"),
     snapPoint: [snapPoint],
-    footer: <View></View>,
+    footer: <View />,
     onDismiss: () => dispatch(cancelQueuedPaymentUpdates())
   });
   // eslint-disable-next-line functional/immutable-data

@@ -15,15 +15,17 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isPremiumMessagesOptInOutEnabledSelector } from "../../../../store/reducers/backendStatus";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { EnabledChannels } from "../../../../utils/profile";
+import * as analytics from "../../common/analytics";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { upsertServicePreference } from "../store/actions/preference";
 import {
   isErrorServicePreferenceSelector,
   isLoadingServicePreferenceSelector,
+  serviceMetadataInfoSelector,
   servicePreferenceResponseSuccessSelector
-} from "../store/reducers/servicePreference";
-import { serviceMetadataInfoSelector } from "../store/reducers/servicesById";
+} from "../store/reducers";
 
 const hasChannel = (
   notificationChannel: NotificationChannelEnum,
@@ -75,6 +77,23 @@ export const ServiceDetailsPreferences = ({
   const isInboxPreferenceEnabled =
     servicePreferenceResponseSuccess?.value.inbox ?? false;
 
+  useOnFirstRender(
+    () => {
+      analytics.trackServiceDetailsConsent({
+        is_special_service: serviceMetadataInfo.isSpecialService,
+        main_consent_status:
+          servicePreferenceResponseSuccess?.value.inbox ?? false,
+        push_consent_status:
+          servicePreferenceResponseSuccess?.value.push ?? false,
+        read_confirmation_consent_status:
+          servicePreferenceResponseSuccess?.value
+            .can_access_message_read_status ?? false,
+        service_id: serviceId
+      });
+    },
+    () => !!servicePreferenceResponseSuccess
+  );
+
   useEffect(() => {
     if (!isFirstRender && isErrorServicePreference) {
       IOToast.error(I18n.t("global.genericError"));
@@ -84,6 +103,12 @@ export const ServiceDetailsPreferences = ({
   const handleSwitchValueChange = useCallback(
     (channel: keyof EnabledChannels, value: boolean) => {
       if (servicePreferenceResponseSuccess) {
+        analytics.trackServiceConsentChanged({
+          consent_status: value,
+          consent_type: channel,
+          service_id: serviceId
+        });
+
         dispatch(
           upsertServicePreference.request({
             id: serviceId,
@@ -100,7 +125,7 @@ export const ServiceDetailsPreferences = ({
     // this switch is disabled if the current service is a special service.
     // the user can enable the service only using the proper special service flow.
     {
-      disabled: serviceMetadataInfo?.isSpecialService,
+      disabled: serviceMetadataInfo.isSpecialService,
       icon: "message",
       isLoading: isLoadingServicePreference,
       label: I18n.t("services.details.preferences.inbox"),

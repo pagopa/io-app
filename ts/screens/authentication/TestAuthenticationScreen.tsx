@@ -42,7 +42,7 @@ const checkUsernameValid = (username: string): boolean =>
 const VersionView = () => (
   <View style={styles.appVersion} testID="appVersionView">
     <Body>{I18n.t("profile.main.appVersion")}</Body>
-    <Body numberOfLines={1} weight="SemiBold" testID="appVersion">
+    <Body numberOfLines={1} weight="Semibold" testID="appVersion">
       {getAppVersion()}
     </Body>
   </View>
@@ -67,32 +67,21 @@ const LoadingView = () => (
   </View>
 );
 
-const ErrorView = (title: string, content: string) => {
-  const viewRef = React.createRef<View>();
-  return (
-    <View style={IOStyles.flex} testID="errorView">
-      <VSpacer size={16} />
-      <Alert
-        viewRef={viewRef}
-        variant="error"
-        title={title}
-        content={content}
-      />
-      <VSpacer size={16} />
-    </View>
-  );
-};
+const ErrorView = (title: string, content: string) => (
+  <View style={IOStyles.flex} testID="errorView">
+    <VSpacer size={16} />
+    <Alert variant="error" title={title} content={content} />
+    <VSpacer size={16} />
+  </View>
+);
 
-const SuccessfulView = () => {
-  const viewRef = React.createRef<View>();
-  return (
-    <View style={IOStyles.flex} testID="successView">
-      <VSpacer size={16} />
-      <Alert viewRef={viewRef} variant="success" content={"Success"} />
-      <VSpacer size={16} />
-    </View>
-  );
-};
+const SuccessfulView = () => (
+  <View style={IOStyles.flex} testID="successView">
+    <VSpacer size={16} />
+    <Alert variant="success" content={"Success"} />
+    <VSpacer size={16} />
+  </View>
+);
 
 const isConfirmButtonDisabled = (
   username: string,
@@ -143,7 +132,6 @@ const TestAuthenticationScreen = (props: Props) => {
               icon="locked"
               disabled={isLoading}
               textInputProps={{
-                inputMode: "password",
                 returnKeyType: "done"
               }}
             />

@@ -19,6 +19,12 @@ import homeReducer, { PaymentsHomeState } from "../../../home/store/reducers";
 import paymentsWalletReducer, {
   PaymentsWalletState
 } from "../../../wallet/store/reducers";
+import paymentsBizEventsTransactionReducer, {
+  PaymentsBizEventsTransactionState
+} from "../../../bizEventsTransaction/store/reducers";
+import paymentsPagoPaPlatformReducer, {
+  PaymentsPagoPaPlatformState
+} from "./pagoPaPlatformReducer";
 
 export type PaymentsState = {
   onboarding: PaymentsOnboardingState;
@@ -28,6 +34,8 @@ export type PaymentsState = {
   history: PaymentsHistoryState & PersistPartial;
   home: PaymentsHomeState & PersistPartial;
   wallet: PaymentsWalletState;
+  bizEventsTransaction: PaymentsBizEventsTransactionState;
+  pagoPaPlatform: PaymentsPagoPaPlatformState;
 };
 
 const paymentsReducer = combineReducers({
@@ -37,7 +45,9 @@ const paymentsReducer = combineReducers({
   transaction: transactionReducer,
   history: historyReducer,
   home: homeReducer,
-  wallet: paymentsWalletReducer
+  wallet: paymentsWalletReducer,
+  bizEventsTransaction: paymentsBizEventsTransactionReducer,
+  pagoPaPlatform: paymentsPagoPaPlatformReducer
 });
 
 export default paymentsReducer;

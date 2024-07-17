@@ -61,7 +61,6 @@ import {
   deleteUserDataProcessing,
   upsertUserDataProcessing
 } from "../actions/userDataProcessing";
-import { userMetadataLoad, userMetadataUpsert } from "../actions/userMetadata";
 import { deleteAllPaymentMethodsByFunction } from "../actions/wallet/delete";
 import {
   addCreditCardOutcomeCode,
@@ -107,8 +106,8 @@ import {
   updateNotificationInstallationFailure,
   updateNotificationsInstallationToken
 } from "../../features/pushNotifications/store/actions/notifications";
+import { trackServicesAction } from "../../features/services/common/analytics";
 import { trackContentAction } from "./contentAnalytics";
-import { trackServiceAction } from "./serviceAnalytics";
 
 const trackAction =
   (mp: NonNullable<typeof mixpanel>) =>
@@ -257,8 +256,6 @@ const trackAction =
       case getType(sessionInformationLoadFailure):
       case getType(profileLoadFailure):
       case getType(profileUpsert.failure):
-      case getType(userMetadataUpsert.failure):
-      case getType(userMetadataLoad.failure):
       case getType(refreshPMTokenWhileAddCreditCard.failure):
       case getType(deleteWalletFailure):
       case getType(setFavouriteWalletFailure):
@@ -317,11 +314,6 @@ const trackAction =
       // profile
       case getType(profileUpsert.success):
       case getType(profileLoadRequest):
-      // userMetadata
-      case getType(userMetadataUpsert.request):
-      case getType(userMetadataUpsert.success):
-      case getType(userMetadataLoad.request):
-      case getType(userMetadataLoad.success):
       // messages
       case getType(searchMessagesEnabled):
       // wallet
@@ -397,7 +389,7 @@ export const actionTracking =
       void trackCoBadgeAction(mixpanel)(action);
       void trackCgnAction(mixpanel)(action);
       void trackContentAction(mixpanel)(action);
-      void trackServiceAction(mixpanel)(action);
+      void trackServicesAction(mixpanel)(action);
       void trackEuCovidCertificateActions(mixpanel)(action);
       void trackPaypalOnboarding(mixpanel)(action);
       void trackZendesk(mixpanel)(action);

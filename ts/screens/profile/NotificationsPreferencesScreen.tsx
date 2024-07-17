@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { ContentWrapper, useIOToast } from "@pagopa/io-app-design-system";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
-import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";
 import { profileUpsert } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
@@ -97,7 +97,7 @@ export const NotificationsPreferencesScreen = () => {
   );
 
   return (
-    <RNavScreenWithLargeHeader
+    <IOScrollViewWithLargeHeader
       title={{
         label: I18n.t("profile.preferences.notifications.title")
       }}
@@ -117,6 +117,6 @@ export const NotificationsPreferencesScreen = () => {
           remindersSwitchValue={remindersSwitchIsOn}
         />
       </ContentWrapper>
-    </RNavScreenWithLargeHeader>
+    </IOScrollViewWithLargeHeader>
   );
 };

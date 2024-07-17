@@ -39,7 +39,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class PaymentHistoryItem extends React.PureComponent<Props> {
+export default class PaymentHistoryItem extends React.PureComponent<
+  React.PropsWithChildren<Props>
+> {
   public render() {
     return (
       <TouchableDefaultOpacity
@@ -58,7 +60,7 @@ export default class PaymentHistoryItem extends React.PureComponent<Props> {
         <VSpacer size={4} />
         <View style={styles.text3Line}>
           <View style={[styles.text3Container, IOStyles.flex, IOStyles.row]}>
-            <Body color="bluegreyDark" weight="SemiBold" numberOfLines={2}>
+            <Body color="bluegreyDark" weight="Semibold" numberOfLines={2}>
               {`${I18n.t("payment.IUV")} ${this.props.text3}`}
             </Body>
           </View>

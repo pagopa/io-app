@@ -1,9 +1,9 @@
 import {
   Banner,
   ContentWrapper,
-  IOToast,
   RadioGroup,
   RadioItem,
+  useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React, {
@@ -36,6 +36,8 @@ import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { openWebUrl } from "../../utils/url";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import { sectionStatusSelector } from "../../store/reducers/backendStatus";
+import { LightModalContext } from "../../components/ui/LightModal";
+import { AlertModal } from "../../components/ui/AlertModal";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.language.contextualHelpTitle",
@@ -49,8 +51,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const LanguagesPreferencesScreen = () => {
   const viewRef = createRef<View>();
   const dispatch = useIODispatch();
+  const toast = useIOToast();
   const selectedLanguage = useRef<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
+  const { showModal } = React.useContext(LightModalContext);
   const profile = useIOSelector(profileSelector, _.isEqual);
   const prevProfile = usePrevious(profile);
   const bannerInfoSelector = useIOSelector(
@@ -124,8 +128,18 @@ const LanguagesPreferencesScreen = () => {
       !pot.isError(profile)
     ) {
       setIsLoading(false);
-      preferredLanguageSaveSuccessDispatch(selectedItem as Locales);
+      preferredLanguageSaveSuccessDispatch(selectedLanguage.current as Locales);
       setSelectedItem(selectedLanguage.current);
+      showModal(
+        <AlertModal
+          message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
+        />
+      );
+      toast.success(
+        I18n.t(
+          "profile.preferences.list.preferred_language.toast.success.title"
+        )
+      );
       return;
     }
 
@@ -137,14 +151,16 @@ const LanguagesPreferencesScreen = () => {
       pot.isError(profile)
     ) {
       setIsLoading(false);
-      IOToast.error(I18n.t("errors.profileUpdateError"));
+      toast.error(I18n.t("errors.profileUpdateError"));
     }
   }, [
     selectedLanguage,
     preferredLanguageSaveSuccessDispatch,
     prevProfile,
     profile,
-    selectedItem
+    selectedItem,
+    showModal,
+    toast
   ]);
 
   const onLanguageSelected = useCallback(

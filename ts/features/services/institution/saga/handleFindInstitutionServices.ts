@@ -25,6 +25,10 @@ export function* handleFindInstitutionServices(
     )) as unknown as SagaCallReturnType<typeof findInstutionServices>;
 
     if (E.isRight(response)) {
+      if (response.right.status === 401) {
+        return;
+      }
+
       if (response.right.status === 200) {
         yield* put(paginatedServicesGet.success(response.right.value));
         return;
@@ -33,6 +37,7 @@ export function* handleFindInstitutionServices(
       // not handled error codes
       yield* put(
         paginatedServicesGet.failure({
+          id: action.payload.institutionId,
           ...getGenericError(
             new Error(`response status code ${response.right.status}`)
           )
@@ -43,12 +48,14 @@ export function* handleFindInstitutionServices(
     // cannot decode response
     yield* put(
       paginatedServicesGet.failure({
+        id: action.payload.institutionId,
         ...getGenericError(new Error(readablePrivacyReport(response.left)))
       })
     );
   } catch (e) {
     yield* put(
       paginatedServicesGet.failure({
+        id: action.payload.institutionId,
         ...getNetworkError(e)
       })
     );

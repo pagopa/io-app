@@ -20,7 +20,7 @@ export const RemoteContentBanner = () => {
         {
           key: "RCB_T1",
           text: I18n.t("messageDetails.bottomSheet.bodyPt2"),
-          weight: "SemiBold"
+          weight: "Semibold"
         },
         {
           key: "RCB_T2",
@@ -30,7 +30,7 @@ export const RemoteContentBanner = () => {
         {
           key: "RCB_T3",
           text: I18n.t("messageDetails.bottomSheet.bodyPt4"),
-          weight: "SemiBold"
+          weight: "Semibold"
         },
         {
           key: "RCB_T4",

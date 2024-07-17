@@ -10,7 +10,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import _, { capitalize } from "lodash";
 import React, { useEffect, useMemo } from "react";
-import { View } from "react-native";
 import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import I18n from "../../../../i18n";
@@ -21,15 +20,13 @@ import { selectPaymentMethodAction } from "../store/actions/orchestration";
 import { walletPaymentAmountSelector } from "../store/selectors";
 import {
   walletPaymentAllMethodsSelector,
+  walletPaymentEnabledUserWalletsSelector,
   walletPaymentSelectedPaymentMethodIdOptionSelector,
-  walletPaymentSelectedWalletIdOptionSelector,
-  walletPaymentUserWalletLastUpdatedSelector,
-  walletPaymentUserWalletsSelector
+  walletPaymentSelectedWalletIdOptionSelector
 } from "../store/selectors/paymentMethods";
 import { getPaymentLogoFromWalletDetails } from "../../common/utils";
 
 const CheckoutPaymentMethodsList = () => {
-  const alertRef = React.useRef<View>(null);
   const dispatch = useIODispatch();
 
   const [shouldShowWarningBanner, setShouldShowWarningBanner] =
@@ -37,10 +34,7 @@ const CheckoutPaymentMethodsList = () => {
 
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
   const allPaymentMethods = useIOSelector(walletPaymentAllMethodsSelector);
-  const userWallets = useIOSelector(walletPaymentUserWalletsSelector);
-  const latestPaymentMethodUsed = useIOSelector(
-    walletPaymentUserWalletLastUpdatedSelector
-  );
+  const userWallets = useIOSelector(walletPaymentEnabledUserWalletsSelector);
 
   const selectedUserWalletIdOption = useIOSelector(
     walletPaymentSelectedWalletIdOptionSelector
@@ -55,17 +49,6 @@ const CheckoutPaymentMethodsList = () => {
     O.getOrElse(() => 0)
   );
 
-  const latestPaymentMethodListItem = useMemo(
-    () =>
-      pipe(
-        latestPaymentMethodUsed,
-        O.chainNullableK(mapUserWalletToRadioItem),
-        O.map(A.of),
-        O.getOrElse(() => [] as Array<RadioItem<string>>)
-      ),
-    [latestPaymentMethodUsed]
-  );
-
   const userPaymentMethodListItems = useMemo(
     () =>
       pipe(
@@ -74,15 +57,9 @@ const CheckoutPaymentMethodsList = () => {
         O.map(methods => methods.map(mapUserWalletToRadioItem)),
         O.map(A.map(O.fromNullable)),
         O.map(A.compact),
-        O.map(
-          A.filter(
-            method =>
-              !latestPaymentMethodListItem.some(item => item.id === method.id)
-          )
-        ),
         O.getOrElse(() => [] as Array<RadioItem<string>>)
       ),
-    [userWallets, latestPaymentMethodListItem]
+    [userWallets]
   );
 
   const allPaymentMethodListItems = useMemo(
@@ -100,17 +77,11 @@ const CheckoutPaymentMethodsList = () => {
 
   useEffect(() => {
     const hasDisabledMethods =
-      [
-        ...userPaymentMethodListItems,
-        ...allPaymentMethodListItems,
-        ...latestPaymentMethodListItem
-      ].find(item => item.disabled) !== undefined;
+      [...userPaymentMethodListItems, ...allPaymentMethodListItems].find(
+        item => item.disabled
+      ) !== undefined;
     setShouldShowWarningBanner(hasDisabledMethods);
-  }, [
-    userPaymentMethodListItems,
-    allPaymentMethodListItems,
-    latestPaymentMethodListItem
-  ]);
+  }, [userPaymentMethodListItems, allPaymentMethodListItems]);
 
   const handleSelectUserWallet = (walletId: string) =>
     pipe(
@@ -153,22 +124,10 @@ const CheckoutPaymentMethodsList = () => {
         <Alert
           content={I18n.t("wallet.payment.methodSelection.alert.body")}
           variant="warning"
-          viewRef={alertRef}
           onPress={() => setShouldShowWarningBanner(false)}
           action={I18n.t("wallet.payment.methodSelection.alert.cta")}
         />
       )}
-      {!_.isEmpty(latestPaymentMethodListItem) && (
-        <ListItemHeader
-          label={I18n.t("wallet.payment.methodSelection.latestMethod")}
-        />
-      )}
-      <RadioGroup<string>
-        type="radioListItem"
-        selectedItem={selectedWalletId}
-        items={latestPaymentMethodListItem}
-        onPress={handleSelectUserWallet}
-      />
       {!_.isEmpty(userPaymentMethodListItems) && (
         <ListItemHeader
           label={I18n.t("wallet.payment.methodSelection.yourMethods")}

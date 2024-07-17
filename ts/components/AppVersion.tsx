@@ -1,4 +1,3 @@
-import I18n from "i18n-js";
 import * as React from "react";
 import {
   GestureResponderEvent,
@@ -6,6 +5,7 @@ import {
   StyleSheet,
   View
 } from "react-native";
+import I18n from "../i18n";
 import { WithTestID } from "../types/WithTestID";
 import { getAppVersion } from "../utils/appVersion";
 import { LabelSmall } from "./core/typography/LabelSmall";
@@ -33,7 +33,7 @@ const AppVersion = ({ onPress, testID }: AppVersion) => {
       accessibilityLabel={appVersionText}
     >
       <View style={[styles.versionButton, IOStyles.row, IOStyles.alignCenter]}>
-        <LabelSmall numberOfLines={1} weight="SemiBold" color="grey-650">
+        <LabelSmall numberOfLines={1} weight="Semibold" color="grey-650">
           {appVersionText}
         </LabelSmall>
       </View>

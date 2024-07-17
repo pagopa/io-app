@@ -5,6 +5,7 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import * as analytics from "../../common/analytics";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { featuredInstitutionsGet } from "../store/actions";
 import {
@@ -29,6 +30,12 @@ export const FeaturedInstitutionList = () => {
 
   const handlePress = useCallback(
     ({ fiscal_code, name }: Institution) => {
+      analytics.trackInstitutionSelected({
+        organization_fiscal_code: fiscal_code,
+        organization_name: name,
+        source: "featured_organizations"
+      });
+
       navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
         screen: SERVICES_ROUTES.INSTITUTION_SERVICES,
         params: {
@@ -70,7 +77,7 @@ export const FeaturedInstitutionList = () => {
           institutions={mappedFeaturedInstitutions}
         />
       )}
-      <VSpacer size={24} />
+      <VSpacer size={16} />
     </>
   );
 };

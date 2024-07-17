@@ -11,17 +11,10 @@ import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
-import {
-  CommonActions,
-  useFocusEffect,
-  useNavigation
-} from "@react-navigation/native";
+import { CommonActions, useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AppState, SafeAreaView, View, StyleSheet } from "react-native";
 import { H3 } from "../../components/core/typography/H3";
-import BaseScreenComponent, {
-  ContextualHelpProps
-} from "../../components/screens/BaseScreenComponent";
 import { mixpanelTrack } from "../../mixpanel";
 
 import {
@@ -36,7 +29,7 @@ import NavigationService from "../../navigation/NavigationService";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
 import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/utils/login";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
@@ -61,15 +54,12 @@ import {
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import themeVariables from "../../theme/variables";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
-import {
-  ErrorType,
-  IdpAuthErrorScreen,
-  IdpAuthErrorScreenType
-} from "./idpAuthErrorScreen";
-import { useStore } from "react-redux";
 import { selectedIdentityProviderSelector } from "../../store/reducers/authentication";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import ROUTES from "../../navigation/routes";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -88,11 +78,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export type AuthSessionErrorPageType = {
-  contextualHelp: ContextualHelpProps;
-  idpName: string;
-  idpAuthErrorScreenProps: IdpAuthErrorScreenType;
-};
+export enum ErrorType {
+  "LOADING_ERROR" = "LOADING_ERROR",
+  "LOGIN_ERROR" = "LOGIN_ERROR"
+}
 
 type RequestInfoPositiveStates = {
   requestState: "LOADING" | "AUTHORIZED" | "AUTHORIZING";
@@ -152,8 +141,8 @@ export const AuthSessionPage = () => {
 
   const dispatch = useIODispatch();
 
-  // We call useStore beacause we only need some values from store, we don't need any re-render logic
-  const store = useStore();
+  // We call useIOStore beacause we only need some values from store, we don't need any re-render logic
+  const store = useIOStore();
 
   // Memoized values/func --start--
   const state = useMemo(() => store.getState(), [store]);
@@ -199,7 +188,7 @@ export const AuthSessionPage = () => {
         O.fold(
           () => ({
             title: I18n.t("authentication.idp_login.contextualHelpTitle"),
-            body: () => (
+            body: (
               <LegacyMarkdown>
                 {I18n.t("authentication.idp_login.contextualHelpContent")}
               </LegacyMarkdown>
@@ -361,7 +350,8 @@ export const AuthSessionPage = () => {
     return false;
   });
 
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
+
   useFocusEffect(
     React.useCallback(() => {
       navigation.setOptions({
@@ -369,7 +359,15 @@ export const AuthSessionPage = () => {
       });
     }, [navigation, requestInfo])
   );
-
+  useHeaderSecondLevel({
+    title: `${I18n.t("authentication.idp_login.headerTitle")} - ${
+      selectedIdp?.name
+    }`,
+    supportRequest: true,
+    contextualHelp,
+    faqCategories: ["authentication_SPID"],
+    canGoBack: isBackButtonEnabled(requestInfo)
+  });
   // It is enough to set the status to loading,
   // the reload will ensure that the functions necessary for correct functioning are performed.
   const onRetry = () =>
@@ -378,53 +376,42 @@ export const AuthSessionPage = () => {
       nativeAttempts: requestInfo.nativeAttempts + 1
     });
 
+  if (requestInfo.requestState === "ERROR") {
+    navigation.navigate(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.AUTH_ERROR_SCREEN,
+      params: {
+        errorCode: requestInfo.errorCode,
+        authMethod: "SPID",
+        authLevel: "L2",
+        onRetrySpid: onRetry
+      }
+    });
+  }
   if (requestInfo.requestState === "AUTHORIZED") {
     return <IdpSuccessfulAuthentication />;
   } else {
     return (
-      <BaseScreenComponent
-        goBack={isBackButtonEnabled(requestInfo)}
-        hideHelpButton={!isBackButtonEnabled(requestInfo)}
-        contextualHelp={contextualHelp}
-        faqCategories={["authentication_SPID"]}
-        headerTitle={`${I18n.t("authentication.idp_login.headerTitle")} - ${
-          selectedIdp?.name
-        }`}
-      >
-        <LoadingSpinnerOverlay
-          isLoading={requestInfo.requestState === "LOADING"}
-        >
-          {requestInfo.requestState === "ERROR" && (
-            <IdpAuthErrorScreen
-              requestStateError={requestInfo.errorType}
-              errorCode={requestInfo.errorCode}
-              onCancel={onBack}
-              onRetry={onRetry}
-            />
-          )}
-          {requestInfo.requestState === "AUTHORIZING" && (
-            <SafeAreaView style={IOStyles.flex}>
-              <View style={styles.errorContainer}>
-                <Pictogram name={"processing"} size={120} />
-                <VSpacer size={16} />
-                <H3 style={styles.title}>
-                  {I18n.t("spid.pending_login.title")}
-                </H3>
-                <VSpacer size={16} />
-                <Body>{I18n.t("spid.pending_login.details")}</Body>
-              </View>
-              <View style={styles.buttonContainer}>
-                <ButtonSolid
-                  fullWidth
-                  label={I18n.t("spid.pending_login.button")}
-                  accessibilityLabel={I18n.t("spid.pending_login.button")}
-                  onPress={onBack}
-                />
-              </View>
-            </SafeAreaView>
-          )}
-        </LoadingSpinnerOverlay>
-      </BaseScreenComponent>
+      <LoadingSpinnerOverlay isLoading={requestInfo.requestState === "LOADING"}>
+        {requestInfo.requestState === "AUTHORIZING" && (
+          <SafeAreaView style={IOStyles.flex}>
+            <View style={styles.errorContainer}>
+              <Pictogram name={"processing"} size={120} />
+              <VSpacer size={16} />
+              <H3 style={styles.title}>{I18n.t("spid.pending_login.title")}</H3>
+              <VSpacer size={16} />
+              <Body>{I18n.t("spid.pending_login.details")}</Body>
+            </View>
+            <View style={styles.buttonContainer}>
+              <ButtonSolid
+                fullWidth
+                label={I18n.t("spid.pending_login.button")}
+                accessibilityLabel={I18n.t("spid.pending_login.button")}
+                onPress={onBack}
+              />
+            </View>
+          </SafeAreaView>
+        )}
+      </LoadingSpinnerOverlay>
     );
   }
 };

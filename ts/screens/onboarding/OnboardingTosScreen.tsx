@@ -12,9 +12,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import React, { createRef, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Alert, View } from "react-native";
-import { useStore } from "react-redux";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import TosWebviewComponent from "../../components/TosWebviewComponent";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -22,7 +21,7 @@ import { tosConfigSelector } from "../../features/tos/store/selectors";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import {
   isProfileFirstOnBoarding,
   isProfileFirstOnBoardingSelector,
@@ -43,9 +42,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const OnboardingTosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const viewRef = createRef<View>();
 
-  const store = useStore();
+  const store = useIOStore();
   const dispatch = useIODispatch();
   const potProfile = useIOSelector(profileSelector);
 
@@ -143,7 +141,6 @@ const OnboardingTosScreen = () => {
           testID={"currentToSNotAcceptedView"}
         >
           <AlertDS
-            viewRef={viewRef}
             testID="currentToSNotAcceptedText"
             variant="info"
             content={

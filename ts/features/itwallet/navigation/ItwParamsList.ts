@@ -1,6 +1,7 @@
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
+  [ITW_ROUTES.ONBOARDING]: undefined;
   // DISCOVERY
   [ITW_ROUTES.DISCOVERY.INFO]: undefined;
   // IDENTIFICATION
@@ -9,5 +10,11 @@ export type ItwParamsList = {
   [ITW_ROUTES.IDENTIFICATION.IDP_SELECTION]: undefined;
   // ISSUANCE
   [ITW_ROUTES.ISSUANCE.EID_PREVIEW]: undefined;
-  [ITW_ROUTES.ISSUANCE.RESULT]: undefined;
+  [ITW_ROUTES.ISSUANCE.EID_RESULT]: undefined;
+  [ITW_ROUTES.ISSUANCE.CREDENTIAL_AUTH]: undefined;
+  [ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW]: undefined;
+  // PRESENTATION
+  [ITW_ROUTES.PRESENTATION.EID_DETAIL]: undefined;
+  // PLAYGROUNDS
+  [ITW_ROUTES.PLAYGROUNDS]: undefined;
 };

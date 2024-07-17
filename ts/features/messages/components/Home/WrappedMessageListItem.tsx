@@ -1,49 +1,63 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
-import { serviceByIdSelector } from "../../../services/details/store/reducers/servicesById";
 import { UIMessage } from "../../types";
-import { logosForService } from "../../../../utils/services";
 import I18n from "../../../../i18n";
-import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
+import { TagEnum as PaymentTagEnum } from "../../../../../definitions/backend/MessageCategoryPayment";
+import { TagEnum as SENDTagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
+import { logoForService } from "../../../services/home/utils";
 import {
-  accessibilityLabelForMessageItem,
-  getLoadServiceDetailsActionIfNeeded
-} from "./homeUtils";
+  scheduledPreconditionStatusAction,
+  toScheduledPayload
+} from "../../store/actions/preconditions";
+import { isPaymentMessageWithPaidNoticeSelector } from "../../store/reducers/allPaginated";
+import { toggleScheduledMessageArchivingAction } from "../../store/actions/archiving";
+import { MessageListCategory } from "../../types/messageListCategory";
+import {
+  isMessageScheduledForArchivingSelector,
+  isArchivingInSchedulingModeSelector,
+  isArchivingDisabledSelector,
+  isArchivingInProcessingModeSelector
+} from "../../store/reducers/archiving";
+import { accessibilityLabelForMessageItem } from "./homeUtils";
 import { MessageListItem } from "./DS/MessageListItem";
 
 type WrappedMessageListItemProps = {
+  archiveRestoreSourceCategory?: MessageListCategory;
+  index: number;
   message: UIMessage;
 };
 
 export const WrappedMessageListItem = ({
+  archiveRestoreSourceCategory,
+  index,
   message
 }: WrappedMessageListItemProps) => {
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
   const store = useIOStore();
-  const serviceId = message.serviceId;
-  const service = useIOSelector(state => serviceByIdSelector(state, serviceId));
-  const organizationFiscalCode = service?.organization_fiscal_code;
-  useEffect(() => {
-    const state = store.getState();
-    const loadServiceDetailsActionOrUndefined =
-      getLoadServiceDetailsActionIfNeeded(
-        state,
-        serviceId,
-        organizationFiscalCode
-      );
-    if (loadServiceDetailsActionOrUndefined) {
-      dispatch(loadServiceDetailsActionOrUndefined);
-    }
-  }, [dispatch, organizationFiscalCode, serviceId, store]);
 
+  const serviceId = message.serviceId;
+  const organizationFiscalCode = message.organizationFiscalCode;
+
+  const isPaymentMessageWithPaidNotice = useIOSelector(state =>
+    isPaymentMessageWithPaidNoticeSelector(state, message.category)
+  );
+  const isSelected = useIOSelector(state =>
+    isMessageScheduledForArchivingSelector(state, message.id)
+  );
+
+  const messageCategoryTag = message.category.tag;
+  const doubleAvatar = messageCategoryTag === PaymentTagEnum.PAYMENT;
   const serviceLogoUriSources = useMemo(
-    () => (service ? logosForService(service) : undefined),
-    [service]
+    () => logoForService(serviceId, organizationFiscalCode),
+    [serviceId, organizationFiscalCode]
   );
   const organizationName =
     message.organizationName || I18n.t("messages.errorLoading.senderInfo");
@@ -56,26 +70,89 @@ export const WrappedMessageListItem = ({
   );
   const isRead = message.isRead;
   const badgeText =
-    message.category.tag === TagEnum.PN
+    messageCategoryTag === SENDTagEnum.PN
       ? I18n.t("features.pn.details.badge.legalValue")
+      : isPaymentMessageWithPaidNotice
+      ? I18n.t("messages.badge.paid")
+      : undefined;
+  const badgeVariant =
+    messageCategoryTag === SENDTagEnum.PN
+      ? "legalMessage"
+      : isPaymentMessageWithPaidNotice
+      ? "success"
       : undefined;
   const accessibilityLabel = useMemo(
     () => accessibilityLabelForMessageItem(message),
     [message]
   );
 
+  const toggleScheduledMessageArchivingCallback = useCallback(() => {
+    const state = store.getState();
+    if (
+      archiveRestoreSourceCategory &&
+      !isArchivingInProcessingModeSelector(state)
+    ) {
+      dispatch(
+        toggleScheduledMessageArchivingAction({
+          messageId: message.id,
+          fromInboxToArchive: archiveRestoreSourceCategory === "INBOX"
+        })
+      );
+    }
+  }, [archiveRestoreSourceCategory, dispatch, message, store]);
+
+  const onPressCallback = useCallback(() => {
+    const state = store.getState();
+    if (
+      archiveRestoreSourceCategory &&
+      isArchivingInSchedulingModeSelector(state)
+    ) {
+      toggleScheduledMessageArchivingCallback();
+    } else if (
+      !archiveRestoreSourceCategory ||
+      isArchivingDisabledSelector(state)
+    ) {
+      if (message.hasPrecondition) {
+        dispatch(
+          scheduledPreconditionStatusAction(
+            toScheduledPayload(message.id, message.category.tag)
+          )
+        );
+      } else {
+        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
+          params: {
+            messageId: message.id,
+            fromNotification: false
+          }
+        });
+      }
+    }
+  }, [
+    archiveRestoreSourceCategory,
+    dispatch,
+    message,
+    navigation,
+    store,
+    toggleScheduledMessageArchivingCallback
+  ]);
+
   return (
     <MessageListItem
       accessibilityLabel={accessibilityLabel}
-      serviceName={serviceName}
-      messageTitle={messageTitle}
-      onLongPress={() => undefined}
-      onPress={() => undefined}
-      serviceLogos={serviceLogoUriSources}
       badgeText={badgeText}
-      isRead={isRead}
-      organizationName={organizationName}
+      badgeVariant={badgeVariant}
+      doubleAvatar={doubleAvatar}
       formattedDate={messageDate}
+      isRead={isRead}
+      messageTitle={messageTitle}
+      onLongPress={toggleScheduledMessageArchivingCallback}
+      onPress={onPressCallback}
+      organizationName={organizationName}
+      selected={isSelected}
+      serviceLogos={serviceLogoUriSources}
+      serviceName={serviceName}
+      testID={`wrapped_message_list_item_${index}`}
     />
   );
 };

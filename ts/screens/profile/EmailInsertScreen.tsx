@@ -428,7 +428,7 @@ const EmailInsertScreen = () => {
               ) : (
                 <>
                   {I18n.t("email.edit.subtitle")}
-                  <Body weight="SemiBold">
+                  <Body weight="Semibold">
                     {` ${pipe(
                       optionEmail,
                       O.getOrElse(() => "")
@@ -443,7 +443,7 @@ const EmailInsertScreen = () => {
               textInputProps={{
                 autoCorrect: false,
                 autoCapitalize: "none",
-                inputMode: true
+                inputMode: "email"
               }}
               accessibilityLabel={I18n.t("email.newinsert.label")}
               placeholder={I18n.t("email.newinsert.label")}

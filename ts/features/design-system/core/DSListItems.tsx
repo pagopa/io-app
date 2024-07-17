@@ -21,16 +21,10 @@ import { H2 } from "../../../components/core/typography/H2";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
-import ListItemComponent from "../../../components/screens/ListItemComponent";
 import CgnMerchantDiscountItem from "../../bonus/cgn/components/merchants/CgnMerchantsDiscountItem";
 import { BankPreviewItem } from "../../wallet/onboarding/bancomat/components/BankPreviewItem";
-
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
-import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
-import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
-import OrderOption from "../../bonus/cgn/components/merchants/search/OrderOption";
 import { getBadgeTextByTransactionStatus } from "../../payments/common/utils";
-import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItemPermissionComponent";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const onButtonPress = () => {
@@ -47,7 +41,7 @@ export const DSListItems = () => {
     <DesignSystemScreen title="List Items">
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ListItemNav
@@ -56,7 +50,7 @@ export const DSListItems = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ListItemInfoCopy
@@ -65,7 +59,7 @@ export const DSListItems = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ListItemInfo
@@ -74,7 +68,7 @@ export const DSListItems = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ListItemHeader
@@ -83,7 +77,7 @@ export const DSListItems = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ListItemAction
@@ -92,7 +86,7 @@ export const DSListItems = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ListItemTransaction
@@ -103,10 +97,10 @@ export const DSListItems = () => {
 
       <H2
         color={"bluegrey"}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
-        NativeBase lookalikes (not NativeBase)
+        Specific
       </H2>
       <DSComponentViewerBox name="BankPreviewItem -- using PressableListItemBase">
         <BankPreviewItem
@@ -118,160 +112,6 @@ export const DSListItems = () => {
           onPress={() => alert("Action triggered")}
         />
       </DSComponentViewerBox>
-
-      <VSpacer size={40} />
-
-      <H2
-        color={"bluegrey"}
-        weight={"SemiBold"}
-        style={{ marginBottom: 16, marginTop: 16 }}
-      >
-        ListItemComponent (NativeBase)
-      </H2>
-      <DSComponentViewerBox name="ListItemComponent (title)">
-        <ListItemComponent
-          title={"Title"}
-          onPress={() => alert("Action triggered")}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="ListItemComponent (title + subtitle)">
-        <ListItemComponent
-          title={"Title"}
-          subTitle="Subtitle"
-          onPress={() => alert("Action triggered")}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="ListItemComponent (without icon)">
-        <ListItemComponent
-          title={"Title"}
-          hideIcon={true}
-          onPress={() => alert("Action triggered")}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="ListItemComponent (without separator)">
-        <ListItemComponent
-          title={"Title"}
-          onPress={() => alert("Action triggered")}
-          hideSeparator={true}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="ListItemComponent (stress test)">
-        <ListItemComponent
-          title={"Let's try a looong looooong looooooooong title"}
-          subTitle="A loooong looooooong looooooooooong subtitle, too"
-          onPress={() => alert("Action triggered")}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="ListItemComponent (stress test, no truncated subtitle)">
-        <ListItemComponent
-          title={"Let's try a looong looooong looooooooong title"}
-          subTitle="A loooong looooooong looooooooooong subtitle, too"
-          useExtendedSubTitle={true}
-          onPress={() => alert("Action triggered")}
-        />
-      </DSComponentViewerBox>
-
-      <DSComponentViewerBox name="ListItemComponent (badge)">
-        <ListItemComponent
-          title={"A looong looooong looooooooong looooooooooong title"}
-          hasBadge={true}
-          onPress={() => alert("Action triggered")}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="ListItemComponent (badge)">
-        <ListItemComponent
-          title={"A looong looooong looooooooong looooooooooong title"}
-          titleBadge="Badge"
-          onPress={() => alert("Action triggered")}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="ListItemComponent (custom icon)">
-        <ListItemComponent
-          title={"Title"}
-          iconSize={12}
-          iconName={"checkTickBig"}
-          onPress={() => alert("Action triggered")}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="ListItemComponent (switch)">
-        <ListItemComponent
-          title={"Setting with switch"}
-          switchValue={true}
-          accessibilityRole={"switch"}
-          accessibilityState={{ checked: false }}
-          isLongPressEnabled={true}
-          onPress={() => alert("Action triggered")}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="ListItemComponent (radio)">
-        <ListItemComponent
-          title={"Title"}
-          subTitle={"Subtitle"}
-          iconName={"legRadioOn"}
-          smallIconSize={true}
-          iconOnTop={true}
-          onPress={() => alert("Action triggered")}
-        />
-      </DSComponentViewerBox>
-
-      <H2
-        color={"bluegrey"}
-        weight={"SemiBold"}
-        style={{ marginBottom: 16, marginTop: 16 }}
-      >
-        Derivated from ListItem (NativeBase)
-      </H2>
-      <DSComponentViewerBox name="OrderOption">
-        <OrderOption
-          text={"Checked"}
-          value={"Value"}
-          checked={true}
-          onPress={() => alert("Action triggered")}
-        />
-        <OrderOption
-          text={"Unchecked"}
-          value={"Value"}
-          checked={false}
-          onPress={() => alert("Action triggered")}
-        />
-      </DSComponentViewerBox>
-
-      <DSComponentViewerBox name="ZendeskItemPermissionComponent">
-        <ZendeskItemPermissionComponent
-          icon={<Icon name="info" size={24} />}
-          title="Storico versioni dell'app"
-          value="Per capire se il problema dipende dall'ultimo aggiornamento"
-          testId="TestID"
-        />
-      </DSComponentViewerBox>
-      <H2
-        color={"bluegrey"}
-        weight={"SemiBold"}
-        style={{ marginBottom: 16, marginTop: 16 }}
-      >
-        Misc
-      </H2>
-      <DSComponentViewerBox name="DetailedlistItemComponent">
-        <DetailedlistItemComponent
-          isNew={true}
-          text11={"Payment Recipient"}
-          text12={"+200,00 €"}
-          text2={"19/12/2022 - 1:25:23 PM"}
-          text3={"Transaction Name"}
-          onPressItem={() => alert("Action triggered")}
-          accessible={true}
-          accessibilityRole={"button"}
-          accessibilityLabel={"Accessibility Label"}
-        />
-      </DSComponentViewerBox>
-
-      <H2
-        color={"bluegrey"}
-        weight={"SemiBold"}
-        style={{ marginBottom: 16, marginTop: 16 }}
-      >
-        Native (Not NativeBase)
-      </H2>
       <DSComponentViewerBox name="CgnMerchantDiscountItem">
         <CgnMerchantDiscountItem
           discount={{
@@ -287,17 +127,6 @@ export const DSListItems = () => {
           }}
           operatorName={"Operator name"}
           merchantType={undefined}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="CgnMerchantListItem">
-        <CgnMerchantListItem
-          categories={[
-            ProductCategoryEnum.cultureAndEntertainment,
-            ProductCategoryEnum.home
-          ]}
-          name={"Partner Name"}
-          onPress={() => alert("Action triggered")}
-          isNew={true}
         />
       </DSComponentViewerBox>
     </DesignSystemScreen>

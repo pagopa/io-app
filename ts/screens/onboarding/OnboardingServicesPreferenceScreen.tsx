@@ -1,18 +1,15 @@
 import {
+  Banner,
   ContentWrapper,
-  FeatureInfo,
-  FooterWithButtons,
   IOStyles,
-  IOToast,
-  VSpacer
+  VSpacer,
+  useIOToast
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
-import { SafeAreaView, View } from "react-native";
-import { useStore } from "react-redux";
+import { SafeAreaView } from "react-native";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import {
   IOStackNavigationRouteProps,
@@ -22,7 +19,7 @@ import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsLi
 import ROUTES from "../../navigation/routes";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import {
   isServicesPreferenceModeSet,
   profileSelector,
@@ -38,6 +35,7 @@ import {
 } from "../profile/analytics";
 import { useManualConfigBottomSheet } from "../profile/components/services/ManualConfigBottomSheet";
 import ServicesContactComponent from "../profile/components/services/ServicesContactComponent";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
@@ -50,8 +48,9 @@ type Props = IOStackNavigationRouteProps<
 const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
+  const toast = useIOToast();
   const isFirstOnboarding = props.route.params.isFirstOnboarding;
-  const store = useStore();
+  const store = useIOStore();
   const profile = useIOSelector(profileSelector);
   const prevProfile = usePrevious(profile);
   const isLoading = pot.isUpdating(profile) || pot.isLoading(profile);
@@ -104,7 +103,14 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
       store.getState()
     );
     onContinue(isFirstOnboarding);
-  }, [isFirstOnboarding, onContinue, profileServicePreferenceMode, store]);
+    toast.hideAll();
+  }, [
+    isFirstOnboarding,
+    onContinue,
+    profileServicePreferenceMode,
+    store,
+    toast
+  ]);
 
   const selectCurrentMode = useCallback(
     (mode: ServicesPreferencesModeEnum) => {
@@ -139,7 +145,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
     // otherwise, if the profile is in error state,
     // the toast will be shown immediately without any updates
     if (prevProfile && !pot.isError(prevProfile) && pot.isError(profile)) {
-      IOToast.error(I18n.t("global.genericError"));
+      toast.error(I18n.t("global.genericError"));
       return;
     }
 
@@ -153,13 +159,14 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
       profileServicePreferenceMode !== prevMode
     ) {
       setModeSelected(profileServicePreferenceMode);
-      IOToast.success(
+      toast.hideAll();
+      toast.success(
         profileServicePreferenceMode === ServicesPreferencesModeEnum.MANUAL
           ? I18n.t("services.optIn.preferences.manualConfig.successAlert")
           : I18n.t("services.optIn.preferences.quickConfig.successAlert")
       );
     }
-  }, [prevMode, prevProfile, profile, profileServicePreferenceMode]);
+  }, [prevMode, prevProfile, profile, profileServicePreferenceMode, toast]);
 
   // show a badge when the user is not new
   // As explained in this comment (https://pagopa.atlassian.net/browse/IOPID-1511?focusedCommentId=126354)
@@ -168,7 +175,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
   const showBadge = !isFirstOnboarding;
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
-      <RNavScreenWithLargeHeader
+      <IOScrollViewWithLargeHeader
         title={{
           label: I18n.t("services.optIn.preferences.title")
         }}
@@ -176,20 +183,15 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
         description={I18n.t("services.optIn.preferences.body")}
         headerActionsProp={{ showHelp: true }}
         contextualHelp={emptyContextualHelp}
-        fixedBottomSlot={
-          <FooterWithButtons
-            type="SingleButton"
-            primary={{
-              type: "Solid",
-              buttonProps: {
-                label: I18n.t("global.buttons.confirm"),
-                onPress: () => handleOnContinue(),
-                accessibilityLabel: I18n.t("global.buttons.confirm"),
-                disabled: !isServicesPreferenceModeSet(modeSelected)
-              }
-            }}
-          />
-        }
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("global.buttons.confirm"),
+            onPress: handleOnContinue,
+            accessibilityLabel: I18n.t("global.buttons.confirm"),
+            disabled: !isServicesPreferenceModeSet(modeSelected)
+          }
+        }}
       >
         <SafeAreaView style={IOStyles.flex}>
           <ContentWrapper>
@@ -199,18 +201,16 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
               showBadge={showBadge}
             />
             <VSpacer size={16} />
-            <View>
-              <FeatureInfo
-                iconName="navProfile"
-                body={I18n.t(
-                  "profile.main.privacy.shareData.screen.profileSettings"
-                )}
-              />
-            </View>
+            <Banner
+              size="small"
+              color="neutral"
+              pictogramName="activate"
+              content={I18n.t("services.optIn.preferences.banner")}
+            />
           </ContentWrapper>
           {manualConfigBottomSheet}
         </SafeAreaView>
-      </RNavScreenWithLargeHeader>
+      </IOScrollViewWithLargeHeader>
     </LoadingSpinnerOverlay>
   );
 };

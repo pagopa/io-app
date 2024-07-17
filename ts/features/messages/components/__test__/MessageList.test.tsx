@@ -26,8 +26,16 @@ const filter = defaultRequestPayload.filter;
 describe("MessagesInbox component", () => {
   describe("when messages aren't loaded yet", () => {
     const messagesState = {
-      inbox: { data: pot.noneLoading, lastRequest: O.none },
-      archive: { data: pot.noneLoading, lastRequest: O.none }
+      inbox: {
+        data: pot.noneLoading,
+        lastRequest: O.none,
+        lastUpdateTime: new Date(0)
+      },
+      archive: {
+        data: pot.noneLoading,
+        lastRequest: O.none,
+        lastUpdateTime: new Date(0)
+      }
     };
 
     it("should not render the empty component", () => {
@@ -50,7 +58,13 @@ describe("MessagesInbox component", () => {
     it("should render the error component", () => {
       const { component } = renderComponent(
         { ListEmptyComponent, filter },
-        { inbox: { data: pot.noneError("paura, eh?"), lastRequest: O.none } }
+        {
+          inbox: {
+            data: pot.noneError({ reason: "paura, eh?", time: new Date() }),
+            lastRequest: O.none,
+            lastUpdateTime: new Date(0)
+          }
+        }
       );
       expect(
         component.getByText(I18n.t("messages.loadingErrorTitle"))
@@ -60,7 +74,11 @@ describe("MessagesInbox component", () => {
 
   describe("when the messages state contains messages", () => {
     const messagesState = {
-      inbox: { data: pot.some({ page: messages }), lastRequest: O.none }
+      inbox: {
+        data: pot.some({ page: messages }),
+        lastRequest: O.none,
+        lastUpdateTime: new Date(0)
+      }
     };
 
     // eslint-disable-next-line sonarjs/no-identical-functions

@@ -3,7 +3,7 @@
 exports[`ServicesHeader component should match the snapshot 1`] = `
 <View
   style={
-    Object {
+    {
       "alignItems": "center",
       "flexDirection": "row",
       "justifyContent": "space-between",
@@ -14,7 +14,7 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "marginRight": 16,
       }
     }
@@ -22,14 +22,14 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
     <View
       accessibilityIgnoresInvertColors={true}
       style={
-        Array [
-          Object {
+        [
+          {
             "borderColor": "rgba(14,15,19,0.1)",
             "borderCurve": "continuous",
             "borderWidth": 1,
             "overflow": "hidden",
           },
-          Object {
+          {
             "backgroundColor": "#FFFFFF",
             "borderRadius": 12,
             "height": 66,
@@ -41,13 +41,13 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "#FFFFFF",
               "borderCurve": "continuous",
               "overflow": "hidden",
             },
-            Object {
+            {
               "borderRadius": 3,
             },
           ]
@@ -57,12 +57,12 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
           accessibilityIgnoresInvertColors={true}
           onError={[Function]}
           source={
-            Object {
+            {
               "testUri": "../../../img/test/logo.png",
             }
           }
           style={
-            Object {
+            {
               "height": "100%",
               "resizeMode": "contain",
               "width": "100%",
@@ -74,7 +74,7 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "flex": 1,
       }
     }
@@ -83,29 +83,31 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
       allowFontScaling={false}
       color="bluegreyDark"
       defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
+      defaultWeight="Semibold"
+      dynamicTypeRamp="title2"
+      font="TitilliumSansPro"
       fontStyle={
-        Object {
-          "fontSize": 24,
-          "lineHeight": 34,
+        {
+          "fontSize": 22,
+          "lineHeight": 33,
         }
       }
+      maxFontSizeMultiplier={1.25}
       style={
-        Array [
-          Object {
-            "fontSize": 24,
-            "lineHeight": 34,
+        [
+          {
+            "fontSize": 22,
+            "lineHeight": 33,
           },
-          Object {
+          {
             "color": "#17324D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "600",
           },
         ]
       }
-      weight="SemiBold"
+      weight="Semibold"
     >
       #### title ####
     </Text>
@@ -114,23 +116,25 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
       color="grey-700"
       defaultColor="blue"
       defaultWeight="Bold"
-      font="TitilliumWeb"
+      dynamicTypeRamp="footnote"
+      font="TitilliumSansPro"
       fontSize="regular"
       fontStyle={
-        Object {
+        {
           "fontSize": 14,
           "lineHeight": 21,
         }
       }
+      maxFontSizeMultiplier={1.25}
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 14,
             "lineHeight": 21,
           },
-          Object {
+          {
             "color": "#555C70",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "700",
           },

@@ -1,7 +1,6 @@
 import { getType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-
 import {
   defaultRequestPayload,
   defaultRequestError,
@@ -14,6 +13,7 @@ import {
   loadPreviousPageMessages,
   migrateToPaginatedMessages,
   reloadAllMessages,
+  requestAutomaticMessagesRefresh,
   resetMigrationStatus,
   setShownMessageCategoryAction,
   upsertMessageStatusAttributes,
@@ -30,7 +30,14 @@ import reducer, {
   shownMessageCategorySelector,
   MessagePagePot,
   messageListForCategorySelector,
-  MessagePage
+  MessagePage,
+  messagesByCategorySelector,
+  emptyListReasonSelector,
+  shouldShowFooterListComponentSelector,
+  LastRequestType,
+  messagePagePotFromCategorySelector,
+  shouldShowRefreshControllOnListSelector,
+  isPaymentMessageWithPaidNoticeSelector
 } from "../allPaginated";
 import { pageSize } from "../../../../../config";
 import { UIMessage } from "../../../types";
@@ -39,6 +46,10 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { MessageListCategory } from "../../../types/messageListCategory";
 import { emptyMessageArray } from "../../../utils";
+import { isSomeLoadingOrSomeUpdating } from "../../../../../utils/pot";
+import { PaymentByRptIdState } from "../../../../../store/reducers/entities/payments";
+import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
+import { nextPageLoadingWaitMillisecondsGenerator } from "../../../components/Home/homeUtils";
 
 describe("allPaginated reducer", () => {
   describe("given a `reloadAllMessages` action", () => {
@@ -107,7 +118,7 @@ describe("allPaginated reducer", () => {
           pot.isLoading(reducer(undefined, actionRequest).archive.data)
         ).toBe(false);
       });
-      // eslint-disable-next-line sonarjs/no-identical-functions
+
       it("should set the Inbox lastRequest to 'all'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
           O.some("all")
@@ -223,7 +234,7 @@ describe("allPaginated reducer", () => {
           pot.isLoading(reducer(undefined, actionRequest).archive.data)
         ).toBe(false);
       });
-      // eslint-disable-next-line sonarjs/no-identical-functions
+
       it("should set the Inbox lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
           O.some("next")
@@ -378,7 +389,7 @@ describe("allPaginated reducer", () => {
           pot.isLoading(reducer(undefined, actionRequest).archive.data)
         ).toBe(false);
       });
-      // eslint-disable-next-line sonarjs/no-identical-functions
+
       it("should set the Inbox lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
           O.some("previous")
@@ -461,7 +472,8 @@ describe("allPaginated reducer", () => {
           previous: "abcde",
           next: "12345"
         }),
-        lastRequest: O.none
+        lastRequest: O.none,
+        lastUpdateTime: new Date(0)
       }
     };
 
@@ -739,7 +751,6 @@ describe("allPaginated reducer", () => {
       action: failure
     }))
     .forEach(({ initialState, action }) => {
-      const expectedState = pot.noneError(defaultRequestError.error.message);
       describe(`when a ${action.type} failure is sent`, () => {
         it(`preserves the existing lastRequest: ${initialState.inbox.lastRequest}`, () => {
           expect(reducer(initialState, action).inbox.lastRequest).toEqual(
@@ -747,17 +758,20 @@ describe("allPaginated reducer", () => {
           );
         });
         it("returns the error", () => {
-          expect(reducer(initialState, action).inbox.data).toEqual(
-            expectedState
-          );
+          const output = reducer(initialState, action).inbox.data;
+          const errorReason = pot.isError(output)
+            ? output.error.reason
+            : undefined;
+          expect(pot.isError(output)).toBe(true);
+          expect(errorReason).toBe(defaultRequestError.error.message);
         });
       });
     });
 });
 
 const defaultState: AllPaginated = {
-  inbox: { data: pot.none, lastRequest: O.none },
-  archive: { data: pot.none, lastRequest: O.none },
+  inbox: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
+  archive: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
   migration: O.none,
   shownCategory: "INBOX"
 };
@@ -775,6 +789,7 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.none,
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -783,6 +798,7 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.none,
       inbox: pot.none,
       lastRequest: O.none,
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -791,6 +807,7 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("previous"),
+      lastUpdateTime: new Date(0),
       expectedArchive: true,
       expectedInbox: true
     },
@@ -799,6 +816,7 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.none,
       lastRequest: O.some("previous"),
+      lastUpdateTime: new Date(0),
       expectedArchive: true,
       expectedInbox: false
     },
@@ -807,6 +825,7 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("next"),
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -814,11 +833,19 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("all"),
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     }
   ].forEach(
-    ({ archive, inbox, lastRequest, expectedArchive, expectedInbox }) => {
+    ({
+      archive,
+      inbox,
+      lastRequest,
+      lastUpdateTime,
+      expectedArchive,
+      expectedInbox
+    }) => {
       describe(`given { archive: ${archive.kind}, inbox: ${
         inbox.kind
       }, lastRequest: ${lastRequest.toString()} `, () => {
@@ -830,12 +857,14 @@ describe("isLoadingPreviousPage selector", () => {
                 archive: {
                   data: archive,
                   lastRequest:
-                    lastRequest as AllPaginated["archive"]["lastRequest"]
+                    lastRequest as AllPaginated["archive"]["lastRequest"],
+                  lastUpdateTime
                 },
                 inbox: {
                   data: inbox,
                   lastRequest:
-                    lastRequest as AllPaginated["inbox"]["lastRequest"]
+                    lastRequest as AllPaginated["inbox"]["lastRequest"],
+                  lastUpdateTime
                 }
               })
             )
@@ -850,12 +879,14 @@ describe("isLoadingPreviousPage selector", () => {
                 archive: {
                   data: archive,
                   lastRequest:
-                    lastRequest as AllPaginated["archive"]["lastRequest"]
+                    lastRequest as AllPaginated["archive"]["lastRequest"],
+                  lastUpdateTime
                 },
                 inbox: {
                   data: inbox,
                   lastRequest:
-                    lastRequest as AllPaginated["inbox"]["lastRequest"]
+                    lastRequest as AllPaginated["inbox"]["lastRequest"],
+                  lastUpdateTime
                 }
               })
             )
@@ -873,6 +904,7 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.none,
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -881,6 +913,7 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.none,
       inbox: pot.none,
       lastRequest: O.none,
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -889,6 +922,7 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("next"),
+      lastUpdateTime: new Date(0),
       expectedArchive: true,
       expectedInbox: true
     },
@@ -897,6 +931,7 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.none,
       lastRequest: O.some("next"),
+      lastUpdateTime: new Date(0),
       expectedArchive: true,
       expectedInbox: false
     },
@@ -905,6 +940,7 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("previous"),
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -912,11 +948,19 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("all"),
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     }
   ].forEach(
-    ({ archive, inbox, lastRequest, expectedArchive, expectedInbox }) => {
+    ({
+      archive,
+      inbox,
+      lastRequest,
+      lastUpdateTime,
+      expectedArchive,
+      expectedInbox
+    }) => {
       describe(`given { archive: ${archive.kind}, inbox: ${
         inbox.kind
       }, lastRequest: ${lastRequest.toString()} `, () => {
@@ -928,12 +972,14 @@ describe("isLoadingNextPage selector", () => {
                 archive: {
                   data: archive,
                   lastRequest:
-                    lastRequest as AllPaginated["archive"]["lastRequest"]
+                    lastRequest as AllPaginated["archive"]["lastRequest"],
+                  lastUpdateTime
                 },
                 inbox: {
                   data: inbox,
                   lastRequest:
-                    lastRequest as AllPaginated["inbox"]["lastRequest"]
+                    lastRequest as AllPaginated["inbox"]["lastRequest"],
+                  lastUpdateTime
                 }
               })
             )
@@ -948,12 +994,14 @@ describe("isLoadingNextPage selector", () => {
                 archive: {
                   data: archive,
                   lastRequest:
-                    lastRequest as AllPaginated["archive"]["lastRequest"]
+                    lastRequest as AllPaginated["archive"]["lastRequest"],
+                  lastUpdateTime
                 },
                 inbox: {
                   data: inbox,
                   lastRequest:
-                    lastRequest as AllPaginated["inbox"]["lastRequest"]
+                    lastRequest as AllPaginated["inbox"]["lastRequest"],
+                  lastUpdateTime
                 }
               })
             )
@@ -971,7 +1019,7 @@ describe("isLoadingOrUpdatingInbox selector", () => {
       expectedReturn: false
     },
     {
-      inbox: pot.noneError(""),
+      inbox: pot.noneError({ reason: "", time: new Date() }),
       expectedReturn: false
     },
     {
@@ -985,7 +1033,7 @@ describe("isLoadingOrUpdatingInbox selector", () => {
         {
           page: []
         },
-        ""
+        { reason: "", time: new Date() }
       ),
       expectedReturn: false
     },
@@ -1025,7 +1073,8 @@ describe("isLoadingOrUpdatingInbox selector", () => {
               ...defaultState,
               inbox: {
                 data: inbox,
-                lastRequest: O.none
+                lastRequest: O.none,
+                lastUpdateTime: new Date(0)
               }
             })
           )
@@ -1401,7 +1450,7 @@ describe("messageListForCategorySelector", () => {
     it(`for ${category} category, data pot.noneError, should return emptyMessageArray reference`, () => {
       const state = generateAllPaginatedDataStateForCategory(
         category,
-        pot.noneError("")
+        pot.noneError({ reason: "", time: new Date() })
       );
       const messageList = messageListForCategorySelector(state, category);
       expect(messageList).toBe(emptyMessageArray);
@@ -1409,55 +1458,642 @@ describe("messageListForCategorySelector", () => {
     it(`for ${category} category, data pot.some, should return the message list`, () => {
       const state = generateAllPaginatedDataStateForCategory(
         category,
-        pot.some(messagePage)
+        pot.some(nonEmptyMessagePage)
       );
       const messageList = messageListForCategorySelector(state, category);
-      expect(messageList).toBe(readonlyMessageList);
+      expect(messageList).toBe(readonlyNonEmptyMessageList);
     });
     it(`for ${category} category, data pot.someLoading, should return the message list`, () => {
       const state = generateAllPaginatedDataStateForCategory(
         category,
-        pot.someLoading(messagePage)
+        pot.someLoading(nonEmptyMessagePage)
       );
       const messageList = messageListForCategorySelector(state, category);
-      expect(messageList).toBe(readonlyMessageList);
+      expect(messageList).toBe(readonlyNonEmptyMessageList);
     });
     it(`for ${category} category, data pot.someUpdating, should return the message list`, () => {
       const state = generateAllPaginatedDataStateForCategory(
         category,
-        pot.someUpdating(messagePage, {} as MessagePage)
+        pot.someUpdating(nonEmptyMessagePage, {} as MessagePage)
       );
       const messageList = messageListForCategorySelector(state, category);
-      expect(messageList).toBe(readonlyMessageList);
+      expect(messageList).toBe(readonlyNonEmptyMessageList);
     });
     it(`for ${category} category, data pot.someError, should return the message list`, () => {
       const state = generateAllPaginatedDataStateForCategory(
         category,
-        pot.someError(messagePage, "")
+        pot.someError(nonEmptyMessagePage, { reason: "", time: new Date() })
       );
       const messageList = messageListForCategorySelector(state, category);
-      expect(messageList).toBe(readonlyMessageList);
+      expect(messageList).toBe(readonlyNonEmptyMessageList);
     });
+  });
+});
+
+describe("messagesByCategorySelector", () => {
+  it("should return inbox message page pot for INBOX category", () => {
+    const inputMessagePagePot = pot.some(nonEmptyMessagePage);
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      inputMessagePagePot
+    );
+    const messagePagePot = messagesByCategorySelector(state, "INBOX");
+    expect(messagePagePot).toBe(inputMessagePagePot);
+  });
+  it("should return archive message page pot for ARCHIVE category", () => {
+    const inputMessagePagePot = pot.some(nonEmptyMessagePage);
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      inputMessagePagePot
+    );
+    const messagePagePot = messagesByCategorySelector(state, "ARCHIVE");
+    expect(messagePagePot).toBe(inputMessagePagePot);
+  });
+});
+
+describe("emptyListReasonSelector", () => {
+  it("should return 'noData' for INBOX category when inbox message collection is pot.none", () => {
+    const state = generateAllPaginatedDataStateForCategory("INBOX", pot.none);
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for INBOX category when inbox message collection is pot.noneLoading", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.noneLoading
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'notEmpty' for INBOX category when inbox message collection is pot.noneUpdating", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.noneUpdating(nonEmptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'error' for INBOX category when inbox message collection is pot.noneError", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.noneError({ reason: "", time: new Date() })
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("error");
+  });
+  it("should return 'noData' for INBOX category when inbox message collection is pot.some with no data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.some(emptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for INBOX category when inbox message collection is pot.some with data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.some(nonEmptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'noData' for INBOX category when inbox message collection is pot.someLoading with no data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.someLoading(emptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for INBOX category when inbox message collection is pot.someLoading with data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.someLoading(nonEmptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'noData' for INBOX category when inbox message collection is pot.someUpdating with no data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.someUpdating(emptyMessagePage, nonEmptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for INBOX category when inbox message collection is pot.someUpdating with data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.someUpdating(nonEmptyMessagePage, emptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'noData' for INBOX category when inbox message collection is pot.someError with no data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.someError(emptyMessagePage, { reason: "", time: new Date() })
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for INBOX category when inbox message collection is pot.someError with data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.someError(nonEmptyMessagePage, { reason: "", time: new Date() })
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'noData' for ARCHIVE category when inbox message collection is pot.none", () => {
+    const state = generateAllPaginatedDataStateForCategory("ARCHIVE", pot.none);
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for ARCHIVE category when inbox message collection is pot.noneLoading", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.noneLoading
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'notEmpty' for ARCHIVE category when inbox message collection is pot.noneUpdating", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.noneUpdating(nonEmptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'error' for ARCHIVE category when inbox message collection is pot.noneError", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.noneError({ reason: "", time: new Date() })
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("error");
+  });
+  it("should return 'noData' for ARCHIVE category when inbox message collection is pot.some with no data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.some(emptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for ARCHIVE category when inbox message collection is pot.some with data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.some(nonEmptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'noData' for ARCHIVE category when inbox message collection is pot.someLoading with no data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.someLoading(emptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for ARCHIVE category when inbox message collection is pot.someLoading with data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.someLoading(nonEmptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'noData' for ARCHIVE category when inbox message collection is pot.someUpdating with no data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.someUpdating(emptyMessagePage, nonEmptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for ARCHIVE category when inbox message collection is pot.someUpdating with data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.someUpdating(nonEmptyMessagePage, emptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'noData' for ARCHIVE category when inbox message collection is pot.someError with no data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.someError(emptyMessagePage, { reason: "", time: new Date() })
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for ARCHIVE category when inbox message collection is pot.someError with data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.someError(nonEmptyMessagePage, { reason: "", time: new Date() })
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("notEmpty");
+  });
+});
+
+describe("shouldShowFooterListComponentSelector", () => {
+  const categories: Array<MessageListCategory> = ["INBOX", "ARCHIVE"];
+  const messagePagePots: Array<MessagePagePot> = [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating(emptyMessagePage),
+    pot.noneError({ reason: "", time: new Date() }),
+    pot.some(nonEmptyMessagePage),
+    pot.someLoading(nonEmptyMessagePage),
+    pot.someUpdating(nonEmptyMessagePage, emptyMessagePage),
+    pot.someError(nonEmptyMessagePage, { reason: "", time: new Date() })
+  ];
+  const lastRequests: Array<LastRequestType> = [
+    O.some("all"),
+    O.some("next"),
+    O.some("previous"),
+    O.none
+  ];
+  categories.forEach(category =>
+    lastRequests.forEach(lastRequest =>
+      messagePagePots.forEach(messagePagePot => {
+        const footerIsVisible =
+          O.isSome(lastRequest) &&
+          lastRequest.value === "next" &&
+          isSomeLoadingOrSomeUpdating(messagePagePot);
+        it(`Footer should be ${
+          footerIsVisible ? "visible" : "hidden"
+        }, ${category}, '${
+          O.isSome(lastRequest) ? lastRequest.value : "none"
+        }' lastRequest, ${messagePagePot.kind}`, () => {
+          const state = generateAllPaginatedDataStateForCategory(
+            category,
+            messagePagePot,
+            lastRequest
+          );
+          const shouldShowFooterListComponent =
+            shouldShowFooterListComponentSelector(state, category);
+          expect(shouldShowFooterListComponent).toBe(footerIsVisible);
+        });
+      })
+    )
+  );
+});
+
+describe("messagePagePotFromCategorySelector", () => {
+  it("should return messagePagePot, INBOX category", () => {
+    const category: MessageListCategory = "INBOX";
+    const messagePagePot = pot.some({} as MessagePage);
+    const state = generateAllPaginatedDataStateForCategory(
+      category,
+      messagePagePot
+    );
+    const outputMessagePagePot =
+      messagePagePotFromCategorySelector(category)(state);
+    expect(outputMessagePagePot).toStrictEqual(messagePagePot);
+  });
+});
+
+describe("nextPageLoadingWaitMillisecondsGenerator", () => {
+  it("should return 2 seconds", () => {
+    const waitMilliseconds = nextPageLoadingWaitMillisecondsGenerator();
+    expect(waitMilliseconds).toBe(2000);
+  });
+});
+
+describe("shouldShowRefreshControllOnListSelector", () => {
+  const categories: ReadonlyArray<MessageListCategory> = ["INBOX", "ARCHIVE"];
+  const messagePagePotData: ReadonlyArray<MessagePagePot> = [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating(nonEmptyMessagePage),
+    pot.noneError({ reason: "", time: new Date() }),
+    pot.some(nonEmptyMessagePage),
+    pot.someLoading(nonEmptyMessagePage),
+    pot.someUpdating(nonEmptyMessagePage, emptyMessagePage),
+    pot.someError(nonEmptyMessagePage, { reason: "", time: new Date() })
+  ];
+  const messageRequests: ReadonlyArray<LastRequestType> = [
+    O.some("next"),
+    O.some("previous"),
+    O.some("all"),
+    O.none
+  ];
+
+  categories.forEach(category =>
+    messagePagePotData.forEach(messagePagePot =>
+      messageRequests.forEach(messageRequest => {
+        const expectedOutput =
+          (messagePagePot.kind === "PotSomeLoading" ||
+            messagePagePot.kind === "PotSomeUpdating") &&
+          O.isSome(messageRequest) &&
+          (messageRequest.value === "all" ||
+            messageRequest.value === "previous");
+
+        it(`should return ${expectedOutput}, ${category}, '${
+          O.isSome(messageRequest) ? messageRequest.value : "None"
+        }' lastRequest, ${messagePagePot.kind}`, () => {
+          const state = generateAllPaginatedDataStateForCategory(
+            category,
+            messagePagePot,
+            messageRequest
+          );
+          const shouldShowRefreshControl =
+            shouldShowRefreshControllOnListSelector(state, category);
+          expect(shouldShowRefreshControl).toBe(expectedOutput);
+        });
+      })
+    )
+  );
+});
+
+describe("isPaymentMessageWithPaidNoticeSelector", () => {
+  it("should return 'false' for GENERIC category", () => {
+    const state = {
+      entities: {
+        paymentByRptId: {
+          "00123456789001122334455667788": { kind: "DUPLICATED" }
+        } as PaymentByRptIdState
+      }
+    } as GlobalState;
+    const category = {
+      tag: "GENERIC"
+    } as MessageCategory;
+    const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
+    expect(isPaid).toBe(false);
+  });
+  it("should return 'false' for EU_COVID_CERT category", () => {
+    const state = {
+      entities: {
+        paymentByRptId: {
+          "00123456789001122334455667788": { kind: "DUPLICATED" }
+        } as PaymentByRptIdState
+      }
+    } as GlobalState;
+    const category = {
+      tag: "EU_COVID_CERT"
+    } as MessageCategory;
+    const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
+    expect(isPaid).toBe(false);
+  });
+  it("should return 'false' for LEGAL_MESSAGE category", () => {
+    const state = {
+      entities: {
+        paymentByRptId: {
+          "00123456789001122334455667788": { kind: "DUPLICATED" }
+        } as PaymentByRptIdState
+      }
+    } as GlobalState;
+    const category = {
+      tag: "LEGAL_MESSAGE"
+    } as MessageCategory;
+    const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
+    expect(isPaid).toBe(false);
+  });
+  it("should return 'false' for SEND category", () => {
+    const state = {
+      entities: {
+        paymentByRptId: {
+          "00123456789001122334455667788": { kind: "DUPLICATED" }
+        } as PaymentByRptIdState
+      }
+    } as GlobalState;
+    const category = {
+      tag: "PN"
+    } as MessageCategory;
+    const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
+    expect(isPaid).toBe(false);
+  });
+  it("should return 'false' for PAYMENT category, unmatching rptId", () => {
+    const state = {
+      entities: {
+        paymentByRptId: {
+          "00123456789001122334455667788": { kind: "DUPLICATED" }
+        } as PaymentByRptIdState
+      }
+    } as GlobalState;
+    const category = {
+      tag: "PAYMENT",
+      rptId: "00123456789001122334455667799"
+    } as MessageCategory;
+    const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
+    expect(isPaid).toBe(false);
+  });
+  it("should return 'false' for PAYMENT category, matching rptId, undefined value", () => {
+    const state = {
+      entities: {
+        paymentByRptId: {
+          "00123456789001122334455667788": undefined
+        } as PaymentByRptIdState
+      }
+    } as GlobalState;
+    const category = {
+      tag: "PAYMENT",
+      rptId: "00123456789001122334455667799"
+    } as MessageCategory;
+    const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
+    expect(isPaid).toBe(false);
+  });
+  it("should return 'true' for PAYMENT category, matching rptId, 'DUPLICATED' value", () => {
+    const state = {
+      entities: {
+        paymentByRptId: {
+          "00123456789001122334455667788": { kind: "DUPLICATED" }
+        } as PaymentByRptIdState
+      }
+    } as GlobalState;
+    const category = {
+      tag: "PAYMENT",
+      rptId: "00123456789001122334455667788"
+    } as MessageCategory;
+    const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
+    expect(isPaid).toBe(true);
+  });
+  it("should return 'true' for PAYMENT category, matching rptId, 'COMPLETED' value", () => {
+    const state = {
+      entities: {
+        paymentByRptId: {
+          "00123456789001122334455667788": {
+            kind: "COMPLETED",
+            transactionId: undefined
+          }
+        } as PaymentByRptIdState
+      }
+    } as GlobalState;
+    const category = {
+      tag: "PAYMENT",
+      rptId: "00123456789001122334455667788"
+    } as MessageCategory;
+    const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
+    expect(isPaid).toBe(true);
+  });
+});
+
+describe("allPaginated reducer", () => {
+  it("'lastUpdateTime' should match expected values for initial state", () => {
+    const allPaginatedState = reducer(
+      undefined,
+      applicationChangeState("active")
+    );
+    expect(allPaginatedState.archive.lastUpdateTime).toStrictEqual(new Date(0));
+    expect(allPaginatedState.inbox.lastUpdateTime).toStrictEqual(new Date(0));
+  });
+  const expectedResultForIndex = (index: number, archived?: boolean) => {
+    const isChangingTimeIndex = index === 1 || index === 4;
+    return {
+      archiveShouldHaveOriginalValue: !archived || !isChangingTimeIndex,
+      inboxShoudlHaveOriginalValue: archived || !isChangingTimeIndex
+    };
+  };
+  [undefined, false, true].forEach(archived =>
+    [
+      reloadAllMessages.request({
+        pageSize,
+        filter: { getArchived: archived }
+      }),
+      reloadAllMessages.success({
+        filter: { getArchived: archived },
+        messages: [],
+        pagination: {}
+      }),
+      reloadAllMessages.failure({
+        error: new Error(""),
+        filter: { getArchived: archived }
+      }),
+      loadPreviousPageMessages.request({
+        filter: { getArchived: archived },
+        pageSize
+      }),
+      loadPreviousPageMessages.success({
+        filter: { getArchived: archived },
+        messages: [],
+        pagination: {}
+      }),
+      loadPreviousPageMessages.failure({
+        error: new Error(""),
+        filter: { getArchived: archived }
+      }),
+      loadNextPageMessages.request({
+        filter: { getArchived: archived },
+        pageSize
+      }),
+      loadNextPageMessages.success({
+        filter: { getArchived: archived },
+        messages: [],
+        pagination: {}
+      }),
+      loadNextPageMessages.failure({
+        error: new Error(""),
+        filter: { getArchived: archived }
+      })
+    ].forEach((dispatchedAction, index) => {
+      it(`'lastUpdateTime' should match expected value for action '${
+        dispatchedAction.type
+      }' with filter '${
+        archived ? "ARCHIVED" : archived === false ? "INBOX" : "undefined"
+      }'`, () => {
+        const reducerState = reducer(undefined, dispatchedAction);
+        const result = expectedResultForIndex(index, archived);
+        if (result.archiveShouldHaveOriginalValue) {
+          expect(reducerState.archive.lastUpdateTime).toStrictEqual(
+            new Date(0)
+          );
+        } else {
+          expect(reducerState.archive.lastUpdateTime).not.toStrictEqual(
+            new Date(0)
+          );
+        }
+        if (result.inboxShoudlHaveOriginalValue) {
+          expect(reducerState.inbox.lastUpdateTime).toStrictEqual(new Date(0));
+        } else {
+          expect(reducerState.inbox.lastUpdateTime).not.toStrictEqual(
+            new Date(0)
+          );
+        }
+      });
+    })
+  );
+  it("'inbox.lastUpdateTime' should be 'new Date(0)' after 'requestAutomaticMessagesRefresh('INBOX')' dispatch", () => {
+    const lastUpdateTime = new Date();
+    const initialState = {
+      archive: {
+        data: pot.none,
+        lastRequest: O.none,
+        lastUpdateTime
+      },
+      inbox: {
+        data: pot.none,
+        lastRequest: O.none,
+        lastUpdateTime
+      },
+      migration: O.none,
+      shownCategory: "INBOX"
+    } as AllPaginated;
+    const reducerState = reducer(
+      initialState,
+      requestAutomaticMessagesRefresh("INBOX")
+    );
+    expect(reducerState.archive.lastUpdateTime).toStrictEqual(lastUpdateTime);
+    expect(reducerState.inbox.lastUpdateTime).toStrictEqual(new Date(0));
+  });
+  it("'archive.lastUpdateTime' should be 'new Date(0)' after 'requestAutomaticMessagesRefresh('ARCHIVE')' dispatch", () => {
+    const lastUpdateTime = new Date();
+    const initialState = {
+      archive: {
+        data: pot.none,
+        lastRequest: O.none,
+        lastUpdateTime
+      },
+      inbox: {
+        data: pot.none,
+        lastRequest: O.none,
+        lastUpdateTime
+      },
+      migration: O.none,
+      shownCategory: "INBOX"
+    } as AllPaginated;
+    const reducerState = reducer(
+      initialState,
+      requestAutomaticMessagesRefresh("ARCHIVE")
+    );
+    expect(reducerState.archive.lastUpdateTime).toStrictEqual(new Date(0));
+    expect(reducerState.inbox.lastUpdateTime).toStrictEqual(lastUpdateTime);
   });
 });
 
 const generateAllPaginatedDataStateForCategory = (
   category: MessageListCategory,
-  data: MessagePagePot
+  data: MessagePagePot,
+  lastRequest: LastRequestType = O.none
 ): GlobalState =>
   ({
     entities: {
       messages: {
         allPaginated: {
-          inbox: category === "INBOX" ? { data } : { data: pot.none },
-          archive: category === "ARCHIVE" ? { data } : { data: pot.none }
+          inbox:
+            category === "INBOX"
+              ? { data, lastRequest }
+              : { data: pot.none, lastRequest: O.none },
+          archive:
+            category === "ARCHIVE"
+              ? { data, lastRequest }
+              : { data: pot.none, lastRequest: O.none }
         }
       }
     }
   } as GlobalState);
 
-const readonlyMessageList: ReadonlyArray<UIMessage> = [{} as UIMessage];
+const readonlyNonEmptyMessageList: ReadonlyArray<UIMessage> = [{} as UIMessage];
+const nonEmptyMessagePage = {
+  page: readonlyNonEmptyMessageList,
+  next: "01J06J748BP0MS9FZRPZV8DWCC"
+} as MessagePage;
 
-const messagePage = {
-  page: readonlyMessageList
+const readonlyEmptyMessageList: ReadonlyArray<UIMessage> = [];
+const emptyMessagePage = {
+  page: readonlyEmptyMessageList
 } as MessagePage;

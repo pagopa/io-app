@@ -150,7 +150,7 @@ const ColorThemeGroup = ({
       {name && (
         <H3
           color={theme["textHeading-default"]}
-          weight={"SemiBold"}
+          weight={"Semibold"}
           style={{ marginBottom: sectionTitleMargin }}
         >
           {name}
@@ -241,7 +241,7 @@ const ColorGroup = ({ name, colorObject }: ColorGroupProps) => {
       {name && (
         <H3
           color={theme["textHeading-default"]}
-          weight={"SemiBold"}
+          weight={"Semibold"}
           style={{ marginBottom: sectionTitleMargin }}
         >
           {name}
@@ -299,7 +299,7 @@ export const DSColors = () => {
       {/* Gradients */}
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: sectionTitleMargin }}
       >
         Gradients
@@ -314,7 +314,7 @@ export const DSColors = () => {
 
       {/* Legacy */}
       <View style={{ marginBottom: sectionTitleMargin }}>
-        <H2 color={theme["textHeading-default"]} weight={"SemiBold"}>
+        <H2 color={theme["textHeading-default"]} weight={"Semibold"}>
           Legacy palette (†2023)
         </H2>
         <LabelSmall weight={"Regular"} color={theme["textBody-tertiary"]}>
@@ -361,7 +361,7 @@ const ColorBox = ({
             : { backgroundColor: color }
         ]}
       >
-        {color && <Text style={styles.colorPill}>{color}</Text>}
+        {color && <Text style={styles.colorPill}>{color as string}</Text>}
       </View>
 
       {name && (

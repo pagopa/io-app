@@ -3,7 +3,7 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useMessageOpening } from "../../hooks/useMessageOpening";
+import { useLegacyMessageOpening } from "../../hooks/useLegacyMessageOpening";
 import MessagesInbox from "../../components/Home/legacy/MessagesInbox";
 import { upsertMessageStatusAttributes } from "../../store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -14,9 +14,7 @@ import {
 import { UIMessage } from "../../types";
 import { MessagesHomeTabParamsList } from "../../navigation/MessagesHomeTabNavigator";
 import MessagesArchive from "../../components/Home/legacy/MessagesArchive";
-import messageListData, {
-  MessageListCategory
-} from "../../types/messageListCategory";
+import { MessageListCategory, fold } from "../../types/messageListCategory";
 
 export type MessagesHomeTabNavigationParams = Readonly<{
   category: MessageListCategory;
@@ -43,7 +41,7 @@ const MessageListScreen = () => {
     messagesByCategorySelector(state, route.params.category)
   );
   const messages = getMessages(messagePagePot);
-  const { present, bottomSheet } = useMessageOpening();
+  const { present, bottomSheet } = useLegacyMessageOpening();
 
   const setArchived = (
     isArchived: boolean,
@@ -59,7 +57,7 @@ const MessageListScreen = () => {
     );
 
   const getContent = (category: MessageListCategory) =>
-    messageListData.fold(
+    fold(
       category,
       () => (
         <MessagesInbox

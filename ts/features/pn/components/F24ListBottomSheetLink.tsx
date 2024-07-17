@@ -13,7 +13,7 @@ import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
 const styles = StyleSheet.create({
   buttonLinkContainer: {
     justifyContent: "center",
-    alignSelf: "center"
+    alignSelf: "flex-start"
   }
 });
 
@@ -49,7 +49,7 @@ export const F24ListBottomSheetLink = ({
         </>
       ),
       title: I18n.t("features.pn.details.f24Section.bottomSheet.title"),
-      footer: <View></View>,
+      footer: <View />,
       onDismiss: () => dispatch(cancelPreviousAttachmentDownload())
     },
     100

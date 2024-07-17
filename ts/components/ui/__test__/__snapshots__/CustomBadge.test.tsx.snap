@@ -5,8 +5,8 @@ exports[`CustomBadge component match snapshot for 0 1`] = `null`;
 exports[`CustomBadge component match snapshot for 10 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "alignContent": "center",
         "alignSelf": "flex-start",
         "backgroundColor": "#0073E6",
@@ -22,7 +22,7 @@ exports[`CustomBadge component match snapshot for 10 1`] = `
         "position": "absolute",
         "width": 20,
       },
-      Object {
+      {
         "width": 24,
       },
     ]
@@ -33,9 +33,9 @@ exports[`CustomBadge component match snapshot for 10 1`] = `
     accessible={false}
     importantForAccessibility="no-hide-descendants"
     style={
-      Object {
+      {
         "color": "#FFFFFF",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontSize": 10,
         "fontStyle": "normal",
         "fontWeight": "700",
@@ -51,8 +51,8 @@ exports[`CustomBadge component match snapshot for 10 1`] = `
 exports[`CustomBadge component match snapshot for 100 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "alignContent": "center",
         "alignSelf": "flex-start",
         "backgroundColor": "#0073E6",
@@ -68,7 +68,7 @@ exports[`CustomBadge component match snapshot for 100 1`] = `
         "position": "absolute",
         "width": 20,
       },
-      Object {
+      {
         "width": 28,
       },
     ]
@@ -79,9 +79,9 @@ exports[`CustomBadge component match snapshot for 100 1`] = `
     accessible={false}
     importantForAccessibility="no-hide-descendants"
     style={
-      Object {
+      {
         "color": "#FFFFFF",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontSize": 10,
         "fontStyle": "normal",
         "fontWeight": "700",

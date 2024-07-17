@@ -4,14 +4,12 @@ import * as O from "fp-ts/lib/Option";
 import * as B from "fp-ts/lib/boolean";
 import { constNull, pipe } from "fp-ts/lib/function";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { cdcEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   isCGNEnabledSelector,
-  isCdcEnabledSelector,
   isPnEnabledSelector,
-  isPnSupportedSelector
+  isPnAppVersionSupportedSelector
 } from "../../../../store/reducers/backendStatus";
 import { openAppStoreUrl } from "../../../../utils/url";
 import { CgnServiceCta } from "../../../bonus/cgn/components/CgnServiceCTA";
@@ -65,16 +63,11 @@ export const ServiceSpecialAction = ({
   customSpecialFlowOpt
 }: ServiceSpecialActionProps) => {
   const isCGNEnabled = useIOSelector(isCGNEnabledSelector);
-  const cdcEnabledSelector = useIOSelector(isCdcEnabledSelector);
-
-  const isCdcEnabled = cdcEnabledSelector && cdcEnabled;
-
   const isPnEnabled = useIOSelector(isPnEnabledSelector);
-  const isPnSupported = useIOSelector(isPnSupportedSelector);
+  const isPnSupported = useIOSelector(isPnAppVersionSupportedSelector);
 
   const mapSpecialServiceConfig = new Map<string, SpecialServiceConfig>([
     ["cgn", { isEnabled: isCGNEnabled, isSupported: true }],
-    ["cdc", { isEnabled: isCdcEnabled, isSupported: true }],
     ["pn", { isEnabled: isPnEnabled, isSupported: isPnSupported }]
   ]);
 
@@ -95,9 +88,6 @@ export const ServiceSpecialAction = ({
                   isSupported,
                   <CgnServiceCta serviceId={serviceId} />
                 );
-              case "cdc":
-                // CdC is disabled: the flow needs to be reviewed
-                return null;
               case "pn":
                 return renderCta(
                   isEnabled,

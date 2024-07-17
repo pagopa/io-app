@@ -3,7 +3,7 @@ import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { getGenericError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
+import { withThirdPartyRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { idPayGenerateCode } from "../../store/actions";
 import { handleIdPayGenerateCode } from "../handleIdPayGenerateCode";
 
@@ -23,12 +23,12 @@ describe("handleIdPayGenerateCode", () => {
       )
         .next()
         .call(
-          withRefreshApiCall,
+          withThirdPartyRefreshApiCall,
           generateCode({
             bearerAuth: tBearerToken,
             initiativeId: tInitiativeId
           }),
-          idPayGenerateCode.request({ initiativeId: tInitiativeId })
+          { action: idPayGenerateCode.request({ initiativeId: tInitiativeId }) }
         )
         .next(E.right({ status: 200, value: { idpayCode: tIdPayCode } }))
         .put(idPayGenerateCode.success({ idpayCode: tIdPayCode }))
@@ -49,12 +49,12 @@ describe("handleIdPayGenerateCode", () => {
       )
         .next()
         .call(
-          withRefreshApiCall,
+          withThirdPartyRefreshApiCall,
           generateCode({
             bearerAuth: tBearerToken,
             initiativeId: tInitiativeId
           }),
-          idPayGenerateCode.request({ initiativeId: tInitiativeId })
+          { action: idPayGenerateCode.request({ initiativeId: tInitiativeId }) }
         )
         .next(E.right({ status: 500 }))
         .put(
@@ -79,12 +79,12 @@ describe("handleIdPayGenerateCode", () => {
       )
         .next()
         .call(
-          withRefreshApiCall,
+          withThirdPartyRefreshApiCall,
           generateCode({
             bearerAuth: tBearerToken,
             initiativeId: tInitiativeId
           }),
-          idPayGenerateCode.request({ initiativeId: tInitiativeId })
+          { action: idPayGenerateCode.request({ initiativeId: tInitiativeId }) }
         )
         .next(E.left([]))
         .put(

@@ -1,4 +1,10 @@
-import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOPictograms,
+  IOPictogramsLegacy,
+  Pictogram,
+  useIOTheme
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { H2 } from "../../../components/core/typography/H2";
@@ -17,7 +23,6 @@ import Question from "../../../../img/pictograms/doubt.png";
 import CompletedRaster from "../../../../img/pictograms/payment-completed.png";
 import BeerMug from "../../../../img/search/beer-mug.png";
 import Search from "../../../../img/search/search-icon.png";
-import Puzzle from "../../../../img/services/icon-loading-services.png";
 import ABILogo from "../../../../img/wallet/cards-icons/abiLogoFallback.png";
 import Umbrella from "../../../../img/wallet/errors/generic-error-icon.png";
 import NotAvailable from "../../../../img/wallet/errors/payment-unavailable-icon.png";
@@ -32,6 +37,7 @@ import Baloons from "../../../../img/messages/empty-due-date-list-icon.png";
 import Heart from "../../../../img/features/uaDonations/heart.svg";
 /* Sections */
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { H3 } from "../../../components/core/typography/H3";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -49,6 +55,33 @@ export const DSLegacyPictograms = () => {
 
   return (
     <DesignSystemScreen title={"Legacy Pictograms"}>
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"Semibold"}
+        style={{ marginBottom: 16 }}
+      >
+        Vector
+      </H2>
+
+      <View style={styles.itemsWrapper}>
+        {Object.entries(IOPictogramsLegacy).map(([pictogramItemName]) => (
+          <DSAssetViewerBox
+            key={pictogramItemName}
+            name={pictogramItemName}
+            image={
+              <Pictogram name={pictogramItemName as IOPictograms} size="100%" />
+            }
+          />
+        ))}
+      </View>
+
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"Semibold"}
+        style={{ marginBottom: 16 }}
+      >
+        Raster
+      </H2>
       <View style={styles.itemsWrapper}>
         <DSAssetViewerBox
           type="raster"
@@ -87,11 +120,6 @@ export const DSLegacyPictograms = () => {
         />
         <DSAssetViewerBox
           type="raster"
-          name={"Puzzle"}
-          image={renderRasterImage(Puzzle)}
-        />
-        <DSAssetViewerBox
-          type="raster"
           name={"ABILogo"}
           image={renderRasterImage(ABILogo)}
         />
@@ -126,13 +154,13 @@ export const DSLegacyPictograms = () => {
           image={<Heart fill={IOColors.blue} />}
         />
       </View>
-      <H2
+      <H3
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         EU Covid Certificate
-      </H2>
+      </H3>
       <View style={styles.itemsWrapper}>
         <DSAssetViewerBox
           type="raster"

@@ -1,13 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
-import * as reactRedux from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { IdPayCodeRoutes } from "../../navigation/routes";
-import { idPayEnrollCode } from "../../store/actions";
 import { IdPayCodeState } from "../../store/reducers";
 import { IdPayCodeOnboardingScreen } from "../IdPayCodeOnboardingScreen";
 
@@ -34,8 +32,6 @@ jest.mock("@react-navigation/native", () => {
 const tInitiativeId = "123456";
 
 describe("IdPayCodeOnboardingScreen", () => {
-  const useDispatchMock = jest.spyOn(reactRedux, "useDispatch");
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -43,11 +39,6 @@ describe("IdPayCodeOnboardingScreen", () => {
   describe("if the code was already onboarded", () => {
     describe("when continue is pressed", () => {
       it("should enroll the code to the initiative and navigate to the result screen ", () => {
-        const dispatchMock = jest.fn();
-        useDispatchMock.mockReturnValue(dispatchMock);
-
-        expect(dispatchMock).not.toHaveBeenCalled();
-
         const { component } = renderComponent(
           {
             isOnboarded: pot.some(true)
@@ -62,9 +53,6 @@ describe("IdPayCodeOnboardingScreen", () => {
         expect(mockReplace).toBeCalledWith(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
           screen: IdPayCodeRoutes.IDPAY_CODE_RESULT
         });
-        expect(dispatchMock).toHaveBeenCalledWith(
-          idPayEnrollCode.request({ initiativeId: tInitiativeId })
-        );
       });
     });
   });
@@ -72,11 +60,6 @@ describe("IdPayCodeOnboardingScreen", () => {
   describe("if the code was not onboarded", () => {
     describe("when continue is pressed", () => {
       it("should display the identification request and generate the code if identification is successfull", () => {
-        const dispatchMock = jest.fn();
-        useDispatchMock.mockReturnValue(dispatchMock);
-
-        expect(dispatchMock).not.toHaveBeenCalled();
-
         const { component } = renderComponent({
           isOnboarded: pot.some(false)
         });

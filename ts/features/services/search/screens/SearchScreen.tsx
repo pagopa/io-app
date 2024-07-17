@@ -1,15 +1,18 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Platform, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import {
-  ContentWrapper,
   Divider,
+  IOSpacingScale,
   IOStyles,
   IOToast,
   SearchInput,
+  SearchInputRef,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { Institution } from "../../../../../definitions/services/Institution";
 import { searchPaginatedInstitutionsGet } from "../store/actions";
@@ -20,14 +23,19 @@ import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { EmptyState } from "../../common/components/EmptyState";
 import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
 import { ListItemSearchInstitution } from "../../common/components/ListItemSearchInstitution";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import * as analytics from "../../common/analytics";
 
-const MIN_QUERY_LENGTH: number = 3;
+const INPUT_PADDING: IOSpacingScale = 16;
 const LIST_ITEM_HEIGHT: number = 70;
+const MIN_QUERY_LENGTH: number = 3;
 
 export const SearchScreen = () => {
+  const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
+  const searchInputRef = useRef<SearchInputRef>(null);
   const [query, setQuery] = useState<string>("");
 
   const {
@@ -39,6 +47,14 @@ export const SearchScreen = () => {
     isLoading,
     isUpdating
   } = useInstitutionsFetcher();
+
+  useOnFirstRender(() => analytics.trackSearchPage());
+
+  useFocusEffect(
+    useCallback(() => {
+      searchInputRef.current?.focus();
+    }, [])
+  );
 
   useEffect(() => {
     if (isError) {
@@ -54,15 +70,13 @@ export const SearchScreen = () => {
     [dispatch, navigation]
   );
 
-  useHeaderSecondLevel({
-    title: "",
-    supportRequest: true
-  });
+  const handleCancel = useCallback(() => navigation.goBack(), [navigation]);
 
   const handleChangeText = (text: string) => {
     setQuery(text);
 
     if (text.length >= MIN_QUERY_LENGTH) {
+      analytics.trackSearchInput();
       fetchPage(0, text);
     } else {
       dispatch(searchPaginatedInstitutionsGet.cancel());
@@ -72,18 +86,26 @@ export const SearchScreen = () => {
   const handleEndReached = useCallback(() => {
     if (!!data && query.length >= MIN_QUERY_LENGTH) {
       fetchNextPage(currentPage + 1, query);
+      analytics.trackSearchResultScroll();
     }
   }, [currentPage, data, fetchNextPage, query]);
 
   const navigateToInstitution = useCallback(
-    (institution: Institution) =>
+    ({ fiscal_code, id, name }: Institution) => {
+      analytics.trackInstitutionSelected({
+        organization_fiscal_code: fiscal_code,
+        organization_name: name,
+        source: "search_list"
+      });
+
       navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
         screen: SERVICES_ROUTES.INSTITUTION_SERVICES,
         params: {
-          institutionId: institution.id,
-          institutionName: institution.name
+          institutionId: id,
+          institutionName: name
         }
-      }),
+      });
+    },
     [navigation]
   );
 
@@ -133,18 +155,28 @@ export const SearchScreen = () => {
 
   return (
     <>
-      <ContentWrapper>
+      <View
+        style={[
+          {
+            marginTop: insets.top,
+            paddingVertical: INPUT_PADDING
+          },
+          IOStyles.horizontalContentPadding
+        ]}
+      >
         <SearchInput
-          autoFocus
-          accessibilityLabel={I18n.t("services.search.input.placeholder")}
+          accessibilityLabel={I18n.t("services.search.input.placeholderShort")}
+          autoFocus={true}
           cancelButtonLabel={I18n.t("services.search.input.cancel")}
           clearAccessibilityLabel={I18n.t("services.search.input.clear")}
+          keepCancelVisible={true}
+          onCancel={handleCancel}
           onChangeText={handleChangeText}
-          placeholder={I18n.t("services.search.input.placeholder")}
+          placeholder={I18n.t("services.search.input.placeholderShort")}
+          ref={searchInputRef}
           value={query}
         />
-        <VSpacer />
-      </ContentWrapper>
+      </View>
       <FlashList
         ItemSeparatorComponent={() => <Divider />}
         contentContainerStyle={IOStyles.horizontalContentPadding}
@@ -156,6 +188,10 @@ export const SearchScreen = () => {
         onEndReachedThreshold={0.1}
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
+        keyboardDismissMode={Platform.select({
+          ios: "interactive",
+          default: "on-drag"
+        })}
         keyboardShouldPersistTaps="handled"
       />
     </>

@@ -9,9 +9,9 @@ import { Platform, PlatformStatic } from "react-native";
 type PlatformSelectType = PlatformStatic["select"];
 
 const fonts = {
-  TitilliumWeb: Platform.select({
-    android: "TitilliumWeb",
-    ios: "Titillium Web"
+  TitilliumSansPro: Platform.select({
+    android: "TitilliumSansPro",
+    ios: "Titillium Sans Pro"
   }),
   RobotoMono: Platform.select({
     android: "RobotoMono",
@@ -22,7 +22,7 @@ const fonts = {
 const fontWeights = {
   "300": "Light",
   "400": "Regular",
-  "600": "SemiBold",
+  "600": "Semibold",
   "700": "Bold"
 };
 
@@ -65,7 +65,7 @@ export const makeFontStyleObject = (
   osSelect: PlatformSelectType,
   weight: FontWeight | undefined = undefined,
   isItalic: boolean | undefined = false,
-  font: FontFamily | undefined = "TitilliumWeb"
+  font: FontFamily | undefined = "TitilliumSansPro"
 ): FontStyleObject =>
   osSelect({
     default: {

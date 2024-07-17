@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MessageDetailsContent component should match the snapshot when abstract is defined 1`] = `
-Array [
+[
   <View
     style={
-      Object {
+      {
         "height": 16,
       }
     }
@@ -14,22 +14,24 @@ Array [
     color="grey-850"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    dynamicTypeRamp="body"
+    font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#2B2E38",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },

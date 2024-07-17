@@ -1,8 +1,8 @@
+import { Alert, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Alert, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import {
   TransactionDetailDTO,
   StatusEnum as TransactionStatusEnum
@@ -23,8 +23,6 @@ type Props = {
 const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
   const { transaction } = props;
 
-  const alertViewRef = React.createRef<View>();
-
   const statusAlertComponent = pipe(
     transaction.status,
     O.of,
@@ -34,7 +32,6 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
           return (
             <>
               <Alert
-                viewRef={alertViewRef}
                 variant="error"
                 content={I18n.t(
                   "idpay.initiative.operationDetails.discount.details.alerts.CANCELLED"
@@ -73,7 +70,7 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
             "idpay.initiative.operationDetails.discount.details.labels.totalAmount"
           )}
         </Body>
-        <Body weight="SemiBold">{formattedAmount}</Body>
+        <Body weight="Semibold">{formattedAmount}</Body>
       </View>
       <View style={styles.detailRow}>
         <Body>
@@ -81,7 +78,7 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
             "idpay.initiative.operationDetails.discount.details.labels.idpayAmount"
           )}
         </Body>
-        <Body weight="SemiBold">
+        <Body weight="Semibold">
           {formatNumberAmount(transaction.accrued, true)}
         </Body>
       </View>
@@ -99,7 +96,7 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
         </Body>
         <HSpacer size={16} />
         <Body
-          weight="SemiBold"
+          weight="Semibold"
           numberOfLines={2}
           style={{ flex: 1, textAlign: "right" }}
         >
@@ -112,7 +109,7 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
             "idpay.initiative.operationDetails.discount.details.labels.status"
           )}
         </Body>
-        <Body weight="SemiBold">
+        <Body weight="Semibold">
           {I18n.t(
             `idpay.initiative.operationDetails.discount.labels.${transaction.status}`
           )}
@@ -122,7 +119,7 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
         <Body>
           {I18n.t("idpay.initiative.operationDetails.transaction.date")}
         </Body>
-        <Body weight="SemiBold">
+        <Body weight="Semibold">
           {format(transaction.operationDate, "DD MMM YYYY, HH:mm")}
         </Body>
       </View>
@@ -135,7 +132,7 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
         <HSpacer size={16} />
         <View style={[IOStyles.flex, IOStyles.row]}>
           <Body
-            weight="SemiBold"
+            weight="Semibold"
             numberOfLines={1}
             ellipsizeMode="tail"
             style={IOStyles.flex}

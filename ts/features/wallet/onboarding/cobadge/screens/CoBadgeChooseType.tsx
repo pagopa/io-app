@@ -65,13 +65,12 @@ type IAddCardPath = Readonly<{
 const renderListItem = (cardPathItem: ListRenderItemInfo<IAddCardPath>) => (
   <PressableListItemBase
     onPress={cardPathItem.item.onPress}
-    first={cardPathItem.index === 0}
     testID={`${cardPathItem.item.path}Item`}
   >
     <View style={styles.flexColumn}>
       <View style={styles.row}>
         <View>
-          <H3 color={"bluegreyDark"} weight={"SemiBold"}>
+          <H3 color={"bluegreyDark"} weight={"Semibold"}>
             {cardPathItem.item.title}
           </H3>
         </View>

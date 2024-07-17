@@ -19,7 +19,6 @@ import {
   isIoInternalLink,
   removeFIMSPrefixFromUrl
 } from "../../../components/ui/Markdown/handlers/link";
-import { FIMS_ROUTES } from "../../fims/navigation";
 import { trackMessageCTAFrontMatterDecodingError } from "../analytics";
 import { localeFallback } from "../../../i18n";
 import NavigationService from "../../../navigation/NavigationService";
@@ -31,6 +30,7 @@ import {
 } from "../../../utils/internalLink";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { isTextIncludedCaseInsensitive } from "../../../utils/strings";
+import { FIMS_ROUTES } from "../../fims/common/navigation";
 
 export function messageContainsText(
   message: CreatedMessageWithContentAndAttachments,
