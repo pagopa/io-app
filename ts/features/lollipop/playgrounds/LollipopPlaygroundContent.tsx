@@ -48,7 +48,6 @@ type Props = WithTestID<{
 }>;
 
 const LollipopPlaygroundContent = (props: Props) => {
-  const viewRef = React.createRef<View>();
   const [httpRequestBodyText, setHttpRequestBodyText] =
     React.useState<string>("");
 
@@ -97,7 +96,6 @@ const LollipopPlaygroundContent = (props: Props) => {
       <VSpacer size={16} />
       {props.playgroundState.isVerificationSuccess !== undefined && (
         <Alert
-          viewRef={viewRef}
           variant={
             props.playgroundState.isVerificationSuccess ? "success" : "error"
           }

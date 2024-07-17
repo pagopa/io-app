@@ -7,7 +7,6 @@ export type Identification =
 
 export type Context = {
   integrityKeyTag: string | undefined;
-  walletAttestation: string | undefined;
   eid: StoredCredential | undefined;
   identification: Identification | undefined;
   failure: IssuanceFailure | undefined;
@@ -15,7 +14,6 @@ export type Context = {
 
 export const InitialContext: Context = {
   integrityKeyTag: undefined,
-  walletAttestation: undefined,
   eid: undefined,
   identification: undefined,
   failure: undefined

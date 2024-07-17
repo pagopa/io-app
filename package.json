@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.65.0-rc.0",
+  "version": "2.66.0-rc.0",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.34/definitions.yml",
@@ -103,7 +103,7 @@
   "dependencies": {
     "@babel/plugin-transform-regenerator": "^7.18.6",
     "@gorhom/bottom-sheet": "^4.1.5",
-    "@pagopa/io-app-design-system": "1.39.4",
+    "@pagopa/io-app-design-system": "1.40.0",
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-crypto": "^0.3.0",
     "@pagopa/io-react-native-http-client": "1.0.5",
@@ -138,7 +138,6 @@
     "front-matter": "^4.0.2",
     "hastscript": "^7.0.2",
     "hoist-non-react-statics": "^3.0.1",
-    "io-react-native-secure-storage": "^0.1.1",
     "io-ts": "^2.2.16",
     "jail-monkey": "^2.8.0",
     "jwk-thumbprint": "^0.1.4",

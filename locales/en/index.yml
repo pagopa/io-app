@@ -81,7 +81,7 @@ global:
   unknown: unknown
   disclaimer_beta: If you're having trouble signing in, please let us know!
   sectionStatus:
-    moreInfo: more info
+    moreInfo: "Want to know more?"
   accessibility:
     minusSymbol: minus
     switchLabel: "Select to activate"
@@ -297,6 +297,8 @@ profile:
     description: Use the barcode to communicate your fiscal code when asked.
     help: !include profile/profile_fiscal_code.md
     facSimile: FAC-SIMILE
+    copyCode: Copy fiscal code
+    codeCopied: Fiscal code copied!
   sections:
     spid: SPID PROFILE
   unknown: UNKNOWN
@@ -354,9 +356,9 @@ profile:
           title: Delete your profile
           description: You can delete your IO profile at any time.
           banner: Your profile will be deleted within 30 days of your request.
-          body: 
+          body:
             p1: If you decide to continue, you will no longer be able to retrieve the messages or preferences you have set in the app.
-            p2: 
+            p2:
               firstPart: "Any bonuses or discounts you get via the IO app "
               lastPart: won't be available anymore.
             p3: You can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE.
@@ -388,13 +390,13 @@ profile:
             item3: the text of the Messages you received;
             item4: your notification preferences.
           paragraph1: The information will be downloaded in YAML format, a standard format for exchanging data between different applications.
-          paragraph2: 
+          paragraph2:
             part1: "You will get "
             part2: "a message on IO "
-            part3: with a link and password that lasts 15 days. 
-          paragraph3: 
+            part3: with a link and password that lasts 15 days.
+          paragraph3:
             part1: For more information see the.
-            link:  IO Privacy Policy.
+            link: IO Privacy Policy.
         alert:
           requestTitle: Are you sure you want to export all your data?
           oldRequest: We are already proceeding to export all your data
@@ -2020,6 +2022,13 @@ messages:
     restore:
       success: "Successfully unarchived."
       failure: "Failed to unarchive"
+  search:
+    emptyState:
+      title: "Enter at least three letters"
+    input:
+      cancel: "Cancel"
+      clear: "Erase"
+      placeholderShort: "Enter text"
 messageDetails:
   accessibilityAttachmentIcon: "Includes attachments"
   contextualHelpTitle: Message details
@@ -2129,6 +2138,7 @@ services:
         title: "Preferences saved!"
         body: "You can always see the list of available services by visiting the Services section."
         cta: "Check available services"
+      banner: Puoi modificare la tua scelta in ogni momento da Profilo > Preferenze
       oldUsersBadge: "Current setup"
       choiceLabel: "You chose the"
       unavailable: "Not defined"
@@ -3178,8 +3188,9 @@ features:
       tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()
     identification:
       mode:
-        title: Con quale metodo vuoi identificarti?
-        header: Metodi disponibili
+        title: Attiva IT Wallet con la tua identità digitale
+        description: È un passaggio necessario solo la prima volta per garantire la sicurezza dei tuoi dati.
+        header: Scegli come identificarti
         method:
           spid:
             title: SPID
@@ -3190,6 +3201,7 @@ features:
           cieId:
             title: CieID
             subtitle: Usa credenziali e app CieID
+        privacy: Identificandoti dichiari di aver letto e compreso l’[Informativa Privacy]() di **Istituto Poligrafico e Zecca dello Stato**.
       nfc:
         title: Attiva l'NFC per continuare
         description: La funzionalità NFC permette al dispositivo di leggere la tua CIE.
