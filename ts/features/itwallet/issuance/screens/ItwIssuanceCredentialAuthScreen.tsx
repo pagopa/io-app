@@ -73,7 +73,7 @@ const ItwIssuanceCredentialAuthScreen = () => {
         <VSpacer size={24} />
         <H2>
           {I18n.t("features.itWallet.issuance.credentialAuth.title", {
-            credentialName: "<TODO>credentialName<TODO>"
+            credentialName: "credential.displayData.title" // TODO [SIW-1358]: remove references to displayData
           })}
         </H2>
         <ItwMarkdown>
