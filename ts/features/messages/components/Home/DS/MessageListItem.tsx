@@ -103,7 +103,11 @@ export const MessageListItem = ({
   >
     <View style={styles.container}>
       <View style={styles.serviceLogoAndSelectionContainer}>
-        <View style={styles.serviceLogoContainer}>
+        <View
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no-hide-descendants"
+          style={styles.serviceLogoContainer}
+        >
           {doubleAvatar ? (
             <DoubleAvatar backgroundLogoUri={serviceLogos} />
           ) : (
