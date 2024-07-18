@@ -1,21 +1,8 @@
-import { IOIcons } from "@pagopa/io-app-design-system";
 import { Prettify } from "../../../types/helpers";
-import {
-  CgnWalletCard,
-  CgnWalletCardProps
-} from "../../bonus/cgn/components/CgnWalletCard";
-import {
-  IdPayWalletCard,
-  IdPayWalletCardProps
-} from "../../idpay/wallet/components/IdPayWalletCard";
+import { CgnWalletCardProps } from "../../bonus/cgn/components/CgnWalletCard";
+import { IdPayWalletCardProps } from "../../idpay/wallet/components/IdPayWalletCard";
 import { ItwCredentialCard } from "../../itwallet/common/components/ItwCredentialCard";
-import { ItwCredentialWalletCard } from "../../itwallet/wallet/components/ItwCredentialWalletCard";
-import {
-  PaymentWalletCard,
-  PaymentWalletCardProps
-} from "../../payments/wallet/components/PaymentWalletCard";
-import { WalletCardBaseComponent } from "../components/WalletCardBaseComponent";
-import { WalletCardSkeleton } from "../components/WalletCardSkeleton";
+import { PaymentWalletCardProps } from "../../payments/wallet/components/PaymentWalletCard";
 
 // Used to group the cards in the wallet. **DO NOT CHANGE THE ITEMS ORDER**
 export const walletCardCategories = ["itw", "cgn", "bonus", "payment"] as const;
@@ -71,20 +58,3 @@ export type WalletCard = WalletCardBase &
 
 // Used to map the card to the specific component that will render the card.
 export type WalletCardType = WalletCard["type"];
-
-/**
- * Wallet card component mapper which translates a WalletCardType to a
- * component to be rendered inside the wallet.
- * Component MUST be a WalletCardBaseComponent, which can be created
- * using {@see withWalletCardBaseComponent} HOC
- */
-export const walletCardComponentMapper: Record<
-  WalletCardType,
-  WalletCardBaseComponent<any> | undefined
-> = {
-  cgn: CgnWalletCard,
-  idPay: IdPayWalletCard,
-  payment: PaymentWalletCard,
-  itw: ItwCredentialWalletCard,
-  placeholder: WalletCardSkeleton
-};

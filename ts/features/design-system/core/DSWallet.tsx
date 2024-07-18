@@ -80,6 +80,12 @@ export const DSWallet = () => {
       type: "itw",
       category: "itw",
       credentialType: CredentialType.PID
+    },
+    {
+      key: "9",
+      type: "cgn",
+      category: "cgn",
+      expireDate: new Date(2025, 1, 1)
     }
   ];
 
@@ -98,7 +104,7 @@ export const DSWallet = () => {
         value={isStacked}
         onSwitchValueChange={setStacked}
       />
-      <DesignSystemSection title="With categories">
+      <DesignSystemSection title="With IT Wallet">
         <WalletCardsCategoryContainer
           cards={cardsByCategory.itw}
           header={{
@@ -116,7 +122,7 @@ export const DSWallet = () => {
           isStacked={isStacked}
         />
         <WalletCardsCategoryContainer
-          cards={cardsByCategory.bonus}
+          cards={[...cardsByCategory.cgn, ...cardsByCategory.bonus]}
           header={{
             label: "Altro"
           }}
@@ -124,8 +130,15 @@ export const DSWallet = () => {
         />
       </DesignSystemSection>
 
-      <DesignSystemSection title="Without categories">
-        <WalletCardsCategoryContainer cards={cards} isStacked={isStacked} />
+      <DesignSystemSection title="Without IT Wallet">
+        <WalletCardsCategoryContainer
+          cards={[
+            ...cardsByCategory.payment,
+            ...cardsByCategory.cgn,
+            ...cardsByCategory.bonus
+          ]}
+          isStacked={isStacked}
+        />
       </DesignSystemSection>
     </DesignSystemScreen>
   );

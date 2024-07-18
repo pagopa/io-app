@@ -5,6 +5,7 @@ import { CgnWalletCard } from "../../bonus/cgn/components/CgnWalletCard";
 import { IdPayWalletCard } from "../../idpay/wallet/components/IdPayWalletCard";
 import { PaymentWalletCard } from "../../payments/wallet/components/PaymentWalletCard";
 import { WalletCardSkeleton } from "../components/WalletCardSkeleton";
+import { ItwCredentialWalletCard } from "../../itwallet/wallet/components/ItwCredentialWalletCard";
 
 /**
  * Wallet card component mapper which translates a WalletCardType to a
@@ -19,6 +20,7 @@ export const walletCardComponentMapper: Record<
   cgn: CgnWalletCard,
   idPay: IdPayWalletCard,
   payment: PaymentWalletCard,
+  itw: ItwCredentialWalletCard,
   placeholder: WalletCardSkeleton
 };
 
