@@ -10,7 +10,11 @@ import {
   H3,
   H4,
   H5,
-  H6
+  H6,
+  Banner,
+  IOPictogramsBleed,
+  Divider,
+  Nullable
 } from "@pagopa/io-app-design-system";
 import {
   TxtHeaderNode,
@@ -22,6 +26,13 @@ import {
   TxtEmphasisNode,
   TxtLinkNode,
   TxtImageNode,
+  TxtBlockQuoteNode,
+  TxtParentNode,
+  TxtCodeBlockNode,
+  TxtCodeNode,
+  TxtHtmlNode,
+  TxtHorizontalRuleNode,
+  TxtBreakNode,
   AnyTxtNode
 } from "@textlint/ast-node-types";
 import React, { Fragment } from "react";
@@ -39,6 +50,32 @@ const HEADINGS_MAP = {
   5: H5,
   6: H6
 };
+const PICTOGRAM_REGEXP = /^\s*>\s{0,4}\[\!(.*?)\]/;
+const HEADING_REGEXP = /^\s*>\s{0,4}#{1,6}\s+(.+)/m;
+const STARTS_WITH_PICTOGRAM = new RegExp(
+  PICTOGRAM_REGEXP.source + "s*\n( {0,4})>"
+);
+const PICTOGRAM_REGEXP_GLOB = new RegExp(PICTOGRAM_REGEXP.source, "g");
+const HEADING_REGEXP_GLOB_MULTI = new RegExp(HEADING_REGEXP.source, "gm");
+
+export function getPictogramName(value?: Nullable<string>): IOPictogramsBleed {
+  const isValidPictogram =
+    value && Boolean(IOPictogramsBleed[value as IOPictogramsBleed]);
+  return isValidPictogram ? (value as IOPictogramsBleed) : "notification";
+}
+
+export function getStrValue({ children }: TxtParentNode): string {
+  return children.reduce((acc, inc) => {
+    if (inc.type === "Str" || inc.type === "Code") {
+      return acc + inc.value;
+    }
+    if ("children" in inc) {
+      return acc + getStrValue(inc);
+    }
+    return acc;
+  }, "");
+}
+
 /**
  * Used to get a valid key
  *
@@ -186,7 +223,9 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    */
   ListItem(listItem: TxtListItemNode, render: Renderer) {
     return (
-      <View key={getTxtNodeKey(listItem)}>{listItem.children.map(render)}</View>
+      <View accessible={false} key={getTxtNodeKey(listItem)}>
+        {listItem.children.map(render)}
+      </View>
     );
   },
   /**
@@ -198,5 +237,72 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @param props The custom `Spacer` component used to add space between the first level content.
    * @returns The rendered `VSpacer` component.
    */
-  Spacer: ({ key, size }) => <VSpacer key={key} size={size} />
+  Spacer: ({ key, size }) => <VSpacer key={key} size={size} />,
+  /**
+   *
+   * @param blockQuote The `BlockQuote` node.
+   * @returns The `Banner` component configured with the `BlockQuote` content.
+   */
+  BlockQuote: (blockQuote: TxtBlockQuoteNode) => {
+    const pictogramName = blockQuote.raw.match(STARTS_WITH_PICTOGRAM);
+    const title = HEADING_REGEXP.exec(blockQuote.raw);
+    const content = blockQuote.raw
+      .replace(PICTOGRAM_REGEXP_GLOB, "")
+      .replace(HEADING_REGEXP_GLOB_MULTI, "")
+      .replace(/^>*/gm, "")
+      .trim();
+
+    return (
+      <Banner
+        key={getTxtNodeKey(blockQuote)}
+        pictogramName={getPictogramName(pictogramName?.[1])}
+        color="neutral"
+        size="big"
+        title={title?.[1]}
+        content={content}
+      />
+    );
+  },
+  /**
+   * @param codeBlock The `CodeBlock` node.
+   * @returns A `Body` containing the `raw` content.
+   */
+  CodeBlock: (codeBlock: TxtCodeBlockNode) => (
+    <Body key={getTxtNodeKey(codeBlock)}>{codeBlock.raw}</Body>
+  ),
+  /**
+   * @param code The `Code` node.
+   * @returns A `Body` containing the `value` content.
+   */
+  Code: (code: TxtCodeNode) => (
+    <Body key={getTxtNodeKey(code)}>{code.value}</Body>
+  ),
+  /**
+   * @param breakNode The `Break` node.
+   * @returns A new line character.
+   */
+  Break: (breakNode: TxtBreakNode) => (
+    <Fragment key={getTxtNodeKey(breakNode)}>{"\n"}</Fragment>
+  ),
+  /**
+   * @param html The `Html` node.
+   * @returns A new line character in case of `<br/>` value, otherwise `null`.
+   */
+  Html: (html: TxtHtmlNode) => {
+    const val = html.value.split(/<([^\s\/>]+)\s*\/>/);
+    const [, value] = val;
+
+    if (value === "br") {
+      return <Fragment key={getTxtNodeKey(html)}>{"\n"}</Fragment>;
+    }
+
+    return null;
+  },
+  /**
+   * @param horizontalRule The `HorizontalRule` node.
+   * @returns A `Divider` component.
+   */
+  HorizontalRule: (horizontalRule: TxtHorizontalRuleNode) => (
+    <Divider key={getTxtNodeKey(horizontalRule)} />
+  )
 };

@@ -10,6 +10,12 @@ import {
   TxtEmphasisNode,
   TxtLinkNode,
   TxtImageNode,
+  TxtBlockQuoteNode,
+  TxtCodeBlockNode,
+  TxtCodeNode,
+  TxtBreakNode,
+  TxtHtmlNode,
+  TxtHorizontalRuleNode,
   AnyTxtNode
 } from "@textlint/ast-node-types";
 import { ReactNode, ComponentProps } from "react";
@@ -34,5 +40,11 @@ export type IOMarkdownRenderRules = {
   [ASTNodeTypes.List]: RuleRenderer<TxtListNode, Renderer>;
   [ASTNodeTypes.ListItem]: RuleRenderer<TxtListItemNode, Renderer>;
   [ASTNodeTypes.Image]: RuleRenderer<TxtImageNode, Renderer>;
+  [ASTNodeTypes.BlockQuote]: RuleRenderer<TxtBlockQuoteNode, Renderer>;
+  [ASTNodeTypes.CodeBlock]: RuleRenderer<TxtCodeBlockNode, Renderer>;
+  [ASTNodeTypes.Code]: RuleRenderer<TxtCodeNode, Renderer>;
+  [ASTNodeTypes.Break]: RuleRenderer<TxtBreakNode, Renderer>;
+  [ASTNodeTypes.Html]: RuleRenderer<TxtHtmlNode, Renderer>;
+  [ASTNodeTypes.HorizontalRule]: RuleRenderer<TxtHorizontalRuleNode, Renderer>;
   Spacer: RuleRenderer<ComponentProps<typeof VSpacer> & { key: string }>;
 };
