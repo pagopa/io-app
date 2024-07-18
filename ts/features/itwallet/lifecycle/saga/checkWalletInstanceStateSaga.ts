@@ -5,20 +5,13 @@ import * as O from "fp-ts/lib/Option";
 import { getAttestation } from "../../common/utils/itwAttestationUtils";
 import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { itwRemoveIntegrityKeyTag } from "../../issuance/store/actions";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { itwLifecycleIsInstalledSelector } from "../store/selectors";
-import { ItwLifecycleState } from "../store/reducers";
-import { itwLifecycleStateUpdated } from "../store/actions";
-import { itwCredentialsWalletReset } from "../../credentials/store/actions";
+import { itwLifecycleWalletReset } from "../store/actions";
 
 function* handleWalletInstanceReset(integrityKeyTag: string) {
   yield* call(deleteKey, integrityKeyTag);
-  yield* put(itwRemoveIntegrityKeyTag());
-  yield* put(itwCredentialsWalletReset());
-  yield* put(
-    itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_INSTALLED)
-  );
+  yield* put(itwLifecycleWalletReset());
 }
 
 /**

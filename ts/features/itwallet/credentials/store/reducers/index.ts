@@ -1,13 +1,10 @@
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import {
-  itwCredentialsRemove,
-  itwCredentialsStore,
-  itwCredentialsWalletReset
-} from "../actions";
+import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { itwLifecycleWalletReset } from "../../../lifecycle/store/actions";
 
 export type ItwCredentialsState = {
   eid: O.Option<StoredCredential>;
@@ -55,7 +52,7 @@ const reducer = (
       };
     }
 
-    case getType(itwCredentialsWalletReset):
+    case getType(itwLifecycleWalletReset):
       return { ...initialState };
 
     default:
