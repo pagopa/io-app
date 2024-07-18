@@ -15,6 +15,7 @@ type BaseCategoryContainerProps<T> = WithTestID<{
   iconName: IOIcons;
   label: string;
   cards: ReadonlyArray<T>;
+  stacked?: boolean;
 }>;
 
 export type RenderProps<T> = {
@@ -27,6 +28,7 @@ const BaseCategoryContainer = <T,>({
   label,
   iconName,
   cards,
+  stacked = true,
   keyExtractorFn,
   renderCardFn
 }: BaseCategoryContainerProps<T> & RenderProps<T>) => {
@@ -35,7 +37,7 @@ const BaseCategoryContainer = <T,>({
     return null;
   }
 
-  const isStacked = cards.length > 1;
+  const isStacked = stacked && cards.length > 1;
 
   return (
     <Animated.View testID={testID} layout={Layout.duration(200)}>
