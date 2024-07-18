@@ -2,7 +2,10 @@ import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import { AuthorizationDetail } from "@pagopa/io-react-native-wallet";
 import { RequestObject } from "@pagopa/io-react-native-wallet/lib/typescript/credential/presentation/types";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
+import {
+  IssuerConfiguration,
+  StoredCredential
+} from "../../common/utils/itwTypesUtils";
 
 export type Context = {
   credentialType: CredentialType | undefined;
@@ -13,6 +16,7 @@ export type Context = {
   codeVerifier: string | undefined;
   credentialDefinition: AuthorizationDetail | undefined;
   requestedCredential: RequestObject | undefined;
+  credential: StoredCredential | undefined;
 };
 
 export const InitialContext: Context = {
@@ -23,5 +27,6 @@ export const InitialContext: Context = {
   clientId: undefined,
   codeVerifier: undefined,
   credentialDefinition: undefined,
-  requestedCredential: undefined
+  requestedCredential: undefined,
+  credential: undefined
 };

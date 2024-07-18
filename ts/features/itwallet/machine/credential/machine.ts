@@ -117,7 +117,16 @@ export const itwCredentialIssuanceMachine = setup({
           credentialDefinition: context.credentialDefinition,
           requestedCredential: context.requestedCredential,
           issuerConf: context.issuerConf
-        })
+        }),
+        onDone: {
+          target: "DisplayingCredentialPreview",
+          actions: assign(({ event }) => ({
+            credential: event.output.credential
+          })),
+          onError: {
+            target: "Failure"
+          }
+        }
       },
       states: {
         Loading: {
