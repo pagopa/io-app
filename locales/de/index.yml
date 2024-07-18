@@ -2104,7 +2104,7 @@ bonus:
         title: "Leider erfüllst du nicht die Voraussetzungen für die Nationale Jugendkarte."
         body: "Die Nationale Jugendkarte ist nur für italienische und europäische Staatsbürger mit Wohnsitz in Italien im Alter von 18 bis 35 Jahren erhältlich."
       timeout:
-        title: "Wir bearbeiten deine Anfrage."
+        title: "Stiamo lavorando la tua richiesta."
         body: "Wir werden dir eine Nachricht in der App schicken, wenn deine Jugendkarte aktiv ist."
       alreadyActive:
         title: "Deine Nationale Jugendkarte ist bereits aktiv!"
