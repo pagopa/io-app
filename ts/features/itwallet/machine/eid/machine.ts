@@ -244,7 +244,7 @@ export const itwEidIssuanceMachine = setup({
           actions: "requestAssistance"
         },
         reset: {
-          target: "Idle" // TODO: handle navigation to an initial screen (TOS?)
+          target: "Idle"
         }
       }
     }

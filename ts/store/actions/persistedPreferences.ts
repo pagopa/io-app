@@ -57,10 +57,6 @@ export const preferencesItWalletTestSetEnabled = createStandardAction(
   "PREFERENCES_ITWALLET_TEST_SET_ENABLED"
 )<{ isItWalletTestEnabled: boolean }>();
 
-export const preferencesNewHomeSectionSetEnabled = createStandardAction(
-  "PREFERENCES_NEW_HOME_SECTION_SET_ENABLED"
-)<{ isNewHomeSectionEnabled: boolean }>();
-
 export type PersistedPreferencesActions = ActionType<
   | typeof preferenceFingerprintIsEnabledSaveSuccess
   | typeof preferredCalendarSaveSuccess
@@ -75,5 +71,4 @@ export type PersistedPreferencesActions = ActionType<
   | typeof preferencesDesignSystemSetEnabled
   | typeof preferencesNewWalletSectionSetEnabled
   | typeof preferencesItWalletTestSetEnabled
-  | typeof preferencesNewHomeSectionSetEnabled
 >;
