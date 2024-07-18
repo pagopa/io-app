@@ -235,7 +235,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           }
         />
-        <View>
+        <View
+          accessible={false}
+        >
           <Text
             allowFontScaling={false}
             color="bluegrey"
@@ -316,7 +318,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           }
         />
-        <View>
+        <View
+          accessible={false}
+        >
           <Text
             allowFontScaling={false}
             color="bluegrey"
@@ -397,7 +401,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           }
         />
-        <View>
+        <View
+          accessible={false}
+        >
           <Text
             allowFontScaling={false}
             color="bluegrey"
@@ -538,7 +544,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           }
         />
-        <View>
+        <View
+          accessible={false}
+        >
           <Text
             allowFontScaling={false}
             color="bluegrey"
@@ -620,7 +628,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           }
         />
-        <View>
+        <View
+          accessible={false}
+        >
           <Text
             allowFontScaling={false}
             color="bluegrey"
@@ -702,7 +712,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           }
         />
-        <View>
+        <View
+          accessible={false}
+        >
           <Text
             allowFontScaling={false}
             color="bluegrey"
