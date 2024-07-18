@@ -7,7 +7,7 @@ import {
 } from "@pagopa/io-react-native-wallet";
 import uuid from "react-native-uuid";
 import { itwWalletProviderBaseUrl } from "../../../../config";
-import createItWalletFetch from "../../api/client";
+import { createItWalletFetch } from "../../api/client";
 import {
   ensureIntegrityServiceIsReady,
   generateIntegrityHardwareKeyTag,

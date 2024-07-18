@@ -15,9 +15,9 @@ import {
   itWalletIssuanceRedirectUriCie
 } from "../../../../config";
 import { type IdentificationContext } from "../../machine/eid/context";
+import { createItWalletFetch } from "../../api/client";
 import { getIntegrityContext } from "./itwIntegrityUtils";
 import { StoredCredential } from "./itwTypesUtils";
-import createItWalletFetch from "../../api/client";
 
 // TODO: use withEphemeralKey imported from @pagopa/io-react-native-wallet
 export const withEphemeralKey = async <R>(
