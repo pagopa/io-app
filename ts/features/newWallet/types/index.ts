@@ -12,6 +12,8 @@ import {
   CgnWalletCard,
   CgnWalletCardProps
 } from "../../bonus/cgn/components/CgnWalletCard";
+import { ItwCredentialCard } from "../../itwallet/common/components/ItwCredentialCard";
+import { ItwCredentialWalletCard } from "../../itwallet/wallet/components/ItwCredentialWalletCard";
 
 // Used to group the cards in the wallet.
 export const walletCardCategories = ["itw", "cgn", "bonus", "payment"] as const;
@@ -39,9 +41,14 @@ export type WalletCardPayment = {
   type: "payment";
 } & PaymentWalletCardProps;
 
+// IT Wallet
+export type WalletCardItw = {
+  type: "itw";
+} & ItwCredentialCard;
+
 // Base WalletCard type, which includes all card types
 export type WalletCard = WalletCardBase &
-  (WalletCardBonus | WalletCardCgn | WalletCardPayment);
+  (WalletCardBonus | WalletCardCgn | WalletCardPayment | WalletCardItw);
 
 // Used to map the card to the specific component that will render the card.
 export type WalletCardType = WalletCard["type"];
@@ -58,7 +65,8 @@ export const walletCardComponentMapper: Record<
 > = {
   cgn: CgnWalletCard,
   idPay: IdPayWalletCard,
-  payment: PaymentWalletCard
+  payment: PaymentWalletCard,
+  itw: ItwCredentialWalletCard
 };
 
 /**
