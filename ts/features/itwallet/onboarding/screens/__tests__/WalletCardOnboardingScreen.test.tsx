@@ -20,31 +20,49 @@ import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
+import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+
+type RenderOptions = {
+  isIdPayEnabled?: boolean;
+  itwTrialStatus?: SubscriptionState;
+  isItwEnabled?: boolean;
+  isItwTestEnabled?: boolean;
+  itwLifecycle?: ItwLifecycleState;
+};
+
+jest.mock("../../../../../config", () => ({
+  itwEnabled: true
+}));
 
 describe("WalletCardOnboardingScreen", () => {
   it("it should render the screen correctly", () => {
-    const component = renderComponent();
+    const component = renderComponent({});
     expect(component).toBeTruthy();
   });
 
-  it("it should render the IT Wallet modules if trial is active", () => {
-    const { queryByTestId } = renderComponent({
-      itwTrialStatus: SubscriptionStateEnum.ACTIVE
-    });
+  it("it should render the IT Wallet modules", () => {
+    const { queryByTestId } = renderComponent({});
 
     expect(queryByTestId("itwDrivingLicenseModuleTestID")).toBeTruthy();
     expect(queryByTestId("itwDisabilityCardModuleTestID")).toBeTruthy();
   });
 
-  it("it should not render the IT Wallet modules if trial is not active", () => {
-    const { queryByTestId } = renderComponent();
-
-    expect(queryByTestId("itwDrivingLicenseModuleTestID")).toBeFalsy();
-    expect(queryByTestId("itwDisabilityCardModuleTestID")).toBeFalsy();
-  });
+  test.each([
+    { itwTrialStatus: SubscriptionStateEnum.DISABLED },
+    { isItwEnabled: false },
+    { isItwTestEnabled: false },
+    { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED },
+    { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_DEACTIVATED }
+  ] as ReadonlyArray<RenderOptions>)(
+    "should not render the IT Wallet modules if %p",
+    options => {
+      const { queryByTestId } = renderComponent(options);
+      expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
+    }
+  );
 
   it("it should not render the ID Pay module if ID Pay is not active", () => {
-    const { queryByTestId } = renderComponent();
+    const { queryByTestId } = renderComponent({ isIdPayEnabled: false });
 
     expect(queryByTestId("idPayModuleTestID")).toBeFalsy();
   });
@@ -56,29 +74,43 @@ describe("WalletCardOnboardingScreen", () => {
   });
 });
 
-const renderComponent = (
-  config: {
-    isIdPayEnabled?: boolean;
-    itwTrialStatus?: SubscriptionState;
-  } = {}
-) => {
+const renderComponent = ({
+  isIdPayEnabled = true,
+  isItwEnabled = true,
+  itwTrialStatus = SubscriptionStateEnum.ACTIVE,
+  isItwTestEnabled = true,
+  itwLifecycle = ItwLifecycleState.ITW_LIFECYCLE_VALID
+}: RenderOptions) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(
     _.merge(undefined, globalState, {
+      features: {
+        itWallet: {
+          lifecycle: itwLifecycle
+        }
+      },
       trialSystem: {
-        [ITW_TRIAL_ID as TrialId]: config.itwTrialStatus
-          ? pot.some(config.itwTrialStatus)
+        [ITW_TRIAL_ID as TrialId]: itwTrialStatus
+          ? pot.some(itwTrialStatus)
           : pot.none
       },
       persistedPreferences: {
-        isIdPayTestEnabled: config.isIdPayEnabled
+        isIdPayTestEnabled: isIdPayEnabled,
+        isItWalletTestEnabled: isItwTestEnabled
       },
       backendStatus: {
         status: O.some({
           config: {
-            idPay: config.isIdPayEnabled && {
+            itw: {
+              enabled: isItwEnabled,
+              min_app_version: {
+                android: "0.0.0.0",
+                ios: "0.0.0.0"
+              }
+            },
+            idPay: isIdPayEnabled && {
               min_app_version: {
                 android: "0.0.0.0",
                 ios: "0.0.0.0"

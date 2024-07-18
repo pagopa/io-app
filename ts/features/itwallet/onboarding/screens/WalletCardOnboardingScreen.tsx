@@ -10,7 +10,10 @@ import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollV
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus";
+import {
+  isIdPayEnabledSelector,
+  isItwEnabledSelector
+} from "../../../../store/reducers/backendStatus";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
 import { isCgnInformationAvailableSelector } from "../../../bonus/cgn/store/reducers/details";
@@ -31,12 +34,20 @@ const WalletCardOnboardingScreen = () => {
 
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const isCgnAlreadyActive = useIOSelector(isCgnInformationAvailableSelector);
+
   const isItWalletEnabled = useIOSelector(isItWalletTestEnabledSelector);
   const isItwTrialEnabled = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
+  const isItwEnabled = useIOSelector(isItwEnabledSelector);
+
   const isItwSectionVisible = React.useMemo(
-    () => isItWalletEnabled && isItwTrialEnabled && isItwValid,
-    [isItWalletEnabled, isItwTrialEnabled, isItwValid]
+    // IT Wallet cedential catalog should be visible if
+    () =>
+      isItWalletEnabled && // Local FF is enabled
+      isItwTrialEnabled && // User is part of the trial
+      isItwValid && // An eID has ben obtained and wallet is valid
+      isItwEnabled, // Remote FF is enabled
+    [isItWalletEnabled, isItwTrialEnabled, isItwValid, isItwEnabled]
   );
 
   const isCredentialLoading = ItwCredentialIssuanceMachineContext.useSelector(
