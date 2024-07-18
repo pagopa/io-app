@@ -73,7 +73,6 @@ import {
   isFIMSEnabledSelector,
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
-import { isItWalletTestEnabledSelector } from "../store/reducers/persistedPreferences";
 import { isGestureEnabled } from "../utils/navigation";
 import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
@@ -101,7 +100,6 @@ const AuthenticatedStackNavigator = () => {
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
-  const isItWalletEnabled = useIOSelector(isItWalletTestEnabledSelector);
 
   return (
     <Stack.Navigator
@@ -384,14 +382,11 @@ const AuthenticatedStackNavigator = () => {
           ...hideHeaderOptions
         }}
       />
-
-      {isItWalletEnabled && (
-        <Stack.Screen
-          name={ITW_ROUTES.MAIN}
-          component={ItwStackNavigator}
-          options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
-        />
-      )}
+      <Stack.Screen
+        name={ITW_ROUTES.MAIN}
+        component={ItwStackNavigator}
+        options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+      />
     </Stack.Navigator>
   );
 };

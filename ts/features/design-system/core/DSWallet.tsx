@@ -1,10 +1,14 @@
+import { ListItemSwitch } from "@pagopa/io-app-design-system";
 import * as React from "react";
+import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
 import { WalletCardsCategoryContainer } from "../../newWallet/components/WalletCardsCategoryContainer";
 import { WalletCard, WalletCardCategory } from "../../newWallet/types";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
 
 export const DSWallet = () => {
+  const [isStacked, setStacked] = React.useState(true);
+
   const cards: ReadonlyArray<WalletCard> = [
     {
       key: "1",
@@ -29,14 +33,14 @@ export const DSWallet = () => {
       expireDate: new Date()
     },
     {
-      key: "4",
+      key: "3",
       type: "payment",
       category: "payment",
       walletId: "1",
       holderEmail: "anna_v********@**hoo.it"
     },
     {
-      key: "2",
+      key: "4",
       type: "payment",
       category: "payment",
       walletId: "1",
@@ -45,6 +49,24 @@ export const DSWallet = () => {
       holderName: "Anna Verdi",
       expireDate: new Date(),
       isExpired: true
+    },
+    {
+      key: "7",
+      type: "itw",
+      category: "itw",
+      credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+    },
+    {
+      key: "6",
+      type: "itw",
+      category: "itw",
+      credentialType: CredentialType.DRIVING_LICENSE
+    },
+    {
+      key: "5",
+      type: "itw",
+      category: "itw",
+      credentialType: CredentialType.PID
     }
   ];
 
@@ -67,10 +89,22 @@ export const DSWallet = () => {
       </DesignSystemSection>
 
       <DesignSystemSection title="Multiple cards">
+        <ListItemSwitch
+          label="Show stacked cards"
+          value={isStacked}
+          onSwitchValueChange={setStacked}
+        />
         <WalletCardsCategoryContainer
           label="Metodi di pagamento"
           iconName="creditCard"
           cards={cardsByCategory.payment}
+          stacked={isStacked}
+        />
+        <WalletCardsCategoryContainer
+          label="IT Wallet"
+          iconName="fiscalCodeIndividual"
+          cards={cardsByCategory.itw}
+          stacked={isStacked}
         />
       </DesignSystemSection>
     </DesignSystemScreen>
