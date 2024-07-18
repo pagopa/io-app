@@ -6,12 +6,18 @@ import {
   ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ItwMarkdown from "../../common/components/ItwMarkdown";
+import {
+  ItwCredentialIssuanceMachineContext,
+  ItwEidIssuanceMachineContext
+} from "../../machine/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { ItwTrialSystemSection } from "../components/ItwTrialSystemSection";
 
 // Sample markdown text
 const sampleMarkdown = `
@@ -40,6 +46,17 @@ A malformed link [Error](httssdps://www.error.com) that show toast error.
  */
 const ItwPlayground = () => {
   const navigation = useIONavigation();
+  const eidMachineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const credentialMachineRef =
+    ItwCredentialIssuanceMachineContext.useActorRef();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Resets the machine in case they were left in s failure state
+      eidMachineRef.send({ type: "reset" });
+      credentialMachineRef.send({ type: "reset" });
+    }, [eidMachineRef, credentialMachineRef])
+  );
 
   useHeaderSecondLevel({
     title: "ITW Playground"
@@ -78,7 +95,7 @@ const ItwPlayground = () => {
           value="Wallet activation"
           accessibilityLabel={"Discovery Playground"}
           description="Start the eID issuing flow"
-          onPress={() => undefined}
+          onPress={navigateToDiscovery}
         />
         <VSpacer size={16} />
         {/* Issuing Playground */}
@@ -107,13 +124,6 @@ const ItwPlayground = () => {
         {/* Screens Playground */}
         <ListItemHeader label="Screens" />
         <ListItemNav
-          value="Wallet discovery screen"
-          accessibilityLabel={"Discovery screen"}
-          description="Navigate to the IT Wallet discovery screen"
-          onPress={navigateToDiscovery}
-        />
-        <Divider />
-        <ListItemNav
           value="Credential preview (mDL)"
           accessibilityLabel="Credential preview (mdl) Playground"
           description="Open the credential preview screen"
@@ -134,6 +144,15 @@ const ItwPlayground = () => {
           onPress={navigateToCredentialAuth}
         />
         <VSpacer size={16} />
+        {
+          /* F&F Experimentation */
+          __DEV__ ? (
+            <>
+              <ItwTrialSystemSection />
+              <VSpacer size={16} />
+            </>
+          ) : null
+        }
         {/* Other Playgrounds */}
         <ListItemHeader label="Miscellaneous" />
         <H3>{"IT Wallet markdown preview"}</H3>

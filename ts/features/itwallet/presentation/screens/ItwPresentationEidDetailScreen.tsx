@@ -11,7 +11,6 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { ItwPidAssuranceLevel } from "../../common/components/ItwPidAssuranceLevel";
 import { ItwReleaserName } from "../../common/components/ItwReleaserName";
 import {
   ItWalletError,
@@ -31,7 +30,6 @@ import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetail
 
 // TODO: use the real credential update time
 const today = new Date();
-const credentialCardData: ReadonlyArray<string> = [];
 
 /**
  * This component renders the entire credential detail.
@@ -57,10 +55,7 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
       />
       <ScrollView contentContainerStyle={{ paddingBottom: screenEndMargin }}>
         <View style={styles.cardContainer}>
-          <ItwCredentialCard
-            credentialType={CredentialType.PID}
-            data={credentialCardData}
-          />
+          <ItwCredentialCard credentialType={CredentialType.PID} />
           <View
             style={[styles.cardBackdrop, { backgroundColor: themeColor }]}
           />
@@ -68,7 +63,6 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
 
         <ContentWrapper>
           <ItwClaimsSections credential={eid} />
-          <ItwPidAssuranceLevel credential={eid} />
           <Divider />
           <ItwReleaserName credential={eid} />
           <VSpacer size={40} />

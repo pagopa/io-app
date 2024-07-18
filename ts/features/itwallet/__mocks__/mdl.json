@@ -1183,7 +1183,7 @@
     "credentialType": "mDL",
     "displayData": {
         "title": "Licenza di guida",
-        "icon": "driverLicense",
+        "icon": "car",
         "incoming": false,
         "textColor": "black",
         "firstLine": [

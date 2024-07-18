@@ -1,5 +1,7 @@
 import * as React from "react";
 import { View } from "react-native";
+import Animated, { Layout } from "react-native-reanimated";
+import { IOStyles } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import {
@@ -50,41 +52,43 @@ const WalletCardsContainer = () => {
   }
 
   return (
-    <View testID="walletCardsContainerTestID">
-      {categories.map(category => {
-        const iconName = walletCardCategoryIcons[category];
-        const label = I18n.t(`features.wallet.cards.categories.${category}`);
+    <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
+      <View testID="walletCardsContainerTestID">
+        {categories.map(category => {
+          const iconName = walletCardCategoryIcons[category];
+          const label = I18n.t(`features.wallet.cards.categories.${category}`);
 
-        const cards = cardsByCategory[category];
-        const placeholders = placeholdersByCategory[category];
+          const cards = cardsByCategory[category];
+          const placeholders = placeholdersByCategory[category];
 
-        if (cards) {
-          return (
-            <WalletCardsCategoryContainer
-              key={`cards_category_${category}`}
-              testID={`walletCardsCategoryTestID_${category}`}
-              iconName={iconName}
-              label={label}
-              cards={cards}
-            />
-          );
-        }
+          if (cards) {
+            return (
+              <WalletCardsCategoryContainer
+                key={`cards_category_${category}`}
+                testID={`walletCardsCategoryTestID_${category}`}
+                iconName={iconName}
+                label={label}
+                cards={cards}
+              />
+            );
+          }
 
-        if (placeholders) {
-          return (
-            <WalletCardsCategoryContainerSkeleton
-              key={`cards_category_skeleton_${category}`}
-              testID={`walletCardsCategorySkeletonTestID_${category}`}
-              iconName={iconName}
-              label={label}
-              cards={placeholders}
-            />
-          );
-        }
+          if (placeholders) {
+            return (
+              <WalletCardsCategoryContainerSkeleton
+                key={`cards_category_skeleton_${category}`}
+                testID={`walletCardsCategorySkeletonTestID_${category}`}
+                iconName={iconName}
+                label={label}
+                cards={placeholders}
+              />
+            );
+          }
 
-        return null;
-      })}
-    </View>
+          return null;
+        })}
+      </View>
+    </Animated.View>
   );
 };
 

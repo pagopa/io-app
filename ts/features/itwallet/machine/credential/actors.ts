@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { fromPromise } from "xstate5";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 

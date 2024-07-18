@@ -33,7 +33,6 @@ import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
   preferencesItWalletTestSetEnabled,
-  preferencesNewHomeSectionSetEnabled,
   preferencesNewWalletSectionSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
@@ -48,8 +47,7 @@ import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
   isIdPayTestEnabledSelector,
   isItWalletTestEnabledSelector,
-  isNewHomeSectionEnabledSelector,
-  isNewWalletSectionEnabledSelector,
+  isNewWalletSectionLocallyEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -292,25 +290,14 @@ const DesignSystemSection = () => {
   const { themeType, setTheme } = useIOThemeContext();
   const dispatch = useIODispatch();
 
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewWalletSectionEnabledSelector
-  );
-  const isNewHomeSectionEnabled = useIOSelector(
-    isNewHomeSectionEnabledSelector
+  const isNewWalletSectionLocallyEnabled = useIOSelector(
+    isNewWalletSectionLocallyEnabledSelector
   );
 
   const onNewWalletSectionToggle = (enabled: boolean) => {
     dispatch(
       preferencesNewWalletSectionSetEnabled({
         isNewWalletSectionEnabled: enabled
-      })
-    );
-  };
-
-  const onNewHomeSectionToggle = (enabled: boolean) => {
-    dispatch(
-      preferencesNewHomeSectionSetEnabled({
-        isNewHomeSectionEnabled: enabled
       })
     );
   };
@@ -341,14 +328,8 @@ const DesignSystemSection = () => {
       <Divider />
       <ListItemSwitch
         label={I18n.t("profile.main.newWalletSection")}
-        value={isNewWalletSectionEnabled}
+        value={isNewWalletSectionLocallyEnabled}
         onSwitchValueChange={onNewWalletSectionToggle}
-      />
-      <Divider />
-      <ListItemSwitch
-        label={I18n.t("profile.main.newHomeSection")}
-        value={isNewHomeSectionEnabled}
-        onSwitchValueChange={onNewHomeSectionToggle}
       />
     </ContentWrapper>
   );

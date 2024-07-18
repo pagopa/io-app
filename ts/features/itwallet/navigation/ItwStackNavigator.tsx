@@ -7,15 +7,18 @@ import { ItwIdentificationModeSelectionScreen } from "../identification/screens/
 import { ItwIdentificationNfcInstructionsScreen } from "../identification/screens/ItwIdentificationNfcInstructionsScreen";
 import { ItwIssuanceCredentialAuthScreen } from "../issuance/screens/ItwIssuanceCredentialAuthScreen";
 import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssuanceCredentialPreviewScreen";
+import { ItwIssuanceEidRequestScreen } from "../issuance/screens/ItwIssuanceEidRequestScreen";
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
+import { ItwIssuanceEidFailureScreen } from "../issuance/screens/ItwIssuanceEidFailureScreen";
 import {
   ItWalletIssuanceMachineProvider,
   ItwCredentialIssuanceMachineContext,
   ItwEidIssuanceMachineContext
 } from "../machine/provider";
-import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
+import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground";
+import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -46,6 +49,10 @@ const InnerNavigator = () => {
         }
       }}
     >
+      <Stack.Screen
+        name={ITW_ROUTES.ONBOARDING}
+        component={WalletCardOnboardingScreen}
+      />
       {/* DISCOVERY */}
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.INFO}
@@ -66,6 +73,11 @@ const InnerNavigator = () => {
       />
       {/* ISSUANCE */}
       <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.EID_REQUEST}
+        component={ItwIssuanceEidRequestScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.EID_PREVIEW}
         component={ItwIssuanceEidPreviewScreen}
         options={{ headerShown: false }}
@@ -82,6 +94,11 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.EID_RESULT}
         component={ItwIssuanceEidResultScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.EID_FAILURE}
+        component={ItwIssuanceEidFailureScreen}
         options={{ headerShown: false }}
       />
       {/* CREDENTIAL PRESENTATION */}

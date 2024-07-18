@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { View, StyleSheet } from "react-native";
 import {
   IOColors,
@@ -22,6 +22,7 @@ import { FAQsCategoriesType } from "../../utils/faq";
 import { useIOSelector } from "../../store/hooks";
 import { useMaxBrightness } from "../../utils/brightness";
 import { setAccessibilityFocus } from "../../utils/accessibility";
+import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 
 const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = ["profile"];
 
@@ -36,10 +37,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const FiscalCodeScreen = () => {
   useMaxBrightness();
 
-  const titleRef = React.useRef<View>(null);
+  const titleRef = useRef<View>(null);
+  const [isCFCopied, setIsCFCopied] = useState(false);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       setAccessibilityFocus(titleRef, 300 as Millisecond);
     }, [])
   );
@@ -47,11 +49,33 @@ const FiscalCodeScreen = () => {
   const nameSurname = useIOSelector(profileNameSurnameSelector);
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
 
+  const onPressCopyButton = useCallback(() => {
+    if (!isCFCopied) {
+      setIsCFCopied(true);
+      clipboardSetStringWithFeedback(fiscalCode ?? "");
+      setTimeout(() => {
+        setIsCFCopied(false);
+      }, 5000);
+    }
+  }, [fiscalCode, isCFCopied]);
+
   return (
     <IOScrollViewWithLargeHeader
       ref={titleRef}
       title={{
         label: I18n.t("profile.fiscalCode.fiscalCode")
+      }}
+      actions={{
+        type: "SingleButton",
+        primary: {
+          label: isCFCopied
+            ? I18n.t("profile.fiscalCode.codeCopied")
+            : I18n.t("profile.fiscalCode.copyCode"),
+          onPress: onPressCopyButton,
+          accessibilityLabel: isCFCopied
+            ? I18n.t("profile.fiscalCode.codeCopied")
+            : I18n.t("profile.fiscalCode.copyCode")
+        }
       }}
       description={I18n.t("profile.fiscalCode.description")}
       headerActionsProp={{ showHelp: true }}

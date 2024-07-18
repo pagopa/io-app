@@ -1,13 +1,20 @@
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { type StoredCredential } from "../../common/utils/itwTypesUtils";
+import { IssuanceFailure } from "./failure";
+
+export type IdentificationContext =
+  | { mode: "ciePin" | "cieId" }
+  | { mode: "spid"; idpId: string };
 
 export type Context = {
-  walletAttestation: string | undefined;
-  userToken: string | undefined;
+  integrityKeyTag: string | undefined;
   eid: StoredCredential | undefined;
+  identification: IdentificationContext | undefined;
+  failure: IssuanceFailure | undefined;
 };
 
 export const InitialContext: Context = {
-  walletAttestation: undefined,
-  userToken: undefined,
-  eid: undefined
+  integrityKeyTag: undefined,
+  eid: undefined,
+  identification: undefined,
+  failure: undefined
 };
