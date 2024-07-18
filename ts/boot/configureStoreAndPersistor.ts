@@ -53,7 +53,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 31;
+const CURRENT_REDUX_STORE_VERSION = 32;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -409,7 +409,7 @@ const migrations: MigrationManifest = {
       }
     } as GlobalState),
   // Version 30
-  // Adds new wallet section FF
+  // Adds new Messages Home FF
   "30": (state: PersistedState) =>
     merge(state, {
       persistedPreferences: {
@@ -418,7 +418,11 @@ const migrations: MigrationManifest = {
     }),
   // version 31
   // remove userMetadata from persisted state
-  "31": (state: PersistedState) => omit(state, "userMetadata")
+  "31": (state: PersistedState) => omit(state, "userMetadata"),
+  // Version 32
+  // Removes new Messages Home FF
+  "32": (state: PersistedState) =>
+    omit(state, "persistedPreferences.isNewHomeSectionEnabled")
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
