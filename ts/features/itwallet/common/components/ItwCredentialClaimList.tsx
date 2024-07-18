@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { parseClaims, sortClaims } from "../utils/itwClaimsUtils";
+import { parseClaims } from "../utils/itwClaimsUtils";
 import { StoredCredential } from "../utils/itwTypesUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 import { ItwReleaserName } from "./ItwReleaserName";
@@ -17,9 +17,7 @@ export const ItwCredentialClaimsList = ({
   data: StoredCredential;
   isPreview?: boolean;
 }) => {
-  const { parsedCredential, displayData } = data;
-
-  const claims = parseClaims(sortClaims(displayData.order, parsedCredential));
+  const claims = parseClaims(data.parsedCredential);
 
   return (
     <>
