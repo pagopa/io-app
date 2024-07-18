@@ -1,52 +1,60 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import configureMockStore from "redux-mock-store";
-import { ItwDiscoveryBanner } from "../ItwDiscoveryBanner";
-import ROUTES from "../../../../../navigation/routes";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
+import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
+import { Config } from "../../../../../../definitions/content/Config";
 import { SubscriptionStateEnum } from "../../../../../../definitions/trial_system/SubscriptionState";
-import { ITW_TRIAL_ID } from "../../utils/itwTrialUtils";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { appReducer } from "../../../../../store/reducers";
+import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { BackendStatusState } from "../../../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+import { ITW_TRIAL_ID } from "../../utils/itwTrialUtils";
+import { ItwDiscoveryBanner } from "../ItwDiscoveryBanner";
+
+type RenderOptions = {
+  isItwTrial?: boolean;
+  isItwValid?: boolean;
+  isItwEnabled?: boolean;
+};
+
+jest.mock("../../../../../config", () => ({
+  itwEnabled: true
+}));
 
 describe("ItwDiscoveryBanner", () => {
-  it("should render the banner if trial is ON and wallet is not VALID", () => {
+  it("should render the banner", () => {
     const {
       component: { queryByTestId }
-    } = renderComponent({ isItwTrial: true, isItwValid: false });
+    } = renderComponent({});
     expect(queryByTestId("itwDiscoveryBannerTestID")).not.toBeNull();
   });
 
-  it("should not render the banner if trial OFF and wallet is not VALID", () => {
-    const {
-      component: { queryByTestId }
-    } = renderComponent({ isItwTrial: false, isItwValid: false });
-    expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
-  });
-
-  it("should not render the banner if trial OFF and wallet is VALID", () => {
-    const {
-      component: { queryByTestId }
-    } = renderComponent({ isItwTrial: false, isItwValid: true });
-    expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
-  });
-
-  it("should not render the banner if trial ON and wallet is VALID", () => {
-    const {
-      component: { queryByTestId }
-    } = renderComponent({ isItwTrial: true, isItwValid: true });
-    expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
-  });
+  test.each([
+    { isItwTrial: false },
+    { isItwEnabled: false },
+    { isItwValid: true }
+  ] as ReadonlyArray<RenderOptions>)(
+    "should not render the banner if %p",
+    options => {
+      const {
+        component: { queryByTestId }
+      } = renderComponent(options);
+      expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
+    }
+  );
 });
 
-const renderComponent = (options: {
-  isItwTrial: boolean;
-  isItwValid: boolean;
-}) => {
+const renderComponent = ({
+  isItwEnabled = true,
+  isItwTrial = true,
+  isItwValid = false
+}: RenderOptions) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const { isItwTrial = false, isItwValid = false } = options;
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(
@@ -62,7 +70,30 @@ const renderComponent = (options: {
             ? ItwLifecycleState.ITW_LIFECYCLE_VALID
             : ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
         }
-      }
+      },
+      backendStatus: {
+        status: O.some({
+          config: {
+            itw: {
+              enabled: isItwEnabled,
+              min_app_version: {
+                android: "0.0.0.0",
+                ios: "0.0.0.0"
+              }
+            },
+            assistanceTool: { tool: ToolEnum.none },
+            cgn: { enabled: true },
+            newPaymentSection: {
+              enabled: false,
+              min_app_version: {
+                android: "0.0.0.0",
+                ios: "0.0.0.0"
+              }
+            },
+            fims: { enabled: true }
+          } as Config
+        } as BackendStatus)
+      } as BackendStatusState
     } as GlobalState)
   );
 
