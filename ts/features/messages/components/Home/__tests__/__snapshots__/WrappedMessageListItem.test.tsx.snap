@@ -486,13 +486,18 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -1513,13 +1518,18 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -2716,13 +2726,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -3774,13 +3789,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -4887,13 +4907,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -5820,13 +5845,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -6687,13 +6717,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -7499,13 +7534,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
