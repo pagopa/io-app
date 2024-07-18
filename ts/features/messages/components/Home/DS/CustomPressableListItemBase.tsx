@@ -41,7 +41,9 @@ export const CustomPressableListItemBase = ({
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
       accessibilityRole={accessibilityRole || "button"}
-      style={{ backgroundColor: selected ? IOColors["blueIO-50"] : undefined }}
+      style={{
+        backgroundColor: selected ? IOColors["blueIO-50"] : undefined
+      }}
       {...props}
     >
       <Animated.View

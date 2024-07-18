@@ -6,7 +6,6 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import { ScrollView } from "react-native";
-import Animated, { Layout } from "react-native-reanimated";
 import I18n from "../../../i18n";
 import {
   IOStackNavigationRouteProps,
@@ -16,13 +15,14 @@ import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList"
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
+import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
+import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
-import { selectWalletCards } from "../store/selectors";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
-import { ITW_ROUTES } from "../../itwallet/navigation/routes";
+import { selectWalletCards } from "../store/selectors";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
@@ -50,19 +50,18 @@ const WalletHomeScreen = ({ route }: Props) => {
   );
 
   return (
-    <WalletHomeScreenContainer>
+    <>
       <WalletCategoryFilterTabs />
-      <WalletPaymentsRedirectBanner />
-      <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
+      <WalletScrollView>
+        <ItwDiscoveryBanner ignoreMargins={true} />
+        <WalletPaymentsRedirectBanner />
         <WalletCardsContainer />
-      </Animated.View>
-    </WalletHomeScreenContainer>
+      </WalletScrollView>
+    </>
   );
 };
 
-const WalletHomeScreenContainer = ({
-  children
-}: React.PropsWithChildren<any>) => {
+const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
   const navigation = useIONavigation();
   const cards = useIOSelector(selectWalletCards);
 

@@ -1,6 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { isGestureEnabled } from "../../../utils/navigation";
 import { EuCovidCertificateRouterScreen } from "../screens/EuCovidCertificateRouterScreen";
 import { EuCovidCertMarkdownDetailsScreen } from "../screens/valid/EuCovidCertMarkdownDetailsScreen";
 import { EuCovidCertQrCodeFullScreen } from "../screens/valid/EuCovidCertQrCodeFullScreen";
@@ -10,10 +9,7 @@ import EUCOVIDCERT_ROUTES from "./routes";
 const Stack = createStackNavigator<EUCovidCertParamsList>();
 
 export const EUCovidCertStackNavigator = () => (
-  <Stack.Navigator
-    initialRouteName={EUCOVIDCERT_ROUTES.CERTIFICATE}
-    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: true }}
-  >
+  <Stack.Navigator initialRouteName={EUCOVIDCERT_ROUTES.CERTIFICATE}>
     <Stack.Screen
       name={EUCOVIDCERT_ROUTES.CERTIFICATE}
       component={EuCovidCertificateRouterScreen}
