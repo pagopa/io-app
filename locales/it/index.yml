@@ -81,7 +81,7 @@ global:
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
   unknown: sconosciuto
   sectionStatus:
-    moreInfo: più info
+    moreInfo: "Vuoi saperne di più?"
   accessibility:
     minusSymbol: meno
     reload: "Ricarica"
@@ -483,7 +483,6 @@ profile:
       titleSection: Partecipa alla sperimentazione
     designSystemEnvironment: Design System sperimentale
     newWalletSection: Nuova sezione portafoglio
-    newHomeSection: Nuova home messaggi
     appVersion: Versione
     backendVersion: Versione Backend
     debugMode: Modalità debug
@@ -1927,9 +1926,10 @@ messages:
       read: "Messaggio"
       unread: "Messaggio non letto"
       archived: Archiviato
-      description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
+      description: "{{newMessage}} {{selected}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "ricevuto il"
       received_at: "ricevuto alle ore"
+      selected: "selezionato"
   contextualHelpTitle: Cosa puoi fare nei tuoi Messaggi
   contextualHelpContent: !include messages/messages_home.md
   counting:

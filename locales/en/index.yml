@@ -81,7 +81,7 @@ global:
   unknown: unknown
   disclaimer_beta: If you're having trouble signing in, please let us know!
   sectionStatus:
-    moreInfo: more info
+    moreInfo: "Want to know more?"
   accessibility:
     minusSymbol: minus
     switchLabel: "Select to activate"
@@ -481,7 +481,6 @@ profile:
       itWalletTest: IT Wallet
     designSystemEnvironment: Experimental Design System
     newWalletSection: New wallet section
-    newHomeSection: New messages home
     appVersion: Version
     backendVersion: Backend Version
     debugMode: Debug mode
@@ -1927,9 +1926,10 @@ messages:
       read: "Message"
       unread: "Unread message"
       archived: Archived
-      description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
+      description: "{{newMessage}} {{selected}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "received on"
       received_at: "received at"
+      selected: "selected"
   contextualHelpTitle: About this section
   contextualHelpContent: !include messages/messages_home.md
   counting:
