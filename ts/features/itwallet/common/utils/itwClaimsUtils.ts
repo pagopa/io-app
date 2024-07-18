@@ -285,9 +285,7 @@ export const previewDateClaimsConfig: DateClaimConfig = {
  * @returns
  */
 export const groupCredentialClaims = (credential: StoredCredential) => {
-  const claims = parseClaims(
-    sortClaims(credential.displayData.order, credential.parsedCredential)
-  );
+  const claims = parseClaims(credential.parsedCredential);
 
   return claims.reduce((acc, claim) => {
     const section = sectionsByClaim[claim.id] || "noSection";

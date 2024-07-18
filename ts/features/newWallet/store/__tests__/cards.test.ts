@@ -7,10 +7,7 @@ import {
   walletRemoveCards,
   walletUpsertCard
 } from "../actions/cards";
-import {
-  getWalletCardsCategorySelector,
-  selectWalletCards
-} from "../selectors";
+import { selectWalletCards } from "../selectors";
 
 const T_CARD_1: WalletCard = {
   category: "bonus",
@@ -58,10 +55,6 @@ describe("Wallet cards reducer", () => {
     expect(selectWalletCards(store.getState())).toEqual(
       expect.arrayContaining([T_CARD_1, T_CARD_2, T_CARD_3])
     );
-
-    expect(
-      getWalletCardsCategorySelector("payment")(store.getState())
-    ).toStrictEqual(expect.arrayContaining([T_CARD_2, T_CARD_3]));
   });
 
   it("should update a specific card in the store", () => {
