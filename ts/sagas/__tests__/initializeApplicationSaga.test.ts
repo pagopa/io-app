@@ -41,6 +41,7 @@ import { backendStatusSelector } from "../../store/reducers/backendStatus";
 import { watchLogoutSaga } from "../startup/watchLogoutSaga";
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
+import { startupTransientErrorInitialState } from "../../store/reducers/startup";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -109,7 +110,7 @@ describe("initializeApplicationSaga", () => {
       .next(O.none)
       .next(O.none) // loadSessionInformationSaga
       .next(handleApplicationStartupTransientError)
-      .next({ kind: "NOT_SET", retry: 0 });
+      .next(startupTransientErrorInitialState);
   });
 
   it("should dispatch sessionExpired if check session response is 401 & FastLogin disabled", () => {

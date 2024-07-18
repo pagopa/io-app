@@ -91,7 +91,10 @@ import {
   isProfileFirstOnBoarding,
   profileSelector
 } from "../store/reducers/profile";
-import { StartupStatusEnum } from "../store/reducers/startup";
+import {
+  StartupStatusEnum,
+  startupTransientErrorInitialState
+} from "../store/reducers/startup";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
@@ -377,7 +380,7 @@ export function* initializeApplicationSaga(
     yield* call(handleApplicationStartupTransientError, "GET_PROFILE_DOWN");
     return;
   }
-  yield* put(startupTransientError({ kind: "NOT_SET", retry: 0 }));
+  yield* put(startupTransientError(startupTransientErrorInitialState));
 
   // eslint-disable-next-line functional/no-let
   let userProfile = maybeUserProfile.value;

@@ -17,18 +17,21 @@ export enum StartupStatusEnum {
 
 type StartupTransientErrorNotSet = {
   kind: "NOT_SET";
-  retry: 0;
+  getSessionRetries: 0;
+  getProfileRetries: 0;
 };
 
 type StartupTransientErrorOnGetSession = {
   kind: "GET_SESSION_DOWN";
-  retry: number;
+  getSessionRetries: number;
+  getProfileRetries: number;
   showError: boolean;
 };
 
 type StartupTransientErrorOnGetProfile = {
   kind: "GET_PROFILE_DOWN";
-  retry: number;
+  getSessionRetries: number;
+  getProfileRetries: number;
   showError: boolean;
 };
 
@@ -42,9 +45,15 @@ export type StartupState = {
   transientError: StartupTransientError;
 };
 
+export const startupTransientErrorInitialState: StartupTransientError = {
+  kind: "NOT_SET",
+  getProfileRetries: 0,
+  getSessionRetries: 0
+};
+
 const initialStartupState: StartupState = {
   status: StartupStatusEnum.INITIAL,
-  transientError: { kind: "NOT_SET", retry: 0 }
+  transientError: startupTransientErrorInitialState
 };
 
 export default function startupReducer(

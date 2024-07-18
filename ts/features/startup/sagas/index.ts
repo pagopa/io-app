@@ -26,16 +26,28 @@ export function* handleApplicationStartupTransientError(
   );
 
   if (
-    (transientError.kind === kind || transientError.kind === "NOT_SET") &&
-    transientError.retry < STARTUP_TRANSIENT_ERROR_MAX_RETRIES
+    transientError.getSessionRetries < STARTUP_TRANSIENT_ERROR_MAX_RETRIES &&
+    transientError.getProfileRetries < STARTUP_TRANSIENT_ERROR_MAX_RETRIES
   ) {
-    yield* put(
-      startupTransientError({
-        kind,
-        retry: transientError.retry + 1,
-        showError: false
-      })
-    );
+    if (kind === "GET_SESSION_DOWN") {
+      yield* put(
+        startupTransientError({
+          kind,
+          getSessionRetries: transientError.getSessionRetries + 1,
+          getProfileRetries: 0,
+          showError: false
+        })
+      );
+    } else if (kind === "GET_PROFILE_DOWN") {
+      yield* put(
+        startupTransientError({
+          kind,
+          getSessionRetries: 0,
+          getProfileRetries: transientError.getProfileRetries + 1,
+          showError: false
+        })
+      );
+    }
     yield* delay(WAIT_INITIALIZE_SAGA);
     yield* put(startApplicationInitialization());
   } else {
@@ -47,7 +59,8 @@ export function* handleApplicationStartupTransientError(
     yield* put(
       startupTransientError({
         kind,
-        retry: 0,
+        getSessionRetries: 0,
+        getProfileRetries: 0,
         showError: true
       })
     );
