@@ -12,6 +12,7 @@ import { isTrialActiveSelector } from "../../../trialSystem/store/reducers";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ITW_TRIAL_ID } from "../utils/itwTrialUtils";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus";
 
 type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
@@ -27,13 +28,19 @@ export const ItwDiscoveryBanner = ({
   const [isVisible, setVisible] = React.useState(true);
   const isItwTrialActive = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
+  const isItwEnabled = useIOSelector(isItwEnabledSelector);
 
-  // Banner should be hidden if:
-  if (
-    !isVisible || // The user closed it by pressing the `x`
-    !isItwTrialActive || // The user is not part of the trial
-    isItwValid // The user already activated the wallet
-  ) {
+  const shouldBeHidden = React.useMemo(
+    () =>
+      // Banner should be hidden if:
+      !isVisible || // The user closed it by pressing the `x` button
+      !isItwTrialActive || // The user is not part of the trial
+      isItwValid || // The user already activated the wallet
+      !isItwEnabled, // The IT Wallet features is not enabled
+    [isVisible, isItwTrialActive, isItwValid, isItwEnabled]
+  );
+
+  if (shouldBeHidden) {
     return null;
   }
 
