@@ -65,11 +65,17 @@ export const messageViewPageIndexToListCategory = (
   pageIndex: number
 ): MessageListCategory => (pageIndex === 1 ? "ARCHIVE" : "INBOX");
 
-export const accessibilityLabelForMessageItem = (message: UIMessage): string =>
+export const accessibilityLabelForMessageItem = (
+  message: UIMessage,
+  isSelected?: boolean
+): string =>
   I18n.t("messages.accessibility.message.description", {
     newMessage: I18n.t(
       `messages.accessibility.message.${message.isRead ? "read" : "unread"}`
     ),
+    selected: isSelected
+      ? I18n.t("messages.accessibility.message.selected")
+      : "",
     organizationName: message.organizationName,
     serviceName: message.serviceName,
     subject: message.title,

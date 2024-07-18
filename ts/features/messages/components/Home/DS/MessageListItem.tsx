@@ -103,13 +103,24 @@ export const MessageListItem = ({
   >
     <View style={styles.container}>
       <View style={styles.serviceLogoAndSelectionContainer}>
-        <View style={styles.serviceLogoContainer}>
+        <View
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no-hide-descendants"
+          style={styles.serviceLogoContainer}
+        >
           {doubleAvatar ? (
             <DoubleAvatar backgroundLogoUri={serviceLogos} />
           ) : (
             <Avatar logoUri={serviceLogos} size="small" />
           )}
-          <View style={StyleSheet.absoluteFill}>
+          <View
+            style={[
+              StyleSheet.absoluteFill,
+              {
+                pointerEvents: "none"
+              }
+            ]}
+          >
             <AnimatedMessageCheckbox checked={selected} />
           </View>
         </View>

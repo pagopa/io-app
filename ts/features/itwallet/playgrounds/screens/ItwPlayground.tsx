@@ -144,9 +144,15 @@ const ItwPlayground = () => {
           onPress={navigateToCredentialAuth}
         />
         <VSpacer size={16} />
-        {/* F&F Experimentation */}
-        <ItwTrialSystemSection />
-        <VSpacer size={16} />
+        {
+          /* F&F Experimentation */
+          __DEV__ ? (
+            <>
+              <ItwTrialSystemSection />
+              <VSpacer size={16} />
+            </>
+          ) : null
+        }
         {/* Other Playgrounds */}
         <ListItemHeader label="Miscellaneous" />
         <H3>{"IT Wallet markdown preview"}</H3>

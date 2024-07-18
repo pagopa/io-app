@@ -483,7 +483,6 @@ profile:
       titleSection: Partecipa alla sperimentazione
     designSystemEnvironment: Design System sperimentale
     newWalletSection: Nuova sezione portafoglio
-    newHomeSection: Nuova home messaggi
     appVersion: Versione
     backendVersion: Versione Backend
     debugMode: Modalità debug
@@ -1927,9 +1926,10 @@ messages:
       read: "Messaggio"
       unread: "Messaggio non letto"
       archived: Archiviato
-      description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
+      description: "{{newMessage}} {{selected}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "ricevuto il"
       received_at: "ricevuto alle ore"
+      selected: "selezionato"
   contextualHelpTitle: Cosa puoi fare nei tuoi Messaggi
   contextualHelpContent: !include messages/messages_home.md
   counting:
@@ -3182,6 +3182,10 @@ features:
         body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
         cta: "Chiedi informazioni o segnala errori"
     discovery:
+      banner:
+        title: È arrivato IT Wallet
+        content: Attiva IT Wallet per aggiungere al Portafoglio di IO la versione  digitale dei tuoi documenti!
+        action: Inizia
       title: Attiva IT Wallet
       content: "###### Cos'è e come funziona? \n IT Wallet è la nuova funzionalità di IO che ti permette di aggiungere al Portafoglio la tua **Identità Digitale** e di portare sempre con te **la versione digitale dei documenti fisici** che già possiedi, come la Tessera Sanitaria e presto molti altri. \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
       tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()
