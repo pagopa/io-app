@@ -8501,6 +8501,11 @@ invariant@*, invariant@2.2.4, invariant@^2.2.2, invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
+io-react-native-secure-storage@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/io-react-native-secure-storage/-/io-react-native-secure-storage-0.1.1.tgz#c1fb28125f6c9f8f1b7436198fab726f4ae790ef"
+  integrity sha512-ceBQImvJoxGoyD5tDZ9E0SqDb/9CKPSR5XrMfDDBJ5topKDXCUkC9tiuEv/RYhOOzLbaLR7qvvkEtla5fcnHmg==
+
 io-ts@2.2.20, io-ts@^2.2.16:
   version "2.2.20"
   resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.20.tgz#be42b75f6668a2c44f706f72ee6e4c906777c7f5"
