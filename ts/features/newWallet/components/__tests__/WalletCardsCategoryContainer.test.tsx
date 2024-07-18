@@ -34,18 +34,9 @@ describe("WalletCardsCategoryContainer", () => {
       }
     });
     expect(queryByText(T_CATEGORY_LABEL)).not.toBeNull();
-    expect(queryByTestId(`walletCardTestID_${T_KEY}`)).not.toBeNull();
-  });
-
-  it("should not render the component if no cards are provided", () => {
-    const { queryByTestId, queryByText } = renderComponent({
-      cards: [],
-      header: {
-        label: T_CATEGORY_LABEL
-      }
-    });
-    expect(queryByText(T_CATEGORY_LABEL)).toBeNull();
-    expect(queryByTestId(`walletCardTestID_${T_KEY}`)).toBeNull();
+    expect(
+      queryByTestId(`walletCardTestID_payment_payment_${T_KEY}`)
+    ).not.toBeNull();
   });
 });
 

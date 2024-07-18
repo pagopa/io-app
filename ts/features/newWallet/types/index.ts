@@ -36,15 +36,17 @@ export type WalletCardPayment = Prettify<
   } & PaymentWalletCardProps
 >;
 
+// IT Wallet
+export type WalletCardItw = Prettify<
+  {
+    type: "itw";
+  } & ItwCredentialCard
+>;
+
 // This card type renders a loading skeleton, used as a placeholder for other cards
 export type WalletCardPlaceholder = {
   type: "placeholder";
 };
-
-// IT Wallet
-export type WalletCardItw = {
-  type: "itw";
-} & ItwCredentialCard;
 
 // Base WalletCard type, which includes all card types
 export type WalletCard = WalletCardBase &

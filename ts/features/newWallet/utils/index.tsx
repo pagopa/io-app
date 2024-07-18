@@ -31,7 +31,7 @@ export const renderWalletCardFn = (
   const Component = walletCardComponentMapper[card.type];
   return Component ? (
     <Component
-      testID={`walletCardTestID_${card.key}`}
+      testID={`walletCardTestID_${card.category}_${card.type}_${card.key}`}
       cardProps={card}
       isStacked={stacked}
     />

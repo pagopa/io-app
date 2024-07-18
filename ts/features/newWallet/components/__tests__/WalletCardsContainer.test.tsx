@@ -1,17 +1,33 @@
-import * as React from "react";
-import { within } from "@testing-library/react-native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
+import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import I18n from "../../../../i18n";
+import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
+import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
+import { Config } from "../../../../../definitions/content/Config";
+import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
+import { BackendStatusState } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { CredentialType } from "../../../itwallet/common/utils/itwMocksUtils";
+import { ITW_TRIAL_ID } from "../../../itwallet/common/utils/itwTrialUtils";
+import { ItwLifecycleState } from "../../../itwallet/lifecycle/store/reducers";
 import { WalletCardsState } from "../../store/reducers/cards";
-import { WalletCardsContainer } from "../WalletCardsContainer";
-import { walletCardCategories } from "../../types";
 import { WalletPlaceholdersState } from "../../store/reducers/placeholders";
+import { WalletCard } from "../../types";
+import { WalletCardsContainer } from "../WalletCardsContainer";
+
+type RenderOptions = {
+  cards?: WalletCardsState;
+  isLoading?: WalletPlaceholdersState["isLoading"];
+  isItwTrial?: boolean;
+  isItwEnabled?: boolean;
+  isItwValid?: boolean;
+};
 
 jest.mock("react-native-reanimated", () => ({
   ...require("react-native-reanimated/mock"),
@@ -20,23 +36,21 @@ jest.mock("react-native-reanimated", () => ({
   }
 }));
 
+jest.mock("../../../../config", () => ({
+  itwEnabled: true
+}));
+
 const T_CARDS: WalletCardsState = {
   "1": {
     key: "1",
-    type: "payment",
     category: "payment",
+    type: "payment",
     walletId: ""
   },
   "2": {
     key: "2",
-    type: "payment",
-    category: "payment",
-    walletId: ""
-  },
-  "3": {
-    key: "3",
-    type: "idPay",
     category: "bonus",
+    type: "idPay",
     amount: 1234,
     avatarSource: {
       uri: ""
@@ -44,141 +58,164 @@ const T_CARDS: WalletCardsState = {
     expireDate: new Date(),
     initiativeId: "",
     name: "ABC"
+  },
+  "3": {
+    key: "3",
+    category: "cgn",
+    type: "cgn"
+  },
+  "4": {
+    key: "4",
+    category: "itw",
+    type: "itw",
+    credentialType: CredentialType.PID
   }
 };
+
+const T_PLACEHOLDERS: WalletCardsState = _.mapValues(
+  T_CARDS,
+  card =>
+    ({
+      type: "placeholder",
+      category: card.category,
+      key: card.key
+    } as WalletCard)
+);
 
 describe("WalletCardsContainer", () => {
   jest.useFakeTimers();
   jest.runAllTimers();
 
   it("should render the loading screen", async () => {
-    const { queryByTestId } = renderComponent(
-      {},
-      { items: {}, isLoading: true }
-    );
+    const { queryByTestId } = renderComponent({
+      isLoading: true
+    });
 
     expect(queryByTestId("walletCardSkeletonTestID")).not.toBeNull();
-
-    walletCardCategories.forEach(category =>
-      expect(queryByTestId(`walletCardsCategoryTestID_${category}`)).toBeNull()
-    );
+    expect(queryByTestId(`walletCardsCategoryTestID_itw`)).toBeNull();
+    expect(queryByTestId(`walletCardsCategoryTestID_other`)).toBeNull();
   });
 
   it("should render the placeholders", () => {
-    const { queryByTestId } = renderComponent(
-      {},
-      {
-        items: {
-          a: "payment",
-          b: "payment",
-          c: "payment",
-          d: "bonus"
-        },
-        isLoading: true
-      }
-    );
-
-    expect(queryByTestId("walletCardSkeletonTestID")).toBeNull();
-
-    expect(
-      queryByTestId(`walletCardsCategorySkeletonTestID_payment`)
-    ).not.toBeNull();
-    expect(
-      queryByTestId(`walletCardsCategorySkeletonTestID_bonus`)
-    ).not.toBeNull();
-
-    expect(queryByTestId(`walletCardSkeletonTestID_a`)).not.toBeNull();
-    expect(queryByTestId(`walletCardSkeletonTestID_b`)).not.toBeNull();
-    expect(queryByTestId(`walletCardSkeletonTestID_c`)).not.toBeNull();
-    expect(queryByTestId(`walletCardSkeletonTestID_d`)).not.toBeNull();
-  });
-
-  it("should not render the placeholders for categories already in the wallet", () => {
-    const { queryByTestId } = renderComponent(
-      { 3: T_CARDS["3"] },
-      {
-        items: {
-          a: "payment",
-          b: "payment",
-          c: "payment",
-          d: "bonus"
-        },
-        isLoading: true
-      }
-    );
-
-    expect(queryByTestId("walletCardSkeletonTestID")).toBeNull();
-
-    expect(
-      queryByTestId(`walletCardsCategorySkeletonTestID_payment`)
-    ).not.toBeNull();
-    expect(queryByTestId(`walletCardsCategorySkeletonTestID_bonus`)).toBeNull();
-
-    expect(queryByTestId(`walletCardSkeletonTestID_a`)).not.toBeNull();
-    expect(queryByTestId(`walletCardSkeletonTestID_b`)).not.toBeNull();
-    expect(queryByTestId(`walletCardSkeletonTestID_c`)).not.toBeNull();
-    expect(queryByTestId(`walletCardSkeletonTestID_d`)).toBeNull();
-  });
-
-  it("should render the cards correctly", () => {
-    const { queryByText, queryByTestId } = renderComponent(T_CARDS, {
-      items: {},
-      isLoading: false
+    const { queryByTestId } = renderComponent({
+      cards: T_PLACEHOLDERS,
+      isLoading: true
     });
 
+    expect(queryByTestId("walletCardSkeletonTestID")).toBeNull();
+
+    expect(queryByTestId(`walletCardsCategoryTestID_itw`)).not.toBeNull();
+    expect(queryByTestId(`walletCardsCategoryTestID_other`)).not.toBeNull();
+
     expect(
-      queryByText(I18n.t(`features.wallet.cards.categories.payment`))
+      queryByTestId(`walletCardTestID_payment_placeholder_1`)
     ).not.toBeNull();
-
-    const paymentCategoryComponent = queryByTestId(
-      `walletCardsCategoryTestID_payment`
-    );
-
-    if (paymentCategoryComponent) {
-      const { queryByTestId } = within(paymentCategoryComponent);
-      expect(queryByTestId(`walletCardTestID_1`)).not.toBeNull();
-      expect(queryByTestId(`walletCardTestID_2`)).not.toBeNull();
-      expect(queryByTestId(`walletCardTestID_3`)).toBeNull();
-    }
-
     expect(
-      queryByText(I18n.t(`features.wallet.cards.categories.bonus`))
+      queryByTestId(`walletCardTestID_bonus_placeholder_2`)
     ).not.toBeNull();
-
-    const bonusCategoryComponent = queryByTestId(
-      `walletCardsCategoryTestID_bonus`
-    );
-
-    if (bonusCategoryComponent) {
-      const { queryByTestId } = within(bonusCategoryComponent);
-      expect(queryByTestId(`walletCardTestID_1`)).toBeNull();
-      expect(queryByTestId(`walletCardTestID_2`)).toBeNull();
-      expect(queryByTestId(`walletCardTestID_3`)).not.toBeNull();
-    }
-
-    expect(
-      queryByText(I18n.t(`features.wallet.cards.categories.cgn`))
-    ).toBeNull();
-
-    jest.runOnlyPendingTimers();
+    expect(queryByTestId(`walletCardTestID_cgn_placeholder_3`)).not.toBeNull();
+    expect(queryByTestId(`walletCardTestID_itw_placeholder_4`)).not.toBeNull();
   });
+
+  it("should render placeholders along with available cards", () => {
+    const { queryByTestId } = renderComponent({
+      cards: {
+        "1": T_CARDS["1"],
+        "2": T_PLACEHOLDERS["2"],
+        "3": T_CARDS["3"],
+        "4": T_PLACEHOLDERS["4"]
+      }
+    });
+
+    expect(queryByTestId("walletCardSkeletonTestID")).toBeNull();
+
+    expect(queryByTestId(`walletCardsCategoryTestID_itw`)).not.toBeNull();
+    expect(queryByTestId(`walletCardsCategoryTestID_other`)).not.toBeNull();
+
+    expect(queryByTestId(`walletCardTestID_payment_payment_1`)).not.toBeNull();
+    expect(
+      queryByTestId(`walletCardTestID_bonus_placeholder_2`)
+    ).not.toBeNull();
+    expect(queryByTestId(`walletCardTestID_cgn_cgn_3`)).not.toBeNull();
+    expect(queryByTestId(`walletCardTestID_itw_placeholder_4`)).not.toBeNull();
+  });
+
+  test.each([
+    { isItwEnabled: false },
+    { isItwTrial: false }
+  ] as ReadonlyArray<RenderOptions>)(
+    "should not render ITW section if %p",
+    options => {
+      const { queryByTestId } = renderComponent({
+        ...options,
+        cards: T_CARDS
+      });
+
+      expect(queryByTestId("walletCardSkeletonTestID")).toBeNull();
+      expect(queryByTestId(`walletCardsCategoryTestID_itw`)).toBeNull();
+      expect(queryByTestId(`walletCardsCategoryTestID_other`)).not.toBeNull();
+
+      expect(
+        queryByTestId(`walletCardTestID_payment_payment_1`)
+      ).not.toBeNull();
+      expect(queryByTestId(`walletCardTestID_bonus_idPay_2`)).not.toBeNull();
+      expect(queryByTestId(`walletCardTestID_cgn_cgn_3`)).not.toBeNull();
+      expect(queryByTestId(`walletCardTestID_itw_itw_4`)).toBeNull();
+    }
+  );
 });
 
-const renderComponent = (
-  cards: WalletCardsState,
-  placeholders: WalletPlaceholdersState
-) => {
+const renderComponent = ({
+  cards = {},
+  isItwEnabled = true,
+  isItwTrial = true,
+  isItwValid = true,
+  isLoading = false
+}: RenderOptions) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(
     _.merge(undefined, globalState, {
+      trialSystem: isItwTrial
+        ? {
+            [ITW_TRIAL_ID]: pot.some(SubscriptionStateEnum.ACTIVE)
+          }
+        : {},
       features: {
         wallet: {
           cards,
-          placeholders
+          placeholders: { isLoading }
+        },
+        itWallet: {
+          lifecycle: isItwValid
+            ? ItwLifecycleState.ITW_LIFECYCLE_VALID
+            : ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
         }
-      }
+      },
+      backendStatus: {
+        status: O.some({
+          config: {
+            itw: {
+              enabled: isItwEnabled,
+              min_app_version: {
+                android: "0.0.0.0",
+                ios: "0.0.0.0"
+              }
+            },
+            assistanceTool: { tool: ToolEnum.none },
+            cgn: { enabled: true },
+            newPaymentSection: {
+              enabled: false,
+              min_app_version: {
+                android: "0.0.0.0",
+                ios: "0.0.0.0"
+              }
+            },
+            fims: { enabled: true }
+          } as Config
+        } as BackendStatus)
+      } as BackendStatusState
     } as GlobalState)
   );
 

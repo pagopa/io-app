@@ -4,6 +4,7 @@ import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
+import { isItwEnabledSelector } from "../../../store/reducers/backendStatus";
 import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
 import { ITW_TRIAL_ID } from "../../itwallet/common/utils/itwTrialUtils";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
@@ -61,8 +62,9 @@ const ItwCardsContainer = ({
   const cards = useIOSelector(selectWalletItwCards);
   const isItwTrialEnabled = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
+  const isItwEnabled = useIOSelector(isItwEnabledSelector);
 
-  if (!isItwTrialEnabled) {
+  if (!isItwTrialEnabled || !isItwEnabled) {
     return null;
   }
 
@@ -71,14 +73,16 @@ const ItwCardsContainer = ({
         type: "badge",
         componentProps: {
           text: I18n.t("features.itWallet.wallet.active"),
-          variant: "blue"
+          variant: "blue",
+          testID: "walletCardsCategoryItwActiveBadgeTestID"
         }
       }
     : {
         type: "badge",
         componentProps: {
           text: I18n.t("features.itWallet.wallet.inactive"),
-          variant: "default"
+          variant: "default",
+          testID: "walletCardsCategoryItwInactiveBadgeTestID"
         }
       };
 
