@@ -1,6 +1,12 @@
 import { assign, fromPromise, setup } from "xstate5";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
+import {
+  InitializeWalletActorOutput,
+  ObtainCredentialActorInput,
+  ObtainCredentialActorOutput,
+  RequestCredentialActorInput,
+  RequestCredentialActorOutput
+} from "./actors";
 import { Context, InitialContext } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -14,19 +20,25 @@ export const itwCredentialIssuanceMachine = setup({
     events: {} as CredentialIssuanceEvents
   },
   actions: {
-    navigateToAuthDataScreen: notImplemented,
+    navigateToTrustIssuerScreen: notImplemented,
     navigateToCredentialPreviewScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     storeCredential: notImplemented,
+    disposeWallet: notImplemented,
     closeIssuance: notImplemented
   },
   actors: {
-    getWalletAttestation: fromPromise<string>(notImplemented),
+    initializeWallet: fromPromise<InitializeWalletActorOutput>(notImplemented),
     requestCredential: fromPromise<
-      StoredCredential,
-      StoredCredential | undefined
-    >(notImplemented)
+      RequestCredentialActorOutput,
+      RequestCredentialActorInput
+    >(notImplemented),
+    obtainCredential: fromPromise<
+      ObtainCredentialActorOutput,
+      ObtainCredentialActorInput
+    >(notImplemented),
+    disposeWallet: fromPromise(notImplemented)
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
@@ -46,32 +58,67 @@ export const itwCredentialIssuanceMachine = setup({
     },
     WalletInitialization: {
       tags: [ItwTags.Loading],
-      description: "Wallet attestation issuance",
       invoke: {
-        src: "getWalletAttestation",
+        src: "initializeWallet",
         onDone: {
-          target: "Identification"
+          target: "Identification",
+          actions: assign(({ event }) => ({
+            walletInstanceAttestation: event.output.walletInstanceAttestation,
+            wiaCryptoContext: event.output.wiaCryptoContext
+          }))
         },
         onError: {
           target: "Failure"
         }
       }
     },
-    Identification: {
-      description: "User is identified using the eID",
-      entry: "navigateToAuthDataScreen",
-      on: {
-        "confirm-auth-data": {
-          target: "RequestingCredential"
+    RequestingCredential: {
+      tags: [ItwTags.Loading],
+      invoke: {
+        src: "requestCredential",
+        input: ({ context }) => ({
+          credentialType: context.credentialType,
+          walletInstanceAttestation: context.walletInstanceAttestation,
+          wiaCryptoContext: context.wiaCryptoContext
+        }),
+        onDone: {
+          target: "DisplayingTrustIssuer",
+          actions: assign(({ event }) => ({
+            requestedCredential: event.output.requestedCredential
+          }))
         },
-        close: {
-          actions: "closeIssuance"
+        onError: {
+          target: "Failure"
         }
       }
     },
-    RequestingCredential: {
+    DisplayingTrustIssuer: {
+      entry: "navigateToTrustIssuerScreen",
+      on: {
+        "confirm-auth-data": {
+          target: "ObtainingCredential"
+        },
+        close: {
+          actions: ["closeIssuance", "disposeWallet"]
+        }
+      }
+    },
+    ObtainingCredential: {
       tags: [ItwTags.Loading],
       initial: "Loading",
+      invoke: {
+        src: "obtainCredential",
+        input: ({ context }) => ({
+          credentialType: context.credentialType,
+          walletInstanceAttestation: context.walletInstanceAttestation,
+          wiaCryptoContext: context.wiaCryptoContext,
+          clientId: context.clientId,
+          codeVerifier: context.codeVerifier,
+          credentialDefinition: context.credentialDefinition,
+          requestedCredential: context.requestedCredential,
+          issuerConf: context.issuerConf
+        })
+      },
       states: {
         Loading: {
           description: "Dummy state. Credential is being requested"
@@ -86,24 +133,13 @@ export const itwCredentialIssuanceMachine = setup({
         4000: {
           target: ".Hanging"
         }
-      },
-      invoke: {
-        src: "requestCredential",
-        input: ({ context }) => context.eid,
-        onDone: {
-          actions: assign(({ event }) => ({ credential: event.output })),
-          target: "DisplayingCredentialPreview"
-        },
-        onError: {
-          target: "Failure"
-        }
       }
     },
     DisplayingCredentialPreview: {
       entry: "navigateToCredentialPreviewScreen",
       on: {
         "add-to-wallet": {
-          actions: ["storeCredential", "navigateToWallet"]
+          actions: ["storeCredential", "navigateToWallet", "disposeWallet"]
         },
         close: {
           actions: "closeIssuance"
@@ -111,7 +147,7 @@ export const itwCredentialIssuanceMachine = setup({
       }
     },
     Failure: {
-      entry: "navigateToFailureScreen",
+      entry: ["navigateToFailureScreen", "disposeWallet"],
       on: {
         close: {
           actions: "closeIssuance"

@@ -26,7 +26,9 @@ export const ItwIssuanceEidPreviewScreen = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const eidOption = useSelector(machineRef, selectEidOption);
-  const dismissDialog = useItwDismissalDialog();
+  const dismissDialog = useItwDismissalDialog(() =>
+    machineRef.send({ type: "close" })
+  );
 
   useAvoidHardwareBackButton();
 
