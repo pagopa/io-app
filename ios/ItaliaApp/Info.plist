@@ -30,7 +30,7 @@
         <key>CFBundleURLSchemes</key>
         <array>
           <string>ioit</string>
-          <string>iowallet</string>
+          <string>iowalletcie</string>
         </array>
       </dict>
     </array>
