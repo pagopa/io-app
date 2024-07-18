@@ -1,4 +1,6 @@
+import { ListItemSwitch } from "@pagopa/io-app-design-system";
 import * as React from "react";
+import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
 import { WalletCardsCategoryContainer } from "../../newWallet/components/WalletCardsCategoryContainer";
 import { WalletCard, WalletCardCategory } from "../../newWallet/types";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -6,6 +8,8 @@ import { DesignSystemSection } from "../components/DesignSystemSection";
 import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
 
 export const DSWallet = () => {
+  const [isStacked, setStacked] = React.useState(true);
+
   const cards: ReadonlyArray<WalletCard> = [
     {
       key: "1",
@@ -58,6 +62,24 @@ export const DSWallet = () => {
       holderName: "Anna Verdi",
       expireDate: new Date(),
       isExpired: true
+    },
+    {
+      key: "6",
+      type: "itw",
+      category: "itw",
+      credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+    },
+    {
+      key: "7",
+      type: "itw",
+      category: "itw",
+      credentialType: CredentialType.DRIVING_LICENSE
+    },
+    {
+      key: "8",
+      type: "itw",
+      category: "itw",
+      credentialType: CredentialType.PID
     }
   ];
 
@@ -71,26 +93,39 @@ export const DSWallet = () => {
 
   return (
     <DesignSystemScreen title={"Wallet"}>
-      <DesignSystemSection title="Stacked">
+      <ListItemSwitch
+        label="Show stacked cards"
+        value={isStacked}
+        onSwitchValueChange={setStacked}
+      />
+      <DesignSystemSection title="With categories">
         <WalletCardsCategoryContainer
-          cards={cardsByCategory.bonus}
+          cards={cardsByCategory.itw}
           header={{
-            label: "Iniziative welfare",
-            iconName: "bonus"
+            label: "IT Wallet",
+            iconName: "fiscalCodeIndividual"
           }}
-          isStacked={true}
+          isStacked={isStacked}
         />
-      </DesignSystemSection>
-
-      <DesignSystemSection title="Unstacked">
         <WalletCardsCategoryContainer
           cards={cardsByCategory.payment}
           header={{
             label: "Metodi di pagamento",
             iconName: "creditCard"
           }}
-          footer={<ItwDiscoveryBanner ignoreMargins />}
+          isStacked={isStacked}
         />
+        <WalletCardsCategoryContainer
+          cards={cardsByCategory.bonus}
+          header={{
+            label: "Altro"
+          }}
+          isStacked={isStacked}
+        />
+      </DesignSystemSection>
+
+      <DesignSystemSection title="Without categories">
+        <WalletCardsCategoryContainer cards={cards} isStacked={isStacked} />
       </DesignSystemSection>
     </DesignSystemScreen>
   );
