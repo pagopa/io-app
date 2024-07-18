@@ -6,10 +6,12 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import ROUTES from "../../../../navigation/routes";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { walletUpsertCard } from "../../../newWallet/store/actions/cards";
 import { itwLifecycleStateUpdated } from "../../lifecycle/store/actions";
 import { ItwLifecycleState } from "../../lifecycle/store/reducers";
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwCredentialsStore } from "../../credentials/store/actions";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { assert } from "../../../../utils/assert";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -120,6 +122,14 @@ export const createEidIssuanceActionsImplementation = (
     assert(context.eid, "eID is undefined");
 
     dispatch(itwCredentialsStore(context.eid));
+    dispatch(
+      walletUpsertCard({
+        key: context.eid.keyTag,
+        type: "itw",
+        category: "itw",
+        credentialType: CredentialType.PID
+      })
+    );
   },
 
   requestAssistance: () => {}
