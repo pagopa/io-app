@@ -54,7 +54,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
   };
 
   const handleCieIdPress = () => {
-    Alert.alert("Not implemented");
+    machineRef.send({ type: "select-identification-mode", mode: "cieId" });
   };
 
   useFocusEffect(
