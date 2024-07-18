@@ -3,7 +3,7 @@
 buildscript {
     ext {
         firebaseMessagingVersion = "23.2.1"
-        buildToolsVersion = "33.0.2"
+        buildToolsVersion = "34.0.0"
         kotlinVersion = "1.7.0"
         minSdkVersion = 23
         compileSdkVersion = 34
