@@ -66,7 +66,6 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isItWalletTestEnabled: false
 };
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export default function preferencesReducer(
   state: PersistedPreferencesState = initialPreferencesState,
   action: Action
