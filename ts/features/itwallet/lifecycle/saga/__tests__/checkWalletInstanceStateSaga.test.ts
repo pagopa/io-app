@@ -11,13 +11,14 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { itwLifecycleWalletReset } from "../../store/actions";
 import { getAttestation } from "../../../common/utils/itwAttestationUtils";
 import { ensureIntegrityServiceIsReady } from "../../../common/utils/itwIntegrityUtils";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({
   deleteKey: jest.fn
 }));
 
 describe("checkWalletInstanceStateSaga", () => {
-  it("Does not check the wallet state if the wallet is INSTALLED", () => {
+  it("Does not check the wallet state when the wallet is INSTALLED", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
@@ -33,7 +34,7 @@ describe("checkWalletInstanceStateSaga", () => {
       .run();
   });
 
-  it("Checks the wallet state if the wallet is OPERATIONAL and the attestation is valid", () => {
+  it("Checks the wallet state when the wallet is OPERATIONAL and the attestation is valid", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
@@ -61,7 +62,7 @@ describe("checkWalletInstanceStateSaga", () => {
       .run();
   });
 
-  it("Checks the wallet state if the wallet is OPERATIONAL and the attestation is not valid", () => {
+  it("Checks and resets the wallet state when the wallet is OPERATIONAL and the attestation is not valid", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
@@ -69,6 +70,66 @@ describe("checkWalletInstanceStateSaga", () => {
           issuance: {
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
           }
+        }
+      }
+    };
+
+    return expectSaga(checkWalletInstanceStateSaga)
+      .withState(store)
+      .provide([
+        [matchers.call.fn(ensureIntegrityServiceIsReady), true],
+        [
+          matchers.call.fn(getAttestation),
+          throwError(
+            new Errors.WalletInstanceRevokedError("Revoked", "Revoked")
+          )
+        ]
+      ])
+      .call.fn(ensureIntegrityServiceIsReady)
+      .call.fn(getAttestation)
+      .call.fn(deleteKey)
+      .put(itwLifecycleWalletReset())
+      .run();
+  });
+
+  it("Checks the wallet state when the wallet is VALID and the attestation is valid", () => {
+    const store: DeepPartial<GlobalState> = {
+      features: {
+        itWallet: {
+          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
+          issuance: {
+            integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
+          },
+          credentials: { eid: O.some({} as StoredCredential) }
+        }
+      }
+    };
+
+    return expectSaga(checkWalletInstanceStateSaga)
+      .withState(store)
+      .provide([
+        [matchers.call.fn(ensureIntegrityServiceIsReady), true],
+        [
+          matchers.call.fn(getAttestation),
+          "3396d31e-ac6a-4357-8083-cb5d3cda4d74"
+        ]
+      ])
+      .call.fn(ensureIntegrityServiceIsReady)
+      .call.fn(getAttestation)
+      .not.call.fn(deleteKey)
+      .not.put(itwLifecycleWalletReset())
+      .run();
+  });
+
+  it("Checks and resets the wallet state when the wallet is VALID and the attestation is not valid", () => {
+    const store: DeepPartial<GlobalState> = {
+      features: {
+        itWallet: {
+          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
+          issuance: {
+            integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
+          },
+          credentials: { eid: O.some({} as StoredCredential) }
         }
       }
     };

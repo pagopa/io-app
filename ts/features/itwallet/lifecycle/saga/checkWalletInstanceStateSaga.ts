@@ -6,7 +6,10 @@ import { getAttestation } from "../../common/utils/itwAttestationUtils";
 import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { ReduxSagaEffect } from "../../../../types/utils";
-import { itwLifecycleIsInstalledSelector } from "../store/selectors";
+import {
+  itwLifecycleIsOperationalSelector,
+  itwLifecycleIsValidSelector
+} from "../store/selectors";
 import { itwLifecycleWalletReset } from "../store/actions";
 
 function* handleWalletInstanceReset(integrityKeyTag: string) {
@@ -37,9 +40,13 @@ export function* checkWalletInstanceStateSaga(): Generator<
   ReduxSagaEffect,
   void
 > {
-  const isItWalletInstalled = yield* select(itwLifecycleIsInstalledSelector);
-  // No need to check the wallet state if it was never activated
-  if (isItWalletInstalled) {
+  const isItWalletOperational = yield* select(
+    itwLifecycleIsOperationalSelector
+  );
+  const isItWalletValid = yield* select(itwLifecycleIsValidSelector);
+
+  // Skip unnecessary wallet instance checks
+  if (!(isItWalletOperational || isItWalletValid)) {
     return;
   }
 
