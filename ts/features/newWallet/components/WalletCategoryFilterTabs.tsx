@@ -1,9 +1,4 @@
-import {
-  IOVisualCostants,
-  TabItem,
-  TabNavigation,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { TabItem, TabNavigation } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
@@ -66,15 +61,13 @@ const WalletCategoryFilterTabs = () => {
           ))
         ]}
       </TabNavigation>
-      <VSpacer size={16} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: -IOVisualCostants.appMarginDefault * 2,
-    paddingHorizontal: IOVisualCostants.appMarginDefault
+    paddingVertical: 8
   }
 });
 

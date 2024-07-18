@@ -29,7 +29,6 @@ import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 
 // TODO: use the real credential update time
 const today = new Date();
-const credentialCardData: ReadonlyArray<string> = [];
 
 /**
  * This component renders the entire credential detail.
@@ -55,10 +54,7 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
       />
       <ScrollView contentContainerStyle={{ paddingBottom: screenEndMargin }}>
         <View style={styles.cardContainer}>
-          <ItwCredentialCard
-            credentialType={CredentialType.PID}
-            data={credentialCardData}
-          />
+          <ItwCredentialCard credentialType={CredentialType.PID} />
           <View
             style={[styles.cardBackdrop, { backgroundColor: themeColor }]}
           />
