@@ -7,7 +7,7 @@ import { handleWalletCredentialsRehydration } from "../handleWalletCredentialsRe
 import { walletAddCards } from "../../../../newWallet/store/actions/cards";
 
 describe("ITW handleWalletCredentialsRehydration saga", () => {
-  it("rehydrates credentials when there is an eID", () => {
+  it("rehydrates the eID", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
@@ -34,7 +34,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
       .run();
   });
 
-  it("rehydrates credentials when there is an eID and other credentials", () => {
+  it("rehydrates other credentials when there is an eID", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
