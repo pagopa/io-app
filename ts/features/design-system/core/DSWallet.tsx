@@ -1,11 +1,15 @@
-import { ListItemSwitch } from "@pagopa/io-app-design-system";
+import {
+  Banner,
+  LabelSmall,
+  ListItemSwitch,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
 import { WalletCardsCategoryContainer } from "../../newWallet/components/WalletCardsCategoryContainer";
 import { WalletCard, WalletCardCategory } from "../../newWallet/types";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
-import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
 
 export const DSWallet = () => {
   const [isStacked, setStacked] = React.useState(true);
@@ -120,6 +124,17 @@ export const DSWallet = () => {
             iconName: "creditCard"
           }}
           isStacked={isStacked}
+          footer={
+            <>
+              <VSpacer size={16} />
+              <Banner
+                color="turquoise"
+                pictogramName="idea"
+                size="small"
+                content="Categories can have footers!"
+              />
+            </>
+          }
         />
         <WalletCardsCategoryContainer
           cards={[...cardsByCategory.cgn, ...cardsByCategory.bonus]}
