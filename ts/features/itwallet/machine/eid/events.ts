@@ -1,6 +1,7 @@
+import { ErrorActorEvent } from "xstate5";
 import { LocalIdpsFallback } from "../../../../utils/idps";
 
-type IdentificationMode = "spid" | "ciePin" | "cieId";
+export type IdentificationMode = "spid" | "ciePin" | "cieId";
 
 export type Reset = {
   type: "reset";
@@ -64,4 +65,5 @@ export type EidIssuanceEvents =
   | RequestAssistance
   | Retry
   | Back
-  | Close;
+  | Close
+  | ErrorActorEvent;
