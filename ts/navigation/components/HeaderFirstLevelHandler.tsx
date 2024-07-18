@@ -9,7 +9,6 @@ import {
   useStartSupportRequest
 } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
-import { searchMessagesEnabled } from "../../store/actions/search";
 import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { MainTabParamsList } from "../params/MainTabParamsList";
@@ -25,10 +24,6 @@ import {
   isArchivingInSchedulingModeSelector
 } from "../../features/messages/store/reducers/archiving";
 import { resetMessageArchivingAction } from "../../features/messages/store/actions/archiving";
-import {
-  isDesignSystemEnabledSelector,
-  isNewHomeSectionEnabledSelector
-} from "../../store/reducers/persistedPreferences";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
@@ -88,10 +83,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   const navigation = useIONavigation();
   const store = useIOStore();
 
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-  const isNewHomeSectionEnabled = useIOSelector(
-    isNewHomeSectionEnabledSelector
-  );
   const isNewWalletSectionEnabled = useIOSelector(
     isNewPaymentSectionEnabledSelector
   );
@@ -123,19 +114,9 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
 
   const messageSearchCallback = useCallback(() => {
     if (canNavigateIfIsArchivingCallback()) {
-      if (isDesignSystemEnabled && isNewHomeSectionEnabled) {
-        navigation.navigate(MESSAGES_ROUTES.MESSAGES_SEARCH);
-      } else {
-        dispatch(searchMessagesEnabled(true));
-      }
+      navigation.navigate(MESSAGES_ROUTES.MESSAGES_SEARCH);
     }
-  }, [
-    canNavigateIfIsArchivingCallback,
-    dispatch,
-    isDesignSystemEnabled,
-    isNewHomeSectionEnabled,
-    navigation
-  ]);
+  }, [canNavigateIfIsArchivingCallback, navigation]);
 
   const navigateToSettingMainScreen = useCallback(() => {
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
