@@ -17,6 +17,7 @@ import {
 import { type IdentificationContext } from "../../machine/eid/context";
 import { getIntegrityContext } from "./itwIntegrityUtils";
 import { StoredCredential } from "./itwTypesUtils";
+import createItWalletFetch from "../../api/client";
 
 // TODO: use withEphemeralKey imported from @pagopa/io-react-native-wallet
 export const withEphemeralKey = async <R>(
@@ -78,7 +79,8 @@ export async function getPid({
       await WalletInstanceAttestation.getAttestation({
         wiaCryptoContext,
         integrityContext,
-        walletProviderBaseUrl: itwWalletProviderBaseUrl
+        walletProviderBaseUrl: itwWalletProviderBaseUrl,
+        appFetch: createItWalletFetch
       });
 
     /* ---------------- Authorize user and get access token ---------------- */
