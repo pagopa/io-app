@@ -5,12 +5,15 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { handleWalletCredentialsRehydration } from "../handleWalletCredentialsRehydration";
 import { walletAddCards } from "../../../../newWallet/store/actions/cards";
+import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
 
 describe("ITW handleWalletCredentialsRehydration saga", () => {
-  it("rehydrates the eID", () => {
+  it("rehydrates the eID when the wallet is valid", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
+          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
+          issuance: { integrityKeyTag: O.some("key-tag") },
           credentials: {
             eid: O.some({ keyTag: "1", credentialType: CredentialType.PID }),
             credentials: []
@@ -34,10 +37,12 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
       .run();
   });
 
-  it("rehydrates other credentials when there is an eID", () => {
+  it("rehydrates other credentials when the wallet is valid", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
+          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
+          issuance: { integrityKeyTag: O.some("key-tag") },
           credentials: {
             eid: O.some({ keyTag: "1", credentialType: CredentialType.PID }),
             credentials: [
@@ -83,10 +88,12 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
       .run();
   });
 
-  it("does not rehydrate credentials when there is not an eID", () => {
+  it("does not rehydrate credentials when the wallet is not valid", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
+          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED,
+          issuance: { integrityKeyTag: O.none },
           credentials: {
             eid: O.none,
             credentials: [

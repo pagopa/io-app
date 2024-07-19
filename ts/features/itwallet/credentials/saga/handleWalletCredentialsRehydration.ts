@@ -7,6 +7,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { WalletCard } from "../../../newWallet/types";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { walletAddCards } from "../../../newWallet/store/actions/cards";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 
 const mapCredentialsToWalletCards = (
   credentials: Array<StoredCredential>
@@ -23,10 +24,11 @@ const mapCredentialsToWalletCards = (
  * It should be invoked as soon as possible to properly sync credentials to the wallet.
  */
 export function* handleWalletCredentialsRehydration() {
+  const isItWalletValid = yield* select(itwLifecycleIsValidSelector);
   const { eid, credentials } = yield* select(itwCredentialsSelector);
 
-  // Skip adding all credentials if there is no valid eID
-  if (O.isNone(eid)) {
+  // Only a valid wallet should contain credentials to display
+  if (!isItWalletValid || O.isNone(eid)) {
     return;
   }
 
