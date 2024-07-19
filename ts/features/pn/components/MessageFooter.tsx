@@ -1,5 +1,5 @@
 import React, { MutableRefObject, useCallback } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import {
   ButtonSolid,
   IOStyles,
@@ -12,22 +12,12 @@ import { NotificationPaymentInfo } from "../../../../definitions/pn/Notification
 import { useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../messages/types";
 import { canNavigateToPaymentFromMessageSelector } from "../../messages/store/reducers/payments";
-import variables from "../../../theme/variables";
 import { getRptIdStringFromPayment } from "../utils/rptId";
 import { trackPNShowAllPayments } from "../analytics";
 import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
-import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { shouldUseBottomSheetForPayments } from "../utils";
 import { isNewPaymentSectionEnabledSelector } from "../../../store/reducers/backendStatus";
-
-const styles = StyleSheet.create({
-  container: {
-    overflow: "hidden",
-    marginTop: -variables.footerShadowOffsetHeight,
-    paddingTop: variables.footerShadowOffsetHeight
-  }
-});
 
 type MessageFooterProps = {
   messageId: UIMessageId;
@@ -45,7 +35,6 @@ export const MessageFooter = ({
   presentPaymentsBottomSheetRef
 }: MessageFooterProps) => {
   const safeAreaInsets = useSafeAreaInsets();
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const buttonState = useIOSelector(state =>
     paymentsButtonStateSelector(
       state,
@@ -95,7 +84,7 @@ export const MessageFooter = ({
     return null;
   }
   const isLoading = buttonState === "visibleLoading";
-  return isDesignSystemEnabled ? (
+  return (
     <View
       style={[
         IOStyles.footer,
@@ -110,20 +99,6 @@ export const MessageFooter = ({
         fullWidth
         loading={isLoading}
       />
-    </View>
-  ) : (
-    <View style={styles.container}>
-      <View style={IOStyles.footer}>
-        <ButtonSolid
-          disabled={isLoading}
-          fullWidth={true}
-          loading={isLoading}
-          color="primary"
-          label={I18n.t("wallet.continue")}
-          onPress={onFooterPressCallback}
-          accessibilityLabel={I18n.t("wallet.continue")}
-        />
-      </View>
     </View>
   );
 };

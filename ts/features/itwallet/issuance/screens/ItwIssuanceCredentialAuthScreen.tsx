@@ -17,7 +17,6 @@ import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { ItwCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import {
   ItwRequestedClaimsList,
@@ -41,7 +40,7 @@ const mockedClaims: ReadonlyArray<RequiredClaim> = [
 
 const ItwIssuanceCredentialAuthScreen = () => {
   const navigation = useIONavigation();
-  const credential = ItwCredentialsMocks.mdl;
+  // const credential = ItwCredentialsMocks.mdl;
 
   const handleClosePress = () => {
     navigation.pop();
@@ -74,7 +73,7 @@ const ItwIssuanceCredentialAuthScreen = () => {
         <VSpacer size={24} />
         <H2>
           {I18n.t("features.itWallet.issuance.credentialAuth.title", {
-            credentialName: credential.displayData.title
+            credentialName: "credential.displayData.title" // TODO [SIW-1358]: remove references to displayData
           })}
         </H2>
         <ItwMarkdown>
