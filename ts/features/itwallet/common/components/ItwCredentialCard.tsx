@@ -12,31 +12,18 @@ import { CredentialType } from "../utils/itwMocksUtils";
 
 export type ItwCredentialStatus = "valid" | "pending" | "expiring" | "expired";
 
-type PreviewProps = {
-  isPreview: true;
-};
-
-type DataProps = {
-  isPreview?: false;
-  data: ReadonlyArray<string>;
-};
-
-type BaseProps = {
+export type ItwCredentialCard = {
   credentialType: CredentialType;
-  isMasked?: boolean;
   status?: ItwCredentialStatus;
+  isPreview?: boolean;
 };
-
-export type ItwCredentialCard = BaseProps & (PreviewProps | DataProps);
 
 export const ItwCredentialCard = ({
-  isMasked = false,
   status = "valid",
   credentialType,
-  ...props
+  isPreview = false
 }: ItwCredentialCard) => {
   const isValid = status === "valid";
-  const shouldDisplayData = !(!isValid || isMasked) && !props.isPreview;
   const labelColor: IOColors = isValid ? "bluegreyDark" : "grey-700";
 
   const cardBackgroundSource =
@@ -44,7 +31,7 @@ export const ItwCredentialCard = ({
   const statusTagProps = tagPropsByStatus[status];
 
   return (
-    <View style={props.isPreview && styles.previewContainer}>
+    <View style={isPreview && styles.previewContainer}>
       <View style={styles.cardContainer}>
         <View style={styles.card}>
           <Image
@@ -70,7 +57,6 @@ export const ItwCredentialCard = ({
               </>
             )}
           </View>
-          {shouldDisplayData && <CredentialData {...props} />}
         </View>
         {!isValid && <DigitalVersionBadge />}
         <View
@@ -80,20 +66,6 @@ export const ItwCredentialCard = ({
     </View>
   );
 };
-
-const CredentialData = ({ data }: DataProps) => (
-  <View style={styles.personalInfo}>
-    {data.map(value => (
-      <Body
-        color="bluegreyDark"
-        weight="Semibold"
-        key={`credential_data_${value}`}
-      >
-        {value}
-      </Body>
-    ))}
-  </View>
-);
 
 const DigitalVersionBadge = () => (
   <View style={styles.digitalVersionBadge}>
@@ -198,10 +170,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between"
   },
-  digitalVersionBadge: { position: "absolute", bottom: 16, right: -10 },
-  personalInfo: {
-    position: "absolute",
-    top: 95,
-    left: 16
-  }
+  digitalVersionBadge: { position: "absolute", bottom: 16, right: -10 }
 });
