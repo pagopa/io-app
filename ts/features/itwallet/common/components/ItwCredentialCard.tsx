@@ -6,13 +6,8 @@ import {
   Tag
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
-import Animated, {
-  Easing,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming
-} from "react-native-reanimated";
+import { ImageSourcePropType, StyleSheet, View } from "react-native";
+import { AnimatedImage } from "../../../../components/AnimatedImage";
 import I18n from "../../../../i18n";
 import { CredentialType } from "../utils/itwMocksUtils";
 
@@ -39,7 +34,12 @@ export const ItwCredentialCard = ({
   return (
     <View style={isPreview && styles.previewContainer}>
       <View style={styles.cardContainer}>
-        <CardBackgroundImage source={cardBackgroundSource} />
+        <View style={styles.card}>
+          <AnimatedImage
+            source={cardBackgroundSource}
+            style={styles.cardBackground}
+          />
+        </View>
         <View style={styles.infoContainer}>
           <View style={styles.header}>
             <Body
@@ -63,35 +63,6 @@ export const ItwCredentialCard = ({
           style={[styles.border, { borderColor: borderColorByStatus[status] }]}
         />
       </View>
-    </View>
-  );
-};
-
-const CardBackgroundImage = ({
-  source
-}: Pick<React.ComponentProps<typeof Image>, "source">) => {
-  const opacity = useSharedValue(0);
-
-  const handleOnLoad = () => {
-    // eslint-disable-next-line functional/immutable-data
-    opacity.value = 1;
-  };
-
-  const opacityTransition = useAnimatedStyle(() => ({
-    opacity: withTiming(opacity.value, {
-      duration: 200,
-      easing: Easing.ease
-    })
-  }));
-
-  return (
-    <View style={styles.card}>
-      <Animated.Image
-        style={[opacityTransition, styles.cardBackground]}
-        source={source}
-        onLoad={handleOnLoad}
-        accessibilityIgnoresInvertColors={false}
-      />
     </View>
   );
 };

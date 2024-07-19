@@ -5,7 +5,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
+import { AnimatedImage } from "../../../../components/AnimatedImage";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -39,9 +40,8 @@ const ItwDiscoveryInfoScreen = () => {
 
   return (
     <ForceScrollDownView threshold={50}>
-      <Image
+      <AnimatedImage
         source={require("../../../../../img/features/itWallet/discovery/itw_hero.png")}
-        accessibilityIgnoresInvertColors={true}
         style={styles.hero}
       />
       <VSpacer size={24} />
