@@ -21,7 +21,6 @@ import {
 } from "../../lifecycle/store/selectors";
 import { walletRemoveCards } from "../../../newWallet/store/actions/cards";
 import { itwCredentialsSelector } from "../../credentials/store/selectors";
-import { ItwCredentialsMocks } from "../../common/utils/itwMocksUtils";
 
 export const ItwLifecycleSection = () => {
   const dispatch = useIODispatch();
