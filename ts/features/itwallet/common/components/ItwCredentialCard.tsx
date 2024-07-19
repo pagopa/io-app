@@ -6,14 +6,13 @@ import {
   Tag
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import {
-  Animated,
-  Image,
-  ImageSourcePropType,
-  StyleSheet,
-  useAnimatedValue,
-  View
-} from "react-native";
+import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming
+} from "react-native-reanimated";
 import I18n from "../../../../i18n";
 import { CredentialType } from "../utils/itwMocksUtils";
 
@@ -71,27 +70,26 @@ export const ItwCredentialCard = ({
 const CardBackgroundImage = ({
   source
 }: Pick<React.ComponentProps<typeof Image>, "source">) => {
-  const opacity = useAnimatedValue(0);
+  const opacity = useSharedValue(0);
 
-  const handleLoad = () => {
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: 200,
-      useNativeDriver: true
-    }).start();
+  const handleOnLoad = () => {
+    // eslint-disable-next-line functional/immutable-data
+    opacity.value = 1;
   };
+
+  const opacityTransition = useAnimatedStyle(() => ({
+    opacity: withTiming(opacity.value, {
+      duration: 200,
+      easing: Easing.ease
+    })
+  }));
 
   return (
     <View style={styles.card}>
       <Animated.Image
-        style={[
-          {
-            opacity
-          },
-          styles.cardBackground
-        ]}
+        style={[opacityTransition, styles.cardBackground]}
         source={source}
-        onLoad={handleLoad}
+        onLoad={handleOnLoad}
         accessibilityIgnoresInvertColors={false}
       />
     </View>
