@@ -165,7 +165,7 @@ const warningWaitNavigatorTime = 2000 as Millisecond;
  */
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
 export function* initializeApplicationSaga(
-  starupAction?: ActionType<typeof startApplicationInitialization>
+  startupAction?: ActionType<typeof startApplicationInitialization>
 ): Generator<ReduxSagaEffect, void, any> {
   const handleSessionExpiration = !!(
     starupAction?.payload && starupAction.payload.handleSessionExpiration
