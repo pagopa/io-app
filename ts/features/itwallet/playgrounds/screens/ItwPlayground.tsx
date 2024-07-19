@@ -18,6 +18,7 @@ import {
 } from "../../machine/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwTrialSystemSection } from "../components/ItwTrialSystemSection";
+import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 
 // Sample markdown text
 const sampleMarkdown = `
@@ -148,6 +149,8 @@ const ItwPlayground = () => {
           /* F&F Experimentation */
           __DEV__ ? (
             <>
+              <ItwLifecycleSection />
+              <VSpacer size={16} />
               <ItwTrialSystemSection />
               <VSpacer size={16} />
             </>
