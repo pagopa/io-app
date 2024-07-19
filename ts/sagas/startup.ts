@@ -168,7 +168,7 @@ export function* initializeApplicationSaga(
   startupAction?: ActionType<typeof startApplicationInitialization>
 ): Generator<ReduxSagaEffect, void, any> {
   const handleSessionExpiration = !!(
-    starupAction?.payload && starupAction.payload.handleSessionExpiration
+    startupAction?.payload && starupAction.payload.handleSessionExpiration
   );
   const showIdentificationModal =
     starupAction?.payload?.showIdentificationModalAtStartup ?? true;
