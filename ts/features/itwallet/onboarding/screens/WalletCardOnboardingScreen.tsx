@@ -1,9 +1,12 @@
 import {
+  Badge,
   ContentWrapper,
   ListItemHeader,
   ModuleCredential,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { constFalse, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -14,22 +17,29 @@ import {
   isIdPayEnabledSelector,
   isItwEnabledSelector
 } from "../../../../store/reducers/backendStatus";
+import { isItWalletTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
 import { isCgnInformationAvailableSelector } from "../../../bonus/cgn/store/reducers/details";
 import { loadAvailableBonuses } from "../../../bonus/common/store/actions/availableBonusesTypes";
 import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
 import { isTrialActiveSelector } from "../../../trialSystem/store/reducers";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
+import {
+  CredentialType,
+  itwCredentialNameByCredentialType
+} from "../../common/utils/itwMocksUtils";
 import { ITW_TRIAL_ID } from "../../common/utils/itwTrialUtils";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { ItwTags } from "../../machine/tags";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { isItWalletTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import {
   selectCredentialTypeOption,
   selectIsLoading
 } from "../../machine/credential/selectors";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+
+const activeBadge: Badge = {
+  variant: "success",
+  text: I18n.t("features.wallet.onboarding.badge.active")
+};
 
 const WalletCardOnboardingScreen = () => {
   const dispatch = useIODispatch();
@@ -56,9 +66,8 @@ const WalletCardOnboardingScreen = () => {
 
   const isCredentialLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
-  const selectedCredential = ItwCredentialIssuanceMachineContext.useSelector(
-    selectCredentialTypeOption
-  );
+  const selectedCredentialOption =
+    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialTypeOption);
 
   const startCgnActiviation = () => {
     if (isCredentialLoading) {
@@ -104,15 +113,25 @@ const WalletCardOnboardingScreen = () => {
         <VSpacer size={12} />
         {isItwSectionVisible ? (
           <>
-            <ListItemHeader label="IT Wallet" />
+            <ListItemHeader
+              label={I18n.t("features.wallet.onboarding.sections.itw")}
+            />
             <ModuleCredential
               testID="itwDrivingLicenseModuleTestID"
               icon="car"
-              label={"Patente di guida"}
+              label={
+                itwCredentialNameByCredentialType[
+                  CredentialType.DRIVING_LICENSE
+                ]
+              }
               onPress={beginCredentialIssuance(CredentialType.DRIVING_LICENSE)}
               isFetching={
                 isCredentialLoading &&
-                selectedCredential === CredentialType.DRIVING_LICENSE
+                pipe(
+                  selectedCredentialOption,
+                  O.map(type => type === CredentialType.DRIVING_LICENSE),
+                  O.getOrElse(constFalse)
+                )
               }
             />
 
@@ -120,17 +139,29 @@ const WalletCardOnboardingScreen = () => {
             <ModuleCredential
               testID="itwDisabilityCardModuleTestID"
               icon="accessibility"
-              label={"Carta Europea della Disabilità"}
+              label={
+                itwCredentialNameByCredentialType[
+                  CredentialType.EUROPEAN_DISABILITY_CARD
+                ]
+              }
               onPress={beginCredentialIssuance(
                 CredentialType.EUROPEAN_DISABILITY_CARD
               )}
               isFetching={
                 isCredentialLoading &&
-                selectedCredential === CredentialType.EUROPEAN_DISABILITY_CARD
+                pipe(
+                  selectedCredentialOption,
+                  O.map(
+                    type => type === CredentialType.EUROPEAN_DISABILITY_CARD
+                  ),
+                  O.getOrElse(constFalse)
+                )
               }
             />
             <VSpacer size={16} />
-            <ListItemHeader label="Altro" />
+            <ListItemHeader
+              label={I18n.t("features.wallet.onboarding.sections.other")}
+            />
           </>
         ) : null}
         <ModuleCredential
@@ -138,11 +169,7 @@ const WalletCardOnboardingScreen = () => {
           image={cgnLogo}
           label={I18n.t("features.wallet.onboarding.options.cgn")}
           onPress={!isCgnAlreadyActive ? startCgnActiviation : undefined}
-          badge={
-            isCgnAlreadyActive
-              ? { variant: "success", text: "già presente" }
-              : undefined
-          }
+          badge={isCgnAlreadyActive ? activeBadge : undefined}
         />
         <VSpacer size={8} />
         {isIdPayEnabled && (

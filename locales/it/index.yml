@@ -3072,7 +3072,12 @@ features:
         payment: Metodi di pagamento
         other: Altro
     onboarding:
-      title: Cosa vuoi aggiungere al portafoglio?
+      title: Cosa vuoi aggiungere al Portafoglio?
+      sections:
+        itw: IT Wallet
+        other: Altro
+      badge:
+        active: Già presente
       options:
         cgn: Carta Giovani Nazionale
         welfare: Iniziative welfare
