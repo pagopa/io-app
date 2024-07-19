@@ -1,6 +1,9 @@
 import { defaultRetryingFetch } from "../../../utils/fetch";
 import { store } from "../../../boot/configureStoreAndPersistor";
-import { isLoggedIn } from "../../../store/reducers/authentication";
+import {
+  ioBackendAuthenticationHeaderSelector,
+  isLoggedIn
+} from "../../../store/reducers/authentication";
 import { itwWalletProviderBaseUrl } from "../../../config";
 
 /**
@@ -36,10 +39,9 @@ const addAuthHeaders = (authHeaders: AuthHeaders, init?: RequestInit) => ({
  */
 const getAuthHeadersForWalletProvider = (url: URL) => {
   const { origin } = url;
-  const sessionToken = sessionTokenSelector(store.getState());
   const { origin: itwWpOrigin } = new URL(itwWalletProviderBaseUrl);
-  if (origin === itwWpOrigin && isLoggedIn(authentication)) {
-    return { Authorization: `Bearer ${authentication.sessionToken}` };
+  if (origin === itwWpOrigin) {
+    return ioBackendAuthenticationHeaderSelector(store.getState());
   }
   return {};
 };
