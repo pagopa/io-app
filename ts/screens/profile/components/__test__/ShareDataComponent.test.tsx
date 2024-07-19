@@ -85,7 +85,7 @@ const globalState = appReducer(undefined, applicationChangeState("active"));
 const renderComponent = () =>
   renderScreenWithNavigationStoreContext<GlobalState>(
     () => <ShareDataComponent trackAction={mockTrackInfo} />,
-    "FAKE_ROUTE",
+    "DUMMY",
     {},
     createStore(appReducer, globalState as any)
   );
