@@ -9,7 +9,10 @@ import React from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
 import I18n from "../../../../i18n";
-import { CredentialType } from "../utils/itwMocksUtils";
+import {
+  CredentialType,
+  itwCredentialNameByCredentialType
+} from "../utils/itwMocksUtils";
 
 export type ItwCredentialStatus = "valid" | "pending" | "expiring" | "expired";
 
@@ -48,7 +51,7 @@ export const ItwCredentialCard = ({
               numberOfLines={2}
               style={{ flex: 1 }}
             >
-              {cardLabelByCredentialType[credentialType].toUpperCase()}
+              {itwCredentialNameByCredentialType[credentialType].toUpperCase()}
             </Body>
             {statusTagProps && (
               <>
@@ -77,13 +80,6 @@ const DigitalVersionBadge = () => (
   </View>
 );
 
-const cardLabelByCredentialType: { [type in CredentialType]: string } = {
-  EuropeanDisabilityCard: I18n.t("features.itWallet.card.label.dc"),
-  EuropeanHealthInsuranceCard: I18n.t("features.itWallet.card.label.ts"),
-  mDL: I18n.t("features.itWallet.card.label.mdl"),
-  PersonIdentificationData: I18n.t("features.itWallet.card.label.eid")
-};
-
 const credentialCardBackgrounds: {
   [type in CredentialType]: [ImageSourcePropType, ImageSourcePropType];
 } = {
@@ -95,7 +91,7 @@ const credentialCardBackgrounds: {
     require("../../../../../img/features/itWallet/cards/ts.png"),
     require("../../../../../img/features/itWallet/cards/ts_off.png")
   ],
-  mDL: [
+  MDL: [
     require("../../../../../img/features/itWallet/cards/mdl.png"),
     require("../../../../../img/features/itWallet/cards/mdl_off.png")
   ],

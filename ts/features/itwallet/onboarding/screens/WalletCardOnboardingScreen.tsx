@@ -26,6 +26,10 @@ import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwTags } from "../../machine/tags";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { isItWalletTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import {
+  selectCredentialType,
+  selectIsLoading
+} from "../../machine/credential/selectors";
 
 const WalletCardOnboardingScreen = () => {
   const dispatch = useIODispatch();
@@ -50,12 +54,10 @@ const WalletCardOnboardingScreen = () => {
     [isItWalletEnabled, isItwTrialEnabled, isItwValid, isItwEnabled]
   );
 
-  const isCredentialLoading = ItwCredentialIssuanceMachineContext.useSelector(
-    snapshot => snapshot.hasTag(ItwTags.Loading)
-  );
-  const selectedCredential = ItwCredentialIssuanceMachineContext.useSelector(
-    snapshot => snapshot.context.credentialType
-  );
+  const isCredentialLoading =
+    ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
+  const selectedCredential =
+    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
 
   const startCgnActiviation = () => {
     if (isCredentialLoading) {

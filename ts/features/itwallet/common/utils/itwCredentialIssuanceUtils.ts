@@ -10,7 +10,8 @@ import { constNull } from "fp-ts/lib/function";
 import uuid from "react-native-uuid";
 import {
   itWalletIssuanceRedirectUri,
-  itwEaaProviderBaseUrl
+  itwEaaProviderBaseUrl,
+  itwWalletProviderBaseUrl
 } from "../../../../config";
 import { getIntegrityContext } from "./itwIntegrityUtils";
 import { CredentialType } from "./itwMocksUtils";
@@ -41,7 +42,7 @@ export const initializeWallet = async ({
     await WalletInstanceAttestation.getAttestation({
       wiaCryptoContext,
       integrityContext,
-      walletProviderBaseUrl: itWalletIssuanceRedirectUri
+      walletProviderBaseUrl: itwWalletProviderBaseUrl
     });
 
   return {

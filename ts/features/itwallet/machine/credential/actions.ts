@@ -1,6 +1,6 @@
 import { IOToast } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
-import { Alert } from "react-native";
+import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { ActionArgs } from "xstate5";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -9,6 +9,7 @@ import { useIODispatch } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { walletUpsertCard } from "../../../newWallet/store/actions/cards";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
+import { itwCredentialNameByCredentialType } from "../../common/utils/itwMocksUtils";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { Context } from "./context";
@@ -21,7 +22,7 @@ export default (
 ) => ({
   navigateToTrustIssuerScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_AUTH
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
     });
   },
 
@@ -32,11 +33,29 @@ export default (
   },
 
   navigateToFailureScreen: () => {
-    Alert.alert("Failure 😭");
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE
+    });
   },
 
-  navigateToWallet: () => {
-    toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
+  navigateToWallet: ({
+    context
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
+    const credentialName = pipe(
+      O.fromNullable(context.credentialType),
+      O.map(type => itwCredentialNameByCredentialType[type]),
+      O.toUndefined
+    );
+
+    toast.success(
+      I18n.t("features.itWallet.issuance.credentialResult.toast", {
+        credentialName
+      })
+    );
     navigation.reset({
       index: 1,
       routes: [
@@ -58,7 +77,7 @@ export default (
     CredentialIssuanceEvents
   >) => {
     assert(context.credential, "credential is undefined");
-    assert(context.credentialType, "credencredentialTypetial is undefined");
+    assert(context.credentialType, "credentialType is undefined");
 
     dispatch(itwCredentialsStore(context.credential));
     dispatch(

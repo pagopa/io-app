@@ -13,8 +13,8 @@ import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
+import { selectIsLoading } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { ItwTags } from "../../machine/tags";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -24,9 +24,7 @@ import { ItwTags } from "../../machine/tags";
  */
 const ItwDiscoveryInfoScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isLoading = ItwEidIssuanceMachineContext.useSelector(snap =>
-    snap.hasTag(ItwTags.Loading)
-  );
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
   useOnFirstRender(() => {
     machineRef.send({ type: "start" });

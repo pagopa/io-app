@@ -61,14 +61,14 @@ export const itwCredentialIssuanceMachine = setup({
       invoke: {
         src: "initializeWallet",
         onDone: {
-          target: "Identification",
+          target: "RequestingCredential",
           actions: assign(({ event }) => ({
             walletInstanceAttestation: event.output.walletInstanceAttestation,
             wiaCryptoContext: event.output.wiaCryptoContext
           }))
         },
         onError: {
-          target: "Failure"
+          target: "#itwCredentialIssuanceMachine.Failure"
         }
       }
     },
@@ -84,18 +84,22 @@ export const itwCredentialIssuanceMachine = setup({
         onDone: {
           target: "DisplayingTrustIssuer",
           actions: assign(({ event }) => ({
-            requestedCredential: event.output.requestedCredential
+            clientId: event.output.clientId,
+            codeVerifier: event.output.codeVerifier,
+            credentialDefinition: event.output.credentialDefinition,
+            requestedCredential: event.output.requestedCredential,
+            issuerConf: event.output.issuerConf
           }))
         },
         onError: {
-          target: "Failure"
+          target: "#itwCredentialIssuanceMachine.Failure"
         }
       }
     },
     DisplayingTrustIssuer: {
       entry: "navigateToTrustIssuerScreen",
       on: {
-        "confirm-auth-data": {
+        "confirm-trust-data": {
           target: "ObtainingCredential"
         },
         close: {
@@ -105,7 +109,6 @@ export const itwCredentialIssuanceMachine = setup({
     },
     ObtainingCredential: {
       tags: [ItwTags.Loading],
-      initial: "Loading",
       invoke: {
         src: "obtainCredential",
         input: ({ context }) => ({
@@ -122,25 +125,16 @@ export const itwCredentialIssuanceMachine = setup({
           target: "DisplayingCredentialPreview",
           actions: assign(({ event }) => ({
             credential: event.output.credential
-          })),
-          onError: {
-            target: "Failure"
-          }
-        }
-      },
-      states: {
-        Loading: {
-          description: "Dummy state. Credential is being requested"
+          }))
         },
-        Hanging: {
-          description:
-            "Credential is hanging. We navigate to the next screen and show a loading message",
-          entry: "navigateToCredentialPreviewScreen"
+        onError: {
+          target: "#itwCredentialIssuanceMachine.Failure"
         }
       },
       after: {
+        // If this step takes more than 4 seconds, we navigate to the next screen and display a loading indicator
         4000: {
-          target: ".Hanging"
+          actions: "navigateToCredentialPreviewScreen"
         }
       }
     },
@@ -156,15 +150,20 @@ export const itwCredentialIssuanceMachine = setup({
       }
     },
     Failure: {
-      entry: ["navigateToFailureScreen", "disposeWallet"],
+      entry: ["navigateToFailureScreen"],
       on: {
         close: {
-          actions: "closeIssuance"
+          actions: ["closeIssuance", "disposeWallet"]
         },
         reset: {
           target: "Idle"
+        },
+        retry: {
+          target: "#itwCredentialIssuanceMachine.DisplayingTrustIssuer"
         }
       }
     }
   }
 });
+
+export type ItwCredentialIssuanceMachine = typeof itwCredentialIssuanceMachine;

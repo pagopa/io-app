@@ -1,18 +1,14 @@
-import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate5";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
-import {
-  itwIntegrityKeyTagSelector,
-  itwPidSelector
-} from "../../issuance/store/selectors";
+import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
+import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 
-export type InitializeWalletActorOutput = {
-  wiaCryptoContext: CryptoContext;
-  walletInstanceAttestation: string;
-};
+export type InitializeWalletActorOutput = Awaited<
+  ReturnType<typeof credentialIssuanceUtils.initializeWallet>
+>;
 
 export type RequestCredentialActorInput =
   Partial<credentialIssuanceUtils.RequestCredentialParams>;
@@ -73,7 +69,7 @@ export default (store: ReturnType<typeof useIOStore>) => {
       credentialDefinition
     } = input;
 
-    const pid = itwPidSelector(store.getState());
+    const eid = itwCredentialsEidSelector(store.getState());
 
     assert(credentialType, "credentialType is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
@@ -83,7 +79,7 @@ export default (store: ReturnType<typeof useIOStore>) => {
     assert(clientId, "clientId is undefined");
     assert(codeVerifier, "codeVerifier is undefined");
     assert(credentialDefinition, "codeVerifier is undefined");
-    assert(O.isSome(pid), "pid is undefined");
+    assert(O.isSome(eid), "eID is undefined");
 
     return await credentialIssuanceUtils.obtainCredential({
       credentialType,
@@ -94,7 +90,7 @@ export default (store: ReturnType<typeof useIOStore>) => {
       clientId,
       codeVerifier,
       credentialDefinition,
-      pid: pid.value
+      pid: eid.value
     });
   });
 

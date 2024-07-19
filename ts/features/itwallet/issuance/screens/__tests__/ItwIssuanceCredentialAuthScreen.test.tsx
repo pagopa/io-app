@@ -5,7 +5,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwIssuanceCredentialAuthScreen } from "../ItwIssuanceCredentialAuthScreen";
+import { ItwIssuanceCredentialAuthScreen } from "../ItwIssuanceCredentialTrustIssuerScreen";
 
 describe("ItwIssuanceCredentialAuthScreen", () => {
   it("it should render the screen correctly", () => {
