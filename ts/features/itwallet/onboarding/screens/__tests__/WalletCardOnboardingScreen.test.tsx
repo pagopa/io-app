@@ -88,7 +88,11 @@ const renderComponent = ({
     _.merge(undefined, globalState, {
       features: {
         itWallet: {
-          lifecycle: itwLifecycle
+          lifecycle: itwLifecycle,
+          ...(itwLifecycle === ItwLifecycleState.ITW_LIFECYCLE_VALID && {
+            credentials: { eid: O.some({}) },
+            issuance: { integrityKeyTag: O.some("key-tag") }
+          })
         }
       },
       trialSystem: {
