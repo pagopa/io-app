@@ -36,7 +36,7 @@ const addAuthHeaders = (authHeaders: AuthHeaders, init?: RequestInit) => ({
  */
 const getAuthHeadersForWalletProvider = (url: URL) => {
   const { origin } = url;
-  const { authentication } = store.getState();
+  const sessionToken = sessionTokenSelector(store.getState());
   const { origin: itwWpOrigin } = new URL(itwWalletProviderBaseUrl);
   if (origin === itwWpOrigin && isLoggedIn(authentication)) {
     return { Authorization: `Bearer ${authentication.sessionToken}` };
