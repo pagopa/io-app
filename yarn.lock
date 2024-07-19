@@ -2105,10 +2105,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.1.tgz#cf6bb709f1613419486b7453a15ba63f0e2784ac"
   integrity sha512-tea892roPm42NQIeTCw4WRSVtfuCkr/i+ussj03PttM3BFdCi6y2Kvg1HITxXcDukLza3b+kENzQFRuKRKhPAQ==
 
-"@pagopa/io-react-native-wallet@^0.15.0":
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.15.0.tgz#ed5131b4c783dd6bfbba548e1c83276823e3a598"
-  integrity sha512-P6vb0O/U5oN5if8p2B7l9eqOh4ZZPSE8FZMnjMfqNM5XnwG+U3bFGP0X1/J/CSufHrBNQy50vuRd9KX9gSlQtw==
+"@pagopa/io-react-native-wallet@^0.15.1":
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.15.1.tgz#4146855ba87348754b9b6d20fcedb46289bc1695"
+  integrity sha512-w8xS1STjnpONCxC6jsmtHBh+iavAlcMM7N/02k2e3h+G5/Nt5mastRNhMMxyh/1Oosyt0x8pcoNKndgSLTd96g==
   dependencies:
     parse-url "^9.2.0"
     react-native-url-polyfill "^2.0.0"
