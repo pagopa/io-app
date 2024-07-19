@@ -9,6 +9,6 @@ export const itwCredentialsRemove = createStandardAction(
   "ITW_CREDENTIALS_REMOVE"
 )<StoredCredential>();
 
-export type ItwCredentialsActions = ActionType<
-  typeof itwCredentialsStore | typeof itwCredentialsRemove
->;
+export type ItwCredentialsActions =
+  | ActionType<typeof itwCredentialsStore>
+  | ActionType<typeof itwCredentialsRemove>;
