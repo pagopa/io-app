@@ -3,12 +3,14 @@ import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { throwError } from "redux-saga-test-plan/providers";
 import { Errors } from "@pagopa/io-react-native-wallet";
-import { deleteKey } from "@pagopa/io-react-native-crypto";
 import * as O from "fp-ts/lib/Option";
-import { checkWalletInstanceStateSaga } from "../checkWalletInstanceStateSaga";
+import {
+  checkWalletInstanceStateSaga,
+  getAttestationOrResetWalletInstance,
+  handleWalletInstanceReset
+} from "../checkWalletInstanceStateSaga";
 import { ItwLifecycleState } from "../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { itwLifecycleWalletReset } from "../../store/actions";
 import { getAttestation } from "../../../common/utils/itwAttestationUtils";
 import { ensureIntegrityServiceIsReady } from "../../../common/utils/itwIntegrityUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
@@ -29,8 +31,7 @@ describe("checkWalletInstanceStateSaga", () => {
     };
     return expectSaga(checkWalletInstanceStateSaga)
       .withState(store)
-      .not.call.fn(ensureIntegrityServiceIsReady)
-      .not.call.fn(getAttestation)
+      .not.call.fn(getAttestationOrResetWalletInstance)
       .run();
   });
 
@@ -55,10 +56,8 @@ describe("checkWalletInstanceStateSaga", () => {
           "aac6e82a-e27e-4293-9b55-94a9fab22763"
         ]
       ])
-      .call.fn(ensureIntegrityServiceIsReady)
-      .call.fn(getAttestation)
-      .not.call.fn(deleteKey)
-      .not.put(itwLifecycleWalletReset())
+      .call.fn(getAttestationOrResetWalletInstance)
+      .not.call.fn(handleWalletInstanceReset)
       .run();
   });
 
@@ -85,10 +84,8 @@ describe("checkWalletInstanceStateSaga", () => {
           )
         ]
       ])
-      .call.fn(ensureIntegrityServiceIsReady)
-      .call.fn(getAttestation)
-      .call.fn(deleteKey)
-      .put(itwLifecycleWalletReset())
+      .call.fn(getAttestationOrResetWalletInstance)
+      .call.fn(handleWalletInstanceReset)
       .run();
   });
 
@@ -114,10 +111,8 @@ describe("checkWalletInstanceStateSaga", () => {
           "3396d31e-ac6a-4357-8083-cb5d3cda4d74"
         ]
       ])
-      .call.fn(ensureIntegrityServiceIsReady)
-      .call.fn(getAttestation)
-      .not.call.fn(deleteKey)
-      .not.put(itwLifecycleWalletReset())
+      .call.fn(getAttestationOrResetWalletInstance)
+      .not.call.fn(handleWalletInstanceReset)
       .run();
   });
 
@@ -145,10 +140,8 @@ describe("checkWalletInstanceStateSaga", () => {
           )
         ]
       ])
-      .call.fn(ensureIntegrityServiceIsReady)
-      .call.fn(getAttestation)
-      .call.fn(deleteKey)
-      .put(itwLifecycleWalletReset())
+      .call.fn(getAttestationOrResetWalletInstance)
+      .call.fn(handleWalletInstanceReset)
       .run();
   });
 });
