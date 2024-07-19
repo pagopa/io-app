@@ -171,7 +171,7 @@ export function* initializeApplicationSaga(
     startupAction?.payload && starupAction.payload.handleSessionExpiration
   );
   const showIdentificationModal =
-    starupAction?.payload?.showIdentificationModalAtStartup ?? true;
+    startupAction?.payload?.showIdentificationModalAtStartup ?? true;
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
