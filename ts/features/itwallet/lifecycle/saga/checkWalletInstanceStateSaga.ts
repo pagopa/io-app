@@ -9,6 +9,8 @@ import { ReduxSagaEffect } from "../../../../types/utils";
 import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
 import { itwLifecycleWalletReset } from "../store/actions";
 import { walletRemoveCardsByType } from "../../../newWallet/store/actions/cards";
+import { sessionTokenSelector } from "../../../../store/reducers/authentication";
+import { assert } from "../../../../utils/assert";
 
 export function* handleWalletInstanceReset(integrityKeyTag: string) {
   yield* put(itwLifecycleWalletReset());
@@ -17,9 +19,13 @@ export function* handleWalletInstanceReset(integrityKeyTag: string) {
 }
 
 export function* getAttestationOrResetWalletInstance(integrityKeyTag: string) {
+  const sessionToken = yield* select(sessionTokenSelector);
+
+  assert(sessionToken, "Missing session token");
+
   try {
     yield* call(ensureIntegrityServiceIsReady);
-    yield* call(getAttestation, integrityKeyTag);
+    yield* call(getAttestation, integrityKeyTag, sessionToken);
   } catch (err) {
     if (
       err instanceof Errors.WalletInstanceRevokedError ||
