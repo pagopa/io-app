@@ -6,7 +6,14 @@ import {
   Tag
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
+import {
+  Animated,
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  useAnimatedValue,
+  View
+} from "react-native";
 import I18n from "../../../../i18n";
 import { CredentialType } from "../utils/itwMocksUtils";
 
@@ -33,13 +40,7 @@ export const ItwCredentialCard = ({
   return (
     <View style={isPreview && styles.previewContainer}>
       <View style={styles.cardContainer}>
-        <View style={styles.card}>
-          <Image
-            style={styles.cardBackground}
-            source={cardBackgroundSource}
-            accessibilityIgnoresInvertColors={true}
-          />
-        </View>
+        <CardBackgroundImage source={cardBackgroundSource} />
         <View style={styles.infoContainer}>
           <View style={styles.header}>
             <Body
@@ -63,6 +64,36 @@ export const ItwCredentialCard = ({
           style={[styles.border, { borderColor: borderColorByStatus[status] }]}
         />
       </View>
+    </View>
+  );
+};
+
+const CardBackgroundImage = ({
+  source
+}: Pick<React.ComponentProps<typeof Image>, "source">) => {
+  const opacity = useAnimatedValue(0);
+
+  const handleLoad = () => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true
+    }).start();
+  };
+
+  return (
+    <View style={styles.card}>
+      <Animated.Image
+        style={[
+          {
+            opacity
+          },
+          styles.cardBackground
+        ]}
+        source={source}
+        onLoad={handleLoad}
+        accessibilityIgnoresInvertColors={false}
+      />
     </View>
   );
 };
