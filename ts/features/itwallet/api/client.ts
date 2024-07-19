@@ -1,9 +1,6 @@
 import { defaultRetryingFetch } from "../../../utils/fetch";
 import { store } from "../../../boot/configureStoreAndPersistor";
-import {
-  ioBackendAuthenticationHeaderSelector,
-  isLoggedIn
-} from "../../../store/reducers/authentication";
+import { ioBackendAuthenticationHeaderSelector } from "../../../store/reducers/authentication";
 import { itwWalletProviderBaseUrl } from "../../../config";
 
 /**
