@@ -32,7 +32,7 @@ class CieButtonCheckTest(unittest.TestCase):
         # Wrong uri
         with self.assertRaises(SystemExit):
             CieBtn.main(
-                uri="https://app-backend.io.germania.it/login?entityID=xx_servizicie&authLevel=SpidL2",
+                uri="https://app-backend.i-o.it/login?entityID=xx_servizicie&authLevel=SpidL3",
                 headers=CieBtn.cieHeaders,
                 payload=CieBtn.ciePayload,
                 maxAttempts=5,
@@ -42,7 +42,7 @@ class CieButtonCheckTest(unittest.TestCase):
         # Wrong uri
         with self.assertRaises(requests.exceptions.RequestException):
             CieBtn.requestCieAuthPage(
-                uri="https://app-backend.io.germania.it/login?entityID=xx_servizicie&authLevel=SpidL2",
+                uri="https://app-backend.i-o.it/login?entityID=xx_servizicie&authLevel=SpidL3",
                 headers=CieBtn.cieHeaders,
                 payload=CieBtn.ciePayload,
                 maxAttempts=5,
@@ -51,7 +51,7 @@ class CieButtonCheckTest(unittest.TestCase):
     def testPatternFailure(self):
         with self.assertRaises(SystemExit):
             CieBtn.main(
-                uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&authLevel=SpidL2",
+                uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&authLevel=SpidL3",
                 headers=CieBtn.cieHeaders,
                 payload=CieBtn.ciePayload,
                 maxAttempts=5,
