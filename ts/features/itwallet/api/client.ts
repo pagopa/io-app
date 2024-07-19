@@ -1,7 +1,7 @@
+import { URL as PolyfillURL } from "react-native-url-polyfill";
 import { defaultRetryingFetch } from "../../../utils/fetch";
-import { store } from "../../../boot/configureStoreAndPersistor";
-import { ioBackendAuthenticationHeaderSelector } from "../../../store/reducers/authentication";
 import { itwWalletProviderBaseUrl } from "../../../config";
+import { SessionToken } from "../../../types/SessionToken";
 
 /**
  * Authorization headers which contains the bearer token for the current session.
@@ -31,14 +31,18 @@ const addAuthHeaders = (authHeaders: AuthHeaders, init?: RequestInit) => ({
  * it returns the Authorization header with the session token.
  * Otherwise, it returns an empty object.
  * @param url - The URL object to check against the wallet provider base URL
+ * @param sessionToken - The session token bearer token to be added to the Authorization header
  * @throws {@link TypeError} if the wallet provider URL is not valid
  * @returns An object containing the Authorization header if conditions are met, otherwise an empty object
  */
-const getAuthHeadersForWalletProvider = (url: URL) => {
-  const { origin } = url;
-  const { origin: itwWpOrigin } = new URL(itwWalletProviderBaseUrl);
-  if (origin === itwWpOrigin) {
-    return ioBackendAuthenticationHeaderSelector(store.getState());
+const getAuthHeadersForWalletProvider = (
+  url: string,
+  sessionToken: SessionToken
+) => {
+  const urlTarget = new PolyfillURL(url);
+  const urlWp = new PolyfillURL(itwWalletProviderBaseUrl);
+  if (urlTarget.origin === urlWp.origin) {
+    return { Authorization: `Bearer ${sessionToken}` };
   }
   return {};
 };
@@ -46,13 +50,16 @@ const getAuthHeadersForWalletProvider = (url: URL) => {
 /**
  * Creates a fetch function for the wallet provider functions that adds the Authorization header
  * with the session token if the user is logged in and the URL matches the wallet provider base URL.
- * @param input - The request of the fetch function.
- * @param init - Set of options that can be used to configure a Fetch request.
+ * @param url - The URL object to check against the wallet provider base URL
+ * @param sessionToken - The session token bearer token to be added to the Authorization header
  * @returns A fetch function that can be used to make requests to the wallet provider.
  */
-export const createItWalletFetch = (input: RequestInfo, init?: RequestInit) => {
-  const requestUrl =
-    typeof input === "string" ? new URL(input) : new URL(input.url);
-  const authHeaders = getAuthHeadersForWalletProvider(requestUrl);
-  return defaultRetryingFetch()(input, addAuthHeaders(authHeaders, init));
-};
+export function createItWalletFetch(
+  url: string,
+  sessionToken: SessionToken
+): typeof fetch {
+  const authHeader = getAuthHeadersForWalletProvider(url, sessionToken);
+  const fetch = defaultRetryingFetch();
+  return (input: RequestInfo | URL, init?: RequestInit) =>
+    fetch(input, addAuthHeaders(authHeader, init));
+}

@@ -10,6 +10,7 @@ import {
 } from "../../common/utils/itwAttestationUtils";
 import { useIOStore } from "../../../../store/hooks";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { sessionTokenSelector } from "../../../../store/reducers/authentication";
 import { type IdentificationContext } from "./context";
 
 export type RequestEidActorParams = {
@@ -21,6 +22,8 @@ export const createEidIssuanceActorsImplementation = (
   store: ReturnType<typeof useIOStore>
 ) => ({
   createWalletInstance: fromPromise<string>(async () => {
+    const sessionToken = sessionTokenSelector(store.getState());
+    assert(sessionToken, "sessionToken is undefined");
     const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(store.getState());
 
     // If there is a stored key tag we assume the wallet instance was already created
@@ -31,17 +34,21 @@ export const createEidIssuanceActorsImplementation = (
     }
 
     const hardwareKeyTag = await getIntegrityHardwareKeyTag();
-    await registerWalletInstance(hardwareKeyTag);
+    await registerWalletInstance(hardwareKeyTag, sessionToken);
+
     return hardwareKeyTag;
   }),
 
   requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
     async ({ input }) => {
+      const sessionToken = sessionTokenSelector(store.getState());
+      assert(sessionToken, "sessionToken is undefined");
       assert(input.integrityKeyTag, "integrityKeyTag is undefined");
       assert(input.identification, "identification is undefined");
 
       return await issuanceUtils.getPid({
         integrityKeyTag: input.integrityKeyTag,
+        sessionToken,
         identification: input.identification
       });
     }

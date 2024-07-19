@@ -16,6 +16,7 @@ import {
 } from "../../../../config";
 import { type IdentificationContext } from "../../machine/eid/context";
 import { createItWalletFetch } from "../../api/client";
+import { SessionToken } from "../../../../types/SessionToken";
 import { getIntegrityContext } from "./itwIntegrityUtils";
 import { StoredCredential } from "./itwTypesUtils";
 
@@ -49,9 +50,11 @@ const getRedirectUri = (identificationMode: IdentificationContext["mode"]) =>
 
 export async function getPid({
   integrityKeyTag,
+  sessionToken,
   identification
 }: {
   integrityKeyTag: string;
+  sessionToken: SessionToken;
   identification: IdentificationContext;
 }): Promise<StoredCredential> {
   const authorizationContext: AuthorizationContext | undefined =
@@ -74,13 +77,18 @@ export async function getPid({
   return withEphemeralKey(async wiaCryptoContext => {
     /* ---------------- Get a Wallet Instance Attestation ---------------- */
     const integrityContext = getIntegrityContext(integrityKeyTag);
+    // This must be used only for API calls mediated through our backend which are related to the wallet instance only
+    const appFetch = createItWalletFetch(
+      itwWalletProviderBaseUrl,
+      sessionToken
+    );
 
     const walletInstanceAttestation =
       await WalletInstanceAttestation.getAttestation({
         wiaCryptoContext,
         integrityContext,
         walletProviderBaseUrl: itwWalletProviderBaseUrl,
-        appFetch: createItWalletFetch
+        appFetch
       });
 
     /* ---------------- Authorize user and get access token ---------------- */
