@@ -31,9 +31,9 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import {
-  selectCredentialType,
+  selectCredentialTypeOption,
   selectIsLoading,
-  selectRequestedCredential
+  selectRequestedCredentialOption
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import {
@@ -43,16 +43,18 @@ import {
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
-
-  const maybeRequestedCredential =
-    ItwCredentialIssuanceMachineContext.useSelector(selectRequestedCredential);
-  const maybeCredentialType =
-    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
+  const requestedCredentialOption =
+    ItwCredentialIssuanceMachineContext.useSelector(
+      selectRequestedCredentialOption
+    );
+  const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
+    selectCredentialTypeOption
+  );
 
   return pipe(
     sequenceS(O.Monad)({
-      credentialType: O.fromNullable(maybeCredentialType),
-      requestedCredential: O.fromNullable(maybeRequestedCredential),
+      credentialType: credentialTypeOption,
+      requestedCredential: requestedCredentialOption,
       eid: eidOption
     }),
     O.fold(constNull, props => <ContentView {...props} />)
@@ -65,6 +67,9 @@ type ContentViewProps = {
   eid: StoredCredential;
 };
 
+/**
+ * Renders the content of the screen
+ */
 const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isLoading =
@@ -74,11 +79,11 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
     machineRef.send({ type: "confirm-trust-data" });
   };
 
-  const dimissDialog = useItwDismissalDialog(() =>
+  const dismissDialog = useItwDismissalDialog(() =>
     machineRef.send({ type: "close" })
   );
 
-  useHeaderSecondLevel({ title: "", goBack: dimissDialog.show });
+  useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });
 
   const claims = parseClaims(eid.parsedCredential);
   const requiredClaims = claims.map(
@@ -159,7 +164,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           },
           secondary: {
             label: I18n.t("global.buttons.cancel"),
-            onPress: dimissDialog.show
+            onPress: dismissDialog.show
           }
         }}
       />

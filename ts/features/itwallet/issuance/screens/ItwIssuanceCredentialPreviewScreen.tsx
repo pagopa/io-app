@@ -1,5 +1,6 @@
 import {
   ContentWrapper,
+  ForceScrollDownView,
   H3,
   IOStyles,
   VSpacer
@@ -10,8 +11,8 @@ import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";
@@ -24,17 +25,19 @@ import {
 } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
-  selectCredential,
-  selectCredentialType,
+  selectCredentialOption,
+  selectCredentialTypeOption,
   selectIsLoading
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
-  const maybeCredential =
-    ItwCredentialIssuanceMachineContext.useSelector(selectCredential);
-  const maybeCredentialType =
-    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
+  const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
+    selectCredentialTypeOption
+  );
+  const credentialOption = ItwCredentialIssuanceMachineContext.useSelector(
+    selectCredentialOption
+  );
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
 
@@ -44,8 +47,8 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
 
   return pipe(
     sequenceS(O.Monad)({
-      credentialType: O.fromNullable(maybeCredentialType),
-      credential: O.fromNullable(maybeCredential)
+      credentialType: credentialTypeOption,
+      credential: credentialOption
     }),
     O.fold(constNull, props => <ContentView {...props} />)
   );
@@ -57,10 +60,9 @@ type ContentViewProps = {
 };
 
 /**
- * Renders the content of the screen if the credential is decoded.
+ * Renders the content of the screen
  */
 const ContentView = ({ credentialType, credential }: ContentViewProps) => {
-  const navigation = useIONavigation();
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
   const dispatch = useIODispatch();
@@ -85,22 +87,15 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
     );
   };
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: true
-    });
-  }, [navigation]);
+  useHeaderSecondLevel({
+    title: I18n.t("features.itWallet.issuance.credentialPreview.title", {
+      credential: itwCredentialNameByCredentialType[credentialType]
+    }),
+    goBack: dismissDialog.show
+  });
 
   return (
-    <IOScrollViewWithLargeHeader
-      excludeEndContentMargin
-      title={{
-        label: I18n.t("features.itWallet.issuance.credentialPreview.title", {
-          credential: itwCredentialNameByCredentialType[credentialType]
-        })
-      }}
-      goBack={dismissDialog.show}
-    >
+    <ForceScrollDownView>
       <ContentWrapper>
         <ItwCredentialClaimsList data={credential} isPreview={true} />
       </ContentWrapper>
@@ -124,7 +119,7 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
           }
         }}
       />
-    </IOScrollViewWithLargeHeader>
+    </ForceScrollDownView>
   );
 };
 

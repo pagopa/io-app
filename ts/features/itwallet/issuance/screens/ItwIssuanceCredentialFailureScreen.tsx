@@ -14,46 +14,48 @@ import { selectFailureOption } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
-  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const failureOption =
     ItwCredentialIssuanceMachineContext.useSelector(selectFailureOption);
-
-  const closeIssuance = () => machineRef.send({ type: "close" });
-  const retryIssuance = () => machineRef.send({ type: "retry" });
-
-  const ContentView = ({ failure }: { failure: CredentialIssuanceFailure }) => {
-    const resultScreensMap: Record<
-      CredentialIssuanceFailure,
-      OperationResultScreenContentProps
-    > = {
-      [CredentialIssuanceFailureEnum.GENERIC]: {
-        title: I18n.t("features.itWallet.issuance.genericError.title"),
-        subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
-        pictogram: "workInProgress",
-        action: {
-          label: I18n.t(
-            "features.itWallet.issuance.genericError.primaryAction"
-          ),
-          onPress: retryIssuance
-        },
-        secondaryAction: {
-          label: I18n.t(
-            "features.itWallet.issuance.genericError.secondaryAction"
-          ),
-          onPress: closeIssuance
-        }
-      }
-    };
-
-    const resultScreenProps =
-      resultScreensMap[failure] ?? resultScreensMap.GENERIC;
-
-    return <OperationResultScreenContent {...resultScreenProps} />;
-  };
 
   return pipe(
     failureOption,
     O.alt(() => O.some(CredentialIssuanceFailureEnum.GENERIC)),
     O.fold(constNull, failure => <ContentView failure={failure} />)
   );
+};
+
+type ContentViewProps = { failure: CredentialIssuanceFailure };
+
+/**
+ * Renders the content of the screen
+ */
+const ContentView = ({ failure }: ContentViewProps) => {
+  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+
+  const closeIssuance = () => machineRef.send({ type: "close" });
+  const retryIssuance = () => machineRef.send({ type: "retry" });
+
+  const resultScreensMap: Record<
+    CredentialIssuanceFailure,
+    OperationResultScreenContentProps
+  > = {
+    [CredentialIssuanceFailureEnum.GENERIC]: {
+      title: I18n.t("features.itWallet.issuance.genericError.title"),
+      subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
+      pictogram: "workInProgress",
+      action: {
+        label: I18n.t("features.itWallet.issuance.genericError.primaryAction"),
+        onPress: retryIssuance
+      },
+      secondaryAction: {
+        label: I18n.t(
+          "features.itWallet.issuance.genericError.secondaryAction"
+        ),
+        onPress: closeIssuance
+      }
+    }
+  };
+
+  const resultScreenProps = resultScreensMap[failure];
+  return <OperationResultScreenContent {...resultScreenProps} />;
 };
