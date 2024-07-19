@@ -10,8 +10,11 @@ import {
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { useFocusEffect } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
+import * as T from "fp-ts/lib/Task";
+import * as O from "fp-ts/lib/Option";
+import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
+import React, { useCallback, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
@@ -29,12 +32,17 @@ import { Dispatch } from "../../store/actions/types";
 import { useIOSelector } from "../../store/hooks";
 import { testLoginSelector } from "../../store/reducers/testLogin";
 import { getAppVersion } from "../../utils/appVersion";
+import { handleRegenerateKey } from "../../features/lollipop";
+import { GlobalState } from "../../store/reducers/types";
+import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
+import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 
 const styles = StyleSheet.create({
   appVersion: { ...IOStyles.flex, ...IOStyles.rowSpaceBetween }
 });
 
-type Props = ReturnType<typeof mapDispatchToProps>;
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 const checkUsernameValid = (username: string): boolean =>
   E.isRight(FiscalCode.decode(username));
@@ -93,16 +101,51 @@ const isUsernameFieldValid = (username: string) =>
   username.length > 0 ? checkUsernameValid(username) : false;
 
 const TestAuthenticationScreen = (props: Props) => {
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const loginState = useIOSelector(testLoginSelector);
   const isLoading = loginState.kind === "requested";
   const isError = loginState.kind === "failed";
   const isSuccessful = loginState.kind === "succedeed";
 
-  useFocusEffect(
-    React.useCallback(() => props.cleanUpLogin, [props.cleanUpLogin])
+  useFocusEffect(useCallback(() => props.cleanUpLogin, [props.cleanUpLogin]));
+
+  const handlePressLoginButton = useCallback(
+    () =>
+      pipe(
+        // First, map over maybeKeyTag to get the TaskEither if it's Some
+        O.map((keyTag: string) =>
+          TE.tryCatch(
+            () =>
+              handleRegenerateKey(
+                keyTag,
+                props.mixpanelEnabled,
+                props.dispatch
+              ),
+            E.toError
+          )
+        )(props.maybeKeyTag),
+        // If maybeKeyTag is None, create a TaskEither that immediately fails
+        O.getOrElse(() => TE.left(new Error("Missing keyTag"))),
+        // Continue with the login flow if key regeneration is successful
+        TE.chainW(() =>
+          pipe(
+            PasswordLogin.decode({ username, password }),
+            TE.fromEither,
+            TE.map(props.requestLogin)
+          )
+        ),
+        TE.fold(
+          error => {
+            // eslint-disable-next-line no-console
+            console.error(error);
+            return T.of(undefined);
+          },
+          result => T.of(result)
+        )
+      )(),
+    [username, password, props]
   );
 
   return (
@@ -151,11 +194,7 @@ const TestAuthenticationScreen = (props: Props) => {
             label: I18n.t("global.buttons.confirm"),
             accessibilityLabel: I18n.t("global.buttons.confirm"),
             disabled: isConfirmButtonDisabled(username, password, isLoading),
-            onPress: () =>
-              pipe(
-                PasswordLogin.decode({ username, password }),
-                E.map(props.requestLogin)
-              ),
+            onPress: handlePressLoginButton,
             testID: "confirmButton"
           }
         }}
@@ -164,10 +203,19 @@ const TestAuthenticationScreen = (props: Props) => {
   );
 };
 
+const mapStateToProps = (state: GlobalState) => ({
+  maybeKeyTag: lollipopKeyTagSelector(state),
+  mixpanelEnabled: isMixpanelEnabled(state)
+});
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestLogin: (passwordLogin: PasswordLogin) =>
     dispatch(testLoginRequest(passwordLogin)),
-  cleanUpLogin: () => dispatch(testLoginCleanUp())
+  cleanUpLogin: () => dispatch(testLoginCleanUp()),
+  dispatch
 });
 
-export default connect(undefined, mapDispatchToProps)(TestAuthenticationScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TestAuthenticationScreen);
