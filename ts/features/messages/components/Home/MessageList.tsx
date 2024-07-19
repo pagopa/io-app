@@ -20,11 +20,13 @@ import { UIMessage } from "../../types";
 import { ItwDiscoveryBanner } from "../../../itwallet/common/components/ItwDiscoveryBanner";
 import {
   getLoadNextPageMessagesActionIfAllowed,
-  getReloadAllMessagesActionForRefreshIfAllowed,
-  messageListItemHeight
+  getReloadAllMessagesActionForRefreshIfAllowed
 } from "./homeUtils";
 import { WrappedMessageListItem } from "./WrappedMessageListItem";
-import { MessageListItemSkeleton } from "./DS/MessageListItemSkeleton";
+import {
+  SkeletonHeight,
+  MessageListItemSkeleton
+} from "./DS/MessageListItemSkeleton";
 import { EmptyList } from "./EmptyList";
 import { Footer } from "./Footer";
 
@@ -61,7 +63,7 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         safeAreaInsets.bottom -
         topBarHeight -
         bottomTabHeight;
-      const count = Math.floor(listHeight / messageListItemHeight());
+      const count = Math.floor(listHeight / SkeletonHeight);
       return [...Array(count).keys()];
     }, [safeAreaFrame.height, safeAreaInsets.top, safeAreaInsets.bottom]);
 

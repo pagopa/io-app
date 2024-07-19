@@ -8,9 +8,12 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 
+export const SkeletonHeight = 95;
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+    height: SkeletonHeight,
     padding: 16
   },
   serviceLogo: {

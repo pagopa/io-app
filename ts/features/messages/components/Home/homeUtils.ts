@@ -30,7 +30,6 @@ import {
 import { isArchivingInProcessingModeSelector } from "../../store/reducers/archiving";
 
 export const nextPageLoadingWaitMillisecondsGenerator = () => 2000;
-export const messageListItemHeight = () => 130;
 export const refreshIntervalMillisecondsGenerator = () => 60000;
 
 export const getInitialReloadAllMessagesActionIfNeeded = (
