@@ -5,6 +5,7 @@ import { assert } from "../../../../utils/assert";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { sessionTokenSelector } from "../../../../store/reducers/authentication";
 
 export type InitializeWalletActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.initializeWallet>
@@ -27,11 +28,15 @@ export type ObtainCredentialActorOutput = Awaited<
 export default (store: ReturnType<typeof useIOStore>) => {
   const initializeWallet = fromPromise<InitializeWalletActorOutput>(
     async () => {
+      const sessionToken = sessionTokenSelector(store.getState());
       const integrityKeyTag = itwIntegrityKeyTagSelector(store.getState());
+
+      assert(sessionToken, "sessionToken is undefined");
       assert(O.isSome(integrityKeyTag), "integriyKeyTag is not present");
 
       return await credentialIssuanceUtils.initializeWallet({
-        integrityKeyTag: integrityKeyTag.value
+        integrityKeyTag: integrityKeyTag.value,
+        sessionToken
       });
     }
   );

@@ -13,6 +13,8 @@ import {
   itwEaaProviderBaseUrl,
   itwWalletProviderBaseUrl
 } from "../../../../config";
+import { SessionToken } from "../../../../types/SessionToken";
+import { createItWalletFetch } from "../../api/client";
 import { getIntegrityContext } from "./itwIntegrityUtils";
 import { CredentialType } from "./itwMocksUtils";
 import {
@@ -25,24 +27,30 @@ const WIA_CRDENTIAL_KEYTAG = "WIA_CRDENTIAL_KEYTAG";
 
 export type InitializeWalletParams = {
   integrityKeyTag: string;
+  sessionToken: SessionToken;
 };
 
 export const initializeWallet = async ({
-  integrityKeyTag
+  integrityKeyTag,
+  sessionToken
 }: InitializeWalletParams) => {
   await deleteKey(WIA_CRDENTIAL_KEYTAG)
     .catch(constNull)
     .finally(() => generate(WIA_CRDENTIAL_KEYTAG));
 
+  const appFetch = createItWalletFetch(itwWalletProviderBaseUrl, sessionToken);
+
   // Obtain a wallet attestation.
 
   const wiaCryptoContext = createCryptoContextFor(WIA_CRDENTIAL_KEYTAG);
   const integrityContext = getIntegrityContext(integrityKeyTag);
+
   const walletInstanceAttestation =
     await WalletInstanceAttestation.getAttestation({
       wiaCryptoContext,
       integrityContext,
-      walletProviderBaseUrl: itwWalletProviderBaseUrl
+      walletProviderBaseUrl: itwWalletProviderBaseUrl,
+      appFetch
     });
 
   return {
