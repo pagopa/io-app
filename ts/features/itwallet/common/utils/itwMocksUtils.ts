@@ -1,5 +1,4 @@
 import { IOIcons } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
 import dc from "../../__mocks__/dc.json";
 import eid from "../../__mocks__/eid.json";
 import mdl from "../../__mocks__/mdl.json";
@@ -90,13 +89,4 @@ export const ItwCredentialsMocks = {
   dc: dc as unknown as StoredCredential,
   mdl: mdl as unknown as StoredCredential,
   ts: ts as unknown as StoredCredential
-};
-
-export const itwCredentialNameByCredentialType: {
-  [type in CredentialType]: string;
-} = {
-  EuropeanDisabilityCard: I18n.t("features.itWallet.credentialName.dc"),
-  EuropeanHealthInsuranceCard: I18n.t("features.itWallet.credentialName.ts"),
-  MDL: I18n.t("features.itWallet.credentialName.mdl"),
-  PersonIdentificationData: I18n.t("features.itWallet.credentialName.eid")
 };

@@ -24,10 +24,8 @@ import { isCgnInformationAvailableSelector } from "../../../bonus/cgn/store/redu
 import { loadAvailableBonuses } from "../../../bonus/common/store/actions/availableBonusesTypes";
 import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
 import { isTrialActiveSelector } from "../../../trialSystem/store/reducers";
-import {
-  CredentialType,
-  itwCredentialNameByCredentialType
-} from "../../common/utils/itwMocksUtils";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { ITW_TRIAL_ID } from "../../common/utils/itwTrialUtils";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import {
@@ -119,11 +117,7 @@ const WalletCardOnboardingScreen = () => {
             <ModuleCredential
               testID="itwDrivingLicenseModuleTestID"
               icon="car"
-              label={
-                itwCredentialNameByCredentialType[
-                  CredentialType.DRIVING_LICENSE
-                ]
-              }
+              label={getCredentialNameFromType(CredentialType.DRIVING_LICENSE)}
               onPress={beginCredentialIssuance(CredentialType.DRIVING_LICENSE)}
               isFetching={
                 isCredentialLoading &&
@@ -139,11 +133,9 @@ const WalletCardOnboardingScreen = () => {
             <ModuleCredential
               testID="itwDisabilityCardModuleTestID"
               icon="accessibility"
-              label={
-                itwCredentialNameByCredentialType[
-                  CredentialType.EUROPEAN_DISABILITY_CARD
-                ]
-              }
+              label={getCredentialNameFromType(
+                CredentialType.EUROPEAN_DISABILITY_CARD
+              )}
               onPress={beginCredentialIssuance(
                 CredentialType.EUROPEAN_DISABILITY_CARD
               )}

@@ -21,10 +21,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims } from "../../common/utils/itwClaimsUtils";
-import {
-  CredentialType,
-  itwCredentialNameByCredentialType
-} from "../../common/utils/itwMocksUtils";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
   RequestObject,
   StoredCredential
@@ -40,6 +37,7 @@ import {
   ItwRequestedClaimsList,
   RequiredClaim
 } from "../components/ItwRequiredClaimsList";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -90,10 +88,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
     a =>
       ({
         name: a.label,
-        source:
-          itwCredentialNameByCredentialType[
-            eid.credentialType as CredentialType
-          ]
+        source: getCredentialNameFromType(eid.credentialType)
       } as RequiredClaim)
   );
 
@@ -117,7 +112,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
         <VSpacer size={24} />
         <H2>
           {I18n.t("features.itWallet.issuance.credentialAuth.title", {
-            credentialName: itwCredentialNameByCredentialType[credentialType]
+            credentialName: getCredentialNameFromType(credentialType)
           })}
         </H2>
         <ItwMarkdown>

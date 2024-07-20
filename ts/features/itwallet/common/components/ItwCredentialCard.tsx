@@ -9,10 +9,8 @@ import React from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
 import I18n from "../../../../i18n";
-import {
-  CredentialType,
-  itwCredentialNameByCredentialType
-} from "../utils/itwMocksUtils";
+import { CredentialType } from "../utils/itwMocksUtils";
+import { getCredentialNameFromType } from "../utils/itwCredentialUtils";
 
 export type ItwCredentialStatus = "valid" | "pending" | "expiring" | "expired";
 
@@ -51,7 +49,7 @@ export const ItwCredentialCard = ({
               numberOfLines={2}
               style={{ flex: 1 }}
             >
-              {itwCredentialNameByCredentialType[credentialType].toUpperCase()}
+              {getCredentialNameFromType(credentialType, "").toUpperCase()}
             </Body>
             {statusTagProps && (
               <>

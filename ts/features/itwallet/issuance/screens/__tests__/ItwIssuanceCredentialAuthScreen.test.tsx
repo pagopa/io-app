@@ -5,7 +5,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwIssuanceCredentialAuthScreen } from "../ItwIssuanceCredentialTrustIssuerScreen";
+import { ItwIssuanceCredentialTrustIssuerScreen } from "../ItwIssuanceCredentialTrustIssuerScreen";
 
 describe("ItwIssuanceCredentialAuthScreen", () => {
   it("it should render the screen correctly", () => {
@@ -17,8 +17,8 @@ describe("ItwIssuanceCredentialAuthScreen", () => {
 const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <ItwIssuanceCredentialAuthScreen />,
-    ITW_ROUTES.ISSUANCE.CREDENTIAL_AUTH,
+    () => <ItwIssuanceCredentialTrustIssuerScreen />,
+    ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
     {},
     createStore(appReducer, globalState as any)
   );

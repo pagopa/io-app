@@ -9,9 +9,9 @@ import { useIODispatch } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { walletUpsertCard } from "../../../newWallet/store/actions/cards";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
-import { itwCredentialNameByCredentialType } from "../../common/utils/itwMocksUtils";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -47,7 +47,7 @@ export default (
   >) => {
     const credentialName = pipe(
       O.fromNullable(context.credentialType),
-      O.map(type => itwCredentialNameByCredentialType[type]),
+      O.map(getCredentialNameFromType),
       O.toUndefined
     );
 
