@@ -9,6 +9,7 @@ import {
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { CredentialIssuanceEvents } from "./events";
+import { CredentialIssuanceFailureTypeEnum } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -26,7 +27,14 @@ export const itwCredentialIssuanceMachine = setup({
     navigateToWallet: notImplemented,
     storeCredential: notImplemented,
     disposeWallet: notImplemented,
-    closeIssuance: notImplemented
+    closeIssuance: notImplemented,
+    setFailure: assign(({ event }) => ({
+      failure: {
+        // TODO add error mapping
+        type: CredentialIssuanceFailureTypeEnum.GENERIC,
+        reason: (event as any).error
+      }
+    }))
   },
   actors: {
     initializeWallet: fromPromise<InitializeWalletActorOutput>(notImplemented),
@@ -68,7 +76,8 @@ export const itwCredentialIssuanceMachine = setup({
           }))
         },
         onError: {
-          target: "#itwCredentialIssuanceMachine.Failure"
+          target: "#itwCredentialIssuanceMachine.Failure",
+          actions: "setFailure"
         }
       }
     },
@@ -92,7 +101,8 @@ export const itwCredentialIssuanceMachine = setup({
           }))
         },
         onError: {
-          target: "#itwCredentialIssuanceMachine.Failure"
+          target: "#itwCredentialIssuanceMachine.Failure",
+          actions: "setFailure"
         }
       }
     },
@@ -128,7 +138,8 @@ export const itwCredentialIssuanceMachine = setup({
           }))
         },
         onError: {
-          target: "#itwCredentialIssuanceMachine.Failure"
+          target: "#itwCredentialIssuanceMachine.Failure",
+          actions: "setFailure"
         }
       },
       after: {

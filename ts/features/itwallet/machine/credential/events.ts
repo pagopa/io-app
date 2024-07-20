@@ -1,3 +1,4 @@
+import { ErrorActorEvent } from "xstate5";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 
 export type Reset = {
@@ -36,4 +37,5 @@ export type CredentialIssuanceEvents =
   | AddToWallet
   | Retry
   | Back
-  | Close;
+  | Close
+  | ErrorActorEvent;

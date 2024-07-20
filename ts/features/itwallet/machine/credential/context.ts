@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import { AuthorizationDetail } from "@pagopa/io-react-native-wallet";
 import { RequestObject } from "@pagopa/io-react-native-wallet/lib/typescript/credential/presentation/types";
@@ -19,7 +18,7 @@ export type Context = {
   credentialDefinition: AuthorizationDetail | undefined;
   requestedCredential: RequestObject | undefined;
   credential: StoredCredential | undefined;
-  failure: O.Option<CredentialIssuanceFailure>;
+  failure: CredentialIssuanceFailure | undefined;
 };
 
 export const InitialContext: Context = {
@@ -32,5 +31,5 @@ export const InitialContext: Context = {
   credentialDefinition: undefined,
   requestedCredential: undefined,
   credential: undefined,
-  failure: O.none
+  failure: undefined
 };

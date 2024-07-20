@@ -21,4 +21,4 @@ export const selectCredentialOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.credential);
 
 export const selectFailureOption = (snapshot: MachineSnapshot) =>
-  snapshot.context.failure;
+  O.fromNullable(snapshot.context.failure);

@@ -7,8 +7,8 @@ import {
 } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import {
-  CredentialIssuanceFailure,
-  CredentialIssuanceFailureEnum
+  CredentialIssuanceFailureType,
+  CredentialIssuanceFailureTypeEnum
 } from "../../machine/credential/failure";
 import { selectFailureOption } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
@@ -19,12 +19,13 @@ export const ItwIssuanceCredentialFailureScreen = () => {
 
   return pipe(
     failureOption,
-    O.alt(() => O.some(CredentialIssuanceFailureEnum.GENERIC)),
-    O.fold(constNull, failure => <ContentView failure={failure} />)
+    O.map(failure => failure.type),
+    O.alt(() => O.some(CredentialIssuanceFailureTypeEnum.GENERIC)),
+    O.fold(constNull, type => <ContentView failure={type} />)
   );
 };
 
-type ContentViewProps = { failure: CredentialIssuanceFailure };
+type ContentViewProps = { failure: CredentialIssuanceFailureType };
 
 /**
  * Renders the content of the screen
@@ -36,10 +37,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const retryIssuance = () => machineRef.send({ type: "retry" });
 
   const resultScreensMap: Record<
-    CredentialIssuanceFailure,
+    CredentialIssuanceFailureType,
     OperationResultScreenContentProps
   > = {
-    [CredentialIssuanceFailureEnum.GENERIC]: {
+    GENERIC: {
       title: I18n.t("features.itWallet.issuance.genericError.title"),
       subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
       pictogram: "workInProgress",
