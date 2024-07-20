@@ -4,6 +4,7 @@ import { CieWrongCiePinScreenNavigationParams } from "../identification/screens/
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
+  [ITW_ROUTES.ONBOARDING]: undefined;
   // DISCOVERY
   [ITW_ROUTES.DISCOVERY.INFO]: undefined;
   // IDENTIFICATION
@@ -11,8 +12,10 @@ export type ItwParamsList = {
   [ITW_ROUTES.IDENTIFICATION.NFC_INSTRUCTIONS]: undefined;
   [ITW_ROUTES.IDENTIFICATION.IDP_SELECTION]: undefined;
   // ISSUANCE
+  [ITW_ROUTES.ISSUANCE.EID_REQUEST]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_PREVIEW]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_RESULT]: undefined;
+  [ITW_ROUTES.ISSUANCE.EID_FAILURE]: undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_AUTH]: undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW]: undefined;
   [ITW_ROUTES.ISSUANCE.RESULT]: undefined;

@@ -123,7 +123,8 @@ const renderComponent = (
   const allPaginated = {
     archive: {
       data: pot.none,
-      lastRequest: O.none
+      lastRequest: O.none,
+      lastUpdateTime: new Date(0)
     },
     inbox: {
       data: pot.some({
@@ -131,7 +132,8 @@ const renderComponent = (
         previous: undefined,
         next: undefined
       }),
-      lastRequest: O.none
+      lastRequest: O.none,
+      lastUpdateTime: new Date(0)
     },
     migration: O.none,
     shownCategory: "INBOX"

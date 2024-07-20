@@ -2046,10 +2046,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.39.4":
-  version "1.39.4"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.39.4.tgz#494b00b69f0d1330ae14ca99270bceb9b97a7298"
-  integrity sha512-yxTkgfIQSpUOXCC/FPmGyyaPOWU1H+BSTZAma2ClNkvl0t3biMiRMJZO3qicWd6pzqyzEqLqP0VNPrs/K7GFWQ==
+"@pagopa/io-app-design-system@1.40.0":
+  version "1.40.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.40.0.tgz#a8263b87a132801c792de72603481dd3882cb472"
+  integrity sha512-i0NB75mSOuj4F0ByJl3AQMBVqdG20OA+xsWUBP6kZcmWIvKl6P5GMVMu00e+6eK7EFsgy6yLGbgdGyGGgvFqmw==
   dependencies:
     "@pagopa/ts-commons" "^12.0.0"
     "@testing-library/jest-native" "^5.4.2"
@@ -2087,6 +2087,11 @@
   dependencies:
     auto-changelog "^2.4.0"
 
+"@pagopa/io-react-native-integrity@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-integrity/-/io-react-native-integrity-0.3.0.tgz#ec0808f308f0dc7b163febdbfa528819b1730c2d"
+  integrity sha512-K9omm939IhhuKBopdtDsDLeh6k9XZPgf03WlHnuiFtxo2rdfAUlWj8Fq9njpyT0ovmwDfP12PtRYSDFzkYH5Lg==
+
 "@pagopa/io-react-native-jwt@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-jwt/-/io-react-native-jwt-1.2.0.tgz#9b5b6980e04f85c4703a29818428f6cb5edc69f8"
@@ -2100,11 +2105,12 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.1.tgz#cf6bb709f1613419486b7453a15ba63f0e2784ac"
   integrity sha512-tea892roPm42NQIeTCw4WRSVtfuCkr/i+ussj03PttM3BFdCi6y2Kvg1HITxXcDukLza3b+kENzQFRuKRKhPAQ==
 
-"@pagopa/io-react-native-wallet@^0.11.1":
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.11.1.tgz#0a23f1f9444982bfdc16e9d302978d8bdcaa3467"
-  integrity sha512-UURorbS0QWCyByCgibKiXi7zIhHwrsmP0PRCUk2PczGe2afbOiLbfoeV49/fDEz4Jz2l/ep1gDimrJ6MaxJGVw==
+"@pagopa/io-react-native-wallet@^0.15.1":
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.15.1.tgz#4146855ba87348754b9b6d20fcedb46289bc1695"
+  integrity sha512-w8xS1STjnpONCxC6jsmtHBh+iavAlcMM7N/02k2e3h+G5/Nt5mastRNhMMxyh/1Oosyt0x8pcoNKndgSLTd96g==
   dependencies:
+    parse-url "^9.2.0"
     react-native-url-polyfill "^2.0.0"
     react-native-uuid "^2.0.1"
     zod "^3.21.4"
@@ -3042,6 +3048,11 @@
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
+
+"@types/parse-path@^7.0.0":
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/@types/parse-path/-/parse-path-7.0.3.tgz#cec2da2834ab58eb2eb579122d9a1fc13bd7ef36"
+  integrity sha512-LriObC2+KYZD3FzCrgWGv/qufdUy4eXrxcLgQMfYXgPbLIecKIsVBaQgUPmxSSLcjmYbDTQbMgr6qr6l/eb7Bg==
 
 "@types/prettier@^2.0.0", "@types/prettier@^2.7.3":
   version "2.7.3"
@@ -8490,6 +8501,11 @@ invariant@*, invariant@2.2.4, invariant@^2.2.2, invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
+io-react-native-secure-storage@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/io-react-native-secure-storage/-/io-react-native-secure-storage-0.1.1.tgz#c1fb28125f6c9f8f1b7436198fab726f4ae790ef"
+  integrity sha512-ceBQImvJoxGoyD5tDZ9E0SqDb/9CKPSR5XrMfDDBJ5topKDXCUkC9tiuEv/RYhOOzLbaLR7qvvkEtla5fcnHmg==
+
 io-ts@2.2.20, io-ts@^2.2.16:
   version "2.2.20"
   resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.20.tgz#be42b75f6668a2c44f706f72ee6e4c906777c7f5"
@@ -12211,10 +12227,25 @@ parse-passwd@^1.0.0:
   resolved "https://registry.yarnpkg.com/parse-passwd/-/parse-passwd-1.0.0.tgz#6d5b934a456993b23d37f40a382d6f1666a8e5c6"
   integrity sha1-bVuTSkVpk7I9N/QKOC1vFmao5cY=
 
+parse-path@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/parse-path/-/parse-path-7.0.0.tgz#605a2d58d0a749c8594405d8cc3a2bf76d16099b"
+  integrity sha512-Euf9GG8WT9CdqwuWJGdf3RkUcTBArppHABkO7Lm8IzRQp0e2r/kkFnmhu4TSK30Wcu5rVAZLmfPKSBBi9tWFog==
+  dependencies:
+    protocols "^2.0.0"
+
 parse-svg-path@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/parse-svg-path/-/parse-svg-path-0.1.2.tgz#7a7ec0d1eb06fa5325c7d3e009b859a09b5d49eb"
   integrity sha1-en7A0esG+lMlx9PgCbhZoJtdSes=
+
+parse-url@^9.2.0:
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/parse-url/-/parse-url-9.2.0.tgz#d75da32b3bbade66e4eb0763fb4851d27526b97b"
+  integrity sha512-bCgsFI+GeGWPAvAiUv63ZorMeif3/U0zaXABGJbOWt5OH2KCaPHF6S+0ok4aqM9RuIPGyZdx9tR9l13PsW4AYQ==
+  dependencies:
+    "@types/parse-path" "^7.0.0"
+    parse-path "^7.0.0"
 
 parse5@6.0.1:
   version "6.0.1"
@@ -12616,6 +12647,11 @@ property-information@^6.0.0:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/property-information/-/property-information-6.0.1.tgz#7c668d9f2b9cb63bc3e105d8b8dfee7221a17800"
   integrity sha512-F4WUUAF7fMeF4/JUFHNBWDaKDXi2jbvqBW/y6o5wsf3j19wTZ7S60TmtB5HoBhtgw7NKQRMWuz5vk2PR0CygUg==
+
+protocols@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/protocols/-/protocols-2.0.1.tgz#8f155da3fc0f32644e83c5782c8e8212ccf70a86"
+  integrity sha512-/XJ368cyBJ7fzLMwLKv1e4vLxOju2MNAIokcr7meSaNcVbWz/CPcW22cP04mwxOErdA5mwjA8Q6w/cdAQxVn7Q==
 
 proxy-addr@~2.0.7:
   version "2.0.7"

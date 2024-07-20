@@ -797,11 +797,11 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                           style={
                             [
                               {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               {
                                 "flex": 1,
-                                "marginBottom": -4,
+                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -812,6 +812,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -819,6 +820,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {

@@ -11,13 +11,10 @@ import { ItwIdentificationModeSelectionScreen } from "../identification/screens/
 import { ItwIdentificationNfcInstructionsScreen } from "../identification/screens/ItwIdentificationNfcInstructionsScreen";
 import { ItwIssuanceCredentialAuthScreen } from "../issuance/screens/ItwIssuanceCredentialAuthScreen";
 import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssuanceCredentialPreviewScreen";
+import { ItwIssuanceEidRequestScreen } from "../issuance/screens/ItwIssuanceEidRequestScreen";
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
-import {
-  ItWalletIssuanceMachineProvider,
-  ItwCredentialIssuanceMachineContext,
-  ItwEidIssuanceMachineContext
-} from "../machine/provider";
+import { ItwIssuanceEidFailureScreen } from "../issuance/screens/ItwIssuanceEidFailureScreen";
 import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
 import { ItwCiePinScreen } from "../identification/screens/cie/ItwCiePinScreen";
 import { ItwCieConsentDataUsageScreen } from "../identification/screens/cie/ItwCieConsentDataUsageScreen";
@@ -27,6 +24,12 @@ import { ItwCieWrongCardScreen } from "../identification/screens/cie/ItwCieWrong
 import { ItwActivateNfcScreen } from "../identification/screens/cie/ItwActivateNfcScreen";
 import { ItwCieUnexpectedErrorScreen } from "../identification/screens/cie/ItwCieUnexpectedErrorScreen";
 import { ItwCieExpiredOrInvalidScreen } from "../identification/screens/cie/ItwCieExpiredOrInvalidScreen";
+import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
+import {
+  ItWalletIssuanceMachineProvider,
+  ItwCredentialIssuanceMachineContext,
+  ItwEidIssuanceMachineContext
+} from "../machine/provider";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
@@ -60,6 +63,10 @@ const InnerNavigator = () => {
         }
       }}
     >
+      <Stack.Screen
+        name={ITW_ROUTES.ONBOARDING}
+        component={WalletCardOnboardingScreen}
+      />
       {/* DISCOVERY */}
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.INFO}
@@ -78,8 +85,7 @@ const InnerNavigator = () => {
         name={ITW_ROUTES.IDENTIFICATION.IDP_SELECTION}
         component={ItwIdentificationIdpSelectionScreen}
       />
-
-      {/* ISSUANCE CIE PID */}
+      {/* ISSUANCE CIE PIN */}
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.EID_CIE.PIN_SCREEN}
         component={ItwCiePinScreen}
@@ -127,6 +133,11 @@ const InnerNavigator = () => {
       </Stack.Group>
       {/* ISSUANCE */}
       <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.EID_REQUEST}
+        component={ItwIssuanceEidRequestScreen}
+        options={hiddenHeader}
+      />
+      <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.EID_PREVIEW}
         component={ItwIssuanceEidPreviewScreen}
         options={hiddenHeader}
@@ -143,6 +154,11 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.EID_RESULT}
         component={ItwIssuanceEidResultScreen}
+        options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.EID_FAILURE}
+        component={ItwIssuanceEidFailureScreen}
         options={hiddenHeader}
       />
       {/* CREDENTIAL PRESENTATION */}

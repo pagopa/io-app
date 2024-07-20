@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constFalse, constUndefined, pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
@@ -15,6 +16,7 @@ import {
   migrateToPaginatedMessages,
   MigrationResult,
   reloadAllMessages,
+  requestAutomaticMessagesRefresh,
   resetMigrationStatus,
   setShownMessageCategoryAction,
   upsertMessageStatusAttributes
@@ -28,6 +30,7 @@ import { emptyMessageArray } from "../../utils";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 import { foldMessageCategoryK } from "../../utils/messageCategory";
 import { paymentsByRptIdSelector } from "../../../../store/reducers/entities/payments";
+import { isTextIncludedCaseInsensitive } from "../../../../utils/strings";
 
 export type MessagePage = {
   page: ReadonlyArray<UIMessage>;
@@ -49,6 +52,7 @@ type Collection = {
   data: MessagePagePot;
   /** persist the last action type occurred */
   lastRequest: LastRequestType;
+  lastUpdateTime: Date;
 };
 
 export type MigrationStatus = O.Option<
@@ -75,8 +79,8 @@ export type AllPaginated = {
 };
 
 const INITIAL_STATE: AllPaginated = {
-  archive: { data: pot.none, lastRequest: O.none },
-  inbox: { data: pot.none, lastRequest: O.none },
+  archive: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
+  inbox: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
   migration: O.none,
   shownCategory: "INBOX"
 };
@@ -113,6 +117,9 @@ const reducer = (
     case getType(upsertMessageStatusAttributes.success):
     case getType(upsertMessageStatusAttributes.failure):
       return reduceUpsertMessageStatusAttributes(state, action);
+
+    case getType(requestAutomaticMessagesRefresh):
+      return reduceAutomaticMessageRefreshRequest(state, action);
 
     /* BEGIN Migration-related block */
     case getType(migrateToPaginatedMessages.request):
@@ -163,6 +170,7 @@ const reduceReloadAll = (
         return {
           ...state,
           archive: {
+            ...state.archive,
             data: pot.toLoading(state.archive.data),
             lastRequest: O.some("all")
           }
@@ -171,6 +179,7 @@ const reduceReloadAll = (
       return {
         ...state,
         inbox: {
+          ...state.inbox,
           data: pot.toLoading(state.inbox.data),
           lastRequest: O.some("all")
         }
@@ -187,7 +196,8 @@ const reduceReloadAll = (
               previous: action.payload.pagination.previous,
               next: action.payload.pagination.next
             }),
-            lastRequest: O.none
+            lastRequest: O.none,
+            lastUpdateTime: new Date()
           }
         };
       }
@@ -199,7 +209,8 @@ const reduceReloadAll = (
             previous: action.payload.pagination.previous,
             next: action.payload.pagination.next
           }),
-          lastRequest: O.none
+          lastRequest: O.none,
+          lastUpdateTime: new Date()
         }
       };
     }
@@ -209,6 +220,7 @@ const reduceReloadAll = (
         return {
           ...state,
           archive: {
+            ...state.archive,
             data: pot.toError(state.archive.data, {
               reason: action.payload.error.message,
               time: new Date()
@@ -220,6 +232,7 @@ const reduceReloadAll = (
       return {
         ...state,
         inbox: {
+          ...state.inbox,
           data: pot.toError(state.inbox.data, {
             reason: action.payload.error.message,
             time: new Date()
@@ -243,6 +256,7 @@ const reduceLoadNextPage = (
         return {
           ...state,
           archive: {
+            ...state.archive,
             data: pot.toLoading(state.archive.data),
             lastRequest: O.some("next")
           }
@@ -251,6 +265,7 @@ const reduceLoadNextPage = (
       return {
         ...state,
         inbox: {
+          ...state.inbox,
           data: pot.toLoading(state.inbox.data),
           lastRequest: O.some("next")
         }
@@ -280,6 +295,7 @@ const reduceLoadNextPage = (
         return {
           ...state,
           archive: {
+            ...state.archive,
             data: getNextData(state.archive),
             lastRequest: O.none
           }
@@ -289,6 +305,7 @@ const reduceLoadNextPage = (
       return {
         ...state,
         inbox: {
+          ...state.inbox,
           data: getNextData(state.inbox),
           lastRequest: O.none
         }
@@ -299,6 +316,7 @@ const reduceLoadNextPage = (
         return {
           ...state,
           archive: {
+            ...state.archive,
             data: pot.toError(state.inbox.data, {
               reason: action.payload.error.message,
               time: new Date()
@@ -310,6 +328,7 @@ const reduceLoadNextPage = (
       return {
         ...state,
         inbox: {
+          ...state.inbox,
           data: pot.toError(state.inbox.data, {
             reason: action.payload.error.message,
             time: new Date()
@@ -333,6 +352,7 @@ const reduceLoadPreviousPage = (
         return {
           ...state,
           archive: {
+            ...state.archive,
             data: pot.toLoading(state.archive.data),
             lastRequest: O.some("previous")
           }
@@ -341,6 +361,7 @@ const reduceLoadPreviousPage = (
       return {
         ...state,
         inbox: {
+          ...state.inbox,
           data: pot.toLoading(state.inbox.data),
           lastRequest: O.some("previous")
         }
@@ -373,7 +394,8 @@ const reduceLoadPreviousPage = (
           ...state,
           archive: {
             data: getNextData(state.archive),
-            lastRequest: O.none
+            lastRequest: O.none,
+            lastUpdateTime: new Date()
           }
         };
       }
@@ -382,7 +404,8 @@ const reduceLoadPreviousPage = (
         ...state,
         inbox: {
           data: getNextData(state.inbox),
-          lastRequest: O.none
+          lastRequest: O.none,
+          lastUpdateTime: new Date()
         }
       };
 
@@ -391,6 +414,7 @@ const reduceLoadPreviousPage = (
         return {
           ...state,
           archive: {
+            ...state.archive,
             data: pot.toError(state.archive.data, {
               reason: action.payload.error.message,
               time: new Date()
@@ -402,6 +426,7 @@ const reduceLoadPreviousPage = (
       return {
         ...state,
         inbox: {
+          ...state.inbox,
           data: pot.toError(state.inbox.data, {
             reason: action.payload.error.message,
             time: new Date()
@@ -413,6 +438,34 @@ const reduceLoadPreviousPage = (
     default:
       return state;
   }
+};
+
+const reduceAutomaticMessageRefreshRequest = (
+  state: AllPaginated,
+  action: Action
+): AllPaginated => {
+  switch (action.type) {
+    case getType(requestAutomaticMessagesRefresh): {
+      if (action.payload === "ARCHIVE") {
+        return {
+          ...state,
+          archive: {
+            ...state.archive,
+            lastUpdateTime: new Date(0)
+          }
+        };
+      }
+      return {
+        ...state,
+        inbox: {
+          ...state.archive,
+          lastUpdateTime: new Date(0)
+        }
+      };
+    }
+  }
+
+  return state;
 };
 
 /**
@@ -898,6 +951,50 @@ export const paginatedMessageFromIdForCategorySelector = (
     O.map(messagePage => messagePage.page),
     O.chain(RA.findFirst(message => message.id === messageId)),
     O.toUndefined
+  );
+
+export const searchMessagesUncachedSelector = (
+  state: GlobalState,
+  searchText: string,
+  minQueryLength: number
+) =>
+  pipe(searchText.trim(), trimmedSearchText =>
+    pipe(
+      trimmedSearchText.length >= minQueryLength,
+      B.fold(
+        () => [] as ReadonlyArray<UIMessage>,
+        () =>
+          pipe(
+            state.entities.messages.allPaginated.inbox.data,
+            pot.toOption,
+            O.map(inboxData => inboxData.page),
+            O.getOrElse(() => [] as ReadonlyArray<UIMessage>),
+            inboxMessages =>
+              pipe(
+                state.entities.messages.allPaginated.archive.data,
+                pot.toOption,
+                O.map(archiveData => archiveData.page),
+                O.getOrElseW(() => [] as ReadonlyArray<UIMessage>),
+                archiveMessages => inboxMessages.concat(archiveMessages)
+              ),
+            inboxAndArchiveMessages =>
+              inboxAndArchiveMessages.filter(message =>
+                isTextIncludedCaseInsensitive(
+                  [
+                    message.title,
+                    message.organizationName,
+                    message.serviceName
+                  ].join(" "),
+                  searchText
+                )
+              ),
+            filteredMessages =>
+              [...filteredMessages].sort((a, b) =>
+                b.id.localeCompare(a.id, "en")
+              )
+          )
+      )
+    )
   );
 
 const messagePotToToastReportableErrorOrUndefined = (

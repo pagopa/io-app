@@ -21,8 +21,7 @@ import {
   preferencesIdPayTestSetEnabled,
   preferencesDesignSystemSetEnabled,
   preferencesNewWalletSectionSetEnabled,
-  preferencesItWalletTestSetEnabled,
-  preferencesNewHomeSectionSetEnabled
+  preferencesItWalletTestSetEnabled
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
@@ -49,7 +48,6 @@ export type PersistedPreferencesState = Readonly<{
   isDesignSystemEnabled: boolean;
   isNewWalletSectionEnabled: boolean;
   isItWalletTestEnabled?: boolean;
-  isNewHomeSectionEnabled?: boolean;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {
@@ -65,11 +63,9 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isIdPayTestEnabled: false,
   isDesignSystemEnabled: false,
   isNewWalletSectionEnabled: false,
-  isItWalletTestEnabled: false,
-  isNewHomeSectionEnabled: false
+  isItWalletTestEnabled: false
 };
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export default function preferencesReducer(
   state: PersistedPreferencesState = initialPreferencesState,
   action: Action
@@ -177,13 +173,6 @@ export default function preferencesReducer(
     };
   }
 
-  if (isActionOf(preferencesNewHomeSectionSetEnabled, action)) {
-    return {
-      ...state,
-      isNewHomeSectionEnabled: action.payload.isNewHomeSectionEnabled
-    };
-  }
-
   return state;
 }
 
@@ -231,9 +220,6 @@ export const isNewWalletSectionLocallyEnabledSelector = (state: GlobalState) =>
 
 export const isItWalletTestEnabledSelector = (state: GlobalState) =>
   !!state.persistedPreferences?.isItWalletTestEnabled;
-
-export const isNewHomeSectionEnabledSelector = (state: GlobalState) =>
-  state.persistedPreferences?.isNewHomeSectionEnabled ?? false;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<
