@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.66.0-rc.2](https://github.com/pagopa/io-app/compare/2.65.0-rc.0...2.66.0-rc.2) (2024-07-19)
+
+
+### Bug Fixes
+
+* PSP preselection with onUs attribute ([a80379a](https://github.com/pagopa/io-app/commit/a80379afe5cff0de52ae6e92f655c8c8d93fdeaa))
+
+
+### Chores
+
+* **release:** 2.66.0-rc.1 ([fd9e339](https://github.com/pagopa/io-app/commit/fd9e339d852439fde4c10aa6d018e1ff07633400))
+
 ## [2.66.0-rc.1](https://github.com/pagopa/io-app/compare/2.66.0-rc.0...2.66.0-rc.1) (2024-07-17)
 
 
