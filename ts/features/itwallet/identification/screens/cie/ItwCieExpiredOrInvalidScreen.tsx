@@ -1,15 +1,14 @@
-import React, { useCallback } from "react";
+import React from "react";
 import I18n from "../../../../../i18n";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 
 export const ItwCieExpiredOrInvalidScreen = () => {
-  const navigation = useIONavigation();
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
-  const handleClose = useCallback(() => {
-    // TODO: handle correct navigation
-    // navigation.navigate(ROUTES.MAIN);
-  }, [navigation]);
+  const handleClose = React.useCallback(() => {
+    machineRef.send({ type: "close" });
+  }, [machineRef]);
 
   return (
     <OperationResultScreenContent

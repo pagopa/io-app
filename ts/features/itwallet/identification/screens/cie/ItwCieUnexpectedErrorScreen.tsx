@@ -3,35 +3,28 @@
  */
 import * as React from "react";
 import I18n from "../../../../../i18n";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 
 export const ItwCieUnexpectedErrorScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
-  const navigation = useIONavigation();
-
-  const retry = React.useCallback(() => {
+  const handleRetry = React.useCallback(() => {
     machineRef.send({ type: "back" });
   }, [machineRef]);
 
-  const navigateToAuthenticationScreen = React.useCallback(() => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: ITW_ROUTES.MAIN }]
-    });
-  }, [navigation]);
+  const handleClose = React.useCallback(() => {
+    machineRef.send({ type: "close" });
+  }, [machineRef]);
 
   const action = {
     label: I18n.t("global.buttons.retry"),
-    onPress: retry
+    onPress: handleRetry
   };
 
   const secondaryAction = {
     label: I18n.t("global.buttons.close"),
-    onPress: navigateToAuthenticationScreen
+    onPress: handleClose
   };
 
   return (

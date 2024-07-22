@@ -221,7 +221,7 @@ export const itwEidIssuanceMachine = setup({
         },
         ReadingCieCard: {
           description:
-            "Read the CIE card and get back a url to continue the PID issuing flow.",
+            "Read the CIE card and get back a url to continue the PID issuing flow. This state also handles errors when reading the card.",
           entry: "navigateToCieReadCardScreen",
           on: {
             "cie-identification-completed": {
@@ -232,6 +232,9 @@ export const itwEidIssuanceMachine = setup({
                   callbackUrl: event.url
                 }
               }))
+            },
+            close: {
+              target: "#itwEidIssuanceMachine.UserIdentification"
             },
             back: {
               target: "CiePin"

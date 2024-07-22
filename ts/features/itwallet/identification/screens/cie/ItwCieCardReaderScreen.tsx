@@ -239,7 +239,7 @@ export const ItwCieCardReaderScreen = () => {
     isScreenReaderEnabled
   );
 
-  const handleCancel = () => machineRef.send({ type: "back" });
+  const handleCancel = () => machineRef.send({ type: "close" });
 
   const handleCieReadEvent = (event: Cie.CieEvent) => {
     switch (event) {

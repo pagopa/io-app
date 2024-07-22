@@ -7,7 +7,6 @@ import { IOPictograms } from "@pagopa/io-app-design-system";
 import { Linking } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../../../i18n";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { WithTestID } from "../../../../../types/WithTestID";
@@ -19,7 +18,7 @@ export type CieWrongCiePinScreenNavigationParams = {
 
 export const ItwCieWrongCiePinScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const navigation = useIONavigation();
+
   const route =
     useRoute<
       Route<
@@ -29,16 +28,13 @@ export const ItwCieWrongCiePinScreen = () => {
     >();
   const { remainingCount } = route.params;
 
-  const retry = React.useCallback(() => {
+  const handleRetry = React.useCallback(() => {
     machineRef.send({ type: "back" });
   }, [machineRef]);
 
-  const navigateToAuthenticationScreen = React.useCallback(() => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: ITW_ROUTES.MAIN }]
-    });
-  }, [navigation]);
+  const handleClose = React.useCallback(() => {
+    machineRef.send({ type: "close" });
+  }, [machineRef]);
 
   const didYouForgetPin = React.useCallback(() => {
     Linking.openURL(
@@ -94,11 +90,11 @@ export const ItwCieWrongCiePinScreen = () => {
         subtitle: I18n.t("authentication.cie.pin.incorrectCiePinContent1"),
         action: createMessageAction({
           label: I18n.t("global.buttons.retry"),
-          onPress: retry
+          onPress: handleRetry
         }),
         secondaryAction: createMessageAction({
           label: I18n.t("global.buttons.close"),
-          onPress: navigateToAuthenticationScreen
+          onPress: handleClose
         })
       },
       1: {
@@ -107,7 +103,7 @@ export const ItwCieWrongCiePinScreen = () => {
         subtitle: I18n.t("authentication.cie.pin.incorrectCiePinContent2"),
         action: createMessageAction({
           label: I18n.t("global.buttons.retry"),
-          onPress: retry
+          onPress: handleRetry
         }),
         secondaryAction: createMessageAction({
           label: I18n.t(
@@ -122,7 +118,7 @@ export const ItwCieWrongCiePinScreen = () => {
         subtitle: I18n.t("authentication.cie.pin.lockedCiePinContent"),
         action: createMessageAction({
           label: I18n.t("global.buttons.close"),
-          onPress: navigateToAuthenticationScreen
+          onPress: handleClose
         }),
         secondaryAction: createMessageAction({
           label: I18n.t("authentication.cie.pin.lockedSecondaryActionLabel"),
@@ -134,8 +130,8 @@ export const ItwCieWrongCiePinScreen = () => {
       createMessageAction,
       didYouForgetPin,
       didYouForgetPuk,
-      navigateToAuthenticationScreen,
-      retry
+      handleClose,
+      handleRetry
     ]
   );
 
@@ -149,14 +145,14 @@ export const ItwCieWrongCiePinScreen = () => {
       subtitle: `${remainingCount}`,
       action: createMessageAction({
         label: I18n.t("global.buttons.retry"),
-        onPress: retry
+        onPress: handleRetry
       }),
       secondaryAction: createMessageAction({
         label: I18n.t("global.buttons.close"),
-        onPress: navigateToAuthenticationScreen
+        onPress: handleClose
       })
     }),
-    [createMessageAction, navigateToAuthenticationScreen, retry, remainingCount]
+    [createMessageAction, handleClose, handleRetry, remainingCount]
   );
 
   const getMessage = React.useCallback(
