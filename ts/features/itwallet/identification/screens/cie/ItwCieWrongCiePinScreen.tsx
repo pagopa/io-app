@@ -11,12 +11,14 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { WithTestID } from "../../../../../types/WithTestID";
+import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 
 export type CieWrongCiePinScreenNavigationParams = {
   remainingCount: number;
 };
 
 export const ItwCieWrongCiePinScreen = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const navigation = useIONavigation();
   const route =
     useRoute<
@@ -27,11 +29,9 @@ export const ItwCieWrongCiePinScreen = () => {
     >();
   const { remainingCount } = route.params;
 
-  const navigateToCiePinScreen = React.useCallback(() => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN
-    });
-  }, [navigation]);
+  const retry = React.useCallback(() => {
+    machineRef.send({ type: "back" });
+  }, [machineRef]);
 
   const navigateToAuthenticationScreen = React.useCallback(() => {
     navigation.reset({
@@ -94,7 +94,7 @@ export const ItwCieWrongCiePinScreen = () => {
         subtitle: I18n.t("authentication.cie.pin.incorrectCiePinContent1"),
         action: createMessageAction({
           label: I18n.t("global.buttons.retry"),
-          onPress: navigateToCiePinScreen
+          onPress: retry
         }),
         secondaryAction: createMessageAction({
           label: I18n.t("global.buttons.close"),
@@ -107,7 +107,7 @@ export const ItwCieWrongCiePinScreen = () => {
         subtitle: I18n.t("authentication.cie.pin.incorrectCiePinContent2"),
         action: createMessageAction({
           label: I18n.t("global.buttons.retry"),
-          onPress: navigateToCiePinScreen
+          onPress: retry
         }),
         secondaryAction: createMessageAction({
           label: I18n.t(
@@ -135,7 +135,7 @@ export const ItwCieWrongCiePinScreen = () => {
       didYouForgetPin,
       didYouForgetPuk,
       navigateToAuthenticationScreen,
-      navigateToCiePinScreen
+      retry
     ]
   );
 
@@ -149,19 +149,14 @@ export const ItwCieWrongCiePinScreen = () => {
       subtitle: `${remainingCount}`,
       action: createMessageAction({
         label: I18n.t("global.buttons.retry"),
-        onPress: navigateToCiePinScreen
+        onPress: retry
       }),
       secondaryAction: createMessageAction({
         label: I18n.t("global.buttons.close"),
         onPress: navigateToAuthenticationScreen
       })
     }),
-    [
-      createMessageAction,
-      navigateToAuthenticationScreen,
-      navigateToCiePinScreen,
-      remainingCount
-    ]
+    [createMessageAction, navigateToAuthenticationScreen, retry, remainingCount]
   );
 
   const getMessage = React.useCallback(

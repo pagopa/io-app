@@ -182,7 +182,10 @@ export const itwEidIssuanceMachine = setup({
           }
         },
         CiePin: {
-          entry: "navigateToCiePinScreen",
+          entry: [
+            assign(() => ({ cieAuthContext: undefined })), // Reset the CIE context, otherwise retries will use stale data
+            { type: "navigateToCiePinScreen" }
+          ],
           on: {
             "cie-pin-entered": {
               actions: assign(({ event }) => ({

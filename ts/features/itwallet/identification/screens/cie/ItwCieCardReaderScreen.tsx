@@ -221,18 +221,17 @@ const getTextForState = (
 };
 
 export const ItwCieCardReaderScreen = () => {
+  const navigation = useIONavigation();
+
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const ciePin = useSelector(machineRef, selectCiePin);
   const cieAuthUrl = useSelector(machineRef, selectCieAuthUrlOption);
 
-  const [flowStep, setFlowStep] = useState(FlowStep.AUTHENTICATION);
   const [readingState, setReadingState] = useState(ReadingState.waiting_card);
 
   const blueColorName = useInteractiveElementDefaultColorName();
   const isCieUat = true; // useIOSelector(isCieLoginUatEnabledSelector);
   const isScreenReaderEnabled = useScreenReaderEnabled();
-
-  const isFocused = useIsFocused();
 
   const { title, subtitle, content } = getTextForState(
     readingState,
@@ -253,37 +252,49 @@ export const ItwCieCardReaderScreen = () => {
         break;
       }
       case Cie.CieEvent.completed: {
-        setFlowStep(FlowStep.CONSENT);
+        setReadingState(ReadingState.completed);
         break;
       }
     }
   };
 
   const handleCieReadError = (error: Cie.CieError) => {
-    setReadingState(ReadingState.error);
-    // TODO: map error to the appropriate screen
+    switch (error.type) {
+      case Cie.CieErrorType.PIN_LOCKED:
+      case Cie.CieErrorType.PIN_ERROR:
+        navigation.navigate(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.IDENTIFICATION.CIE.WRONG_PIN,
+          params: { remainingCount: error.attemptsLeft ?? 0 }
+        });
+        break;
+      case Cie.CieErrorType.TAG_NOT_VALID:
+        navigation.navigate(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.IDENTIFICATION.CIE.WRONG_CARD
+        });
+        break;
+      case Cie.CieErrorType.CERTIFICATE_ERROR:
+        navigation.navigate(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.IDENTIFICATION.CIE.CIE_EXPIRED_SCREEN
+        });
+        break;
+      case Cie.CieErrorType.AUTHENTICATION_ERROR:
+        navigation.navigate(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR
+        });
+        break;
+      case Cie.CieErrorType.NFC_ERROR:
+        setReadingState(ReadingState.error);
+    }
   };
 
   const handleCieReadSuccess = (url: string) => {
-    // Send the url to the machine so the PID issuing flow can continue
     machineRef.send({ type: "cie-identification-completed", url });
   };
-
-  const renderFooter = () => (
-    <View style={IOStyles.alignCenter}>
-      <View>
-        <ButtonLink
-          label={I18n.t("global.buttons.close")}
-          onPress={handleCancel}
-        />
-      </View>
-    </View>
-  );
 
   const renderCardReaderContent = () => {
     // Since the CIE web view needs to be mounted all the time, hide the card reader content
     // after it is not longer needed and the user is giving consent on the web view.
-    if (flowStep === FlowStep.CONSENT) {
+    if (readingState === ReadingState.completed) {
       return null;
     }
 
@@ -306,7 +317,14 @@ export const ItwCieCardReaderScreen = () => {
           <VSpacer size={8} />
           {subtitle ? <Body style={styles.centerText}>{subtitle}</Body> : null}
           <VSpacer size={24} />
-          {readingState !== ReadingState.completed ? renderFooter() : null}
+          <View style={IOStyles.alignCenter}>
+            <View>
+              <ButtonLink
+                label={I18n.t("global.buttons.close")}
+                onPress={handleCancel}
+              />
+            </View>
+          </View>
         </ContentWrapper>
       </ScrollView>
     );
@@ -316,7 +334,7 @@ export const ItwCieCardReaderScreen = () => {
     <SafeAreaView style={styles.container}>
       <View
         style={
-          flowStep === FlowStep.CONSENT
+          readingState === ReadingState.completed
             ? { width: "100%", height: "100%" }
             : { width: "0%", height: "0%" }
         }

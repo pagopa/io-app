@@ -6,15 +6,15 @@ import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 
 export const ItwCieWrongCardScreen = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const navigation = useIONavigation();
 
-  const navigateToCiePinScreen = React.useCallback(() => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.EID_CIE.PIN_SCREEN
-    });
-  }, [navigation]);
+  const retry = React.useCallback(() => {
+    machineRef.send({ type: "back" });
+  }, [machineRef]);
 
   const navigateToAuthenticationScreen = React.useCallback(() => {
     navigation.reset({
@@ -25,7 +25,7 @@ export const ItwCieWrongCardScreen = () => {
 
   const action = {
     label: I18n.t("global.buttons.retry"),
-    onPress: navigateToCiePinScreen
+    onPress: retry
   };
 
   const secondaryAction = {
