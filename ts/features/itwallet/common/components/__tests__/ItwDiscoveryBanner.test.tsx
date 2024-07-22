@@ -65,11 +65,15 @@ const renderComponent = ({
           }
         : {},
       features: {
-        itWallet: {
-          lifecycle: isItwValid
-            ? ItwLifecycleState.ITW_LIFECYCLE_VALID
-            : ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
-        }
+        itWallet: isItwValid
+          ? {
+              lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
+              issuance: { integrityKeyTag: O.some("key-tag") },
+              credentials: { eid: O.some({}) }
+            }
+          : {
+              lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
+            }
       },
       backendStatus: {
         status: O.some({
