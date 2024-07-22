@@ -3105,7 +3105,7 @@ features:
           noticeHeading: Avvisi pagati di recente
           noticeBody: "Stiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
           allNoticesHeading: Tutti gli altri avvisi
-          allNoticesBody: Per ottenere le ricevute in formato PDF di operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
+          allNoticesBody: Per le operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
       multiplePayment: Pagamento multiplo
       title: Ricevute pagoPA
       button: Vedi tutte
