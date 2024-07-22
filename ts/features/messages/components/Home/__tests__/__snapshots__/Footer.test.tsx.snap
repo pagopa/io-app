@@ -679,6 +679,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                         style={
                           {
                             "flexDirection": "row",
+                            "height": 95.5,
                             "padding": 16,
                           }
                         }
@@ -726,7 +727,6 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                             style={
                               {
                                 "flexDirection": "row",
-                                "paddingTop": 3,
                               }
                             }
                           >
@@ -764,8 +764,8 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                             <View
                               style={
                                 {
-                                  "marginLeft": 8,
-                                  "width": 35,
+                                  "marginLeft": 12,
+                                  "width": 30,
                                 }
                               }
                             >
@@ -797,7 +797,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                           <View
                             style={
                               {
-                                "marginTop": 25,
+                                "marginTop": 13,
                               }
                             }
                           >
@@ -829,7 +829,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                             style={
                               {
                                 "marginBottom": 5,
-                                "marginTop": 13,
+                                "marginTop": 15,
                               }
                             }
                           >
@@ -854,37 +854,6 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                                   }
                                 }
                                 width="100%"
-                              />
-                            </View>
-                          </View>
-                          <View
-                            style={
-                              {
-                                "marginTop": 13,
-                              }
-                            }
-                          >
-                            <View
-                              collapsable={false}
-                              style={
-                                {
-                                  "opacity": 0.5,
-                                }
-                              }
-                            >
-                              <View
-                                color="#E8EBF1"
-                                height={8}
-                                radius={8}
-                                style={
-                                  {
-                                    "backgroundColor": "#E8EBF1",
-                                    "borderRadius": 8,
-                                    "height": 8,
-                                    "width": "50%",
-                                  }
-                                }
-                                width="50%"
                               />
                             </View>
                           </View>
