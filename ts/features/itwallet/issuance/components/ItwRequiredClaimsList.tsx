@@ -1,36 +1,53 @@
 import {
   Divider,
   H6,
-  IOColors,
   Icon,
+  IOColors,
   LabelSmall
 } from "@pagopa/io-app-design-system";
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import {
+  DateFromString,
+  DateFromTimestamp
+} from "@pagopa/ts-commons/lib/dates";
+import * as E from "fp-ts/Either";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
+import { localeDateFormat } from "../../../../utils/locale";
+import {
+  ClaimDisplayFormat,
+  ClaimValue,
+  DateClaim,
+  DrivingPrivilegesClaim,
+  EvidenceClaim,
+  ImageClaim,
+  PlaceOfBirthClaim,
+  PlainTextClaim
+} from "../../common/utils/itwClaimsUtils";
 
 export type RequiredClaim = {
-  name: string;
+  claim: ClaimDisplayFormat;
   source: string;
 };
 
-type Props = {
-  claims: ReadonlyArray<RequiredClaim>;
+type ItwRequiredClaimsListProps = {
+  items: ReadonlyArray<RequiredClaim>;
 };
 
-const ItwRequiredClaimsList = ({ claims }: Props) => (
+const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => (
   <View style={styles.container}>
     {pipe(
-      claims,
-      RA.mapWithIndex((index, { name, source }) => (
-        <View key={`${index}-${name}-${source}`}>
+      items,
+      RA.map(a => a),
+      RA.mapWithIndex((index, { claim, source }) => (
+        <View key={`${index}-${claim.label}-${source}`}>
           {/* Add a separator view between sections */}
           {index !== 0 && <Divider />}
           <View style={styles.dataItem}>
             <View>
-              <H6>{name}</H6>
+              <H6>{getClaimDisplayValue(claim)}</H6>
               <LabelSmall weight="Regular" color="grey-700">
                 {I18n.t("features.itWallet.generic.dataSource.single", {
                   credentialSource: source
@@ -44,6 +61,37 @@ const ItwRequiredClaimsList = ({ claims }: Props) => (
     )}
   </View>
 );
+
+export const getClaimDisplayValue = (claim: ClaimDisplayFormat): string =>
+  pipe(
+    claim.value,
+    ClaimValue.decode,
+    E.fold(
+      () => I18n.t("features.itWallet.generic.placeholders.claimNotAvailable"),
+      decoded => {
+        if (PlaceOfBirthClaim.is(decoded)) {
+          return `${decoded.locality} (${decoded.country})`;
+        } else if (DateClaim.is(decoded)) {
+          return localeDateFormat(
+            decoded,
+            I18n.t("global.dateFormats.shortFormat")
+          );
+        } else if (EvidenceClaim.is(decoded)) {
+          return decoded[0].record.source.organization_name;
+        } else if (ImageClaim.is(decoded)) {
+          return decoded;
+        } else if (DrivingPrivilegesClaim.is(decoded)) {
+          return decoded.vehicle_category_code;
+        } else if (PlainTextClaim.is(decoded)) {
+          return decoded; // must be the last one to be checked due to overlap with IPatternStringTag
+        }
+
+        return I18n.t(
+          "features.itWallet.generic.placeholders.claimNotAvailable"
+        );
+      }
+    )
+  );
 
 const styles = StyleSheet.create({
   container: {

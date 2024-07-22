@@ -89,9 +89,9 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
 
   const claims = parseClaims(eid.parsedCredential);
   const requiredClaims = claims.map(
-    a =>
+    claim =>
       ({
-        name: a.value,
+        claim,
         source: getCredentialNameFromType(eid.credentialType)
       } as RequiredClaim)
   );
@@ -137,7 +137,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           iconName="security"
           iconColor="grey-700"
         />
-        <ItwRequestedClaimsList claims={requiredClaims} />
+        <ItwRequestedClaimsList items={requiredClaims} />
         <VSpacer size={24} />
         <FeatureInfo
           iconName="fornitori"
