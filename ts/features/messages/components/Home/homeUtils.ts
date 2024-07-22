@@ -2,6 +2,7 @@ import { constTrue, constUndefined, pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { StyleSheet } from "react-native";
 import { ActionType } from "typesafe-actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
@@ -28,6 +29,15 @@ import {
   isStrictSomeError
 } from "../../../../utils/pot";
 import { isArchivingInProcessingModeSelector } from "../../store/reducers/archiving";
+import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
+import { EnhancedHeight, StandardHeight } from "./DS/MessageListItem";
+import { SkeletonHeight } from "./DS/MessageListItemSkeleton";
+
+export type LayoutInfo = {
+  index: number;
+  length: number;
+  offset: number;
+};
 
 export const nextPageLoadingWaitMillisecondsGenerator = () => 2000;
 export const refreshIntervalMillisecondsGenerator = () => 60000;
@@ -227,3 +237,36 @@ const isDoingAnAsyncOperationOnMessages = (state: GlobalState) =>
       constTrue
     )
   );
+
+export const generateMessageListLayoutInfo = (
+  loadingList: ReadonlyArray<number>,
+  messageList: ReadonlyArray<UIMessage> | undefined
+) => {
+  if (messageList) {
+    const messageListLayoutInfo: Array<LayoutInfo> = [];
+    // eslint-disable-next-line functional/no-let
+    for (let i = 0; i < messageList.length; i++) {
+      const message = messageList[i];
+      const itemLayoutInfo: LayoutInfo = {
+        index: i,
+        length:
+          message.category.tag === TagEnum.PN ? EnhancedHeight : StandardHeight,
+        offset:
+          i > 0
+            ? messageListLayoutInfo[i - 1].offset +
+              messageListLayoutInfo[i - 1].length +
+              StyleSheet.hairlineWidth
+            : 0
+      };
+      // eslint-disable-next-line functional/immutable-data
+      messageListLayoutInfo.push(itemLayoutInfo);
+    }
+    return messageListLayoutInfo;
+  } else {
+    return loadingList.map((_, index) => ({
+      index,
+      length: SkeletonHeight,
+      offset: index * SkeletonHeight
+    }));
+  }
+};

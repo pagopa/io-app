@@ -19,8 +19,10 @@ import {
 import { UIMessage } from "../../types";
 import { ItwDiscoveryBanner } from "../../../itwallet/common/components/ItwDiscoveryBanner";
 import {
+  generateMessageListLayoutInfo,
   getLoadNextPageMessagesActionIfAllowed,
-  getReloadAllMessagesActionForRefreshIfAllowed
+  getReloadAllMessagesActionForRefreshIfAllowed,
+  LayoutInfo
 } from "./homeUtils";
 import { WrappedMessageListItem } from "./WrappedMessageListItem";
 import {
@@ -67,6 +69,16 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
       return [...Array(count).keys()];
     }, [safeAreaFrame.height, safeAreaInsets.top, safeAreaInsets.bottom]);
 
+    const layoutInfo: ReadonlyArray<LayoutInfo> = useMemo(
+      () => generateMessageListLayoutInfo(loadingList, messageList),
+      [loadingList, messageList]
+    );
+    const getItemLayoutCallback = useCallback(
+      (_: ArrayLike<UIMessage | number> | null | undefined, index: number) =>
+        layoutInfo[index],
+      [layoutInfo]
+    );
+
     const onRefreshCallback = useCallback(() => {
       const state = store.getState();
       const reloadAllMessagesAction =
@@ -98,6 +110,7 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         ListHeaderComponent={
           category === "INBOX" ? <ItwDiscoveryBanner /> : undefined
         }
+        getItemLayout={getItemLayoutCallback}
         renderItem={({ index, item }) => {
           if (typeof item === "number") {
             return (

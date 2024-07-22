@@ -8,7 +8,7 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 
-export const SkeletonHeight = 95;
+export const SkeletonHeight = 95 + StyleSheet.hairlineWidth;
 
 const styles = StyleSheet.create({
   container: {
