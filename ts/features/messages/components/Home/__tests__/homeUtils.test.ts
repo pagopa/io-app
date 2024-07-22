@@ -13,7 +13,6 @@ import {
   getMessagesViewPagerInitialPageIndex,
   getReloadAllMessagesActionForRefreshIfAllowed,
   messageListCategoryToViewPageIndex,
-  messageListItemHeight,
   messageViewPageIndexToListCategory,
   nextPageLoadingWaitMillisecondsGenerator,
   refreshIntervalMillisecondsGenerator
@@ -368,13 +367,6 @@ describe("accessibilityLabelForMessageItem", () => {
     } as UIMessage;
     const accessibilityLabel = accessibilityLabelForMessageItem(message);
     expect(accessibilityLabel).toStrictEqual(expectedOutput);
-  });
-});
-
-describe("messageListItemHeight", () => {
-  it("should return 130", () => {
-    const height = messageListItemHeight();
-    expect(height).toBe(130);
   });
 });
 
