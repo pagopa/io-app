@@ -5,10 +5,6 @@ import {
   IOColors,
   LabelSmall
 } from "@pagopa/io-app-design-system";
-import {
-  DateFromString,
-  DateFromTimestamp
-} from "@pagopa/ts-commons/lib/dates";
 import * as E from "fp-ts/Either";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
