@@ -3925,6 +3925,8 @@ permissionRequest:
     cta: Apri Impostazioni
 FIMS:
   history:
+    exportData:
+      CTA: "Richiedi una copia via email"
     profileCTA:
       title: Accessi a servizi di terze parti 
       subTitle: Rivedi gli accessi effettuati a servizi di terze parti tramite IO

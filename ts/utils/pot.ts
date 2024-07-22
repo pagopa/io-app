@@ -55,3 +55,33 @@ export const isSomeOrSomeError = <A, E>(
   pot.isSome(p) && !pot.isLoading(p) && !pot.isUpdating(p);
 export const isLoadingOrUpdating = <A, E>(p: pot.Pot<A, E>): boolean =>
   pot.isLoading(p) || pot.isUpdating(p);
+
+type PotFoldWithDefault<A, E, O> = {
+  none?: () => O;
+  noneLoading?: () => O;
+  noneUpdating?: (newValue: A) => O;
+  noneError?: (error: E) => O;
+  some?: (value: A) => O;
+  someLoading?: (value: A) => O;
+  someUpdating?: (value: A, newValue: A) => O;
+  someError?: (value: A, error: E) => O;
+};
+type DefaultPotHandler<A, E, O> = {
+  default: Extract<PotFoldWithDefault<A, E, O>, any> & (() => O);
+};
+
+export const potFoldWithDefault = <A, E, O>(
+  value: pot.Pot<A, E>,
+  handlers: PotFoldWithDefault<A, E, O> & DefaultPotHandler<A, E, O>
+) =>
+  pot.fold(
+    value,
+    handlers.none ?? handlers.default,
+    handlers.noneLoading ?? handlers.default,
+    handlers.noneUpdating ?? handlers.default,
+    handlers.noneError ?? handlers.default,
+    handlers.some ?? handlers.default,
+    handlers.someLoading ?? handlers.default,
+    handlers.someUpdating ?? handlers.default,
+    handlers.someError ?? handlers.default
+  );

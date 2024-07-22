@@ -1,96 +1,28 @@
-import {
-  Body,
-  Divider,
-  H2,
-  IOStyles,
-  ListItemNav,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/Option";
+import { Divider, IOStyles } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { SafeAreaView, View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
-import Placeholder from "rn-placeholder";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { Consent } from "../../../../../definitions/fims/Consent";
-import { ConsentsResponseDTO } from "../../../../../definitions/fims/ConsentsResponseDTO";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { dateToAccessibilityReadableFormat } from "../../../../utils/accessibility";
-import { serviceByIdSelector } from "../../../services/details/store/reducers";
-import { fimsHistoryGet } from "../store/actions";
-import { fimsHistoryPotSelector } from "../store/selectors";
+import { FlatList } from "react-native";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { FimsHistoryListItem } from "../components/ListItem";
+import { LoadingFimsHistoryItemsFooter } from "../components/Loaders";
+import { fimsHistoryGet } from "../store/actions";
+import {
+  fimsHistoryToUndefinedSelector,
+  isFimsHistoryLoadingSelector
+} from "../store/selectors";
 
 export const FimsHistoryScreen = () => {
   const dispatch = useIODispatch();
-  const historyPot = useIOSelector(fimsHistoryPotSelector);
+  const isLoading = useIOSelector(isFimsHistoryLoadingSelector);
+  const consents = useIOSelector(fimsHistoryToUndefinedSelector);
 
   React.useEffect(() => {
     dispatch(fimsHistoryGet.request({ isFirstRequest: true }));
   }, [dispatch]);
 
-  useHeaderSecondLevel({
-    title: "History"
-  });
-
-  const isHistoryLoading = pot.isLoading(historyPot);
-
-  if (historyPot.kind === "PotNoneLoading") {
-    return <HistoryList isLoading />;
-  }
-
-  return pipe(
-    historyPot,
-    pot.toOption,
-    O.fold(
-      () => null,
-      consents => (
-        <HistoryList consents={consents} isLoading={isHistoryLoading} />
-      )
-    )
-  );
-};
-
-// ----------------- components --------------
-
-type HistoryListItemProps = {
-  item: NonNullable<Consent>;
-};
-
-const HistoryListItem = ({ item }: HistoryListItemProps) => {
-  const serviceData = useIOSelector(state =>
-    serviceByIdSelector(state, item.service_id as ServiceId)
-  );
-  // return
-  // serviceData !== undefined ? (
-  return (
-    <ListItemNav
-      key={item.id}
-      onPress={() => null}
-      value={serviceData?.organization_name ?? "MISSING_SERVICE_NAME"}
-      topElement={{
-        dateValue: dateToAccessibilityReadableFormat(item.timestamp)
-      }}
-      description={item.redirect?.display_name}
-      hideChevron
-    />
-  );
-  // ) : (
-  //   <></>
-  // );
-};
-
-type HistoryListProps = {
-  consents?: ConsentsResponseDTO;
-  isLoading?: boolean;
-};
-const HistoryList = ({ consents, isLoading }: HistoryListProps) => {
-  const dispatch = useIODispatch();
-
-  const fetchMore = () => {
+  const fetchMore = React.useCallback(() => {
     if (consents?.continuationToken) {
       dispatch(
         fimsHistoryGet.request({
@@ -99,54 +31,43 @@ const HistoryList = ({ consents, isLoading }: HistoryListProps) => {
         })
       );
     }
-  };
+  }, [consents?.continuationToken, dispatch]);
+
+  const renderLoadingFooter = () =>
+    isLoading ? (
+      <LoadingFimsHistoryItemsFooter
+        showFirstDivider={(consents?.items.length ?? 0) > 0}
+      />
+    ) : null;
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={IOStyles.horizontalContentPadding}>
-        <H2>{I18n.t("FIMS.history.historyScreen.header")}</H2>
-        <VSpacer size={16} />
-        <Body>{I18n.t("FIMS.history.historyScreen.body")}</Body>
-      </View>
-      <VSpacer size={16} />
+    <IOScrollViewWithLargeHeader
+      title={{
+        label: I18n.t("FIMS.history.historyScreen.header")
+      }}
+      description={I18n.t("FIMS.history.historyScreen.body")}
+      canGoback={true}
+      headerActionsProp={{ showHelp: true }}
+      contextualHelp={emptyContextualHelp}
+      actions={{
+        type: "SingleButton",
+        primary: {
+          label: I18n.t("FIMS.history.exportData.CTA"),
+          onPress: () => null // full export functionality coming soon
+        }
+      }}
+    >
       <FlatList
+        onEndReachedThreshold={0.5}
+        nestedScrollEnabled={false}
         data={consents?.items}
         contentContainerStyle={IOStyles.horizontalContentPadding}
         ItemSeparatorComponent={Divider}
-        renderItem={item => <HistoryListItem item={item.item} />}
+        keyExtractor={item => item.id}
+        renderItem={item => <FimsHistoryListItem item={item.item} />}
         onEndReached={fetchMore}
-        ListFooterComponent={() =>
-          isLoading && (
-            <LoadingItemsPlaceholder
-              showFirstDivider={(consents?.items.length ?? 0) > 0}
-            />
-          )
-        }
+        ListFooterComponent={renderLoadingFooter}
       />
-    </SafeAreaView>
+    </IOScrollViewWithLargeHeader>
   );
 };
-
-const LoadingItemsPlaceholder = ({
-  showFirstDivider
-}: {
-  showFirstDivider?: boolean;
-}) => (
-  <>
-    {showFirstDivider && <Divider />}
-    <LoadingListItem />
-    <Divider />
-    <LoadingListItem />
-    <Divider />
-    <LoadingListItem />
-    <Divider />
-    <LoadingListItem />
-    <Divider />
-    <LoadingListItem />
-  </>
-);
-
-const LoadingListItem = () => (
-  <View style={{ paddingVertical: 16 }}>
-    <Placeholder.Box height={16} width={178} radius={8} animate="fade" />
-  </View>
-);
