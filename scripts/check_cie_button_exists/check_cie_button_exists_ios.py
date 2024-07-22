@@ -57,9 +57,12 @@ def postSlack(
         uri="https://slack.com/api/chat.postMessage",
         channel='#io_dev_app_status'):
 
+    if not token:
+        print("Slack token is None")    
+
     slackHeaders = {
         "Content-type": "application/json",
-        "Authorization": "Bearer " + token
+        "Authorization": f"Bearer {token}"
     }
 
     slackPayload = {
@@ -71,7 +74,7 @@ def postSlack(
         uri, headers=slackHeaders, json=slackPayload, allow_redirects=True)
 
 
-def main(uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&authLevel=SpidL2",
+def main(uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&authLevel=SpidL3",
          headers=cieHeaders,
          payload=ciePayload,
          maxAttempts=5,
@@ -82,6 +85,7 @@ def main(uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&auth
         cieAuthPageResponse = requestCieAuthPage(
             uri, headers, payload, maxAttempts, timeoutPerRequest)
         cieAuthPageResponse.raise_for_status()
+        print("[OK] Page containing CIE button reachable!")
     except requests.exceptions.RequestException:
         print("[Fatal Error] Page containing CIE button unrechable", file=sys.stderr)
         postSlack(os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN", None))
@@ -95,7 +99,7 @@ def main(uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&auth
 
 
 if __name__ == "__main__":
-    main(uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&authLevel=SpidL2",
+    main(uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&authLevel=SpidL3",
          headers=cieHeaders,
          payload=ciePayload,
          maxAttempts=5,
