@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.67.0-rc.0](https://github.com/pagopa/io-app/compare/2.66.0-rc.1...2.67.0-rc.0) (2024-07-22)
+
+
+### Features
+
+* [[IOPAE-1310](https://pagopa.atlassian.net/browse/IOPAE-1310)] Reintroduced the status banner in the services home ([#5987](https://github.com/pagopa/io-app/issues/5987)) ([b02f187](https://github.com/pagopa/io-app/commit/b02f187862385e463ed66194d5c39d11fef83162))
+* **IT Wallet:** [[SIW-1035](https://pagopa.atlassian.net/browse/SIW-1035)] Add eID to wallet ([#5981](https://github.com/pagopa/io-app/issues/5981)) ([8f54adc](https://github.com/pagopa/io-app/commit/8f54adc190a1c96755f65c3130b7a95793d4aaf0))
+* **IT Wallet:** [[SIW-1295](https://pagopa.atlassian.net/browse/SIW-1295)] Add eID issuance flow with SPID and CieID ([#5965](https://github.com/pagopa/io-app/issues/5965)) ([af13dbc](https://github.com/pagopa/io-app/commit/af13dbc498db242956e92dacd536007783190188))
+
+
+### Bug Fixes
+
+* [[IOBP-776](https://pagopa.atlassian.net/browse/IOBP-776)] PSP preselection with onUs attribute ([#5999](https://github.com/pagopa/io-app/issues/5999)) ([cf57388](https://github.com/pagopa/io-app/commit/cf57388465219845f616c104f08e4c2af5824a11))
+* **IT Wallet:** [[SIW-1369](https://pagopa.atlassian.net/browse/SIW-1369)] Fetch function without session token ([#5995](https://github.com/pagopa/io-app/issues/5995)) ([9b1c820](https://github.com/pagopa/io-app/commit/9b1c8208eaa35f9ad068d216a7f99b8a76a5a923))
+* [[IOCOM-1551](https://pagopa.atlassian.net/browse/IOCOM-1551)] Additional margin for single CTA ([#5990](https://github.com/pagopa/io-app/issues/5990)) ([e05f1cf](https://github.com/pagopa/io-app/commit/e05f1cf56a3f6829d47fc75d56c3ddc2e7e82aa4))
+
+
+### Chores
+
+* [[IOCOM-1600](https://pagopa.atlassian.net/browse/IOCOM-1600)] Bigger fonts on message list items ([#5998](https://github.com/pagopa/io-app/issues/5998)) ([5a809df](https://github.com/pagopa/io-app/commit/5a809dff3afadf70f125f6e28406ac2e1015703e))
+* align default `tosVersion` to the remote one ([#5978](https://github.com/pagopa/io-app/issues/5978)) ([f8b31c3](https://github.com/pagopa/io-app/commit/f8b31c3a0c4e91c79f87d7319afa2bc55469980d)), closes [/github.com/pagopa/io-services-metadata/blob/a5ece439327bbcbd03029c9f28f70ab3a17a1687/status/backend.json#L118](https://github.com/pagopa//github.com/pagopa/io-services-metadata/blob/a5ece439327bbcbd03029c9f28f70ab3a17a1687/status/backend.json/issues/L118)
+* Bump Android `minSdkVersion` from `23` to `25` ([#6000](https://github.com/pagopa/io-app/issues/6000)) ([7f5e5a9](https://github.com/pagopa/io-app/commit/7f5e5a9341e5dbb642f9e5d5af965f7d9e10342d))
+* update EIC button scripts ([#5997](https://github.com/pagopa/io-app/issues/5997)) ([63889fb](https://github.com/pagopa/io-app/commit/63889fb278f121aba0067b04005b2b5a47fece28))
+* **IT Wallet:** [[SIW-1284](https://pagopa.atlassian.net/browse/SIW-1284)] Add IT Wallet discovery banner for trial users ([#5948](https://github.com/pagopa/io-app/issues/5948)) ([28ecce1](https://github.com/pagopa/io-app/commit/28ecce18c6451aa5a1631f2c81a606c31b64942b))
+* **IT Wallet:** [[SIW-1285](https://pagopa.atlassian.net/browse/SIW-1285)] Update ITW credential catalog screen ([#5969](https://github.com/pagopa/io-app/issues/5969)) ([d6c99db](https://github.com/pagopa/io-app/commit/d6c99db25ed81272eb885577f1d1311d34429f7e))
+* **IT Wallet:** [[SIW-1328](https://pagopa.atlassian.net/browse/SIW-1328)] Update cards categorization in wallet screen ([#5961](https://github.com/pagopa/io-app/issues/5961)) ([1222c9b](https://github.com/pagopa/io-app/commit/1222c9bacc46ba4f1a92b0def95b67894127b18e))
+* **IT Wallet:** [[SIW-1360](https://pagopa.atlassian.net/browse/SIW-1360)] Add remote config for `it-wallet` feature ([#5979](https://github.com/pagopa/io-app/issues/5979)) ([a655f42](https://github.com/pagopa/io-app/commit/a655f427893687e7db002ae5f6ee858ec01a7f77))
+* **IT Wallet:** [[SIW-1363](https://pagopa.atlassian.net/browse/SIW-1363)] Add IT Wallet credential cards in wallet ([#5988](https://github.com/pagopa/io-app/issues/5988)) ([b5a41ef](https://github.com/pagopa/io-app/commit/b5a41efd26a998a99e94c8f8b7bf4d947d68498a))
+
 ## [2.66.0-rc.2](https://github.com/pagopa/io-app/compare/2.65.0-rc.0...2.66.0-rc.2) (2024-07-19)
 
 
