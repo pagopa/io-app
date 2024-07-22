@@ -234,8 +234,8 @@ const ProfileMainScreen = () => {
     contextualHelpMarkdown: {
       title: "profile.main.contextualHelpTitle",
       body: isSettingsVisibleAndHideProfile
-        ? "profile.main.contextualHelpContentNew"
-        : "profile.main.contextualHelpContent"
+        ? "profile.main.contextualHelpContent"
+        : "profile.main.legacyContextualHelpContent"
     }
   });
 

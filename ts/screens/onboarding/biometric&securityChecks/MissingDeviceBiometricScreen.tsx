@@ -12,16 +12,12 @@ import { FAQsCategoriesType } from "../../../utils/faq";
 import ScreenWithListItems from "../../../components/screens/ScreenWithListItems";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
 import useContentWithFF from "../../profile/useContentWithFF";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../store/reducers/backendStatus";
 import { trackBiometricConfigurationEducationalScreen } from "./analytics";
 
 const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = [
   "onboarding_fingerprint"
 ];
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "onboarding.contextualHelpTitle",
-  body: "onboarding.contextualHelpContent"
-};
 
 /**
  * A screen to show, if the fingerprint is supported by the device,
@@ -31,6 +27,17 @@ const MissingDeviceBiometricScreen = () => {
   const dispatch = useIODispatch();
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const { showAlert } = useOnboardingAbortAlert();
+
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
+
+  const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+    title: "onboarding.contextualHelpTitle",
+    body: isSettingsVisibleAndHideProfile
+      ? "onboarding.contextualHelpContent"
+      : "onboarding.legacyContextualHelpContent"
+  };
 
   useOnFirstRender(() => {
     trackBiometricConfigurationEducationalScreen(

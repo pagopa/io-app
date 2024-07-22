@@ -203,8 +203,8 @@ const IbanEnrollmentScreen = () => {
               style={IOStyles.flex} // required for correct wrapping
             >
               {isSettingsVisibleAndHideProfile
-                ? I18n.t("idpay.configuration.iban.enrollment.footerNew")
-                : I18n.t("idpay.configuration.iban.enrollment.footer")}
+                ? I18n.t("idpay.configuration.iban.enrollment.footer")
+                : I18n.t("idpay.configuration.iban.enrollment.legacyFooter")}
             </LabelSmall>
           </View>
           {/* TODO:: end AdviceComponent  */}

@@ -112,8 +112,8 @@ const IbanOnboardingScreen = () => {
           <HSpacer size={16} />
           <LabelSmall color="bluegrey" weight="Regular">
             {isSettingsVisibleAndHideProfile
-              ? I18n.t("idpay.configuration.iban.onboarding.bottomLabelNew")
-              : I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}
+              ? I18n.t("idpay.configuration.iban.onboarding.bottomLabel")
+              : I18n.t("idpay.configuration.iban.onboarding.legacyBottomLabel")}
           </LabelSmall>
         </View>
       </ScrollView>
