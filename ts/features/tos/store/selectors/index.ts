@@ -2,12 +2,13 @@ import { createSelector } from "reselect";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { TosConfig } from "../../../../../definitions/content/TosConfig";
+// eslint-disable-next-line no-restricted-imports
 import { privacyUrl } from "../../../../config";
 import { backendStatusSelector } from "../../../../store/reducers/backendStatus";
 
 const DEFAULT_TOS_CONFIG: TosConfig = {
   tos_url: privacyUrl,
-  tos_version: 4.8
+  tos_version: 4.9
 };
 
 export const tosConfigSelector = createSelector(
