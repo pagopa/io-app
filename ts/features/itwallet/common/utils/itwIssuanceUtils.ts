@@ -1,4 +1,4 @@
-import { deleteKey, generate } from "@pagopa/io-react-native-crypto";
+import { generate } from "@pagopa/io-react-native-crypto";
 import {
   type AuthorizationContext,
   createCryptoContextFor,
@@ -12,7 +12,8 @@ import { URL } from "react-native-url-polyfill";
 import {
   itwPidProviderBaseUrl,
   itWalletIssuanceRedirectUri,
-  itWalletIssuanceRedirectUriCie
+  itWalletIssuanceRedirectUriCie,
+  itwCieIdpHint
 } from "../../../../config";
 import { type IdentificationContext } from "../../machine/eid/context";
 import { StoredCredential } from "./itwTypesUtils";
@@ -25,16 +26,14 @@ type IssuerConf = Parameters<Credential.Issuance.ObtainCredential>[0];
 
 // TODO [SIW-1359]: get the correct urls for production
 const SPID_HINT = "https://demo.spid.gov.it";
-const CIE_HINT =
-  "https://collaudo.idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO";
 
 // This can be any URL, as long as it has http or https as its protocol, otherwise it cannot be managed by the webview.
 const CIE_L3_REDIRECT_URI = "https://cie.callback";
 const CREDENTIAL_TYPE = "PersonIdentificationData";
 
 const idpHintsMap: Record<IdentificationContext["mode"], string> = {
-  cieId: CIE_HINT,
-  ciePin: CIE_HINT,
+  cieId: itwCieIdpHint,
+  ciePin: itwCieIdpHint,
   spid: SPID_HINT
 };
 
@@ -89,8 +88,7 @@ const startCieAuthFlow = async ({
   const params = new URLSearchParams({
     client_id: clientId,
     request_uri: issuerRequestUri,
-    idphint:
-      "https://collaudo.idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO"
+    idphint: idpHintsMap.ciePin
   });
 
   return {
