@@ -13,7 +13,7 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { ImageURISource, StyleSheet, View } from "react-native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -21,6 +21,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims } from "../../common/utils/itwClaimsUtils";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
   RequestObject,
@@ -30,6 +31,7 @@ import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import {
   selectCredentialTypeOption,
   selectIsLoading,
+  selectIssuerConfigurationOption,
   selectRequestedCredentialOption
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
@@ -37,7 +39,6 @@ import {
   ItwRequestedClaimsList,
   RequiredClaim
 } from "../components/ItwRequiredClaimsList";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -72,6 +73,9 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
+  const issuerConfOption = ItwCredentialIssuanceMachineContext.useSelector(
+    selectIssuerConfigurationOption
+  );
 
   const handleContinuePress = () => {
     machineRef.send({ type: "confirm-trust-data" });
@@ -87,9 +91,17 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const requiredClaims = claims.map(
     a =>
       ({
-        name: a.label,
+        name: a.value,
         source: getCredentialNameFromType(eid.credentialType)
       } as RequiredClaim)
+  );
+
+  const issuerLogoUri = pipe(
+    issuerConfOption,
+    O.map(
+      config => ({ uri: config.federation_entity.logo_uri } as ImageURISource)
+    ),
+    O.toUndefined
   );
 
   return (
@@ -97,10 +109,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
       <ContentWrapper>
         <VSpacer size={24} />
         <View style={styles.header}>
-          <Avatar
-            size="small"
-            logoUri={require("../../../../../img/features/itWallet/issuer/ipzs.png")}
-          />
+          <Avatar size="small" logoUri={issuerLogoUri} />
           <HSpacer size={8} />
           <Icon name={"transactions"} color={"grey-450"} size={24} />
           <HSpacer size={8} />
