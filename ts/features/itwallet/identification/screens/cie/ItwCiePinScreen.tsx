@@ -8,12 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
-import {
-  useFocusEffect,
-  useIsFocused,
-  useNavigation
-} from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Keyboard,
@@ -46,9 +41,6 @@ import { itwIsNfcEnabledSelector } from "../../store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { selectIsLoading } from "../../../machine/eid/selectors";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
-import { ITW_ROUTES } from "../../../navigation/routes";
-
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -72,8 +64,6 @@ const ForgottenPin = () => (
 );
 
 export const ItwCiePinScreen = () => {
-  const navigation = useNavigation<StackNavigationProp<ItwParamsList>>();
-
   const dispatch = useIODispatch();
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   const isEnabled = useIOSelector(itwIsNfcEnabledSelector);
@@ -125,13 +115,7 @@ export const ItwCiePinScreen = () => {
 
     if (value.length === CIE_PIN_LENGTH) {
       Keyboard.dismiss();
-      if (isNfcEnabled) {
-        machineRef.send({ type: "cie-pin-entered", pin: value });
-      } else {
-        navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC, {
-          ciePin: value
-        });
-      }
+      machineRef.send({ type: "cie-pin-entered", pin: value, isNfcEnabled });
     }
   };
 

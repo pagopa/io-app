@@ -44,6 +44,7 @@ export type SelectSpidIdp = {
 export type CiePinEntered = {
   type: "cie-pin-entered";
   pin: string;
+  isNfcEnabled: boolean;
 };
 
 export type CieIdentificationCompleted = {
@@ -63,6 +64,10 @@ export type Close = {
   type: "close";
 };
 
+export type NfcEnabled = {
+  type: "nfc-enabled";
+};
+
 export type EidIssuanceEvents =
   | Reset
   | Start
@@ -78,4 +83,5 @@ export type EidIssuanceEvents =
   | Retry
   | Back
   | Close
+  | NfcEnabled
   | ErrorActorEvent;

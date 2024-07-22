@@ -63,6 +63,12 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
+  navigateToNfcInstructionsScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC
+    });
+  },
+
   navigateToWallet: () => {
     toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
     navigation.reset({

@@ -6,28 +6,13 @@ import {
 } from "@pagopa/io-app-design-system";
 import React, { useCallback } from "react";
 import { Alert } from "react-native";
-import { Route, useRoute } from "@react-navigation/native";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../../i18n";
 import * as cieUtils from "../../../../../utils/cie";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
-import { ITW_ROUTES } from "../../../navigation/routes";
-
-export type CieActivateNfcScreenNavigationParams = {
-  ciePin: string;
-};
 
 export const ItwActivateNfcScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const route =
-    useRoute<
-      Route<
-        typeof ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC,
-        CieActivateNfcScreenNavigationParams
-      >
-    >();
-
-  const { ciePin } = route.params;
 
   const openSettings = useCallback(async () => {
     await cieUtils.openNFCSettings();
@@ -37,7 +22,7 @@ export const ItwActivateNfcScreen = () => {
     const isNfcEnabled = await cieUtils.isNfcEnabled();
 
     if (isNfcEnabled) {
-      machineRef.send({ type: "cie-pin-entered", pin: ciePin });
+      machineRef.send({ type: "nfc-enabled" });
     } else {
       Alert.alert(I18n.t("authentication.cie.nfc.activeNfcAlert"), "", [
         {
@@ -50,7 +35,7 @@ export const ItwActivateNfcScreen = () => {
         }
       ]);
     }
-  }, [ciePin, openSettings, machineRef]);
+  }, [openSettings, machineRef]);
 
   return (
     <IOScrollViewWithLargeHeader
