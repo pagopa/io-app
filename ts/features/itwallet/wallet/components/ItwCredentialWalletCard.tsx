@@ -14,7 +14,10 @@ const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
 
   const handleOnPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
+      params: {
+        credentialType: props.credentialType
+      }
     });
   };
   return (

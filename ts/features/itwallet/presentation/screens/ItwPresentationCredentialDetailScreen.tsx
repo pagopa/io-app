@@ -1,42 +1,70 @@
-import React from "react";
-import * as O from "fp-ts/Option";
-import { pipe } from "fp-ts/lib/function";
 import {
   ContentWrapper,
   Divider,
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as O from "fp-ts/Option";
+import { pipe } from "fp-ts/lib/function";
+import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { useIOSelector } from "../../../../store/hooks";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import { ItwReleaserName } from "../../common/components/ItwReleaserName";
 import {
   ItWalletError,
   getItwGenericMappedError
 } from "../../common/utils/itwErrorsUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwClaimsSections } from "../components/ItwClaimsSections";
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
-import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 
 // TODO: use the real credential update time
 const today = new Date();
 
+export type ItwPresentationCredentialDetailNavigationParams = {
+  credentialType: string;
+};
+
+type Props = IOStackNavigationRouteProps<
+  ItwParamsList,
+  "ITW_PRESENTATION_CREDENTIAL_DETAIL"
+>;
+
+export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
+  const { credentialType } = route.params;
+  const credentialOption = useIOSelector(
+    itwCredentialByTypeSelector(credentialType)
+  );
+
+  return pipe(
+    credentialOption,
+    O.fold(
+      () => <ErrorView />,
+      credential => <ContentView credential={credential} />
+    )
+  );
+};
+
 /**
  * This component renders the entire credential detail.
  */
-const ContentView = ({ eid }: { eid: StoredCredential }) => {
+const ContentView = ({ credential }: { credential: StoredCredential }) => {
   const { screenEndMargin } = useScreenEndMargin();
   const themeColor = getThemeColorByCredentialType(
-    eid.credentialType as CredentialType
+    credential.credentialType as CredentialType
   );
 
   useHeaderSecondLevel({
@@ -54,44 +82,35 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
       />
       <ScrollView contentContainerStyle={{ paddingBottom: screenEndMargin }}>
         <View style={styles.cardContainer}>
-          <ItwCredentialCard credentialType={CredentialType.PID} />
+          <ItwCredentialCard credentialType={credential.credentialType} />
           <View
             style={[styles.cardBackdrop, { backgroundColor: themeColor }]}
           />
         </View>
 
         <ContentWrapper>
-          <ItwClaimsSections credential={eid} />
+          <ItwClaimsSections credential={credential} />
           <Divider />
-          <ItwReleaserName credential={eid} />
+          <ItwReleaserName credential={credential} />
           <VSpacer size={40} />
-          <ItwPresentationDetailFooter lastUpdateTime={today} />
+          <ItwPresentationDetailFooter
+            lastUpdateTime={today}
+            issuerConf={credential.issuerConf}
+          />
         </ContentWrapper>
       </ScrollView>
     </>
   );
 };
 
-export const ItwPresentationCredentialDetailScreen = () => {
+/**
+ * Error view component which currently displays a generic error.
+ * @param error - optional ItWalletError to be displayed.
+ */
+const ErrorView = ({ error: _ }: { error?: ItWalletError }) => {
   const navigation = useIONavigation();
-  const eidOption = useIOSelector(itwCredentialsEidSelector);
-
-  /**
-   * Error view component which currently displays a generic error.
-   * @param error - optional ItWalletError to be displayed.
-   */
-  const ErrorView = ({ error: _ }: { error?: ItWalletError }) => {
-    const mappedError = getItwGenericMappedError(() => navigation.goBack());
-    return <OperationResultScreenContent {...mappedError} />;
-  };
-
-  return pipe(
-    eidOption,
-    O.fold(
-      () => <ErrorView />,
-      eid => <ContentView eid={eid} />
-    )
-  );
+  const mappedError = getItwGenericMappedError(() => navigation.goBack());
+  return <OperationResultScreenContent {...mappedError} />;
 };
 
 const styles = StyleSheet.create({
