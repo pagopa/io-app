@@ -72,7 +72,7 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
   );
 };
 
-export const ItwPresentationEidDetailScreen = () => {
+export const ItwPresentationCredentialDetailScreen = () => {
   const navigation = useIONavigation();
   const eidOption = useIOSelector(itwCredentialsEidSelector);
 

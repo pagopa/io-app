@@ -19,7 +19,7 @@ import {
 } from "../machine/provider";
 import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground";
-import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
+import { ItwPresentationCredentialDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -109,8 +109,8 @@ const InnerNavigator = () => {
       />
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen
-        name={ITW_ROUTES.PRESENTATION.EID_DETAIL}
-        component={ItwPresentationEidDetailScreen}
+        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL}
+        component={ItwPresentationCredentialDetailScreen}
         options={{ headerShown: false }}
       />
       {/* PLAYGROUNDS */}

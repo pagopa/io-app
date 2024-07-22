@@ -1,14 +1,28 @@
 import React from "react";
 import { withWalletCardBaseComponent } from "../../../newWallet/components/WalletCardBaseComponent";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
+import { WalletCardPressableBase } from "../../../newWallet/components/WalletCardPressableBase";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 export type ItwCredentialWalletCardProps = ItwCredentialCard & {
   isPreview?: false; // Cards in wallet cannot be in preview mode
 };
 
-const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => (
-  <ItwCredentialCard {...props} />
-);
+const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
+  const navigation = useIONavigation();
+
+  const handleOnPress = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL
+    });
+  };
+  return (
+    <WalletCardPressableBase onPress={handleOnPress}>
+      <ItwCredentialCard {...props} />
+    </WalletCardPressableBase>
+  );
+};
 
 /**
  * Wrapper component which adds wallet capabilites to the ItwCredentialCard component
