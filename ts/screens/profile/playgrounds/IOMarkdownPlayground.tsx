@@ -111,7 +111,7 @@ Praesent commodo cursus magna, _vel scelerisque nisl consectetur et_. Donec sed 
 Curabitur blandit tempus porttitor. **_Nullam quis risus eget urna mollis ornare vel eu leo_**. Sed posuere consectetur est at lobortis.
 Vestibulum id ligula porta felis euismod semper. _Cras justo odio_, dapibus ac facilisis in, egestas eget quam. 
 Maecenas faucibus mollis interdum. **Donec ullamcorper nulla non metus auctor fringilla**.`;
-const LINK = "[This is a link](type here your URL)";
+const LINK = "[This is a link](type_here_your_URL)";
 
 const styles = StyleSheet.create({
   textInput: {
