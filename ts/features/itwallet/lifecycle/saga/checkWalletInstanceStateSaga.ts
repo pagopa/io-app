@@ -15,6 +15,7 @@ import { sessionTokenSelector } from "../../../../store/reducers/authentication"
 import { assert } from "../../../../utils/assert";
 import { itwCredentialsSelector } from "../../credentials/store/selectors";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { isIos } from "../../../../utils/platform";
 
 const getKeyTag = (credential: O.Option<StoredCredential>) =>
   pipe(
@@ -27,9 +28,14 @@ export function* handleWalletInstanceReset(integrityKeyTag: string) {
   yield* put(itwLifecycleWalletReset());
   yield* put(walletRemoveCardsByType("itw"));
 
-  // Remove all keys within the wallet
+  // Remove all keys within the wallet.
+  // On iOS skip the integrity key tag as it is managed by the App Attest service.
   const itwKeyTags = pipe(
-    [O.of(integrityKeyTag), getKeyTag(eid), ...credentials.map(getKeyTag)],
+    [
+      isIos ? O.none : O.of(integrityKeyTag),
+      getKeyTag(eid),
+      ...credentials.map(getKeyTag)
+    ],
     RA.filterMap(identity)
   );
   yield* all(itwKeyTags.map(deleteKey));
