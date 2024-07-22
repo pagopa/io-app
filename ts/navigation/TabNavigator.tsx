@@ -1,37 +1,27 @@
-import {
-  IOColors,
-  useIOTheme,
-  useIOThemeContext
-} from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { StyleSheet } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { makeFontStyleObject } from "../components/core/fonts";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
-import LegacyMessagesHomeScreen from "../features/messages/screens/legacy/LegacyMessagesHomeScreen";
+import { showBarcodeScanSection } from "../config";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesHomeScreen } from "../features/messages/screens/MessagesHomeScreen";
 import { WalletHomeScreen as NewWalletHomeScreen } from "../features/newWallet/screens/WalletHomeScreen";
 import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";
+import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
+import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
+import { useBottomTabNavigatorStyle } from "../hooks/useBottomTabNavigatorStyle";
 import I18n from "../i18n";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
-import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
-import {
-  isDesignSystemEnabledSelector,
-  isNewHomeSectionEnabledSelector
-} from "../store/reducers/persistedPreferences";
 import {
   isNewPaymentSectionEnabledSelector,
   isSettingsVisibleAndHideProfileSelector
 } from "../store/reducers/backendStatus";
+import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
-import variables from "../theme/variables";
-import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import { showBarcodeScanSection } from "../config";
 import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
@@ -39,52 +29,25 @@ import ROUTES from "./routes";
 
 const Tab = createBottomTabNavigator<MainTabParamsList>();
 
-const styles = StyleSheet.create({
-  tabBarStyle: {
-    paddingLeft: 3,
-    paddingRight: 3,
-    borderTopWidth: 0,
-    paddingTop: 8,
-    // iOS shadow
-    shadowColor: variables.footerShadowColor,
-    shadowOffset: {
-      width: variables.footerShadowOffsetWidth,
-      height: variables.footerShadowOffsetHeight
-    },
-    zIndex: 999,
-    shadowOpacity: variables.footerShadowOpacity,
-    shadowRadius: variables.footerShadowRadius,
-    // Android shadow
-    elevation: variables.footerElevation
-  }
-});
-
 export const MainTabNavigator = () => {
-  const navigation = useIONavigation();
-  const insets = useSafeAreaInsets();
   const theme = useIOTheme();
-  const { themeType } = useIOThemeContext();
+  const navigation = useIONavigation();
 
   const startupLoaded = useIOSelector(isStartupLoaded);
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isNewWalletSectionEnabled = useIOSelector(
     isNewPaymentSectionEnabledSelector
   );
-  const isNewHomeSectionEnabled = useIOSelector(
-    isNewHomeSectionEnabledSelector
-  );
 
   const isSettingsVisibleAndHideProfile = useIOSelector(
     isSettingsVisibleAndHideProfileSelector
   );
 
-  const tabBarHeight = 54;
-  const additionalPadding = 10;
-  const bottomInset = insets.bottom === 0 ? additionalPadding : insets.bottom;
-
   const navigateToBarcodeScanScreen = () => {
     navigation.navigate(ROUTES.BARCODE_SCAN);
   };
+
+  const tabBarStyle = useBottomTabNavigatorStyle();
 
   return (
     <LoadingSpinnerOverlay
@@ -110,27 +73,12 @@ export const MainTabNavigator = () => {
           tabBarAllowFontScaling: false,
           tabBarActiveTintColor: IOColors[theme["interactiveElem-default"]],
           tabBarInactiveTintColor: IOColors[theme["textBody-secondary"]],
-          tabBarStyle: [
-            styles.tabBarStyle,
-            {
-              height: tabBarHeight + bottomInset,
-              backgroundColor: IOColors[theme["appBackground-primary"]]
-            },
-            themeType === "dark" && {
-              borderTopColor: IOColors[theme["divider-default"]],
-              borderTopWidth: 1
-            },
-            insets.bottom === 0 ? { paddingBottom: additionalPadding } : {}
-          ]
+          tabBarStyle
         }}
       >
         <Tab.Screen
           name={MESSAGES_ROUTES.MESSAGES_HOME}
-          component={
-            isDesignSystemEnabled && isNewHomeSectionEnabled
-              ? MessagesHomeScreen
-              : LegacyMessagesHomeScreen
-          }
+          component={MessagesHomeScreen}
           options={{
             title: I18n.t("global.navigator.messages"),
             tabBarIcon: ({ color, focused }) => (

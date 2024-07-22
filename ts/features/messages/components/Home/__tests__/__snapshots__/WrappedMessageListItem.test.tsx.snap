@@ -332,7 +332,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                       }
                     >
                       <View
-                        accessibilityLabel="Message, received by Organization name, Service name. Message title. 
+                        accessibilityLabel="Message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
@@ -421,6 +421,8 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -484,13 +486,18 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -1357,7 +1364,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                       }
                     >
                       <View
-                        accessibilityLabel="Unread message, received by Organization name, Service name. Message title. 
+                        accessibilityLabel="Unread message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
@@ -1446,6 +1453,8 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -1509,13 +1518,18 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -2437,7 +2451,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                       }
                     >
                       <View
-                        accessibilityLabel="Message, received by Organization name, Service name. Message title. 
+                        accessibilityLabel="Message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
@@ -2526,6 +2540,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -2710,13 +2726,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -3493,7 +3514,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                       }
                     >
                       <View
-                        accessibilityLabel="Unread message, received by Organization name, Service name. Message title. 
+                        accessibilityLabel="Unread message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
@@ -3582,6 +3603,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -3766,13 +3789,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -4604,7 +4632,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                       }
                     >
                       <View
-                        accessibilityLabel="Message, received by Organization name, Service name. Message title. 
+                        accessibilityLabel="Message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
@@ -4693,6 +4721,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -4877,13 +4907,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -5535,7 +5570,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                       }
                     >
                       <View
-                        accessibilityLabel="Unread message, received by Organization name, Service name. Message title. 
+                        accessibilityLabel="Unread message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
@@ -5624,6 +5659,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -5808,13 +5845,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -6521,7 +6563,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                       }
                     >
                       <View
-                        accessibilityLabel="Message, received by Organization name, Service name. Message title. 
+                        accessibilityLabel="Message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
@@ -6610,6 +6652,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -6673,13 +6717,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -7331,7 +7380,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                       }
                     >
                       <View
-                        accessibilityLabel="Unread message, received by Organization name, Service name. Message title. 
+                        accessibilityLabel="Unread message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
@@ -7420,6 +7469,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -7483,13 +7534,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
