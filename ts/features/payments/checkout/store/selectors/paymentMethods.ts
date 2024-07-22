@@ -121,12 +121,15 @@ export const notHasValidPaymentMethodsSelector = createSelector(
   walletPaymentAllMethodsSelector,
   walletPaymentEnabledUserWalletsSelector,
   walletPaymentDetailsSelector,
-  (allMethodsPot, userWalletsPot, paymentDetailsPot) => {
-    const allMethods = pipe(
-      allMethodsPot,
-      pot.toOption,
-      O.getOrElse(() => [] as PaymentMethodsResponse["paymentMethods"])
-    );
+  (_allMethodsPot, userWalletsPot, paymentDetailsPot) => {
+    // TODO: Uncomment the following lines when the "payment as a guest" feature will be implemented
+    // ========================================
+    // const allMethods = pipe(
+    //   allMethodsPot,
+    //   pot.toOption,
+    //   O.getOrElse(() => [] as PaymentMethodsResponse["paymentMethods"])
+    // );
+    // ========================================
     const userWallets = pipe(
       userWalletsPot,
       pot.toOption,
@@ -134,8 +137,8 @@ export const notHasValidPaymentMethodsSelector = createSelector(
     );
 
     return (
-      pot.isSome(allMethodsPot) &&
-      _.isEmpty(allMethods) &&
+      // pot.isSome(allMethodsPot) &&
+      // _.isEmpty(allMethods) &&
       pot.isSome(userWalletsPot) &&
       _.isEmpty(userWallets) &&
       pot.isSome(paymentDetailsPot)
