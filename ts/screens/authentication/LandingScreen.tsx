@@ -22,7 +22,6 @@ import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../components/SectionStatus";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import { privacyUrl } from "../../config";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
 import {
@@ -45,6 +44,7 @@ import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../utils/url";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { setAccessibilityFocus } from "../../utils/accessibility";
+import { tosConfigSelector } from "../../features/tos/store/selectors";
 import {
   trackCieLoginSelected,
   trackMethodInfo,
@@ -70,6 +70,9 @@ const SPACE_AROUND_BUTTON_LINK = 16;
 export const LandingScreen = () => {
   const accessibilityFirstFocuseViewRef = React.useRef<View>(null);
   const insets = useSafeAreaInsets();
+
+  const tosConfig = useIOSelector(tosConfigSelector);
+  const privacyUrl = tosConfig.tos_url;
 
   const [isRootedOrJailbroken, setIsRootedOrJailbroken] = React.useState<
     O.Option<boolean>
@@ -185,7 +188,7 @@ export const LandingScreen = () => {
   const navigateToPrivacyUrl = React.useCallback(() => {
     trackMethodInfo();
     openWebUrl(privacyUrl);
-  }, []);
+  }, [privacyUrl]);
 
   const navigateToCieUatSelectionScreen = React.useCallback(() => {
     if (isCieSupported()) {
