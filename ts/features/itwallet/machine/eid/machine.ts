@@ -1,14 +1,25 @@
-import { assign, fromPromise, setup } from "xstate5";
+import { assign, fromPromise, setup, ErrorActorEvent } from "xstate5";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { WalletAttestationResult } from "../../common/utils/itwAttestationUtils";
 import { ItwTags } from "../tags";
-import { Context, InitialContext } from "./context";
+import { CieAuthContext, Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
-import { type RequestEidActorParams } from "./actors";
+import {
+  GetWalletAttestationActorParams,
+  StartCieAuthFlowActorParams,
+  type RequestEidActorParams
+} from "./actors";
 import { IssuanceFailureType } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
 };
+
+const setFailure =
+  (type: IssuanceFailureType) =>
+  ({ event }: { event: ErrorActorEvent }): Partial<Context> => ({
+    failure: { type, reason: event.error }
+  });
 
 export const itwEidIssuanceMachine = setup({
   types: {
@@ -25,6 +36,8 @@ export const itwEidIssuanceMachine = setup({
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToCredentialCatalog: notImplemented,
+    navigateToCiePinScreen: notImplemented,
+    navigateToCieReadCardScreen: notImplemented,
     storeIntegrityKeyTag: (_ctx, _params: { keyTag: string }) =>
       notImplemented(),
     storeEidCredential: notImplemented,
@@ -35,7 +48,14 @@ export const itwEidIssuanceMachine = setup({
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
+    getWalletAttestation: fromPromise<
+      WalletAttestationResult,
+      GetWalletAttestationActorParams
+    >(notImplemented),
     requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
+      notImplemented
+    ),
+    startCieAuthFlow: fromPromise<CieAuthContext, StartCieAuthFlowActorParams>(
       notImplemented
     )
   },
@@ -68,6 +88,10 @@ export const itwEidIssuanceMachine = setup({
             target: "WalletInstanceCreation"
           },
           {
+            guard: ({ context }) => !context.walletAttestationContext,
+            target: "WalletInstanceAttestationObtainment"
+          },
+          {
             target: "UserIdentification"
           }
         ]
@@ -90,15 +114,29 @@ export const itwEidIssuanceMachine = setup({
             },
             { type: "setWalletInstanceToOperational" }
           ],
+          target: "WalletInstanceAttestationObtainment"
+        },
+        onError: {
+          actions: assign(setFailure(IssuanceFailureType.UNSUPPORTED_DEVICE)),
+          target: "#itwEidIssuanceMachine.Failure"
+        }
+      }
+    },
+    WalletInstanceAttestationObtainment: {
+      description:
+        "This state obtains the wallet instance attestation and stores it in the context for later use in the issuance flow.",
+      tags: [ItwTags.Loading],
+      invoke: {
+        src: "getWalletAttestation",
+        input: ({ context }) => ({ integrityKeyTag: context.integrityKeyTag }),
+        onDone: {
+          actions: assign(({ event }) => ({
+            walletAttestationContext: event.output
+          })),
           target: "UserIdentification"
         },
         onError: {
-          actions: assign(({ event }) => ({
-            failure: {
-              type: IssuanceFailureType.UNSUPPORTED_DEVICE,
-              reason: event.error
-            }
-          })),
+          actions: assign(setFailure(IssuanceFailureType.UNSUPPORTED_DEVICE)),
           target: "#itwEidIssuanceMachine.Failure"
         }
       }
@@ -144,7 +182,58 @@ export const itwEidIssuanceMachine = setup({
           }
         },
         CiePin: {
-          // TODO
+          entry: "navigateToCiePinScreen",
+          on: {
+            "cie-pin-entered": {
+              actions: assign(({ event }) => ({
+                identification: { mode: "ciePin", pin: event.pin }
+              })),
+              target: "StartingCieAuthFlow"
+            },
+            back: {
+              target: "ModeSelection"
+            }
+          }
+        },
+        StartingCieAuthFlow: {
+          description:
+            "Start the preliminary phase of the CIE identification flow.",
+          tags: [ItwTags.Loading],
+          invoke: {
+            src: "startCieAuthFlow",
+            input: ({ context }) => ({
+              walletAttestationContext: context.walletAttestationContext
+            }),
+            onDone: {
+              actions: assign(({ event }) => ({
+                cieAuthContext: event.output
+              })),
+              target: "ReadingCieCard"
+            },
+            onError: {
+              actions: assign(setFailure(IssuanceFailureType.GENERIC)),
+              target: "#itwEidIssuanceMachine.Failure"
+            }
+          }
+        },
+        ReadingCieCard: {
+          description:
+            "Read the CIE card and get back a url to continue the PID issuing flow.",
+          entry: "navigateToCieReadCardScreen",
+          on: {
+            "cie-identification-completed": {
+              target: "#itwEidIssuanceMachine.UserIdentification.Completed",
+              actions: assign(({ context, event }) => ({
+                cieAuthContext: {
+                  ...context.cieAuthContext!,
+                  callbackUrl: event.url
+                }
+              }))
+            },
+            back: {
+              target: "CiePin"
+            }
+          }
         },
         Completed: {
           type: "final"
@@ -166,8 +255,9 @@ export const itwEidIssuanceMachine = setup({
           invoke: {
             src: "requestEid",
             input: ({ context }) => ({
-              integrityKeyTag: context.integrityKeyTag,
-              identification: context.identification
+              identification: context.identification,
+              cieAuthContext: context.cieAuthContext,
+              walletAttestationContext: context.walletAttestationContext
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),
@@ -179,12 +269,7 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.UserIdentification"
               },
               {
-                actions: assign(({ event }) => ({
-                  failure: {
-                    type: IssuanceFailureType.GENERIC,
-                    reason: event.error
-                  }
-                })),
+                actions: assign(setFailure(IssuanceFailureType.GENERIC)),
                 target: "#itwEidIssuanceMachine.Failure"
               }
             ]
@@ -199,9 +284,9 @@ export const itwEidIssuanceMachine = setup({
               target: "#itwEidIssuanceMachine.Issuance.DisplayingPreview"
             },
             {
-              actions: assign(() => ({
-                failure: { type: IssuanceFailureType.NOT_MATCHING_IDENTITY }
-              })),
+              actions: assign(
+                setFailure(IssuanceFailureType.NOT_MATCHING_IDENTITY)
+              ),
               target: "#itwEidIssuanceMachine.Failure"
             }
           ]

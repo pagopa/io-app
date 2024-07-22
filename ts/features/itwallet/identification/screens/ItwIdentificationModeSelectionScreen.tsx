@@ -8,7 +8,6 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
-import { Alert } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -45,7 +44,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
 
   const handleCiePinPress = () => {
     if (isNfcEnabled) {
-      Alert.alert("Not implemented");
+      machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
     } else {
       navigation.navigate(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.IDENTIFICATION.NFC_INSTRUCTIONS

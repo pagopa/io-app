@@ -20,13 +20,13 @@ export const ItwActivateNfcScreen = () => {
     useNavigation<
       IOStackNavigationProp<
         ItwParamsList,
-        typeof ITW_ROUTES.ISSUANCE.EID_CIE.ACTIVATE_NFC
+        typeof ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC
       >
     >();
   const route =
     useRoute<
       Route<
-        typeof ITW_ROUTES.ISSUANCE.EID_CIE.ACTIVATE_NFC,
+        typeof ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC,
         CieCardReaderScreenNavigationParams
       >
     >();

@@ -17,8 +17,7 @@ import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidRe
 import { ItwIssuanceEidFailureScreen } from "../issuance/screens/ItwIssuanceEidFailureScreen";
 import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
 import { ItwCiePinScreen } from "../identification/screens/cie/ItwCiePinScreen";
-import { ItwCieConsentDataUsageScreen } from "../identification/screens/cie/ItwCieConsentDataUsageScreen";
-import { ItwCieCardReaderScreenWrapper } from "../identification/screens/cie/ItwCieCardReaderScreenWrapper";
+import { ItwCieCardReaderScreen } from "../identification/screens/cie/ItwCieCardReaderScreen";
 import { ItwCieWrongCiePinScreen } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
 import { ItwCieWrongCardScreen } from "../identification/screens/cie/ItwCieWrongCardScreen";
 import { ItwActivateNfcScreen } from "../identification/screens/cie/ItwActivateNfcScreen";
@@ -85,23 +84,18 @@ const InnerNavigator = () => {
         name={ITW_ROUTES.IDENTIFICATION.IDP_SELECTION}
         component={ItwIdentificationIdpSelectionScreen}
       />
-      {/* ISSUANCE CIE PIN */}
+      {/* IDENTIFICATION CIE + PIN */}
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.EID_CIE.PIN_SCREEN}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN}
         component={ItwCiePinScreen}
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.EID_CIE.CARD_READER_SCREEN}
-        component={ItwCieCardReaderScreenWrapper}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN}
+        component={ItwCieCardReaderScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.EID_CIE.CONSENT_DATA_USAGE}
-        component={ItwCieConsentDataUsageScreen}
-        options={hiddenHeader}
-      />
-      <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.EID_CIE.ACTIVATE_NFC}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC}
         component={ItwActivateNfcScreen}
       />
       <Stack.Group
@@ -115,19 +109,19 @@ const InnerNavigator = () => {
         }}
       >
         <Stack.Screen
-          name={ITW_ROUTES.ISSUANCE.EID_CIE.WRONG_PIN}
+          name={ITW_ROUTES.IDENTIFICATION.CIE.WRONG_PIN}
           component={ItwCieWrongCiePinScreen}
         />
         <Stack.Screen
-          name={ITW_ROUTES.ISSUANCE.EID_CIE.WRONG_CARD}
+          name={ITW_ROUTES.IDENTIFICATION.CIE.WRONG_CARD}
           component={ItwCieWrongCardScreen}
         />
         <Stack.Screen
-          name={ITW_ROUTES.ISSUANCE.EID_CIE.UNEXPECTED_ERROR}
+          name={ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR}
           component={ItwCieUnexpectedErrorScreen}
         />
         <Stack.Screen
-          name={ITW_ROUTES.ISSUANCE.EID_CIE.CIE_EXPIRED_SCREEN}
+          name={ITW_ROUTES.IDENTIFICATION.CIE.CIE_EXPIRED_SCREEN}
           component={ItwCieExpiredOrInvalidScreen}
         />
       </Stack.Group>

@@ -21,7 +21,7 @@ export const ItwCieWrongCiePinScreen = () => {
   const route =
     useRoute<
       Route<
-        typeof ITW_ROUTES.ISSUANCE.EID_CIE.WRONG_PIN,
+        typeof ITW_ROUTES.IDENTIFICATION.CIE.WRONG_PIN,
         CieWrongCiePinScreenNavigationParams
       >
     >();
@@ -29,7 +29,7 @@ export const ItwCieWrongCiePinScreen = () => {
 
   const navigateToCiePinScreen = React.useCallback(() => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.EID_CIE.PIN_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN
     });
   }, [navigation]);
 

@@ -5,6 +5,7 @@ import {
   WalletInstanceAttestation,
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
+import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import uuid from "react-native-uuid";
 import { itwWalletProviderBaseUrl } from "../../../../config";
 import { createItWalletFetch } from "../../api/client";
@@ -43,28 +44,36 @@ export const registerWalletInstance = async (
   });
 };
 
+export type WalletAttestationResult = {
+  walletAttestation: string;
+  walletAttestationKeyTag: string;
+  wiaCryptoContext: CryptoContext;
+};
+
 /**
  * Getter for the wallet attestation binded to the wallet instance created with the given hardwareKeyTag.
  * @param hardwareKeyTag - the hardware key tag of the wallet instance
- * @return the wallet attestation
+ * @return the wallet attestation and the related key tag
  */
 export const getAttestation = async (
   hardwareKeyTag: string,
   sessionToken: SessionToken
-): Promise<string> => {
+): Promise<WalletAttestationResult> => {
   const integrityContext = getIntegrityContext(hardwareKeyTag);
 
-  const ephemeralKey = uuid.v4().toString();
+  const walletAttestationKeyTag = uuid.v4().toString();
 
-  await generate(ephemeralKey);
-  const wiaCryptoContext = createCryptoContextFor(ephemeralKey);
+  await generate(walletAttestationKeyTag);
+  const wiaCryptoContext = createCryptoContextFor(walletAttestationKeyTag);
 
   const appFetch = createItWalletFetch(itwWalletProviderBaseUrl, sessionToken);
 
-  return WalletInstanceAttestation.getAttestation({
+  const walletAttestation = await WalletInstanceAttestation.getAttestation({
     wiaCryptoContext,
     integrityContext,
     walletProviderBaseUrl: itwWalletProviderBaseUrl,
     appFetch
   });
+
+  return { walletAttestation, walletAttestationKeyTag, wiaCryptoContext };
 };

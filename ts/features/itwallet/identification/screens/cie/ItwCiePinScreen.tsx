@@ -8,18 +8,8 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
-import {
-  useFocusEffect,
-  useIsFocused,
-  useNavigation
-} from "@react-navigation/native";
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -27,24 +17,16 @@ import {
   ScrollView,
   View
 } from "react-native";
+import { useSelector } from "@xstate5/react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import {
-  CieEntityIds,
-  CieRequestAuthenticationOverlay
-} from "../../../common/components/ItwCieRequestAuthenticationOverlay";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
-import {
-  BottomTopAnimation,
-  LightModalContext
-} from "../../../../../components/ui/LightModal";
 import LegacyMarkdown from "../../../../../components/ui/Markdown/LegacyMarkdown";
 import { pinPukHelpUrl } from "../../../../../config";
 import { isCieLoginUatEnabledSelector } from "../../../../../features/cieLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../../../../features/cieLogin/utils";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
@@ -55,11 +37,11 @@ import {
   trackLoginCiePinInfo,
   trackLoginCiePinScreen
 } from "../../../../../screens/authentication/analytics/cieAnalytics"; // TODO: separate cie analytics?
-import { getIdpLoginUri } from "../../../../../utils/login";
-import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { itwNfcIsEnabled } from "../../store/actions";
 import { itwIsNfcEnabledSelector } from "../../store/selectors";
+import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { selectIsLoading } from "../../../machine/eid/selectors";
+import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -69,56 +51,54 @@ const getContextualHelp = (): ContextualHelpPropsMarkdown => ({
 });
 const onOpenForgotPinPage = () => openWebUrl(pinPukHelpUrl);
 
+const ForgottenPin = () => (
+  <View>
+    <LegacyMarkdown avoidTextSelection>
+      {I18n.t("bottomSheets.ciePin.content")}
+    </LegacyMarkdown>
+    <VSpacer size={24} />
+    <LabelLink onPress={onOpenForgotPinPage}>
+      {I18n.t("authentication.cie.pin.bottomSheetCTA")}
+    </LabelLink>
+    <VSpacer size={24} />
+  </View>
+);
+
 export const ItwCiePinScreen = () => {
-  useOnFirstRender(() => {
-    trackLoginCiePinScreen();
+  const dispatch = useIODispatch();
+  const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const isEnabled = useIOSelector(itwIsNfcEnabledSelector);
+  const isNfcEnabled = pot.getOrElse(isEnabled, false);
+
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isMachineLoading = useSelector(machineRef, selectIsLoading);
+
+  const [pin, setPin] = useState("");
+  const pinPadViewRef = useRef<View>(null);
+
+  const headerHeight = useHeaderHeight();
+  const isFocused = useIsFocused();
+
+  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
+    component: <ForgottenPin />,
+    title: I18n.t("bottomSheets.ciePin.title")
   });
 
-  const dispatch = useIODispatch();
+  useOnFirstRender(trackLoginCiePinScreen);
 
   const requestNfcEnabledCheck = useCallback(
     () => dispatch(itwNfcIsEnabled.request()),
     [dispatch]
   );
 
-  const { showAnimatedModal, hideModal } = useContext(LightModalContext);
-  const navigation =
-    useNavigation<
-      IOStackNavigationProp<
-        ItwParamsList,
-        typeof ITW_ROUTES.ISSUANCE.EID_CIE.PIN_SCREEN
-      >
-    >();
-  const [pin, setPin] = useState("");
-  const pinPadViewRef = useRef<View>(null);
-  const [authUrlGenerated, setAuthUrlGenerated] = useState<string | undefined>(
-    undefined
-  );
-  const isEnabled = useIOSelector(itwIsNfcEnabledSelector);
-  const isNfcEnabled = pot.getOrElse(isEnabled, false);
-  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
-    component: (
-      <View>
-        <LegacyMarkdown avoidTextSelection>
-          {I18n.t("bottomSheets.ciePin.content")}
-        </LegacyMarkdown>
-        <VSpacer size={24} />
-        <LabelLink onPress={onOpenForgotPinPage}>
-          {I18n.t("authentication.cie.pin.bottomSheetCTA")}
-        </LabelLink>
-        <VSpacer size={24} />
-      </View>
-    ),
-    title: I18n.t("bottomSheets.ciePin.title")
-  });
-
-  const handleAuthenticationOverlayOnClose = useCallback(() => {
-    setPin("");
-    setAuthUrlGenerated(undefined);
-    hideModal();
-  }, [hideModal]);
-
   useEffect(() => {
+    // Reset the pin when the user leaves the screen.
+    if (!isFocused) {
+      setPin("");
+    }
+  }, [isFocused]);
+
+  /* useEffect(() => {
     if (authUrlGenerated !== undefined) {
       if (cieFlowForDevServerEnabled) {
         const loginUri = getIdpLoginUri(CieEntityIds.PROD, 3);
@@ -147,28 +127,15 @@ export const ItwCiePinScreen = () => {
     navigation,
     pin
   ]);
-
-  const showModal = useCallback(() => {
-    requestNfcEnabledCheck();
-    Keyboard.dismiss();
-    showAnimatedModal(
-      <CieRequestAuthenticationOverlay
-        onClose={handleAuthenticationOverlayOnClose}
-        onSuccess={setAuthUrlGenerated}
-      />,
-      BottomTopAnimation
-    );
-  }, [
-    handleAuthenticationOverlayOnClose,
-    requestNfcEnabledCheck,
-    showAnimatedModal
-  ]);
+  */
 
   useEffect(() => {
     if (pin.length === CIE_PIN_LENGTH) {
-      showModal();
+      requestNfcEnabledCheck();
+      Keyboard.dismiss();
+      machineRef.send({ type: "cie-pin-entered", pin });
     }
-  }, [pin, showModal]);
+  }, [pin, machineRef, requestNfcEnabledCheck]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -176,19 +143,20 @@ export const ItwCiePinScreen = () => {
     }, [])
   );
 
-  const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
-
   useHeaderSecondLevel({
     title: withTrailingPoliceCarLightEmojii("", useCieUat),
     supportRequest: true,
     contextualHelpMarkdown: getContextualHelp()
   });
 
-  const headerHeight = useHeaderHeight();
-  const isFocused = useIsFocused();
+  if (isMachineLoading) {
+    return (
+      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+    );
+  }
 
   return (
-    <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
+    <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
       <KeyboardAvoidingView
         behavior={Platform.select({
           ios: "padding",

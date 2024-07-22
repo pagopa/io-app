@@ -98,6 +98,18 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
+  navigateToCiePinScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN
+    });
+  },
+
+  navigateToCieReadCardScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN
+    });
+  },
+
   closeIssuance: () => {
     navigation.popToTop();
   },

@@ -41,6 +41,16 @@ export type SelectSpidIdp = {
   idp: LocalIdpsFallback;
 };
 
+export type CiePinEntered = {
+  type: "cie-pin-entered";
+  pin: string;
+};
+
+export type CieIdentificationCompleted = {
+  type: "cie-identification-completed";
+  url: string;
+};
+
 export type Retry = {
   type: "retry";
 };
@@ -59,6 +69,8 @@ export type EidIssuanceEvents =
   | AcceptTos
   | SelectIdentificationMode
   | SelectSpidIdp
+  | CiePinEntered
+  | CieIdentificationCompleted
   | AddToWallet
   | GoToWallet
   | AddNewCredential
