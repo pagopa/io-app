@@ -1,8 +1,3 @@
-/**
- * A screen to guide the user to proper read the CIE
- * TODO: isolate cie event listener as saga
- * TODO: when 100% is reached, the animation end
- */
 import {
   ButtonLink,
   ContentWrapper,
@@ -15,61 +10,22 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-import React, {
-  createRef,
-  memo,
-  useCallback,
-  useEffect,
-  useRef,
-  useState
-} from "react";
-import {
-  AccessibilityInfo,
-  Platform,
-  ScrollView,
-  Text,
-  Vibration,
-  View,
-  StyleSheet
-} from "react-native";
+import React, { memo, useCallback, useRef, useState } from "react";
+import { Platform, ScrollView, View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { Cie } from "@pagopa/io-react-native-wallet";
 import { useSelector } from "@xstate5/react";
 import CieCardReadingAnimation, {
   ReadingState
 } from "../../../../../components/cie/CieCardReadingAnimation";
-import { isCieLoginUatEnabledSelector } from "../../../../../features/cieLogin/store/selectors";
-import { getCieUatEndpoint } from "../../../../../features/cieLogin/utils/endpoints";
 import I18n from "../../../../../i18n";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import {
-  CieAuthenticationErrorPayload,
-  CieAuthenticationErrorReason,
-  cieAuthenticationError
-} from "../../../../../store/actions/cie";
-import { ReduxProps } from "../../../../../store/actions/types";
-import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus";
-import { GlobalState } from "../../../../../store/reducers/types";
 import {
   setAccessibilityFocus,
   useScreenReaderEnabled
 } from "../../../../../utils/accessibility";
 import { isDevEnv } from "../../../../../utils/environment";
-import {
-  assistanceToolRemoteConfig,
-  handleSendAssistanceLog
-} from "../../../../../utils/supportAssistance";
-import {
-  trackLoginCieCardReaderScreen,
-  trackLoginCieCardReadingError,
-  trackLoginCieCardReadingSuccess
-} from "../../../../../screens/authentication/analytics/cieAnalytics"; // TODO: separate cie analytics?
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { useInteractiveElementDefaultColorName } from "../../../../../utils/hooks/theme";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
@@ -77,40 +33,10 @@ import {
   selectCieAuthUrlOption,
   selectCiePin
 } from "../../../machine/eid/selectors";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
 
 // This can be any URL, as long as it has http or https as its protocol, otherwise it cannot be managed by the webview.
 const CIE_L3_REDIRECT_URI = "https://cie.callback";
-
-export type CieCardReaderScreenNavigationParams = {
-  ciePin: string;
-  authorizationUri: string;
-};
-
-export type CieCardReaderNavigationProps = IOStackNavigationRouteProps<
-  ItwParamsList,
-  "ITW_IDENTIFICATION_CIE_CARD_READER_SCREEN"
->;
-
-enum FlowStep {
-  AUTHENTICATION,
-  CONSENT
-}
-
-type State = {
-  // Get the current status of the card reading
-  readingState: ReadingState;
-  title: string;
-  subtitle?: string;
-  content?: string;
-  errorMessage?: string;
-  isScreenReaderEnabled: boolean;
-};
-
-type setErrorParameter = {
-  eventReason: CieAuthenticationErrorReason;
-  errorDescription?: string;
-  navigation?: () => void;
-};
 
 const getPictogramName = (state: ReadingState): IOPictograms => {
   switch (state) {
@@ -128,42 +54,6 @@ const getPictogramName = (state: ReadingState): IOPictograms => {
   }
 };
 
-// A subset of Cie Events (errors) which is of interest to analytics
-const analyticActions = new Map<CieAuthenticationErrorReason, string>([
-  // Reading interrupted before the sdk complete the reading
-  ["Transmission Error", I18n.t("authentication.cie.card.error.onTagLost")],
-  ["ON_TAG_LOST", I18n.t("authentication.cie.card.error.onTagLost")],
-  [
-    "TAG_ERROR_NFC_NOT_SUPPORTED",
-    I18n.t("authentication.cie.card.error.unknownCardContent")
-  ],
-  [
-    "ON_TAG_DISCOVERED_NOT_CIE",
-    I18n.t("authentication.cie.card.error.unknownCardContent")
-  ],
-  ["PIN Locked", I18n.t("authentication.cie.card.error.generic")],
-  ["ON_CARD_PIN_LOCKED", I18n.t("authentication.cie.card.error.generic")],
-  ["ON_PIN_ERROR", I18n.t("authentication.cie.card.error.tryAgain")],
-  ["PIN_INPUT_ERROR", ""],
-  ["CERTIFICATE_EXPIRED", I18n.t("authentication.cie.card.error.generic")],
-  ["CERTIFICATE_REVOKED", I18n.t("authentication.cie.card.error.generic")],
-  ["AUTHENTICATION_ERROR", I18n.t("authentication.cie.card.error.generic")],
-  [
-    "EXTENDED_APDU_NOT_SUPPORTED",
-    I18n.t("authentication.cie.nfc.apduNotSupported")
-  ],
-  [
-    "ON_NO_INTERNET_CONNECTION",
-    I18n.t("authentication.cie.card.error.tryAgain")
-  ],
-  ["STOP_NFC_ERROR", ""],
-  ["START_NFC_ERROR", ""]
-]);
-
-// the timeout we sleep until move to consent form screen when authentication goes well
-const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
-const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
-const VIBRATION = 100 as Millisecond;
 const accessibityTimeout = 100 as Millisecond;
 
 type TextForState = {
@@ -175,8 +65,8 @@ type TextForState = {
 // some texts changes depending on current running Platform
 const getTextForState = (
   state: ReadingState,
-  errorMessage: string = "",
-  isScreenReaderEnabled?: boolean
+  isScreenReaderEnabled: boolean,
+  errorMessage: string = ""
 ): TextForState => {
   const texts: Record<ReadingState, TextForState> = {
     [ReadingState.waiting_card]: Platform.select({
@@ -221,7 +111,7 @@ const getTextForState = (
 };
 
 export const ItwCieCardReaderScreen = () => {
-  const navigation = useIONavigation();
+  const navigation = useNavigation<StackNavigationProp<ItwParamsList>>();
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const ciePin = useSelector(machineRef, selectCiePin);
@@ -230,12 +120,10 @@ export const ItwCieCardReaderScreen = () => {
   const [readingState, setReadingState] = useState(ReadingState.waiting_card);
 
   const blueColorName = useInteractiveElementDefaultColorName();
-  const isCieUat = true; // useIOSelector(isCieLoginUatEnabledSelector);
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
   const { title, subtitle, content } = getTextForState(
     readingState,
-    "",
     isScreenReaderEnabled
   );
 
@@ -262,27 +150,21 @@ export const ItwCieCardReaderScreen = () => {
     switch (error.type) {
       case Cie.CieErrorType.PIN_LOCKED:
       case Cie.CieErrorType.PIN_ERROR:
-        navigation.navigate(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.IDENTIFICATION.CIE.WRONG_PIN,
-          params: { remainingCount: error.attemptsLeft ?? 0 }
+        navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.WRONG_PIN, {
+          remainingCount: error.attemptsLeft ?? 0
         });
         break;
       case Cie.CieErrorType.TAG_NOT_VALID:
-        navigation.navigate(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.IDENTIFICATION.CIE.WRONG_CARD
-        });
+        navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.WRONG_CARD);
         break;
       case Cie.CieErrorType.CERTIFICATE_ERROR:
-        navigation.navigate(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.IDENTIFICATION.CIE.CIE_EXPIRED_SCREEN
-        });
+        navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.CIE_EXPIRED_SCREEN);
         break;
       case Cie.CieErrorType.AUTHENTICATION_ERROR:
-        navigation.navigate(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR
-        });
+        navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR);
         break;
       case Cie.CieErrorType.NFC_ERROR:
+      default:
         setReadingState(ReadingState.error);
     }
   };
@@ -343,7 +225,7 @@ export const ItwCieCardReaderScreen = () => {
           <Cie.WebViewComponent
             authUrl={cieAuthUrl.value}
             pin={ciePin}
-            useUat={isCieUat}
+            useUat={isDevEnv}
             onEvent={handleCieReadEvent}
             onSuccess={handleCieReadSuccess}
             onError={handleCieReadError}
