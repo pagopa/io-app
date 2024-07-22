@@ -19,6 +19,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { isLoadingServiceByIdSelector } from "../../../services/details/store/reducers";
 import {
+  isPaymentMessageWithPaidNoticeSelector,
   messagePagePotFromCategorySelector,
   shownMessageCategorySelector
 } from "../../store/reducers/allPaginated";
@@ -39,6 +40,7 @@ export type LayoutInfo = {
   offset: number;
 };
 
+export const minDelayBetweenNavigationMilliseconds = 750;
 export const nextPageLoadingWaitMillisecondsGenerator = () => 2000;
 export const refreshIntervalMillisecondsGenerator = () => 60000;
 
@@ -240,17 +242,20 @@ const isDoingAnAsyncOperationOnMessages = (state: GlobalState) =>
 
 export const generateMessageListLayoutInfo = (
   loadingList: ReadonlyArray<number>,
-  messageList: ReadonlyArray<UIMessage> | undefined
+  messageList: ReadonlyArray<UIMessage> | undefined,
+  state: GlobalState
 ) => {
   if (messageList) {
     const messageListLayoutInfo: Array<LayoutInfo> = [];
     // eslint-disable-next-line functional/no-let
     for (let i = 0; i < messageList.length; i++) {
       const message = messageList[i];
+      const messageHasBadge =
+        message.category.tag === TagEnum.PN ||
+        isPaymentMessageWithPaidNoticeSelector(state, message.category);
       const itemLayoutInfo: LayoutInfo = {
         index: i,
-        length:
-          message.category.tag === TagEnum.PN ? EnhancedHeight : StandardHeight,
+        length: messageHasBadge ? EnhancedHeight : StandardHeight,
         offset:
           i > 0
             ? messageListLayoutInfo[i - 1].offset +

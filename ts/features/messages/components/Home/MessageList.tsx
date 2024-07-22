@@ -70,8 +70,13 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
     }, [safeAreaFrame.height, safeAreaInsets.top, safeAreaInsets.bottom]);
 
     const layoutInfo: ReadonlyArray<LayoutInfo> = useMemo(
-      () => generateMessageListLayoutInfo(loadingList, messageList),
-      [loadingList, messageList]
+      () =>
+        generateMessageListLayoutInfo(
+          loadingList,
+          messageList,
+          store.getState()
+        ),
+      [loadingList, messageList, store]
     );
     const getItemLayoutCallback = useCallback(
       (_: ArrayLike<UIMessage | number> | null | undefined, index: number) =>
