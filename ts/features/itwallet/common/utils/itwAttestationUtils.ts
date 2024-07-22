@@ -7,7 +7,8 @@ import {
 } from "@pagopa/io-react-native-wallet";
 import uuid from "react-native-uuid";
 import { itwWalletProviderBaseUrl } from "../../../../config";
-import { defaultRetryingFetch } from "../../../../utils/fetch";
+import { createItWalletFetch } from "../../api/client";
+import { SessionToken } from "../../../../types/SessionToken";
 import {
   ensureIntegrityServiceIsReady,
   generateIntegrityHardwareKeyTag,
@@ -27,13 +28,18 @@ export const getIntegrityHardwareKeyTag = async (): Promise<string> => {
  * Register a new wallet instance with hardwareKeyTag.
  * @param hardwareKeyTag - the hardware key tag of the integrity Context
  */
-export const registerWalletInstance = async (hardwareKeyTag: string) => {
+export const registerWalletInstance = async (
+  hardwareKeyTag: string,
+  sessionToken: SessionToken
+) => {
   const integrityContext = getIntegrityContext(hardwareKeyTag);
   // Check if the wallet instance has been revoked
+  // This must be used only for API calls mediated through our backend which are related to the wallet instance only
+  const appFetch = createItWalletFetch(itwWalletProviderBaseUrl, sessionToken);
   await WalletInstance.createWalletInstance({
     integrityContext,
     walletProviderBaseUrl: itwWalletProviderBaseUrl,
-    appFetch: defaultRetryingFetch()
+    appFetch
   });
 };
 
@@ -43,7 +49,8 @@ export const registerWalletInstance = async (hardwareKeyTag: string) => {
  * @return the wallet attestation
  */
 export const getAttestation = async (
-  hardwareKeyTag: string
+  hardwareKeyTag: string,
+  sessionToken: SessionToken
 ): Promise<string> => {
   const integrityContext = getIntegrityContext(hardwareKeyTag);
 
@@ -52,10 +59,12 @@ export const getAttestation = async (
   await generate(ephemeralKey);
   const wiaCryptoContext = createCryptoContextFor(ephemeralKey);
 
+  const appFetch = createItWalletFetch(itwWalletProviderBaseUrl, sessionToken);
+
   return WalletInstanceAttestation.getAttestation({
     wiaCryptoContext,
     integrityContext,
     walletProviderBaseUrl: itwWalletProviderBaseUrl,
-    appFetch: defaultRetryingFetch()
+    appFetch
   });
 };

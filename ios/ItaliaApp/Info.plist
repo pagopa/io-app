@@ -30,11 +30,12 @@
         <key>CFBundleURLSchemes</key>
         <array>
           <string>ioit</string>
+          <string>iowalletcie</string>
         </array>
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>0</string>
+    <string>2</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSApplicationQueriesSchemes</key>
