@@ -24,7 +24,6 @@ import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/B
 import LegacyMarkdown from "../../../../../components/ui/Markdown/LegacyMarkdown";
 import { pinPukHelpUrl } from "../../../../../config";
 import { isCieLoginUatEnabledSelector } from "../../../../../features/cieLogin/store/selectors";
-import { cieFlowForDevServerEnabled } from "../../../../../features/cieLogin/utils";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
@@ -42,6 +41,8 @@ import { itwIsNfcEnabledSelector } from "../../store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { selectIsLoading } from "../../../machine/eid/selectors";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { ITW_ROUTES } from "../../../navigation/routes";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -65,6 +66,8 @@ const ForgottenPin = () => (
 );
 
 export const ItwCiePinScreen = () => {
+  const navigation = useIONavigation();
+
   const dispatch = useIODispatch();
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   const isEnabled = useIOSelector(itwIsNfcEnabledSelector);
@@ -98,49 +101,11 @@ export const ItwCiePinScreen = () => {
     }
   }, [isFocused]);
 
-  /* useEffect(() => {
-    if (authUrlGenerated !== undefined) {
-      if (cieFlowForDevServerEnabled) {
-        const loginUri = getIdpLoginUri(CieEntityIds.PROD, 3);
-        navigation.navigate(ITW_ROUTES.ISSUANCE.EID_CIE.CONSENT_DATA_USAGE, {
-          cieConsentUri: loginUri
-        });
-      } else {
-        if (isNfcEnabled) {
-          navigation.navigate(ITW_ROUTES.ISSUANCE.EID_CIE.CARD_READER_SCREEN, {
-            ciePin: pin,
-            authorizationUri: authUrlGenerated
-          });
-        } else {
-          navigation.navigate(ITW_ROUTES.ISSUANCE.EID_CIE.ACTIVATE_NFC, {
-            ciePin: pin,
-            authorizationUri: authUrlGenerated
-          });
-        }
-      }
-      handleAuthenticationOverlayOnClose();
-    }
-  }, [
-    authUrlGenerated,
-    handleAuthenticationOverlayOnClose,
-    isNfcEnabled,
-    navigation,
-    pin
-  ]);
-  */
-
-  useEffect(() => {
-    if (pin.length === CIE_PIN_LENGTH) {
-      requestNfcEnabledCheck();
-      Keyboard.dismiss();
-      machineRef.send({ type: "cie-pin-entered", pin });
-    }
-  }, [pin, machineRef, requestNfcEnabledCheck]);
-
   useFocusEffect(
     React.useCallback(() => {
       setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
-    }, [])
+      requestNfcEnabledCheck();
+    }, [requestNfcEnabledCheck])
   );
 
   useHeaderSecondLevel({
@@ -148,6 +113,22 @@ export const ItwCiePinScreen = () => {
     supportRequest: true,
     contextualHelpMarkdown: getContextualHelp()
   });
+
+  const onPinChanged = (value: string) => {
+    setPin(value);
+
+    if (value.length === CIE_PIN_LENGTH) {
+      Keyboard.dismiss();
+      if (isNfcEnabled) {
+        machineRef.send({ type: "cie-pin-entered", pin: value });
+      } else {
+        navigation.navigate(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC,
+          params: { ciePin: value }
+        });
+      }
+    }
+  };
 
   if (isMachineLoading) {
     return (
@@ -190,7 +171,7 @@ export const ItwCiePinScreen = () => {
                 accessibilityHint={I18n.t(
                   "authentication.cie.pin.accessibility.hint"
                 )}
-                onValueChange={setPin}
+                onValueChange={onPinChanged}
                 length={CIE_PIN_LENGTH}
                 autoFocus={isFocused}
                 key={isFocused ? "focused" : "unfocused"}

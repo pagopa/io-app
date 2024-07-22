@@ -1,48 +1,43 @@
-import { ListItemInfo } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  Divider,
+  ListItemHeader,
+  ListItemInfo
+} from "@pagopa/io-app-design-system";
 import React, { useCallback } from "react";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { Alert } from "react-native";
+import { Route, useRoute } from "@react-navigation/native";
+import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../../i18n";
-import { useIOSelector } from "../../../../../store/hooks";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import * as cieUtils from "../../../../../utils/cie";
-import ScreenWithListItems from "../../../../../components/screens/ScreenWithListItems";
+import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import { itwIsNfcEnabledSelector } from "../../store/selectors";
-import { CieCardReaderScreenNavigationParams } from "./ItwCieCardReaderScreen";
+
+export type CieActivateNfcScreenNavigationParams = {
+  ciePin: string;
+};
 
 export const ItwActivateNfcScreen = () => {
-  const isEnabled = useIOSelector(itwIsNfcEnabledSelector);
-  const isNfcEnabled = pot.getOrElse(isEnabled, false);
-  const navigation =
-    useNavigation<
-      IOStackNavigationProp<
-        ItwParamsList,
-        typeof ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC
-      >
-    >();
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const route =
     useRoute<
       Route<
         typeof ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC,
-        CieCardReaderScreenNavigationParams
+        CieActivateNfcScreenNavigationParams
       >
     >();
 
-  const { ciePin, authorizationUri } = route.params;
+  const { ciePin } = route.params;
 
   const openSettings = useCallback(async () => {
     await cieUtils.openNFCSettings();
   }, []);
 
   const onContinue = useCallback(async () => {
+    const isNfcEnabled = await cieUtils.isNfcEnabled();
+
     if (isNfcEnabled) {
-      navigation.replace(ITW_ROUTES.ISSUANCE.EID_CIE.CARD_READER_SCREEN, {
-        ciePin,
-        authorizationUri
-      });
+      machineRef.send({ type: "cie-pin-entered", pin: ciePin });
     } else {
       Alert.alert(I18n.t("authentication.cie.nfc.activeNfcAlert"), "", [
         {
@@ -55,41 +50,52 @@ export const ItwActivateNfcScreen = () => {
         }
       ]);
     }
-  }, [authorizationUri, ciePin, isNfcEnabled, navigation, openSettings]);
-
-  const renderItems: Array<ListItemInfo> = [
-    {
-      label: I18n.t("authentication.cie.nfc.listItemLabel1"),
-      value: I18n.t("authentication.cie.nfc.listItemValue1"),
-      icon: "systemSettingsAndroid"
-    },
-    {
-      label: I18n.t("authentication.cie.nfc.listItemLabel2"),
-      value: I18n.t("authentication.cie.nfc.listItemValue2"),
-      icon: "systemAppsAndroid"
-    },
-    {
-      label: I18n.t("authentication.cie.nfc.listItemLabel3"),
-      value: I18n.t("authentication.cie.nfc.listItemValue3"),
-      icon: "systemToggleInstructions"
-    }
-  ];
+  }, [ciePin, openSettings, machineRef]);
 
   return (
-    <ScreenWithListItems
-      isHeaderVisible={true}
-      title={I18n.t("authentication.cie.nfc.title")}
-      subtitle={I18n.t("authentication.cie.nfc.subtitle")}
-      listItemHeaderLabel={I18n.t("authentication.cie.nfc.listItemTitle")}
-      renderItems={renderItems}
-      primaryActionProps={{
-        label: I18n.t("authentication.cie.nfc.action"),
-        onPress: openSettings
+    <IOScrollViewWithLargeHeader
+      title={{ label: I18n.t("features.itWallet.identification.nfc.title") }}
+      description={I18n.t("features.itWallet.identification.nfc.description")}
+      actions={{
+        type: "TwoButtons",
+        primary: {
+          label: I18n.t("features.itWallet.identification.nfc.primaryAction"),
+          onPress: openSettings
+        },
+        secondary: {
+          label: I18n.t("features.itWallet.identification.nfc.secondaryAction"),
+          onPress: onContinue
+        }
       }}
-      secondaryActionProps={{
-        label: I18n.t("global.buttons.continue"),
-        onPress: onContinue
-      }}
-    />
+    >
+      <ContentWrapper>
+        <ListItemHeader
+          label={I18n.t("features.itWallet.identification.nfc.header")}
+        />
+        <ListItemInfo
+          label={I18n.t("features.itWallet.identification.nfc.steps.label", {
+            value: 1
+          })}
+          value={I18n.t("features.itWallet.identification.nfc.steps.1")}
+          icon="systemSettingsAndroid"
+        />
+        <Divider />
+        <ListItemInfo
+          label={I18n.t("features.itWallet.identification.nfc.steps.label", {
+            value: 2
+          })}
+          value={I18n.t("features.itWallet.identification.nfc.steps.2")}
+          icon="systemAppsAndroid"
+        />
+        <Divider />
+        <ListItemInfo
+          label={I18n.t("features.itWallet.identification.nfc.steps.label", {
+            value: 3
+          })}
+          value={I18n.t("features.itWallet.identification.nfc.steps.3")}
+          icon="systemToggleInstructions"
+        />
+      </ContentWrapper>
+    </IOScrollViewWithLargeHeader>
   );
 };

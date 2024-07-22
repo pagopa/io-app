@@ -77,10 +77,6 @@ const InnerNavigator = () => {
         component={ItwIdentificationModeSelectionScreen}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.NFC_INSTRUCTIONS}
-        component={ItwIdentificationNfcInstructionsScreen}
-      />
-      <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.IDP_SELECTION}
         component={ItwIdentificationIdpSelectionScreen}
       />

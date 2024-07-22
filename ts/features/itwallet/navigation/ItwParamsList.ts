@@ -1,4 +1,4 @@
-import { CieCardReaderScreenNavigationParams } from "../identification/screens/cie/ItwCieCardReaderScreen";
+import { CieActivateNfcScreenNavigationParams } from "../identification/screens/cie/ItwActivateNfcScreen";
 import { CieWrongCiePinScreenNavigationParams } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
 import { ITW_ROUTES } from "./routes";
 
@@ -8,7 +8,6 @@ export type ItwParamsList = {
   [ITW_ROUTES.DISCOVERY.INFO]: undefined;
   // IDENTIFICATION
   [ITW_ROUTES.IDENTIFICATION.MODE_SELECTION]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.NFC_INSTRUCTIONS]: undefined;
   [ITW_ROUTES.IDENTIFICATION.IDP_SELECTION]: undefined;
   // IDENTIFICATION CIE + PIN
   [ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN]: undefined;
@@ -18,7 +17,7 @@ export type ItwParamsList = {
   [ITW_ROUTES.IDENTIFICATION.CIE.WRONG_CARD]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE
-    .ACTIVATE_NFC]: CieCardReaderScreenNavigationParams;
+    .ACTIVATE_NFC]: CieActivateNfcScreenNavigationParams;
   [ITW_ROUTES.IDENTIFICATION.CIE.CIE_EXPIRED_SCREEN]: undefined;
   // ISSUANCE
   [ITW_ROUTES.ISSUANCE.EID_REQUEST]: undefined;
