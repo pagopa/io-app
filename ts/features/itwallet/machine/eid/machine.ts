@@ -5,6 +5,7 @@ import { ItwTags } from "../tags";
 import { CieAuthContext, Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
 import {
+  CleanUpActorParams,
   GetWalletAttestationActorParams,
   StartCieAuthFlowActorParams,
   type RequestEidActorParams
@@ -20,6 +21,15 @@ const setFailure =
   ({ event }: { event: ErrorActorEvent }): Partial<Context> => ({
     failure: { type, reason: event.error }
   });
+
+const getCleanUpInput = ({
+  context
+}: {
+  context: Context;
+}): CleanUpActorParams => ({
+  walletAttestationKeyTag:
+    context.walletAttestationContext?.walletAttestationKeyTag
+});
 
 export const itwEidIssuanceMachine = setup({
   types: {
@@ -57,7 +67,8 @@ export const itwEidIssuanceMachine = setup({
     ),
     startCieAuthFlow: fromPromise<CieAuthContext, StartCieAuthFlowActorParams>(
       notImplemented
-    )
+    ),
+    cleanUp: fromPromise<void, CleanUpActorParams>(notImplemented)
   },
   guards: {
     isNativeAuthSessionClosed: notImplemented,
@@ -313,6 +324,10 @@ export const itwEidIssuanceMachine = setup({
     },
     Success: {
       entry: "navigateToSuccessScreen",
+      invoke: {
+        src: "cleanUp",
+        input: getCleanUpInput
+      },
       on: {
         "add-new-credential": {
           actions: "navigateToCredentialCatalog"
@@ -327,6 +342,10 @@ export const itwEidIssuanceMachine = setup({
     },
     Failure: {
       entry: "navigateToFailureScreen",
+      invoke: {
+        src: "cleanUp",
+        input: getCleanUpInput
+      },
       on: {
         close: {
           actions: "closeIssuance"

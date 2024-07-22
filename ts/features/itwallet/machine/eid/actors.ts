@@ -1,4 +1,5 @@
 import { fromPromise } from "xstate5";
+import { deleteKey } from "@pagopa/io-react-native-crypto";
 import * as O from "fp-ts/lib/Option";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
@@ -36,6 +37,10 @@ export type CompleteCieAuthFlowActorParams = {
 
 export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
+};
+
+export type CleanUpActorParams = {
+  walletAttestationKeyTag: string | undefined;
 };
 
 export const createEidIssuanceActorsImplementation = (
@@ -120,5 +125,14 @@ export const createEidIssuanceActorsImplementation = (
         callbackUrl: "" // This is not important in this phase, it will be set after completing the CIE auth flow
       };
     }
-  )
+  ),
+
+  /**
+   * Actor used to perform any clean up logic at the end of the issuance flow.
+   */
+  cleanUp: fromPromise<void, CleanUpActorParams>(async ({ input }) => {
+    if (input.walletAttestationKeyTag) {
+      return deleteKey(input.walletAttestationKeyTag);
+    }
+  })
 });
