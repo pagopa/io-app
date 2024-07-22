@@ -332,6 +332,13 @@ export function* initializeApplicationSaga(
   // eslint-disable-next-line functional/no-let
   let maybeSessionInformation: ReturnType<typeof sessionInfoSelector> =
     yield* select(sessionInfoSelector);
+  // In the check below we had also isSessionRefreshed, but it is not needed
+  // since the actual checkSession made above is enough to ensure that the
+  // session tokens are retrieved correctly.
+  // Only in the scenario when we get here and session tokens are not available,
+  // we have to load the session information from the backend.
+  // In a future refactoring where the checkSession won't get the session tokens
+  // anymore, we will need to rethink about this check.
   if (O.isNone(maybeSessionInformation)) {
     // let's try to load the session information from the backend.
 
