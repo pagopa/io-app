@@ -2,9 +2,9 @@ import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
-import * as config from "../config";
 import { SessionToken } from "../types/SessionToken";
 import { trackLoginSpidError } from "../screens/authentication/analytics/spidAnalytics";
+import { apiUrlPrefix, spidRelayState } from "../config";
 import { isStringNullyOrEmpty } from "./strings";
 /**
  * Helper functions for handling the SPID login flow through a webview.
@@ -76,7 +76,7 @@ export const extractLoginResult = (url: string): LoginResult | undefined => {
 
 /** for a given idp id get the relative login uri */
 export const getIdpLoginUri = (idpId: string, level: number) =>
-  `${config.apiUrlPrefix}/login?authLevel=SpidL${level}&entityID=${idpId}&RelayState=${config.spidRelayState}`;
+  `${apiUrlPrefix}/login?authLevel=SpidL${level}&entityID=${idpId}&RelayState=${spidRelayState}`;
 
 /**
  * Extract the login result from the given url.
