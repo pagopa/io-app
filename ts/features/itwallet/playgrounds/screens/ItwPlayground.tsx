@@ -18,6 +18,7 @@ import {
 } from "../../machine/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwTrialSystemSection } from "../components/ItwTrialSystemSection";
+import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 
 // Sample markdown text
 const sampleMarkdown = `
@@ -144,9 +145,17 @@ const ItwPlayground = () => {
           onPress={navigateToCredentialAuth}
         />
         <VSpacer size={16} />
-        {/* F&F Experimentation */}
-        <ItwTrialSystemSection />
-        <VSpacer size={16} />
+        {
+          /* F&F Experimentation */
+          __DEV__ ? (
+            <>
+              <ItwLifecycleSection />
+              <VSpacer size={16} />
+              <ItwTrialSystemSection />
+              <VSpacer size={16} />
+            </>
+          ) : null
+        }
         {/* Other Playgrounds */}
         <ListItemHeader label="Miscellaneous" />
         <H3>{"IT Wallet markdown preview"}</H3>
