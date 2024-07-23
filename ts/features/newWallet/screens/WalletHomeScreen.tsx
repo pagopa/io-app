@@ -1,7 +1,8 @@
 import {
   GradientScrollView,
   IOStyles,
-  IOToast
+  IOToast,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
@@ -15,11 +16,9 @@ import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList"
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
-import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
-import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { selectWalletCards } from "../store/selectors";
@@ -50,14 +49,11 @@ const WalletHomeScreen = ({ route }: Props) => {
   );
 
   return (
-    <>
-      <WalletCategoryFilterTabs />
-      <WalletScrollView>
-        <ItwDiscoveryBanner ignoreMargins={true} />
-        <WalletPaymentsRedirectBanner />
-        <WalletCardsContainer />
-      </WalletScrollView>
-    </>
+    <WalletScrollView>
+      <VSpacer size={16} />
+      <WalletPaymentsRedirectBanner />
+      <WalletCardsContainer />
+    </WalletScrollView>
   );
 };
 
