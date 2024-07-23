@@ -204,7 +204,11 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     return (
       <View key={getTxtNodeKey(list)} style={IOStyles.row}>
         <HSpacer size={8} />
-        <View style={IOStyles.flex} accessible={true} accessibilityRole="list">
+        <View
+          style={[IOStyles.flex, { flexGrow: 1 }]}
+          accessible={true}
+          accessibilityRole="list"
+        >
           {list.children.map((child, i) => (
             <View accessible key={`${child.type}_${i}`} style={IOStyles.row}>
               {getLeftAdornment(i)}
@@ -225,7 +229,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     return (
       <View
         accessible={false}
-        style={{ flexShrink: 1 }}
+        style={[IOStyles.flex, { flexShrink: 1 }]}
         key={getTxtNodeKey(listItem)}
       >
         {listItem.children.map(render)}
