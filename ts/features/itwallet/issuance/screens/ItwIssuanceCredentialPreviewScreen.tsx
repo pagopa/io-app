@@ -72,7 +72,7 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
         excludeEndContentMargin
         title={{
           label: I18n.t("features.itWallet.issuance.credentialPreview.title", {
-            credential: credential.displayData.title
+            credential: "credential.displayData.title" // TODO [SIW-1358]: remove references to displayData
           })
         }}
         goBack={dismissDialog.show}

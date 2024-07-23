@@ -23,5 +23,18 @@ export const itwLifecycleIsOperationalSelector = (state: GlobalState) =>
     ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL &&
   O.isSome(state.features.itWallet.issuance.integrityKeyTag);
 
+/**
+ * The wallet instance is valid. In this state
+ * the integrity key tag and the eID must exist.
+ */
 export const itwLifecycleIsValidSelector = (state: GlobalState) =>
-  state.features.itWallet.lifecycle === ItwLifecycleState.ITW_LIFECYCLE_VALID;
+  state.features.itWallet.lifecycle === ItwLifecycleState.ITW_LIFECYCLE_VALID &&
+  O.isSome(state.features.itWallet.issuance.integrityKeyTag) &&
+  O.isSome(state.features.itWallet.credentials.eid);
+
+/**
+ * Convenience selector that joins the states operational or valid.
+ */
+export const itwLifecycleIsOperationalOrValid = (state: GlobalState) =>
+  itwLifecycleIsOperationalSelector(state) ||
+  itwLifecycleIsValidSelector(state);
