@@ -209,7 +209,7 @@ const BarcodeScanBaseScreenComponent = ({
   }, [openCameraSettings]);
 
   const cameraView = React.useMemo(() => {
-    if (cameraPermissionStatus === "authorized") {
+    if (cameraPermissionStatus === "granted") {
       return cameraComponent;
     }
 
@@ -265,7 +265,7 @@ const BarcodeScanBaseScreenComponent = ({
   };
 
   const shouldDisplayTorchButton =
-    cameraPermissionStatus === "authorized" && hasTorch;
+    cameraPermissionStatus === "granted" && hasTorch;
 
   const torchIconButton: React.ComponentProps<
     typeof BaseHeader

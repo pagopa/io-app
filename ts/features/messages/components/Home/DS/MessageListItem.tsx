@@ -19,6 +19,9 @@ import {
 import { CustomPressableListItemBase } from "./CustomPressableListItemBase";
 import { DoubleAvatar } from "./DoubleAvatar";
 
+export const StandardHeight = 95;
+export const EnhancedHeight = 133;
+
 const styles = StyleSheet.create({
   badgeContainer: { flexDirection: "row", marginTop: 8 },
   container: {
@@ -101,6 +104,7 @@ export const MessageListItem = ({
     selected={selected}
     testID={testID}
     accessibilityLabel={accessibilityLabel}
+    minHeight={badgeText && badgeVariant ? EnhancedHeight : StandardHeight}
   >
     <View style={styles.container}>
       <View style={styles.serviceLogoAndSelectionContainer}>
