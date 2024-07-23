@@ -1,7 +1,8 @@
-import { Divider, IOStyles } from "@pagopa/io-app-design-system";
+import { Body, Divider, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { FlatList } from "react-native";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { FlatList, SafeAreaView, View } from "react-native";
+import { FooterActions } from "../../../../components/ui/FooterActions";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -39,35 +40,40 @@ export const FimsHistoryScreen = () => {
         showFirstDivider={(consents?.items.length ?? 0) > 0}
       />
     ) : null;
-
+  useHeaderSecondLevel({
+    title: I18n.t("FIMS.history.historyScreen.header"),
+    supportRequest: true,
+    contextualHelp: emptyContextualHelp,
+    faqCategories: ["privacy"]
+  });
   return (
-    <IOScrollViewWithLargeHeader
-      title={{
-        label: I18n.t("FIMS.history.historyScreen.header")
-      }}
-      description={I18n.t("FIMS.history.historyScreen.body")}
-      canGoback={true}
-      headerActionsProp={{ showHelp: true }}
-      contextualHelp={emptyContextualHelp}
-      actions={{
-        type: "SingleButton",
-        primary: {
-          label: I18n.t("FIMS.history.exportData.CTA"),
-          onPress: () => null // full export functionality coming soon
-        }
-      }}
-    >
-      <FlatList
-        onEndReachedThreshold={0.5}
-        nestedScrollEnabled={false}
-        data={consents?.items}
-        contentContainerStyle={IOStyles.horizontalContentPadding}
-        ItemSeparatorComponent={Divider}
-        keyExtractor={item => item.id}
-        renderItem={item => <FimsHistoryListItem item={item.item} />}
-        onEndReached={fetchMore}
-        ListFooterComponent={renderLoadingFooter}
+    <>
+      <SafeAreaView>
+        <View style={IOStyles.horizontalContentPadding}>
+          <Body>{I18n.t("FIMS.history.historyScreen.body")}</Body>
+        </View>
+
+        <VSpacer size={16} />
+
+        <FlatList
+          data={consents?.items}
+          contentContainerStyle={IOStyles.horizontalContentPadding}
+          ItemSeparatorComponent={Divider}
+          keyExtractor={item => item.id}
+          renderItem={item => <FimsHistoryListItem item={item.item} />}
+          onEndReached={fetchMore}
+          ListFooterComponent={renderLoadingFooter}
+        />
+      </SafeAreaView>
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("FIMS.history.exportData.CTA"),
+            onPress: () => null // full export functionality coming soon
+          }
+        }}
       />
-    </IOScrollViewWithLargeHeader>
+    </>
   );
 };
