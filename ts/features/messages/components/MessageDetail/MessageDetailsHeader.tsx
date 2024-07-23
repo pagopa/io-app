@@ -11,6 +11,7 @@ import { logosForService } from "../../../services/common/utils";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceByIdPotSelector } from "../../../services/details/store/reducers";
 import { gapBetweenItemsInAGrid } from "../../utils";
+import { UIMessageId } from "../../types";
 import { OrganizationHeader } from "./OrganizationHeader";
 
 const styles = StyleSheet.create({
@@ -25,6 +26,7 @@ const styles = StyleSheet.create({
 
 export type MessageDetailsHeaderProps = PropsWithChildren<{
   createdAt: Date;
+  messageId: UIMessageId;
   serviceId: ServiceId;
   subject: string;
 }>;
@@ -47,6 +49,7 @@ const MessageDetailsHeaderContent = ({
 
 export const MessageDetailsHeader = ({
   children,
+  messageId,
   serviceId,
   ...rest
 }: MessageDetailsHeaderProps) => {
@@ -66,6 +69,7 @@ export const MessageDetailsHeader = ({
       {service && (
         <>
           <OrganizationHeader
+            messageId={messageId}
             logoUri={logosForService(service)}
             organizationName={service.organization_name}
             serviceId={serviceId}
