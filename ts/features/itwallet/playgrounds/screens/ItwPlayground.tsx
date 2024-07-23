@@ -63,18 +63,6 @@ const ItwPlayground = () => {
     title: "ITW Playground"
   });
 
-  const navigateToDiscovery = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.INFO
-    });
-  };
-
-  const navigateToCredentialDetail = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.EID_DETAIL
-    });
-  };
-
   const navigateToCredentialPreview = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW
@@ -90,15 +78,6 @@ const ItwPlayground = () => {
   return (
     <ScrollView>
       <ContentWrapper>
-        {/* Activation Playground */}
-        <ListItemHeader label="Activation" />
-        <ListItemNav
-          value="Wallet activation"
-          accessibilityLabel={"Discovery Playground"}
-          description="Start the eID issuing flow"
-          onPress={navigateToDiscovery}
-        />
-        <VSpacer size={16} />
         {/* Issuing Playground */}
         <ListItemHeader label="Credentials issuing" />
         <ListItemNav
@@ -129,13 +108,6 @@ const ItwPlayground = () => {
           accessibilityLabel="Credential preview (mdl) Playground"
           description="Open the credential preview screen"
           onPress={navigateToCredentialPreview}
-        />
-        <Divider />
-        <ListItemNav
-          value="Credential detail (eID)"
-          accessibilityLabel={"Credential detail (eID) Playground"}
-          description="Open the eID credential detail screen"
-          onPress={navigateToCredentialDetail}
         />
         <Divider />
         <ListItemNav
