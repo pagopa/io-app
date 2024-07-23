@@ -17,7 +17,7 @@ export type PressableBaseProps = WithTestID<
     | "accessibilityHint"
     | "accessibilityState"
     | "accessibilityRole"
-  > & { selected?: boolean }
+  > & { minHeight?: number; selected?: boolean }
 >;
 
 export const CustomPressableListItemBase = ({
@@ -26,6 +26,7 @@ export const CustomPressableListItemBase = ({
   testID,
   children,
   accessibilityRole,
+  minHeight,
   selected,
   ...props
 }: React.PropsWithChildren<PressableBaseProps>) => {
@@ -41,15 +42,19 @@ export const CustomPressableListItemBase = ({
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
       accessibilityRole={accessibilityRole || "button"}
-      style={{
-        backgroundColor: selected ? IOColors["blueIO-50"] : undefined
-      }}
+      style={[
+        {
+          backgroundColor: selected ? IOColors["blueIO-50"] : undefined
+        },
+        minHeight ? { minHeight } : {}
+      ]}
       {...props}
     >
       <Animated.View
         style={[
           IOListItemStyles.listItem,
-          !selected ? animatedBackgroundStyle : undefined
+          !selected ? animatedBackgroundStyle : undefined,
+          { flexGrow: 1, justifyContent: "center" }
         ]}
       >
         <Animated.View
