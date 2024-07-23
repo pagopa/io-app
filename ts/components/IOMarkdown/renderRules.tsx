@@ -50,7 +50,7 @@ const HEADINGS_MAP = {
   5: H5,
   6: H6
 };
-const PICTOGRAM_REGEXP = /^\s*>\s{0,4}\[\!(.*?)\]/;
+const PICTOGRAM_REGEXP = /^\s*>\s{0,4}\[!(.*?)\]/;
 const HEADING_REGEXP = /^\s*>\s{0,4}#{1,6}\s+(.+)/m;
 const STARTS_WITH_PICTOGRAM = new RegExp(
   PICTOGRAM_REGEXP.source + "s*\n( {0,4})>"
@@ -204,9 +204,9 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     return (
       <View key={getTxtNodeKey(list)} style={IOStyles.row}>
         <HSpacer size={8} />
-        <View accessible={true} accessibilityRole="list">
+        <View style={IOStyles.flex} accessible={true} accessibilityRole="list">
           {list.children.map((child, i) => (
-            <View key={`${child.type}_${i}`} style={IOStyles.row}>
+            <View accessible key={`${child.type}_${i}`} style={IOStyles.row}>
               {getLeftAdornment(i)}
               <HSpacer size={8} />
               {render(child)}
@@ -223,7 +223,11 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    */
   ListItem(listItem: TxtListItemNode, render: Renderer) {
     return (
-      <View accessible={false} key={getTxtNodeKey(listItem)}>
+      <View
+        accessible={false}
+        style={{ flexShrink: 1 }}
+        key={getTxtNodeKey(listItem)}
+      >
         {listItem.children.map(render)}
       </View>
     );
@@ -289,7 +293,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns A new line character in case of `<br/>` value, otherwise `null`.
    */
   Html: (html: TxtHtmlNode) => {
-    const val = html.value.split(/<([^\s\/>]+)\s*\/>/);
+    const val = html.value.split(/<([^\s/>]+)\s*\/>/);
     const [, value] = val;
 
     if (value === "br") {
