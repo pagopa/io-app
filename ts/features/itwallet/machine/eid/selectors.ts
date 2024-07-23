@@ -3,6 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ItwTags } from "../tags";
 import { ItwEidIssuanceMachine } from "./machine";
+import { IdentificationContext } from "./context";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -20,7 +21,7 @@ export const selectCiePin = (snapshot: MachineSnapshot) =>
     snapshot.context.identification,
     O.fromNullable,
     O.filter(x => x.mode === "ciePin"),
-    O.map(x => x.pin),
+    O.map(x => (x as Extract<IdentificationContext, { mode: "ciePin" }>).pin),
     O.getOrElse(() => "")
   );
 

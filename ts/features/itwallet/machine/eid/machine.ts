@@ -1,4 +1,4 @@
-import { assign, fromPromise, setup, ErrorActorEvent } from "xstate5";
+import { assign, fromPromise, setup } from "xstate5";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { WalletAttestationResult } from "../../common/utils/itwAttestationUtils";
 import { ItwTags } from "../tags";
@@ -17,8 +17,8 @@ const notImplemented = () => {
 
 const setFailure =
   (type: IssuanceFailureType) =>
-  ({ event }: { event: ErrorActorEvent }): Partial<Context> => ({
-    failure: { type, reason: event.error }
+  ({ event }: { event: EidIssuanceEvents }): Partial<Context> => ({
+    failure: { type, reason: "error" in event ? event.error : undefined }
   });
 
 export const itwEidIssuanceMachine = setup({
