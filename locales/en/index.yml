@@ -3,8 +3,8 @@ accessibility:
   doubleTapToActivateHint: "Double tap to activate"
   buttons:
     torch:
-      turnOn: "Accendi la torcia"
-      turnOff: "Spegni la torcia"
+      turnOn: "Turn the flashlight on"
+      turnOff: "Turn the flashlight off"
 date:
   formats:
     default: "%d/%m/%Y"
@@ -1519,8 +1519,8 @@ wallet:
     idTransaction: Transaction identification code
     updatedAmount: Updated amount
     amountInfo:
-      title: Vedi un importo diverso?
-      message: pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests
+      title: Do you see a different amount?
+      message: pagoPA updates the amount in real time, so that you can pay without additional charges or interest. This may happen, for instance, when the institution applies notification fees (if it has sent you a notification with legal value) or if you are late with your payment.
       cta: Ok, va bene
     contextualHelpTitle: Transaction's summary
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
