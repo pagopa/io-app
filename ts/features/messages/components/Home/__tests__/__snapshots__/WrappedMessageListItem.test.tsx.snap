@@ -372,7 +372,6 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                               "backgroundColor": undefined,
                             },
                             {
-                              "justifyContent": "center",
                               "minHeight": 133,
                             },
                           ]
@@ -389,6 +388,10 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                               },
                               {
                                 "backgroundColor": undefined,
+                              },
+                              {
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               },
                             ]
                           }
@@ -1408,7 +1411,6 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                               "backgroundColor": undefined,
                             },
                             {
-                              "justifyContent": "center",
                               "minHeight": 133,
                             },
                           ]
@@ -1425,6 +1427,10 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                               },
                               {
                                 "backgroundColor": undefined,
+                              },
+                              {
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               },
                             ]
                           }
@@ -2499,7 +2505,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                               "backgroundColor": undefined,
                             },
                             {
-                              "justifyContent": "center",
                               "minHeight": 133,
                             },
                           ]
@@ -2516,6 +2521,10 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                               },
                               {
                                 "backgroundColor": undefined,
+                              },
+                              {
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               },
                             ]
                           }
@@ -3566,7 +3575,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                               "backgroundColor": undefined,
                             },
                             {
-                              "justifyContent": "center",
                               "minHeight": 133,
                             },
                           ]
@@ -3583,6 +3591,10 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                               },
                               {
                                 "backgroundColor": undefined,
+                              },
+                              {
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               },
                             ]
                           }
@@ -4688,7 +4700,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                               "backgroundColor": undefined,
                             },
                             {
-                              "justifyContent": "center",
                               "minHeight": 95,
                             },
                           ]
@@ -4705,6 +4716,10 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                               },
                               {
                                 "backgroundColor": undefined,
+                              },
+                              {
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               },
                             ]
                           }
@@ -5630,7 +5645,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                               "backgroundColor": undefined,
                             },
                             {
-                              "justifyContent": "center",
                               "minHeight": 95,
                             },
                           ]
@@ -5647,6 +5661,10 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                               },
                               {
                                 "backgroundColor": undefined,
+                              },
+                              {
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               },
                             ]
                           }
@@ -6627,7 +6645,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                               "backgroundColor": undefined,
                             },
                             {
-                              "justifyContent": "center",
                               "minHeight": 95,
                             },
                           ]
@@ -6644,6 +6661,10 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                               },
                               {
                                 "backgroundColor": undefined,
+                              },
+                              {
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               },
                             ]
                           }
@@ -7448,7 +7469,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                               "backgroundColor": undefined,
                             },
                             {
-                              "justifyContent": "center",
                               "minHeight": 95,
                             },
                           ]
@@ -7465,6 +7485,10 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                               },
                               {
                                 "backgroundColor": undefined,
+                              },
+                              {
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               },
                             ]
                           }
