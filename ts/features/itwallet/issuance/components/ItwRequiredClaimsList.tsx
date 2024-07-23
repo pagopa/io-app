@@ -19,6 +19,7 @@ import {
   DrivingPrivilegesClaim,
   EvidenceClaim,
   ImageClaim,
+  ImageClaimNoUrl,
   PlaceOfBirthClaim,
   PlainTextClaim
 } from "../../common/utils/itwClaimsUtils";
@@ -87,7 +88,7 @@ export const getClaimDisplayValue = (
           );
         } else if (EvidenceClaim.is(decoded)) {
           return decoded[0].record.source.organization_name;
-        } else if (ImageClaim.is(decoded)) {
+        } else if (ImageClaim.is(decoded) || ImageClaimNoUrl.is(decoded)) {
           return decoded;
         } else if (DrivingPrivilegesClaim.is(decoded)) {
           return decoded.map(e => e.driving_privilege);
