@@ -9,12 +9,6 @@ export const itwCredentialsRemove = createStandardAction(
   "ITW_CREDENTIALS_REMOVE"
 )<StoredCredential>();
 
-export const itwCredentialsWalletReset = createStandardAction(
-  "ITW_CREDENTIALS_WALLET_RESET"
-)<void>();
-
-export type ItwCredentialsActions = ActionType<
-  | typeof itwCredentialsStore
-  | typeof itwCredentialsRemove
-  | typeof itwCredentialsWalletReset
->;
+export type ItwCredentialsActions =
+  | ActionType<typeof itwCredentialsStore>
+  | ActionType<typeof itwCredentialsRemove>;
