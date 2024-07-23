@@ -162,7 +162,7 @@ export const retrieveNextBarcode = (barcodes: Array<Code>): O.Option<Code> =>
 /**
  * Delay for reactivating the QR scanner after a scan
  */
-const QRCODE_SCANNER_REACTIVATION_TIME_MS = 8000;
+const QRCODE_SCANNER_REACTIVATION_TIME_MS = 5000;
 
 export const useIOBarcodeCameraScanner = ({
   onBarcodeSuccess,
