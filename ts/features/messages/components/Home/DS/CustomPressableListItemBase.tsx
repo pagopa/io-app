@@ -46,14 +46,15 @@ export const CustomPressableListItemBase = ({
         {
           backgroundColor: selected ? IOColors["blueIO-50"] : undefined
         },
-        minHeight ? { minHeight, justifyContent: "center" } : {}
+        minHeight ? { minHeight } : {}
       ]}
       {...props}
     >
       <Animated.View
         style={[
           IOListItemStyles.listItem,
-          !selected ? animatedBackgroundStyle : undefined
+          !selected ? animatedBackgroundStyle : undefined,
+          { flexGrow: 1, justifyContent: "center" }
         ]}
       >
         <Animated.View
