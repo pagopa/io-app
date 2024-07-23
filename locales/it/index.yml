@@ -482,7 +482,7 @@ profile:
     trial:
       titleSection: Partecipa alla sperimentazione
     designSystemEnvironment: Design System sperimentale
-    newScanSection: Nuova sezione scansiona
+    newScanSection: Nuova funzione 'Inquadra'
     appVersion: Versione
     backendVersion: Versione Backend
     debugMode: Modalità debug
