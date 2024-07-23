@@ -42,13 +42,6 @@ Created on **30/08/2022**
 #### Reason:
 - Missing accessibility types.
 
-### react-native-mixpanel+1.2.0
-
-#### Reason:
-- **20/03/2020** Change the endpoint to european server.
-- **04/03/2021** Improve track function type definition.
-
-
 ### reactotron-redux-saga+2.1.4
 Created on **13/12/2019**
 
