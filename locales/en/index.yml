@@ -3121,6 +3121,10 @@ features:
         error: Impossibile scaricare la ricevuta, riprova più tardi.
         download: Scarica ricevuta
     details:
+      payPal:
+        banner:
+          title: Vuoi pagare in 3 rate?
+          content: Non usare questo metodo. Durante il pagamento, seleziona "PayPal (anche in 3 rate)".
       pspAlert:
         description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
         action: "Cosa significa?"
