@@ -4,6 +4,7 @@ import * as t from "io-ts";
 import * as E from "fp-ts/lib/Either";
 import * as J from "fp-ts/lib/Json";
 import * as O from "fp-ts/lib/Option";
+import { extractFiscalCode } from "../../common/utils/itwClaimsUtils";
 import { useIOStore } from "../../../../store/hooks";
 import { profileFiscalCodeSelector } from "../../../../store/reducers/profile";
 import { EidIssuanceEvents } from "./events";
@@ -58,6 +59,7 @@ export const createEidIssuanceGuardsImplementation = (
       O.chain(x => O.fromNullable(x[EID_FISCAL_CODE_KEY]?.value)),
       O.map(t.string.decode),
       O.chain(O.fromEither),
+      O.chain(extractFiscalCode),
       O.getOrElse(() => "")
     );
 
