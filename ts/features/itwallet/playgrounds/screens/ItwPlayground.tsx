@@ -17,8 +17,8 @@ import {
   ItwEidIssuanceMachineContext
 } from "../../machine/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { ItwTrialSystemSection } from "../components/ItwTrialSystemSection";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
+import { ItwTrialSystemSection } from "../components/ItwTrialSystemSection";
 
 // Sample markdown text
 const sampleMarkdown = `
@@ -69,24 +69,6 @@ const ItwPlayground = () => {
     });
   };
 
-  const navigateToCredentialDetail = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.EID_DETAIL
-    });
-  };
-
-  const navigateToCredentialPreview = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW
-    });
-  };
-
-  const navigateToCredentialAuth = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
-    });
-  };
-
   return (
     <ScrollView>
       <ContentWrapper>
@@ -120,29 +102,6 @@ const ItwPlayground = () => {
           accessibilityLabel={"DC Issuing"}
           description="Start the issuing flow to get your european disability card card"
           onPress={() => undefined}
-        />
-        <VSpacer size={16} />
-        {/* Screens Playground */}
-        <ListItemHeader label="Screens" />
-        <ListItemNav
-          value="Credential preview (mDL)"
-          accessibilityLabel="Credential preview (mdl) Playground"
-          description="Open the credential preview screen"
-          onPress={navigateToCredentialPreview}
-        />
-        <Divider />
-        <ListItemNav
-          value="Credential detail (eID)"
-          accessibilityLabel={"Credential detail (eID) Playground"}
-          description="Open the eID credential detail screen"
-          onPress={navigateToCredentialDetail}
-        />
-        <Divider />
-        <ListItemNav
-          value="Credential auth (mDL)"
-          accessibilityLabel={"Credential auth (mdl) Playground"}
-          description="Open the eID credential detail screen"
-          onPress={navigateToCredentialAuth}
         />
         <VSpacer size={16} />
         {

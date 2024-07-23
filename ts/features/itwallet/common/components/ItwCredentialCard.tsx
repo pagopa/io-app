@@ -15,7 +15,7 @@ import { getCredentialNameFromType } from "../utils/itwCredentialUtils";
 export type ItwCredentialStatus = "valid" | "pending" | "expiring" | "expired";
 
 export type ItwCredentialCard = {
-  credentialType: CredentialType;
+  credentialType: string;
   status?: ItwCredentialStatus;
   isPreview?: boolean;
 };
@@ -79,21 +79,21 @@ const DigitalVersionBadge = () => (
 );
 
 const credentialCardBackgrounds: {
-  [type in CredentialType]: [ImageSourcePropType, ImageSourcePropType];
+  [type: string]: [ImageSourcePropType, ImageSourcePropType];
 } = {
-  EuropeanDisabilityCard: [
+  [CredentialType.EUROPEAN_DISABILITY_CARD]: [
     require("../../../../../img/features/itWallet/cards/dc.png"),
     require("../../../../../img/features/itWallet/cards/dc_off.png")
   ],
-  EuropeanHealthInsuranceCard: [
+  [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: [
     require("../../../../../img/features/itWallet/cards/ts.png"),
     require("../../../../../img/features/itWallet/cards/ts_off.png")
   ],
-  MDL: [
+  [CredentialType.DRIVING_LICENSE]: [
     require("../../../../../img/features/itWallet/cards/mdl.png"),
     require("../../../../../img/features/itWallet/cards/mdl_off.png")
   ],
-  PersonIdentificationData: [
+  [CredentialType.PID]: [
     require("../../../../../img/features/itWallet/cards/eid.png"),
     require("../../../../../img/features/itWallet/cards/eid_off.png")
   ]

@@ -5,7 +5,7 @@ import {
   PaymentCard,
   PaymentCardProps
 } from "../../common/components/PaymentCard";
-import { PaymentCardPressableBase } from "../../common/components/PaymentCardPressableBase";
+import { WalletCardPressableBase } from "../../../newWallet/components/WalletCardPressableBase";
 import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
 
 export type PaymentWalletCardProps = PaymentCardProps & {
@@ -30,9 +30,9 @@ const WrappedPaymentCard = (props: PaymentWalletCardProps) => {
   };
 
   return (
-    <PaymentCardPressableBase onPress={handleOnPress}>
+    <WalletCardPressableBase onPress={handleOnPress}>
       <PaymentCard {...cardProps} />
-    </PaymentCardPressableBase>
+    </WalletCardPressableBase>
   );
 };
 
