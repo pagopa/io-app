@@ -1,6 +1,7 @@
 import {
   ContentWrapper,
   ForceScrollDownView,
+  H2,
   H3,
   IOStyles,
   VSpacer
@@ -86,15 +87,19 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   };
 
   useHeaderSecondLevel({
-    title: I18n.t("features.itWallet.issuance.credentialPreview.title", {
-      credential: getCredentialNameFromType(credentialType)
-    }),
+    title: "",
     goBack: dismissDialog.show
   });
 
   return (
     <ForceScrollDownView>
       <ContentWrapper>
+        <H2>
+          {I18n.t("features.itWallet.issuance.credentialPreview.title", {
+            credential: getCredentialNameFromType(credentialType)
+          })}
+        </H2>
+        <VSpacer size={24} />
         <ItwCredentialClaimsList data={credential} isPreview={true} />
       </ContentWrapper>
       <FooterActions
