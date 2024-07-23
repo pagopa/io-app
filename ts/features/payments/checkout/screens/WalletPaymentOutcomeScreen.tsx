@@ -222,6 +222,7 @@ const WalletPaymentOutcomeScreen = () => {
           title: I18n.t("wallet.payment.outcome.SUCCESS.title", {
             amount: paymentAmount
           }),
+          subtitle: I18n.t("wallet.payment.outcome.SUCCESS.subtitle"),
           action: closeSuccessAction
         };
       case WalletPaymentOutcomeEnum.GENERIC_ERROR:
