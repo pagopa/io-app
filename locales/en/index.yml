@@ -3,8 +3,8 @@ accessibility:
   doubleTapToActivateHint: "Double tap to activate"
   buttons:
     torch:
-      turnOn: "Turn the flashlight on"
-      turnOff: "Turn the flashlight off"
+      turnOn: "Turn on the flashlight"
+      turnOff: "Turn off the flashlight"
 date:
   formats:
     default: "%d/%m/%Y"
