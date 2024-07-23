@@ -178,6 +178,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
         <View style={styles.container}>
           <ContentWrapper>
             <MessageDetailsHeader
+              messageId={messageId}
               serviceId={serviceId}
               subject={subject}
               createdAt={message.createdAt}
