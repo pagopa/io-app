@@ -27,6 +27,14 @@ export const buildAbsoluteUrl = (
   }
 };
 
+export const getDomainFromUrl = (url: string) => {
+  try {
+    return new PolyfillURL(url).origin;
+  } catch {
+    return undefined;
+  }
+};
+
 export const logToMixPanel = (toLog: string) => {
   void mixpanelTrack(
     "FIMS_TECH_TEMP_ERROR",
