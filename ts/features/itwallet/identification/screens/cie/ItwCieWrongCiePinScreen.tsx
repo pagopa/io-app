@@ -11,13 +11,34 @@ import { ITW_ROUTES } from "../../../navigation/routes";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { WithTestID } from "../../../../../types/WithTestID";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { useItwPreventNavigationEvent } from "../../../common/hooks/useItwPreventNavigationEvent";
 
 export type CieWrongCiePinScreenNavigationParams = {
   remainingCount: number;
 };
 
+type MessageAction<T extends string> = {
+  label: T;
+  accessibilityLabel: T;
+  onPress: () => void;
+};
+
+type Message = {
+  pictogram: IOPictograms;
+  title: string;
+  subtitle: string;
+  action: MessageAction<string>;
+  secondaryAction: MessageAction<string>;
+};
+
+type Messages = {
+  [key: number]: Message;
+};
+
 export const ItwCieWrongCiePinScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+
+  useItwPreventNavigationEvent();
 
   const route =
     useRoute<
@@ -47,24 +68,6 @@ export const ItwCieWrongCiePinScreen = () => {
       "https://www.cartaidentita.interno.gov.it/info-utili/recupero-puk/"
     ).catch(constNull);
   }, []);
-
-  type MessageAction<T extends string> = {
-    label: T;
-    accessibilityLabel: T;
-    onPress: () => void;
-  };
-
-  type Message = {
-    pictogram: IOPictograms;
-    title: string;
-    subtitle: string;
-    action: MessageAction<string>;
-    secondaryAction: MessageAction<string>;
-  };
-
-  type Messages = {
-    [key: number]: Message;
-  };
 
   const createMessageAction = React.useCallback(
     <T extends string>({
