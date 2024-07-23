@@ -3128,8 +3128,8 @@ features:
     details:
       payPal:
         banner:
-          title: Vuoi pagare in 3 rate?
-          content: Non usare questo metodo. Durante il pagamento, seleziona "PayPal (anche in 3 rate)".
+          title: Do you want to pay in 3?
+          content: Don't use this method. During a payment, select "PayPal (Pay in 3 too)".
       pspAlert:
         description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
         action: "Cosa significa?"
