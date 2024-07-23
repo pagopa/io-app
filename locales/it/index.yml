@@ -3205,7 +3205,7 @@ features:
           cieId:
             title: CieID
             subtitle: Usa credenziali e app CieID
-        privacy: Identificandoti dichiari di aver letto e compreso l’[Informativa Privacy]() di **Istituto Poligrafico e Zecca dello Stato**.
+        privacy: Identificandoti dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione/) di **Istituto Poligrafico e Zecca dello Stato**.
       nfc:
         title: Attiva l'NFC per continuare
         description: La funzionalità NFC permette al dispositivo di leggere la tua CIE.
