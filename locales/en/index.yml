@@ -1847,7 +1847,7 @@ wallet:
     outcome:
       SUCCESS:
         title: Hai pagato {{amount}}
-        subtitle: La ricevuta è nella sezione Pagamenti.
+        subtitle: The receipt is in the Payments section.
         button: Ok, chiudi
         banner:
           title: Puoi dirci com’è andata?
