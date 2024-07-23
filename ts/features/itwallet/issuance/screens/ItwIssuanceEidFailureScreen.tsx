@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "@xstate5/react";
 import * as O from "fp-ts/lib/Option";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -33,7 +33,7 @@ export const ItwIssuanceEidFailureScreen = () => {
           label: I18n.t(
             "features.itWallet.issuance.genericError.primaryAction"
           ),
-          onPress: () => machineRef.send({ type: "reset" })
+          onPress: closeIssuance
         },
         secondaryAction: {
           label: I18n.t(
@@ -71,7 +71,7 @@ export const ItwIssuanceEidFailureScreen = () => {
           label: I18n.t(
             "features.itWallet.issuance.notMatchingIdentityError.primaryAction"
           ),
-          onPress: () => machineRef.send({ type: "close" })
+          onPress: () => closeIssuance
         },
         secondaryAction: {
           label: I18n.t(
@@ -90,6 +90,9 @@ export const ItwIssuanceEidFailureScreen = () => {
 
   return pipe(
     failureOption,
-    O.fold(constNull, failure => <ContentView failure={failure} />)
+    O.fold(
+      () => <ContentView failure={{ type: IssuanceFailureType.GENERIC }} />,
+      failure => <ContentView failure={failure} />
+    )
   );
 };

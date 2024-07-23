@@ -99,7 +99,10 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.EID_FAILURE}
         component={ItwIssuanceEidFailureScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, gestureEnabled: false }}
+        /* gestureEnabled to false prevents going back to the loading screen, just go back to the home screen when swiping back.
+         * TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+         */
       />
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen
