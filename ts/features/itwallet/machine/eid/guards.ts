@@ -14,6 +14,7 @@ const NativeAuthSessionClosed = t.type({
 });
 
 const EID_FISCAL_CODE_KEY = "tax_id_code";
+const EID_FISCAL_CODE_PREFIX = "TINIT-";
 
 type GuardsImplementationOptions = Partial<{
   bypassIdentityMatch: boolean;
@@ -58,6 +59,7 @@ export const createEidIssuanceGuardsImplementation = (
       O.chain(x => O.fromNullable(x[EID_FISCAL_CODE_KEY]?.value)),
       O.map(t.string.decode),
       O.chain(O.fromEither),
+      O.map(x => x.replace(EID_FISCAL_CODE_PREFIX, "")),
       O.getOrElse(() => "")
     );
 
