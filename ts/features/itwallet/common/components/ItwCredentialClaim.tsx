@@ -8,10 +8,11 @@ import {
   ClaimDisplayFormat,
   ClaimValue,
   DateClaimConfig,
+  DrivingPrivilegeClaimType,
   DrivingPrivilegesClaim,
-  DrivingPrivilegesClaimType,
   EvidenceClaim,
   ImageClaim,
+  ImageClaimNoUrl,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
   PlainTextClaim,
@@ -25,6 +26,8 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bott
 import { getExpireStatus } from "../../../../utils/dates";
 
 const HIDDEN_CLAIM = "******";
+
+const base64Url = "data:image/png;base64,";
 
 /**
  * Component which renders a place of birth type claim.
@@ -227,12 +230,20 @@ const DrivingPrivilegesClaimItem = ({
   claim
 }: {
   label: string;
-  claim: DrivingPrivilegesClaimType;
+  claim: DrivingPrivilegeClaimType;
 }) => {
+  const localExpiryDate = localeDateFormat(
+    new Date(claim.expiry_date),
+    I18n.t("global.dateFormats.shortFormat")
+  );
+  const localIssueDate = localeDateFormat(
+    new Date(claim.issue_date),
+    I18n.t("global.dateFormats.shortFormat")
+  );
   const privilegeBottomSheet = useIOBottomSheetAutoresizableModal({
     title: I18n.t(
       "features.itWallet.verifiableCredentials.claims.mdl.category",
-      { category: claim.vehicle_category_code }
+      { category: claim.driving_privilege }
     ),
     component: (
       <>
@@ -241,7 +252,7 @@ const DrivingPrivilegesClaimItem = ({
             "features.itWallet.verifiableCredentials.claims.mdl.issuedDate"
           )}
           value={claim.issue_date}
-          accessibilityLabel={`${label} ${claim.issue_date}`}
+          accessibilityLabel={`${label} ${localExpiryDate}`}
         />
         <Divider />
         <ListItemInfo
@@ -249,7 +260,15 @@ const DrivingPrivilegesClaimItem = ({
             "features.itWallet.verifiableCredentials.claims.mdl.expirationDate"
           )}
           value={claim.expiry_date}
-          accessibilityLabel={`${label} ${claim.expiry_date}`}
+          accessibilityLabel={`${label} ${localIssueDate}`}
+        />
+        <Divider />
+        <ListItemInfo
+          label={I18n.t(
+            "features.itWallet.verifiableCredentials.claims.mdl.restrictionConditions"
+          )}
+          value={claim.restriction_conditions || "-"}
+          accessibilityLabel={`${label} ${claim.restriction_conditions}`}
         />
       </>
     )
@@ -258,23 +277,22 @@ const DrivingPrivilegesClaimItem = ({
     <>
       <ListItemInfo
         label={label}
-        value={claim.vehicle_category_code}
+        value={claim.driving_privilege}
         endElement={{
-          type: "iconButton",
+          type: "buttonLink",
           componentProps: {
-            icon: "info",
-            accessibilityLabel: "test",
-            onPress: () => privilegeBottomSheet.present()
+            label: I18n.t("global.buttons.show"),
+            onPress: () => privilegeBottomSheet.present(),
+            accessibilityLabel: I18n.t("global.buttons.show")
           }
         }}
-        accessibilityLabel={`${label} ${claim}`}
+        accessibilityLabel={`${label} ${claim.driving_privilege}`}
       />
       <Divider />
       {privilegeBottomSheet.bottomSheet}
     </>
   );
 };
-
 /**
  * Component which renders a claim.
  * It renders a different component based on the type of the claim.
@@ -317,10 +335,18 @@ export const ItwCredentialClaim = ({
           );
         } else if (ImageClaim.is(decoded)) {
           return <ImageClaimItem label={claim.label} claim={decoded} />;
+        } else if (ImageClaimNoUrl.is(decoded)) {
+          // TODO [SIW-1378] remove this branch when the image claim is always with url
+          const fixedImage = base64Url.concat(decoded);
+          return <ImageClaimItem label={claim.label} claim={fixedImage} />;
         } else if (DrivingPrivilegesClaim.is(decoded)) {
-          return (
-            <DrivingPrivilegesClaimItem label={claim.label} claim={decoded} />
-          );
+          return decoded.map((elem, index) => (
+            <DrivingPrivilegesClaimItem
+              label={claim.label}
+              claim={elem}
+              key={`${index}_{elem.label}`}
+            />
+          ));
         } else if (PlainTextClaim.is(decoded)) {
           return <PlainTextClaimItem label={claim.label} claim={decoded} />; // must be the last one to be checked due to overlap with IPatternStringTag
         } else {

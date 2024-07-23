@@ -43,7 +43,7 @@ const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => (
           {index !== 0 && <Divider />}
           <View style={styles.dataItem}>
             <View>
-              <H6>{getClaimDisplayValue(claim)}</H6>
+              {ClaimText(claim)}
               <LabelSmall weight="Regular" color="grey-700">
                 {I18n.t("features.itWallet.generic.dataSource.single", {
                   credentialSource: source
@@ -58,7 +58,20 @@ const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => (
   </View>
 );
 
-export const getClaimDisplayValue = (claim: ClaimDisplayFormat): string =>
+const ClaimText = (claim: ClaimDisplayFormat) => {
+  const displayValue = getClaimDisplayValue(claim);
+  return Array.isArray(displayValue) ? (
+    displayValue.map((value, index) => (
+      <H6 key={`${index}_${value}`}>{value}</H6>
+    ))
+  ) : (
+    <H6>{displayValue}</H6>
+  );
+};
+
+export const getClaimDisplayValue = (
+  claim: ClaimDisplayFormat
+): string | Array<string> =>
   pipe(
     claim.value,
     ClaimValue.decode,
@@ -77,7 +90,7 @@ export const getClaimDisplayValue = (claim: ClaimDisplayFormat): string =>
         } else if (ImageClaim.is(decoded)) {
           return decoded;
         } else if (DrivingPrivilegesClaim.is(decoded)) {
-          return decoded.vehicle_category_code;
+          return decoded.map(e => e.driving_privilege);
         } else if (PlainTextClaim.is(decoded)) {
           return decoded; // must be the last one to be checked due to overlap with IPatternStringTag
         }
