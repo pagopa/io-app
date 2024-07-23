@@ -81,3 +81,9 @@ export const getPaymentPhaseFromStep = (
       return "pagamento";
   }
 };
+
+/**
+ * This function checks if a date is a dumb date
+ * that some entities use to represent a missing date.
+ */
+export const isPaymentDumbDate = (date: string) => date === "31/12/2099";
