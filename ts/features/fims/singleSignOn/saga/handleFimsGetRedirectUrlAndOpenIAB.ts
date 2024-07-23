@@ -25,7 +25,11 @@ import {
 } from "../../../lollipop/store/reducers/lollipop";
 import { generateKeyInfo } from "../../../lollipop/saga";
 import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
-import { buildAbsoluteUrl, logToMixPanel } from "./sagaUtils";
+import {
+  buildAbsoluteUrl,
+  formatHttpClientResponseForMixPanel,
+  logToMixPanel
+} from "./sagaUtils";
 import { handleFimsResourcesDeallocation } from "./handleFimsResourcesDeallocation";
 
 // note: IAB => InAppBrowser
@@ -68,7 +72,7 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
       return;
     }
     logToMixPanel(
-      `could not get RelyingParty redirect URL, ${JSON.stringify(
+      `could not get RelyingParty redirect URL, ${formatHttpClientResponseForMixPanel(
         rpRedirectResponse
       )}`
     );
