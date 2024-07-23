@@ -28,7 +28,7 @@ export const paymentsGetPaymentMethodsAction = createAsyncAction(
 )<undefined, PaymentMethodsResponse, NetworkError>();
 
 type PaymentGetPaymentUserMethodsPayload = {
-  onResponse: (wallets: ReadonlyArray<WalletInfo> | undefined) => void;
+  onResponse?: (wallets: ReadonlyArray<WalletInfo> | undefined) => void;
 };
 
 export const paymentsGetPaymentUserMethodsAction = createAsyncAction(

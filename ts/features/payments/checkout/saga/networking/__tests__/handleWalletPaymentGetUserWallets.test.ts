@@ -38,7 +38,7 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
     testSaga(
       handleWalletPaymentGetUserWallets,
       mockGetWalletsByIdUser,
-      paymentsGetPaymentUserMethodsAction.request()
+      paymentsGetPaymentUserMethodsAction.request({})
     )
       .next()
       .next(T_SESSION_TOKEN)
@@ -58,7 +58,7 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
     testSaga(
       handleWalletPaymentGetUserWallets,
       mockGetWalletsByIdUser,
-      paymentsGetPaymentUserMethodsAction.request()
+      paymentsGetPaymentUserMethodsAction.request({})
     )
       .next()
       .next(T_SESSION_TOKEN)
@@ -80,7 +80,7 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
     testSaga(
       handleWalletPaymentGetUserWallets,
       mockGetWalletsByIdUser,
-      paymentsGetPaymentUserMethodsAction.request()
+      paymentsGetPaymentUserMethodsAction.request({})
     )
       .next()
       .next(T_SESSION_TOKEN)
