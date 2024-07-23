@@ -33,13 +33,13 @@ export const ItwIssuanceEidFailureScreen = () => {
           label: I18n.t(
             "features.itWallet.issuance.genericError.primaryAction"
           ),
-          onPress: closeIssuance
+          onPress: closeIssuance // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         },
         secondaryAction: {
           label: I18n.t(
             "features.itWallet.issuance.genericError.secondaryAction"
           ),
-          onPress: closeIssuance
+          onPress: closeIssuance // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         }
       },
       [IssuanceFailureType.UNSUPPORTED_DEVICE]: {
@@ -50,7 +50,7 @@ export const ItwIssuanceEidFailureScreen = () => {
           label: I18n.t(
             "features.itWallet.unsupportedDevice.error.primaryAction"
           ),
-          onPress: closeIssuance
+          onPress: closeIssuance // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         },
         secondaryAction: {
           label: I18n.t(
@@ -71,7 +71,7 @@ export const ItwIssuanceEidFailureScreen = () => {
           label: I18n.t(
             "features.itWallet.issuance.notMatchingIdentityError.primaryAction"
           ),
-          onPress: () => closeIssuance
+          onPress: () => closeIssuance // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         },
         secondaryAction: {
           label: I18n.t(
