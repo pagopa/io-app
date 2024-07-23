@@ -3073,6 +3073,11 @@ features:
         other: Altro
     onboarding:
       title: Cosa vuoi aggiungere al portafoglio?
+      sections:
+        itw: IT Wallet
+        other: Altro
+      badge:
+        active: Già presente
       options:
         cgn: Carta Giovani Nazionale
         welfare: Iniziative welfare
@@ -3129,6 +3134,11 @@ features:
     errors:
       transactionCreationError: C’è un problema con i sistemi di pagamento.
   itWallet:
+    credentialName:
+      eid: Identità Digitale
+      mdl: Patente di Guida
+      dc: Carta Europea della Disabilità
+      ts: Tessera Sanitaria
     wallet:
       active: Attivo
       inactive: Non attivo
@@ -3137,11 +3147,6 @@ features:
         expired: Non valida
         expiring: In scadenza
         pending: In lavorazione
-      label:
-        eid: Identità Digitale
-        mdl: Patente di Guida
-        dc: Carta Europea della Disabilità
-        ts: Tessera Sanitaria
       digital: Versione digitale
     generic:
       error:
@@ -3229,9 +3234,7 @@ features:
         disclaimer:
           0: I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.
           1: I dati saranno condivisi solo per il tempo necessario al rilascio della credenziale.
-        tos:
-          0: "Per maggiori informazioni, leggi"
-          1: l’informativa Privacy e i Termini e Condizioni d’uso
+        tos: "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy]()."
       eidPreview:
         title: "Stiamo aggiungendo i seguenti dati al Portafoglio:"
         actions:
@@ -3257,6 +3260,8 @@ features:
           actions:
             continue: Aggiungi primo documento
             close: Continua più tardi
+      credentialResult:
+        toast: Fatto! Hai aggiunto {{credentialName}}
       notMatchingIdentityError:
         title: Identità non riconosciuta
         body: Non puoi attivare IT Wallet con un'identità diversa da quella che usi per accedere a IO. Verifica le credenziali di accesso e riprova.
