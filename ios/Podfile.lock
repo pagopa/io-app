@@ -73,36 +73,6 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
-  - GoogleDataTransport (9.3.0):
-    - GoogleUtilities/Environment (~> 7.7)
-    - nanopb (< 2.30910.0, >= 2.30908.0)
-    - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleMLKit/BarcodeScanning (4.0.0):
-    - GoogleMLKit/MLKitCore
-    - MLKitBarcodeScanning (~> 3.0.0)
-  - GoogleMLKit/MLKitCore (4.0.0):
-    - MLKitCommon (~> 9.0.0)
-  - GoogleToolboxForMac/DebugUtils (2.3.2):
-    - GoogleToolboxForMac/Defines (= 2.3.2)
-  - GoogleToolboxForMac/Defines (2.3.2)
-  - GoogleToolboxForMac/Logger (2.3.2):
-    - GoogleToolboxForMac/Defines (= 2.3.2)
-  - "GoogleToolboxForMac/NSData+zlib (2.3.2)":
-    - GoogleToolboxForMac/Defines (= 2.3.2)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.3.2)":
-    - GoogleToolboxForMac/DebugUtils (= 2.3.2)
-    - GoogleToolboxForMac/Defines (= 2.3.2)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.3.2)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.3.2)"
-  - GoogleUtilities/Environment (7.12.0):
-    - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.12.0):
-    - GoogleUtilities/Environment
-  - GoogleUtilities/UserDefaults (7.12.0):
-    - GoogleUtilities/Logger
-  - GoogleUtilitiesComponents (1.1.0):
-    - GoogleUtilities/Logger
-  - GTMSessionFetcher/Core (2.3.0)
   - hermes-engine (0.72.14):
     - hermes-engine/Pre-built (= 0.72.14)
   - hermes-engine/Pre-built (0.72.14)
@@ -119,29 +89,6 @@ PODS:
   - MixpanelReactNative (2.4.1):
     - Mixpanel-swift (= 4.2.0)
     - React-Core
-  - MLImage (1.0.0-beta4)
-  - MLKitBarcodeScanning (3.0.0):
-    - MLKitCommon (~> 9.0)
-    - MLKitVision (~> 5.0)
-  - MLKitCommon (9.0.0):
-    - GoogleDataTransport (~> 9.0)
-    - GoogleToolboxForMac/Logger (~> 2.1)
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
-    - GoogleUtilities/UserDefaults (~> 7.0)
-    - GoogleUtilitiesComponents (~> 1.0)
-    - GTMSessionFetcher/Core (< 3.0, >= 1.1)
-  - MLKitVision (5.0.0):
-    - GoogleToolboxForMac/Logger (~> 2.1)
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-    - GTMSessionFetcher/Core (< 3.0, >= 1.1)
-    - MLImage (= 1.0.0-beta4)
-    - MLKitCommon (~> 9.0)
-  - nanopb (2.30909.1):
-    - nanopb/decode (= 2.30909.1)
-    - nanopb/encode (= 2.30909.1)
-  - nanopb/decode (2.30909.1)
-  - nanopb/encode (2.30909.1)
   - OpenSSL-Universal (1.1.1100)
   - pagopa-io-react-native-crypto (0.3.0):
     - React-Core
@@ -166,7 +113,6 @@ PODS:
     - ZendeskChatSDK
     - ZendeskMessagingAPISDK
     - ZendeskSupportSDK
-  - PromisesObjC (2.3.1)
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -635,7 +581,8 @@ PODS:
     - React-Core
   - RNDeviceInfo (10.8.0):
     - React-Core
-  - RNFlashList (1.4.3):
+  - RNFlashList (1.7.0):
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - RNFS (2.18.0):
     - React
@@ -661,16 +608,13 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTImage
-  - RNShare (7.3.9):
+  - RNShare (10.2.1):
     - React-Core
   - RNSVG (15.1.0):
     - React-Core
   - SocketRocket (0.6.1)
   - SwiftCBOR (0.4.7)
-  - vision-camera-code-scanner (0.2.0):
-    - GoogleMLKit/BarcodeScanning
-    - React-Core
-  - VisionCamera (2.16.7):
+  - VisionCamera (3.9.2):
     - React
     - React-callinvoker
     - React-Core
@@ -815,7 +759,6 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - vision-camera-code-scanner (from `../node_modules/vision-camera-code-scanner`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -832,22 +775,10 @@ SPEC REPOS:
     - Flipper-PeerTalk
     - FlipperKit
     - fmt
-    - GoogleDataTransport
-    - GoogleMLKit
-    - GoogleToolboxForMac
-    - GoogleUtilities
-    - GoogleUtilitiesComponents
-    - GTMSessionFetcher
     - JOSESwift
     - libevent
     - Mixpanel-swift
-    - MLImage
-    - MLKitBarcodeScanning
-    - MLKitCommon
-    - MLKitVision
-    - nanopb
     - OpenSSL-Universal
-    - PromisesObjC
     - SocketRocket
     - SwiftCBOR
     - YogaKit
@@ -1039,8 +970,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
-  vision-camera-code-scanner:
-    :path: "../node_modules/vision-camera-code-scanner"
   VisionCamera:
     :path: "../node_modules/react-native-vision-camera"
   Yoga:
@@ -1064,12 +993,6 @@ SPEC CHECKSUMS:
   FlipperKit: 2efad7007d6745a3f95e4034d547be637f89d3f6
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
-  GoogleDataTransport: 57c22343ab29bc686febbf7cbb13bad167c2d8fe
-  GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
-  GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
-  GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
-  GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
-  GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   hermes-engine: b213bace5f31766ad1434d2d9b2cbf04cf92a2b6
   io-react-native-secure-storage: 5e6f84d27ead13de84f2014ecc767bffdc3e97e9
   jail-monkey: a71b35d482a70ecba844a90f002994012cf12a5d
@@ -1077,11 +1000,6 @@ SPEC CHECKSUMS:
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
   MixpanelReactNative: 0101b8828c2f335c128850e71ab7d3b7adde089a
-  MLImage: 7bb7c4264164ade9bf64f679b40fb29c8f33ee9b
-  MLKitBarcodeScanning: 04e264482c5f3810cb89ebc134ef6b61e67db505
-  MLKitCommon: c1b791c3e667091918d91bda4bba69a91011e390
-  MLKitVision: 8baa5f46ee3352614169b85250574fde38c36f49
-  nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
   pagopa-io-react-native-http-client: cbdfb83c92432efb0de22b7c3c85cffa391870f8
@@ -1089,7 +1007,6 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-jwt: 662d4e722715996758b079774abea1996b057467
   pagopa-io-react-native-login-utils: 9fb43fd59dcc864a24343209e74bd7429659456a
   pagopa-react-native-zendesk: 60a26f8a8072234789c34bb7c8a769c156eb57dc
-  PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 264adaca1d8b1a9c078761891898d4142df05313
   RCTTypeSafety: 279a89da7058a69899778a127be73fab38b84499
@@ -1149,7 +1066,7 @@ SPEC CHECKSUMS:
   RNCClipboard: f1736c75ab85b627a4d57587edb4b60999c4dd80
   RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
   RNDeviceInfo: 5795b418ed3451ebcaf39384e6cf51f60cb931c9
-  RNFlashList: ade81b4e928ebd585dd492014d40fb8d0e848aab
+  RNFlashList: 1d10168366611816790acee65b6f9a7172d1f11c
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
   RNGestureHandler: fc754e30bb46d093b46b47824e1a04e722fd8a3d
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
@@ -1159,12 +1076,11 @@ SPEC CHECKSUMS:
   RNReactNativeHapticFeedback: 6d24decfa94e037c2ecc312407d2a057b7933f10
   RNReanimated: 108a53626a492df35db30b98fc922a7189d1c601
   RNScreens: b8d370282cdeae9df85dd5eab20c88eb5181243b
-  RNShare: 807d6f8231b8ebcf6dd839294b877342eb93d4e5
+  RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
   RNSVG: 50cf2c7018e57cf5d3522d98d0a3a4dd6bf9d093
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   SwiftCBOR: 465775bed0e8bac7bfb8160bcf7b95d7f75971e4
-  vision-camera-code-scanner: dda884a7f3ec8243a2a6d6489b91860648371bca
-  VisionCamera: 8bc0089891097ab368afd7b699cc3e239871235c
+  VisionCamera: 36c460338692788a0d377dce7d32f8ba049fb4f2
   Yoga: c32e0be1a17f8f1f0e633a3122f7666441f52c82
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   ZendeskAnswerBotProvidersSDK: a024260282886870a15e7a986bf5286c23fd9311
@@ -1180,6 +1096,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: 8cf921c496269bb5f53aac9320f3d002a793991d
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: a409230d2dbff899bf9ff74097f2aa21f5a54a2a
+PODFILE CHECKSUM: c81fe8fa67af4bf6e27653958d177ac176ab0293
 
 COCOAPODS: 1.14.3
