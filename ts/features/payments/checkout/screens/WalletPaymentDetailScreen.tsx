@@ -56,6 +56,7 @@ import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import * as analytics from "../analytics";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { isPaymentDumbDate } from "../utils";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -191,6 +192,9 @@ const WalletPaymentDetailContent = ({
     payment.dueDate,
     O.fromNullable,
     O.map(_ => format(_, "DD/MM/YYYY")),
+    O.map(formattedDate =>
+      isPaymentDumbDate(formattedDate) ? undefined : formattedDate
+    ),
     O.toUndefined
   );
 
