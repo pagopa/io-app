@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.67.0-rc.1](https://github.com/pagopa/io-app/compare/2.67.0-rc.0...2.67.0-rc.1) (2024-07-23)
+
+
+### Features
+
+* [[IOPID-2016](https://pagopa.atlassian.net/browse/IOPID-2016),[IOPID-2017](https://pagopa.atlassian.net/browse/IOPID-2017)] Error handling during the app startup ([#5963](https://github.com/pagopa/io-app/issues/5963)) ([fcdec99](https://github.com/pagopa/io-app/commit/fcdec99a25d85471e68175316e9557c44682041b))
+* [[IOPID-92](https://pagopa.atlassian.net/browse/IOPID-92)] Add logic to use test login with lollipop ([#5996](https://github.com/pagopa/io-app/issues/5996)) ([789f3d4](https://github.com/pagopa/io-app/commit/789f3d4d5e4fdcb8c624b80904e6ed394049fde6))
+
+
+### Bug Fixes
+
+* [[IOCOM-1612](https://pagopa.atlassian.net/browse/IOCOM-1612)] BUGFIX: FIMS decode error in iOS ([#6013](https://github.com/pagopa/io-app/issues/6013)) ([4a1194b](https://github.com/pagopa/io-app/commit/4a1194be63931666cf7bde8aa3134e89bab536f2))
+* [[IOPAE-1315](https://pagopa.atlassian.net/browse/IOPAE-1315)] Fix organizationFiscalCode copy to clipboard value in service details screen ([#6010](https://github.com/pagopa/io-app/issues/6010)) ([2bf20b7](https://github.com/pagopa/io-app/commit/2bf20b77885dbe51236455570c4a8dadc744ee30))
+
+
+### Chores
+
+* [[IOPLT-603](https://pagopa.atlassian.net/browse/IOPLT-603)] Sets Android API Level 34  ([#5947](https://github.com/pagopa/io-app/issues/5947)) ([26335e5](https://github.com/pagopa/io-app/commit/26335e5d8a1e162cf49b8c4b16fe36296a9e1c2e))
+* **IT Wallet:** [[SIW-1191](https://pagopa.atlassian.net/browse/SIW-1191)] Add wallet instance state check at start up ([#5970](https://github.com/pagopa/io-app/issues/5970)) ([19ef221](https://github.com/pagopa/io-app/commit/19ef22113f89b9a096d16b5e170670ace4f6107a))
+* [[IOCOM-1549](https://pagopa.atlassian.net/browse/IOCOM-1549)] Double avatar standard message detail ([#6004](https://github.com/pagopa/io-app/issues/6004)) ([2473d8f](https://github.com/pagopa/io-app/commit/2473d8f86b54401e4366ac164b22577da5e8d99c))
+
 ## [2.67.0-rc.0](https://github.com/pagopa/io-app/compare/2.66.0-rc.1...2.67.0-rc.0) (2024-07-22)
 
 
