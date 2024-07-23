@@ -5,7 +5,6 @@ import { ItwTags } from "../tags";
 import { CieAuthContext, Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
 import {
-  CleanUpActorParams,
   GetWalletAttestationActorParams,
   StartCieAuthFlowActorParams,
   type RequestEidActorParams
@@ -21,15 +20,6 @@ const setFailure =
   ({ event }: { event: ErrorActorEvent }): Partial<Context> => ({
     failure: { type, reason: event.error }
   });
-
-const getCleanUpInput = ({
-  context
-}: {
-  context: Context;
-}): CleanUpActorParams => ({
-  walletAttestationKeyTag:
-    context.walletAttestationContext?.walletAttestationKeyTag
-});
 
 export const itwEidIssuanceMachine = setup({
   types: {
@@ -48,6 +38,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToCredentialCatalog: notImplemented,
     navigateToCiePinScreen: notImplemented,
     navigateToCieReadCardScreen: notImplemented,
+    navigateToNfcInstructionsScreen: notImplemented,
     storeIntegrityKeyTag: (_ctx, _params: { keyTag: string }) =>
       notImplemented(),
     storeEidCredential: notImplemented,
@@ -55,7 +46,7 @@ export const itwEidIssuanceMachine = setup({
     requestAssistance: notImplemented,
     setWalletInstanceToOperational: notImplemented,
     setWalletInstanceToValid: notImplemented,
-    navigateToNfcInstructionsScreen: notImplemented
+    disposeWalletAttestation: notImplemented
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
@@ -68,8 +59,7 @@ export const itwEidIssuanceMachine = setup({
     ),
     startCieAuthFlow: fromPromise<CieAuthContext, StartCieAuthFlowActorParams>(
       notImplemented
-    ),
-    cleanUp: fromPromise<void, CleanUpActorParams>(notImplemented)
+    )
   },
   guards: {
     isNativeAuthSessionClosed: notImplemented,
@@ -184,13 +174,13 @@ export const itwEidIssuanceMachine = setup({
           entry: "navigateToIdpSelectionScreen",
           on: {
             "select-spid-idp": {
-              target: "#itwEidIssuanceMachine.UserIdentification.Completed",
+              target: "Completed",
               actions: assign(({ event }) => ({
                 identification: { mode: "spid", idpId: event.idp.id }
               }))
             },
             back: {
-              target: "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+              target: "ModeSelection"
             }
           }
         },
@@ -203,10 +193,10 @@ export const itwEidIssuanceMachine = setup({
             "cie-pin-entered": [
               {
                 guard: ({ event }) => event.isNfcEnabled,
+                target: "StartingCieAuthFlow",
                 actions: assign(({ event }) => ({
                   identification: { mode: "ciePin", pin: event.pin }
-                })),
-                target: "StartingCieAuthFlow"
+                }))
               },
               {
                 target: "ActivateNfc",
@@ -300,7 +290,7 @@ export const itwEidIssuanceMachine = setup({
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),
-              target: "#itwEidIssuanceMachine.Issuance.CheckingIdentityMatch"
+              target: "CheckingIdentityMatch"
             },
             onError: [
               {
@@ -320,7 +310,7 @@ export const itwEidIssuanceMachine = setup({
           always: [
             {
               guard: "issuedEidMatchesAuthenticatedUser",
-              target: "#itwEidIssuanceMachine.Issuance.DisplayingPreview"
+              target: "DisplayingPreview"
             },
             {
               actions: assign(
@@ -334,11 +324,15 @@ export const itwEidIssuanceMachine = setup({
           entry: "navigateToEidPreviewScreen",
           on: {
             "add-to-wallet": {
-              actions: ["storeEidCredential", "setWalletInstanceToValid"],
+              actions: [
+                "storeEidCredential",
+                "setWalletInstanceToValid",
+                "disposeWalletAttestation"
+              ],
               target: "#itwEidIssuanceMachine.Success"
             },
             close: {
-              actions: "closeIssuance"
+              actions: ["closeIssuance", "disposeWalletAttestation"]
             }
           }
         }
@@ -346,10 +340,6 @@ export const itwEidIssuanceMachine = setup({
     },
     Success: {
       entry: "navigateToSuccessScreen",
-      invoke: {
-        src: "cleanUp",
-        input: getCleanUpInput
-      },
       on: {
         "add-new-credential": {
           actions: "navigateToCredentialCatalog"
@@ -364,13 +354,9 @@ export const itwEidIssuanceMachine = setup({
     },
     Failure: {
       entry: "navigateToFailureScreen",
-      invoke: {
-        src: "cleanUp",
-        input: getCleanUpInput
-      },
       on: {
         close: {
-          actions: "closeIssuance"
+          actions: ["closeIssuance", "disposeWalletAttestation"]
         },
         "request-assistance": {
           actions: "requestAssistance"

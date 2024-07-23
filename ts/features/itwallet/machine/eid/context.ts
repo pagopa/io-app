@@ -28,7 +28,6 @@ export type CieAuthContext = {
 
 export type WalletAttestationContext = {
   walletAttestation: string;
-  walletAttestationKeyTag: string;
   wiaCryptoContext: CryptoContext;
 };
 
