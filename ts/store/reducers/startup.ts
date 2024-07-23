@@ -4,7 +4,7 @@
 import { isActionOf } from "typesafe-actions";
 import { sessionExpired, sessionInvalid } from "../actions/authentication";
 
-import { startupLoadSuccess } from "../actions/startup";
+import { startupLoadSuccess, startupTransientError } from "../actions/startup";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -15,12 +15,45 @@ export enum StartupStatusEnum {
   AUTHENTICATED = "authenticated"
 }
 
+type StartupTransientErrorNotSet = {
+  kind: "NOT_SET";
+  getSessionRetries: 0;
+  getProfileRetries: 0;
+};
+
+type StartupTransientErrorOnGetSession = {
+  kind: "GET_SESSION_DOWN";
+  getSessionRetries: number;
+  getProfileRetries: number;
+  showError: boolean;
+};
+
+type StartupTransientErrorOnGetProfile = {
+  kind: "GET_PROFILE_DOWN";
+  getSessionRetries: number;
+  getProfileRetries: number;
+  showError: boolean;
+};
+
+export type StartupTransientError =
+  | StartupTransientErrorNotSet
+  | StartupTransientErrorOnGetSession
+  | StartupTransientErrorOnGetProfile;
+
 export type StartupState = {
   status: StartupStatusEnum;
+  transientError: StartupTransientError;
+};
+
+export const startupTransientErrorInitialState: StartupTransientError = {
+  kind: "NOT_SET",
+  getProfileRetries: 0,
+  getSessionRetries: 0
 };
 
 const initialStartupState: StartupState = {
-  status: StartupStatusEnum.INITIAL
+  status: StartupStatusEnum.INITIAL,
+  transientError: startupTransientErrorInitialState
 };
 
 export default function startupReducer(
@@ -42,9 +75,28 @@ export default function startupReducer(
       status: StartupStatusEnum.NOT_AUTHENTICATED
     };
   }
+  if (isActionOf(startupTransientError, action)) {
+    return {
+      ...state,
+      transientError: action.payload
+    };
+  }
   return state;
 }
 
 // Selector
 export const isStartupLoaded = (state: GlobalState): StartupStatusEnum =>
   state.startup.status;
+
+export const startupTransientErrorSelector = (
+  state: GlobalState
+): StartupTransientError => state.startup.transientError;
+
+export const isTransientErrorNotSetSelector = (state: GlobalState) =>
+  state.startup.transientError.kind === "NOT_SET";
+
+export const isTransientErrorOnGetProfileSelector = (state: GlobalState) =>
+  state.startup.transientError.kind === "GET_PROFILE_DOWN";
+
+export const isTransientErrorOnGetSessionSelector = (state: GlobalState) =>
+  state.startup.transientError.kind === "GET_SESSION_DOWN";
