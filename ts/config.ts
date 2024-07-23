@@ -260,5 +260,6 @@ export const itWalletIssuanceRedirectUri = Config.ITW_ISSUANCE_REDIRECT_URI;
 export const itWalletIssuanceRedirectUriCie =
   Config.ITW_ISSUANCE_REDIRECT_URI_CIE;
 export const itwPidProviderBaseUrl = Config.ITW_PID_PROVIDER_BASE_URL;
+export const itwEaaProviderBaseUrl = Config.ITW_EAA_PROVIDER_BASE_URL;
 export const itwBypassIdentityMatch =
   Config.ITW_BYPASS_IDENTITY_MATCH === "YES";
