@@ -11,7 +11,10 @@ import { ConsentData } from "../types";
 import { fimsGetConsentsListAction } from "../store/actions";
 import { fimsTokenSelector } from "../../../../store/reducers/authentication";
 import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
-import { logToMixPanel } from "./sagaUtils";
+import {
+  formatHttpClientResponseForMixPanel,
+  logToMixPanel
+} from "./sagaUtils";
 
 export function* handleFimsGetConsentsList(
   action: ActionType<typeof fimsGetConsentsListAction.request>
@@ -48,7 +51,9 @@ export function* handleFimsGetConsentsList(
       return;
     }
     logToMixPanel(
-      `consent data fetch error: ${JSON.stringify(getConsentsResult)}`
+      `consent data fetch error: ${formatHttpClientResponseForMixPanel(
+        getConsentsResult
+      )}`
     );
     yield* put(fimsGetConsentsListAction.failure("consent data fetch error"));
     return;

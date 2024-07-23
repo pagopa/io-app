@@ -332,7 +332,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                       }
                     >
                       <View
-                        accessibilityLabel="Message, received by Organization name, Service name. Message title. 
+                        accessibilityLabel="Message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
@@ -367,9 +367,14 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          {
-                            "backgroundColor": undefined,
-                          }
+                          [
+                            {
+                              "backgroundColor": undefined,
+                            },
+                            {
+                              "minHeight": 133,
+                            },
+                          ]
                         }
                         testID="wrapped_message_list_item_0"
                       >
@@ -383,6 +388,10 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                               },
                               {
                                 "backgroundColor": undefined,
+                              },
+                              {
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               },
                             ]
                           }
@@ -421,6 +430,8 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -484,13 +495,18 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -583,12 +599,12 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
-                                    dynamicTypeRamp="footnote"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
-                                        "fontSize": 16,
-                                        "lineHeight": 21,
+                                        "fontSize": 18,
+                                        "lineHeight": 25,
                                       }
                                     }
                                     maxFontSizeMultiplier={1.25}
@@ -599,8 +615,8 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                           "flex": 1,
                                         },
                                         {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
+                                          "fontSize": 18,
+                                          "lineHeight": 25,
                                         },
                                         {
                                           "color": "#0E0F13",
@@ -694,27 +710,26 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
+                                      color="black"
+                                      defaultColor="black"
                                       defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
-                                      fontSize="regular"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
                                         }
                                       }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
                                           },
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -759,27 +774,26 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
+                                      color="black"
+                                      defaultColor="black"
                                       defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
-                                      fontSize="regular"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
                                         }
                                       }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
                                           },
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -1357,7 +1371,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                       }
                     >
                       <View
-                        accessibilityLabel="Unread message, received by Organization name, Service name. Message title. 
+                        accessibilityLabel="Unread message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
@@ -1392,9 +1406,14 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          {
-                            "backgroundColor": undefined,
-                          }
+                          [
+                            {
+                              "backgroundColor": undefined,
+                            },
+                            {
+                              "minHeight": 133,
+                            },
+                          ]
                         }
                         testID="wrapped_message_list_item_0"
                       >
@@ -1408,6 +1427,10 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                               },
                               {
                                 "backgroundColor": undefined,
+                              },
+                              {
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               },
                             ]
                           }
@@ -1446,6 +1469,8 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -1509,13 +1534,18 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -1608,12 +1638,12 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
-                                    dynamicTypeRamp="footnote"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
-                                        "fontSize": 16,
-                                        "lineHeight": 21,
+                                        "fontSize": 18,
+                                        "lineHeight": 25,
                                       }
                                     }
                                     maxFontSizeMultiplier={1.25}
@@ -1624,8 +1654,8 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                           "flex": 1,
                                         },
                                         {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
+                                          "fontSize": 18,
+                                          "lineHeight": 25,
                                         },
                                         {
                                           "color": "#0E0F13",
@@ -1719,27 +1749,26 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
+                                      color="black"
+                                      defaultColor="black"
                                       defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
-                                      fontSize="regular"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
                                         }
                                       }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
                                           },
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -1784,27 +1813,26 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
+                                      color="black"
+                                      defaultColor="black"
                                       defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
-                                      fontSize="regular"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
                                         }
                                       }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
                                           },
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -2437,7 +2465,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                       }
                     >
                       <View
-                        accessibilityLabel="Message, received by Organization name, Service name. Message title. 
+                        accessibilityLabel="Message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
@@ -2472,9 +2500,14 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          {
-                            "backgroundColor": undefined,
-                          }
+                          [
+                            {
+                              "backgroundColor": undefined,
+                            },
+                            {
+                              "minHeight": 133,
+                            },
+                          ]
                         }
                         testID="wrapped_message_list_item_0"
                       >
@@ -2488,6 +2521,10 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                               },
                               {
                                 "backgroundColor": undefined,
+                              },
+                              {
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               },
                             ]
                           }
@@ -2526,6 +2563,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -2710,13 +2749,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -2809,12 +2853,12 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
-                                    dynamicTypeRamp="footnote"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
-                                        "fontSize": 16,
-                                        "lineHeight": 21,
+                                        "fontSize": 18,
+                                        "lineHeight": 25,
                                       }
                                     }
                                     maxFontSizeMultiplier={1.25}
@@ -2825,8 +2869,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "flex": 1,
                                         },
                                         {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
+                                          "fontSize": 18,
+                                          "lineHeight": 25,
                                         },
                                         {
                                           "color": "#0E0F13",
@@ -2920,27 +2964,26 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
+                                      color="black"
+                                      defaultColor="black"
                                       defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
-                                      fontSize="regular"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
                                         }
                                       }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
                                           },
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -2985,27 +3028,26 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
+                                      color="black"
+                                      defaultColor="black"
                                       defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
-                                      fontSize="regular"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
                                         }
                                       }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
                                           },
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -3493,7 +3535,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                       }
                     >
                       <View
-                        accessibilityLabel="Unread message, received by Organization name, Service name. Message title. 
+                        accessibilityLabel="Unread message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
@@ -3528,9 +3570,14 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          {
-                            "backgroundColor": undefined,
-                          }
+                          [
+                            {
+                              "backgroundColor": undefined,
+                            },
+                            {
+                              "minHeight": 133,
+                            },
+                          ]
                         }
                         testID="wrapped_message_list_item_0"
                       >
@@ -3544,6 +3591,10 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                               },
                               {
                                 "backgroundColor": undefined,
+                              },
+                              {
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               },
                             ]
                           }
@@ -3582,6 +3633,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -3766,13 +3819,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -3865,12 +3923,12 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
-                                    dynamicTypeRamp="footnote"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
-                                        "fontSize": 16,
-                                        "lineHeight": 21,
+                                        "fontSize": 18,
+                                        "lineHeight": 25,
                                       }
                                     }
                                     maxFontSizeMultiplier={1.25}
@@ -3881,8 +3939,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "flex": 1,
                                         },
                                         {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
+                                          "fontSize": 18,
+                                          "lineHeight": 25,
                                         },
                                         {
                                           "color": "#0E0F13",
@@ -3976,27 +4034,26 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
+                                      color="black"
+                                      defaultColor="black"
                                       defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
-                                      fontSize="regular"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
                                         }
                                       }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
                                           },
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -4041,27 +4098,26 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
+                                      color="black"
+                                      defaultColor="black"
                                       defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
-                                      fontSize="regular"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
                                         }
                                       }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
                                           },
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -4604,7 +4660,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                       }
                     >
                       <View
-                        accessibilityLabel="Message, received by Organization name, Service name. Message title. 
+                        accessibilityLabel="Message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
@@ -4639,9 +4695,14 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          {
-                            "backgroundColor": undefined,
-                          }
+                          [
+                            {
+                              "backgroundColor": undefined,
+                            },
+                            {
+                              "minHeight": 95,
+                            },
+                          ]
                         }
                         testID="wrapped_message_list_item_0"
                       >
@@ -4655,6 +4716,10 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                               },
                               {
                                 "backgroundColor": undefined,
+                              },
+                              {
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               },
                             ]
                           }
@@ -4693,6 +4758,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -4877,13 +4944,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -4976,12 +5048,12 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
-                                    dynamicTypeRamp="footnote"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
-                                        "fontSize": 16,
-                                        "lineHeight": 21,
+                                        "fontSize": 18,
+                                        "lineHeight": 25,
                                       }
                                     }
                                     maxFontSizeMultiplier={1.25}
@@ -4992,8 +5064,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "flex": 1,
                                         },
                                         {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
+                                          "fontSize": 18,
+                                          "lineHeight": 25,
                                         },
                                         {
                                           "color": "#0E0F13",
@@ -5087,27 +5159,26 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
+                                      color="black"
+                                      defaultColor="black"
                                       defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
-                                      fontSize="regular"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
                                         }
                                       }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
                                           },
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -5152,27 +5223,26 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
+                                      color="black"
+                                      defaultColor="black"
                                       defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
-                                      fontSize="regular"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
                                         }
                                       }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
                                           },
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -5535,7 +5605,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                       }
                     >
                       <View
-                        accessibilityLabel="Unread message, received by Organization name, Service name. Message title. 
+                        accessibilityLabel="Unread message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
@@ -5570,9 +5640,14 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          {
-                            "backgroundColor": undefined,
-                          }
+                          [
+                            {
+                              "backgroundColor": undefined,
+                            },
+                            {
+                              "minHeight": 95,
+                            },
+                          ]
                         }
                         testID="wrapped_message_list_item_0"
                       >
@@ -5586,6 +5661,10 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                               },
                               {
                                 "backgroundColor": undefined,
+                              },
+                              {
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               },
                             ]
                           }
@@ -5624,6 +5703,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -5808,13 +5889,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -5907,12 +5993,12 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
-                                    dynamicTypeRamp="footnote"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
-                                        "fontSize": 16,
-                                        "lineHeight": 21,
+                                        "fontSize": 18,
+                                        "lineHeight": 25,
                                       }
                                     }
                                     maxFontSizeMultiplier={1.25}
@@ -5923,8 +6009,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "flex": 1,
                                         },
                                         {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
+                                          "fontSize": 18,
+                                          "lineHeight": 25,
                                         },
                                         {
                                           "color": "#0E0F13",
@@ -6018,27 +6104,26 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
+                                      color="black"
+                                      defaultColor="black"
                                       defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
-                                      fontSize="regular"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
                                         }
                                       }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
                                           },
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -6083,27 +6168,26 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
+                                      color="black"
+                                      defaultColor="black"
                                       defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
-                                      fontSize="regular"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
                                         }
                                       }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
                                           },
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -6521,7 +6605,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                       }
                     >
                       <View
-                        accessibilityLabel="Message, received by Organization name, Service name. Message title. 
+                        accessibilityLabel="Message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
@@ -6556,9 +6640,14 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          {
-                            "backgroundColor": undefined,
-                          }
+                          [
+                            {
+                              "backgroundColor": undefined,
+                            },
+                            {
+                              "minHeight": 95,
+                            },
+                          ]
                         }
                         testID="wrapped_message_list_item_0"
                       >
@@ -6572,6 +6661,10 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                               },
                               {
                                 "backgroundColor": undefined,
+                              },
+                              {
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               },
                             ]
                           }
@@ -6610,6 +6703,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -6673,13 +6768,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -6772,12 +6872,12 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
-                                    dynamicTypeRamp="footnote"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
-                                        "fontSize": 16,
-                                        "lineHeight": 21,
+                                        "fontSize": 18,
+                                        "lineHeight": 25,
                                       }
                                     }
                                     maxFontSizeMultiplier={1.25}
@@ -6788,8 +6888,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "flex": 1,
                                         },
                                         {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
+                                          "fontSize": 18,
+                                          "lineHeight": 25,
                                         },
                                         {
                                           "color": "#0E0F13",
@@ -6883,27 +6983,26 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
+                                      color="black"
+                                      defaultColor="black"
                                       defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
-                                      fontSize="regular"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
                                         }
                                       }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
                                           },
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -6948,27 +7047,26 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
+                                      color="black"
+                                      defaultColor="black"
                                       defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
-                                      fontSize="regular"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
                                         }
                                       }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
                                           },
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -7331,7 +7429,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                       }
                     >
                       <View
-                        accessibilityLabel="Unread message, received by Organization name, Service name. Message title. 
+                        accessibilityLabel="Unread message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
@@ -7366,9 +7464,14 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          {
-                            "backgroundColor": undefined,
-                          }
+                          [
+                            {
+                              "backgroundColor": undefined,
+                            },
+                            {
+                              "minHeight": 95,
+                            },
+                          ]
                         }
                         testID="wrapped_message_list_item_0"
                       >
@@ -7382,6 +7485,10 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                               },
                               {
                                 "backgroundColor": undefined,
+                              },
+                              {
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               },
                             ]
                           }
@@ -7420,6 +7527,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -7483,13 +7592,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                   </View>
                                   <View
                                     style={
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      }
+                                      [
+                                        {
+                                          "bottom": 0,
+                                          "left": 0,
+                                          "position": "absolute",
+                                          "right": 0,
+                                          "top": 0,
+                                        },
+                                        {
+                                          "pointerEvents": "none",
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
@@ -7582,12 +7696,12 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
-                                    dynamicTypeRamp="footnote"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
-                                        "fontSize": 16,
-                                        "lineHeight": 21,
+                                        "fontSize": 18,
+                                        "lineHeight": 25,
                                       }
                                     }
                                     maxFontSizeMultiplier={1.25}
@@ -7598,8 +7712,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "flex": 1,
                                         },
                                         {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
+                                          "fontSize": 18,
+                                          "lineHeight": 25,
                                         },
                                         {
                                           "color": "#0E0F13",
@@ -7693,27 +7807,26 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
+                                      color="black"
+                                      defaultColor="black"
                                       defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
-                                      fontSize="regular"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
                                         }
                                       }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
                                           },
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -7758,27 +7871,26 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
+                                      color="black"
+                                      defaultColor="black"
                                       defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
-                                      fontSize="regular"
                                       fontStyle={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
                                         }
                                       }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
                                           },
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",

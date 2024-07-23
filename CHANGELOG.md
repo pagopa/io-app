@@ -2,6 +2,87 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.67.0-rc.1](https://github.com/pagopa/io-app/compare/2.67.0-rc.0...2.67.0-rc.1) (2024-07-23)
+
+
+### Features
+
+* [[IOPID-2016](https://pagopa.atlassian.net/browse/IOPID-2016),[IOPID-2017](https://pagopa.atlassian.net/browse/IOPID-2017)] Error handling during the app startup ([#5963](https://github.com/pagopa/io-app/issues/5963)) ([fcdec99](https://github.com/pagopa/io-app/commit/fcdec99a25d85471e68175316e9557c44682041b))
+* [[IOPID-92](https://pagopa.atlassian.net/browse/IOPID-92)] Add logic to use test login with lollipop ([#5996](https://github.com/pagopa/io-app/issues/5996)) ([789f3d4](https://github.com/pagopa/io-app/commit/789f3d4d5e4fdcb8c624b80904e6ed394049fde6))
+
+
+### Bug Fixes
+
+* [[IOCOM-1612](https://pagopa.atlassian.net/browse/IOCOM-1612)] BUGFIX: FIMS decode error in iOS ([#6013](https://github.com/pagopa/io-app/issues/6013)) ([4a1194b](https://github.com/pagopa/io-app/commit/4a1194be63931666cf7bde8aa3134e89bab536f2))
+* [[IOPAE-1315](https://pagopa.atlassian.net/browse/IOPAE-1315)] Fix organizationFiscalCode copy to clipboard value in service details screen ([#6010](https://github.com/pagopa/io-app/issues/6010)) ([2bf20b7](https://github.com/pagopa/io-app/commit/2bf20b77885dbe51236455570c4a8dadc744ee30))
+
+
+### Chores
+
+* [[IOPLT-603](https://pagopa.atlassian.net/browse/IOPLT-603)] Sets Android API Level 34  ([#5947](https://github.com/pagopa/io-app/issues/5947)) ([26335e5](https://github.com/pagopa/io-app/commit/26335e5d8a1e162cf49b8c4b16fe36296a9e1c2e))
+* **IT Wallet:** [[SIW-1191](https://pagopa.atlassian.net/browse/SIW-1191)] Add wallet instance state check at start up ([#5970](https://github.com/pagopa/io-app/issues/5970)) ([19ef221](https://github.com/pagopa/io-app/commit/19ef22113f89b9a096d16b5e170670ace4f6107a))
+* [[IOCOM-1549](https://pagopa.atlassian.net/browse/IOCOM-1549)] Double avatar standard message detail ([#6004](https://github.com/pagopa/io-app/issues/6004)) ([2473d8f](https://github.com/pagopa/io-app/commit/2473d8f86b54401e4366ac164b22577da5e8d99c))
+
+## [2.67.0-rc.0](https://github.com/pagopa/io-app/compare/2.66.0-rc.1...2.67.0-rc.0) (2024-07-22)
+
+
+### Features
+
+* [[IOPAE-1310](https://pagopa.atlassian.net/browse/IOPAE-1310)] Reintroduced the status banner in the services home ([#5987](https://github.com/pagopa/io-app/issues/5987)) ([b02f187](https://github.com/pagopa/io-app/commit/b02f187862385e463ed66194d5c39d11fef83162))
+* **IT Wallet:** [[SIW-1035](https://pagopa.atlassian.net/browse/SIW-1035)] Add eID to wallet ([#5981](https://github.com/pagopa/io-app/issues/5981)) ([8f54adc](https://github.com/pagopa/io-app/commit/8f54adc190a1c96755f65c3130b7a95793d4aaf0))
+* **IT Wallet:** [[SIW-1295](https://pagopa.atlassian.net/browse/SIW-1295)] Add eID issuance flow with SPID and CieID ([#5965](https://github.com/pagopa/io-app/issues/5965)) ([af13dbc](https://github.com/pagopa/io-app/commit/af13dbc498db242956e92dacd536007783190188))
+
+
+### Bug Fixes
+
+* [[IOBP-776](https://pagopa.atlassian.net/browse/IOBP-776)] PSP preselection with onUs attribute ([#5999](https://github.com/pagopa/io-app/issues/5999)) ([cf57388](https://github.com/pagopa/io-app/commit/cf57388465219845f616c104f08e4c2af5824a11))
+* **IT Wallet:** [[SIW-1369](https://pagopa.atlassian.net/browse/SIW-1369)] Fetch function without session token ([#5995](https://github.com/pagopa/io-app/issues/5995)) ([9b1c820](https://github.com/pagopa/io-app/commit/9b1c8208eaa35f9ad068d216a7f99b8a76a5a923))
+* [[IOCOM-1551](https://pagopa.atlassian.net/browse/IOCOM-1551)] Additional margin for single CTA ([#5990](https://github.com/pagopa/io-app/issues/5990)) ([e05f1cf](https://github.com/pagopa/io-app/commit/e05f1cf56a3f6829d47fc75d56c3ddc2e7e82aa4))
+
+
+### Chores
+
+* [[IOCOM-1600](https://pagopa.atlassian.net/browse/IOCOM-1600)] Bigger fonts on message list items ([#5998](https://github.com/pagopa/io-app/issues/5998)) ([5a809df](https://github.com/pagopa/io-app/commit/5a809dff3afadf70f125f6e28406ac2e1015703e))
+* align default `tosVersion` to the remote one ([#5978](https://github.com/pagopa/io-app/issues/5978)) ([f8b31c3](https://github.com/pagopa/io-app/commit/f8b31c3a0c4e91c79f87d7319afa2bc55469980d)), closes [/github.com/pagopa/io-services-metadata/blob/a5ece439327bbcbd03029c9f28f70ab3a17a1687/status/backend.json#L118](https://github.com/pagopa//github.com/pagopa/io-services-metadata/blob/a5ece439327bbcbd03029c9f28f70ab3a17a1687/status/backend.json/issues/L118)
+* Bump Android `minSdkVersion` from `23` to `25` ([#6000](https://github.com/pagopa/io-app/issues/6000)) ([7f5e5a9](https://github.com/pagopa/io-app/commit/7f5e5a9341e5dbb642f9e5d5af965f7d9e10342d))
+* update EIC button scripts ([#5997](https://github.com/pagopa/io-app/issues/5997)) ([63889fb](https://github.com/pagopa/io-app/commit/63889fb278f121aba0067b04005b2b5a47fece28))
+* **IT Wallet:** [[SIW-1284](https://pagopa.atlassian.net/browse/SIW-1284)] Add IT Wallet discovery banner for trial users ([#5948](https://github.com/pagopa/io-app/issues/5948)) ([28ecce1](https://github.com/pagopa/io-app/commit/28ecce18c6451aa5a1631f2c81a606c31b64942b))
+* **IT Wallet:** [[SIW-1285](https://pagopa.atlassian.net/browse/SIW-1285)] Update ITW credential catalog screen ([#5969](https://github.com/pagopa/io-app/issues/5969)) ([d6c99db](https://github.com/pagopa/io-app/commit/d6c99db25ed81272eb885577f1d1311d34429f7e))
+* **IT Wallet:** [[SIW-1328](https://pagopa.atlassian.net/browse/SIW-1328)] Update cards categorization in wallet screen ([#5961](https://github.com/pagopa/io-app/issues/5961)) ([1222c9b](https://github.com/pagopa/io-app/commit/1222c9bacc46ba4f1a92b0def95b67894127b18e))
+* **IT Wallet:** [[SIW-1360](https://pagopa.atlassian.net/browse/SIW-1360)] Add remote config for `it-wallet` feature ([#5979](https://github.com/pagopa/io-app/issues/5979)) ([a655f42](https://github.com/pagopa/io-app/commit/a655f427893687e7db002ae5f6ee858ec01a7f77))
+* **IT Wallet:** [[SIW-1363](https://pagopa.atlassian.net/browse/SIW-1363)] Add IT Wallet credential cards in wallet ([#5988](https://github.com/pagopa/io-app/issues/5988)) ([b5a41ef](https://github.com/pagopa/io-app/commit/b5a41efd26a998a99e94c8f8b7bf4d947d68498a))
+
+## [2.66.0-rc.2](https://github.com/pagopa/io-app/compare/2.65.0-rc.0...2.66.0-rc.2) (2024-07-19)
+
+
+### Bug Fixes
+
+* PSP preselection with onUs attribute ([a80379a](https://github.com/pagopa/io-app/commit/a80379afe5cff0de52ae6e92f655c8c8d93fdeaa))
+
+
+### Chores
+
+* **release:** 2.66.0-rc.1 ([fd9e339](https://github.com/pagopa/io-app/commit/fd9e339d852439fde4c10aa6d018e1ff07633400))
+
+## [2.66.0-rc.1](https://github.com/pagopa/io-app/compare/2.66.0-rc.0...2.66.0-rc.1) (2024-07-17)
+
+
+### Features
+
+* [[IOCOM-1418](https://pagopa.atlassian.net/browse/IOCOM-1418)] Improved accessibility for new messages flows ([#5976](https://github.com/pagopa/io-app/issues/5976)) ([4ae3af1](https://github.com/pagopa/io-app/commit/4ae3af1b57853a20716cbe1808cf85d8a7bd664f))
+* [[IOCOM-834](https://pagopa.atlassian.net/browse/IOCOM-834)] Auto refresh on new messages home ([#5945](https://github.com/pagopa/io-app/issues/5945)) ([f2cb01e](https://github.com/pagopa/io-app/commit/f2cb01e2b5ed2f280d472cc871b9349cf6aaa3ba))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1361](https://pagopa.atlassian.net/browse/SIW-1361)] Fix wallet onboarding screen ([#5980](https://github.com/pagopa/io-app/issues/5980)) ([93038ac](https://github.com/pagopa/io-app/commit/93038ac832c4910562c23419252b5b0288917749))
+
+
+### Chores
+
+* [[IOCOM-1595](https://pagopa.atlassian.net/browse/IOCOM-1595)] New messages flows as default ([#5984](https://github.com/pagopa/io-app/issues/5984)) ([d9fc8f6](https://github.com/pagopa/io-app/commit/d9fc8f62297cd8c1dbd718adb69c01acb0dca133))
+* **IT Wallet:** [[SIW-1319](https://pagopa.atlassian.net/browse/SIW-1319)] Wallet Instance lifecycle reducer ([#5934](https://github.com/pagopa/io-app/issues/5934)) ([5a3b637](https://github.com/pagopa/io-app/commit/5a3b637b7ec99ca774a4519bcd5e0b85d730aa85))
+
 ## [2.66.0-rc.0](https://github.com/pagopa/io-app/compare/2.64.0-rc.0...2.66.0-rc.0) (2024-07-16)
 
 

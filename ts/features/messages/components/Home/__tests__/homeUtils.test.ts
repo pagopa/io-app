@@ -13,7 +13,6 @@ import {
   getMessagesViewPagerInitialPageIndex,
   getReloadAllMessagesActionForRefreshIfAllowed,
   messageListCategoryToViewPageIndex,
-  messageListItemHeight,
   messageViewPageIndexToListCategory,
   nextPageLoadingWaitMillisecondsGenerator,
   refreshIntervalMillisecondsGenerator
@@ -296,7 +295,7 @@ describe("accessibilityLabelForMessageItem", () => {
     const serviceName = "Service Name";
     const title = "Message Title";
     const createdAt = new Date(1990, 0, 2, 1, 1, 1);
-    const expectedOutput = `Unread message, received by ${organizationName}, ${serviceName}. ${title}. \n    received on ${format(
+    const expectedOutput = `Unread message , received by ${organizationName}, ${serviceName}. ${title}. \n    received on ${format(
       createdAt,
       "MMMM Do YYYY"
     )}\n  . `;
@@ -316,7 +315,7 @@ describe("accessibilityLabelForMessageItem", () => {
     const title = "Message Title";
     const createdAt = new Date();
     createdAt.setTime(createdAt.getTime() - 60 * 60 * 1000);
-    const expectedOutput = `Unread message, received by ${organizationName}, ${serviceName}. ${title}. received at ${format(
+    const expectedOutput = `Unread message , received by ${organizationName}, ${serviceName}. ${title}. received at ${format(
       createdAt,
       "H:mm"
     )}. `;
@@ -335,7 +334,7 @@ describe("accessibilityLabelForMessageItem", () => {
     const serviceName = "Service Name";
     const title = "Message Title";
     const createdAt = new Date(1990, 0, 2, 1, 1, 1);
-    const expectedOutput = `Message, received by ${organizationName}, ${serviceName}. ${title}. \n    received on ${format(
+    const expectedOutput = `Message , received by ${organizationName}, ${serviceName}. ${title}. \n    received on ${format(
       createdAt,
       "MMMM Do YYYY"
     )}\n  . `;
@@ -355,7 +354,7 @@ describe("accessibilityLabelForMessageItem", () => {
     const title = "Message Title";
     const createdAt = new Date();
     createdAt.setTime(createdAt.getTime() - 60 * 60 * 1000);
-    const expectedOutput = `Message, received by ${organizationName}, ${serviceName}. ${title}. received at ${format(
+    const expectedOutput = `Message , received by ${organizationName}, ${serviceName}. ${title}. received at ${format(
       createdAt,
       "H:mm"
     )}. `;
@@ -368,13 +367,6 @@ describe("accessibilityLabelForMessageItem", () => {
     } as UIMessage;
     const accessibilityLabel = accessibilityLabelForMessageItem(message);
     expect(accessibilityLabel).toStrictEqual(expectedOutput);
-  });
-});
-
-describe("messageListItemHeight", () => {
-  it("should return 130", () => {
-    const height = messageListItemHeight();
-    expect(height).toBe(130);
   });
 });
 
