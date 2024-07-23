@@ -8,19 +8,16 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { ScrollView, StyleSheet, View } from "react-native";
+import { useIOSelector } from "../../../../store/hooks";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { ItwPidAssuranceLevel } from "../../common/components/ItwPidAssuranceLevel";
 import { ItwReleaserName } from "../../common/components/ItwReleaserName";
 import {
   ItWalletError,
   getItwGenericMappedError
 } from "../../common/utils/itwErrorsUtils";
-import {
-  CredentialType,
-  ItwCredentialsMocks
-} from "../../common/utils/itwMocksUtils";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -28,10 +25,10 @@ import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { ItwClaimsSections } from "../components/ItwClaimsSections";
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
+import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 
 // TODO: use the real credential update time
 const today = new Date();
-const credentialCardData: ReadonlyArray<string> = [];
 
 /**
  * This component renders the entire credential detail.
@@ -57,10 +54,7 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
       />
       <ScrollView contentContainerStyle={{ paddingBottom: screenEndMargin }}>
         <View style={styles.cardContainer}>
-          <ItwCredentialCard
-            credentialType={CredentialType.PID}
-            data={credentialCardData}
-          />
+          <ItwCredentialCard credentialType={CredentialType.PID} />
           <View
             style={[styles.cardBackdrop, { backgroundColor: themeColor }]}
           />
@@ -68,7 +62,6 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
 
         <ContentWrapper>
           <ItwClaimsSections credential={eid} />
-          <ItwPidAssuranceLevel credential={eid} />
           <Divider />
           <ItwReleaserName credential={eid} />
           <VSpacer size={40} />
@@ -81,7 +74,7 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
 
 export const ItwPresentationEidDetailScreen = () => {
   const navigation = useIONavigation();
-  const eidOption = O.some(ItwCredentialsMocks.eid);
+  const eidOption = useIOSelector(itwCredentialsEidSelector);
 
   /**
    * Error view component which currently displays a generic error.

@@ -5,12 +5,10 @@ import { WalletCard } from "../../types";
 import {
   walletAddCards,
   walletRemoveCards,
+  walletRemoveCardsByType,
   walletUpsertCard
 } from "../actions/cards";
-import {
-  getWalletCardsCategorySelector,
-  selectWalletCards
-} from "../selectors";
+import { selectWalletCards } from "../selectors";
 
 const T_CARD_1: WalletCard = {
   category: "bonus",
@@ -58,10 +56,6 @@ describe("Wallet cards reducer", () => {
     expect(selectWalletCards(store.getState())).toEqual(
       expect.arrayContaining([T_CARD_1, T_CARD_2, T_CARD_3])
     );
-
-    expect(
-      getWalletCardsCategorySelector("payment")(store.getState())
-    ).toStrictEqual(expect.arrayContaining([T_CARD_2, T_CARD_3]));
   });
 
   it("should update a specific card in the store", () => {
@@ -115,6 +109,25 @@ describe("Wallet cards reducer", () => {
 
     expect(store.getState().features.wallet.cards).toStrictEqual({
       [T_CARD_2.key]: T_CARD_2
+    });
+  });
+
+  it("should remove cards of the same type from the store", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+
+    store.dispatch(walletAddCards([T_CARD_1, T_CARD_2, T_CARD_3]));
+
+    expect(store.getState().features.wallet.cards).toStrictEqual({
+      [T_CARD_1.key]: T_CARD_1,
+      [T_CARD_2.key]: T_CARD_2,
+      [T_CARD_3.key]: T_CARD_3
+    });
+
+    store.dispatch(walletRemoveCardsByType("payment"));
+
+    expect(store.getState().features.wallet.cards).toStrictEqual({
+      [T_CARD_1.key]: T_CARD_1
     });
   });
 });

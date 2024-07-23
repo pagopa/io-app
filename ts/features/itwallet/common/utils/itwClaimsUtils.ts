@@ -35,9 +35,9 @@ export const getEvidenceOrganizationName = (credential: ParsedCredential) =>
     O.fromNullable,
     O.fold(
       () => I18n.t("features.itWallet.generic.placeholders.organizationName"),
-      some =>
+      evidence =>
         pipe(
-          some.value,
+          evidence.value,
           EvidenceClaim.decode,
           E.fold(
             () =>
@@ -66,7 +66,6 @@ export type ClaimDisplayFormat = {
  * If there's no locale that matches the current locale then we take the attribute key as the name.
  * The value is taken from the attribute value.
  * @param parsedCredential - the parsed credential.
- * @param schema - the issuance credentialConfigurationSchema of parsedCredential.
  * @returns the array of {@link ClaimDisplayFormat} of the credential contained in its configuration schema.
  */
 export const parseClaims = (
@@ -76,7 +75,7 @@ export const parseClaims = (
     const attributeName =
       typeof attribute.name === "string"
         ? attribute.name
-        : attribute.name[getClaimsFullLocale()] || key;
+        : attribute.name?.[getClaimsFullLocale()] || key;
 
     return { label: attributeName, value: attribute.value, id: key };
   });
@@ -286,9 +285,7 @@ export const previewDateClaimsConfig: DateClaimConfig = {
  * @returns
  */
 export const groupCredentialClaims = (credential: StoredCredential) => {
-  const claims = parseClaims(
-    sortClaims(credential.displayData.order, credential.parsedCredential)
-  );
+  const claims = parseClaims(credential.parsedCredential);
 
   return claims.reduce((acc, claim) => {
     const section = sectionsByClaim[claim.id] || "noSection";
@@ -298,3 +295,14 @@ export const groupCredentialClaims = (credential: StoredCredential) => {
     };
   }, {} as Record<ClaimSection, ReadonlyArray<ClaimDisplayFormat>>);
 };
+
+const FISCAL_CODE_REGEX =
+  /([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])/g;
+
+/**
+ * Extract a fiscal code from any string.
+ * @param s - the input string
+ * @returns An option with the extracted fiscal code
+ */
+export const extractFiscalCode = (s: string) =>
+  pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));

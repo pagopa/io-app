@@ -120,7 +120,30 @@ module.exports = {
       "off" /* Error when you launch the lint command */,
     "react-native/no-single-element-style-arrays": "warn",
     /* Too much verbose. It also requires a lot of effort in the main repo */
-    "react-native-a11y/has-accessibility-hint": "off"
+    "react-native-a11y/has-accessibility-hint": "off",
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            name: "i18n-js",
+            message: 'Importing I18n from "i18n-js" is not allowed. Import it from "ts/i18n.ts" instead.',
+          }, 
+          {
+            name: "@pagopa/ts-commons",
+            importNames: ["pot"],
+            message: 'Importing { pot } from "@pagopa/ts-commons" is not allowed. Use \'import * as pot from "@pagopa/ts-commons/lib/pot"\' instead.',
+          }
+        ],
+        patterns: [
+          {
+            group: ["**/config"],
+            importNames: ["privacyUrl"],
+            message: 'Importing "privacyUrl" from "config.ts" module is restricted. Please use "tosConfigSelector" to obtain it instead.'
+          }
+        ]          
+      }
+    ]
   },
   env: {
     "react-native/react-native": true

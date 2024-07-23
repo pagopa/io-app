@@ -17,13 +17,18 @@ import {
   shouldShowRefreshControllOnListSelector
 } from "../../store/reducers/allPaginated";
 import { UIMessage } from "../../types";
+import { ItwDiscoveryBanner } from "../../../itwallet/common/components/ItwDiscoveryBanner";
 import {
+  generateMessageListLayoutInfo,
   getLoadNextPageMessagesActionIfAllowed,
   getReloadAllMessagesActionForRefreshIfAllowed,
-  messageListItemHeight
+  LayoutInfo
 } from "./homeUtils";
 import { WrappedMessageListItem } from "./WrappedMessageListItem";
-import { MessageListItemSkeleton } from "./DS/MessageListItemSkeleton";
+import {
+  SkeletonHeight,
+  MessageListItemSkeleton
+} from "./DS/MessageListItemSkeleton";
 import { EmptyList } from "./EmptyList";
 import { Footer } from "./Footer";
 
@@ -60,9 +65,24 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         safeAreaInsets.bottom -
         topBarHeight -
         bottomTabHeight;
-      const count = Math.floor(listHeight / messageListItemHeight());
+      const count = Math.floor(listHeight / SkeletonHeight);
       return [...Array(count).keys()];
     }, [safeAreaFrame.height, safeAreaInsets.top, safeAreaInsets.bottom]);
+
+    const layoutInfo: ReadonlyArray<LayoutInfo> = useMemo(
+      () =>
+        generateMessageListLayoutInfo(
+          loadingList,
+          messageList,
+          store.getState()
+        ),
+      [loadingList, messageList, store]
+    );
+    const getItemLayoutCallback = useCallback(
+      (_: ArrayLike<UIMessage | number> | null | undefined, index: number) =>
+        layoutInfo[index],
+      [layoutInfo]
+    );
 
     const onRefreshCallback = useCallback(() => {
       const state = store.getState();
@@ -92,6 +112,10 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         }
         ListEmptyComponent={<EmptyList category={category} />}
         ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
+        ListHeaderComponent={
+          category === "INBOX" ? <ItwDiscoveryBanner /> : undefined
+        }
+        getItemLayout={getItemLayoutCallback}
         renderItem={({ index, item }) => {
           if (typeof item === "number") {
             return (
@@ -102,8 +126,8 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
           } else {
             return (
               <WrappedMessageListItem
+                archiveRestoreSourceCategory={category}
                 index={index}
-                listCategory={category}
                 message={item}
               />
             );

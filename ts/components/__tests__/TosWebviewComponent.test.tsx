@@ -8,7 +8,7 @@ import renderer from "react-test-renderer";
 //   WebViewMessageEvent,
 //   WebViewNavigationEvent
 // } from "react-native-webview/lib/WebViewTypes";
-// import I18n from "i18n-js";
+// import I18n from "../../i18n";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import TosWebviewComponent from "../TosWebviewComponent";
 import { FlowType } from "../../utils/analytics";

@@ -22,7 +22,7 @@ import fciReducer, { FciState } from "../../../fci/store/reducers";
 import fimsReducer, { FimsState } from "../../../fims/common/store/reducer";
 import idPayReducer, { IDPayState } from "../../../idpay/common/store/reducers";
 import itWalletReducer, {
-  ItWalletState
+  PersistedItWalletState
 } from "../../../itwallet/common/store/reducers";
 import {
   NativeLoginState,
@@ -63,7 +63,7 @@ export type FeaturesState = {
   services: ServicesState;
   wallet: WalletState;
   fims: FimsState;
-  itWallet: ItWalletState;
+  itWallet: PersistedItWalletState;
   profileSettings: ProfileSettingsState & PersistPartial;
 };
 
