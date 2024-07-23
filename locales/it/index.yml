@@ -482,7 +482,7 @@ profile:
     trial:
       titleSection: Partecipa alla sperimentazione
     designSystemEnvironment: Design System sperimentale
-    newWalletSection: Nuova sezione portafoglio
+    newScanSection: Nuova sezione scansiona
     appVersion: Versione
     backendVersion: Versione Backend
     debugMode: Modalità debug

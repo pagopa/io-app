@@ -21,7 +21,6 @@ import {
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import { showBarcodeScanSection } from "../config";
 import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
@@ -109,7 +108,7 @@ export const MainTabNavigator = () => {
             )
           }}
         />
-        {showBarcodeScanSection && (
+        {isSettingsVisibleAndHideProfile && (
           <Tab.Screen
             name={ROUTES.BARCODE_SCAN}
             component={EmptyComponent}

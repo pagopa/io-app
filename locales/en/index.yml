@@ -480,7 +480,7 @@ profile:
     itWallet:
       itWalletTest: IT Wallet
     designSystemEnvironment: Experimental Design System
-    newWalletSection: New wallet section
+    newScanSection: New scan section
     appVersion: Version
     backendVersion: Backend Version
     debugMode: Debug mode
