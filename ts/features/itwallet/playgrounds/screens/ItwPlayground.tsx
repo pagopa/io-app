@@ -83,7 +83,7 @@ const ItwPlayground = () => {
 
   const navigateToCredentialAuth = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_AUTH
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
     });
   };
 
