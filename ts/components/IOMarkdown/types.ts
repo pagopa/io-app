@@ -29,22 +29,28 @@ export type AnyTxtNodeWithSpacer =
   | AnyTxtNode
   | { type: "Spacer"; size: number; key: string };
 
-export type IOMarkdownRenderRules = {
-  [ASTNodeTypes.Header]: RuleRenderer<TxtHeaderNode, Renderer>;
-  [ASTNodeTypes.Paragraph]: RuleRenderer<TxtParagraphNode, Renderer>;
-  [ASTNodeTypes.Str]: RuleRenderer<TxtStrNode, Renderer>;
-  [ASTNodeTypes.Strong]: RuleRenderer<TxtStrongNode, Renderer>;
-  [ASTNodeTypes.Emphasis]: RuleRenderer<TxtEmphasisNode, Renderer>;
+type TxtNodeMap = {
+  [ASTNodeTypes.Header]: TxtHeaderNode;
+  [ASTNodeTypes.Paragraph]: TxtParagraphNode;
+  [ASTNodeTypes.Str]: TxtStrNode;
+  [ASTNodeTypes.Strong]: TxtStrongNode;
+  [ASTNodeTypes.Emphasis]: TxtEmphasisNode;
+  [ASTNodeTypes.Link]: TxtLinkNode;
+  [ASTNodeTypes.List]: TxtListNode;
+  [ASTNodeTypes.ListItem]: TxtListItemNode;
+  [ASTNodeTypes.Image]: TxtImageNode;
+  [ASTNodeTypes.BlockQuote]: TxtBlockQuoteNode;
+  [ASTNodeTypes.CodeBlock]: TxtCodeBlockNode;
+  [ASTNodeTypes.Code]: TxtCodeNode;
+  [ASTNodeTypes.Break]: TxtBreakNode;
+  [ASTNodeTypes.Html]: TxtHtmlNode;
+  [ASTNodeTypes.HorizontalRule]: TxtHorizontalRuleNode;
+};
+type RendererMap = {
+  [K in keyof TxtNodeMap]: RuleRenderer<TxtNodeMap[K], Renderer>;
+} & {
   [ASTNodeTypes.Comment]: RuleRenderer<null>;
-  [ASTNodeTypes.Link]: RuleRenderer<TxtLinkNode, Renderer>;
-  [ASTNodeTypes.List]: RuleRenderer<TxtListNode, Renderer>;
-  [ASTNodeTypes.ListItem]: RuleRenderer<TxtListItemNode, Renderer>;
-  [ASTNodeTypes.Image]: RuleRenderer<TxtImageNode, Renderer>;
-  [ASTNodeTypes.BlockQuote]: RuleRenderer<TxtBlockQuoteNode, Renderer>;
-  [ASTNodeTypes.CodeBlock]: RuleRenderer<TxtCodeBlockNode, Renderer>;
-  [ASTNodeTypes.Code]: RuleRenderer<TxtCodeNode, Renderer>;
-  [ASTNodeTypes.Break]: RuleRenderer<TxtBreakNode, Renderer>;
-  [ASTNodeTypes.Html]: RuleRenderer<TxtHtmlNode, Renderer>;
-  [ASTNodeTypes.HorizontalRule]: RuleRenderer<TxtHorizontalRuleNode, Renderer>;
   Spacer: RuleRenderer<ComponentProps<typeof VSpacer> & { key: string }>;
 };
+
+export type IOMarkdownRenderRules = RendererMap;
