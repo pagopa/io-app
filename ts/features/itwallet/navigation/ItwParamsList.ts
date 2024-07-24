@@ -1,3 +1,4 @@
+import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
@@ -17,7 +18,8 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW]: undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE]: undefined;
   // PRESENTATION
-  [ITW_ROUTES.PRESENTATION.EID_DETAIL]: undefined;
+  [ITW_ROUTES.PRESENTATION
+    .CREDENTIAL_DETAIL]: ItwPresentationCredentialDetailNavigationParams;
   // PLAYGROUNDS
   [ITW_ROUTES.PLAYGROUNDS]: undefined;
 };
