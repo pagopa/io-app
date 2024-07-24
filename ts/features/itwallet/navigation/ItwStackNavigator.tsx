@@ -15,7 +15,6 @@ import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidP
 import { ItwIssuanceEidRequestScreen } from "../issuance/screens/ItwIssuanceEidRequestScreen";
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import { ItwIssuanceEidFailureScreen } from "../issuance/screens/ItwIssuanceEidFailureScreen";
-import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
 import { ItwCiePinScreen } from "../identification/screens/cie/ItwCiePinScreen";
 import { ItwCieCardReaderScreen } from "../identification/screens/cie/ItwCieCardReaderScreen";
 import { ItwCieWrongCiePinScreen } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
@@ -30,6 +29,7 @@ import {
   ItwEidIssuanceMachineContext
 } from "../machine/provider";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground";
+import { ItwPresentationCredentialDetailScreen } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -144,7 +144,7 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE}
         component={ItwIssuanceCredentialFailureScreen}
-        options={{ headerShown: false }}
+        options={hiddenHeader}
       />
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.EID_RESULT}
@@ -161,8 +161,8 @@ const InnerNavigator = () => {
       />
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen
-        name={ITW_ROUTES.PRESENTATION.EID_DETAIL}
-        component={ItwPresentationEidDetailScreen}
+        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL}
+        component={ItwPresentationCredentialDetailScreen}
         options={hiddenHeader}
       />
       {/* PLAYGROUNDS */}
