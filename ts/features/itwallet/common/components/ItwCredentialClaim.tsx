@@ -207,16 +207,19 @@ const ImageClaimItem = ({ label, claim }: { label: string; claim: string }) => (
 /**
  * Component which renders a driving privileges type claim.
  * It features a bottom sheet with information about the issued and expiration date of the claim.
- * @param label - the label of the claim
- * @param claim - the claim value
- * @returns
+ * @param label the label of the claim
+ * @param claim the claim value
+ * @param detailsButtonVisible a flag to show or hide the details button
+ * @returns a list item component with the driving privileges claim
  */
 const DrivingPrivilegesClaimItem = ({
   label,
-  claim
+  claim,
+  detailsButtonVisible
 }: {
   label: string;
   claim: DrivingPrivilegeClaimType;
+  detailsButtonVisible: boolean;
 }) => {
   const localExpiryDate = localeDateFormat(
     new Date(claim.expiry_date),
@@ -259,19 +262,24 @@ const DrivingPrivilegesClaimItem = ({
       </>
     )
   });
+
+  const endElement: ListItemInfo["endElement"] = detailsButtonVisible
+    ? {
+        type: "buttonLink",
+        componentProps: {
+          label: I18n.t("global.buttons.show"),
+          onPress: () => privilegeBottomSheet.present(),
+          accessibilityLabel: I18n.t("global.buttons.show")
+        }
+      }
+    : undefined;
+
   return (
     <>
       <ListItemInfo
         label={label}
         value={claim.driving_privilege}
-        endElement={{
-          type: "buttonLink",
-          componentProps: {
-            label: I18n.t("global.buttons.show"),
-            onPress: () => privilegeBottomSheet.present(),
-            accessibilityLabel: I18n.t("global.buttons.show")
-          }
-        }}
+        endElement={endElement}
         accessibilityLabel={`${label} ${claim.driving_privilege}`}
       />
       {privilegeBottomSheet.bottomSheet}
@@ -330,6 +338,7 @@ export const ItwCredentialClaim = ({
               label={claim.label}
               claim={elem}
               key={`${index}_{elem.label}`}
+              detailsButtonVisible={isPreview || false}
             />
           ));
         } else if (PlainTextClaim.is(decoded)) {
