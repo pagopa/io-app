@@ -46,7 +46,7 @@ export type PersistedPreferencesState = Readonly<{
   // changing the variable value later). Typescript cannot detect this so
   // be sure to handle such case when reading and using this value
   isDesignSystemEnabled: boolean;
-  isNewScanSectionEnabled: boolean;
+  isNewScanSectionEnabled?: boolean;
   isItWalletTestEnabled?: boolean;
 }>;
 
