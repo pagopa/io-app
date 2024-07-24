@@ -36,7 +36,6 @@ import {
   trackLollipopKeyGenerationSuccess
 } from "../../../utils/analytics";
 import { PublicSession } from "../../../../definitions/backend/PublicSession";
-import { isLoggedInWithTestIdpSelector } from "../../../store/reducers/authentication";
 import { mixpanelTrack } from "../../../mixpanel";
 
 const WAIT_A_BIT_AFTER_SESSION_EXPIRED = 1000 as Millisecond;
@@ -81,17 +80,6 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
   maybePublicKey: O.Option<PublicKey>,
   maybeSessionInformation: O.Option<PublicSession>
 ) {
-  // When using the test idp to login, no authentication data nor lollipop key are saved / used / sent.
-  // Therefore, we must not check for the lollipop assertion,
-  // when this function is called after a successful test idp login,
-  // otherwise the (test) user is immediately logged-out.
-  // TODO: this is a temporary workaround, we should find a better way to handle test accounts.
-  // See: https://pagopa.atlassian.net/browse/LLK-72
-  const isLoggedInWithTestIdp = yield* select(isLoggedInWithTestIdpSelector);
-  if (isLoggedInWithTestIdp) {
-    return true;
-  }
-
   const lollipopCheckResult = pipe(
     maybeSessionInformation,
     O.chainNullableK(
