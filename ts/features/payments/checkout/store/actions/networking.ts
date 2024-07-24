@@ -47,12 +47,17 @@ export const paymentsCalculatePaymentFeesAction = createAsyncAction(
   NetworkError
 >();
 
+export type WalletPaymentCreateTransactionPayload = {
+  data: NewTransactionRequest;
+  onError?: () => void;
+};
+
 export const paymentsCreateTransactionAction = createAsyncAction(
   "PAYMENTS_CREATE_TRANSACTION_REQUEST",
   "PAYMENTS_CREATE_TRANSACTION_SUCCESS",
   "PAYMENTS_CREATE_TRANSACTION_FAILURE"
 )<
-  NewTransactionRequest,
+  WalletPaymentCreateTransactionPayload,
   NewTransactionResponse,
   NetworkError | WalletPaymentFailure
 >();

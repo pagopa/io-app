@@ -362,6 +362,13 @@ const PlaygroundsSection = () => {
         })
     },
     {
+      value: "IO Markdown",
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.IO_MARKDOWN_PLAYGROUND
+        })
+    },
+    {
       value: "CGN Landing Page",
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
