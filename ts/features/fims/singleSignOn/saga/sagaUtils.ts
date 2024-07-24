@@ -74,3 +74,16 @@ export const logToMixPanel = (toLog: string) => {
     buildEventProperties("TECH", undefined, { message: toLog })
   );
 };
+
+export const isRedirect = (statusCode: number) =>
+  statusCode >= 300 && statusCode < 400;
+
+export const isValidRedirectResponse = (
+  res: HttpClientResponse
+): res is HttpClientSuccessResponse & {
+  headers: { location: string };
+} =>
+  res.type === "success" &&
+  isRedirect(res.status) &&
+  !!res.headers.location &&
+  res.headers.location.trim().length > 0;
