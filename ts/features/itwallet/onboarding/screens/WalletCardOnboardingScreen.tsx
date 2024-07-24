@@ -27,6 +27,7 @@ import { isTrialActiveSelector } from "../../../trialSystem/store/reducers";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { ITW_TRIAL_ID } from "../../common/utils/itwTrialUtils";
+import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import {
   selectCredentialTypeOption,
@@ -51,6 +52,7 @@ const WalletCardOnboardingScreen = () => {
   const isItwTrialEnabled = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
+  const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
 
   const isItwSectionVisible = React.useMemo(
     // IT Wallet cedential catalog should be visible if
@@ -118,7 +120,11 @@ const WalletCardOnboardingScreen = () => {
               testID="itwDrivingLicenseModuleTestID"
               icon="car"
               label={getCredentialNameFromType(CredentialType.DRIVING_LICENSE)}
-              onPress={beginCredentialIssuance(CredentialType.DRIVING_LICENSE)}
+              onPress={
+                itwCredentialsTypes.includes(CredentialType.DRIVING_LICENSE)
+                  ? undefined
+                  : beginCredentialIssuance(CredentialType.DRIVING_LICENSE)
+              }
               isFetching={
                 isCredentialLoading &&
                 pipe(
@@ -126,6 +132,11 @@ const WalletCardOnboardingScreen = () => {
                   O.map(type => type === CredentialType.DRIVING_LICENSE),
                   O.getOrElse(constFalse)
                 )
+              }
+              badge={
+                itwCredentialsTypes.includes(CredentialType.DRIVING_LICENSE)
+                  ? activeBadge
+                  : undefined
               }
             />
 
@@ -136,9 +147,15 @@ const WalletCardOnboardingScreen = () => {
               label={getCredentialNameFromType(
                 CredentialType.EUROPEAN_DISABILITY_CARD
               )}
-              onPress={beginCredentialIssuance(
-                CredentialType.EUROPEAN_DISABILITY_CARD
-              )}
+              onPress={
+                itwCredentialsTypes.includes(
+                  CredentialType.EUROPEAN_DISABILITY_CARD
+                )
+                  ? undefined
+                  : beginCredentialIssuance(
+                      CredentialType.EUROPEAN_DISABILITY_CARD
+                    )
+              }
               isFetching={
                 isCredentialLoading &&
                 pipe(
@@ -148,6 +165,13 @@ const WalletCardOnboardingScreen = () => {
                   ),
                   O.getOrElse(constFalse)
                 )
+              }
+              badge={
+                itwCredentialsTypes.includes(
+                  CredentialType.EUROPEAN_DISABILITY_CARD
+                )
+                  ? activeBadge
+                  : undefined
               }
             />
             <VSpacer size={16} />

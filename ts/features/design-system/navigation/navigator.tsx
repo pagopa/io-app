@@ -73,6 +73,7 @@ import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
 import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
+import { DSIOMarkdown } from "../core/DSIOMarkdown";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -371,6 +372,14 @@ export const DesignSystemNavigator = () => {
           component={DSWallet}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.WALLET.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.IO_MARKDOWN.route}
+          component={DSIOMarkdown}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.IO_MARKDOWN.title
           }}
         />
 
