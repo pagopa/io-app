@@ -2,7 +2,6 @@ import { Alert } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { View } from "react-native";
 
 import I18n from "../../../../i18n";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus";
@@ -29,13 +28,8 @@ const PaymentMethodFeatures = ({ paymentMethod }: Props) => {
   const isIdpayEnabled = useIOSelector(isIdPayEnabledSelector);
 
   if (isMethodExpired) {
-    const viewRef = React.createRef<View>();
     return (
-      <Alert
-        viewRef={viewRef}
-        variant="error"
-        content={I18n.t("wallet.methodDetails.expired")}
-      />
+      <Alert variant="error" content={I18n.t("wallet.methodDetails.expired")} />
     );
   }
   return (

@@ -33,7 +33,6 @@ import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
   preferencesItWalletTestSetEnabled,
-  preferencesNewHomeSectionSetEnabled,
   preferencesNewWalletSectionSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
@@ -48,8 +47,7 @@ import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
   isIdPayTestEnabledSelector,
   isItWalletTestEnabledSelector,
-  isNewHomeSectionEnabledSelector,
-  isNewWalletSectionEnabledSelector,
+  isNewWalletSectionLocallyEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -57,6 +55,7 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
+import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -291,25 +290,14 @@ const DesignSystemSection = () => {
   const { themeType, setTheme } = useIOThemeContext();
   const dispatch = useIODispatch();
 
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewWalletSectionEnabledSelector
-  );
-  const isNewHomeSectionEnabled = useIOSelector(
-    isNewHomeSectionEnabledSelector
+  const isNewWalletSectionLocallyEnabled = useIOSelector(
+    isNewWalletSectionLocallyEnabledSelector
   );
 
   const onNewWalletSectionToggle = (enabled: boolean) => {
     dispatch(
       preferencesNewWalletSectionSetEnabled({
         isNewWalletSectionEnabled: enabled
-      })
-    );
-  };
-
-  const onNewHomeSectionToggle = (enabled: boolean) => {
-    dispatch(
-      preferencesNewHomeSectionSetEnabled({
-        isNewHomeSectionEnabled: enabled
       })
     );
   };
@@ -340,14 +328,8 @@ const DesignSystemSection = () => {
       <Divider />
       <ListItemSwitch
         label={I18n.t("profile.main.newWalletSection")}
-        value={isNewWalletSectionEnabled}
+        value={isNewWalletSectionLocallyEnabled}
         onSwitchValueChange={onNewWalletSectionToggle}
-      />
-      <Divider />
-      <ListItemSwitch
-        label={I18n.t("profile.main.newHomeSection")}
-        value={isNewHomeSectionEnabled}
-        onSwitchValueChange={onNewHomeSectionToggle}
       />
     </ContentWrapper>
   );
@@ -377,6 +359,13 @@ const PlaygroundsSection = () => {
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
           screen: ROUTES.MARKDOWN_PLAYGROUND
+        })
+    },
+    {
+      value: "IO Markdown",
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.IO_MARKDOWN_PLAYGROUND
         })
     },
     {
@@ -413,8 +402,8 @@ const PlaygroundsSection = () => {
       condition: isItWalletTestEnabled,
       value: "IT Wallet",
       onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.ITW_PLAYGROUND
+        navigation.navigate(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.PLAYGROUNDS
         })
     },
     {

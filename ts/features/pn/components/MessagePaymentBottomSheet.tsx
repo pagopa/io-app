@@ -46,7 +46,7 @@ export const MessagePaymentBottomSheet = ({
     ),
     title: I18n.t("features.pn.details.paymentSection.bottomSheetTitle"),
     snapPoint: [snapPoint],
-    footer: <View></View>,
+    footer: <View />,
     onDismiss: () => dispatch(cancelQueuedPaymentUpdates())
   });
   // eslint-disable-next-line functional/immutable-data

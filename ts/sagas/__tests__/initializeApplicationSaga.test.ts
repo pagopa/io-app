@@ -4,7 +4,6 @@ import { testSaga } from "redux-saga-test-plan";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import mockedProfile from "../../__mocks__/initializedProfile";
 
-import { startApplicationInitialization } from "../../store/actions/application";
 import { sessionExpired } from "../../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../../store/actions/installation";
 import { resetProfileState } from "../../store/actions/profile";
@@ -36,13 +35,13 @@ import {
   getKeyInfo
 } from "../../features/lollipop/saga";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
-import { startupLoadSuccess } from "../../store/actions/startup";
-import { StartupStatusEnum } from "../../store/reducers/startup";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
 import { backendStatusSelector } from "../../store/reducers/backendStatus";
 import { watchLogoutSaga } from "../startup/watchLogoutSaga";
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
+import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
+import { startupTransientErrorInitialState } from "../../store/reducers/startup";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -65,7 +64,7 @@ const profile: InitializedProfile = {
 };
 
 describe("initializeApplicationSaga", () => {
-  it("should dispatch startApplicationInitialization if check session response is 200 but session is none", () => {
+  it("should call handleTransientError if check session response is 200 but session is none", () => {
     testSaga(initializeApplicationSaga)
       .next()
       .call(checkAppHistoryVersionSaga)
@@ -107,14 +106,11 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
-      .next()
-      .next()
       .select(sessionInfoSelector)
       .next(O.none)
       .next(O.none) // loadSessionInformationSaga
-      .put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED))
-      .next()
-      .put(startApplicationInitialization());
+      .next(handleApplicationStartupTransientError)
+      .next(startupTransientErrorInitialState);
   });
 
   it("should dispatch sessionExpired if check session response is 401 & FastLogin disabled", () => {
@@ -243,8 +239,6 @@ describe("initializeApplicationSaga", () => {
       .spawn(watchLogoutSaga, undefined)
       .next()
       .next(200) // check session
-      .next()
-      .next()
       .next()
       .next()
       .next()

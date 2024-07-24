@@ -61,7 +61,6 @@ import {
   deleteUserDataProcessing,
   upsertUserDataProcessing
 } from "../actions/userDataProcessing";
-import { userMetadataLoad, userMetadataUpsert } from "../actions/userMetadata";
 import { deleteAllPaymentMethodsByFunction } from "../actions/wallet/delete";
 import {
   addCreditCardOutcomeCode,
@@ -257,8 +256,6 @@ const trackAction =
       case getType(sessionInformationLoadFailure):
       case getType(profileLoadFailure):
       case getType(profileUpsert.failure):
-      case getType(userMetadataUpsert.failure):
-      case getType(userMetadataLoad.failure):
       case getType(refreshPMTokenWhileAddCreditCard.failure):
       case getType(deleteWalletFailure):
       case getType(setFavouriteWalletFailure):
@@ -317,11 +314,6 @@ const trackAction =
       // profile
       case getType(profileUpsert.success):
       case getType(profileLoadRequest):
-      // userMetadata
-      case getType(userMetadataUpsert.request):
-      case getType(userMetadataUpsert.success):
-      case getType(userMetadataLoad.request):
-      case getType(userMetadataLoad.success):
       // messages
       case getType(searchMessagesEnabled):
       // wallet

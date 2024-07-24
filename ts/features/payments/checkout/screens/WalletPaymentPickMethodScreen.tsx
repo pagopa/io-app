@@ -195,15 +195,22 @@ const WalletPaymentPickMethodScreen = () => {
   );
 
   React.useEffect(() => {
-    if (isError) {
+    if (isError && !pot.isError(transactionPot)) {
       navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
         screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
         params: {
           outcome: WalletPaymentOutcomeEnum.GENERIC_ERROR
         }
       });
+    } else if (isError && pot.isError(transactionPot)) {
+      navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+        screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_FAILURE,
+        params: {
+          error: transactionPot.error
+        }
+      });
     }
-  }, [isError, navigation]);
+  }, [isError, navigation, transactionPot]);
 
   const canContinue = O.isSome(selectedPaymentMethodIdOption);
 
@@ -215,6 +222,10 @@ const WalletPaymentPickMethodScreen = () => {
         () => "saved" as PaymentAnalyticsSelectedMethodFlag
       )
     );
+
+  const handleOnCreateTransactionError = () => {
+    setWaitingTransactionActivation(false);
+  };
 
   const handleContinue = () => {
     analytics.trackPaymentMethodSelected({
@@ -236,9 +247,12 @@ const WalletPaymentPickMethodScreen = () => {
         O.map(paymentDetails => {
           dispatch(
             paymentsCreateTransactionAction.request({
-              paymentNotices: [
-                { rptId: paymentDetails.rptId, amount: paymentDetails.amount }
-              ]
+              data: {
+                paymentNotices: [
+                  { rptId: paymentDetails.rptId, amount: paymentDetails.amount }
+                ]
+              },
+              onError: handleOnCreateTransactionError
             })
           );
           setWaitingTransactionActivation(true);

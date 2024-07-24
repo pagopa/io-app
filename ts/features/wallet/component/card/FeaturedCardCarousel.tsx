@@ -17,7 +17,6 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { showServiceDetails } from "../../../../store/actions/services";
 import { Dispatch } from "../../../../store/actions/types";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
  * an item represents a bonus that the app can handle (relative feature flag enabled and handler set) and its
  * visibility is 'visible' or 'experimental'
  */
-// eslint-disable-next-line sonarjs/cognitive-complexity
+
 const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -100,13 +99,11 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
               // TODO: add mixpanel tracking and alert: https://pagopa.atlassian.net/browse/AP-14
               IOToast.info(I18n.t("bonus.cdc.serviceEntryPoint.notAvailable"));
             },
-            s => () => {
-              dispatch(showServiceDetails(s));
+            s => () =>
               navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
                 screen: SERVICES_ROUTES.SERVICE_DETAIL,
                 params: { serviceId: s.service_id }
-              });
-            }
+              })
           )
         );
       }

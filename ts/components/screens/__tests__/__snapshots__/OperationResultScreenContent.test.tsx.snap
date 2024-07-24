@@ -3,7 +3,7 @@
 exports[`OperationResultScreenContent should match the snapshot with default props 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,14 +326,22 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "additive",
+                            "right": "additive",
+                            "top": "additive",
+                          }
+                        }
                         style={
-                          Object {
+                          {
                             "flexGrow": 1,
                             "marginHorizontal": 24,
                           }
@@ -331,8 +351,8 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                           centerContent={true}
                           collapsable={false}
                           contentContainerStyle={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
                                 "flex": 1,
@@ -346,8 +366,8 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                           onGestureHandlerEvent={[Function]}
                           onGestureHandlerStateChange={[Function]}
                           waitFor={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "current": null,
                               },
                             ]
@@ -359,23 +379,25 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
-                                Object {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                {
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "textAlign": "center",
                                   },
-                                  Object {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                  {
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
-                                  Object {
+                                  {
                                     "color": "#17324D",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
@@ -389,7 +411,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                             </Text>
                             <View
                               style={
-                                Object {
+                                {
                                   "height": 8,
                                 }
                               }
@@ -399,23 +421,25 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 16,
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "textAlign": "center",
                                   },
-                                  Object {
+                                  {
                                     "fontSize": 16,
                                     "lineHeight": 24,
                                   },
-                                  Object {
+                                  {
                                     "color": "#475A6D",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
@@ -429,14 +453,14 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                             </Text>
                             <View
                               style={
-                                Object {
+                                {
                                   "alignItems": "center",
                                 }
                               }
                             >
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "height": 24,
                                   }
                                 }
@@ -446,9 +470,20 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                   accessibilityLabel="Action"
                                   accessibilityRole="button"
                                   accessibilityState={
-                                    Object {
+                                    {
                                       "busy": false,
+                                      "checked": undefined,
                                       "disabled": false,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
                                     }
                                   }
                                   accessible={true}
@@ -464,15 +499,15 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
                                   style={
-                                    Object {
+                                    {
                                       "alignSelf": "flex-start",
                                     }
                                   }
                                 >
                                   <View
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "alignItems": "center",
                                           "borderRadius": 4,
                                           "elevation": 0,
@@ -481,20 +516,20 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                           "paddingHorizontal": 16,
                                           "textAlignVertical": "center",
                                         },
-                                        Object {
+                                        {
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        Object {
+                                        {
                                           "height": 40,
                                         },
-                                        Object {
+                                        {
                                           "backgroundColor": "#0073E6",
                                         },
-                                        Object {
+                                        {
                                           "backgroundColor": undefined,
-                                          "transform": Array [
-                                            Object {
+                                          "transform": [
+                                            {
                                               "scale": undefined,
                                             },
                                           ],
@@ -504,8 +539,8 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                   >
                                     <View
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "alignItems": "center",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
@@ -524,22 +559,22 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                         ellipsizeMode="tail"
                                         font="TitilliumSansPro"
                                         fontStyle={
-                                          Object {
+                                          {
                                             "fontSize": 16,
                                           }
                                         }
                                         importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.3}
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "alignSelf": "center",
                                             },
-                                            Object {
+                                            {
                                               "fontSize": 16,
                                             },
-                                            Object {
+                                            {
                                               "color": "#FFFFFF",
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
@@ -558,14 +593,14 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                             </View>
                             <View
                               style={
-                                Object {
+                                {
                                   "alignItems": "center",
                                 }
                               }
                             >
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "height": 24,
                                   }
                                 }
@@ -575,15 +610,27 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                   accessibilityLabel="Secondary Action"
                                   accessibilityRole="button"
                                   accessibilityState={
-                                    Object {
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
                                       "disabled": false,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
                                     }
                                   }
                                   accessible={true}
                                   collapsable={false}
                                   focusable={true}
                                   hitSlop={
-                                    Object {
+                                    {
                                       "bottom": 14,
                                       "left": 24,
                                       "right": 24,
@@ -601,15 +648,15 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                   onStartShouldSetResponder={[Function]}
                                   onTouchEnd={[Function]}
                                   style={
-                                    Object {
+                                    {
                                       "alignSelf": "flex-start",
                                     }
                                   }
                                 >
                                   <View
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "alignItems": "center",
                                           "elevation": 0,
                                           "flexDirection": "row",
@@ -617,10 +664,10 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                           "textAlignVertical": "center",
                                         },
                                         false,
-                                        Object {},
-                                        Object {
-                                          "transform": Array [
-                                            Object {
+                                        {},
+                                        {
+                                          "transform": [
+                                            {
                                               "scale": undefined,
                                             },
                                           ],
@@ -637,17 +684,17 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                       maxFontSizeMultiplier={1.3}
                                       numberOfLines={1}
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "700",
                                           },
-                                          Object {
+                                          {
                                             "color": "#0073E6",
                                           },
-                                          Object {
+                                          {
                                             "color": undefined,
                                           },
                                         ]
@@ -668,8 +715,8 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
