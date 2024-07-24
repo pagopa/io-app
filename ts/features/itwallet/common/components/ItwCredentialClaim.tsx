@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/Either";
 import { pipe } from "fp-ts/lib/function";
-import { View, Image } from "react-native";
+import { Image } from "react-native";
 import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import {
   ClaimDisplayFormat,
@@ -43,10 +43,7 @@ const PlaceOfBirthClaimItem = ({
 }) => {
   const value = `${claim.locality} (${claim.country})`;
   return (
-    <>
-      <ListItemInfo label={label} value={value} accessibilityLabel={value} />
-      <Divider />
-    </>
+    <ListItemInfo label={label} value={value} accessibilityLabel={value} />
   );
 };
 
@@ -62,20 +59,15 @@ const PlainTextClaimItem = ({
   label: string;
   claim: string;
 }) => (
-  <>
-    <ListItemInfo
-      label={label}
-      value={claim}
-      accessibilityLabel={`${label} ${
-        claim === HIDDEN_CLAIM
-          ? I18n.t(
-              "features.itWallet.presentation.credentialDetails.hiddenClaim"
-            )
-          : claim
-      }`}
-    />
-    <Divider />
-  </>
+  <ListItemInfo
+    label={label}
+    value={claim}
+    accessibilityLabel={`${label} ${
+      claim === HIDDEN_CLAIM
+        ? I18n.t("features.itWallet.presentation.credentialDetails.hiddenClaim")
+        : claim
+    }`}
+  />
 );
 
 /**
@@ -116,16 +108,14 @@ const DateClaimItem = ({
   }, [expirationBadgeVisible, claim]);
 
   return (
-    <View key={`${label}-${value}`}>
-      <ListItemInfo
-        label={label}
-        value={value}
-        icon={iconVisible ? "calendar" : undefined}
-        accessibilityLabel={`${label} ${value}`}
-        endElement={endElement}
-      />
-      <Divider />
-    </View>
+    <ListItemInfo
+      key={`${label}-${value}`}
+      label={label}
+      value={value}
+      icon={iconVisible ? "calendar" : undefined}
+      accessibilityLabel={`${label} ${value}`}
+      endElement={endElement}
+    />
   );
 };
 
@@ -175,7 +165,6 @@ const EvidenceClaimItem = ({ issuerName }: { issuerName: string }) => {
         accessibilityLabel={`${label} ${issuerName}`}
       />
       {issuedByBottomSheet.bottomSheet}
-      <Divider />
     </>
   );
 };
@@ -198,24 +187,21 @@ const UnknownClaimItem = ({ label }: { label: string; _claim?: never }) => (
  * @param claim - the claim value
  */
 const ImageClaimItem = ({ label, claim }: { label: string; claim: string }) => (
-  <>
-    <ListItemInfo
-      label={label}
-      value={
-        <Image
-          source={{ uri: claim }}
-          style={{
-            width: 250,
-            height: 250
-          }}
-          resizeMode="contain"
-          accessibilityIgnoresInvertColors
-        />
-      }
-      accessibilityLabel={`${label} ${claim}`}
-    />
-    <Divider />
-  </>
+  <ListItemInfo
+    label={label}
+    value={
+      <Image
+        source={{ uri: claim }}
+        style={{
+          width: 250,
+          height: 250
+        }}
+        resizeMode="contain"
+        accessibilityIgnoresInvertColors
+      />
+    }
+    accessibilityLabel={`${label} ${claim}`}
+  />
 );
 
 /**
@@ -288,7 +274,6 @@ const DrivingPrivilegesClaimItem = ({
         }}
         accessibilityLabel={`${label} ${claim.driving_privilege}`}
       />
-      <Divider />
       {privilegeBottomSheet.bottomSheet}
     </>
   );
