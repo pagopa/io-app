@@ -44,7 +44,7 @@ const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => (
           {index !== 0 && <Divider />}
           <View style={styles.dataItem}>
             <View>
-              {ClaimText(claim)}
+              <ClaimText claim={claim} />
               <LabelSmall weight="Regular" color="grey-700">
                 {I18n.t("features.itWallet.generic.dataSource.single", {
                   credentialSource: source
@@ -59,7 +59,12 @@ const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => (
   </View>
 );
 
-const ClaimText = (claim: ClaimDisplayFormat) => {
+/**
+ * Component which renders the claim value or multiple values in case of an array.
+ * @param claim The claim to render
+ * @returns An {@link H6} element with the claim value or multiple {@link H6} elements in case of an array
+ */
+const ClaimText = ({ claim }: { claim: ClaimDisplayFormat }) => {
   const displayValue = getClaimDisplayValue(claim);
   return Array.isArray(displayValue) ? (
     displayValue.map((value, index) => (
