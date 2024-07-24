@@ -1,7 +1,8 @@
 import React from "react";
-import { useSelector } from "@xstate5/react";
+import * as t from "io-ts";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { Alert } from "@pagopa/io-app-design-system";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -13,10 +14,13 @@ import {
 } from "../../machine/eid/failure";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { selectFailureOption } from "../../machine/eid/selectors";
+import { useIOSelector } from "../../../../store/hooks";
+import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 
 export const ItwIssuanceEidFailureScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const failureOption = useSelector(machineRef, selectFailureOption);
+  const failureOption =
+    ItwEidIssuanceMachineContext.useSelector(selectFailureOption);
 
   const closeIssuance = () => machineRef.send({ type: "close" });
 
@@ -71,7 +75,7 @@ export const ItwIssuanceEidFailureScreen = () => {
           label: I18n.t(
             "features.itWallet.issuance.notMatchingIdentityError.primaryAction"
           ),
-          onPress: () => closeIssuance // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+          onPress: closeIssuance // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         },
         secondaryAction: {
           label: I18n.t(
@@ -85,7 +89,11 @@ export const ItwIssuanceEidFailureScreen = () => {
     const resultScreenProps =
       resultScreensMap[failure.type] ?? resultScreensMap.GENERIC;
 
-    return <OperationResultScreenContent {...resultScreenProps} />;
+    return (
+      <OperationResultScreenContent {...resultScreenProps}>
+        <ErrorAlertDebugOnly failure={failure} />
+      </OperationResultScreenContent>
+    );
   };
 
   return pipe(
@@ -95,4 +103,22 @@ export const ItwIssuanceEidFailureScreen = () => {
       failure => <ContentView failure={failure} />
     )
   );
+};
+
+const ErrorAlertDebugOnly = ({ failure }: { failure: IssuanceFailure }) => {
+  const isDebug = useIOSelector(isDebugModeEnabledSelector);
+
+  if (!isDebug) {
+    return null;
+  }
+
+  const renderErrorText = () =>
+    pipe(
+      failure.reason instanceof Error ? failure.reason.message : failure.reason,
+      t.string.decode,
+      O.fromEither,
+      O.getOrElse(() => "Unknown error")
+    );
+
+  return <Alert variant="error" content={renderErrorText()} />;
 };
