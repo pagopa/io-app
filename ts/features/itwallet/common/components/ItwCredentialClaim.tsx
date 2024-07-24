@@ -251,16 +251,16 @@ const DrivingPrivilegesClaimItem = ({
           label={I18n.t(
             "features.itWallet.verifiableCredentials.claims.mdl.issuedDate"
           )}
-          value={claim.issue_date}
-          accessibilityLabel={`${label} ${localExpiryDate}`}
+          value={localIssueDate}
+          accessibilityLabel={`${label} ${localIssueDate}`}
         />
         <Divider />
         <ListItemInfo
           label={I18n.t(
             "features.itWallet.verifiableCredentials.claims.mdl.expirationDate"
           )}
-          value={claim.expiry_date}
-          accessibilityLabel={`${label} ${localIssueDate}`}
+          value={localExpiryDate}
+          accessibilityLabel={`${label} ${localExpiryDate}`}
         />
         <Divider />
         <ListItemInfo
