@@ -141,6 +141,7 @@ export const ItwCieCardReaderScreen = () => {
     IdentificationStep.AUTHENTICATION
   );
   const [readingState, setReadingState] = useState(ReadingState.waiting_card);
+  const [webViewVisible, setWebViewVisible] = useState(true);
 
   const blueColorName = useInteractiveElementDefaultColorName();
   const isScreenReaderEnabled = useScreenReaderEnabled();
@@ -214,6 +215,7 @@ export const ItwCieCardReaderScreen = () => {
   };
 
   const handleCieReadSuccess = (url: string) => {
+    setWebViewVisible(false); // Try to hide the error page because the callback url is fake
     machineRef.send({ type: "cie-identification-completed", url });
   };
 
@@ -266,7 +268,7 @@ export const ItwCieCardReaderScreen = () => {
     <SafeAreaView style={styles.container}>
       <View
         style={
-          identificationStep === IdentificationStep.CONSENT
+          webViewVisible && identificationStep === IdentificationStep.CONSENT
             ? { width: "100%", height: "100%" }
             : { width: "0%", height: "0%" }
         }
