@@ -30,6 +30,7 @@ import { DSBottomSheet } from "../core/DSBottomSheet";
 import { DSButtons } from "../core/DSButtons";
 import { DSCards } from "../core/DSCards";
 import { DSColors } from "../core/DSColors";
+import { DSDynamicBackground } from "../core/DSDynamicBackground";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
 import { DSFooterActions } from "../core/DSFooterActions";
 import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
@@ -39,12 +40,14 @@ import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
+import { DSIOMarkdown } from "../core/DSIOMarkdown";
 import { DSIOScrollView } from "../core/DSIOScrollView";
 import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithLargeHeader";
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
 import { DSIcons } from "../core/DSIcons";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyAccordion } from "../core/DSLegacyAccordion";
+import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
 import { DSLegacyAlert } from "../core/DSLegacyAlert";
 import { DSLegacyBadges } from "../core/DSLegacyBadges";
 import { DSLegacyButtons } from "../core/DSLegacyButtons";
@@ -72,8 +75,6 @@ import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
-import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
-import { DSDynamicBackground } from "../core/DSDynamicBackground";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -372,6 +373,14 @@ export const DesignSystemNavigator = () => {
           component={DSWallet}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.WALLET.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.IO_MARKDOWN.route}
+          component={DSIOMarkdown}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.IO_MARKDOWN.title
           }}
         />
 
