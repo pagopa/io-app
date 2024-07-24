@@ -1,0 +1,1004 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IOMarkdown Should match snapshot 1`] = `
+<View>
+  <Text
+    allowFontScaling={false}
+    color="black"
+    defaultColor="black"
+    defaultWeight="Semibold"
+    dynamicTypeRamp="largeTitle"
+    font="TitilliumSansPro"
+    fontStyle={
+      {
+        "fontSize": 31,
+        "lineHeight": 43,
+      }
+    }
+    maxFontSizeMultiplier={1.25}
+    style={
+      [
+        {
+          "fontSize": 31,
+          "lineHeight": 43,
+        },
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="Semibold"
+  >
+    Main Title
+  </Text>
+  <View
+    style={
+      {
+        "height": 8,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="black"
+    defaultColor="black"
+    defaultWeight="Semibold"
+    dynamicTypeRamp="title1"
+    font="TitilliumSansPro"
+    fontStyle={
+      {
+        "fontSize": 28,
+        "lineHeight": 40,
+      }
+    }
+    maxFontSizeMultiplier={1.25}
+    style={
+      [
+        {
+          "fontSize": 28,
+          "lineHeight": 40,
+        },
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="Semibold"
+  >
+    Subtitle
+  </Text>
+  <View
+    style={
+      {
+        "height": 8,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    dynamicTypeRamp="body"
+    font="TitilliumSansPro"
+    fontStyle={
+      {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    maxFontSizeMultiplier={1.25}
+    style={
+      [
+        {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+  >
+    This is an example of 
+    <Text
+      style={
+        {
+          "fontWeight": "800",
+        }
+      }
+    >
+      bold text
+    </Text>
+     and this is an example of 
+    <Text
+      style={
+        {
+          "fontStyle": "italic",
+        }
+      }
+    >
+      italic text
+    </Text>
+    .
+  </Text>
+  <View
+    style={
+      {
+        "height": 8,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    dynamicTypeRamp="body"
+    font="TitilliumSansPro"
+    fontStyle={
+      {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    maxFontSizeMultiplier={1.25}
+    style={
+      [
+        {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+  >
+    Here is a bullet list:
+  </Text>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      accessibilityRole="list"
+      accessible={true}
+      style={
+        [
+          {
+            "flex": 1,
+          },
+          {
+            "flexGrow": 1,
+          },
+        ]
+      }
+    >
+      <View
+        accessible={true}
+        style={
+          {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          dynamicTypeRamp="body"
+          font="TitilliumSansPro"
+          fontStyle={
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          maxFontSizeMultiplier={1.25}
+          style={
+            [
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "400",
+              },
+            ]
+          }
+          weight="Regular"
+        >
+          •
+        </Text>
+        <View
+          style={
+            {
+              "width": 8,
+            }
+          }
+        />
+        <View
+          accessible={false}
+          style={
+            [
+              {
+                "flex": 1,
+              },
+              {
+                "flexShrink": 1,
+              },
+            ]
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            color="bluegrey"
+            defaultColor="bluegrey"
+            defaultWeight="Regular"
+            dynamicTypeRamp="body"
+            font="TitilliumSansPro"
+            fontStyle={
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              }
+            }
+            maxFontSizeMultiplier={1.25}
+            style={
+              [
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                {
+                  "color": "#475A6D",
+                  "fontFamily": "Titillium Sans Pro",
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                },
+              ]
+            }
+            weight="Regular"
+          >
+            Item 1
+          </Text>
+        </View>
+      </View>
+      <View
+        accessible={true}
+        style={
+          {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          dynamicTypeRamp="body"
+          font="TitilliumSansPro"
+          fontStyle={
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          maxFontSizeMultiplier={1.25}
+          style={
+            [
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "400",
+              },
+            ]
+          }
+          weight="Regular"
+        >
+          •
+        </Text>
+        <View
+          style={
+            {
+              "width": 8,
+            }
+          }
+        />
+        <View
+          accessible={false}
+          style={
+            [
+              {
+                "flex": 1,
+              },
+              {
+                "flexShrink": 1,
+              },
+            ]
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            color="bluegrey"
+            defaultColor="bluegrey"
+            defaultWeight="Regular"
+            dynamicTypeRamp="body"
+            font="TitilliumSansPro"
+            fontStyle={
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              }
+            }
+            maxFontSizeMultiplier={1.25}
+            style={
+              [
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                {
+                  "color": "#475A6D",
+                  "fontFamily": "Titillium Sans Pro",
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                },
+              ]
+            }
+            weight="Regular"
+          >
+            Item 2
+          </Text>
+        </View>
+      </View>
+      <View
+        accessible={true}
+        style={
+          {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          dynamicTypeRamp="body"
+          font="TitilliumSansPro"
+          fontStyle={
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          maxFontSizeMultiplier={1.25}
+          style={
+            [
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "400",
+              },
+            ]
+          }
+          weight="Regular"
+        >
+          •
+        </Text>
+        <View
+          style={
+            {
+              "width": 8,
+            }
+          }
+        />
+        <View
+          accessible={false}
+          style={
+            [
+              {
+                "flex": 1,
+              },
+              {
+                "flexShrink": 1,
+              },
+            ]
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            color="bluegrey"
+            defaultColor="bluegrey"
+            defaultWeight="Regular"
+            dynamicTypeRamp="body"
+            font="TitilliumSansPro"
+            fontStyle={
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              }
+            }
+            maxFontSizeMultiplier={1.25}
+            style={
+              [
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                {
+                  "color": "#475A6D",
+                  "fontFamily": "Titillium Sans Pro",
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                },
+              ]
+            }
+            weight="Regular"
+          >
+            Item 3
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "height": 8,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    dynamicTypeRamp="body"
+    font="TitilliumSansPro"
+    fontStyle={
+      {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    maxFontSizeMultiplier={1.25}
+    style={
+      [
+        {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+  >
+    Here is a numbered list:
+  </Text>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      accessibilityRole="list"
+      accessible={true}
+      style={
+        [
+          {
+            "flex": 1,
+          },
+          {
+            "flexGrow": 1,
+          },
+        ]
+      }
+    >
+      <View
+        accessible={true}
+        style={
+          {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          dynamicTypeRamp="body"
+          font="TitilliumSansPro"
+          fontStyle={
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          maxFontSizeMultiplier={1.25}
+          style={
+            [
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "400",
+              },
+            ]
+          }
+          weight="Regular"
+        >
+          1
+          .
+        </Text>
+        <View
+          style={
+            {
+              "width": 8,
+            }
+          }
+        />
+        <View
+          accessible={false}
+          style={
+            [
+              {
+                "flex": 1,
+              },
+              {
+                "flexShrink": 1,
+              },
+            ]
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            color="bluegrey"
+            defaultColor="bluegrey"
+            defaultWeight="Regular"
+            dynamicTypeRamp="body"
+            font="TitilliumSansPro"
+            fontStyle={
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              }
+            }
+            maxFontSizeMultiplier={1.25}
+            style={
+              [
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                {
+                  "color": "#475A6D",
+                  "fontFamily": "Titillium Sans Pro",
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                },
+              ]
+            }
+            weight="Regular"
+          >
+            First
+          </Text>
+        </View>
+      </View>
+      <View
+        accessible={true}
+        style={
+          {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          dynamicTypeRamp="body"
+          font="TitilliumSansPro"
+          fontStyle={
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          maxFontSizeMultiplier={1.25}
+          style={
+            [
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "400",
+              },
+            ]
+          }
+          weight="Regular"
+        >
+          2
+          .
+        </Text>
+        <View
+          style={
+            {
+              "width": 8,
+            }
+          }
+        />
+        <View
+          accessible={false}
+          style={
+            [
+              {
+                "flex": 1,
+              },
+              {
+                "flexShrink": 1,
+              },
+            ]
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            color="bluegrey"
+            defaultColor="bluegrey"
+            defaultWeight="Regular"
+            dynamicTypeRamp="body"
+            font="TitilliumSansPro"
+            fontStyle={
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              }
+            }
+            maxFontSizeMultiplier={1.25}
+            style={
+              [
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                {
+                  "color": "#475A6D",
+                  "fontFamily": "Titillium Sans Pro",
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                },
+              ]
+            }
+            weight="Regular"
+          >
+            Second
+          </Text>
+        </View>
+      </View>
+      <View
+        accessible={true}
+        style={
+          {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          dynamicTypeRamp="body"
+          font="TitilliumSansPro"
+          fontStyle={
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          maxFontSizeMultiplier={1.25}
+          style={
+            [
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "400",
+              },
+            ]
+          }
+          weight="Regular"
+        >
+          3
+          .
+        </Text>
+        <View
+          style={
+            {
+              "width": 8,
+            }
+          }
+        />
+        <View
+          accessible={false}
+          style={
+            [
+              {
+                "flex": 1,
+              },
+              {
+                "flexShrink": 1,
+              },
+            ]
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            color="bluegrey"
+            defaultColor="bluegrey"
+            defaultWeight="Regular"
+            dynamicTypeRamp="body"
+            font="TitilliumSansPro"
+            fontStyle={
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              }
+            }
+            maxFontSizeMultiplier={1.25}
+            style={
+              [
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                {
+                  "color": "#475A6D",
+                  "fontFamily": "Titillium Sans Pro",
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                },
+              ]
+            }
+            weight="Regular"
+          >
+            Third
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "height": 8,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    dynamicTypeRamp="body"
+    font="TitilliumSansPro"
+    fontStyle={
+      {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    maxFontSizeMultiplier={1.25}
+    style={
+      [
+        {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+  >
+    Here is a link: 
+    <Text
+      accessibilityRole="link"
+      allowFontScaling={false}
+      color="blue"
+      defaultColor="blue"
+      defaultWeight="Semibold"
+      dynamicTypeRamp="footnote"
+      font="TitilliumSansPro"
+      fontStyle={
+        {
+          "fontSize": 16,
+          "lineHeight": 24,
+          "textDecorationLine": "underline",
+        }
+      }
+      maxFontSizeMultiplier={1.25}
+      onPress={[Function]}
+      style={
+        [
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+            "textDecorationLine": "underline",
+          },
+          {
+            "color": "#0073E6",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="Semibold"
+    >
+      Go to Privacy and ToS
+    </Text>
+  </Text>
+  <View
+    style={
+      {
+        "height": 8,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    dynamicTypeRamp="body"
+    font="TitilliumSansPro"
+    fontStyle={
+      {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    maxFontSizeMultiplier={1.25}
+    style={
+      [
+        {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+  >
+    Here is an image:
+
+    <Image
+      accessibilityIgnoresInvertColors={true}
+      accessibilityLabel="Alt text"
+      source={
+        {
+          "uri": "https://via.placeholder.com/150",
+        }
+      }
+    />
+  </Text>
+  <View
+    style={
+      {
+        "height": 8,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    dynamicTypeRamp="body"
+    font="TitilliumSansPro"
+    fontStyle={
+      {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    maxFontSizeMultiplier={1.25}
+    style={
+      [
+        {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+  >
+    Here is a code block:
+  </Text>
+</View>
+`;

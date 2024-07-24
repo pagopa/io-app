@@ -6,43 +6,24 @@ import {
   ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as A from "fp-ts/lib/Array";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { itwCredentialsWalletReset } from "../../credentials/store/actions";
-import { itwRemoveIntegrityKeyTag } from "../../issuance/store/actions";
-import { itwLifecycleStateUpdated } from "../../lifecycle/store/actions";
-import { ItwLifecycleState } from "../../lifecycle/store/reducers";
+import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
 import {
   itwLifecycleIsInstalledSelector,
   itwLifecycleIsOperationalSelector,
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
-import { walletRemoveCards } from "../../../newWallet/store/actions/cards";
-import { itwCredentialsSelector } from "../../credentials/store/selectors";
+import { walletRemoveCardsByType } from "../../../newWallet/store/actions/cards";
 
 export const ItwLifecycleSection = () => {
   const dispatch = useIODispatch();
   const isItwInstalled = useIOSelector(itwLifecycleIsInstalledSelector);
   const isItwOperational = useIOSelector(itwLifecycleIsOperationalSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
-  const { eid, credentials } = useIOSelector(itwCredentialsSelector);
 
   const resetWalletInstance = () => {
-    dispatch(itwCredentialsWalletReset());
-    dispatch(itwRemoveIntegrityKeyTag());
-    dispatch(
-      itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_INSTALLED)
-    );
-    if (O.isSome(eid)) {
-      dispatch(
-        walletRemoveCards([
-          eid.value.keyTag,
-          ...pipe(credentials, A.filterMap(O.map(x => x.keyTag)))
-        ])
-      );
-    }
+    dispatch(itwLifecycleWalletReset());
+    dispatch(walletRemoveCardsByType("itw"));
   };
 
   const getLifecycleStateLabel = () => {

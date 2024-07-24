@@ -5,12 +5,13 @@ import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScr
 import { ItwIdentificationIdpSelectionScreen } from "../identification/screens/ItwIdentificationIdpSelectionScreen";
 import { ItwIdentificationModeSelectionScreen } from "../identification/screens/ItwIdentificationModeSelectionScreen";
 import { ItwIdentificationNfcInstructionsScreen } from "../identification/screens/ItwIdentificationNfcInstructionsScreen";
-import { ItwIssuanceCredentialAuthScreen } from "../issuance/screens/ItwIssuanceCredentialAuthScreen";
+import { ItwIssuanceCredentialFailureScreen } from "../issuance/screens/ItwIssuanceCredentialFailureScreen";
 import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssuanceCredentialPreviewScreen";
-import { ItwIssuanceEidRequestScreen } from "../issuance/screens/ItwIssuanceEidRequestScreen";
-import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
-import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
+import { ItwIssuanceCredentialTrustIssuerScreen } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
 import { ItwIssuanceEidFailureScreen } from "../issuance/screens/ItwIssuanceEidFailureScreen";
+import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
+import { ItwIssuanceEidRequestScreen } from "../issuance/screens/ItwIssuanceEidRequestScreen";
+import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import {
   ItWalletIssuanceMachineProvider,
   ItwCredentialIssuanceMachineContext,
@@ -18,7 +19,7 @@ import {
 } from "../machine/provider";
 import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground";
-import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
+import { ItwPresentationCredentialDetailScreen } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -83,12 +84,17 @@ const InnerNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_AUTH}
-        component={ItwIssuanceCredentialAuthScreen}
+        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER}
+        component={ItwIssuanceCredentialTrustIssuerScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW}
         component={ItwIssuanceCredentialPreviewScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE}
+        component={ItwIssuanceCredentialFailureScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -99,12 +105,15 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.EID_FAILURE}
         component={ItwIssuanceEidFailureScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, gestureEnabled: false }}
+        /* gestureEnabled to false prevents going back to the loading screen, just go back to the home screen when swiping back.
+         * TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+         */
       />
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen
-        name={ITW_ROUTES.PRESENTATION.EID_DETAIL}
-        component={ItwPresentationEidDetailScreen}
+        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL}
+        component={ItwPresentationCredentialDetailScreen}
         options={{ headerShown: false }}
       />
       {/* PLAYGROUNDS */}

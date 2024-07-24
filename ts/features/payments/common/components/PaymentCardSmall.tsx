@@ -10,8 +10,8 @@ import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 import { WithTestID } from "../../../../types/WithTestID";
+import { WalletCardPressableBase } from "../../../newWallet/components/WalletCardPressableBase";
 import { PaymentCardProps } from "./PaymentCard";
-import { PaymentCardPressableBase } from "./PaymentCardPressableBase";
 
 export type PaymentCardSmallProps = WithTestID<
   PaymentCardProps & {
@@ -60,7 +60,7 @@ const PaymentCardSmall = ({
   }, [props]);
 
   return (
-    <PaymentCardPressableBase
+    <WalletCardPressableBase
       onPress={onPress}
       testID={`${testID}-pressable`}
       accessibilityLabel={accessibilityLabel}
@@ -90,7 +90,7 @@ const PaymentCardSmall = ({
           {labelText}
         </Chip>
       </View>
-    </PaymentCardPressableBase>
+    </WalletCardPressableBase>
   );
 };
 
