@@ -23,7 +23,8 @@ import { ItwCredentialClaimsSection } from "../../common/components/ItwCredentia
 import { ItwReleaserName } from "../../common/components/ItwReleaserName";
 import {
   getCredentialExpireStatus,
-  parseClaims
+  parseClaims,
+  removeClaim
 } from "../../common/utils/itwClaimsUtils";
 import {
   ItWalletError,
@@ -84,6 +85,11 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
     credential.parsedCredential
   );
 
+  const parsedCredential =
+    credential.credentialType === CredentialType.PID
+      ? removeClaim(credential.parsedCredential, "unique_id")
+      : credential.parsedCredential;
+
   return (
     <>
       <FocusAwareStatusBar
@@ -108,7 +114,7 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
             title={I18n.t(
               "features.itWallet.presentation.credentialDetails.documentDataTitle"
             )}
-            claims={parseClaims(credential.parsedCredential)}
+            claims={parseClaims(parsedCredential)}
             canHideValues={true}
           />
           <Divider />

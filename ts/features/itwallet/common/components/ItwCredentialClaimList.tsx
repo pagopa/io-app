@@ -1,8 +1,9 @@
 import React from "react";
 import { View } from "react-native";
 import { Divider } from "@pagopa/io-app-design-system";
-import { parseClaims } from "../utils/itwClaimsUtils";
+import { parseClaims, removeClaim } from "../utils/itwClaimsUtils";
 import { StoredCredential } from "../utils/itwTypesUtils";
+import { CredentialType } from "../utils/itwMocksUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 import { ItwReleaserName } from "./ItwReleaserName";
 
@@ -13,19 +14,30 @@ import { ItwReleaserName } from "./ItwReleaserName";
  */
 export const ItwCredentialClaimsList = ({
   data,
-  isPreview
+  isPreview,
+  isHidden
 }: {
   data: StoredCredential;
   isPreview?: boolean;
+  isHidden?: boolean;
 }) => {
-  const claims = parseClaims(data.parsedCredential);
+  const parsedCredential =
+    data.credentialType === CredentialType.PID
+      ? removeClaim(data.parsedCredential, "unique_id")
+      : data.parsedCredential;
+
+  const claims = parseClaims(parsedCredential);
 
   return (
     <>
       {claims.map((elem, index) => (
         <View key={index}>
           {index !== 0 && <Divider />}
-          <ItwCredentialClaim claim={elem} isPreview={isPreview} />
+          <ItwCredentialClaim
+            claim={elem}
+            isPreview={isPreview}
+            hidden={isHidden}
+          />
         </View>
       ))}
       <Divider />

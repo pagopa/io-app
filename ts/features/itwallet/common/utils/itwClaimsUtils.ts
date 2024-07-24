@@ -395,3 +395,18 @@ const FISCAL_CODE_REGEX =
  */
 export const extractFiscalCode = (s: string) =>
   pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));
+
+/**
+ * Filters a claim from the credential.
+ * TODO [SIW-1383]: remove this dirty hack
+ * @param parsedCredential the parsed credential which contains the claim
+ * @param key the key of the claim to be removed
+ * @return the parsed credential without the claim
+ */
+export const removeClaim = (
+  parsedCredential: ParsedCredential,
+  key: string
+): ParsedCredential => {
+  const { [key]: _, ...remainingCredentials } = parsedCredential;
+  return remainingCredentials;
+};
