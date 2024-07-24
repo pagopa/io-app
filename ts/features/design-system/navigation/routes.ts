@@ -35,6 +35,10 @@ const DESIGN_SYSTEM_ROUTES = {
     WALLET: {
       route: "DESIGN_SYSTEM_WALLET",
       title: "Wallet"
+    },
+    IO_MARKDOWN: {
+      route: "IO_MARKDOWN",
+      title: "IOMarkdown"
     }
   },
   HEADERS: {

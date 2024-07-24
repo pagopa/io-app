@@ -295,15 +295,15 @@ export const MessageDetailsStickyFooter = ({
     return null;
   }
 
+  const paddingBottom =
+    safeAreaInsets.bottom +
+    (footerData.tag === "CTA" || footerData.tag === "Payment"
+      ? IOStyles.footer.paddingBottom
+      : 0);
+
   const isPaymentLoading = paymentButtonStatus === "loading";
   return (
-    <View
-      style={[
-        IOStyles.footer,
-        styles.container,
-        { paddingBottom: safeAreaInsets.bottom }
-      ]}
-    >
+    <View style={[IOStyles.footer, styles.container, { paddingBottom }]}>
       {foldFooterData(
         footerData,
         paymentWithDoubleCTA =>

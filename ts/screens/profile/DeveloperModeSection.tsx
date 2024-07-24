@@ -33,7 +33,6 @@ import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
   preferencesItWalletTestSetEnabled,
-  preferencesNewHomeSectionSetEnabled,
   preferencesNewWalletSectionSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
@@ -48,7 +47,6 @@ import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
   isIdPayTestEnabledSelector,
   isItWalletTestEnabledSelector,
-  isNewHomeSectionEnabledSelector,
   isNewWalletSectionLocallyEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
@@ -295,22 +293,11 @@ const DesignSystemSection = () => {
   const isNewWalletSectionLocallyEnabled = useIOSelector(
     isNewWalletSectionLocallyEnabledSelector
   );
-  const isNewHomeSectionEnabled = useIOSelector(
-    isNewHomeSectionEnabledSelector
-  );
 
   const onNewWalletSectionToggle = (enabled: boolean) => {
     dispatch(
       preferencesNewWalletSectionSetEnabled({
         isNewWalletSectionEnabled: enabled
-      })
-    );
-  };
-
-  const onNewHomeSectionToggle = (enabled: boolean) => {
-    dispatch(
-      preferencesNewHomeSectionSetEnabled({
-        isNewHomeSectionEnabled: enabled
       })
     );
   };
@@ -344,12 +331,6 @@ const DesignSystemSection = () => {
         value={isNewWalletSectionLocallyEnabled}
         onSwitchValueChange={onNewWalletSectionToggle}
       />
-      <Divider />
-      <ListItemSwitch
-        label={I18n.t("profile.main.newHomeSection")}
-        value={isNewHomeSectionEnabled}
-        onSwitchValueChange={onNewHomeSectionToggle}
-      />
     </ContentWrapper>
   );
 };
@@ -378,6 +359,13 @@ const PlaygroundsSection = () => {
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
           screen: ROUTES.MARKDOWN_PLAYGROUND
+        })
+    },
+    {
+      value: "IO Markdown",
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.IO_MARKDOWN_PLAYGROUND
         })
     },
     {

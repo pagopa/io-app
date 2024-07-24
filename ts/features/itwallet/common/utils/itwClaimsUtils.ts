@@ -2,16 +2,19 @@
  * Utility functions for working with credential claims.
  */
 
-import * as t from "io-ts";
-import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { patternDateFromString } from "@pagopa/ts-commons/lib/dates";
+import { PatternString } from "@pagopa/ts-commons/lib/strings";
+import { differenceInCalendarDays } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import * as t from "io-ts";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
-import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
+import { ItwCredentialStatus } from "../components/ItwCredentialCard";
 import { CredentialCatalogDisplay } from "./itwMocksUtils";
+import { JsonFromString } from "./ItwCodecUtils";
+import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
 /**
  *
@@ -156,6 +159,14 @@ const DATE_FORMAT_REGEX = "^\\d{4}-\\d{2}-\\d{2}$";
 const PICTURE_URL_REGEX = "^data:image\\/png;base64,";
 
 /**
+ * Regex for the picture without URL format which is used to validate the image claim as a base64 encoded png image.
+ * This is needed until the issuer adds the URL to the image claim.
+ * TODO [SIW-1378]: remove this regex when the issuer adds the URL schema to the image claim.
+ */
+const PICTURE_WITHOUT_URL_REGEX =
+  "(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)";
+
+/**
  * io-ts decoder for the date claim field of the credential.
  * The date format is checked against the regex dateFormatRegex, which is currenlty mocked.
  * This is needed because a generic date decoder would accept invalid dates like numbers,
@@ -192,11 +203,19 @@ export type PlaceOfBirthClaimType = t.TypeOf<typeof PlaceOfBirthClaim>;
 /**
  * io-ts decoder for the mDL driving privileges
  */
-export const DrivingPrivilegesClaim = t.type({
+const DrivingPrivilegeClaim = t.type({
+  driving_privilege: t.string,
   issue_date: t.string,
-  vehicle_category_code: t.string,
-  expiry_date: t.string
+  expiry_date: t.string,
+  restrictions_conditions: t.union([t.string, t.null])
 });
+
+export type DrivingPrivilegeClaimType = t.TypeOf<typeof DrivingPrivilegeClaim>;
+
+export const DrivingPrivilegesClaim = t.string
+  .pipe(JsonFromString)
+  .pipe(t.array(DrivingPrivilegeClaim));
+
 export type DrivingPrivilegesClaimType = t.TypeOf<
   typeof DrivingPrivilegesClaim
 >;
@@ -207,6 +226,9 @@ export type DrivingPrivilegesClaimType = t.TypeOf<
 export const PlainTextClaim = t.string;
 
 export const ImageClaim = PatternString(PICTURE_URL_REGEX);
+
+// TODO [SIW-1378]: remove this decoder when the issuer adds the URL schema to the image claim.
+export const ImageClaimNoUrl = PatternString(PICTURE_WITHOUT_URL_REGEX);
 
 /**
  * Decoder type for the claim field of the credential.
@@ -225,6 +247,8 @@ export const ClaimValue = t.union([
   DateClaim,
   // Otherwise parse an image
   ImageClaim,
+  // Otherwise parse an image without URL
+  ImageClaimNoUrl,
   // Otherwise fallback to string
   PlainTextClaim
 ]);
@@ -285,9 +309,7 @@ export const previewDateClaimsConfig: DateClaimConfig = {
  * @returns
  */
 export const groupCredentialClaims = (credential: StoredCredential) => {
-  const claims = parseClaims(
-    sortClaims(credential.displayData.order, credential.parsedCredential)
-  );
+  const claims = parseClaims(credential.parsedCredential);
 
   return claims.reduce((acc, claim) => {
     const section = sectionsByClaim[claim.id] || "noSection";
@@ -297,3 +319,69 @@ export const groupCredentialClaims = (credential: StoredCredential) => {
     };
   }, {} as Record<ClaimSection, ReadonlyArray<ClaimDisplayFormat>>);
 };
+
+/**
+ * Returns the expiration date from a {@see ParsedCredential}, if present
+ * @param credential the parsed credential claims
+ * @returns a Date if found, undefined if not
+ */
+export const getCredentialExpireDate = (
+  credential: ParsedCredential
+): Date | undefined => {
+  // A credential could contain its expiration date in `expiry_date` or `expiration_date` claims
+  const expireDate: ParsedCredential[keyof ParsedCredential] | undefined =
+    credential.expiry_date || credential.expiration_date;
+
+  return expireDate && new Date(expireDate.value as string);
+};
+
+/**
+ * Returns the remaining days until the expiration a {@see ParsedCredential}
+ * @param credential the parsed credential claims
+ * @returns the number of days until the expiration date, undefined if no expire date is found
+ */
+export const getCredentialExpireDays = (
+  credential: ParsedCredential
+): number | undefined => {
+  const expireDate = getCredentialExpireDate(credential);
+
+  if (expireDate === undefined) {
+    return undefined;
+  }
+
+  return differenceInCalendarDays(expireDate, Date.now());
+};
+
+/**
+ * Returns the expire status of a {@see ParsedCredential}
+ * @param credential the parsed credential claims
+ * @param expiringDays the number of days required to mark a credential as "EXPIRING"
+ * @returns "VALID" if the credential is valid, "EXPIRING" if there are less than {expiringDays} days left until the expiry day, "EXPIRED" if the expiry date has passed
+ */
+export const getCredentialExpireStatus = (
+  credential: ParsedCredential,
+  expiringDays: number = 14
+): ItwCredentialStatus | undefined => {
+  const expireDays = getCredentialExpireDays(credential);
+
+  if (expireDays === undefined) {
+    return undefined;
+  }
+
+  return expireDays > expiringDays
+    ? "valid"
+    : expireDays > 0
+    ? "expiring"
+    : "expired";
+};
+
+const FISCAL_CODE_REGEX =
+  /([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])/g;
+
+/**
+ * Extract a fiscal code from any string.
+ * @param s - the input string
+ * @returns An option with the extracted fiscal code
+ */
+export const extractFiscalCode = (s: string) =>
+  pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));

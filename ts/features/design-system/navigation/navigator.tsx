@@ -38,6 +38,7 @@ import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
+import { DSIOMarkdown } from "../core/DSIOMarkdown";
 import { DSIOScrollView } from "../core/DSIOScrollView";
 import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithLargeHeader";
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
@@ -370,6 +371,14 @@ export const DesignSystemNavigator = () => {
           component={DSWallet}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.WALLET.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.IO_MARKDOWN.route}
+          component={DSIOMarkdown}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.IO_MARKDOWN.title
           }}
         />
 

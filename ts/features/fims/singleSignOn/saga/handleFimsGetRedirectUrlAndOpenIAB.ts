@@ -1,10 +1,4 @@
 import {
-  URL as PolyfillURL,
-  URLSearchParams as PolyfillURLSearchParams
-} from "react-native-url-polyfill";
-import { Parser as HTMLParser2 } from "htmlparser2";
-import * as E from "fp-ts/lib/Either";
-import {
   HttpCallConfig,
   HttpClientFailureResponse,
   HttpClientResponse,
@@ -12,21 +6,33 @@ import {
   isCancelledFailure,
   nativeRequest
 } from "@pagopa/io-react-native-http-client";
+import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import * as E from "fp-ts/lib/Either";
+import { Parser as HTMLParser2 } from "htmlparser2";
+import {
+  URL as PolyfillURL,
+  URLSearchParams as PolyfillURLSearchParams
+} from "react-native-url-polyfill";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
-import { ReduxSagaEffect } from "../../../../types/utils";
-import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
+import { ReduxSagaEffect } from "../../../../types/utils";
 import { LollipopConfig } from "../../../lollipop";
+import { generateKeyInfo } from "../../../lollipop/saga";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../../../lollipop/store/reducers/lollipop";
-import { generateKeyInfo } from "../../../lollipop/saga";
 import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
-import { buildAbsoluteUrl, logToMixPanel } from "./sagaUtils";
+import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import { handleFimsResourcesDeallocation } from "./handleFimsResourcesDeallocation";
+import {
+  buildAbsoluteUrl,
+  formatHttpClientResponseForMixPanel,
+  isRedirect,
+  isValidRedirectResponse,
+  logToMixPanel
+} from "./sagaUtils";
 
 // note: IAB => InAppBrowser
 
@@ -68,7 +74,7 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
       return;
     }
     logToMixPanel(
-      `could not get RelyingParty redirect URL, ${JSON.stringify(
+      `could not get RelyingParty redirect URL, ${formatHttpClientResponseForMixPanel(
         rpRedirectResponse
       )}`
     );
@@ -125,7 +131,7 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
 
 const recurseUntilRPUrl = async (
   httpClientConfig: HttpCallConfig,
-  oidcDomain: string
+  fimsDomain: string
 ): Promise<HttpClientResponse> => {
   const res = await nativeRequest({
     ...httpClientConfig,
@@ -151,11 +157,11 @@ const recurseUntilRPUrl = async (
     return response;
   }
 
-  const isOIDCProviderBaseUrl = redirectUrl
+  const isFIMSProviderBaseUrl = redirectUrl
     .toLowerCase()
-    .startsWith(oidcDomain.toLowerCase());
+    .startsWith(fimsDomain.toLowerCase());
 
-  if (!isOIDCProviderBaseUrl) {
+  if (!isFIMSProviderBaseUrl) {
     return res;
   } else {
     return await recurseUntilRPUrl(
@@ -165,7 +171,7 @@ const recurseUntilRPUrl = async (
         url: redirectUrl,
         followRedirects: false
       },
-      oidcDomain
+      fimsDomain
     );
   }
 };
@@ -177,14 +183,6 @@ const extractValidRedirect = (
   isValidRedirectResponse(data)
     ? buildAbsoluteUrl(data.headers.location, originalRequestUrl)
     : undefined;
-
-const isValidRedirectResponse = (
-  res: HttpClientResponse
-): res is HttpClientSuccessResponse =>
-  res.type === "success" &&
-  isRedirect(res.status) &&
-  !!res.headers.location &&
-  res.headers.location.trim().length > 0;
 
 const getLollipopParamsFromUrlString = (url: string) => {
   try {
@@ -198,9 +196,6 @@ const getLollipopParamsFromUrlString = (url: string) => {
     return undefined;
   }
 };
-
-const isRedirect = (statusCode: number) =>
-  statusCode >= 300 && statusCode < 400;
 
 type RelyingPartyOutput = {
   relyingPartyUrl: string;
