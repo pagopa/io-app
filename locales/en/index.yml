@@ -3195,6 +3195,7 @@ features:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
+          restrictionConditions: "Codici"
       unrecognizedData:
         title: "Non riconosci alcuni dati?"
         body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
