@@ -10,6 +10,11 @@ export const selectPagoPaPlatformSessionTokenPot = createSelector(
   state => state.sessionToken
 );
 
+export const selectPagoPaPlatformPendingActions = createSelector(
+  selectPaymentsCheckoutState,
+  state => state.pendingActions
+);
+
 export const selectPagoPaPlatformSessionToken = createSelector(
   selectPagoPaPlatformSessionTokenPot,
   pot.toUndefined
