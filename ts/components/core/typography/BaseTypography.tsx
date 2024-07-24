@@ -39,6 +39,7 @@ const calculateTextStyle = (
  * This component shouldn't be used in the application but only to compose others `Typography elements`.
  * @param props
  * @constructor
+ * @deprecated Don't use local `BaseTypography`. Import it from `io-app-design-system` instead.
  */
 export const BaseTypography: React.FunctionComponent<OwnProps> = props => {
   const fontStyle = useMemo(

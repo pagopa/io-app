@@ -26,6 +26,7 @@ export const bodyDefaultWeight: AllowedWeight = "Regular";
  * default values(if not defined) are weight: `Regular`, color: `bluegrey`
  * @param props`
  * @constructor
+ * @deprecated Don't use local `Body`. Import it from `io-app-design-system` instead.
  */
 export const Body: React.FunctionComponent<OwnProps> = props =>
   useTypographyFactory<AllowedWeight, AllowedColors>({

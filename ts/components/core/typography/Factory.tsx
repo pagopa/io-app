@@ -71,6 +71,7 @@ function isDefaultFactoryProps<WeightPropsType, ColorsPropsType>(
  * or with a factory function to define some custom behaviour using {@link DefaultFactoryProps}
  * TODO: rewrite this component following the rules of hooks
  * @param props
+ * @deprecated Don't use local `useTypographyFactory`. Import it from `io-app-design-system` instead.
  */
 export function useTypographyFactory<
   WeightPropsType extends IOFontWeight,

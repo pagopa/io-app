@@ -21,6 +21,7 @@ export const linkDefaultWeight: AllowedWeight = "Semibold";
  * default values(if not defined) are weight: `Semibold`, color: `blue`
  * @param props`
  * @constructor
+ * @deprecated Don't use local `Link`. Import `LabelLink` from `io-app-design-system` instead.
  */
 export const Link: React.FunctionComponent<OwnProps> = props =>
   useTypographyFactory<AllowedWeight, AllowedColors>({
