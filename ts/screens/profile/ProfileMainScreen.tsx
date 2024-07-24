@@ -36,7 +36,9 @@ import { setShowProfileBanner } from "../../features/profileSettings/store/actio
 import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 import { useHeaderProps } from "../../hooks/useHeaderProps";
 import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus";
+import { TranslationKeys } from "../../../locales/locales";
 import DeveloperModeSection from "./DeveloperModeSection";
+import useContentWithFF from "./useContentWithFF";
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
@@ -61,6 +63,9 @@ const ProfileMainScreen = () => {
   const { show } = useIOToast();
   const isSettingsVisibleAndHideProfile = useIOSelector(
     isSettingsVisibleAndHideProfileSelector
+  );
+  const contextualHelpTitleContent = useContentWithFF(
+    "profile.main.contextualHelpTitle"
   );
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
   const showProfileBanner = useIOSelector(showProfileBannerSelector);
@@ -232,7 +237,7 @@ const ProfileMainScreen = () => {
     showHelp: true,
     faqCategories: ["profile"],
     contextualHelpMarkdown: {
-      title: "profile.main.contextualHelpTitle",
+      title: contextualHelpTitleContent as TranslationKeys,
       body: isSettingsVisibleAndHideProfile
         ? "profile.main.contextualHelpContent"
         : "profile.main.legacyContextualHelpContent"

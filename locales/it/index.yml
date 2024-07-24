@@ -317,7 +317,7 @@ profile:
     forgetCurrentSession: Dimentica sessione corrente
     clearAsyncStorage: Cancella contenuto di AsyncStorage
     dumpAsyncStorage: Scarica contenuto di AsyncStorage
-    contextualHelpTitle: Cosa puoi fare nel tuo Profilo
+    contextualHelpTitle: Cosa puoi fare nella sezione {{pageName}}
     legacyContextualHelpContent: !include profile/legacy_profile_account_main.md
     contextualHelpContent: !include profile/profile_account_main.md
     developerModeOn: Modalità sviluppatore attivata
