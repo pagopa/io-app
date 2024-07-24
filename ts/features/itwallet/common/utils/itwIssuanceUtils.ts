@@ -115,7 +115,7 @@ export type CompleteCieAuthFlowResult = Awaited<
 
 /**
  * Function to complete the CIE + PIN authentication flow. It must be invoked after `startCieAuthFlow`
- * and after reading the card to get the final `authUrl`. The rest of the parameters are those obtained from
+ * and after reading the card to get the final `callbackUrl`. The rest of the parameters are those obtained from
  * `startCieAuthFlow` + the wallet attestation.
  * @param walletAttestation - The wallet attestation.
  * @param wiaCryptoContext - The crypto context related to the wallet attestation.

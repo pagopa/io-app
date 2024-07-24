@@ -13,7 +13,7 @@ import { WithTestID } from "../../../../../types/WithTestID";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { useItwPreventNavigationEvent } from "../../../common/hooks/useItwPreventNavigationEvent";
 
-export type CieWrongCiePinScreenNavigationParams = {
+export type ItwCieWrongCiePinScreenNavigationParams = {
   remainingCount: number;
 };
 
@@ -44,7 +44,7 @@ export const ItwCieWrongCiePinScreen = () => {
     useRoute<
       Route<
         typeof ITW_ROUTES.IDENTIFICATION.CIE.WRONG_PIN,
-        CieWrongCiePinScreenNavigationParams
+        ItwCieWrongCiePinScreenNavigationParams
       >
     >();
   const { remainingCount } = route.params;

@@ -1,4 +1,4 @@
-import { CieWrongCiePinScreenNavigationParams } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
+import { ItwCieWrongCiePinScreenNavigationParams } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
 import { ITW_ROUTES } from "./routes";
 
@@ -13,7 +13,7 @@ export type ItwParamsList = {
   [ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE
-    .WRONG_PIN]: CieWrongCiePinScreenNavigationParams;
+    .WRONG_PIN]: ItwCieWrongCiePinScreenNavigationParams;
   [ITW_ROUTES.IDENTIFICATION.CIE.WRONG_CARD]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC]: undefined;
