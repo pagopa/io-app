@@ -41,6 +41,17 @@ export type SelectSpidIdp = {
   idp: LocalIdpsFallback;
 };
 
+export type CiePinEntered = {
+  type: "cie-pin-entered";
+  pin: string;
+  isNfcEnabled: boolean;
+};
+
+export type CieIdentificationCompleted = {
+  type: "cie-identification-completed";
+  url: string;
+};
+
 export type Retry = {
   type: "retry";
 };
@@ -53,12 +64,18 @@ export type Close = {
   type: "close";
 };
 
+export type NfcEnabled = {
+  type: "nfc-enabled";
+};
+
 export type EidIssuanceEvents =
   | Reset
   | Start
   | AcceptTos
   | SelectIdentificationMode
   | SelectSpidIdp
+  | CiePinEntered
+  | CieIdentificationCompleted
   | AddToWallet
   | GoToWallet
   | AddNewCredential
@@ -66,4 +83,5 @@ export type EidIssuanceEvents =
   | Retry
   | Back
   | Close
+  | NfcEnabled
   | ErrorActorEvent;
