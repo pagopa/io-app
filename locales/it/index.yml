@@ -3191,6 +3191,7 @@ features:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
+          restrictionConditions: "Codici"
       unrecognizedData:
         title: "Non riconosci alcuni dati?"
         body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
@@ -3238,7 +3239,7 @@ features:
         disclaimer:
           0: I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.
           1: I dati saranno condivisi solo per il tempo necessario al rilascio della credenziale.
-        tos: "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy]()."
+        tos: "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione)."
       eidPreview:
         title: "Stiamo aggiungendo i seguenti dati al Portafoglio:"
         actions:
