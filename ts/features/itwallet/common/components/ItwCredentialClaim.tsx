@@ -219,7 +219,7 @@ const DrivingPrivilegesClaimItem = ({
 }: {
   label: string;
   claim: DrivingPrivilegeClaimType;
-  detailsButtonVisible: boolean;
+  detailsButtonVisible?: boolean;
 }) => {
   const localExpiryDate = localeDateFormat(
     new Date(claim.expiry_date),
@@ -338,7 +338,7 @@ export const ItwCredentialClaim = ({
               label={claim.label}
               claim={elem}
               key={`${index}_{elem.label}`}
-              detailsButtonVisible={isPreview || false}
+              detailsButtonVisible={!isPreview}
             />
           ));
         } else if (PlainTextClaim.is(decoded)) {
