@@ -352,3 +352,14 @@ export const getCredentialExpireStatus = (
     ? "expiring"
     : "expired";
 };
+
+const FISCAL_CODE_REGEX =
+  /([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])/g;
+
+/**
+ * Extract a fiscal code from any string.
+ * @param s - the input string
+ * @returns An option with the extracted fiscal code
+ */
+export const extractFiscalCode = (s: string) =>
+  pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));
