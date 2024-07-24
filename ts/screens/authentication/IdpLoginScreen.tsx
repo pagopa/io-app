@@ -267,9 +267,11 @@ const IdpLoginScreen = (props: Props) => {
   const hasError = pot.isError(requestState);
 
   useHeaderSecondLevel({
-    title: `${I18n.t("authentication.idp_login.headerTitle")} - ${
-      loggedOutWithIdpAuth?.idp.name
-    }`,
+    title: !loggedInAuth
+      ? `${I18n.t("authentication.idp_login.headerTitle")} - ${
+          loggedOutWithIdpAuth?.idp.name
+        }`
+      : "",
     supportRequest: true,
     contextualHelp,
     faqCategories: ["authentication_SPID"]
