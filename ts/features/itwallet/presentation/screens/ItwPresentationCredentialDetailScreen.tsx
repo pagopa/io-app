@@ -34,7 +34,7 @@ import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils"
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { ItwPresentationBannersSection } from "../components/ItwPresentationBannersSection";
+import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlertsSection";
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
 
 // TODO: use the real credential update time
@@ -102,7 +102,7 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
         </View>
         <ContentWrapper>
           <VSpacer size={16} />
-          <ItwPresentationBannersSection credential={credential} />
+          <ItwPresentationAlertsSection credential={credential} />
           <VSpacer size={16} />
           <ItwCredentialClaimsSection
             title={I18n.t(

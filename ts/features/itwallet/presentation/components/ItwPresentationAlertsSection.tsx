@@ -15,7 +15,7 @@ type Props = {
   credential: StoredCredential;
 };
 
-export const ItwPresentationBannersSection = ({ credential }: Props) => {
+export const ItwPresentationAlertsSection = ({ credential }: Props) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
   const beginCredentialIssuance = () => {
@@ -44,6 +44,7 @@ export const ItwPresentationBannersSection = ({ credential }: Props) => {
   if (isExpired) {
     return (
       <Alert
+        testID="itwExpiredBannerTestID"
         content={I18n.t(
           "features.itWallet.presentation.alerts.expired.content"
         )}
@@ -58,6 +59,7 @@ export const ItwPresentationBannersSection = ({ credential }: Props) => {
     <VStack space={16}>
       {isExpiring && (
         <Alert
+          testID="itwExpiringBannerTestID"
           content={I18n.t(
             "features.itWallet.presentation.alerts.expiring.content",
             {
@@ -70,6 +72,7 @@ export const ItwPresentationBannersSection = ({ credential }: Props) => {
       {isMdl && (
         <>
           <Alert
+            testID="itwMdlBannerTestID"
             content={I18n.t(
               "features.itWallet.presentation.alerts.mdl.content"
             )}
