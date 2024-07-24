@@ -207,7 +207,7 @@ const DrivingPrivilegeClaim = t.type({
   driving_privilege: t.string,
   issue_date: t.string,
   expiry_date: t.string,
-  restriction_conditions: t.union([t.string, t.null])
+  restrictions_conditions: t.union([t.string, t.null])
 });
 
 export type DrivingPrivilegeClaimType = t.TypeOf<typeof DrivingPrivilegeClaim>;
