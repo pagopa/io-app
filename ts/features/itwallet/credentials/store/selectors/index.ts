@@ -32,3 +32,8 @@ export const itwCredentialByTypeSelector = (type: string) =>
     itwCredentialsByTypeSelector,
     credentials => credentials[type] || O.none
   );
+
+export const itwCredentialsTypesSelector = createSelector(
+  itwCredentialsByTypeSelector,
+  credentials => Object.keys(credentials)
+);
