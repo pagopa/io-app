@@ -1,6 +1,7 @@
 import { assign, fromPromise, setup } from "xstate5";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { WalletAttestationResult } from "../../common/utils/itwAttestationUtils";
+import { assert } from "../../../../utils/assert";
 import { ItwTags } from "../tags";
 import { CieAuthContext, Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -185,83 +186,103 @@ export const itwEidIssuanceMachine = setup({
           }
         },
         CiePin: {
-          entry: [
-            assign(() => ({ cieAuthContext: undefined })), // Reset the CIE context, otherwise retries will use stale data
-            { type: "navigateToCiePinScreen" }
-          ],
-          on: {
-            "cie-pin-entered": [
-              {
-                guard: ({ event }) => event.isNfcEnabled,
-                target: "StartingCieAuthFlow",
-                actions: assign(({ event }) => ({
-                  identification: { mode: "ciePin", pin: event.pin }
-                }))
-              },
-              {
-                target: "ActivateNfc",
-                actions: assign(({ event }) => ({
-                  identification: { mode: "ciePin", pin: event.pin }
-                }))
-              }
-            ],
-            back: {
-              target: "ModeSelection"
-            }
-          }
-        },
-        ActivateNfc: {
-          entry: "navigateToNfcInstructionsScreen",
-          on: {
-            "nfc-enabled": {
-              target: "StartingCieAuthFlow"
-            },
-            back: {
-              target: "CiePin"
-            }
-          }
-        },
-        StartingCieAuthFlow: {
           description:
-            "Start the preliminary phase of the CIE identification flow.",
-          tags: [ItwTags.Loading],
-          invoke: {
-            src: "startCieAuthFlow",
-            input: ({ context }) => ({
-              walletAttestationContext: context.walletAttestationContext
-            }),
-            onDone: {
-              actions: assign(({ event }) => ({
-                cieAuthContext: event.output
-              })),
-              target: "ReadingCieCard"
-            },
-            onError: {
-              actions: assign(setFailure(IssuanceFailureType.GENERIC)),
-              target: "#itwEidIssuanceMachine.Failure"
-            }
-          }
-        },
-        ReadingCieCard: {
-          description:
-            "Read the CIE card and get back a url to continue the PID issuing flow. This state also handles errors when reading the card.",
-          entry: "navigateToCieReadCardScreen",
-          on: {
-            "cie-identification-completed": {
-              target: "#itwEidIssuanceMachine.UserIdentification.Completed",
-              actions: assign(({ context, event }) => ({
-                cieAuthContext: {
-                  ...context.cieAuthContext!,
-                  callbackUrl: event.url
+            "This state handles the entire CIE + pin identification flow",
+          initial: "InsertingCardPin",
+          states: {
+            InsertingCardPin: {
+              entry: [
+                assign(() => ({ cieAuthContext: undefined })), // Reset the CIE context, otherwise retries will use stale data
+                { type: "navigateToCiePinScreen" }
+              ],
+              on: {
+                "cie-pin-entered": [
+                  {
+                    guard: ({ event }) => event.isNfcEnabled,
+                    target: "StartingCieAuthFlow",
+                    actions: assign(({ event }) => ({
+                      identification: { mode: "ciePin", pin: event.pin }
+                    }))
+                  },
+                  {
+                    target: "ActivateNfc",
+                    actions: assign(({ event }) => ({
+                      identification: { mode: "ciePin", pin: event.pin }
+                    }))
+                  }
+                ],
+                back: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
                 }
-              }))
+              }
             },
-            close: {
-              target: "#itwEidIssuanceMachine.UserIdentification"
+            ActivateNfc: {
+              entry: "navigateToNfcInstructionsScreen",
+              on: {
+                "nfc-enabled": {
+                  target: "StartingCieAuthFlow"
+                },
+                back: {
+                  target: "InsertingCardPin"
+                }
+              }
             },
-            back: {
-              target: "CiePin"
+            StartingCieAuthFlow: {
+              description:
+                "Start the preliminary phase of the CIE identification flow.",
+              tags: [ItwTags.Loading],
+              invoke: {
+                src: "startCieAuthFlow",
+                input: ({ context }) => ({
+                  walletAttestationContext: context.walletAttestationContext
+                }),
+                onDone: {
+                  actions: assign(({ event }) => ({
+                    cieAuthContext: event.output
+                  })),
+                  target: "ReadingCieCard"
+                },
+                onError: {
+                  actions: assign(setFailure(IssuanceFailureType.GENERIC)),
+                  target: "#itwEidIssuanceMachine.Failure"
+                }
+              }
+            },
+            ReadingCieCard: {
+              description:
+                "Read the CIE card and get back a url to continue the PID issuing flow. This state also handles errors when reading the card.",
+              entry: "navigateToCieReadCardScreen",
+              on: {
+                "cie-identification-completed": {
+                  target: "Completed",
+                  actions: assign(({ context, event }) => {
+                    assert(
+                      context.cieAuthContext,
+                      "cieAuthContext must be defined when completing CIE+pin flow"
+                    );
+                    return {
+                      cieAuthContext: {
+                        ...context.cieAuthContext,
+                        callbackUrl: event.url
+                      }
+                    };
+                  })
+                },
+                close: {
+                  target: "#itwEidIssuanceMachine.UserIdentification"
+                },
+                back: {
+                  target: "InsertingCardPin"
+                }
+              }
+            },
+            Completed: {
+              type: "final"
             }
+          },
+          onDone: {
+            target: "#itwEidIssuanceMachine.UserIdentification.Completed"
           }
         },
         Completed: {
