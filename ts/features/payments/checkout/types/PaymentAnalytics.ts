@@ -10,7 +10,7 @@ export type PaymentAnalyticsData = {
     WalletInfo | EcommerceWalletInfo
   >;
   pspList?: ReadonlyArray<Bundle>;
-  selectedPsp?: Bundle;
+  selectedPsp?: string;
   selectedPspFlag?: PaymentAnalyticsSelectedPspFlag;
   selectedPaymentMethod?: string;
   formattedAmount?: string;
