@@ -223,6 +223,10 @@ const WalletPaymentPickMethodScreen = () => {
       )
     );
 
+  const handleOnCreateTransactionError = () => {
+    setWaitingTransactionActivation(false);
+  };
+
   const handleContinue = () => {
     analytics.trackPaymentMethodSelected({
       attempt: paymentAnalyticsData?.attempt,
@@ -243,9 +247,12 @@ const WalletPaymentPickMethodScreen = () => {
         O.map(paymentDetails => {
           dispatch(
             paymentsCreateTransactionAction.request({
-              paymentNotices: [
-                { rptId: paymentDetails.rptId, amount: paymentDetails.amount }
-              ]
+              data: {
+                paymentNotices: [
+                  { rptId: paymentDetails.rptId, amount: paymentDetails.amount }
+                ]
+              },
+              onError: handleOnCreateTransactionError
             })
           );
           setWaitingTransactionActivation(true);
