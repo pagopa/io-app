@@ -11,6 +11,7 @@ import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
+import { ItwCredentialStatus } from "../components/ItwCredentialCard";
 import { CredentialCatalogDisplay } from "./itwMocksUtils";
 import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
@@ -338,7 +339,7 @@ export const getCredentialExpireDays = (
 export const getCredentialExpireStatus = (
   credential: ParsedCredential,
   expiringDays: number = 14
-): "VALID" | "EXPIRING" | "EXPIRED" | undefined => {
+): ItwCredentialStatus | undefined => {
   const expireDays = getCredentialExpireDays(credential);
 
   if (expireDays === undefined) {
@@ -346,8 +347,8 @@ export const getCredentialExpireStatus = (
   }
 
   return expireDays > expiringDays
-    ? "VALID"
+    ? "valid"
     : expireDays > 0
-    ? "EXPIRING"
-    : "EXPIRED";
+    ? "expiring"
+    : "expired";
 };

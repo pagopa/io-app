@@ -21,7 +21,10 @@ import { useIOSelector } from "../../../../store/hooks";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import { ItwCredentialClaimsSection } from "../../common/components/ItwCredentialClaimsSection";
 import { ItwReleaserName } from "../../common/components/ItwReleaserName";
-import { parseClaims } from "../../common/utils/itwClaimsUtils";
+import {
+  getCredentialExpireStatus,
+  parseClaims
+} from "../../common/utils/itwClaimsUtils";
 import {
   ItWalletError,
   getItwGenericMappedError
@@ -77,6 +80,10 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
     backgroundColor: themeColor
   });
 
+  const credentialStatus = getCredentialExpireStatus(
+    credential.parsedCredential
+  );
+
   return (
     <>
       <FocusAwareStatusBar
@@ -85,7 +92,10 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
       />
       <ScrollView contentContainerStyle={{ paddingBottom: screenEndMargin }}>
         <View style={styles.cardContainer}>
-          <ItwCredentialCard credentialType={credential.credentialType} />
+          <ItwCredentialCard
+            credentialType={credential.credentialType}
+            status={credentialStatus}
+          />
           <View
             style={[styles.cardBackdrop, { backgroundColor: themeColor }]}
           />

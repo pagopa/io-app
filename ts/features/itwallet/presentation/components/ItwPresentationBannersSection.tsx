@@ -8,6 +8,7 @@ import {
 } from "../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import I18n from "../../../../i18n";
 
 type Props = {
   credential: StoredCredential;
@@ -17,12 +18,10 @@ export const ItwPresentationBannersSection = ({ credential }: Props) => {
   const isMdl = credential.credentialType === CredentialType.DRIVING_LICENSE;
 
   const mdlDisclaimerBottomSheet = useIOBottomSheetAutoresizableModal({
-    title: "Patente: contesti di verifica",
+    title: I18n.t("features.itWallet.presentation.bottomSheets.mdl.title"),
     component: (
       <ItwMarkdown>
-        {
-          "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Cartadi Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valorelegale del documento fisico.**"
-        }
+        {I18n.t("features.itWallet.presentation.bottomSheets.mdl.content")}
       </ItwMarkdown>
     )
   });
@@ -30,12 +29,14 @@ export const ItwPresentationBannersSection = ({ credential }: Props) => {
   const expireStatus = getCredentialExpireStatus(credential.parsedCredential);
   const expireDays = getCredentialExpireDays(credential.parsedCredential);
 
-  if (expireStatus === "EXPIRED") {
+  if (expireStatus === "expired") {
     return (
       <Alert
-        content="Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio"
+        content={I18n.t(
+          "features.itWallet.presentation.alerts.expired.content"
+        )}
         variant="error"
-        action="Aggiorna il documento"
+        action={I18n.t("features.itWallet.presentation.alerts.expired.action")}
         onPress={mdlDisclaimerBottomSheet.present}
       />
     );
@@ -43,18 +44,25 @@ export const ItwPresentationBannersSection = ({ credential }: Props) => {
 
   return (
     <VStack space={16}>
-      {expireStatus === "EXPIRING" && (
+      {expireStatus === "expiring" && (
         <Alert
-          content={`Mancano ${expireDays} giorni alla scadenza del documento.`}
+          content={I18n.t(
+            "features.itWallet.presentation.alerts.expiring.content",
+            {
+              days: expireDays
+            }
+          )}
           variant="warning"
         />
       )}
       {isMdl && (
         <>
           <Alert
-            content="In questa fase, la versione digitale della Patente non ha lo stesso valore del documento fisico: dovrai presentarla insieme a un documento di identità valido."
+            content={I18n.t(
+              "features.itWallet.presentation.alerts.mdl.content"
+            )}
             variant="info"
-            action="Scopri di più"
+            action={I18n.t("features.itWallet.presentation.alerts.mdl.action")}
             onPress={mdlDisclaimerBottomSheet.present}
           />
           {mdlDisclaimerBottomSheet.bottomSheet}

@@ -80,7 +80,7 @@ describe("getCredentialExpireStatus", () => {
           )
         }
       },
-      "EXPIRING"
+      "expiring"
     ],
     [
       {
@@ -92,7 +92,7 @@ describe("getCredentialExpireStatus", () => {
           )
         }
       },
-      "VALID"
+      "valid"
     ],
     [
       {
@@ -101,7 +101,7 @@ describe("getCredentialExpireStatus", () => {
           value: format(new Date(Date.now() - 1000), "YYYY-MM-DD")
         }
       },
-      "EXPIRED"
+      "expired"
     ],
     [
       {
