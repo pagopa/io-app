@@ -2,7 +2,6 @@ import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { useSelector } from "@xstate5/react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
@@ -24,7 +23,7 @@ export const ItwIssuanceEidPreviewScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const eidOption = useSelector(machineRef, selectEidOption);
+  const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
   const dismissDialog = useItwDismissalDialog(() =>
     machineRef.send({ type: "close" })
   );
