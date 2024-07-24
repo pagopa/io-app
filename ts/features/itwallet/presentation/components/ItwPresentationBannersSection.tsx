@@ -9,12 +9,22 @@ import {
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import I18n from "../../../../i18n";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 
 type Props = {
   credential: StoredCredential;
 };
 
 export const ItwPresentationBannersSection = ({ credential }: Props) => {
+  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+
+  const beginCredentialIssuance = () => {
+    machineRef.send({
+      type: "select-credential",
+      credentialType: credential.credentialType as CredentialType
+    });
+  };
+
   const isMdl = credential.credentialType === CredentialType.DRIVING_LICENSE;
 
   const mdlDisclaimerBottomSheet = useIOBottomSheetAutoresizableModal({
@@ -28,8 +38,10 @@ export const ItwPresentationBannersSection = ({ credential }: Props) => {
 
   const expireStatus = getCredentialExpireStatus(credential.parsedCredential);
   const expireDays = getCredentialExpireDays(credential.parsedCredential);
+  const isExpired = expireStatus === "expired";
+  const isExpiring = expireStatus === "expiring";
 
-  if (expireStatus === "expired") {
+  if (isExpired) {
     return (
       <Alert
         content={I18n.t(
@@ -37,14 +49,14 @@ export const ItwPresentationBannersSection = ({ credential }: Props) => {
         )}
         variant="error"
         action={I18n.t("features.itWallet.presentation.alerts.expired.action")}
-        onPress={mdlDisclaimerBottomSheet.present}
+        onPress={beginCredentialIssuance}
       />
     );
   }
 
   return (
     <VStack space={16}>
-      {expireStatus === "expiring" && (
+      {isExpiring && (
         <Alert
           content={I18n.t(
             "features.itWallet.presentation.alerts.expiring.content",
