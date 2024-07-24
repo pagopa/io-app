@@ -231,6 +231,7 @@ export const itwEidIssuanceMachine = setup({
             StartingCieAuthFlow: {
               description:
                 "Start the preliminary phase of the CIE identification flow.",
+              entry: "navigateToCieReadCardScreen",
               tags: [ItwTags.Loading],
               invoke: {
                 src: "startCieAuthFlow",
@@ -247,12 +248,14 @@ export const itwEidIssuanceMachine = setup({
                   actions: assign(setFailure(IssuanceFailureType.GENERIC)),
                   target: "#itwEidIssuanceMachine.Failure"
                 }
+              },
+              back: {
+                target: "InsertingCardPin"
               }
             },
             ReadingCieCard: {
               description:
                 "Read the CIE card and get back a url to continue the PID issuing flow. This state also handles errors when reading the card.",
-              entry: "navigateToCieReadCardScreen",
               on: {
                 "cie-identification-completed": {
                   target: "Completed",

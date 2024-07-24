@@ -36,9 +36,11 @@ import { useInteractiveElementDefaultColorName } from "../../../../../utils/hook
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import {
   selectCieAuthUrlOption,
-  selectCiePin
+  selectCiePin,
+  selectIsLoading
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 
 // This can be any URL, as long as it has http or https as its protocol, otherwise it cannot be managed by the webview.
 const CIE_L3_REDIRECT_URI = "https://cie.callback";
@@ -128,10 +130,16 @@ const getTextForState = (
   return texts[state];
 };
 
+const LoadingSpinner = (
+  <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+);
+
 export const ItwCieCardReaderScreen = () => {
   const navigation = useNavigation<StackNavigationProp<ItwParamsList>>();
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isMachineLoading =
+    ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const ciePin = ItwEidIssuanceMachineContext.useSelector(selectCiePin);
   const cieAuthUrl = ItwEidIssuanceMachineContext.useSelector(
     selectCieAuthUrlOption
@@ -140,16 +148,11 @@ export const ItwCieCardReaderScreen = () => {
   const [identificationStep, setIdentificationStep] = useState(
     IdentificationStep.AUTHENTICATION
   );
-  const [readingState, setReadingState] = useState(ReadingState.waiting_card);
+  const [readingState, setReadingState] = useState<ReadingState>();
   const [webViewVisible, setWebViewVisible] = useState(true);
 
   const blueColorName = useInteractiveElementDefaultColorName();
   const isScreenReaderEnabled = useScreenReaderEnabled();
-
-  const { title, subtitle } = getTextForState(
-    readingState,
-    isScreenReaderEnabled
-  );
 
   const handleCancel = () => machineRef.send({ type: "close" });
 
@@ -219,6 +222,10 @@ export const ItwCieCardReaderScreen = () => {
     machineRef.send({ type: "cie-identification-completed", url });
   };
 
+  if (isMachineLoading) {
+    return LoadingSpinner;
+  }
+
   const renderCardReaderFooter = () => (
     <View style={IOStyles.alignCenter}>
       <View>
@@ -230,12 +237,18 @@ export const ItwCieCardReaderScreen = () => {
     </View>
   );
 
-  const renderCardReaderContent = () => {
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const renderCardReaderContent = (readingState: ReadingState) => {
     // Since the CIE web view needs to be mounted all the time, hide the card reader content
     // after it is not longer needed and the user is giving consent on the web view.
     if (identificationStep === IdentificationStep.CONSENT) {
       return null;
     }
+
+    const { title, subtitle } = getTextForState(
+      readingState,
+      isScreenReaderEnabled
+    );
 
     return (
       <ScrollView
@@ -285,7 +298,11 @@ export const ItwCieCardReaderScreen = () => {
           />
         ) : null}
       </View>
-      {renderCardReaderContent()}
+      {
+        // When the card is ready the CIE SDK will send the waiting_card state
+        // Wait for it before showing the user the card reading screen
+        readingState ? renderCardReaderContent(readingState) : LoadingSpinner
+      }
     </SafeAreaView>
   );
 };

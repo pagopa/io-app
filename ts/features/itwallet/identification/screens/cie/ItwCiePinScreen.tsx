@@ -38,8 +38,6 @@ import {
 import { itwNfcIsEnabled } from "../../store/actions";
 import { itwIsNfcEnabledSelector } from "../../store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
-import { selectIsLoading } from "../../../machine/eid/selectors";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -69,8 +67,6 @@ export const ItwCiePinScreen = () => {
   const isNfcEnabled = pot.getOrElse(isEnabled, false);
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isMachineLoading =
-    ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
   const [pin, setPin] = useState("");
   const pinPadViewRef = useRef<View>(null);
@@ -118,12 +114,6 @@ export const ItwCiePinScreen = () => {
       machineRef.send({ type: "cie-pin-entered", pin: value, isNfcEnabled });
     }
   };
-
-  if (isMachineLoading) {
-    return (
-      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
-    );
-  }
 
   return (
     <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
