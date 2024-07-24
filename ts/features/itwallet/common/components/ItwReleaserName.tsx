@@ -47,7 +47,7 @@ export const ItwReleaserName = ({ credential, isPreview }: Props) => {
     ]
   });
   const endElement: ListItemInfo["endElement"] = useMemo(() => {
-    if (!isPreview) {
+    if (isPreview) {
       return;
     }
 
