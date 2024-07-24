@@ -156,7 +156,7 @@ export const DSDynamicBackground = () => {
               size="medium"
               logoUri={{ uri: entityData?.imageSource }}
             />
-            <View style={{ alignSelf: "center" }}>
+            <View style={{ alignSelf: "center", flexShrink: 1 }}>
               <H3 color={theme["textBody-secondary"]}>{entityData?.name}</H3>
               <LabelSmall
                 fontSize="regular"
