@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "@xstate5/react";
 import * as t from "io-ts";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -20,7 +19,8 @@ import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 
 export const ItwIssuanceEidFailureScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const failureOption = useSelector(machineRef, selectFailureOption);
+  const failureOption =
+    ItwEidIssuanceMachineContext.useSelector(selectFailureOption);
 
   const closeIssuance = () => machineRef.send({ type: "close" });
 

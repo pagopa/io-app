@@ -17,7 +17,6 @@ import {
   ScrollView,
   View
 } from "react-native";
-import { useSelector } from "@xstate5/react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
@@ -70,7 +69,8 @@ export const ItwCiePinScreen = () => {
   const isNfcEnabled = pot.getOrElse(isEnabled, false);
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isMachineLoading = useSelector(machineRef, selectIsLoading);
+  const isMachineLoading =
+    ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
   const [pin, setPin] = useState("");
   const pinPadViewRef = useRef<View>(null);

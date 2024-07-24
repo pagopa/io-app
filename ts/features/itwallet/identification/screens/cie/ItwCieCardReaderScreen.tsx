@@ -22,7 +22,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Cie } from "@pagopa/io-react-native-wallet";
-import { useSelector } from "@xstate5/react";
 import CieCardReadingAnimation, {
   ReadingState
 } from "../../../../../components/cie/CieCardReadingAnimation";
@@ -133,8 +132,10 @@ export const ItwCieCardReaderScreen = () => {
   const navigation = useNavigation<StackNavigationProp<ItwParamsList>>();
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const ciePin = useSelector(machineRef, selectCiePin);
-  const cieAuthUrl = useSelector(machineRef, selectCieAuthUrlOption);
+  const ciePin = ItwEidIssuanceMachineContext.useSelector(selectCiePin);
+  const cieAuthUrl = ItwEidIssuanceMachineContext.useSelector(
+    selectCieAuthUrlOption
+  );
 
   const [identificationStep, setIdentificationStep] = useState(
     IdentificationStep.AUTHENTICATION
