@@ -2,16 +2,17 @@
  * Utility functions for working with credential claims.
  */
 
-import * as t from "io-ts";
-import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { patternDateFromString } from "@pagopa/ts-commons/lib/dates";
+import { PatternString } from "@pagopa/ts-commons/lib/strings";
+import { differenceInCalendarDays } from "date-fns";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
+import * as t from "io-ts";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
-import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 import { CredentialCatalogDisplay } from "./itwMocksUtils";
+import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
 /**
  *
@@ -294,4 +295,38 @@ export const groupCredentialClaims = (credential: StoredCredential) => {
       [section]: (acc[section] || []).concat(claim)
     };
   }, {} as Record<ClaimSection, ReadonlyArray<ClaimDisplayFormat>>);
+};
+
+export const getCredentialExpireDate = (
+  credential: ParsedCredential
+): Date | undefined => {
+  // A credential could contain its expiration date in `expiry_date` or `expiration_date` claims
+  const expireDate: ParsedCredential[keyof ParsedCredential] | undefined =
+    credential.expiry_date || credential.expiration_date;
+
+  return expireDate && new Date(expireDate.value as string);
+};
+
+export const getCredentialExpireDays = (
+  credential: ParsedCredential
+): number | undefined => {
+  const expireDate = getCredentialExpireDate(credential);
+
+  if (expireDate === undefined) {
+    return undefined;
+  }
+
+  return differenceInCalendarDays(expireDate, Date.now());
+};
+
+export const getCredentialExpireStatus = (
+  credential: ParsedCredential
+): "VALID" | "EXPIRING" | "EXPIRED" | undefined => {
+  const expireDays = getCredentialExpireDays(credential);
+
+  if (expireDays === undefined) {
+    return undefined;
+  }
+
+  return expireDays > 14 ? "VALID" : expireDays > 0 ? "EXPIRING" : "EXPIRED";
 };

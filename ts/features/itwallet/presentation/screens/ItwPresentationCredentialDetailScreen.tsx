@@ -12,13 +12,16 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
+import I18n from "../../../../i18n";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
+import { ItwCredentialClaimsSection } from "../../common/components/ItwCredentialClaimsSection";
 import { ItwReleaserName } from "../../common/components/ItwReleaserName";
+import { parseClaims } from "../../common/utils/itwClaimsUtils";
 import {
   ItWalletError,
   getItwGenericMappedError
@@ -28,7 +31,7 @@ import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils"
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { ItwClaimsSections } from "../components/ItwClaimsSections";
+import { ItwPresentationBannersSection } from "../components/ItwPresentationBannersSection";
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
 
 // TODO: use the real credential update time
@@ -87,12 +90,20 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
             style={[styles.cardBackdrop, { backgroundColor: themeColor }]}
           />
         </View>
-
         <ContentWrapper>
-          <ItwClaimsSections credential={credential} />
+          <VSpacer size={16} />
+          <ItwPresentationBannersSection credential={credential} />
+          <VSpacer size={16} />
+          <ItwCredentialClaimsSection
+            title={I18n.t(
+              "features.itWallet.presentation.credentialDetails.documentDataTitle"
+            )}
+            claims={parseClaims(credential.parsedCredential)}
+            canHideValues={true}
+          />
           <Divider />
           <ItwReleaserName credential={credential} />
-          <VSpacer size={40} />
+          <VSpacer size={24} />
           <ItwPresentationDetailFooter
             lastUpdateTime={today}
             issuerConf={credential.issuerConf}
