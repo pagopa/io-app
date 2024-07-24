@@ -216,7 +216,7 @@ export const isDesignSystemEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isDesignSystemEnabled ?? false;
 
 export const isNewScanSectionLocallyEnabledSelector = (state: GlobalState) =>
-  state.persistedPreferences?.isNewScanSectionEnabled ?? false;
+  !!state.persistedPreferences?.isNewScanSectionEnabled;
 
 export const isItWalletTestEnabledSelector = (state: GlobalState) =>
   !!state.persistedPreferences?.isItWalletTestEnabled;
