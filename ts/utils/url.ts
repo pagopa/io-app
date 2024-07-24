@@ -74,6 +74,11 @@ export const isHttp = (url: string): boolean => {
   return urlLower.match(/http(s)?:\/\//gm) !== null;
 };
 
+export const isIOIT = (url: string): boolean => {
+  const urlLower = url.trim().toLocaleLowerCase();
+  return urlLower.match(/ioit?:\/\//gm) !== null;
+};
+
 export const taskLinking = (url: string) =>
   TE.tryCatch(
     () => Linking.openURL(url),
@@ -82,7 +87,10 @@ export const taskLinking = (url: string) =>
 
 const taskCanOpenUrl = (url: string) =>
   TE.tryCatch(
-    () => (!isHttp(url) ? Promise.resolve(false) : Linking.canOpenURL(url)),
+    () =>
+      !isHttp(url) && !isIOIT(url)
+        ? Promise.resolve(false)
+        : Linking.canOpenURL(url),
     _ => `cannot check if can open url ${url}`
   );
 
