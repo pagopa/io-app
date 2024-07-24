@@ -17,3 +17,8 @@ export const paymentsWalletUserMethodsSelector = createSelector(
         ([] as ReadonlyArray<WalletInfo>)
     )
 );
+
+export const paymentsWalletUserMethodsFromPotSelector = createSelector(
+  paymentsWalletUserMethodsSelector,
+  walletPot => pot.getOrElse(walletPot, [] as ReadonlyArray<WalletInfo>)
+);

@@ -1,27 +1,30 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { identity, pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
+import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { isStrictNone } from "../../../../../utils/pot";
+import { getDomainFromUrl } from "../../saga/sagaUtils";
+import { ConsentData } from "../../types";
 import {
   fimsCancelOrAbortAction,
   fimsGetConsentsListAction,
   fimsGetRedirectUrlAndOpenIABAction
 } from "../actions";
-import { ConsentData } from "../../types";
-import { isStrictNone } from "../../../../../utils/pot";
 
 type FimsFlowStateTags = "consents" | "in-app-browser" | "abort";
 
 export type FimsSSOState = {
   currentFlowState: FimsFlowStateTags;
   consentsData: pot.Pot<ConsentData, string>; // string -> errMessage
+  relyingPartyDomain?: string;
 };
 
 const INITIAL_STATE: FimsSSOState = {
   currentFlowState: "consents",
+  relyingPartyDomain: undefined,
   consentsData: pot.none
 };
 
@@ -33,7 +36,8 @@ const reducer = (
     case getType(fimsGetConsentsListAction.request):
       return {
         currentFlowState: "consents",
-        consentsData: pot.noneLoading
+        consentsData: pot.noneLoading,
+        relyingPartyDomain: getDomainFromUrl(action.payload.ctaUrl)
       };
     case getType(fimsGetConsentsListAction.success):
       return {
@@ -42,6 +46,7 @@ const reducer = (
       };
     case getType(fimsGetRedirectUrlAndOpenIABAction.request):
       return {
+        ...state,
         currentFlowState: "in-app-browser",
         consentsData: pot.noneLoading
       };
@@ -71,6 +76,9 @@ const reducer = (
 
 export const fimsConsentsDataSelector = (state: GlobalState) =>
   state.features.fims.sso.consentsData;
+
+export const fimsRelyingPartyDomainSelector = (state: GlobalState) =>
+  state.features.fims.sso.relyingPartyDomain;
 
 export const fimsPartialAbortUrl = (state: GlobalState) =>
   pipe(state, fimsConsentsDataSelector, abortUrlFromConsentsPot, O.toUndefined);
