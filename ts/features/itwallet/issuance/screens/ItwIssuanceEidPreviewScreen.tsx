@@ -2,9 +2,7 @@ import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { useSelector } from "@xstate5/react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { FooterActions } from "../../../../components/ui/FooterActions";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -25,8 +23,10 @@ export const ItwIssuanceEidPreviewScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const eidOption = useSelector(machineRef, selectEidOption);
-  const dismissDialog = useItwDismissalDialog();
+  const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
+  const dismissDialog = useItwDismissalDialog(() =>
+    machineRef.send({ type: "close" })
+  );
 
   useAvoidHardwareBackButton();
 
@@ -69,28 +69,25 @@ export const ItwIssuanceEidPreviewScreen = () => {
         title={{
           label: I18n.t("features.itWallet.issuance.eidPreview.title")
         }}
+        actions={{
+          type: "TwoButtons",
+          primary: {
+            label: I18n.t(
+              "features.itWallet.issuance.eidPreview.actions.primary"
+            ),
+            onPress: handleSaveToWallet
+          },
+          secondary: {
+            label: I18n.t(
+              "features.itWallet.issuance.eidPreview.actions.secondary"
+            ),
+            onPress: dismissDialog.show
+          }
+        }}
       >
         <ContentWrapper>
           <ItwCredentialClaimsList data={eid} isPreview={true} />
         </ContentWrapper>
-        <FooterActions
-          fixed={false}
-          actions={{
-            type: "TwoButtons",
-            primary: {
-              label: I18n.t(
-                "features.itWallet.issuance.eidPreview.actions.primary"
-              ),
-              onPress: handleSaveToWallet
-            },
-            secondary: {
-              label: I18n.t(
-                "features.itWallet.issuance.eidPreview.actions.secondary"
-              ),
-              onPress: dismissDialog.show
-            }
-          }}
-        />
       </IOScrollViewWithLargeHeader>
     );
   };

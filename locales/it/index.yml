@@ -1847,6 +1847,7 @@ wallet:
     outcome:
       SUCCESS:
         title: Hai pagato {{amount}}
+        subtitle: La ricevuta è nella sezione Pagamenti.
         button: Ok, chiudi
         banner:
           title: Puoi dirci com’è andata?
@@ -3072,7 +3073,12 @@ features:
         payment: Metodi di pagamento
         other: Altro
     onboarding:
-      title: Cosa vuoi aggiungere al portafoglio?
+      title: Cosa vuoi aggiungere al Portafoglio?
+      sections:
+        itw: IT Wallet
+        other: Altro
+      badge:
+        active: Già presente
       options:
         cgn: Carta Giovani Nazionale
         welfare: Iniziative welfare
@@ -3120,6 +3126,9 @@ features:
         shareButton: Salva o condividi
         error: Impossibile scaricare la ricevuta, riprova più tardi.
         download: Scarica ricevuta
+      details:
+        totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
+        totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
     details:
       pspAlert:
         description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
@@ -3129,6 +3138,11 @@ features:
     errors:
       transactionCreationError: C’è un problema con i sistemi di pagamento.
   itWallet:
+    credentialName:
+      eid: Identità Digitale
+      mdl: Patente di Guida
+      dc: Carta Europea della Disabilità
+      ts: Tessera Sanitaria
     wallet:
       active: Attivo
       inactive: Non attivo
@@ -3137,11 +3151,6 @@ features:
         expired: Non valida
         expiring: In scadenza
         pending: In lavorazione
-      label:
-        eid: Identità Digitale
-        mdl: Patente di Guida
-        dc: Carta Europea della Disabilità
-        ts: Tessera Sanitaria
       digital: Versione digitale
     generic:
       error:
@@ -3182,6 +3191,7 @@ features:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
+          restrictionConditions: "Codici"
       unrecognizedData:
         title: "Non riconosci alcuni dati?"
         body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
@@ -3193,7 +3203,7 @@ features:
         action: Inizia
       title: Attiva IT Wallet
       content: "###### Cos'è e come funziona? \n IT Wallet è la nuova funzionalità di IO che ti permette di aggiungere al Portafoglio la tua **Identità Digitale** e di portare sempre con te **la versione digitale dei documenti fisici** che già possiedi, come la Tessera Sanitaria e presto molti altri. \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
-      tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()
+      tos: Per maggiori informazioni, leggi l’[informativa Privacy](https://io.italia.it/informativa-sperimentazione) e i [Termini e Condizioni d’uso](https://io.italia.it/tos-sperimentazione)
     identification:
       mode:
         title: Attiva IT Wallet con la tua identità digitale
@@ -3209,18 +3219,18 @@ features:
           cieId:
             title: CieID
             subtitle: Usa credenziali e app CieID
-        privacy: Identificandoti dichiari di aver letto e compreso l’[Informativa Privacy]() di **Istituto Poligrafico e Zecca dello Stato**.
+        privacy: Identificandoti dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione) di **Istituto Poligrafico e Zecca dello Stato**.
       nfc:
         title: Attiva l'NFC per continuare
-        description: La funzionalità NFC permette al dispositivo di leggere la tua CIE.
-        header: "Ecco come:"
+        description: Per consentire a IO di leggere la tua CIE, attiva l'NFC dalle Impostazioni del tuo dispositivo.
+        header: Come fare
         steps:
           label: Step {{value}}
-          1: Vai alle impostazioni
-          2: Cerca "NFC"
-          3: Attivalo
-        primaryAction: Vai alle impostazioni
-        secondaryAction: Ho fatto
+          1: Apri "Impostazioni"
+          2: Cerca la funzionalità "NFC"
+          3: Attiva la funzionalità
+        primaryAction: Apri impostazioni
+        secondaryAction: Continua
     issuance:
       credentialAuth:
         title: "{{credentialName}}: dati necessari"
@@ -3229,9 +3239,7 @@ features:
         disclaimer:
           0: I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.
           1: I dati saranno condivisi solo per il tempo necessario al rilascio della credenziale.
-        tos:
-          0: Per maggiori informazioni, leggi
-          1: l’informativa Privacy e i Termini e Condizioni d’uso
+        tos: "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione)."
       eidPreview:
         title: "Stiamo aggiungendo i seguenti dati al Portafoglio:"
         actions:
@@ -3257,6 +3265,8 @@ features:
           actions:
             continue: Aggiungi primo documento
             close: Continua più tardi
+      credentialResult:
+        toast: Fatto! Hai aggiunto {{credentialName}}
       notMatchingIdentityError:
         title: Identità non riconosciuta
         body: Non puoi attivare IT Wallet con un'identità diversa da quella che usi per accedere a IO. Verifica le credenziali di accesso e riprova.
@@ -3276,6 +3286,19 @@ features:
         primaryAction: Chiudi
         secondaryAction: Scopri di più
     presentation:
+      alerts:
+        mdl:
+          content: "In questa fase, la versione digitale della Patente non ha lo stesso valore del documento fisico: dovrai presentarla insieme a un documento di identità valido."
+          action: Scopri di più
+        expired:
+          content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
+          action: Aggiorna il documento
+        expiring:
+          content: Mancano {{days}} giorni alla scadenza del documento.
+      bottomSheets:
+        mdl:
+          title: "Patente: contesti di verifica"
+          content: "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Cartadi Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valorelegale del documento fisico.**"
       credentialDetails:
         personalDataTitle: "Dati personali"
         documentDataTitle: "Dati documento"
