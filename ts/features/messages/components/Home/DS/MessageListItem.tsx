@@ -6,17 +6,21 @@ import {
   Avatar,
   Body,
   Caption,
+  H6,
   HSpacer,
   IOColors,
   IOStyles,
   IOVisualCostants,
+  Label,
   LabelSmall,
-  LabelSmallAlt,
   Tag,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { CustomPressableListItemBase } from "./CustomPressableListItemBase";
 import { DoubleAvatar } from "./DoubleAvatar";
+
+export const StandardHeight = 95;
+export const EnhancedHeight = 133;
 
 const styles = StyleSheet.create({
   badgeContainer: { flexDirection: "row", marginTop: 8 },
@@ -100,6 +104,7 @@ export const MessageListItem = ({
     selected={selected}
     testID={testID}
     accessibilityLabel={accessibilityLabel}
+    minHeight={badgeText && badgeVariant ? EnhancedHeight : StandardHeight}
   >
     <View style={styles.container}>
       <View style={styles.serviceLogoAndSelectionContainer}>
@@ -127,9 +132,9 @@ export const MessageListItem = ({
       </View>
       <View style={styles.textContainer}>
         <View style={styles.organizationContainer}>
-          <LabelSmallAlt numberOfLines={1} color="black" style={IOStyles.flex}>
+          <H6 numberOfLines={1} color="black" style={IOStyles.flex}>
             {organizationName}
-          </LabelSmallAlt>
+          </H6>
           <LabelSmall
             fontSize="regular"
             color="grey-700"
@@ -141,15 +146,15 @@ export const MessageListItem = ({
         </View>
         <View style={styles.serviceNameAndMessageTitleContainer}>
           <Body numberOfLines={2} style={IOStyles.flex}>
-            <LabelSmall fontSize="regular" color="grey-700" weight="Semibold">
+            <Label fontSize="regular" weight="Semibold">
               {serviceName}
-            </LabelSmall>
+            </Label>
             <Caption weight="Regular" color="grey-700">
               {" • "}
             </Caption>
-            <LabelSmall fontSize="regular" weight="Regular" color="grey-700">
+            <Label fontSize="regular" weight="Regular">
               {messageTitle}
-            </LabelSmall>
+            </Label>
           </Body>
           {!isRead && (
             <View style={styles.messageReadContainer}>
