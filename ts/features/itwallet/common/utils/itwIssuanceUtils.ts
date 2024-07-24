@@ -164,6 +164,24 @@ const CIE_HINT_PROD =
   "https://idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO";
 
 /**
+ * Object of the SPID IDP IDs and the corresponding production hint URLs.
+ */
+const SPID_IDP_HINTS: { [key: string]: string } = {
+  arubaid: "https://loginspid.aruba.it",
+  ehtid: "https://id.eht.eu",
+  infocamereid: "https://loginspid.infocamere.it",
+  infocertid: "https://identity.infocert.it",
+  intesiid: "https://idp.intesigroup.com",
+  lepidaid: "https://id.lepida.it/idp/shibboleth",
+  namirialid: "https://idp.namirialtsp.com/idp",
+  posteid: "https://posteid.poste.it",
+  sielteid: "https://identity.sieltecloud.it",
+  spiditalia: "https://spid.register.it",
+  timid: "https://login.id.tim.it/affwebservices/public/saml2sso",
+  teamsystemid: "https://spid.teamsystem.com/idp"
+};
+
+/**
  * Get the IDP hint based on the identification context.
  * If the {@link itwIdpHintTest} is true the hint will be the test one, otherwise the production one.
  * In production for SPID the hint is retrieved from the IDP ID via the {@link getSpidProductionIdpHint} function,
@@ -188,24 +206,8 @@ const getIdpHint = (idCtx: IdentificationContext) => {
  * @returns
  */
 const getSpidProductionIdpHint = (spidIdpId: string) => {
-  const idpUrls: { [key: string]: string } = {
-    arubaid: "https://loginspid.aruba.it",
-    ehtid: "https://id.eht.eu",
-    infocamereid: "https://loginspid.infocamere.it",
-    infocertid: "https://identity.infocert.it",
-    intesiid: "https://idp.intesigroup.com",
-    lepidaid: "https://id.lepida.it/idp/shibboleth",
-    namirialid: "https://idp.namirialtsp.com/idp",
-    posteid: "https://posteid.poste.it",
-    sielteid: "https://identity.sieltecloud.it",
-    spiditalia: "https://spid.register.it",
-    timid: "https://login.id.tim.it/affwebservices/public/saml2sso",
-    teamsystemid: "https://spid.teamsystem.com/idp"
-  };
-
-  const url = idpUrls[spidIdpId];
-  if (!url) {
+  if (!(spidIdpId in SPID_IDP_HINTS)) {
     throw new Error(`Unknown idp ${spidIdpId}`);
   }
-  return url;
+  return SPID_IDP_HINTS[spidIdpId];
 };
