@@ -92,12 +92,12 @@ export const calculateTotalAmount = (
   const amountString = transactionInfo.amount.replace(",", ".");
   const feeString = transactionInfo.fee.replace(",", ".");
 
-  if (isNaN(parseFloat(amountString)) || isNaN(parseFloat(feeString))) {
+  if (isNaN(parseFloat(amountString))) {
     return undefined;
   }
 
   const amount = parseFloat(amountString);
-  const fee = parseFloat(feeString);
+  const fee = isNaN(parseFloat(feeString)) ? 0 : parseFloat(feeString);
   const total = amount + fee;
 
   return total.toFixed(2);

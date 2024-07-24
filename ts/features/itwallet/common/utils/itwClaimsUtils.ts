@@ -2,16 +2,18 @@
  * Utility functions for working with credential claims.
  */
 
-import * as t from "io-ts";
-import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { patternDateFromString } from "@pagopa/ts-commons/lib/dates";
+import { PatternString } from "@pagopa/ts-commons/lib/strings";
+import { differenceInCalendarDays } from "date-fns";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
+import * as t from "io-ts";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
-import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
+import { ItwCredentialStatus } from "../components/ItwCredentialCard";
 import { CredentialCatalogDisplay } from "./itwMocksUtils";
+import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
 /**
  *
@@ -294,6 +296,61 @@ export const groupCredentialClaims = (credential: StoredCredential) => {
       [section]: (acc[section] || []).concat(claim)
     };
   }, {} as Record<ClaimSection, ReadonlyArray<ClaimDisplayFormat>>);
+};
+
+/**
+ * Returns the expiration date from a {@see ParsedCredential}, if present
+ * @param credential the parsed credential claims
+ * @returns a Date if found, undefined if not
+ */
+export const getCredentialExpireDate = (
+  credential: ParsedCredential
+): Date | undefined => {
+  // A credential could contain its expiration date in `expiry_date` or `expiration_date` claims
+  const expireDate: ParsedCredential[keyof ParsedCredential] | undefined =
+    credential.expiry_date || credential.expiration_date;
+
+  return expireDate && new Date(expireDate.value as string);
+};
+
+/**
+ * Returns the remaining days until the expiration a {@see ParsedCredential}
+ * @param credential the parsed credential claims
+ * @returns the number of days until the expiration date, undefined if no expire date is found
+ */
+export const getCredentialExpireDays = (
+  credential: ParsedCredential
+): number | undefined => {
+  const expireDate = getCredentialExpireDate(credential);
+
+  if (expireDate === undefined) {
+    return undefined;
+  }
+
+  return differenceInCalendarDays(expireDate, Date.now());
+};
+
+/**
+ * Returns the expire status of a {@see ParsedCredential}
+ * @param credential the parsed credential claims
+ * @param expiringDays the number of days required to mark a credential as "EXPIRING"
+ * @returns "VALID" if the credential is valid, "EXPIRING" if there are less than {expiringDays} days left until the expiry day, "EXPIRED" if the expiry date has passed
+ */
+export const getCredentialExpireStatus = (
+  credential: ParsedCredential,
+  expiringDays: number = 14
+): ItwCredentialStatus | undefined => {
+  const expireDays = getCredentialExpireDays(credential);
+
+  if (expireDays === undefined) {
+    return undefined;
+  }
+
+  return expireDays > expiringDays
+    ? "valid"
+    : expireDays > 0
+    ? "expiring"
+    : "expired";
 };
 
 const FISCAL_CODE_REGEX =

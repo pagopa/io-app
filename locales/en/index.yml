@@ -3125,6 +3125,9 @@ features:
         shareButton: Save or share
         error: Impossibile scaricare la ricevuta, riprova più tardi.
         download: Scarica ricevuta
+      details:
+        totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
+        totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
     details:
       pspAlert:
         description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
@@ -3281,6 +3284,19 @@ features:
         primaryAction: Chiudi
         secondaryAction: Scopri di più
     presentation:
+      alerts:
+        mdl:
+          content: "In questa fase, la versione digitale della Patente non ha lo stesso valore del documento fisico: dovrai presentarla insieme a un documento di identità valido."
+          action: Scopri di più
+        expired:
+          content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
+          action: Aggiorna il documento
+        expiring:
+          content: Mancano {{days}} giorni alla scadenza del documento.
+      bottomSheets:
+        mdl:
+          title: "Patente: contesti di verifica"
+          content: "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Cartadi Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valorelegale del documento fisico.**"
       credentialDetails:
         personalDataTitle: "Personal data"
         documentDataTitle: "Document data"
