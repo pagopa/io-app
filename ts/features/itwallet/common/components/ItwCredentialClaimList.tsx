@@ -29,7 +29,7 @@ export const ItwCredentialClaimsList = ({
         </View>
       ))}
       <Divider />
-      <ItwReleaserName credential={data} />
+      <ItwReleaserName credential={data} isPreview={isPreview} />
     </>
   );
 };
