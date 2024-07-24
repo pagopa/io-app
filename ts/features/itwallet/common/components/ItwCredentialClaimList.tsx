@@ -24,6 +24,7 @@ export const ItwCredentialClaimsList = ({
     <>
       {claims.map((elem, index) => (
         <View key={index}>
+          {index !== 0 && <Divider />}
           <ItwCredentialClaim claim={elem} isPreview={isPreview} />
         </View>
       ))}
