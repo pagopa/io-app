@@ -10,13 +10,11 @@ import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import {
   ItwCredentialIssuanceMachineContext,
   ItwEidIssuanceMachineContext
 } from "../../machine/provider";
-import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwTrialSystemSection } from "../components/ItwTrialSystemSection";
 
@@ -46,7 +44,6 @@ A malformed link [Error](httssdps://www.error.com) that show toast error.
  * @returns a screen with a list of playgrounds for the ITW
  */
 const ItwPlayground = () => {
-  const navigation = useIONavigation();
   const eidMachineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
@@ -63,24 +60,9 @@ const ItwPlayground = () => {
     title: "ITW Playground"
   });
 
-  const navigateToDiscovery = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.INFO
-    });
-  };
-
   return (
     <ScrollView>
       <ContentWrapper>
-        {/* Activation Playground */}
-        <ListItemHeader label="Activation" />
-        <ListItemNav
-          value="Wallet activation"
-          accessibilityLabel={"Discovery Playground"}
-          description="Start the eID issuing flow"
-          onPress={navigateToDiscovery}
-        />
-        <VSpacer size={16} />
         {/* Issuing Playground */}
         <ListItemHeader label="Credentials issuing" />
         <ListItemNav
