@@ -297,6 +297,11 @@ export const groupCredentialClaims = (credential: StoredCredential) => {
   }, {} as Record<ClaimSection, ReadonlyArray<ClaimDisplayFormat>>);
 };
 
+/**
+ * Returns the expiration date from a {@see ParsedCredential}, if present
+ * @param credential the parsed credential claims
+ * @returns a Date if found, undefined if not
+ */
 export const getCredentialExpireDate = (
   credential: ParsedCredential
 ): Date | undefined => {
@@ -307,6 +312,11 @@ export const getCredentialExpireDate = (
   return expireDate && new Date(expireDate.value as string);
 };
 
+/**
+ * Returns the remaining days until the expiration a {@see ParsedCredential}
+ * @param credential the parsed credential claims
+ * @returns the number of days until the expiration date, undefined if no expire date is found
+ */
 export const getCredentialExpireDays = (
   credential: ParsedCredential
 ): number | undefined => {
@@ -319,8 +329,15 @@ export const getCredentialExpireDays = (
   return differenceInCalendarDays(expireDate, Date.now());
 };
 
+/**
+ * Returns the expire status of a {@see ParsedCredential}
+ * @param credential the parsed credential claims
+ * @param expiringDays the number of days required to mark a credential as "EXPIRING"
+ * @returns "VALID" if the credential is valid, "EXPIRING" if there are less than {expiringDays} days left until the expiry day, "EXPIRED" if the expiry date has passed
+ */
 export const getCredentialExpireStatus = (
-  credential: ParsedCredential
+  credential: ParsedCredential,
+  expiringDays: number = 14
 ): "VALID" | "EXPIRING" | "EXPIRED" | undefined => {
   const expireDays = getCredentialExpireDays(credential);
 
@@ -328,5 +345,9 @@ export const getCredentialExpireStatus = (
     return undefined;
   }
 
-  return expireDays > 14 ? "VALID" : expireDays > 0 ? "EXPIRING" : "EXPIRED";
+  return expireDays > expiringDays
+    ? "VALID"
+    : expireDays > 0
+    ? "EXPIRING"
+    : "EXPIRED";
 };
