@@ -85,11 +85,17 @@ export const mockedmDLResponse = Buffer.from(
   "hex"
 );
 
-export const ItwCredentialsMocks = {
+export const ItwParsedCredentialsMocks = {
   eid: (eid as unknown as StoredCredential).parsedCredential,
   dc: (dc as unknown as StoredCredential).parsedCredential,
   mdl: mdl as unknown as ParsedCredential,
   ts: (ts as unknown as StoredCredential).parsedCredential
+};
+
+export const ItwStoredCredentialsMocks = {
+  eid: eid as unknown as StoredCredential,
+  dc: dc as unknown as StoredCredential,
+  ts: ts as unknown as StoredCredential
 };
 
 export const ItwRawCredentialsMocks = {
