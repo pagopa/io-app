@@ -6,7 +6,7 @@ import { StoredCredential } from "../utils/itwTypesUtils";
 
 type Props = {
   credential: StoredCredential;
-  isPreview: boolean;
+  isPreview?: boolean;
 };
 
 /**
