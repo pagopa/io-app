@@ -1,9 +1,10 @@
-import { assertEvent, assign, fromPromise, setup } from "xstate5";
-import { LocalIdpsFallback } from "../../../../utils/idps";
+import { assign, fromPromise, setup } from "xstate5";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
+import { type RequestEidActorParams } from "./actors";
+import { IssuanceFailureType } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -18,32 +19,37 @@ export const itwEidIssuanceMachine = setup({
     navigateToTosScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
     navigateToIdpSelectionScreen: notImplemented,
+    navigateToEidRequestScreen: notImplemented,
     navigateToEidPreviewScreen: notImplemented,
     navigateToSuccessScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToCredentialCatalog: notImplemented,
-    storeWalletAttestation: notImplemented,
+    storeIntegrityKeyTag: (_ctx, _params: { keyTag: string }) =>
+      notImplemented(),
     storeEidCredential: notImplemented,
     closeIssuance: notImplemented,
-    requestAssistance: notImplemented
+    requestAssistance: notImplemented,
+    setWalletInstanceToOperational: notImplemented,
+    setWalletInstanceToValid: notImplemented
   },
   actors: {
-    registerWalletInstance: fromPromise<string>(notImplemented),
-    showSpidIdentificationWebView: fromPromise<string, LocalIdpsFallback>(
-      notImplemented
-    ),
-    requestEid: fromPromise<StoredCredential, string | undefined>(
+    createWalletInstance: fromPromise<string>(notImplemented),
+    requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
       notImplemented
     )
   },
-  guards: {}
+  guards: {
+    isNativeAuthSessionClosed: notImplemented,
+    issuedEidMatchesAuthenticatedUser: notImplemented
+  }
 }).createMachine({
   id: "itwEidIssuanceMachine",
   context: InitialContext,
   initial: "Idle",
   states: {
     Idle: {
+      entry: assign(() => InitialContext),
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
@@ -56,22 +62,44 @@ export const itwEidIssuanceMachine = setup({
         "Display of the ToS to the user who must accept in order to proceed with the issuance of the eID",
       entry: "navigateToTosScreen",
       on: {
-        "accept-tos": {
-          target: "WalletInitialization"
-        }
+        "accept-tos": [
+          {
+            guard: ({ context }) => !context.integrityKeyTag,
+            target: "WalletInstanceCreation"
+          },
+          {
+            target: "UserIdentification"
+          }
+        ]
       }
     },
-    WalletInitialization: {
+    WalletInstanceCreation: {
+      description:
+        "This state generates the integrity hardware key and registers the wallet instance. The generated integrity hardware key is then stored and persisted to the redux store.",
       tags: [ItwTags.Loading],
-      description: "Wallet instance registration and attestation issuance",
       invoke: {
-        src: "registerWalletInstance",
+        src: "createWalletInstance",
         onDone: {
-          target: "UserIdentification",
-          actions: "storeWalletAttestation"
+          actions: [
+            assign(({ event }) => ({
+              integrityKeyTag: event.output
+            })),
+            {
+              type: "storeIntegrityKeyTag",
+              params: ({ event }) => ({ keyTag: event.output })
+            },
+            { type: "setWalletInstanceToOperational" }
+          ],
+          target: "UserIdentification"
         },
         onError: {
-          target: "Failure"
+          actions: assign(({ event }) => ({
+            failure: {
+              type: IssuanceFailureType.UNSUPPORTED_DEVICE,
+              reason: event.error
+            }
+          })),
+          target: "#itwEidIssuanceMachine.Failure"
         }
       }
     },
@@ -94,47 +122,28 @@ export const itwEidIssuanceMachine = setup({
               },
               {
                 guard: ({ event }) => event.mode === "cieId",
-                target: "CieId"
+                actions: assign(() => ({ identification: { mode: "cieId" } })),
+                target: "#itwEidIssuanceMachine.UserIdentification.Completed"
               }
             ],
             back: "#itwEidIssuanceMachine.TosAcceptance"
           }
         },
         Spid: {
-          initial: "IdpSelection",
-          states: {
-            IdpSelection: {
-              entry: "navigateToIdpSelectionScreen",
-              on: {
-                "select-spid-idp": {
-                  target: "IdpIdentification"
-                },
-                back: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
-                }
-              }
+          entry: "navigateToIdpSelectionScreen",
+          on: {
+            "select-spid-idp": {
+              target: "#itwEidIssuanceMachine.UserIdentification.Completed",
+              actions: assign(({ event }) => ({
+                identification: { mode: "spid", idpId: event.idp.id }
+              }))
             },
-            IdpIdentification: {
-              tags: [ItwTags.Loading],
-              invoke: {
-                input: ({ event }) => {
-                  assertEvent(event, "select-spid-idp");
-                  return event.idp;
-                },
-                src: "showSpidIdentificationWebView",
-                onDone: {
-                  actions: assign(({ event }) => ({ userToken: event.output })),
-                  target: "#itwEidIssuanceMachine.UserIdentification.Completed"
-                }
-              }
+            back: {
+              target: "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
             }
           }
         },
         CiePin: {
-          // TODO
-        },
-        CieId: {
           // TODO
         },
         Completed: {
@@ -146,27 +155,62 @@ export const itwEidIssuanceMachine = setup({
       }
     },
     Issuance: {
-      entry: "navigateToEidPreviewScreen",
+      entry: "navigateToEidRequestScreen",
       initial: "RequestingEid",
       states: {
         RequestingEid: {
+          on: {
+            back: { target: "#itwEidIssuanceMachine.UserIdentification" }
+          },
           tags: [ItwTags.Loading],
           invoke: {
             src: "requestEid",
-            input: ({ context }) => context.userToken,
+            input: ({ context }) => ({
+              integrityKeyTag: context.integrityKeyTag,
+              identification: context.identification
+            }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),
-              target: "#itwEidIssuanceMachine.Issuance.DisplayingPreview"
+              target: "#itwEidIssuanceMachine.Issuance.CheckingIdentityMatch"
             },
-            onError: {
-              target: "#itwEidIssuanceMachine.Failure"
-            }
+            onError: [
+              {
+                guard: "isNativeAuthSessionClosed",
+                target: "#itwEidIssuanceMachine.UserIdentification"
+              },
+              {
+                actions: assign(({ event }) => ({
+                  failure: {
+                    type: IssuanceFailureType.GENERIC,
+                    reason: event.error
+                  }
+                })),
+                target: "#itwEidIssuanceMachine.Failure"
+              }
+            ]
           }
         },
+        CheckingIdentityMatch: {
+          description:
+            "Checking whether the issued eID matches the identity of the currently logged-in user.",
+          always: [
+            {
+              guard: "issuedEidMatchesAuthenticatedUser",
+              target: "#itwEidIssuanceMachine.Issuance.DisplayingPreview"
+            },
+            {
+              actions: assign(() => ({
+                failure: { type: IssuanceFailureType.NOT_MATCHING_IDENTITY }
+              })),
+              target: "#itwEidIssuanceMachine.Failure"
+            }
+          ]
+        },
         DisplayingPreview: {
+          entry: "navigateToEidPreviewScreen",
           on: {
             "add-to-wallet": {
-              actions: "storeEidCredential",
+              actions: ["storeEidCredential", "setWalletInstanceToValid"],
               target: "#itwEidIssuanceMachine.Success"
             },
             close: {
@@ -184,6 +228,9 @@ export const itwEidIssuanceMachine = setup({
         },
         "go-to-wallet": {
           actions: "navigateToWallet"
+        },
+        reset: {
+          target: "Idle"
         }
       }
     },
@@ -195,8 +242,13 @@ export const itwEidIssuanceMachine = setup({
         },
         "request-assistance": {
           actions: "requestAssistance"
+        },
+        reset: {
+          target: "Idle"
         }
       }
     }
   }
 });
+
+export type ItwEidIssuanceMachine = typeof itwEidIssuanceMachine;
