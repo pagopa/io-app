@@ -253,8 +253,8 @@ const DrivingPrivilegesClaimItem = ({
           label={I18n.t(
             "features.itWallet.verifiableCredentials.claims.mdl.restrictionConditions"
           )}
-          value={claim.restriction_conditions || "-"}
-          accessibilityLabel={`${label} ${claim.restriction_conditions}`}
+          value={claim.restrictions_conditions || "-"}
+          accessibilityLabel={`${label} ${claim.restrictions_conditions}`}
         />
       </>
     )
