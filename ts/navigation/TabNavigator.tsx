@@ -1,27 +1,27 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { useBottomTabNavigatorStyle } from "../hooks/useBottomTabNavigatorStyle";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { makeFontStyleObject } from "../components/core/fonts";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
+import { showBarcodeScanSection } from "../config";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesHomeScreen } from "../features/messages/screens/MessagesHomeScreen";
 import { WalletHomeScreen as NewWalletHomeScreen } from "../features/newWallet/screens/WalletHomeScreen";
 import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";
+import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
+import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
+import { useBottomTabNavigatorStyle } from "../hooks/useBottomTabNavigatorStyle";
 import I18n from "../i18n";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
-import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
-import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
 import {
   isNewPaymentSectionEnabledSelector,
   isSettingsVisibleAndHideProfileSelector
 } from "../store/reducers/backendStatus";
+import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
-import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import { showBarcodeScanSection } from "../config";
 import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
@@ -30,6 +30,7 @@ import ROUTES from "./routes";
 const Tab = createBottomTabNavigator<MainTabParamsList>();
 
 export const MainTabNavigator = () => {
+  const theme = useIOTheme();
   const navigation = useIONavigation();
 
   const startupLoaded = useIOSelector(isStartupLoaded);
@@ -70,10 +71,8 @@ export const MainTabNavigator = () => {
           },
           tabBarHideOnKeyboard: true,
           tabBarAllowFontScaling: false,
-          tabBarActiveTintColor: isDesignSystemEnabled
-            ? IOColors["blueIO-500"]
-            : IOColors.blue,
-          tabBarInactiveTintColor: IOColors["grey-850"],
+          tabBarActiveTintColor: IOColors[theme["interactiveElem-default"]],
+          tabBarInactiveTintColor: IOColors[theme["textBody-secondary"]],
           tabBarStyle
         }}
       >
