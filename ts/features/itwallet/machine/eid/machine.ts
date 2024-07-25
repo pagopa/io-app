@@ -121,7 +121,7 @@ export const itwEidIssuanceMachine = setup({
           target: "WalletInstanceAttestationObtainment"
         },
         onError: {
-          actions: assign(setFailure(IssuanceFailureType.UNSUPPORTED_DEVICE)),
+          actions: assign(setFailure(IssuanceFailureType.GENERIC)),
           target: "#itwEidIssuanceMachine.Failure"
         }
       }
@@ -140,7 +140,7 @@ export const itwEidIssuanceMachine = setup({
           target: "UserIdentification"
         },
         onError: {
-          actions: assign(setFailure(IssuanceFailureType.UNSUPPORTED_DEVICE)),
+          actions: assign(setFailure(IssuanceFailureType.GENERIC)),
           target: "#itwEidIssuanceMachine.Failure"
         }
       }
