@@ -36,6 +36,23 @@ export const fastLoginOptInFFEnabled = createSelector(
     })
 );
 
+/**
+ * return the remote config about FastLoginSessionRefresh enabled/disabled
+ * based on a minumum version of the app.
+ * if there is no data, false is the default value -> (FastLoginSessionRefresh disabled)
+ */
+export const fastLoginSessionRefreshFFEnabled = createSelector(
+  backendStatusSelector,
+  backendStatus =>
+    isPropertyWithMinAppVersionEnabled({
+      backendStatus,
+      mainLocalFlag: fastLoginEnabled,
+      configPropertyName: "fastLogin",
+      optionalLocalFlag: fastLoginOptIn,
+      optionalConfig: "sessionRefresh"
+    })
+);
+
 const isFastLoginOptInEnabledSelector = createSelector(
   fastLoginOptInFFEnabled,
   fastLoginOptInSelector,
@@ -72,6 +89,18 @@ export const isFastLoginEnabledSelector = createSelector(
   isFastLoginFFEnabledSelector,
   isFastLoginOptInEnabledSelector,
   (fastloginFFEnabled, optInEnabled) => fastloginFFEnabled && !!optInEnabled
+);
+
+/**
+ * if the fast login is active and has been chosen by the user (opt-in is true)
+ * then if the remote FF of this functionality (fastLoginSessionRefreshFFEnabled)
+ * is active, the user will see the implementation of the session refresh when
+ * returning to foreground after at least 2 minutes of background
+ */
+export const isFastLoginSessionRefreshEnabledSelector = createSelector(
+  isFastLoginEnabledSelector,
+  fastLoginSessionRefreshFFEnabled,
+  (isFastLoginEnabled, sessionRefresh) => isFastLoginEnabled && sessionRefresh
 );
 
 const fastLoginTokenRefreshHandlerSelector = (state: GlobalState) =>
