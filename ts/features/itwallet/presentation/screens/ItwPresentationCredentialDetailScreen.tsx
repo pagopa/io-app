@@ -108,7 +108,9 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
             title={I18n.t(
               "features.itWallet.presentation.credentialDetails.documentDataTitle"
             )}
-            claims={parseClaims(credential.parsedCredential)}
+            claims={parseClaims(credential.parsedCredential, {
+              exclude: ["unique_id"]
+            })}
             canHideValues={true}
           />
           <Divider />

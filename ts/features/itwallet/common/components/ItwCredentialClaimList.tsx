@@ -13,10 +13,12 @@ import { ItwReleaserName } from "./ItwReleaserName";
  */
 export const ItwCredentialClaimsList = ({
   data,
-  isPreview
+  isPreview,
+  isHidden
 }: {
   data: StoredCredential;
   isPreview?: boolean;
+  isHidden?: boolean;
 }) => {
   const claims = parseClaims(data.parsedCredential);
 
@@ -25,7 +27,11 @@ export const ItwCredentialClaimsList = ({
       {claims.map((elem, index) => (
         <View key={index}>
           {index !== 0 && <Divider />}
-          <ItwCredentialClaim claim={elem} isPreview={isPreview} />
+          <ItwCredentialClaim
+            claim={elem}
+            isPreview={isPreview}
+            hidden={isHidden}
+          />
         </View>
       ))}
       <Divider />
