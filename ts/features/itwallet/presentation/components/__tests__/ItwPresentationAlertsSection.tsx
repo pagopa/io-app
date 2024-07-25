@@ -1,3 +1,4 @@
+import MockDate from "mockdate";
 import { format } from "date-fns";
 import * as React from "react";
 import { createStore } from "redux";
@@ -15,6 +16,20 @@ import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwPresentationAlertsSection } from "../ItwPresentationAlertsSection";
 
 describe("ItwPresentationAlertsSection", () => {
+  beforeAll(() => {
+    MockDate.set(new Date(2000, 0, 20, 23, 59));
+  });
+
+  afterAll(() => {
+    MockDate.reset();
+  });
+
+  it("should pass the sanity check", () => {
+    const actualDate = new Date();
+    const expectedDate = new Date(2000, 0, 20, 23, 59);
+    expect(actualDate).toEqual(expectedDate);
+  });
+
   it("should render expired alert", () => {
     const { queryByTestId } = renderComponent(
       CredentialType.DRIVING_LICENSE,
@@ -29,7 +44,7 @@ describe("ItwPresentationAlertsSection", () => {
   it("should render expiring alert with correct number of days", () => {
     const { queryByTestId, queryByText } = renderComponent(
       CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
-      new Date(Date.now() + 1000 * 60 * 61 * 24 * 9)
+      new Date(2000, 0, 21, 0, 0)
     );
 
     expect(queryByTestId("itwExpiredBannerTestID")).toBeNull();
@@ -39,7 +54,7 @@ describe("ItwPresentationAlertsSection", () => {
     expect(
       queryByText(
         I18n.t("features.itWallet.presentation.alerts.expiring.content", {
-          days: 9
+          days: 1
         })
       )
     ).not.toBeNull();
@@ -48,7 +63,7 @@ describe("ItwPresentationAlertsSection", () => {
   it("should render MDL alert", () => {
     const { queryByTestId } = renderComponent(
       CredentialType.DRIVING_LICENSE,
-      new Date(Date.now() + 1000 * 60 * 61 * 24 * 30)
+      new Date(2000, 0, 19)
     );
 
     expect(queryByTestId("itwExpiredBannerTestID")).toBeNull();
