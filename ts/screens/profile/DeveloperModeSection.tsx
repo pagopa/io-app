@@ -32,7 +32,6 @@ import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
-  preferencesItWalletTestSetEnabled,
   preferencesNewScanSectionSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
@@ -46,7 +45,6 @@ import {
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
   isIdPayTestEnabledSelector,
-  isItWalletTestEnabledSelector,
   isNewScanSectionLocallyEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
@@ -339,7 +337,6 @@ const PlaygroundsSection = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
-  const isItWalletTestEnabled = useIOSelector(isItWalletTestEnabledSelector);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
 
   const onAddTestCard = () => {
@@ -399,7 +396,6 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      condition: isItWalletTestEnabled,
       value: "IT Wallet",
       onPress: () =>
         navigation.navigate(ITW_ROUTES.MAIN, {
@@ -462,7 +458,6 @@ const DeveloperTestEnvironmentSection = ({
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
   const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
-  const isItWalletTestEnabled = useIOSelector(isItWalletTestEnabledSelector);
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -510,13 +505,6 @@ const DeveloperTestEnvironmentSection = ({
     handleShowModal();
   };
 
-  const onItWalletTestToggle = (enabled: boolean) => {
-    dispatch(
-      preferencesItWalletTestSetEnabled({ isItWalletTestEnabled: enabled })
-    );
-    handleShowModal();
-  };
-
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
     {
       label: I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
@@ -534,11 +522,6 @@ const DeveloperTestEnvironmentSection = ({
       description: I18n.t("profile.main.idpay.idpayTestAlert"),
       value: isIdPayTestEnabled,
       onSwitchValueChange: onIdPayTestToggle
-    },
-    {
-      label: I18n.t("profile.main.itWallet.itWalletTest"),
-      value: isItWalletTestEnabled,
-      onSwitchValueChange: onItWalletTestToggle
     }
   ];
 
