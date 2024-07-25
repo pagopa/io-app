@@ -121,7 +121,7 @@ const PaymentsTransactionListScreen = () => {
             )}
             onPress={presentLegacyAttachmentBottomSheet}
             color="neutral"
-            pictogramName="activate"
+            pictogramName="workInProgress"
             size="big"
           />
           <VSpacer size={16} />
