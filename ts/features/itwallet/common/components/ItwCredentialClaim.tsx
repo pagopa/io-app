@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/Either";
+import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Image } from "react-native";
 import { DateFromString } from "@pagopa/ts-commons/lib/dates";
@@ -11,12 +12,14 @@ import {
   DrivingPrivilegeClaimType,
   DrivingPrivilegesClaim,
   EvidenceClaim,
+  FiscalCodeClaim,
   ImageClaim,
   ImageClaimNoUrl,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
   PlainTextClaim,
   dateClaimsConfig,
+  extractFiscalCode,
   previewDateClaimsConfig
 } from "../utils/itwClaimsUtils";
 import I18n from "../../../../i18n";
@@ -341,6 +344,13 @@ export const ItwCredentialClaim = ({
               detailsButtonVisible={!isPreview}
             />
           ));
+        } else if (FiscalCodeClaim.is(decoded)) {
+          const fiscalCode = pipe(
+            decoded,
+            extractFiscalCode,
+            O.getOrElseW(() => decoded)
+          );
+          return <PlainTextClaimItem label={claim.label} claim={fiscalCode} />;
         } else if (PlainTextClaim.is(decoded)) {
           return <PlainTextClaimItem label={claim.label} claim={decoded} />; // must be the last one to be checked due to overlap with IPatternStringTag
         } else {
