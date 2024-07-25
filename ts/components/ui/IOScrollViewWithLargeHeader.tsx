@@ -4,7 +4,7 @@ import {
   H2,
   HeaderSecondLevel,
   IOStyles,
-  LabelSmallAlt,
+  LabelSmall,
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -113,15 +113,15 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
           onLayout={getTitleHeight}
         >
           {title.section && (
-            <LabelSmallAlt color={theme["textBody-tertiary"]}>
+            <LabelSmall weight="Semibold" color={theme["textBody-tertiary"]}>
               {title.section}
-            </LabelSmallAlt>
+            </LabelSmall>
           )}
           <H2
+            color={theme["textHeading-default"]}
             testID={title.testID}
             accessibilityLabel={title.accessibilityLabel ?? title.label}
             accessibilityRole="header"
-            color={theme["textHeading-default"]}
           >
             {title.label}
           </H2>
@@ -131,7 +131,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
           <ContentWrapper>
             <VSpacer size={4} />
             {typeof description === "string" ? (
-              <Body color="grey-700">{description}</Body>
+              <Body color={theme["textBody-tertiary"]}>{description}</Body>
             ) : (
               <ComposedBodyFromArray body={description} textAlign="left" />
             )}
