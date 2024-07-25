@@ -43,6 +43,11 @@ jobs:
           IO_APP_RELEASE_STORE_PASSWORD: ${{secrets.IO_APP_RELEASE_STORE_PASSWORD}}
           IO_APP_RELEASE_KEY_ALIAS: ${{secrets.IO_APP_RELEASE_KEY_ALIAS}}
           IO_APP_RELEASE_KEY_PASSWORD: ${{secrets.IO_APP_RELEASE_KEY_PASSWORD}}
+      - id: upload-apk
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
+        with:
+          name: app-release.apk
+          path: android/app/build/outputs/apk/app-release.apk
   release-ios:
     needs: run-static-checks
     environment: prod
@@ -99,7 +104,12 @@ jobs:
         with:
           name: ItaliaApp.app.dSYM.zip
           path: ios/ItaliaApp.app.dSYM.zip
-          retention-days: 60        
+          retention-days: 60
+      - id: upload-ipa
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
+        with:
+          name: ItaliaApp.ipa
+          path: ios/ItaliaApp.ipa
   notify-new-version:
     environment: dev
     runs-on: ubuntu-latest
