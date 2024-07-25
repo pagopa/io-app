@@ -121,7 +121,7 @@ export const itwEidIssuanceMachine = setup({
           target: "WalletInstanceAttestationObtainment"
         },
         onError: {
-          actions: assign(setFailure(IssuanceFailureType.UNSUPPORTED_DEVICE)),
+          actions: assign(setFailure(IssuanceFailureType.GENERIC)), // TODO: [SIW-1390] Use unsupported device from io-rn-wallet
           target: "#itwEidIssuanceMachine.Failure"
         }
       }
@@ -140,7 +140,7 @@ export const itwEidIssuanceMachine = setup({
           target: "UserIdentification"
         },
         onError: {
-          actions: assign(setFailure(IssuanceFailureType.UNSUPPORTED_DEVICE)),
+          actions: assign(setFailure(IssuanceFailureType.GENERIC)),
           target: "#itwEidIssuanceMachine.Failure"
         }
       }
@@ -245,7 +245,9 @@ export const itwEidIssuanceMachine = setup({
                   target: "ReadingCieCard"
                 },
                 onError: {
-                  actions: assign(setFailure(IssuanceFailureType.GENERIC)),
+                  actions: assign(
+                    setFailure(IssuanceFailureType.ISSUER_GENERIC)
+                  ),
                   target: "#itwEidIssuanceMachine.Failure"
                 }
               },
@@ -322,7 +324,7 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.UserIdentification"
               },
               {
-                actions: assign(setFailure(IssuanceFailureType.GENERIC)),
+                actions: assign(setFailure(IssuanceFailureType.ISSUER_GENERIC)),
                 target: "#itwEidIssuanceMachine.Failure"
               }
             ]

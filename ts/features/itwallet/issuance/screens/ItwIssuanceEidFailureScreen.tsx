@@ -30,6 +30,15 @@ export const ItwIssuanceEidFailureScreen = () => {
       OperationResultScreenContentProps
     > = {
       [IssuanceFailureType.GENERIC]: {
+        title: I18n.t("features.itWallet.generic.error.title"),
+        subtitle: I18n.t("features.itWallet.generic.error.body"),
+        pictogram: "workInProgress",
+        action: {
+          label: I18n.t("global.buttons.close"),
+          onPress: closeIssuance // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+        }
+      },
+      [IssuanceFailureType.ISSUER_GENERIC]: {
         title: I18n.t("features.itWallet.issuance.genericError.title"),
         subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
         pictogram: "workInProgress",
