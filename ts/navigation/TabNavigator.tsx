@@ -4,7 +4,6 @@ import React from "react";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { makeFontStyleObject } from "../components/core/fonts";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
-import { showBarcodeScanSection } from "../config";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesHomeScreen } from "../features/messages/screens/MessagesHomeScreen";
 import { WalletHomeScreen as NewWalletHomeScreen } from "../features/newWallet/screens/WalletHomeScreen";
@@ -108,7 +107,7 @@ export const MainTabNavigator = () => {
             )
           }}
         />
-        {showBarcodeScanSection && (
+        {isSettingsVisibleAndHideProfile && (
           <Tab.Screen
             name={ROUTES.BARCODE_SCAN}
             component={EmptyComponent}

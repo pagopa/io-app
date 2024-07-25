@@ -12,6 +12,7 @@ import { ItwLifecycleState } from "../../lifecycle/store/reducers";
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { disposeWalletAttestation } from "../../common/utils/itwAttestationUtils";
 import { assert } from "../../../../utils/assert";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -63,6 +64,12 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
+  navigateToNfcInstructionsScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC
+    });
+  },
+
   navigateToWallet: () => {
     toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
     navigation.reset({
@@ -95,6 +102,18 @@ export const createEidIssuanceActionsImplementation = (
           }
         }
       ]
+    });
+  },
+
+  navigateToCiePinScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN
+    });
+  },
+
+  navigateToCieReadCardScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN
     });
   },
 
@@ -132,5 +151,7 @@ export const createEidIssuanceActionsImplementation = (
     );
   },
 
-  requestAssistance: () => {}
+  requestAssistance: () => {},
+
+  disposeWalletAttestation
 });
