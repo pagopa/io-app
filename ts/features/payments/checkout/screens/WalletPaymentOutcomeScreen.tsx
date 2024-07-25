@@ -95,6 +95,13 @@ const WalletPaymentOutcomeScreen = () => {
   );
 
   const handleContactSupport = () => {
+    analytics.trackPaymentErrorHelp({
+      error: outcome,
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
+    });
     supportModal.present();
   };
 
@@ -166,7 +173,7 @@ const WalletPaymentOutcomeScreen = () => {
         analytics.trackPaymentMethodErrorContinue({
           organization_name: paymentAnalyticsData?.verifiedData?.paName,
           service_name: paymentAnalyticsData?.serviceName,
-          first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
+          first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
           expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
         });
         navigation.replace(
@@ -197,7 +204,7 @@ const WalletPaymentOutcomeScreen = () => {
   const trackOutcomeScreen = () => {
     if (outcome === WalletPaymentOutcomeEnum.SUCCESS) {
       analytics.trackPaymentOutcomeSuccess({
-        attempt: paymentAnalyticsData?.attempt,
+        attempt: paymentOngoingHistory?.attempt,
         organization_name: paymentAnalyticsData?.verifiedData?.paName,
         service_name: paymentAnalyticsData?.serviceName,
         amount: paymentAnalyticsData?.formattedAmount,
@@ -210,9 +217,11 @@ const WalletPaymentOutcomeScreen = () => {
       return;
     }
     analytics.trackPaymentOutcomeFailure(outcome, {
+      data_entry: paymentAnalyticsData?.startOrigin,
+      first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
       service_name: paymentAnalyticsData?.serviceName,
-      attempt: paymentAnalyticsData?.attempt,
+      attempt: paymentOngoingHistory?.attempt,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
       payment_phase:
         outcome === WalletPaymentOutcomeEnum.GENERIC_ERROR
@@ -229,6 +238,7 @@ const WalletPaymentOutcomeScreen = () => {
           title: I18n.t("wallet.payment.outcome.SUCCESS.title", {
             amount: paymentAmount
           }),
+          subtitle: I18n.t("wallet.payment.outcome.SUCCESS.subtitle"),
           action: closeSuccessAction
         };
       case WalletPaymentOutcomeEnum.GENERIC_ERROR:
