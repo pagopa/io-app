@@ -1,5 +1,118 @@
+import MockDate from "mockdate";
+import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
-import { extractFiscalCode } from "../itwClaimsUtils";
+import {
+  extractFiscalCode,
+  getCredentialExpireDate,
+  getCredentialExpireDays,
+  getCredentialExpireStatus
+} from "../itwClaimsUtils";
+
+describe("getCredentialExpireDate", () => {
+  it("should return undefined", () => {
+    const expireDate = getCredentialExpireDate({});
+    expect(expireDate).toBeUndefined();
+  });
+
+  test.each([
+    [
+      {
+        expiry_date: {
+          name: "",
+          value: "2035-10-20"
+        }
+      },
+      new Date(2035, 9, 20)
+    ],
+    [
+      {
+        expiration_date: {
+          name: "",
+          value: "01/01/2015"
+        }
+      },
+      new Date(2015, 0, 1)
+    ],
+    [
+      {
+        expiration_date: {
+          name: "",
+          value: undefined
+        }
+      },
+      undefined
+    ],
+    [
+      {
+        expiry: {
+          name: "",
+          value: "01/01/2015"
+        }
+      },
+      undefined
+    ]
+  ])("if %p should return %p", (value, expected) => {
+    const expireDate = getCredentialExpireDate(value);
+    expect(expireDate).toStrictEqual(expected);
+  });
+});
+
+describe("getCredentialExpireDays", () => {
+  it("should return undefined", () => {
+    const expireDate = getCredentialExpireDays({});
+    expect(expireDate).toBeUndefined();
+  });
+
+  test.each([
+    [new Date(2000, 0, 1), "2000-01-01", 0],
+    [new Date(2000, 0, 1, 23, 59), "2000-01-01", 0],
+    [new Date(2000, 0, 1, 0, 0), "2000-01-07", 6],
+    [new Date(2000, 0, 1, 23, 59), "2000-01-07", 6],
+    [new Date(2000, 0, 1, 23, 59), "pippo", undefined],
+    [new Date(2000, 0, 1, 23, 59), undefined, undefined]
+  ])(
+    "if current date is %p and expiration date is %p should return %p days",
+    (current, expiration, difference) => {
+      MockDate.set(current);
+      expect(new Date()).toStrictEqual(current);
+
+      const expireDays = getCredentialExpireDays({
+        expiry_date: {
+          name: "",
+          value: expiration
+        }
+      });
+      expect(expireDays).toStrictEqual(difference);
+
+      MockDate.reset();
+    }
+  );
+});
+
+describe("getCredentialExpireStatus", () => {
+  it("should return undefined", () => {
+    const expireStatus = getCredentialExpireStatus({});
+    expect(expireStatus).toBeUndefined();
+  });
+
+  test.each([
+    [new Date(2000, 0, 18), "expiring"],
+    [new Date(2000, 0, 30), "valid"],
+    [new Date(2000, 0, 9), "expired"]
+  ])("if %p should return %p", (expiryDate, expectedStatus) => {
+    MockDate.set(new Date(2000, 0, 10, 23, 59));
+    expect(new Date()).toStrictEqual(new Date(2000, 0, 10, 23, 59));
+
+    const status = getCredentialExpireStatus({
+      expiry_date: {
+        name: "",
+        value: format(expiryDate, "YYYY-MM-DD")
+      }
+    });
+    expect(status).toStrictEqual(expectedStatus);
+    MockDate.reset();
+  });
+});
 
 describe("extractFiscalCode", () => {
   it("extract a valid fiscal code", () => {

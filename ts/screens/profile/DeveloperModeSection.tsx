@@ -34,7 +34,7 @@ import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
   preferencesItWalletTestSetEnabled,
-  preferencesNewWalletSectionSetEnabled,
+  preferencesNewScanSectionSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
@@ -48,7 +48,7 @@ import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
   isIdPayTestEnabledSelector,
   isItWalletTestEnabledSelector,
-  isNewWalletSectionLocallyEnabledSelector,
+  isNewScanSectionLocallyEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -301,14 +301,14 @@ const DesignSystemSection = () => {
   const { themeType, setTheme } = useIOThemeContext();
   const dispatch = useIODispatch();
 
-  const isNewWalletSectionLocallyEnabled = useIOSelector(
-    isNewWalletSectionLocallyEnabledSelector
+  const isNewScanSectionLocallyEnabled = useIOSelector(
+    isNewScanSectionLocallyEnabledSelector
   );
 
-  const onNewWalletSectionToggle = (enabled: boolean) => {
+  const onNewScanSectionToggle = (enabled: boolean) => {
     dispatch(
-      preferencesNewWalletSectionSetEnabled({
-        isNewWalletSectionEnabled: enabled
+      preferencesNewScanSectionSetEnabled({
+        isNewScanSectionEnabled: enabled
       })
     );
   };
@@ -338,9 +338,9 @@ const DesignSystemSection = () => {
       />
       <Divider />
       <ListItemSwitch
-        label={I18n.t("profile.main.newWalletSection")}
-        value={isNewWalletSectionLocallyEnabled}
-        onSwitchValueChange={onNewWalletSectionToggle}
+        label={I18n.t("profile.main.newScanSection")}
+        value={isNewScanSectionLocallyEnabled}
+        onSwitchValueChange={onNewScanSectionToggle}
       />
     </ContentWrapper>
   );
@@ -370,6 +370,13 @@ const PlaygroundsSection = () => {
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
           screen: ROUTES.MARKDOWN_PLAYGROUND
+        })
+    },
+    {
+      value: "IO Markdown",
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.IO_MARKDOWN_PLAYGROUND
         })
     },
     {
