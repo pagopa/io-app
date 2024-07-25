@@ -1526,7 +1526,7 @@ wallet:
     idTransaction: Codice identificativo della transazione
     amountInfo:
       title: Vedi un importo diverso?
-      message: pagoPA aggiorna automaticamente l'importo per assicurarti di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
+      message: pagoPA aggiorna l'importo in tempo reale, per permetterti di pagare evitando more o interessi aggiuntivi. Può succedere, per esempio, quando l'ente applica dei costi di notifica (se ti ha inviato una comunicazione a valore legale) o se sei in ritardo con il pagamento. 
       cta: Ok, va bene
     contextualHelpTitle: Riepilogo della transazione
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
@@ -3114,7 +3114,7 @@ features:
           noticeHeading: Avvisi pagati di recente
           noticeBody: "Stiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
           allNoticesHeading: Tutti gli altri avvisi
-          allNoticesBody: Per ottenere le ricevute in formato PDF di operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
+          allNoticesBody: Per le operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
       multiplePayment: Pagamento multiplo
       title: Ricevute pagoPA
       button: Vedi tutte

@@ -23,10 +23,9 @@ import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation"
 import { isCgnInformationAvailableSelector } from "../../../bonus/cgn/store/reducers/details";
 import { loadAvailableBonuses } from "../../../bonus/common/store/actions/availableBonusesTypes";
 import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
-import { isTrialActiveSelector } from "../../../trialSystem/store/reducers";
+import { isItwTrialActiveSelector } from "../../../trialSystem/store/reducers";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { ITW_TRIAL_ID } from "../../common/utils/itwTrialUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import {
@@ -49,7 +48,7 @@ const WalletCardOnboardingScreen = () => {
   const isCgnAlreadyActive = useIOSelector(isCgnInformationAvailableSelector);
 
   const isItWalletEnabled = useIOSelector(isItWalletTestEnabledSelector);
-  const isItwTrialEnabled = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
+  const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
