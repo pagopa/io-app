@@ -61,6 +61,7 @@ export function* handleWalletPaymentCalculateFees(
         yield* put(paymentsCalculatePaymentFeesAction.success(res.value));
         return;
       } else if (res.status !== 401) {
+        // The 401 status is handled by the withPaymentsSessionToken
         yield* put(
           paymentsCalculatePaymentFeesAction.failure(
             getGenericError(new Error(`Error: ${res.status}`))
