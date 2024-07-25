@@ -14,6 +14,7 @@ import {
   isIdPayCodeEnrollmentRequestLoadingSelector,
   isIdPayCodeFailureSelector
 } from "../store/selectors";
+import useContentWithFF from "../../../../screens/profile/useContentWithFF";
 
 const IdPayCodeResultScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -30,6 +31,10 @@ const IdPayCodeResultScreen = () => {
   );
 
   const isFailure = isCodeFailure || isEnrollmentFailure;
+
+  const content = useContentWithFF(
+    "idpay.initiative.discountDetails.IDPayCode.successScreen.body"
+  );
 
   const handleClose = () => {
     dispatch(idPayResetCode());
@@ -68,9 +73,7 @@ const IdPayCodeResultScreen = () => {
         onPress: handleClose,
         testID: "actionButtonTestID"
       }}
-      subtitle={I18n.t(
-        "idpay.initiative.discountDetails.IDPayCode.successScreen.body"
-      )}
+      subtitle={content}
     />
   );
 
