@@ -5,7 +5,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Alert, Linking, View } from "react-native";
+import { Linking, View } from "react-native";
 import I18n from "../../../../i18n";
 import { format } from "../../../../utils/dates";
 import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
@@ -34,17 +34,6 @@ export const ItwPresentationDetailFooter = ({
       onPress={() =>
         Linking.openURL(`mailto:${issuerConf.federation_entity.contacts?.[0]}`)
       }
-    />
-    <ListItemAction
-      variant="danger"
-      icon="trashcan"
-      label={I18n.t(
-        "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
-      )}
-      accessibilityLabel={I18n.t(
-        "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
-      )}
-      onPress={() => Alert.alert("Remove")}
     />
     <VSpacer size={24} />
     <Chip color="grey-650" style={IOStyles.selfCenter}>
