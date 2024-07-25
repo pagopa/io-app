@@ -30,7 +30,6 @@ import {
   setAccessibilityFocus,
   useScreenReaderEnabled
 } from "../../../../../utils/accessibility";
-import { isDevEnv } from "../../../../../utils/environment";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { useInteractiveElementDefaultColorName } from "../../../../../utils/hooks/theme";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
