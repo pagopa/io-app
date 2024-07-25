@@ -1,4 +1,8 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 
@@ -35,7 +39,13 @@ export const paymentsTogglePagoPaCapabilityAction = createAsyncAction(
   "PAYMENTS_TOGGLE_PAGOPA_CAPABILITY_CANCEL"
 )<TogglePagoPaCapabilityPayload, void, NetworkError, void>();
 
+/** This action is used to close/show the PayPal banner into a payment method details of type paypal */
+export const paymentsPayPalBannerSetIsClosedAction = createStandardAction(
+  "PAYMENTS_PAYPAL_BANNER_SET_IS_CLOSED"
+)<boolean>();
+
 export type PaymentsMethodDetailsActions =
   | ActionType<typeof paymentsGetMethodDetailsAction>
   | ActionType<typeof paymentsDeleteMethodAction>
-  | ActionType<typeof paymentsTogglePagoPaCapabilityAction>;
+  | ActionType<typeof paymentsTogglePagoPaCapabilityAction>
+  | ActionType<typeof paymentsPayPalBannerSetIsClosedAction>;

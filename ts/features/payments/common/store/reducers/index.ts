@@ -28,7 +28,7 @@ import paymentsPagoPaPlatformReducer, {
 
 export type PaymentsState = {
   onboarding: PaymentsOnboardingState;
-  details: PaymentsMethodDetailsState;
+  details: PaymentsMethodDetailsState & PersistPartial;
   checkout: PaymentsCheckoutState;
   transaction: PaymentsTransactionState;
   history: PaymentsHistoryState & PersistPartial;

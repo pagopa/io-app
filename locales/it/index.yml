@@ -3132,6 +3132,10 @@ features:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
         totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
     details:
+      payPal:
+        banner:
+          title: Vuoi pagare in 3 rate?
+          content: Non usare questo metodo. Durante il pagamento, seleziona "PayPal (anche in 3 rate)".
       pspAlert:
         description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
         action: "Cosa significa?"
@@ -3956,6 +3960,15 @@ permissionRequest:
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
 FIMS:
+  history:
+    exportData:
+      CTA: "Richiedi una copia via email"
+    profileCTA:
+      title: Accessi a servizi di terze parti 
+      subTitle: Rivedi gli accessi effettuati a servizi di terze parti tramite IO
+    historyScreen:
+      header: Accessi a servizi di terze parti
+      body: Qui puoi vedere tutti gli accessi a servizi esterni che hai fatto tramite IO e richiederne una copia via email
   loadingScreen:
     abort:
       title: "Operazione annullata"
