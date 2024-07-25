@@ -317,6 +317,7 @@ profile:
     forgetCurrentSession: Forget current session
     clearAsyncStorage: Clear AsyncStorage
     dumpAsyncStorage: Dump AsyncStorage content to console
+    sentryTestEvent: Send Exception to Sentry
     contextualHelpTitle: What you can do in {{pageName}} section 
     legacyContextualHelpContent: !include profile/legacy_profile_account_main.md
     contextualHelpContent: !include profile/profile_account_main.md
