@@ -56,7 +56,7 @@ export const isSomeOrSomeError = <A, E>(
 export const isLoadingOrUpdating = <A, E>(p: pot.Pot<A, E>): boolean =>
   pot.isLoading(p) || pot.isUpdating(p);
 
-type PotFoldWithDefault<A, E, O> = {
+type PotFoldWithDefaultHandlers<A, E, O> = {
   none?: () => O;
   noneLoading?: () => O;
   noneUpdating?: (newValue: A) => O;
@@ -65,14 +65,22 @@ type PotFoldWithDefault<A, E, O> = {
   someLoading?: (value: A) => O;
   someUpdating?: (value: A, newValue: A) => O;
   someError?: (value: A, error: E) => O;
-};
-type DefaultPotHandler<A, E, O> = {
-  default: Extract<PotFoldWithDefault<A, E, O>, any> & (() => O);
+} & {
+  default: (value?: A | E, secondValue?: A | E) => O;
 };
 
+/**
+ * Fold a {@link pot.Pot} using a fallback default function
+ * @param value
+ * @param handlers {PotFoldWithDefaultHandlers}
+ *
+ * The default handler will be called if any of the args is not defined,
+ * and will have two optional parameters, which can be *some* or *error*
+ *
+ */
 export const potFoldWithDefault = <A, E, O>(
   value: pot.Pot<A, E>,
-  handlers: PotFoldWithDefault<A, E, O> & DefaultPotHandler<A, E, O>
+  handlers: PotFoldWithDefaultHandlers<A, E, O>
 ) =>
   pot.fold(
     value,

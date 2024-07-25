@@ -18,7 +18,7 @@ const reducer = (
 ): FimsHistoryState => {
   switch (action.type) {
     case getType(fimsHistoryGet.request):
-      return action.payload.isFirstRequest
+      return action.payload.shouldReloadFromScratch
         ? {
             consentsList: pot.noneLoading
           }

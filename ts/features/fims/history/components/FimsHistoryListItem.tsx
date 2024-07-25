@@ -1,4 +1,5 @@
 import { ListItemNav } from "@pagopa/io-app-design-system";
+import { constNull } from "fp-ts/lib/function";
 import * as React from "react";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
@@ -6,7 +7,7 @@ import { Consent } from "../../../../../definitions/fims/Consent";
 import { dateToAccessibilityReadableFormat } from "../../../../utils/accessibility";
 import { potFoldWithDefault } from "../../../../utils/pot";
 import { useAutoFetchingServiceByIdPot } from "../../common/utils/hooks";
-import { LoadingFimsHistoryListItem } from "../components/Loaders";
+import { LoadingFimsHistoryListItem } from "./FimsHistoryLoaders";
 
 type SuccessListItemProps = {
   serviceData: ServicePublic;
@@ -14,7 +15,7 @@ type SuccessListItemProps = {
 };
 const SuccessListItem = ({ serviceData, consent }: SuccessListItemProps) => (
   <ListItemNav
-    onPress={() => null}
+    onPress={constNull}
     value={serviceData.organization_name}
     topElement={{
       dateValue: dateToAccessibilityReadableFormat(consent.timestamp)
