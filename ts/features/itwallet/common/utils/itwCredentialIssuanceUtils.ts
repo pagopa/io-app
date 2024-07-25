@@ -143,7 +143,7 @@ export const obtainCredential = async ({
       }
     );
 
-  const { accessToken, tokenRequestSignedDPop } =
+  const { accessToken, dPoPContext } =
     await Credential.Issuance.authorizeAccess(
       issuerConf,
       code,
@@ -169,7 +169,7 @@ export const obtainCredential = async ({
     accessToken,
     clientId,
     credentialDefinition,
-    tokenRequestSignedDPop,
+    dPoPContext,
     {
       credentialCryptoContext
     }

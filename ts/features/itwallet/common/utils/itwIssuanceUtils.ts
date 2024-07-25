@@ -133,7 +133,7 @@ const completeCieAuthFlow = async ({
   const query = Object.fromEntries(new URL(callbackUrl).searchParams);
   const { code } = Credential.Issuance.parseAuthroizationResponse(query);
 
-  const { accessToken, tokenRequestSignedDPop } =
+  const { accessToken, dPoPContext } =
     await Credential.Issuance.authorizeAccess(
       issuerConf,
       code,
@@ -146,7 +146,7 @@ const completeCieAuthFlow = async ({
       }
     );
 
-  return { accessToken, tokenRequestSignedDPop };
+  return { accessToken, dPoPContext };
 };
 
 type FullAuthFlowParams = {
@@ -207,7 +207,7 @@ const startAndCompleteFullAuthFlow = async ({
       authorizationContext
     );
 
-  const { accessToken, tokenRequestSignedDPop } =
+  const { accessToken, dPoPContext } =
     await Credential.Issuance.authorizeAccess(
       issuerConf,
       code,
@@ -222,7 +222,7 @@ const startAndCompleteFullAuthFlow = async ({
 
   return {
     accessToken,
-    tokenRequestSignedDPop,
+    dPoPContext,
     credentialDefinition,
     clientId,
     issuerConf
@@ -233,7 +233,7 @@ type PidIssuanceParams = {
   issuerConf: IssuerConf;
   accessToken: AccessToken;
   clientId: string;
-  tokenRequestSignedDPop: string;
+  dPoPContext: CryptoContext;
   credentialDefinition: AuthorizationDetail;
 };
 
@@ -248,7 +248,7 @@ const getPid = async ({
   issuerConf,
   clientId,
   accessToken,
-  tokenRequestSignedDPop,
+  dPoPContext,
   credentialDefinition
 }: PidIssuanceParams): Promise<StoredCredential> => {
   const credentialKeyTag = uuid.v4().toString();
@@ -260,7 +260,7 @@ const getPid = async ({
     accessToken,
     clientId,
     credentialDefinition,
-    tokenRequestSignedDPop,
+    dPoPContext,
     { credentialCryptoContext }
   );
 
