@@ -122,6 +122,7 @@ export const notHasValidPaymentMethodsSelector = createSelector(
   walletPaymentDetailsSelector,
   (_allMethodsPot, userWalletsPot, paymentDetailsPot) => {
     // TODO: Uncomment the following lines when the "payment as a guest" feature will be implemented
+    // https://pagopa.atlassian.net/browse/IOBP-794
     // ========================================
     // const allMethods = pipe(
     //   allMethodsPot,
