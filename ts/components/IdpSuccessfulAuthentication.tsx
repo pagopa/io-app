@@ -32,6 +32,7 @@ export const IdpSuccessfulAuthentication = () => {
   return OperationResultScreenContent({
     pictogram: "success",
     title: contentTitle,
-    testID: "idp-successful-authentication"
+    testID: "idp-successful-authentication",
+    isHeaderVisible: true
   });
 };

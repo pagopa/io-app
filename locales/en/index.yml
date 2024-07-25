@@ -1847,6 +1847,7 @@ wallet:
     outcome:
       SUCCESS:
         title: Hai pagato {{amount}}
+        subtitle: The receipt is in the Payments section.
         button: Ok, chiudi
         banner:
           title: Puoi dirci com’è andata?
@@ -3125,6 +3126,9 @@ features:
         shareButton: Save or share
         error: Impossibile scaricare la ricevuta, riprova più tardi.
         download: Scarica ricevuta
+      details:
+        totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
+        totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
     details:
       pspAlert:
         description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
@@ -3187,6 +3191,7 @@ features:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
+          restrictionConditions: "Codici"
       unrecognizedData:
         title: "Non riconosci alcuni dati?"
         body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
@@ -3217,15 +3222,15 @@ features:
         privacy: Identificandoti dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione) di **Istituto Poligrafico e Zecca dello Stato**.
       nfc:
         title: Attiva l'NFC per continuare
-        description: La funzionalità NFC permette al dispositivo di leggere la tua CIE.
-        header: "Ecco come:"
+        description: Per consentire a IO di leggere la tua CIE, attiva l'NFC dalle Impostazioni del tuo dispositivo.
+        header: Come fare
         steps:
           label: Step {{value}}
-          1: Vai alle impostazioni
-          2: Cerca "NFC"
-          3: Attivalo
-        primaryAction: Vai alle impostazioni
-        secondaryAction: Ho fatto
+          1: Apri "Impostazioni"
+          2: Cerca la funzionalità "NFC"
+          3: Attiva la funzionalità
+        primaryAction: Apri impostazioni
+        secondaryAction: Continua
     issuance:
       credentialAuth:
         title: "{{credentialName}}: dati necessari"
@@ -3234,7 +3239,7 @@ features:
         disclaimer:
           0: I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.
           1: I dati saranno condivisi solo per il tempo necessario al rilascio della credenziale.
-        tos: "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy]()."
+        tos: "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione/)."
       eidPreview:
         title: "Stiamo aggiungendo i seguenti dati al Portafoglio:"
         actions:
