@@ -19,24 +19,24 @@ import {
   isUpdatingTrialStatusSelector,
   trialStatusSelector
 } from "../../../trialSystem/store/reducers";
-import { ITW_TRIAL_ID } from "../../common/utils/itwTrialUtils";
+import { itwTrialId } from "../../../../config";
 
 export const ItwTrialSystemSection = () => {
   const dispatch = useIODispatch();
-  const status = useIOSelector(trialStatusSelector(ITW_TRIAL_ID));
-  const isLoading = useIOSelector(isLoadingTrialStatusSelector(ITW_TRIAL_ID));
-  const isUpdating = useIOSelector(isUpdatingTrialStatusSelector(ITW_TRIAL_ID));
+  const status = useIOSelector(trialStatusSelector(itwTrialId));
+  const isLoading = useIOSelector(isLoadingTrialStatusSelector(itwTrialId));
+  const isUpdating = useIOSelector(isUpdatingTrialStatusSelector(itwTrialId));
 
   const subscribe = () => {
-    dispatch(trialSystemActivationStatusUpsert.request(ITW_TRIAL_ID));
+    dispatch(trialSystemActivationStatusUpsert.request(itwTrialId));
   };
 
   const refresh = () => {
-    dispatch(trialSystemActivationStatus.request(ITW_TRIAL_ID));
+    dispatch(trialSystemActivationStatus.request(itwTrialId));
   };
 
   const reset = () => {
-    dispatch(trialSystemActivationStatusReset(ITW_TRIAL_ID));
+    dispatch(trialSystemActivationStatusReset(itwTrialId));
   };
 
   return (
