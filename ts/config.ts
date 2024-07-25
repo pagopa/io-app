@@ -106,9 +106,6 @@ export const cieLoginFlowWithDevServerEnabled =
 // Native Login Feature Flag
 export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 
-// ITW (IT-Wallet) local Feature Flag
-export const itwEnabled = Config.ITW_ENABLED === "YES";
-
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),
   t.Integer.decode,
