@@ -35,18 +35,6 @@ export const ItwPresentationDetailFooter = ({
         Linking.openURL(`mailto:${issuerConf.federation_entity.contacts?.[0]}`)
       }
     />
-    <ListItemAction
-      variant="danger"
-      icon="trashcan"
-      label={I18n.t(
-        "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
-      )}
-      accessibilityLabel={I18n.t(
-        "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
-      )}
-      onPress={() => Alert.alert("Remove")}
-    />
-    <VSpacer size={24} />
     <Chip color="grey-650" style={IOStyles.selfCenter}>
       {I18n.t("features.itWallet.presentation.credentialDetails.lastUpdated", {
         lastUpdateTime: format(lastUpdateTime, "DD MMMM YYYY, HH:mm")
