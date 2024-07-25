@@ -4,19 +4,19 @@ import { VSpacer, Banner } from "@pagopa/io-app-design-system";
 import Animated, { FadeOut } from "react-native-reanimated";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { paymentsTogglePayPalBannerAction } from "../store/actions";
-import { showPayPalBannerSelector } from "../store/selectors";
+import { paymentsPayPalBannerSetVisibleAction } from "../store/actions";
+import { walletPayPalBannerClosedSelector } from "../store/selectors";
 
 const PaymentsMethodPspPayPalBanner = () => {
   const bannerViewRef = React.useRef(null);
   const dispatch = useIODispatch();
-  const showBanner = useIOSelector(showPayPalBannerSelector);
+  const bannerClosed = useIOSelector(walletPayPalBannerClosedSelector);
 
   const handleOnCloseBanner = () => {
-    dispatch(paymentsTogglePayPalBannerAction());
+    dispatch(paymentsPayPalBannerSetVisibleAction(true));
   };
 
-  if (showBanner) {
+  if (!bannerClosed) {
     return (
       // The zIndex is set to 9999 due to a known bug of react-native-reanimated (https://github.com/software-mansion/react-native-reanimated/issues/4534)
       <Animated.View exiting={FadeOut.duration(200)} style={{ zIndex: 9999 }}>
