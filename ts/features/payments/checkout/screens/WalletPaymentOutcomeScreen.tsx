@@ -36,6 +36,7 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getPaymentPhaseFromStep } from "../utils";
 import { paymentCompletedSuccess } from "../store/actions/orchestration";
 import { walletPaymentSelectedPspSelector } from "../store/selectors/psps";
+import { PaymentsCheckoutRoutes } from "../navigation/routes";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -141,8 +142,12 @@ const WalletPaymentOutcomeScreen = () => {
 
   const onboardPaymentMethodCloseAction: OperationResultScreenContentProps["action"] =
     {
-      label: I18n.t("global.buttons.close"),
-      accessibilityLabel: I18n.t("global.buttons.close"),
+      label: I18n.t(
+        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.secondaryAction"
+      ),
+      accessibilityLabel: I18n.t(
+        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.secondaryAction"
+      ),
       onPress: () => {
         analytics.trackPaymentMethodErrorExit({
           organization_name: paymentAnalyticsData?.verifiedData?.paName,
@@ -150,7 +155,9 @@ const WalletPaymentOutcomeScreen = () => {
           first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
           expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
         });
-        handleClose();
+        navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+          screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
+        });
       }
     };
 

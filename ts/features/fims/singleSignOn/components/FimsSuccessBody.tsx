@@ -15,6 +15,7 @@ import {
   ListItemHeader,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
 import * as React from "react";
@@ -23,12 +24,11 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { Link } from "../../../../components/core/typography/Link";
 import { LoadingSkeleton } from "../../../../components/ui/Markdown/LoadingSkeleton";
 import I18n from "../../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIODispatch } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
-import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { serviceByIdSelector } from "../../../services/details/store/reducers";
 import { logoForService } from "../../../services/home/utils";
+import { useAutoFetchingServiceByIdPot } from "../../common/utils/hooks";
 import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import { ConsentData, FimsClaimType } from "../types";
 
@@ -41,15 +41,8 @@ export const FimsFlowSuccessBody = ({
   const dispatch = useIODispatch();
   const serviceId = consents.service_id as ServiceId;
 
-  const serviceData = useIOSelector(state =>
-    serviceByIdSelector(state, serviceId)
-  );
-
-  React.useEffect(() => {
-    if (serviceData === undefined) {
-      dispatch(loadServiceDetail.request(serviceId));
-    }
-  }, [serviceData, serviceId, dispatch]);
+  const servicePot = useAutoFetchingServiceByIdPot(serviceId);
+  const serviceData = pot.toUndefined(servicePot.serviceData);
 
   const serviceLogo = pipe(
     serviceData,
