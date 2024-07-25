@@ -61,7 +61,8 @@ export function* handleWalletPaymentCreateTransaction(
           newTransactionResult.right.value
         )
       );
-    } else if (status === 400) {
+    } else if (status !== 401) {
+      // The 401 status is handled by the withPaymentsSessionToken
       handleError(paymentAnalyticsData, action.payload.onError);
       yield* put(
         paymentsCreateTransactionAction.failure({
@@ -69,12 +70,6 @@ export function* handleWalletPaymentCreateTransaction(
             new Error(`Error: ${newTransactionResult.right.status}`)
           )
         })
-      );
-    } else {
-      yield* put(
-        paymentsCreateTransactionAction.failure(
-          newTransactionResult.right.value
-        )
       );
     }
   } catch (e) {

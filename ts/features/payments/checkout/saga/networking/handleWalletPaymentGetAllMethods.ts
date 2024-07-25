@@ -1,5 +1,4 @@
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
@@ -21,26 +20,27 @@ export function* handleWalletPaymentGetAllMethods(
       "pagoPAPlatformSessionToken"
     );
 
-    yield* put(
-      pipe(
-        getAllPaymentMethodsResult,
-        E.fold(
-          error =>
-            paymentsGetPaymentMethodsAction.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
-
-          res => {
-            if (res.status === 200) {
-              return paymentsGetPaymentMethodsAction.success(res.value);
-            }
-            return paymentsGetPaymentMethodsAction.failure({
-              ...getGenericError(new Error(`Error: ${res.status}`))
-            });
-          }
-        )
-      )
-    );
+    if (E.isLeft(getAllPaymentMethodsResult)) {
+      yield* put(
+        paymentsGetPaymentMethodsAction.failure({
+          ...getGenericError(
+            new Error(readablePrivacyReport(getAllPaymentMethodsResult.left))
+          )
+        })
+      );
+      return;
+    }
+    const res = getAllPaymentMethodsResult.right;
+    if (res.status === 200) {
+      yield* put(paymentsGetPaymentMethodsAction.success(res.value));
+    } else if (res.status !== 401) {
+      // The 401 status is handled by the withPaymentsSessionToken
+      yield* put(
+        paymentsGetPaymentMethodsAction.failure({
+          ...getGenericError(new Error(`Error: ${res.status}`))
+        })
+      );
+    }
   } catch (e) {
     yield* put(
       paymentsGetPaymentMethodsAction.failure({ ...getNetworkError(e) })

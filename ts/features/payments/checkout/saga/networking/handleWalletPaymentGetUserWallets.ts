@@ -1,5 +1,4 @@
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
@@ -21,36 +20,37 @@ export function* handleWalletPaymentGetUserWallets(
       "pagoPAPlatformSessionToken"
     );
 
-    yield* put(
-      pipe(
-        getWalletsByIdUserResult,
-        E.fold(
-          error =>
-            paymentsGetPaymentUserMethodsAction.failure(
-              getGenericError(new Error(readablePrivacyReport(error)))
-            ),
-          res => {
-            if (res.status === 200) {
-              if (action.payload.onResponse) {
-                action.payload.onResponse(res.value.wallets);
-              }
-              return paymentsGetPaymentUserMethodsAction.success(res.value);
-            }
-            if (action.payload.onResponse) {
-              action.payload.onResponse(undefined);
-            }
-            if (res.status === 404) {
-              return paymentsGetPaymentUserMethodsAction.success({
-                wallets: []
-              });
-            }
-            return paymentsGetPaymentUserMethodsAction.failure({
-              ...getGenericError(new Error(`Error: ${res.status}`))
-            });
-          }
-        )
-      )
-    );
+    if (E.isLeft(getWalletsByIdUserResult)) {
+      yield* put(
+        paymentsGetPaymentUserMethodsAction.failure({
+          ...getGenericError(
+            new Error(readablePrivacyReport(getWalletsByIdUserResult.left))
+          )
+        })
+      );
+      return;
+    }
+
+    const res = getWalletsByIdUserResult.right;
+    if (action.payload.onResponse) {
+      action.payload.onResponse(
+        res.status === 200 ? res.value.wallets : undefined
+      );
+    }
+    if (res.status === 200) {
+      yield* put(paymentsGetPaymentUserMethodsAction.success(res.value));
+    } else if (res.status === 404) {
+      paymentsGetPaymentUserMethodsAction.success({
+        wallets: []
+      });
+    } else if (res.status !== 401) {
+      // The 401 status is handled by the withPaymentsSessionToken
+      yield* put(
+        paymentsGetPaymentUserMethodsAction.failure({
+          ...getGenericError(new Error(`Error: ${res.status}`))
+        })
+      );
+    }
   } catch (e) {
     if (action.payload.onResponse) {
       action.payload.onResponse(undefined);
