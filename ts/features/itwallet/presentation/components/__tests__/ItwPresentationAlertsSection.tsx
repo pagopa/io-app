@@ -63,7 +63,7 @@ describe("ItwPresentationAlertsSection", () => {
   it("should render MDL alert", () => {
     const { queryByTestId } = renderComponent(
       CredentialType.DRIVING_LICENSE,
-      new Date(2000, 0, 19)
+      new Date(2000, 2, 20)
     );
 
     expect(queryByTestId("itwExpiredBannerTestID")).toBeNull();
