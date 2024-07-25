@@ -14,6 +14,8 @@ import {
   PaymentAnalyticsSelectedPspFlag
 } from "../types/PaymentAnalytics";
 
+export const PAYMENTS_DUMB_DATES = ["31/12/2099"];
+
 export const WALLET_PAYMENT_FEEDBACK_URL =
   "https://io.italia.it/diccilatua/ces-pagamento";
 
@@ -86,4 +88,5 @@ export const getPaymentPhaseFromStep = (
  * This function checks if a date is a dumb date
  * that some entities use to represent a missing date.
  */
-export const isPaymentDumbDate = (date: string) => date === "31/12/2099";
+export const isPaymentDumbDate = (date: string) =>
+  PAYMENTS_DUMB_DATES.includes(date);
