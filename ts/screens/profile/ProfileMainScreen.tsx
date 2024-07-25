@@ -7,36 +7,35 @@ import {
   ListItemAction,
   ListItemNav,
   VSpacer,
-  useIOTheme,
   useIOToast
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import React, {
-  useCallback,
-  useState,
-  useRef,
   ComponentProps,
-  useMemo,
   memo,
+  useCallback,
   useEffect,
-  useLayoutEffect
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState
 } from "react";
 import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
 import AppVersion from "../../components/AppVersion";
 import { LightModalContext } from "../../components/ui/LightModal";
+import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
+import { showProfileBannerSelector } from "../../features/profileSettings/store/selectors";
+import { useHeaderProps } from "../../hooks/useHeaderProps";
+import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { setDebugModeEnabled } from "../../store/actions/debug";
-import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
-import { isDevEnv } from "../../utils/environment";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { showProfileBannerSelector } from "../../features/profileSettings/store/selectors";
-import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
-import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
-import { useHeaderProps } from "../../hooks/useHeaderProps";
 import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus";
 import { TranslationKeys } from "../../../locales/locales";
+import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
+import { isDevEnv } from "../../utils/environment";
 import DeveloperModeSection from "./DeveloperModeSection";
 import useContentWithFF from "./useContentWithFF";
 
@@ -59,7 +58,6 @@ const ProfileMainScreen = () => {
   const { hideModal } = React.useContext(LightModalContext);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const theme = useIOTheme();
   const { show } = useIOToast();
   const isSettingsVisibleAndHideProfile = useIOSelector(
     isSettingsVisibleAndHideProfileSelector
@@ -253,10 +251,7 @@ const ProfileMainScreen = () => {
   }, [headerProps, isSettingsVisibleAndHideProfile, navigation]);
 
   return (
-    <ScrollView
-      ref={scrollViewContentRef}
-      style={{ backgroundColor: theme["appBackground-primary"] }}
-    >
+    <ScrollView ref={scrollViewContentRef}>
       {showProfileBanner && (
         <ContentWrapper>
           <VSpacer size={16} />
