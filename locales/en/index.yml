@@ -3,8 +3,8 @@ accessibility:
   doubleTapToActivateHint: "Double tap to activate"
   buttons:
     torch:
-      turnOn: "Accendi la torcia"
-      turnOff: "Spegni la torcia"
+      turnOn: "Turn on the flashlight"
+      turnOff: "Turn off the flashlight"
 date:
   formats:
     default: "%d/%m/%Y"
@@ -1521,8 +1521,8 @@ wallet:
     idTransaction: Transaction identification code
     updatedAmount: Updated amount
     amountInfo:
-      title: Vedi un importo diverso?
-      message: pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests
+      title: Do you see a different amount?
+      message: pagoPA updates the amount in real time, so that you can pay without additional charges or interest. This may happen, for instance, when the institution applies notification fees (if it has sent you a notification with legal value) or if you are late with your payment.
       cta: Ok, va bene
     contextualHelpTitle: Transaction's summary
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
@@ -1890,9 +1890,10 @@ wallet:
         title: Abilita il metodo per effettuare pagamenti in app
         subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
       PAYMENT_METHODS_NOT_AVAILABLE:
-        title: Aggiungi un metodo per effettuare pagamenti in app
+        title: Vuoi pagare con carta? Aggiungila ora!
         subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
-        primaryAction: Aggiungi metodo
+        primaryAction: Aggiungi carta
+        secondaryAction: Usa altri metodi
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -3113,7 +3114,7 @@ features:
           noticeHeading: Avvisi pagati di recente
           noticeBody: "Stiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
           allNoticesHeading: Tutti gli altri avvisi
-          allNoticesBody: Per ottenere le ricevute in formato PDF di operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
+          allNoticesBody: Per le operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
       multiplePayment: Pagamento multiplo
       title: Ricevute pagoPA
       button: Vedi tutte
@@ -3132,6 +3133,10 @@ features:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
         totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
     details:
+      payPal:
+        banner:
+          title: Do you want to pay in 3?
+          content: Don't use this method. During a payment, select "PayPal (Pay in 3 too)".
       pspAlert:
         description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
         action: "Cosa significa?"

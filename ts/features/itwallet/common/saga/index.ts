@@ -5,7 +5,7 @@ import { trialSystemActivationStatus } from "../../../trialSystem/store/actions"
 import { watchItwIdentificationSaga } from "../../identification/saga";
 import { checkWalletInstanceStateSaga } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
-import { ITW_TRIAL_ID } from "../utils/itwTrialUtils";
+import { itwTrialId } from "../../../../config";
 
 export function* watchItwSaga(): SagaIterator {
   const isItWalletTestEnabled: ReturnType<
@@ -22,5 +22,5 @@ export function* watchItwSaga(): SagaIterator {
   yield* fork(watchItwIdentificationSaga);
 
   // IT Wallet trial status refresh
-  yield* put(trialSystemActivationStatus.request(ITW_TRIAL_ID));
+  yield* put(trialSystemActivationStatus.request(itwTrialId));
 }
