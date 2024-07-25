@@ -87,7 +87,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
 
   useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });
 
-  const claims = parseClaims(eid.parsedCredential);
+  const claims = parseClaims(eid.parsedCredential, { exclude: ["unique_id"] });
   const requiredClaims = claims.map(
     claim =>
       ({
