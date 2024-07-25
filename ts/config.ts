@@ -106,6 +106,9 @@ export const cieLoginFlowWithDevServerEnabled =
 // Native Login Feature Flag
 export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 
+// ITW (IT-Wallet) local Feature Flag
+export const itwEnabled = Config.ITW_ENABLED === "YES";
+
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),
   t.Integer.decode,
@@ -236,3 +239,16 @@ export const walletApiUatBaseUrl = Config.WALLET_API_UAT_BASEURL;
 
 // Default pin for dev mode
 export const defaultPin = "162534";
+
+// IT Wallet
+export const itwWalletProviderBaseUrl = Config.ITW_WALLET_PROVIDER_BASE_URL;
+export const itwGoogleCloudProjectNumber =
+  Config.ITW_GOOGLE_CLOUD_PROJECT_NUMBER;
+export const itWalletIssuanceRedirectUri = Config.ITW_ISSUANCE_REDIRECT_URI;
+export const itWalletIssuanceRedirectUriCie =
+  Config.ITW_ISSUANCE_REDIRECT_URI_CIE;
+export const itwPidProviderBaseUrl = Config.ITW_PID_PROVIDER_BASE_URL;
+export const itwEaaProviderBaseUrl = Config.ITW_EAA_PROVIDER_BASE_URL;
+export const itwBypassIdentityMatch =
+  Config.ITW_BYPASS_IDENTITY_MATCH === "YES";
+export const itwCieIdpHint = Config.ITW_CIE_IDPHINT;

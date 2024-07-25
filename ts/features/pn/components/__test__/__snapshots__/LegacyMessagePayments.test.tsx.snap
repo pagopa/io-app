@@ -903,7 +903,6 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                   [
                                     {
                                       "alignItems": "center",
-                                      "backgroundColor": "#FFFFFF",
                                       "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
@@ -912,6 +911,9 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                       "justifyContent": "space-between",
                                       "paddingHorizontal": 16,
                                       "paddingVertical": 16,
+                                    },
+                                    {
+                                      "borderColor": "#E8EBF1",
                                     },
                                     false,
                                     {
@@ -935,9 +937,10 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
+                                    color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -945,6 +948,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -953,7 +957,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                           "lineHeight": 21,
                                         },
                                         {
-                                          "color": "#475A6D",
+                                          "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -966,25 +970,27 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="blue"
-                                    defaultWeight="Bold"
+                                    color="blueIO-500"
+                                    defaultColor="black"
+                                    defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
-                                        "fontSize": 14,
+                                        "fontSize": 16,
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
                                         {
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "lineHeight": 21,
                                         },
                                         {
-                                          "color": "#475A6D",
+                                          "color": "#0B3EE3",
                                           "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
@@ -1025,7 +1031,9 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                     }
                                   >
                                     <Text
+                                      allowFontScaling={false}
                                       ellipsizeMode="tail"
+                                      maxFontSizeMultiplier={1.25}
                                       numberOfLines={1}
                                       style={
                                         [
@@ -1161,7 +1169,6 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                   [
                                     {
                                       "alignItems": "center",
-                                      "backgroundColor": "#FFFFFF",
                                       "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
@@ -1170,6 +1177,9 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                       "justifyContent": "space-between",
                                       "paddingHorizontal": 16,
                                       "paddingVertical": 16,
+                                    },
+                                    {
+                                      "borderColor": "#E8EBF1",
                                     },
                                     false,
                                     {
@@ -1193,9 +1203,10 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
+                                    color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -1203,6 +1214,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -1211,7 +1223,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                           "lineHeight": 21,
                                         },
                                         {
-                                          "color": "#475A6D",
+                                          "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -1224,25 +1236,27 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="blue"
-                                    defaultWeight="Bold"
+                                    color="blueIO-500"
+                                    defaultColor="black"
+                                    defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
-                                        "fontSize": 14,
+                                        "fontSize": 16,
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
                                         {
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "lineHeight": 21,
                                         },
                                         {
-                                          "color": "#475A6D",
+                                          "color": "#0B3EE3",
                                           "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
@@ -1283,7 +1297,9 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                     }
                                   >
                                     <Text
+                                      allowFontScaling={false}
                                       ellipsizeMode="tail"
+                                      maxFontSizeMultiplier={1.25}
                                       numberOfLines={1}
                                       style={
                                         [
@@ -1419,7 +1435,6 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                   [
                                     {
                                       "alignItems": "center",
-                                      "backgroundColor": "#FFFFFF",
                                       "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
@@ -1428,6 +1443,9 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                       "justifyContent": "space-between",
                                       "paddingHorizontal": 16,
                                       "paddingVertical": 16,
+                                    },
+                                    {
+                                      "borderColor": "#E8EBF1",
                                     },
                                     false,
                                     {
@@ -1451,9 +1469,10 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
+                                    color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -1461,6 +1480,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -1469,7 +1489,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                           "lineHeight": 21,
                                         },
                                         {
-                                          "color": "#475A6D",
+                                          "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -1482,25 +1502,27 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="blue"
-                                    defaultWeight="Bold"
+                                    color="blueIO-500"
+                                    defaultColor="black"
+                                    defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
-                                        "fontSize": 14,
+                                        "fontSize": 16,
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
                                         {
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "lineHeight": 21,
                                         },
                                         {
-                                          "color": "#475A6D",
+                                          "color": "#0B3EE3",
                                           "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
@@ -1541,7 +1563,9 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                     }
                                   >
                                     <Text
+                                      allowFontScaling={false}
                                       ellipsizeMode="tail"
+                                      maxFontSizeMultiplier={1.25}
                                       numberOfLines={1}
                                       style={
                                         [
@@ -2107,108 +2131,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for a single 
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -2689,108 +2713,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -2805,108 +2829,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -2921,108 +2945,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -3037,108 +3061,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -3153,108 +3177,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -3735,108 +3759,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -3851,108 +3875,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -3967,108 +3991,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -4083,108 +4107,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -4199,108 +4223,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -4781,108 +4805,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -4897,108 +4921,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -5013,108 +5037,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -5129,108 +5153,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -5245,108 +5269,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -5827,108 +5851,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -5943,108 +5967,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -6059,108 +6083,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -6175,108 +6199,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>
@@ -6291,108 +6315,108 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                             <View
                               accessible={false}
                               style={
-                                {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
-                                  "borderColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "borderWidth": 1,
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 16,
+                                    "paddingVertical": 16,
+                                  },
+                                  {
+                                    "borderColor": "#E8EBF1",
+                                    "opacity": 1,
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
                                   }
                                 }
                               >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                <View>
                                   <View
-                                    height={16}
-                                    radius={8}
+                                    collapsable={false}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 179,
+                                        "opacity": 0.5,
                                       }
                                     }
-                                    width={179}
-                                  />
-                                </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "opacity": 0.5,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      height={13}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 13,
+                                          "width": 121,
+                                        }
+                                      }
+                                      width={121}
+                                    />
+                                  </View>
                                   <View
-                                    height={13}
-                                    radius={8}
                                     style={
                                       {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 13,
-                                        "width": 121,
+                                        "height": 8,
                                       }
                                     }
-                                    width={121}
                                   />
+                                  <View
+                                    collapsable={false}
+                                    style={
+                                      {
+                                        "opacity": 0.5,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      height={16}
+                                      radius={8}
+                                      style={
+                                        {
+                                          "backgroundColor": "#efefef",
+                                          "borderRadius": 8,
+                                          "height": 16,
+                                          "width": 179,
+                                        }
+                                      }
+                                      width={179}
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
+                                collapsable={false}
                                 style={
                                   {
-                                    "marginLeft": 12,
+                                    "opacity": 0.5,
                                   }
                                 }
                               >
                                 <View
-                                  collapsable={false}
+                                  height={24}
+                                  radius={16}
                                   style={
                                     {
-                                      "opacity": 0.5,
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 16,
+                                      "height": 24,
+                                      "width": 62,
                                     }
                                   }
-                                >
-                                  <View
-                                    height={16}
-                                    radius={8}
-                                    style={
-                                      {
-                                        "backgroundColor": "#efefef",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 62,
-                                      }
-                                    }
-                                    width={62}
-                                  />
-                                </View>
+                                  width={62}
+                                />
                               </View>
                             </View>
                           </View>

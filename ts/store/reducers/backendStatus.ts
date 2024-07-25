@@ -3,7 +3,7 @@
  */
 
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
+import { constFalse, pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
 
 import { createSelector } from "reselect";
@@ -21,6 +21,7 @@ import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
   fciEnabled,
+  itwEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled,
   uaDonationsEnabled
@@ -33,7 +34,7 @@ import { Action } from "../actions/types";
 
 import {
   isIdPayTestEnabledSelector,
-  isNewWalletSectionEnabledSelector
+  isNewScanSectionLocallyEnabledSelector
 } from "./persistedPreferences";
 import { GlobalState } from "./types";
 
@@ -71,6 +72,47 @@ export const sectionStatusSelector = (sectionStatusKey: SectionStatusKey) =>
         O.map(bs => bs.sections[sectionStatusKey]),
         O.toUndefined
       )
+  );
+
+export const isSectionVisibleSelector = (
+  state: GlobalState,
+  sectionStatusKey: SectionStatusKey
+) =>
+  pipe(
+    sectionStatusUncachedSelector(state, sectionStatusKey),
+    O.map(section => section.is_visible),
+    O.getOrElse(constFalse)
+  );
+export const webUrlForSectionSelector = (
+  state: GlobalState,
+  sectionStatusKey: SectionStatusKey,
+  locale: LocalizedMessageKeys
+) =>
+  pipe(
+    sectionStatusUncachedSelector(state, sectionStatusKey),
+    O.chainNullableK(section => section.web_url),
+    O.chainNullableK(statusMessage => statusMessage[locale]),
+    O.toUndefined
+  );
+export const messageForSectionSelector = (
+  state: GlobalState,
+  sectionStatusKey: SectionStatusKey,
+  locale: LocalizedMessageKeys
+) =>
+  pipe(
+    sectionStatusUncachedSelector(state, sectionStatusKey),
+    O.chainNullableK(section => section.message),
+    O.chainNullableK(messageTranslations => messageTranslations[locale]),
+    O.toUndefined
+  );
+export const levelForSectionSelector = (
+  state: GlobalState,
+  sectionStatusKey: SectionStatusKey
+) =>
+  pipe(
+    sectionStatusUncachedSelector(state, sectionStatusKey),
+    O.map(section => section.level),
+    O.toUndefined
   );
 
 export const cgnMerchantVersionSelector = createSelector(
@@ -414,14 +456,34 @@ export const isIdPayEnabledSelector = createSelector(
  */
 export const isNewPaymentSectionEnabledSelector = createSelector(
   backendStatusSelector,
-  isNewWalletSectionEnabledSelector,
-  (backendStatus, isNeWalletSectionEnabled): boolean =>
-    isNeWalletSectionEnabled ||
+  (backendStatus): boolean =>
     pipe(
       backendStatus,
-      O.map(bs => bs.config.newPaymentSection?.enabled),
+      O.map(bs =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? bs.config.newPaymentSection.min_app_version.ios
+            : bs.config.newPaymentSection.min_app_version.android,
+          getAppVersion()
+        )
+      ),
       O.getOrElse(() => false)
     )
+);
+
+// This selector checks that both the new wallet section and the
+// new document scan section are included in the tab bar.
+// In this case, the navigation to the profile section in the tab bar
+// is replaced with the 'settings' section accessed by clicking
+// on the icon in the headers of the top-level screens.
+// It will be possible to delete this control and all the code it carries
+// it carries when isNewPaymentSectionEnabledSelector and
+// isNewScanSectionLocallyEnabled will be deleted
+export const isSettingsVisibleAndHideProfileSelector = createSelector(
+  isNewPaymentSectionEnabledSelector,
+  isNewScanSectionLocallyEnabledSelector,
+  (isNewPaymentSectionEnabled, isNewScanSectionLocallyEnabled) =>
+    isNewPaymentSectionEnabled && isNewScanSectionLocallyEnabled
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
@@ -431,6 +493,30 @@ export const DEAD_COUNTER_THRESHOLD = 2;
 export const isBackendServicesStatusOffSelector = createSelector(
   backendServicesStatusSelector,
   bss => bss.areSystemsDead
+);
+
+/**
+ * Return the remote config about IT-WALLET enabled/disabled
+ * if there is no data or the local Feature Flag is disabled,
+ * false is the default value -> (IT-WALLET disabled)
+ */
+export const isItwEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    itwEnabled &&
+    pipe(
+      backendStatus,
+      O.map(
+        bs =>
+          isVersionSupported(
+            Platform.OS === "ios"
+              ? bs.config.itw.min_app_version.ios
+              : bs.config.itw.min_app_version.android,
+            getAppVersion()
+          ) && bs.config.itw.enabled
+      ),
+      O.getOrElse(() => false)
+    )
 );
 
 export const areSystemsDeadReducer = (
@@ -458,3 +544,12 @@ export default function backendServicesStatusReducer(
   }
   return state;
 }
+
+const sectionStatusUncachedSelector = (
+  state: GlobalState,
+  sectionStatusKey: SectionStatusKey
+) =>
+  pipe(
+    state.backendStatus.status,
+    O.chainNullableK(status => status.sections[sectionStatusKey])
+  );

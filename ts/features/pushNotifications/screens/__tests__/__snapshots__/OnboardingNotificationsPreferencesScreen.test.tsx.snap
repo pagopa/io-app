@@ -210,6 +210,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="largeTitle"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -217,6 +218,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "lineHeight": 43,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -247,6 +249,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -254,6 +257,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -462,6 +466,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -469,6 +474,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -492,6 +498,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -499,6 +506,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -581,6 +589,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -589,6 +598,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -671,6 +681,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -678,6 +689,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -709,6 +721,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -718,6 +731,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -801,6 +815,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -809,6 +824,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -891,6 +907,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -898,6 +915,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -962,6 +980,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   color="grey-700"
                                   defaultColor="blue"
                                   defaultWeight="Bold"
+                                  dynamicTypeRamp="footnote"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -969,6 +988,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       "lineHeight": 21,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -1037,10 +1057,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     }
                                   >
                                     <RNSVGPath
-                                      d="M60.77 115.18c-14.23 0-27.7-8.57-33.22-22.59-7.21-18.3 1.81-39.05 20.11-46.26 15.97-6.29 34.17-.32 43.27 14.2.44.7.23 1.63-.47 2.07-.7.44-1.63.23-2.07-.47-8.34-13.29-25-18.76-39.63-13C32 55.73 23.74 74.74 30.34 91.5c6.6 16.76 25.6 25.02 42.37 18.42.77-.3 1.64.07 1.95.85.3.77-.08 1.64-.85 1.95a35.392 35.392 0 0 1-13.03 2.48l-.01-.02Z"
+                                      d="M195.491 126.862a2.322 2.322 0 0 0 1.05 2.853c1.937 1.057 47.11 25.409 69.065 17.362.273-.1.546-.2.811-.322l-1.789-4.288c-7.973 3.305-21.801 1.502-40.007-5.234-10.895-4.028-20.372-8.749-24.13-10.683 2.897-9.392 1.388-19.01.164-24.085-.909-3.783-4.412-6.404-8.332-6.253-3.089.12-5.812 1.908-7.111 4.67-2.043 4.308-4.723 11.531-6.005 15.079-4.101-1.587-14.171-6.671-32.443-17.153a17.256 17.256 0 0 0-9.991-2.245 9.503 9.503 0 0 0-8.65 7.891c-.468 2.767.279 5.57 2.076 7.693 4.78 5.687 15.519 13.331 19.958 16.376-1.58 2.705-2.639 6.491-2.471 11.793a33.282 33.282 0 0 0 1.053 7.203s-.013.029-.009.04l.021-.008c2.325 8.875 8.39 17.144 18.139 24.657 34.542 26.591 71.474 28.652 73.036 28.722l.227-4.631c-.364-.015-37.069-2.097-70.417-27.767-8.446-6.494-13.841-13.514-16.143-20.914 1.301-3.702 4.622-10.493 9.554-11.46 4.098-.81 9.208 2.508 14.784 9.585a4.255 4.255 0 0 1 .621 4.11c-.476 1.262-1.481 2.1-2.753 2.344-3.83.699-7.866-.813-11.986-4.505l-3.099 3.459c6.536 5.847 12.268 6.28 15.933 5.604a8.138 8.138 0 0 0 1.36-.375c2.237-.819 4.019-2.573 4.898-4.897.988-2.599.663-5.532-.797-7.852 2.883-6.198 2.049-12.504-2.393-17.203-5.878-6.213-15.803-7.506-24.137-3.13-.8.417-1.625.967-2.429 1.644-4.041-2.77-14.898-10.432-19.392-15.78a4.887 4.887 0 0 1-1.054-3.94 4.881 4.881 0 0 1 4.431-4.046 12.632 12.632 0 0 1 7.302 1.637c13.931 8.007 31.469 17.67 35.889 18.274a2.318 2.318 0 0 0 2.51-1.525c.034-.111 3.961-11.178 6.57-16.707.568-1.184 1.747-1.95 3.088-2.009 1.708-.07 3.239 1.062 3.631 2.698 1.178 4.92 2.671 14.494-.67 23.319l.037-.001Zm-37.721.54c7.237-3.79 14.83-1.765 18.595 2.206 2.595 2.744 3.388 6.211 2.374 9.882-5.784-6.259-11.322-8.926-16.481-7.9-4.489.891-7.725 4.413-9.899 7.929-.071-6.116 1.747-10.194 5.411-12.117Z"
                                       fill={
                                         {
-                                          "payload": 4278240714,
+                                          "payload": 4278927075,
                                           "type": 0,
                                         }
                                       }
@@ -1051,21 +1071,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     />
                                     <RNSVGPath
-                                      d="M90.301 63.72h-.15l-29.63-2.98c-.82-.08-1.42-.82-1.34-1.64.08-.82.84-1.42 1.64-1.34l28.08 2.83 1.65-27.16c.05-.83.75-1.45 1.59-1.41a1.5 1.5 0 0 1 1.41 1.59l-1.74 28.72c-.02.41-.21.79-.53 1.05-.27.23-.62.36-.97.36l-.01-.02Z"
-                                      fill={
-                                        {
-                                          "payload": 4278240714,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="m144.48 143.66 1.16-5.41 2.04-2.6 3.33-.83c.16-.46.31-.92.44-1.39l-3.11.47-6.8-.96h-9.24s-3.35-.93-5.35-1.75c-2-.82-1.78-1.35-2.36-2.01-.57-.66-1.43-.82-1.43-.82l.02-3.01-.86-1.79 3.25-4.74 2.17-1.69 2.84-1.05 4.03-.7 13.72-1.48 3.15-.11c-4.23-14.53-17.63-25.15-33.52-25.15H42.91C23.63 88.65 8 104.28 8 123.57c0 19.28 15.63 34.91 34.91 34.91h75.05c10.86 0 20.56-4.96 26.96-12.73l-.45-2.08.01-.01Z"
+                                      d="M53.78 92.97c-.497 0-1.153.12-1.8.36-3.598 1.288-7.206 2.577-10.804 3.866-1.243.45-2.406.15-3.29-.84a48.829 48.829 0 0 1-6.949-10 46.713 46.713 0 0 1-3.15-7.534c-.368-1.16-.11-2.209.804-3.008 1.82-1.598 3.678-3.147 5.527-4.716 1.213-1.039 2.455-2.048 3.638-3.117 2.416-2.178 2.446-6.125.03-8.323-1.412-1.279-2.892-2.488-4.344-3.717-1.62-1.379-3.26-2.738-4.85-4.146-.915-.81-1.173-1.859-.796-3.028a47.678 47.678 0 0 1 3.4-7.973 48.14 48.14 0 0 1 6.75-9.592c.854-.95 1.928-1.229 3.12-.81 2.903 1.02 5.795 2.069 8.698 3.098.835.3 1.66.62 2.505.88 3.33 1.038 6.72-1.02 7.366-4.457.556-2.977 1.083-5.955 1.63-8.932.149-.84.298-1.669.457-2.498.248-1.27 1.123-2.108 2.386-2.368 2.584-.52 5.178-.86 7.813-.98 2.634-.12 5.258-.05 7.862.29 1.431.19 2.853.43 4.274.69 1.462.27 2.247 1.109 2.515 2.568.636 3.537 1.283 7.064 1.939 10.59.119.64.238 1.29.497 1.88.964 2.157 2.654 3.316 5.01 3.476.785.05 1.54-.09 2.276-.36 3.598-1.288 7.186-2.577 10.785-3.856 1.242-.44 2.395-.14 3.28.849a48.743 48.743 0 0 1 7.445 11 46.648 46.648 0 0 1 2.644 6.515c.368 1.16.12 2.208-.795 3.008-1.829 1.598-3.688 3.157-5.537 4.726-1.212 1.039-2.455 2.048-3.638 3.117-2.405 2.178-2.425 6.125-.029 8.313 1.411 1.279 2.892 2.488 4.343 3.717 1.621 1.388 3.271 2.747 4.871 4.156.905.8 1.173 1.839.795 2.988-1.719 5.305-4.264 10.181-7.664 14.587a64.715 64.715 0 0 1-2.485 2.998c-.845.959-1.918 1.239-3.111.829-2.515-.87-5.01-1.788-7.515-2.678-1.252-.45-2.485-.919-3.747-1.319-2.903-.939-6.153.71-7.078 3.637-.288.92-.427 1.889-.596 2.838-.586 3.157-1.153 6.315-1.73 9.472-.218 1.189-1.103 2.068-2.325 2.318-2.555.52-5.13.859-7.744.989-2.823.13-5.636.04-8.43-.34a84.91 84.91 0 0 1-3.965-.649c-1.243-.23-2.107-1.099-2.336-2.348-.567-3.047-1.113-6.095-1.67-9.142-.15-.84-.288-1.689-.467-2.528-.577-2.638-2.903-4.496-5.785-4.496h-.03Zm6.173-29.186c0 7.834 6.312 14.238 14.065 14.248a14.187 14.187 0 0 0 14.234-14.218c.01-7.823-6.332-14.218-14.115-14.218-7.833 0-14.184 6.345-14.184 14.198v-.01Z"
                                       fill={
                                         {
                                           "payload": 4289392367,
@@ -1079,80 +1085,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     />
                                     <RNSVGPath
-                                      d="M43.13 149.97c14.58 0 26.4-11.82 26.4-26.4 0-14.58-11.82-26.4-26.4-26.4-14.58 0-26.4 11.82-26.4 26.4 0 14.58 11.82 26.4 26.4 26.4Z"
+                                      d="M82.514 19.484c-.305-.17-7.724-4.049-16.741-.772a3.032 3.032 0 0 0-1.904 2.175l-2.703 11.485-.326 1.293a5.388 5.388 0 0 1-2.486 3.347 5.28 5.28 0 0 1-4.094.571l-13.9-3.738-.651.441c-.296.2-7.163 5-8.563 14.632a3.074 3.074 0 0 0 .986 2.736l8.76 7.897a6.632 6.632 0 0 1 2.339 5.351 6.58 6.58 0 0 1-2.753 5.141l-6.462 4.64a6.67 6.67 0 0 0-2.357 7.687c1.48 4.039 4.054 9.48 7.882 12.407.316.24.68.35 1.036.35.523 0 1.036-.24 1.381-.7a1.774 1.774 0 0 0-.335-2.456c-2.467-1.894-4.854-5.743-6.729-10.834-.483-1.302-.02-2.786 1.115-3.607l6.462-4.64a10.097 10.097 0 0 0 4.203-7.868c.128-3.166-1.184-6.153-3.542-8.147l-8.553-7.707c1.016-6.383 4.962-10.262 6.462-11.535l12.321 3.307a8.677 8.677 0 0 0 6.719-.931c2.042-1.213 3.492-3.167 4.084-5.502l2.989-12.618c7.419-2.585 13.634.602 13.742.662.839.45 1.885.12 2.329-.732a1.76 1.76 0 0 0-.72-2.365l.01.03ZM146.686 11.236c.753-.585.9-1.666.323-2.43a1.687 1.687 0 0 0-2.396-.327l-20.988 16.248a1.745 1.745 0 0 0-.323 2.43c.333.447.841.685 1.359.685.362 0 .724-.119 1.037-.357l20.988-16.249ZM153.148 31.619c-.167-.963-1.063-1.6-1.998-1.428l-24.46 4.578c-.935.172-1.555 1.093-1.387 2.056.147.85.876 1.458 1.693 1.458.098 0 .206 0 .305-.03l24.459-4.578c.935-.172 1.555-1.094 1.388-2.056Z"
                                       fill={
                                         {
                                           "payload": 4278240714,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M133.026 116.075c10.19-1.93 81.474-6.41 109.474 9.089l1.41-3.74c-24.41-15.763-101.104-11.269-111.624-9.269-5.67 1.07-9.65 6.1-9.26 11.68.25 3.64 2.38 8.28 11.09 9.68 15.98 2.57 29.78-.26 30.36-.38l-.82-3.92c-.14.03-13.65 2.8-28.9.34-7.4-1.2-7.66-4.82-7.74-6.01-.25-3.56 2.33-6.77 6.01-7.47Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M169.026 155.434c-.25 0-.5-.01-.74-.04-2.86-.28-4.82-2.19-5.36-5.23-.75-4.24 1.3-10.09 6.11-17.36 3.44-5.21 7.03-9.24 7.18-9.41l2.98 2.67c-3.83 4.28-13.5 16.84-12.33 23.41.28 1.59 1.04 1.88 1.81 1.95 4.02.4 12.54-5.66 14.87-11.62l3.72 1.46c-2.77 7.07-12.05 14.18-18.25 14.18l.01-.01Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M189.457 156.214c-.76-3.95-6.5-7.16-8.65-8.07l1.55-3.69c.4.17 9.71 4.14 11.03 11l-3.93.75v.01ZM155.287 153.674c-3.2 0-6.37-.78-8.24-3.29-2.41-3.24-3.22-8.18-2-12.31.99-3.35 3.17-5.81 6.13-6.91.74-.28 1.53-.47 2.35-.57l.5 3.97c-.52.06-1.01.18-1.46.35-2.25.84-3.25 2.8-3.69 4.29-.86 2.93-.3 6.54 1.37 8.78 2.42 3.25 11.11.99 13.96-.06l1.38 3.75c-.84.31-5.61 1.99-10.31 1.99l.01.01Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M168.896 168.314c-2.27 0-4.46-.51-6.55-1.52-8.18-3.97-11.68-14.35-11.83-14.79l3.8-1.25c.03.09 3.14 9.23 9.79 12.45 2.91 1.41 6.03 1.48 9.51.21 3.5-1.27 5.57-2.79 5.68-4.17.14-1.9-3.15-4.62-5.42-5.85l1.9-3.52c.81.44 7.89 4.42 7.51 9.66-.23 3.15-3.02 5.72-8.3 7.64-2.08.76-4.12 1.14-6.09 1.14Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M241 177.662c-35.5 4.5-64.721-10.34-65.647-10.804l1.798-3.576c.218.105 30.849 14.38 63.595 10.39l.254 3.99Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
                                           "type": 0,
                                         }
                                       }
@@ -1216,6 +1152,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -1223,6 +1160,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -1364,7 +1302,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 }
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.3}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1858,6 +1796,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="largeTitle"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -1865,6 +1804,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "lineHeight": 43,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -1895,6 +1835,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -1902,6 +1843,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -2110,6 +2052,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -2117,6 +2060,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -2140,6 +2084,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -2147,6 +2092,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -2229,6 +2175,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -2237,6 +2184,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -2319,6 +2267,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -2326,6 +2275,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -2357,6 +2307,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -2366,6 +2317,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -2449,6 +2401,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -2457,6 +2410,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -2539,6 +2493,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -2546,6 +2501,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -2610,6 +2566,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   color="grey-700"
                                   defaultColor="blue"
                                   defaultWeight="Bold"
+                                  dynamicTypeRamp="footnote"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -2617,6 +2574,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       "lineHeight": 21,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -2685,10 +2643,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     }
                                   >
                                     <RNSVGPath
-                                      d="M60.77 115.18c-14.23 0-27.7-8.57-33.22-22.59-7.21-18.3 1.81-39.05 20.11-46.26 15.97-6.29 34.17-.32 43.27 14.2.44.7.23 1.63-.47 2.07-.7.44-1.63.23-2.07-.47-8.34-13.29-25-18.76-39.63-13C32 55.73 23.74 74.74 30.34 91.5c6.6 16.76 25.6 25.02 42.37 18.42.77-.3 1.64.07 1.95.85.3.77-.08 1.64-.85 1.95a35.392 35.392 0 0 1-13.03 2.48l-.01-.02Z"
+                                      d="M195.491 126.862a2.322 2.322 0 0 0 1.05 2.853c1.937 1.057 47.11 25.409 69.065 17.362.273-.1.546-.2.811-.322l-1.789-4.288c-7.973 3.305-21.801 1.502-40.007-5.234-10.895-4.028-20.372-8.749-24.13-10.683 2.897-9.392 1.388-19.01.164-24.085-.909-3.783-4.412-6.404-8.332-6.253-3.089.12-5.812 1.908-7.111 4.67-2.043 4.308-4.723 11.531-6.005 15.079-4.101-1.587-14.171-6.671-32.443-17.153a17.256 17.256 0 0 0-9.991-2.245 9.503 9.503 0 0 0-8.65 7.891c-.468 2.767.279 5.57 2.076 7.693 4.78 5.687 15.519 13.331 19.958 16.376-1.58 2.705-2.639 6.491-2.471 11.793a33.282 33.282 0 0 0 1.053 7.203s-.013.029-.009.04l.021-.008c2.325 8.875 8.39 17.144 18.139 24.657 34.542 26.591 71.474 28.652 73.036 28.722l.227-4.631c-.364-.015-37.069-2.097-70.417-27.767-8.446-6.494-13.841-13.514-16.143-20.914 1.301-3.702 4.622-10.493 9.554-11.46 4.098-.81 9.208 2.508 14.784 9.585a4.255 4.255 0 0 1 .621 4.11c-.476 1.262-1.481 2.1-2.753 2.344-3.83.699-7.866-.813-11.986-4.505l-3.099 3.459c6.536 5.847 12.268 6.28 15.933 5.604a8.138 8.138 0 0 0 1.36-.375c2.237-.819 4.019-2.573 4.898-4.897.988-2.599.663-5.532-.797-7.852 2.883-6.198 2.049-12.504-2.393-17.203-5.878-6.213-15.803-7.506-24.137-3.13-.8.417-1.625.967-2.429 1.644-4.041-2.77-14.898-10.432-19.392-15.78a4.887 4.887 0 0 1-1.054-3.94 4.881 4.881 0 0 1 4.431-4.046 12.632 12.632 0 0 1 7.302 1.637c13.931 8.007 31.469 17.67 35.889 18.274a2.318 2.318 0 0 0 2.51-1.525c.034-.111 3.961-11.178 6.57-16.707.568-1.184 1.747-1.95 3.088-2.009 1.708-.07 3.239 1.062 3.631 2.698 1.178 4.92 2.671 14.494-.67 23.319l.037-.001Zm-37.721.54c7.237-3.79 14.83-1.765 18.595 2.206 2.595 2.744 3.388 6.211 2.374 9.882-5.784-6.259-11.322-8.926-16.481-7.9-4.489.891-7.725 4.413-9.899 7.929-.071-6.116 1.747-10.194 5.411-12.117Z"
                                       fill={
                                         {
-                                          "payload": 4278240714,
+                                          "payload": 4278927075,
                                           "type": 0,
                                         }
                                       }
@@ -2699,21 +2657,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     />
                                     <RNSVGPath
-                                      d="M90.301 63.72h-.15l-29.63-2.98c-.82-.08-1.42-.82-1.34-1.64.08-.82.84-1.42 1.64-1.34l28.08 2.83 1.65-27.16c.05-.83.75-1.45 1.59-1.41a1.5 1.5 0 0 1 1.41 1.59l-1.74 28.72c-.02.41-.21.79-.53 1.05-.27.23-.62.36-.97.36l-.01-.02Z"
-                                      fill={
-                                        {
-                                          "payload": 4278240714,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="m144.48 143.66 1.16-5.41 2.04-2.6 3.33-.83c.16-.46.31-.92.44-1.39l-3.11.47-6.8-.96h-9.24s-3.35-.93-5.35-1.75c-2-.82-1.78-1.35-2.36-2.01-.57-.66-1.43-.82-1.43-.82l.02-3.01-.86-1.79 3.25-4.74 2.17-1.69 2.84-1.05 4.03-.7 13.72-1.48 3.15-.11c-4.23-14.53-17.63-25.15-33.52-25.15H42.91C23.63 88.65 8 104.28 8 123.57c0 19.28 15.63 34.91 34.91 34.91h75.05c10.86 0 20.56-4.96 26.96-12.73l-.45-2.08.01-.01Z"
+                                      d="M53.78 92.97c-.497 0-1.153.12-1.8.36-3.598 1.288-7.206 2.577-10.804 3.866-1.243.45-2.406.15-3.29-.84a48.829 48.829 0 0 1-6.949-10 46.713 46.713 0 0 1-3.15-7.534c-.368-1.16-.11-2.209.804-3.008 1.82-1.598 3.678-3.147 5.527-4.716 1.213-1.039 2.455-2.048 3.638-3.117 2.416-2.178 2.446-6.125.03-8.323-1.412-1.279-2.892-2.488-4.344-3.717-1.62-1.379-3.26-2.738-4.85-4.146-.915-.81-1.173-1.859-.796-3.028a47.678 47.678 0 0 1 3.4-7.973 48.14 48.14 0 0 1 6.75-9.592c.854-.95 1.928-1.229 3.12-.81 2.903 1.02 5.795 2.069 8.698 3.098.835.3 1.66.62 2.505.88 3.33 1.038 6.72-1.02 7.366-4.457.556-2.977 1.083-5.955 1.63-8.932.149-.84.298-1.669.457-2.498.248-1.27 1.123-2.108 2.386-2.368 2.584-.52 5.178-.86 7.813-.98 2.634-.12 5.258-.05 7.862.29 1.431.19 2.853.43 4.274.69 1.462.27 2.247 1.109 2.515 2.568.636 3.537 1.283 7.064 1.939 10.59.119.64.238 1.29.497 1.88.964 2.157 2.654 3.316 5.01 3.476.785.05 1.54-.09 2.276-.36 3.598-1.288 7.186-2.577 10.785-3.856 1.242-.44 2.395-.14 3.28.849a48.743 48.743 0 0 1 7.445 11 46.648 46.648 0 0 1 2.644 6.515c.368 1.16.12 2.208-.795 3.008-1.829 1.598-3.688 3.157-5.537 4.726-1.212 1.039-2.455 2.048-3.638 3.117-2.405 2.178-2.425 6.125-.029 8.313 1.411 1.279 2.892 2.488 4.343 3.717 1.621 1.388 3.271 2.747 4.871 4.156.905.8 1.173 1.839.795 2.988-1.719 5.305-4.264 10.181-7.664 14.587a64.715 64.715 0 0 1-2.485 2.998c-.845.959-1.918 1.239-3.111.829-2.515-.87-5.01-1.788-7.515-2.678-1.252-.45-2.485-.919-3.747-1.319-2.903-.939-6.153.71-7.078 3.637-.288.92-.427 1.889-.596 2.838-.586 3.157-1.153 6.315-1.73 9.472-.218 1.189-1.103 2.068-2.325 2.318-2.555.52-5.13.859-7.744.989-2.823.13-5.636.04-8.43-.34a84.91 84.91 0 0 1-3.965-.649c-1.243-.23-2.107-1.099-2.336-2.348-.567-3.047-1.113-6.095-1.67-9.142-.15-.84-.288-1.689-.467-2.528-.577-2.638-2.903-4.496-5.785-4.496h-.03Zm6.173-29.186c0 7.834 6.312 14.238 14.065 14.248a14.187 14.187 0 0 0 14.234-14.218c.01-7.823-6.332-14.218-14.115-14.218-7.833 0-14.184 6.345-14.184 14.198v-.01Z"
                                       fill={
                                         {
                                           "payload": 4289392367,
@@ -2727,80 +2671,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     />
                                     <RNSVGPath
-                                      d="M43.13 149.97c14.58 0 26.4-11.82 26.4-26.4 0-14.58-11.82-26.4-26.4-26.4-14.58 0-26.4 11.82-26.4 26.4 0 14.58 11.82 26.4 26.4 26.4Z"
+                                      d="M82.514 19.484c-.305-.17-7.724-4.049-16.741-.772a3.032 3.032 0 0 0-1.904 2.175l-2.703 11.485-.326 1.293a5.388 5.388 0 0 1-2.486 3.347 5.28 5.28 0 0 1-4.094.571l-13.9-3.738-.651.441c-.296.2-7.163 5-8.563 14.632a3.074 3.074 0 0 0 .986 2.736l8.76 7.897a6.632 6.632 0 0 1 2.339 5.351 6.58 6.58 0 0 1-2.753 5.141l-6.462 4.64a6.67 6.67 0 0 0-2.357 7.687c1.48 4.039 4.054 9.48 7.882 12.407.316.24.68.35 1.036.35.523 0 1.036-.24 1.381-.7a1.774 1.774 0 0 0-.335-2.456c-2.467-1.894-4.854-5.743-6.729-10.834-.483-1.302-.02-2.786 1.115-3.607l6.462-4.64a10.097 10.097 0 0 0 4.203-7.868c.128-3.166-1.184-6.153-3.542-8.147l-8.553-7.707c1.016-6.383 4.962-10.262 6.462-11.535l12.321 3.307a8.677 8.677 0 0 0 6.719-.931c2.042-1.213 3.492-3.167 4.084-5.502l2.989-12.618c7.419-2.585 13.634.602 13.742.662.839.45 1.885.12 2.329-.732a1.76 1.76 0 0 0-.72-2.365l.01.03ZM146.686 11.236c.753-.585.9-1.666.323-2.43a1.687 1.687 0 0 0-2.396-.327l-20.988 16.248a1.745 1.745 0 0 0-.323 2.43c.333.447.841.685 1.359.685.362 0 .724-.119 1.037-.357l20.988-16.249ZM153.148 31.619c-.167-.963-1.063-1.6-1.998-1.428l-24.46 4.578c-.935.172-1.555 1.093-1.387 2.056.147.85.876 1.458 1.693 1.458.098 0 .206 0 .305-.03l24.459-4.578c.935-.172 1.555-1.094 1.388-2.056Z"
                                       fill={
                                         {
                                           "payload": 4278240714,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M133.026 116.075c10.19-1.93 81.474-6.41 109.474 9.089l1.41-3.74c-24.41-15.763-101.104-11.269-111.624-9.269-5.67 1.07-9.65 6.1-9.26 11.68.25 3.64 2.38 8.28 11.09 9.68 15.98 2.57 29.78-.26 30.36-.38l-.82-3.92c-.14.03-13.65 2.8-28.9.34-7.4-1.2-7.66-4.82-7.74-6.01-.25-3.56 2.33-6.77 6.01-7.47Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M169.026 155.434c-.25 0-.5-.01-.74-.04-2.86-.28-4.82-2.19-5.36-5.23-.75-4.24 1.3-10.09 6.11-17.36 3.44-5.21 7.03-9.24 7.18-9.41l2.98 2.67c-3.83 4.28-13.5 16.84-12.33 23.41.28 1.59 1.04 1.88 1.81 1.95 4.02.4 12.54-5.66 14.87-11.62l3.72 1.46c-2.77 7.07-12.05 14.18-18.25 14.18l.01-.01Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M189.457 156.214c-.76-3.95-6.5-7.16-8.65-8.07l1.55-3.69c.4.17 9.71 4.14 11.03 11l-3.93.75v.01ZM155.287 153.674c-3.2 0-6.37-.78-8.24-3.29-2.41-3.24-3.22-8.18-2-12.31.99-3.35 3.17-5.81 6.13-6.91.74-.28 1.53-.47 2.35-.57l.5 3.97c-.52.06-1.01.18-1.46.35-2.25.84-3.25 2.8-3.69 4.29-.86 2.93-.3 6.54 1.37 8.78 2.42 3.25 11.11.99 13.96-.06l1.38 3.75c-.84.31-5.61 1.99-10.31 1.99l.01.01Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M168.896 168.314c-2.27 0-4.46-.51-6.55-1.52-8.18-3.97-11.68-14.35-11.83-14.79l3.8-1.25c.03.09 3.14 9.23 9.79 12.45 2.91 1.41 6.03 1.48 9.51.21 3.5-1.27 5.57-2.79 5.68-4.17.14-1.9-3.15-4.62-5.42-5.85l1.9-3.52c.81.44 7.89 4.42 7.51 9.66-.23 3.15-3.02 5.72-8.3 7.64-2.08.76-4.12 1.14-6.09 1.14Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M241 177.662c-35.5 4.5-64.721-10.34-65.647-10.804l1.798-3.576c.218.105 30.849 14.38 63.595 10.39l.254 3.99Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
                                           "type": 0,
                                         }
                                       }
@@ -2864,6 +2738,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -2871,6 +2746,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -3013,7 +2889,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 }
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.3}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -3507,6 +3383,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="largeTitle"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -3514,6 +3391,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "lineHeight": 43,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -3544,6 +3422,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -3551,6 +3430,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -3759,6 +3639,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -3766,6 +3647,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -3789,6 +3671,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -3796,6 +3679,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -3878,6 +3762,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -3886,6 +3771,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -3968,6 +3854,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -3975,6 +3862,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -4006,6 +3894,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -4015,6 +3904,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -4098,6 +3988,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -4106,6 +3997,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -4188,6 +4080,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -4195,6 +4088,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -4259,6 +4153,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   color="grey-700"
                                   defaultColor="blue"
                                   defaultWeight="Bold"
+                                  dynamicTypeRamp="footnote"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -4266,6 +4161,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       "lineHeight": 21,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -4334,10 +4230,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     }
                                   >
                                     <RNSVGPath
-                                      d="M60.77 115.18c-14.23 0-27.7-8.57-33.22-22.59-7.21-18.3 1.81-39.05 20.11-46.26 15.97-6.29 34.17-.32 43.27 14.2.44.7.23 1.63-.47 2.07-.7.44-1.63.23-2.07-.47-8.34-13.29-25-18.76-39.63-13C32 55.73 23.74 74.74 30.34 91.5c6.6 16.76 25.6 25.02 42.37 18.42.77-.3 1.64.07 1.95.85.3.77-.08 1.64-.85 1.95a35.392 35.392 0 0 1-13.03 2.48l-.01-.02Z"
+                                      d="M195.491 126.862a2.322 2.322 0 0 0 1.05 2.853c1.937 1.057 47.11 25.409 69.065 17.362.273-.1.546-.2.811-.322l-1.789-4.288c-7.973 3.305-21.801 1.502-40.007-5.234-10.895-4.028-20.372-8.749-24.13-10.683 2.897-9.392 1.388-19.01.164-24.085-.909-3.783-4.412-6.404-8.332-6.253-3.089.12-5.812 1.908-7.111 4.67-2.043 4.308-4.723 11.531-6.005 15.079-4.101-1.587-14.171-6.671-32.443-17.153a17.256 17.256 0 0 0-9.991-2.245 9.503 9.503 0 0 0-8.65 7.891c-.468 2.767.279 5.57 2.076 7.693 4.78 5.687 15.519 13.331 19.958 16.376-1.58 2.705-2.639 6.491-2.471 11.793a33.282 33.282 0 0 0 1.053 7.203s-.013.029-.009.04l.021-.008c2.325 8.875 8.39 17.144 18.139 24.657 34.542 26.591 71.474 28.652 73.036 28.722l.227-4.631c-.364-.015-37.069-2.097-70.417-27.767-8.446-6.494-13.841-13.514-16.143-20.914 1.301-3.702 4.622-10.493 9.554-11.46 4.098-.81 9.208 2.508 14.784 9.585a4.255 4.255 0 0 1 .621 4.11c-.476 1.262-1.481 2.1-2.753 2.344-3.83.699-7.866-.813-11.986-4.505l-3.099 3.459c6.536 5.847 12.268 6.28 15.933 5.604a8.138 8.138 0 0 0 1.36-.375c2.237-.819 4.019-2.573 4.898-4.897.988-2.599.663-5.532-.797-7.852 2.883-6.198 2.049-12.504-2.393-17.203-5.878-6.213-15.803-7.506-24.137-3.13-.8.417-1.625.967-2.429 1.644-4.041-2.77-14.898-10.432-19.392-15.78a4.887 4.887 0 0 1-1.054-3.94 4.881 4.881 0 0 1 4.431-4.046 12.632 12.632 0 0 1 7.302 1.637c13.931 8.007 31.469 17.67 35.889 18.274a2.318 2.318 0 0 0 2.51-1.525c.034-.111 3.961-11.178 6.57-16.707.568-1.184 1.747-1.95 3.088-2.009 1.708-.07 3.239 1.062 3.631 2.698 1.178 4.92 2.671 14.494-.67 23.319l.037-.001Zm-37.721.54c7.237-3.79 14.83-1.765 18.595 2.206 2.595 2.744 3.388 6.211 2.374 9.882-5.784-6.259-11.322-8.926-16.481-7.9-4.489.891-7.725 4.413-9.899 7.929-.071-6.116 1.747-10.194 5.411-12.117Z"
                                       fill={
                                         {
-                                          "payload": 4278240714,
+                                          "payload": 4278927075,
                                           "type": 0,
                                         }
                                       }
@@ -4348,21 +4244,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     />
                                     <RNSVGPath
-                                      d="M90.301 63.72h-.15l-29.63-2.98c-.82-.08-1.42-.82-1.34-1.64.08-.82.84-1.42 1.64-1.34l28.08 2.83 1.65-27.16c.05-.83.75-1.45 1.59-1.41a1.5 1.5 0 0 1 1.41 1.59l-1.74 28.72c-.02.41-.21.79-.53 1.05-.27.23-.62.36-.97.36l-.01-.02Z"
-                                      fill={
-                                        {
-                                          "payload": 4278240714,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="m144.48 143.66 1.16-5.41 2.04-2.6 3.33-.83c.16-.46.31-.92.44-1.39l-3.11.47-6.8-.96h-9.24s-3.35-.93-5.35-1.75c-2-.82-1.78-1.35-2.36-2.01-.57-.66-1.43-.82-1.43-.82l.02-3.01-.86-1.79 3.25-4.74 2.17-1.69 2.84-1.05 4.03-.7 13.72-1.48 3.15-.11c-4.23-14.53-17.63-25.15-33.52-25.15H42.91C23.63 88.65 8 104.28 8 123.57c0 19.28 15.63 34.91 34.91 34.91h75.05c10.86 0 20.56-4.96 26.96-12.73l-.45-2.08.01-.01Z"
+                                      d="M53.78 92.97c-.497 0-1.153.12-1.8.36-3.598 1.288-7.206 2.577-10.804 3.866-1.243.45-2.406.15-3.29-.84a48.829 48.829 0 0 1-6.949-10 46.713 46.713 0 0 1-3.15-7.534c-.368-1.16-.11-2.209.804-3.008 1.82-1.598 3.678-3.147 5.527-4.716 1.213-1.039 2.455-2.048 3.638-3.117 2.416-2.178 2.446-6.125.03-8.323-1.412-1.279-2.892-2.488-4.344-3.717-1.62-1.379-3.26-2.738-4.85-4.146-.915-.81-1.173-1.859-.796-3.028a47.678 47.678 0 0 1 3.4-7.973 48.14 48.14 0 0 1 6.75-9.592c.854-.95 1.928-1.229 3.12-.81 2.903 1.02 5.795 2.069 8.698 3.098.835.3 1.66.62 2.505.88 3.33 1.038 6.72-1.02 7.366-4.457.556-2.977 1.083-5.955 1.63-8.932.149-.84.298-1.669.457-2.498.248-1.27 1.123-2.108 2.386-2.368 2.584-.52 5.178-.86 7.813-.98 2.634-.12 5.258-.05 7.862.29 1.431.19 2.853.43 4.274.69 1.462.27 2.247 1.109 2.515 2.568.636 3.537 1.283 7.064 1.939 10.59.119.64.238 1.29.497 1.88.964 2.157 2.654 3.316 5.01 3.476.785.05 1.54-.09 2.276-.36 3.598-1.288 7.186-2.577 10.785-3.856 1.242-.44 2.395-.14 3.28.849a48.743 48.743 0 0 1 7.445 11 46.648 46.648 0 0 1 2.644 6.515c.368 1.16.12 2.208-.795 3.008-1.829 1.598-3.688 3.157-5.537 4.726-1.212 1.039-2.455 2.048-3.638 3.117-2.405 2.178-2.425 6.125-.029 8.313 1.411 1.279 2.892 2.488 4.343 3.717 1.621 1.388 3.271 2.747 4.871 4.156.905.8 1.173 1.839.795 2.988-1.719 5.305-4.264 10.181-7.664 14.587a64.715 64.715 0 0 1-2.485 2.998c-.845.959-1.918 1.239-3.111.829-2.515-.87-5.01-1.788-7.515-2.678-1.252-.45-2.485-.919-3.747-1.319-2.903-.939-6.153.71-7.078 3.637-.288.92-.427 1.889-.596 2.838-.586 3.157-1.153 6.315-1.73 9.472-.218 1.189-1.103 2.068-2.325 2.318-2.555.52-5.13.859-7.744.989-2.823.13-5.636.04-8.43-.34a84.91 84.91 0 0 1-3.965-.649c-1.243-.23-2.107-1.099-2.336-2.348-.567-3.047-1.113-6.095-1.67-9.142-.15-.84-.288-1.689-.467-2.528-.577-2.638-2.903-4.496-5.785-4.496h-.03Zm6.173-29.186c0 7.834 6.312 14.238 14.065 14.248a14.187 14.187 0 0 0 14.234-14.218c.01-7.823-6.332-14.218-14.115-14.218-7.833 0-14.184 6.345-14.184 14.198v-.01Z"
                                       fill={
                                         {
                                           "payload": 4289392367,
@@ -4376,80 +4258,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     />
                                     <RNSVGPath
-                                      d="M43.13 149.97c14.58 0 26.4-11.82 26.4-26.4 0-14.58-11.82-26.4-26.4-26.4-14.58 0-26.4 11.82-26.4 26.4 0 14.58 11.82 26.4 26.4 26.4Z"
+                                      d="M82.514 19.484c-.305-.17-7.724-4.049-16.741-.772a3.032 3.032 0 0 0-1.904 2.175l-2.703 11.485-.326 1.293a5.388 5.388 0 0 1-2.486 3.347 5.28 5.28 0 0 1-4.094.571l-13.9-3.738-.651.441c-.296.2-7.163 5-8.563 14.632a3.074 3.074 0 0 0 .986 2.736l8.76 7.897a6.632 6.632 0 0 1 2.339 5.351 6.58 6.58 0 0 1-2.753 5.141l-6.462 4.64a6.67 6.67 0 0 0-2.357 7.687c1.48 4.039 4.054 9.48 7.882 12.407.316.24.68.35 1.036.35.523 0 1.036-.24 1.381-.7a1.774 1.774 0 0 0-.335-2.456c-2.467-1.894-4.854-5.743-6.729-10.834-.483-1.302-.02-2.786 1.115-3.607l6.462-4.64a10.097 10.097 0 0 0 4.203-7.868c.128-3.166-1.184-6.153-3.542-8.147l-8.553-7.707c1.016-6.383 4.962-10.262 6.462-11.535l12.321 3.307a8.677 8.677 0 0 0 6.719-.931c2.042-1.213 3.492-3.167 4.084-5.502l2.989-12.618c7.419-2.585 13.634.602 13.742.662.839.45 1.885.12 2.329-.732a1.76 1.76 0 0 0-.72-2.365l.01.03ZM146.686 11.236c.753-.585.9-1.666.323-2.43a1.687 1.687 0 0 0-2.396-.327l-20.988 16.248a1.745 1.745 0 0 0-.323 2.43c.333.447.841.685 1.359.685.362 0 .724-.119 1.037-.357l20.988-16.249ZM153.148 31.619c-.167-.963-1.063-1.6-1.998-1.428l-24.46 4.578c-.935.172-1.555 1.093-1.387 2.056.147.85.876 1.458 1.693 1.458.098 0 .206 0 .305-.03l24.459-4.578c.935-.172 1.555-1.094 1.388-2.056Z"
                                       fill={
                                         {
                                           "payload": 4278240714,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M133.026 116.075c10.19-1.93 81.474-6.41 109.474 9.089l1.41-3.74c-24.41-15.763-101.104-11.269-111.624-9.269-5.67 1.07-9.65 6.1-9.26 11.68.25 3.64 2.38 8.28 11.09 9.68 15.98 2.57 29.78-.26 30.36-.38l-.82-3.92c-.14.03-13.65 2.8-28.9.34-7.4-1.2-7.66-4.82-7.74-6.01-.25-3.56 2.33-6.77 6.01-7.47Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M169.026 155.434c-.25 0-.5-.01-.74-.04-2.86-.28-4.82-2.19-5.36-5.23-.75-4.24 1.3-10.09 6.11-17.36 3.44-5.21 7.03-9.24 7.18-9.41l2.98 2.67c-3.83 4.28-13.5 16.84-12.33 23.41.28 1.59 1.04 1.88 1.81 1.95 4.02.4 12.54-5.66 14.87-11.62l3.72 1.46c-2.77 7.07-12.05 14.18-18.25 14.18l.01-.01Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M189.457 156.214c-.76-3.95-6.5-7.16-8.65-8.07l1.55-3.69c.4.17 9.71 4.14 11.03 11l-3.93.75v.01ZM155.287 153.674c-3.2 0-6.37-.78-8.24-3.29-2.41-3.24-3.22-8.18-2-12.31.99-3.35 3.17-5.81 6.13-6.91.74-.28 1.53-.47 2.35-.57l.5 3.97c-.52.06-1.01.18-1.46.35-2.25.84-3.25 2.8-3.69 4.29-.86 2.93-.3 6.54 1.37 8.78 2.42 3.25 11.11.99 13.96-.06l1.38 3.75c-.84.31-5.61 1.99-10.31 1.99l.01.01Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M168.896 168.314c-2.27 0-4.46-.51-6.55-1.52-8.18-3.97-11.68-14.35-11.83-14.79l3.8-1.25c.03.09 3.14 9.23 9.79 12.45 2.91 1.41 6.03 1.48 9.51.21 3.5-1.27 5.57-2.79 5.68-4.17.14-1.9-3.15-4.62-5.42-5.85l1.9-3.52c.81.44 7.89 4.42 7.51 9.66-.23 3.15-3.02 5.72-8.3 7.64-2.08.76-4.12 1.14-6.09 1.14Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M241 177.662c-35.5 4.5-64.721-10.34-65.647-10.804l1.798-3.576c.218.105 30.849 14.38 63.595 10.39l.254 3.99Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
                                           "type": 0,
                                         }
                                       }
@@ -4513,6 +4325,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -4520,6 +4333,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -4662,7 +4476,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 }
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.3}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -5156,6 +4970,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="largeTitle"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -5163,6 +4978,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "lineHeight": 43,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -5193,6 +5009,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -5200,6 +5017,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -5408,6 +5226,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -5415,6 +5234,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -5438,6 +5258,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -5445,6 +5266,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -5527,6 +5349,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -5535,6 +5358,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -5617,6 +5441,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -5624,6 +5449,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -5655,6 +5481,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -5664,6 +5491,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -5747,6 +5575,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -5755,6 +5584,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -5837,6 +5667,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -5844,6 +5675,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -5908,6 +5740,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   color="grey-700"
                                   defaultColor="blue"
                                   defaultWeight="Bold"
+                                  dynamicTypeRamp="footnote"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -5915,6 +5748,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       "lineHeight": 21,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -5983,10 +5817,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     }
                                   >
                                     <RNSVGPath
-                                      d="M60.77 115.18c-14.23 0-27.7-8.57-33.22-22.59-7.21-18.3 1.81-39.05 20.11-46.26 15.97-6.29 34.17-.32 43.27 14.2.44.7.23 1.63-.47 2.07-.7.44-1.63.23-2.07-.47-8.34-13.29-25-18.76-39.63-13C32 55.73 23.74 74.74 30.34 91.5c6.6 16.76 25.6 25.02 42.37 18.42.77-.3 1.64.07 1.95.85.3.77-.08 1.64-.85 1.95a35.392 35.392 0 0 1-13.03 2.48l-.01-.02Z"
+                                      d="M195.491 126.862a2.322 2.322 0 0 0 1.05 2.853c1.937 1.057 47.11 25.409 69.065 17.362.273-.1.546-.2.811-.322l-1.789-4.288c-7.973 3.305-21.801 1.502-40.007-5.234-10.895-4.028-20.372-8.749-24.13-10.683 2.897-9.392 1.388-19.01.164-24.085-.909-3.783-4.412-6.404-8.332-6.253-3.089.12-5.812 1.908-7.111 4.67-2.043 4.308-4.723 11.531-6.005 15.079-4.101-1.587-14.171-6.671-32.443-17.153a17.256 17.256 0 0 0-9.991-2.245 9.503 9.503 0 0 0-8.65 7.891c-.468 2.767.279 5.57 2.076 7.693 4.78 5.687 15.519 13.331 19.958 16.376-1.58 2.705-2.639 6.491-2.471 11.793a33.282 33.282 0 0 0 1.053 7.203s-.013.029-.009.04l.021-.008c2.325 8.875 8.39 17.144 18.139 24.657 34.542 26.591 71.474 28.652 73.036 28.722l.227-4.631c-.364-.015-37.069-2.097-70.417-27.767-8.446-6.494-13.841-13.514-16.143-20.914 1.301-3.702 4.622-10.493 9.554-11.46 4.098-.81 9.208 2.508 14.784 9.585a4.255 4.255 0 0 1 .621 4.11c-.476 1.262-1.481 2.1-2.753 2.344-3.83.699-7.866-.813-11.986-4.505l-3.099 3.459c6.536 5.847 12.268 6.28 15.933 5.604a8.138 8.138 0 0 0 1.36-.375c2.237-.819 4.019-2.573 4.898-4.897.988-2.599.663-5.532-.797-7.852 2.883-6.198 2.049-12.504-2.393-17.203-5.878-6.213-15.803-7.506-24.137-3.13-.8.417-1.625.967-2.429 1.644-4.041-2.77-14.898-10.432-19.392-15.78a4.887 4.887 0 0 1-1.054-3.94 4.881 4.881 0 0 1 4.431-4.046 12.632 12.632 0 0 1 7.302 1.637c13.931 8.007 31.469 17.67 35.889 18.274a2.318 2.318 0 0 0 2.51-1.525c.034-.111 3.961-11.178 6.57-16.707.568-1.184 1.747-1.95 3.088-2.009 1.708-.07 3.239 1.062 3.631 2.698 1.178 4.92 2.671 14.494-.67 23.319l.037-.001Zm-37.721.54c7.237-3.79 14.83-1.765 18.595 2.206 2.595 2.744 3.388 6.211 2.374 9.882-5.784-6.259-11.322-8.926-16.481-7.9-4.489.891-7.725 4.413-9.899 7.929-.071-6.116 1.747-10.194 5.411-12.117Z"
                                       fill={
                                         {
-                                          "payload": 4278240714,
+                                          "payload": 4278927075,
                                           "type": 0,
                                         }
                                       }
@@ -5997,21 +5831,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     />
                                     <RNSVGPath
-                                      d="M90.301 63.72h-.15l-29.63-2.98c-.82-.08-1.42-.82-1.34-1.64.08-.82.84-1.42 1.64-1.34l28.08 2.83 1.65-27.16c.05-.83.75-1.45 1.59-1.41a1.5 1.5 0 0 1 1.41 1.59l-1.74 28.72c-.02.41-.21.79-.53 1.05-.27.23-.62.36-.97.36l-.01-.02Z"
-                                      fill={
-                                        {
-                                          "payload": 4278240714,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="m144.48 143.66 1.16-5.41 2.04-2.6 3.33-.83c.16-.46.31-.92.44-1.39l-3.11.47-6.8-.96h-9.24s-3.35-.93-5.35-1.75c-2-.82-1.78-1.35-2.36-2.01-.57-.66-1.43-.82-1.43-.82l.02-3.01-.86-1.79 3.25-4.74 2.17-1.69 2.84-1.05 4.03-.7 13.72-1.48 3.15-.11c-4.23-14.53-17.63-25.15-33.52-25.15H42.91C23.63 88.65 8 104.28 8 123.57c0 19.28 15.63 34.91 34.91 34.91h75.05c10.86 0 20.56-4.96 26.96-12.73l-.45-2.08.01-.01Z"
+                                      d="M53.78 92.97c-.497 0-1.153.12-1.8.36-3.598 1.288-7.206 2.577-10.804 3.866-1.243.45-2.406.15-3.29-.84a48.829 48.829 0 0 1-6.949-10 46.713 46.713 0 0 1-3.15-7.534c-.368-1.16-.11-2.209.804-3.008 1.82-1.598 3.678-3.147 5.527-4.716 1.213-1.039 2.455-2.048 3.638-3.117 2.416-2.178 2.446-6.125.03-8.323-1.412-1.279-2.892-2.488-4.344-3.717-1.62-1.379-3.26-2.738-4.85-4.146-.915-.81-1.173-1.859-.796-3.028a47.678 47.678 0 0 1 3.4-7.973 48.14 48.14 0 0 1 6.75-9.592c.854-.95 1.928-1.229 3.12-.81 2.903 1.02 5.795 2.069 8.698 3.098.835.3 1.66.62 2.505.88 3.33 1.038 6.72-1.02 7.366-4.457.556-2.977 1.083-5.955 1.63-8.932.149-.84.298-1.669.457-2.498.248-1.27 1.123-2.108 2.386-2.368 2.584-.52 5.178-.86 7.813-.98 2.634-.12 5.258-.05 7.862.29 1.431.19 2.853.43 4.274.69 1.462.27 2.247 1.109 2.515 2.568.636 3.537 1.283 7.064 1.939 10.59.119.64.238 1.29.497 1.88.964 2.157 2.654 3.316 5.01 3.476.785.05 1.54-.09 2.276-.36 3.598-1.288 7.186-2.577 10.785-3.856 1.242-.44 2.395-.14 3.28.849a48.743 48.743 0 0 1 7.445 11 46.648 46.648 0 0 1 2.644 6.515c.368 1.16.12 2.208-.795 3.008-1.829 1.598-3.688 3.157-5.537 4.726-1.212 1.039-2.455 2.048-3.638 3.117-2.405 2.178-2.425 6.125-.029 8.313 1.411 1.279 2.892 2.488 4.343 3.717 1.621 1.388 3.271 2.747 4.871 4.156.905.8 1.173 1.839.795 2.988-1.719 5.305-4.264 10.181-7.664 14.587a64.715 64.715 0 0 1-2.485 2.998c-.845.959-1.918 1.239-3.111.829-2.515-.87-5.01-1.788-7.515-2.678-1.252-.45-2.485-.919-3.747-1.319-2.903-.939-6.153.71-7.078 3.637-.288.92-.427 1.889-.596 2.838-.586 3.157-1.153 6.315-1.73 9.472-.218 1.189-1.103 2.068-2.325 2.318-2.555.52-5.13.859-7.744.989-2.823.13-5.636.04-8.43-.34a84.91 84.91 0 0 1-3.965-.649c-1.243-.23-2.107-1.099-2.336-2.348-.567-3.047-1.113-6.095-1.67-9.142-.15-.84-.288-1.689-.467-2.528-.577-2.638-2.903-4.496-5.785-4.496h-.03Zm6.173-29.186c0 7.834 6.312 14.238 14.065 14.248a14.187 14.187 0 0 0 14.234-14.218c.01-7.823-6.332-14.218-14.115-14.218-7.833 0-14.184 6.345-14.184 14.198v-.01Z"
                                       fill={
                                         {
                                           "payload": 4289392367,
@@ -6025,80 +5845,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     />
                                     <RNSVGPath
-                                      d="M43.13 149.97c14.58 0 26.4-11.82 26.4-26.4 0-14.58-11.82-26.4-26.4-26.4-14.58 0-26.4 11.82-26.4 26.4 0 14.58 11.82 26.4 26.4 26.4Z"
+                                      d="M82.514 19.484c-.305-.17-7.724-4.049-16.741-.772a3.032 3.032 0 0 0-1.904 2.175l-2.703 11.485-.326 1.293a5.388 5.388 0 0 1-2.486 3.347 5.28 5.28 0 0 1-4.094.571l-13.9-3.738-.651.441c-.296.2-7.163 5-8.563 14.632a3.074 3.074 0 0 0 .986 2.736l8.76 7.897a6.632 6.632 0 0 1 2.339 5.351 6.58 6.58 0 0 1-2.753 5.141l-6.462 4.64a6.67 6.67 0 0 0-2.357 7.687c1.48 4.039 4.054 9.48 7.882 12.407.316.24.68.35 1.036.35.523 0 1.036-.24 1.381-.7a1.774 1.774 0 0 0-.335-2.456c-2.467-1.894-4.854-5.743-6.729-10.834-.483-1.302-.02-2.786 1.115-3.607l6.462-4.64a10.097 10.097 0 0 0 4.203-7.868c.128-3.166-1.184-6.153-3.542-8.147l-8.553-7.707c1.016-6.383 4.962-10.262 6.462-11.535l12.321 3.307a8.677 8.677 0 0 0 6.719-.931c2.042-1.213 3.492-3.167 4.084-5.502l2.989-12.618c7.419-2.585 13.634.602 13.742.662.839.45 1.885.12 2.329-.732a1.76 1.76 0 0 0-.72-2.365l.01.03ZM146.686 11.236c.753-.585.9-1.666.323-2.43a1.687 1.687 0 0 0-2.396-.327l-20.988 16.248a1.745 1.745 0 0 0-.323 2.43c.333.447.841.685 1.359.685.362 0 .724-.119 1.037-.357l20.988-16.249ZM153.148 31.619c-.167-.963-1.063-1.6-1.998-1.428l-24.46 4.578c-.935.172-1.555 1.093-1.387 2.056.147.85.876 1.458 1.693 1.458.098 0 .206 0 .305-.03l24.459-4.578c.935-.172 1.555-1.094 1.388-2.056Z"
                                       fill={
                                         {
                                           "payload": 4278240714,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M133.026 116.075c10.19-1.93 81.474-6.41 109.474 9.089l1.41-3.74c-24.41-15.763-101.104-11.269-111.624-9.269-5.67 1.07-9.65 6.1-9.26 11.68.25 3.64 2.38 8.28 11.09 9.68 15.98 2.57 29.78-.26 30.36-.38l-.82-3.92c-.14.03-13.65 2.8-28.9.34-7.4-1.2-7.66-4.82-7.74-6.01-.25-3.56 2.33-6.77 6.01-7.47Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M169.026 155.434c-.25 0-.5-.01-.74-.04-2.86-.28-4.82-2.19-5.36-5.23-.75-4.24 1.3-10.09 6.11-17.36 3.44-5.21 7.03-9.24 7.18-9.41l2.98 2.67c-3.83 4.28-13.5 16.84-12.33 23.41.28 1.59 1.04 1.88 1.81 1.95 4.02.4 12.54-5.66 14.87-11.62l3.72 1.46c-2.77 7.07-12.05 14.18-18.25 14.18l.01-.01Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M189.457 156.214c-.76-3.95-6.5-7.16-8.65-8.07l1.55-3.69c.4.17 9.71 4.14 11.03 11l-3.93.75v.01ZM155.287 153.674c-3.2 0-6.37-.78-8.24-3.29-2.41-3.24-3.22-8.18-2-12.31.99-3.35 3.17-5.81 6.13-6.91.74-.28 1.53-.47 2.35-.57l.5 3.97c-.52.06-1.01.18-1.46.35-2.25.84-3.25 2.8-3.69 4.29-.86 2.93-.3 6.54 1.37 8.78 2.42 3.25 11.11.99 13.96-.06l1.38 3.75c-.84.31-5.61 1.99-10.31 1.99l.01.01Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M168.896 168.314c-2.27 0-4.46-.51-6.55-1.52-8.18-3.97-11.68-14.35-11.83-14.79l3.8-1.25c.03.09 3.14 9.23 9.79 12.45 2.91 1.41 6.03 1.48 9.51.21 3.5-1.27 5.57-2.79 5.68-4.17.14-1.9-3.15-4.62-5.42-5.85l1.9-3.52c.81.44 7.89 4.42 7.51 9.66-.23 3.15-3.02 5.72-8.3 7.64-2.08.76-4.12 1.14-6.09 1.14Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M241 177.662c-35.5 4.5-64.721-10.34-65.647-10.804l1.798-3.576c.218.105 30.849 14.38 63.595 10.39l.254 3.99Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
                                           "type": 0,
                                         }
                                       }
@@ -6162,6 +5912,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -6169,6 +5920,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -6311,7 +6063,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 }
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.3}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -6805,6 +6557,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="largeTitle"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -6812,6 +6565,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   "lineHeight": 43,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -6842,6 +6596,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -6849,6 +6604,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -7057,6 +6813,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -7064,6 +6821,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -7087,6 +6845,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -7094,6 +6853,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -7176,6 +6936,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -7184,6 +6945,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       }
                                     }
                                     importantForAccessibility="yes"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -7413,6 +7175,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -7420,6 +7183,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -7451,6 +7215,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -7460,6 +7225,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -7543,6 +7309,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -7551,6 +7318,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       }
                                     }
                                     importantForAccessibility="yes"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -7780,6 +7548,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -7787,6 +7556,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -7851,6 +7621,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   color="grey-700"
                                   defaultColor="blue"
                                   defaultWeight="Bold"
+                                  dynamicTypeRamp="footnote"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -7858,6 +7629,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       "lineHeight": 21,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -7926,10 +7698,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     }
                                   >
                                     <RNSVGPath
-                                      d="M60.77 115.18c-14.23 0-27.7-8.57-33.22-22.59-7.21-18.3 1.81-39.05 20.11-46.26 15.97-6.29 34.17-.32 43.27 14.2.44.7.23 1.63-.47 2.07-.7.44-1.63.23-2.07-.47-8.34-13.29-25-18.76-39.63-13C32 55.73 23.74 74.74 30.34 91.5c6.6 16.76 25.6 25.02 42.37 18.42.77-.3 1.64.07 1.95.85.3.77-.08 1.64-.85 1.95a35.392 35.392 0 0 1-13.03 2.48l-.01-.02Z"
+                                      d="M195.491 126.862a2.322 2.322 0 0 0 1.05 2.853c1.937 1.057 47.11 25.409 69.065 17.362.273-.1.546-.2.811-.322l-1.789-4.288c-7.973 3.305-21.801 1.502-40.007-5.234-10.895-4.028-20.372-8.749-24.13-10.683 2.897-9.392 1.388-19.01.164-24.085-.909-3.783-4.412-6.404-8.332-6.253-3.089.12-5.812 1.908-7.111 4.67-2.043 4.308-4.723 11.531-6.005 15.079-4.101-1.587-14.171-6.671-32.443-17.153a17.256 17.256 0 0 0-9.991-2.245 9.503 9.503 0 0 0-8.65 7.891c-.468 2.767.279 5.57 2.076 7.693 4.78 5.687 15.519 13.331 19.958 16.376-1.58 2.705-2.639 6.491-2.471 11.793a33.282 33.282 0 0 0 1.053 7.203s-.013.029-.009.04l.021-.008c2.325 8.875 8.39 17.144 18.139 24.657 34.542 26.591 71.474 28.652 73.036 28.722l.227-4.631c-.364-.015-37.069-2.097-70.417-27.767-8.446-6.494-13.841-13.514-16.143-20.914 1.301-3.702 4.622-10.493 9.554-11.46 4.098-.81 9.208 2.508 14.784 9.585a4.255 4.255 0 0 1 .621 4.11c-.476 1.262-1.481 2.1-2.753 2.344-3.83.699-7.866-.813-11.986-4.505l-3.099 3.459c6.536 5.847 12.268 6.28 15.933 5.604a8.138 8.138 0 0 0 1.36-.375c2.237-.819 4.019-2.573 4.898-4.897.988-2.599.663-5.532-.797-7.852 2.883-6.198 2.049-12.504-2.393-17.203-5.878-6.213-15.803-7.506-24.137-3.13-.8.417-1.625.967-2.429 1.644-4.041-2.77-14.898-10.432-19.392-15.78a4.887 4.887 0 0 1-1.054-3.94 4.881 4.881 0 0 1 4.431-4.046 12.632 12.632 0 0 1 7.302 1.637c13.931 8.007 31.469 17.67 35.889 18.274a2.318 2.318 0 0 0 2.51-1.525c.034-.111 3.961-11.178 6.57-16.707.568-1.184 1.747-1.95 3.088-2.009 1.708-.07 3.239 1.062 3.631 2.698 1.178 4.92 2.671 14.494-.67 23.319l.037-.001Zm-37.721.54c7.237-3.79 14.83-1.765 18.595 2.206 2.595 2.744 3.388 6.211 2.374 9.882-5.784-6.259-11.322-8.926-16.481-7.9-4.489.891-7.725 4.413-9.899 7.929-.071-6.116 1.747-10.194 5.411-12.117Z"
                                       fill={
                                         {
-                                          "payload": 4278240714,
+                                          "payload": 4278927075,
                                           "type": 0,
                                         }
                                       }
@@ -7940,21 +7712,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       }
                                     />
                                     <RNSVGPath
-                                      d="M90.301 63.72h-.15l-29.63-2.98c-.82-.08-1.42-.82-1.34-1.64.08-.82.84-1.42 1.64-1.34l28.08 2.83 1.65-27.16c.05-.83.75-1.45 1.59-1.41a1.5 1.5 0 0 1 1.41 1.59l-1.74 28.72c-.02.41-.21.79-.53 1.05-.27.23-.62.36-.97.36l-.01-.02Z"
-                                      fill={
-                                        {
-                                          "payload": 4278240714,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="m144.48 143.66 1.16-5.41 2.04-2.6 3.33-.83c.16-.46.31-.92.44-1.39l-3.11.47-6.8-.96h-9.24s-3.35-.93-5.35-1.75c-2-.82-1.78-1.35-2.36-2.01-.57-.66-1.43-.82-1.43-.82l.02-3.01-.86-1.79 3.25-4.74 2.17-1.69 2.84-1.05 4.03-.7 13.72-1.48 3.15-.11c-4.23-14.53-17.63-25.15-33.52-25.15H42.91C23.63 88.65 8 104.28 8 123.57c0 19.28 15.63 34.91 34.91 34.91h75.05c10.86 0 20.56-4.96 26.96-12.73l-.45-2.08.01-.01Z"
+                                      d="M53.78 92.97c-.497 0-1.153.12-1.8.36-3.598 1.288-7.206 2.577-10.804 3.866-1.243.45-2.406.15-3.29-.84a48.829 48.829 0 0 1-6.949-10 46.713 46.713 0 0 1-3.15-7.534c-.368-1.16-.11-2.209.804-3.008 1.82-1.598 3.678-3.147 5.527-4.716 1.213-1.039 2.455-2.048 3.638-3.117 2.416-2.178 2.446-6.125.03-8.323-1.412-1.279-2.892-2.488-4.344-3.717-1.62-1.379-3.26-2.738-4.85-4.146-.915-.81-1.173-1.859-.796-3.028a47.678 47.678 0 0 1 3.4-7.973 48.14 48.14 0 0 1 6.75-9.592c.854-.95 1.928-1.229 3.12-.81 2.903 1.02 5.795 2.069 8.698 3.098.835.3 1.66.62 2.505.88 3.33 1.038 6.72-1.02 7.366-4.457.556-2.977 1.083-5.955 1.63-8.932.149-.84.298-1.669.457-2.498.248-1.27 1.123-2.108 2.386-2.368 2.584-.52 5.178-.86 7.813-.98 2.634-.12 5.258-.05 7.862.29 1.431.19 2.853.43 4.274.69 1.462.27 2.247 1.109 2.515 2.568.636 3.537 1.283 7.064 1.939 10.59.119.64.238 1.29.497 1.88.964 2.157 2.654 3.316 5.01 3.476.785.05 1.54-.09 2.276-.36 3.598-1.288 7.186-2.577 10.785-3.856 1.242-.44 2.395-.14 3.28.849a48.743 48.743 0 0 1 7.445 11 46.648 46.648 0 0 1 2.644 6.515c.368 1.16.12 2.208-.795 3.008-1.829 1.598-3.688 3.157-5.537 4.726-1.212 1.039-2.455 2.048-3.638 3.117-2.405 2.178-2.425 6.125-.029 8.313 1.411 1.279 2.892 2.488 4.343 3.717 1.621 1.388 3.271 2.747 4.871 4.156.905.8 1.173 1.839.795 2.988-1.719 5.305-4.264 10.181-7.664 14.587a64.715 64.715 0 0 1-2.485 2.998c-.845.959-1.918 1.239-3.111.829-2.515-.87-5.01-1.788-7.515-2.678-1.252-.45-2.485-.919-3.747-1.319-2.903-.939-6.153.71-7.078 3.637-.288.92-.427 1.889-.596 2.838-.586 3.157-1.153 6.315-1.73 9.472-.218 1.189-1.103 2.068-2.325 2.318-2.555.52-5.13.859-7.744.989-2.823.13-5.636.04-8.43-.34a84.91 84.91 0 0 1-3.965-.649c-1.243-.23-2.107-1.099-2.336-2.348-.567-3.047-1.113-6.095-1.67-9.142-.15-.84-.288-1.689-.467-2.528-.577-2.638-2.903-4.496-5.785-4.496h-.03Zm6.173-29.186c0 7.834 6.312 14.238 14.065 14.248a14.187 14.187 0 0 0 14.234-14.218c.01-7.823-6.332-14.218-14.115-14.218-7.833 0-14.184 6.345-14.184 14.198v-.01Z"
                                       fill={
                                         {
                                           "payload": 4289392367,
@@ -7968,80 +7726,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       }
                                     />
                                     <RNSVGPath
-                                      d="M43.13 149.97c14.58 0 26.4-11.82 26.4-26.4 0-14.58-11.82-26.4-26.4-26.4-14.58 0-26.4 11.82-26.4 26.4 0 14.58 11.82 26.4 26.4 26.4Z"
+                                      d="M82.514 19.484c-.305-.17-7.724-4.049-16.741-.772a3.032 3.032 0 0 0-1.904 2.175l-2.703 11.485-.326 1.293a5.388 5.388 0 0 1-2.486 3.347 5.28 5.28 0 0 1-4.094.571l-13.9-3.738-.651.441c-.296.2-7.163 5-8.563 14.632a3.074 3.074 0 0 0 .986 2.736l8.76 7.897a6.632 6.632 0 0 1 2.339 5.351 6.58 6.58 0 0 1-2.753 5.141l-6.462 4.64a6.67 6.67 0 0 0-2.357 7.687c1.48 4.039 4.054 9.48 7.882 12.407.316.24.68.35 1.036.35.523 0 1.036-.24 1.381-.7a1.774 1.774 0 0 0-.335-2.456c-2.467-1.894-4.854-5.743-6.729-10.834-.483-1.302-.02-2.786 1.115-3.607l6.462-4.64a10.097 10.097 0 0 0 4.203-7.868c.128-3.166-1.184-6.153-3.542-8.147l-8.553-7.707c1.016-6.383 4.962-10.262 6.462-11.535l12.321 3.307a8.677 8.677 0 0 0 6.719-.931c2.042-1.213 3.492-3.167 4.084-5.502l2.989-12.618c7.419-2.585 13.634.602 13.742.662.839.45 1.885.12 2.329-.732a1.76 1.76 0 0 0-.72-2.365l.01.03ZM146.686 11.236c.753-.585.9-1.666.323-2.43a1.687 1.687 0 0 0-2.396-.327l-20.988 16.248a1.745 1.745 0 0 0-.323 2.43c.333.447.841.685 1.359.685.362 0 .724-.119 1.037-.357l20.988-16.249ZM153.148 31.619c-.167-.963-1.063-1.6-1.998-1.428l-24.46 4.578c-.935.172-1.555 1.093-1.387 2.056.147.85.876 1.458 1.693 1.458.098 0 .206 0 .305-.03l24.459-4.578c.935-.172 1.555-1.094 1.388-2.056Z"
                                       fill={
                                         {
                                           "payload": 4278240714,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M133.026 116.075c10.19-1.93 81.474-6.41 109.474 9.089l1.41-3.74c-24.41-15.763-101.104-11.269-111.624-9.269-5.67 1.07-9.65 6.1-9.26 11.68.25 3.64 2.38 8.28 11.09 9.68 15.98 2.57 29.78-.26 30.36-.38l-.82-3.92c-.14.03-13.65 2.8-28.9.34-7.4-1.2-7.66-4.82-7.74-6.01-.25-3.56 2.33-6.77 6.01-7.47Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M169.026 155.434c-.25 0-.5-.01-.74-.04-2.86-.28-4.82-2.19-5.36-5.23-.75-4.24 1.3-10.09 6.11-17.36 3.44-5.21 7.03-9.24 7.18-9.41l2.98 2.67c-3.83 4.28-13.5 16.84-12.33 23.41.28 1.59 1.04 1.88 1.81 1.95 4.02.4 12.54-5.66 14.87-11.62l3.72 1.46c-2.77 7.07-12.05 14.18-18.25 14.18l.01-.01Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M189.457 156.214c-.76-3.95-6.5-7.16-8.65-8.07l1.55-3.69c.4.17 9.71 4.14 11.03 11l-3.93.75v.01ZM155.287 153.674c-3.2 0-6.37-.78-8.24-3.29-2.41-3.24-3.22-8.18-2-12.31.99-3.35 3.17-5.81 6.13-6.91.74-.28 1.53-.47 2.35-.57l.5 3.97c-.52.06-1.01.18-1.46.35-2.25.84-3.25 2.8-3.69 4.29-.86 2.93-.3 6.54 1.37 8.78 2.42 3.25 11.11.99 13.96-.06l1.38 3.75c-.84.31-5.61 1.99-10.31 1.99l.01.01Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M168.896 168.314c-2.27 0-4.46-.51-6.55-1.52-8.18-3.97-11.68-14.35-11.83-14.79l3.8-1.25c.03.09 3.14 9.23 9.79 12.45 2.91 1.41 6.03 1.48 9.51.21 3.5-1.27 5.57-2.79 5.68-4.17.14-1.9-3.15-4.62-5.42-5.85l1.9-3.52c.81.44 7.89 4.42 7.51 9.66-.23 3.15-3.02 5.72-8.3 7.64-2.08.76-4.12 1.14-6.09 1.14Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M241 177.662c-35.5 4.5-64.721-10.34-65.647-10.804l1.798-3.576c.218.105 30.849 14.38 63.595 10.39l.254 3.99Z"
-                                      fill={
-                                        {
-                                          "payload": 4278927075,
                                           "type": 0,
                                         }
                                       }
@@ -8105,6 +7793,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -8112,6 +7801,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {

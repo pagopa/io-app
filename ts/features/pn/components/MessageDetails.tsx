@@ -73,6 +73,7 @@ export const MessageDetails = ({
       >
         <ContentWrapper>
           <MessageDetailsHeader
+            messageId={messageId}
             serviceId={serviceId}
             subject={message.subject}
             createdAt={message.created_at}

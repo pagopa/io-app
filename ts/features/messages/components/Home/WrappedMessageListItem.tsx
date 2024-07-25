@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import {
   useIODispatch,
   useIOSelector,
@@ -25,23 +25,27 @@ import {
   isArchivingDisabledSelector,
   isArchivingInProcessingModeSelector
 } from "../../store/reducers/archiving";
-import { accessibilityLabelForMessageItem } from "./homeUtils";
+import {
+  accessibilityLabelForMessageItem,
+  minDelayBetweenNavigationMilliseconds
+} from "./homeUtils";
 import { MessageListItem } from "./DS/MessageListItem";
 
 type WrappedMessageListItemProps = {
+  archiveRestoreSourceCategory?: MessageListCategory;
   index: number;
-  listCategory: MessageListCategory;
   message: UIMessage;
 };
 
 export const WrappedMessageListItem = ({
+  archiveRestoreSourceCategory,
   index,
-  listCategory,
   message
 }: WrappedMessageListItemProps) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const store = useIOStore();
+  const lastNavigationDate = useRef<Date>(new Date(0));
 
   const serviceId = message.serviceId;
   const organizationFiscalCode = message.organizationFiscalCode;
@@ -82,27 +86,36 @@ export const WrappedMessageListItem = ({
       ? "success"
       : undefined;
   const accessibilityLabel = useMemo(
-    () => accessibilityLabelForMessageItem(message),
-    [message]
+    () => accessibilityLabelForMessageItem(message, isSelected),
+    [isSelected, message]
   );
 
   const toggleScheduledMessageArchivingCallback = useCallback(() => {
     const state = store.getState();
-    if (!isArchivingInProcessingModeSelector(state)) {
+    if (
+      archiveRestoreSourceCategory &&
+      !isArchivingInProcessingModeSelector(state)
+    ) {
       dispatch(
         toggleScheduledMessageArchivingAction({
           messageId: message.id,
-          fromInboxToArchive: listCategory === "INBOX"
+          fromInboxToArchive: archiveRestoreSourceCategory === "INBOX"
         })
       );
     }
-  }, [dispatch, listCategory, message, store]);
+  }, [archiveRestoreSourceCategory, dispatch, message, store]);
 
   const onPressCallback = useCallback(() => {
     const state = store.getState();
-    if (isArchivingInSchedulingModeSelector(state)) {
+    if (
+      archiveRestoreSourceCategory &&
+      isArchivingInSchedulingModeSelector(state)
+    ) {
       toggleScheduledMessageArchivingCallback();
-    } else if (isArchivingDisabledSelector(state)) {
+    } else if (
+      !archiveRestoreSourceCategory ||
+      isArchivingDisabledSelector(state)
+    ) {
       if (message.hasPrecondition) {
         dispatch(
           scheduledPreconditionStatusAction(
@@ -110,6 +123,18 @@ export const WrappedMessageListItem = ({
           )
         );
       } else {
+        const now = new Date();
+        if (
+          lastNavigationDate.current.getTime() +
+            minDelayBetweenNavigationMilliseconds >=
+          now.getTime()
+        ) {
+          // This prevents an unwanted double tap that triggers
+          // a dobule navigation towards the message details
+          return;
+        }
+        // eslint-disable-next-line functional/immutable-data
+        lastNavigationDate.current = now;
         navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
           screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
           params: {
@@ -120,6 +145,7 @@ export const WrappedMessageListItem = ({
       }
     }
   }, [
+    archiveRestoreSourceCategory,
     dispatch,
     message,
     navigation,

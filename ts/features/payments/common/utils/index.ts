@@ -5,8 +5,8 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import I18n from "i18n-js";
 import _ from "lodash";
+import I18n from "../../../../i18n";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
@@ -130,7 +130,7 @@ export const getSortedPspList = (
       return _.orderBy(pspList, psp => psp.taxPayerFee);
     case "default":
     default:
-      return _.orderBy(pspList, ["onUs", "taxPayerFee"]);
+      return _.orderBy(pspList, ["onUs", "taxPayerFee"], ["desc", "asc"]);
   }
 };
 

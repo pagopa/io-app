@@ -31,6 +31,7 @@ import {
   isIdPayCodeFailureSelector,
   isIdPayCodeLoadingSelector
 } from "../store/selectors";
+import useContentWithFF from "../../../../screens/profile/useContentWithFF";
 
 type IdPayCodeDisplayRouteParams = {
   isOnboarding?: boolean;
@@ -50,7 +51,7 @@ const IdPayCodeDisplayScreen = () => {
   const isGeneratingCode = useIOSelector(isIdPayCodeLoadingSelector);
   const isFailure = useIOSelector(isIdPayCodeFailureSelector);
   const idPayCode = useIOSelector(idPayCodeSelector);
-
+  const content = useContentWithFF("idpay.code.onboarding.banner.body");
   const { bottomSheet, present: presentCieBottomSheet } =
     useIdPayInfoCieBottomSheet();
 
@@ -103,7 +104,7 @@ const IdPayCodeDisplayScreen = () => {
               size="big"
               viewRef={bannerRef}
               title={I18n.t("idpay.code.onboarding.banner.header")}
-              content={I18n.t("idpay.code.onboarding.banner.body")}
+              content={content}
             />
           </ContentWrapper>
         </TopScreenComponent>

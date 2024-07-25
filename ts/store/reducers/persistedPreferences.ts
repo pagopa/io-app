@@ -20,9 +20,8 @@ import {
   preferencesPnTestEnvironmentSetEnabled,
   preferencesIdPayTestSetEnabled,
   preferencesDesignSystemSetEnabled,
-  preferencesNewWalletSectionSetEnabled,
-  preferencesItWalletTestSetEnabled,
-  preferencesNewHomeSectionSetEnabled
+  preferencesNewScanSectionSetEnabled,
+  preferencesItWalletTestSetEnabled
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
@@ -47,9 +46,8 @@ export type PersistedPreferencesState = Readonly<{
   // changing the variable value later). Typescript cannot detect this so
   // be sure to handle such case when reading and using this value
   isDesignSystemEnabled: boolean;
-  isNewWalletSectionEnabled: boolean;
+  isNewScanSectionEnabled?: boolean;
   isItWalletTestEnabled?: boolean;
-  isNewHomeSectionEnabled?: boolean;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {
@@ -64,12 +62,10 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isPnTestEnabled: false,
   isIdPayTestEnabled: false,
   isDesignSystemEnabled: false,
-  isNewWalletSectionEnabled: false,
-  isItWalletTestEnabled: false,
-  isNewHomeSectionEnabled: false
+  isNewScanSectionEnabled: false,
+  isItWalletTestEnabled: false
 };
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export default function preferencesReducer(
   state: PersistedPreferencesState = initialPreferencesState,
   action: Action
@@ -163,10 +159,10 @@ export default function preferencesReducer(
     };
   }
 
-  if (isActionOf(preferencesNewWalletSectionSetEnabled, action)) {
+  if (isActionOf(preferencesNewScanSectionSetEnabled, action)) {
     return {
       ...state,
-      isNewWalletSectionEnabled: action.payload.isNewWalletSectionEnabled
+      isNewScanSectionEnabled: action.payload.isNewScanSectionEnabled
     };
   }
 
@@ -174,13 +170,6 @@ export default function preferencesReducer(
     return {
       ...state,
       isItWalletTestEnabled: action.payload.isItWalletTestEnabled
-    };
-  }
-
-  if (isActionOf(preferencesNewHomeSectionSetEnabled, action)) {
-    return {
-      ...state,
-      isNewHomeSectionEnabled: action.payload.isNewHomeSectionEnabled
     };
   }
 
@@ -226,14 +215,11 @@ export const isIdPayTestEnabledSelector = (state: GlobalState) =>
 export const isDesignSystemEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isDesignSystemEnabled ?? false;
 
-export const isNewWalletSectionEnabledSelector = (state: GlobalState) =>
-  state.persistedPreferences?.isNewWalletSectionEnabled ?? false;
+export const isNewScanSectionLocallyEnabledSelector = (state: GlobalState) =>
+  !!state.persistedPreferences?.isNewScanSectionEnabled;
 
 export const isItWalletTestEnabledSelector = (state: GlobalState) =>
   !!state.persistedPreferences?.isItWalletTestEnabled;
-
-export const isNewHomeSectionEnabledSelector = (state: GlobalState) =>
-  state.persistedPreferences?.isNewHomeSectionEnabled ?? false;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { IconButton, H6 } from "@pagopa/io-app-design-system";
+import { IconButton, H6, Divider } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
@@ -38,8 +38,11 @@ export const ItwCredentialClaimsSection = ({
         {canHideValues && renderHideValuesToggle()}
       </View>
       <View>
-        {claims.map(c => (
-          <ItwCredentialClaim key={c.id} claim={c} hidden={valuesHidden} />
+        {claims.map((claim, index) => (
+          <React.Fragment key={claim.id}>
+            {index !== 0 && <Divider />}
+            <ItwCredentialClaim claim={claim} hidden={valuesHidden} />
+          </React.Fragment>
         ))}
       </View>
     </View>
