@@ -4,7 +4,7 @@ jobs:
   publiccode_validation:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: italia/publiccode-parser-action@v1
+    - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
+    - uses: italia/publiccode-parser-action@3244a5a109ae23f76cb379831abbad32927cad8c # v1
       with:
         publiccode: 'publiccode.yml'

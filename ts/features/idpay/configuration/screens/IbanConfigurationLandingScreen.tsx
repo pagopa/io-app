@@ -16,6 +16,8 @@ import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { useConfigurationMachineService } from "../xstate/provider";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
+import { useIOSelector } from "../../../../store/hooks";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -32,6 +34,9 @@ const styles = StyleSheet.create({
 
 const IbanConfigurationLanding = () => {
   const configurationMachine = useConfigurationMachineService();
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
 
   const customGoBack = () => configurationMachine.send({ type: "BACK" });
 
@@ -43,7 +48,11 @@ const IbanConfigurationLanding = () => {
     {
       title: I18n.t("idpay.configuration.iban.landing.modal.title"),
       component: (
-        <Body>{I18n.t("idpay.configuration.iban.landing.modal.content")}</Body>
+        <Body>
+          {isSettingsVisibleAndHideProfile
+            ? I18n.t("idpay.configuration.iban.landing.modal.content")
+            : I18n.t("idpay.configuration.iban.landing.modal.legacyContent")}
+        </Body>
       ),
       footer: (
         <ContentWrapper>
