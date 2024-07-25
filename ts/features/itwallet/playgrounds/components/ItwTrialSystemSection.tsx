@@ -4,7 +4,6 @@ import {
   ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
 import * as React from "react";
 import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
 import I18n from "../../../../i18n";
@@ -19,29 +18,30 @@ import {
   isUpdatingTrialStatusSelector,
   trialStatusSelector
 } from "../../../trialSystem/store/reducers";
-import { ITW_TRIAL_ID } from "../../common/utils/itwTrialUtils";
+import { itwTrialId } from "../../../../config";
 
 export const ItwTrialSystemSection = () => {
   const dispatch = useIODispatch();
-  const status = useIOSelector(trialStatusSelector(ITW_TRIAL_ID));
-  const isLoading = useIOSelector(isLoadingTrialStatusSelector(ITW_TRIAL_ID));
-  const isUpdating = useIOSelector(isUpdatingTrialStatusSelector(ITW_TRIAL_ID));
+  const status = useIOSelector(trialStatusSelector(itwTrialId));
+  const isLoading = useIOSelector(isLoadingTrialStatusSelector(itwTrialId));
+  const isUpdating = useIOSelector(isUpdatingTrialStatusSelector(itwTrialId));
 
   const subscribe = () => {
-    dispatch(trialSystemActivationStatusUpsert.request(ITW_TRIAL_ID));
+    dispatch(trialSystemActivationStatusUpsert.request(itwTrialId));
   };
 
   const refresh = () => {
-    dispatch(trialSystemActivationStatus.request(ITW_TRIAL_ID));
+    dispatch(trialSystemActivationStatus.request(itwTrialId));
   };
 
   const reset = () => {
-    dispatch(trialSystemActivationStatusReset(ITW_TRIAL_ID));
+    dispatch(trialSystemActivationStatusReset(itwTrialId));
   };
 
   return (
     <>
       <ListItemHeader label="Trial" />
+      <ListItemInfo label="ID" value={itwTrialId} />
       <ListItemInfo label="Current status" value={status ?? "Not present"} />
       <VSpacer size={8} />
       <>
@@ -54,15 +54,7 @@ export const ItwTrialSystemSection = () => {
             label={I18n.t("profile.main.trial.titleSection")}
             onPress={subscribe}
           />
-        ) : (
-          <ButtonSolid
-            disabled={isLoading}
-            fullWidth={true}
-            color="danger"
-            label={"Unsubscribe"}
-            onPress={constNull}
-          />
-        )}
+        ) : null}
       </>
       <VSpacer size={8} />
       <ButtonSolid
@@ -74,6 +66,7 @@ export const ItwTrialSystemSection = () => {
       />
       <VSpacer size={8} />
       <ButtonSolid
+        color="danger"
         loading={isUpdating}
         disabled={isLoading}
         fullWidth={true}
