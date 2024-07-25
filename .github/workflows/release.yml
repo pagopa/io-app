@@ -46,8 +46,8 @@ jobs:
       - id: upload-apk
         uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         with:
-          name: app-release.apk
-          path: android/app/build/outputs/apk/app-release.apk
+          name: app-release.aab
+          path: android/app/build/outputs/bundle/release/app-release.aab
   release-ios:
     needs: run-static-checks
     environment: prod
