@@ -73,6 +73,11 @@ platform :android do
     supply
   end
 
+  desc "Download universal APK file from Google Play"
+  lane :download_apk do
+    download_universal_apk_from_google_play
+  end
+
   # You can define as many lanes as you want
 
   after_all do |lane|
