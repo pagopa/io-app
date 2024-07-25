@@ -166,6 +166,9 @@ const PICTURE_URL_REGEX = "^data:image\\/png;base64,";
 const PICTURE_WITHOUT_URL_REGEX =
   "(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)";
 
+const FISCAL_CODE_WITH_PREFIX =
+  "(TINIT-[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])";
+
 /**
  * io-ts decoder for the date claim field of the credential.
  * The date format is checked against the regex dateFormatRegex, which is currenlty mocked.
@@ -221,6 +224,11 @@ export type DrivingPrivilegesClaimType = t.TypeOf<
 >;
 
 /**
+ * Decoder for the fiscal code. This is needed since we have to remove the INIT prefix when rendering it.
+ */
+export const FiscalCodeClaim = PatternString(FISCAL_CODE_WITH_PREFIX);
+
+/**
  * Alias for the string fallback of the claim field of the credential.
  */
 export const PlainTextClaim = t.string;
@@ -249,6 +257,8 @@ export const ClaimValue = t.union([
   ImageClaim,
   // Otherwise parse an image without URL
   ImageClaimNoUrl,
+  // Otherwise parse a fiscal code
+  FiscalCodeClaim,
   // Otherwise fallback to string
   PlainTextClaim
 ]);
