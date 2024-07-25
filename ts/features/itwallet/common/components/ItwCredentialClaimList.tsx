@@ -1,5 +1,6 @@
 import React from "react";
 import { View } from "react-native";
+import { Divider } from "@pagopa/io-app-design-system";
 import { parseClaims } from "../utils/itwClaimsUtils";
 import { StoredCredential } from "../utils/itwTypesUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
@@ -12,10 +13,12 @@ import { ItwReleaserName } from "./ItwReleaserName";
  */
 export const ItwCredentialClaimsList = ({
   data,
-  isPreview
+  isPreview,
+  isHidden
 }: {
   data: StoredCredential;
   isPreview?: boolean;
+  isHidden?: boolean;
 }) => {
   const claims = parseClaims(data.parsedCredential);
 
@@ -23,10 +26,16 @@ export const ItwCredentialClaimsList = ({
     <>
       {claims.map((elem, index) => (
         <View key={index}>
-          <ItwCredentialClaim claim={elem} isPreview={isPreview} />
+          {index !== 0 && <Divider />}
+          <ItwCredentialClaim
+            claim={elem}
+            isPreview={isPreview}
+            hidden={isHidden}
+          />
         </View>
       ))}
-      <ItwReleaserName credential={data} />
+      <Divider />
+      <ItwReleaserName credential={data} isPreview={isPreview} />
     </>
   );
 };

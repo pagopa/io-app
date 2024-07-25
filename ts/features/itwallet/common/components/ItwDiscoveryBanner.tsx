@@ -4,9 +4,8 @@ import { StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { isTrialActiveSelector } from "../../../trialSystem/store/reducers";
+import { isItwTrialActiveSelector } from "../../../trialSystem/store/reducers";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { ITW_TRIAL_ID } from "../utils/itwTrialUtils";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus";
 
@@ -22,7 +21,7 @@ export const ItwDiscoveryBanner = ({
   const bannerRef = React.createRef<View>();
   const navigation = useIONavigation();
   const [isVisible, setVisible] = React.useState(true);
-  const isItwTrialActive = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
+  const isItwTrialActive = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
 
