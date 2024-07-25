@@ -1,15 +1,13 @@
 name: Release new app version
 on:
-  pull_request
-  # push:
-  #   tags: 
-  #     - '[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+'
+  push:
+    tags: 
+      - '[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+'
 jobs:
-  # run-static-checks:
-  #    uses: ./.github/workflows/staticcheck.yaml
+  run-static-checks:
+     uses: ./.github/workflows/staticcheck.yaml
   release-android:
-    # needs: run-static-checks
-    if: false
+    needs: run-static-checks
     environment: prod
     runs-on: ubuntu-latest
     steps:
@@ -51,7 +49,7 @@ jobs:
           name: app-release.aab
           path: android/app/build/outputs/bundle/release/app-release.aab
   release-ios:
-    # needs: run-static-checks
+    needs: run-static-checks
     environment: prod
     runs-on: macos-13-xlarge
     steps:
