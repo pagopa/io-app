@@ -1,3 +1,4 @@
+import MockDate from "mockdate";
 import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import {
@@ -34,6 +35,15 @@ describe("getCredentialExpireDate", () => {
     ],
     [
       {
+        expiration_date: {
+          name: "",
+          value: undefined
+        }
+      },
+      undefined
+    ],
+    [
+      {
         expiry: {
           name: "",
           value: "01/01/2015"
@@ -53,16 +63,30 @@ describe("getCredentialExpireDays", () => {
     expect(expireDate).toBeUndefined();
   });
 
-  it("should return the expire days remaining", () => {
-    const expireDate = new Date(Date.now() + 1000 * 60 * 61 * 24 * 7);
-    const expireDays = getCredentialExpireDays({
-      expiry_date: {
-        name: "",
-        value: format(expireDate, "YYYY-MM-DD")
-      }
-    });
-    expect(expireDays).toStrictEqual(7);
-  });
+  test.each([
+    [new Date(2000, 0, 1), "2000-01-01", 0],
+    [new Date(2000, 0, 1, 23, 59), "2000-01-01", 0],
+    [new Date(2000, 0, 1, 0, 0), "2000-01-07", 6],
+    [new Date(2000, 0, 1, 23, 59), "2000-01-07", 6],
+    [new Date(2000, 0, 1, 23, 59), "pippo", undefined],
+    [new Date(2000, 0, 1, 23, 59), undefined, undefined]
+  ])(
+    "if current date is %p and expiration date is %p should return %p days",
+    (current, expiration, difference) => {
+      MockDate.set(current);
+      expect(new Date()).toStrictEqual(current);
+
+      const expireDays = getCredentialExpireDays({
+        expiry_date: {
+          name: "",
+          value: expiration
+        }
+      });
+      expect(expireDays).toStrictEqual(difference);
+
+      MockDate.reset();
+    }
+  );
 });
 
 describe("getCredentialExpireStatus", () => {
@@ -72,54 +96,21 @@ describe("getCredentialExpireStatus", () => {
   });
 
   test.each([
-    [
-      {
-        expiry_date: {
-          name: "",
-          value: format(
-            new Date(Date.now() + 1000 * 60 * 61 * 24 * 7),
-            "YYYY-MM-DD"
-          )
-        }
-      },
-      "expiring"
-    ],
-    [
-      {
-        expiry_date: {
-          name: "",
-          value: format(
-            new Date(Date.now() + 1000 * 60 * 61 * 24 * 20),
-            "YYYY-MM-DD"
-          )
-        }
-      },
-      "valid"
-    ],
-    [
-      {
-        expiry_date: {
-          name: "",
-          value: format(new Date(Date.now() - 1000), "YYYY-MM-DD")
-        }
-      },
-      "expired"
-    ],
-    [
-      {
-        expiry: {
-          name: "",
-          value: format(
-            new Date(Date.now() + 1000 * 60 * 61 * 24 * 7),
-            "YYYY-MM-DD"
-          )
-        }
-      },
-      undefined
-    ]
-  ])("if %p should return %p", (value, expected) => {
-    const expireDate = getCredentialExpireStatus(value);
-    expect(expireDate).toStrictEqual(expected);
+    [new Date(2000, 0, 18), "expiring"],
+    [new Date(2000, 0, 30), "valid"],
+    [new Date(2000, 0, 9), "expired"]
+  ])("if %p should return %p", (expiryDate, expectedStatus) => {
+    MockDate.set(new Date(2000, 0, 10, 23, 59));
+    expect(new Date()).toStrictEqual(new Date(2000, 0, 10, 23, 59));
+
+    const status = getCredentialExpireStatus({
+      expiry_date: {
+        name: "",
+        value: format(expiryDate, "YYYY-MM-DD")
+      }
+    });
+    expect(status).toStrictEqual(expectedStatus);
+    MockDate.reset();
   });
 });
 
