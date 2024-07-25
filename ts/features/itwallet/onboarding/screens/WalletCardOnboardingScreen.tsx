@@ -139,40 +139,6 @@ const WalletCardOnboardingScreen = () => {
               }
             />
 
-            <VSpacer size={8} />
-            <ModuleCredential
-              testID="itwDisabilityCardModuleTestID"
-              icon="accessibility"
-              label={getCredentialNameFromType(
-                CredentialType.EUROPEAN_DISABILITY_CARD
-              )}
-              onPress={
-                itwCredentialsTypes.includes(
-                  CredentialType.EUROPEAN_DISABILITY_CARD
-                )
-                  ? undefined
-                  : beginCredentialIssuance(
-                      CredentialType.EUROPEAN_DISABILITY_CARD
-                    )
-              }
-              isFetching={
-                isCredentialLoading &&
-                pipe(
-                  selectedCredentialOption,
-                  O.map(
-                    type => type === CredentialType.EUROPEAN_DISABILITY_CARD
-                  ),
-                  O.getOrElse(constFalse)
-                )
-              }
-              badge={
-                itwCredentialsTypes.includes(
-                  CredentialType.EUROPEAN_DISABILITY_CARD
-                )
-                  ? activeBadge
-                  : undefined
-              }
-            />
             <VSpacer size={16} />
             <ListItemHeader
               label={I18n.t("features.wallet.onboarding.sections.other")}
