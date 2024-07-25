@@ -30,7 +30,13 @@ export function* handleWalletPaymentGetUserWallets(
             ),
           res => {
             if (res.status === 200) {
+              if (action.payload.onResponse) {
+                action.payload.onResponse(res.value.wallets);
+              }
               return paymentsGetPaymentUserMethodsAction.success(res.value);
+            }
+            if (action.payload.onResponse) {
+              action.payload.onResponse(undefined);
             }
             if (res.status === 404) {
               return paymentsGetPaymentUserMethodsAction.success({
@@ -45,6 +51,9 @@ export function* handleWalletPaymentGetUserWallets(
       )
     );
   } catch (e) {
+    if (action.payload.onResponse) {
+      action.payload.onResponse(undefined);
+    }
     yield* put(
       paymentsGetPaymentUserMethodsAction.failure({ ...getNetworkError(e) })
     );

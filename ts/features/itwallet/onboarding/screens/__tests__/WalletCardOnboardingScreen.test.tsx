@@ -15,12 +15,12 @@ import { appReducer } from "../../../../../store/reducers";
 import { BackendStatusState } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { ITW_TRIAL_ID } from "../../../common/utils/itwTrialUtils";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
 import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+import { itwTrialId } from "../../../../../config";
 
 type RenderOptions = {
   isIdPayEnabled?: boolean;
@@ -44,7 +44,6 @@ describe("WalletCardOnboardingScreen", () => {
     const { queryByTestId } = renderComponent({});
 
     expect(queryByTestId("itwDrivingLicenseModuleTestID")).toBeTruthy();
-    expect(queryByTestId("itwDisabilityCardModuleTestID")).toBeTruthy();
   });
 
   test.each([
@@ -96,7 +95,7 @@ const renderComponent = ({
         }
       },
       trialSystem: {
-        [ITW_TRIAL_ID as TrialId]: itwTrialStatus
+        [itwTrialId as TrialId]: itwTrialStatus
           ? pot.some(itwTrialStatus)
           : pot.none
       },

@@ -187,9 +187,8 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
   const spreadableMaybeFimsHistoryListItem = isFimsHistoryEnabled
     ? [
         {
-          // TODO: add correct I18n keys
-          value: "FIMS_HISTORY",
-          description: "HISTORY_DESC",
+          value: I18n.t("FIMS.history.profileCTA.title"),
+          description: I18n.t("FIMS.history.profileCTA.subTitle"),
           onPress: () =>
             navigation.navigate(FIMS_ROUTES.MAIN, {
               screen: FIMS_ROUTES.HISTORY

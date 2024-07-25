@@ -14,6 +14,7 @@ import {
   trialSystemActivationStatusUpsert
 } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
+import { itwTrialId } from "../../../../config";
 
 export type TrialSystemState = Record<
   TrialId,
@@ -116,3 +117,8 @@ export const isTrialActiveSelector = (id: TrialId) =>
     trialStatusSelector(id),
     status => status === SubscriptionStateEnum.ACTIVE
   );
+
+/**
+ * Allows to know if the user has the acces to the IT Wallet features
+ */
+export const isItwTrialActiveSelector = isTrialActiveSelector(itwTrialId);
