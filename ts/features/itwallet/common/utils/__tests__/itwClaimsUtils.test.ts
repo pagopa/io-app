@@ -1,109 +1,145 @@
-import { setLocale } from "../../../../../i18n";
-import { groupCredentialClaims } from "../itwClaimsUtils";
-import { ItwCredentialsMocks } from "../itwMocksUtils";
+import MockDate from "mockdate";
+import { format } from "date-fns";
+import * as O from "fp-ts/lib/Option";
+import {
+  extractFiscalCode,
+  getCredentialExpireDate,
+  getCredentialExpireDays,
+  getCredentialExpireStatus
+} from "../itwClaimsUtils";
 
-describe("groupCredentialClaims", () => {
-  beforeAll(() => setLocale("it"));
-
-  it("Groups claims in the appropriate sections for eID", () => {
-    expect(groupCredentialClaims(ItwCredentialsMocks.eid)).toEqual({
-      personalData: [
-        {
-          label: "Luogo di Nascita",
-          value: { country: "IT", locality: "Rome" },
-          id: "place_of_birth"
-        },
-        { label: "Data di Nascita", value: "1991-01-06", id: "birthdate" },
-        { label: "Codice Fiscale", id: "tax_id_code" },
-        { label: "Nome", value: "Casimira", id: "given_name" },
-        { label: "Cognome", value: "Savoia", id: "family_name" },
-        {
-          label: "tax_id_number",
-          value: "TAMMRA80A41H501I",
-          id: "tax_id_number"
-        }
-      ],
-      noSection: [
-        { label: "Identificativo univoco", value: "idANPR", id: "unique_id" },
-        {
-          label: "evidence",
-          value: [
-            {
-              type: "electronic_record",
-              record: {
-                type: "https://eudi.wallet.cie.gov.it",
-                source: {
-                  organization_name: "Ministero dell'Interno",
-                  organization_id: "urn:eudi:it:organization_id:ipa_code:m_it",
-                  country_code: "IT"
-                }
-              }
-            }
-          ],
-          id: "evidence"
-        }
-      ]
-    });
+describe("getCredentialExpireDate", () => {
+  it("should return undefined", () => {
+    const expireDate = getCredentialExpireDate({});
+    expect(expireDate).toBeUndefined();
   });
 
-  it("Groups claims in the appropriate sections for mDL", () => {
-    expect(groupCredentialClaims(ItwCredentialsMocks.mdl)).toEqual({
-      personalData: [
-        { label: "Data di nascita", value: "1991-01-06", id: "birthdate" },
-        { label: "Nome", value: "Casimira", id: "given_name" },
-        { label: "Foto", value: expect.any(String), id: "portrait" },
-        { label: "Cognome", value: "Savoia", id: "family_name" }
-      ],
-      documentData: [
-        {
-          label: "Numero di documento",
-          value: "XX1234567",
-          id: "document_number"
-        },
-        { label: "Data di rilascio", value: "2023-11-14", id: "issue_date" },
-        { label: "Data di scadenza", value: "2024-02-22", id: "expiry_date" }
-      ],
-      noSection: [
-        {
-          label: "Segno distintivo UN",
-          value: "I",
-          id: "un_distinguishing_sign"
-        },
-        { label: "Paese di rilascio", value: "IT", id: "issuing_country" },
-        {
-          label: "AutoritÃ  di rilascio",
-          value: "Istituto Poligrafico e Zecca dello Stato",
-          id: "issuing_authority"
-        },
-        {
-          label: "evidence",
-          value: [
-            {
-              type: "electronic_record",
-              record: {
-                type: "https://eudi.wallet.pdnd.gov.it",
-                source: {
-                  organization_name: "Motorizzazione Civile",
-                  organization_id: "urn:eudi:it:organization_id:ipa_code:m_inf",
-                  country_code: "IT"
-                }
-              }
-            }
-          ],
-          id: "evidence"
+  test.each([
+    [
+      {
+        expiry_date: {
+          name: "",
+          value: "2035-10-20"
         }
-      ],
-      licenseData: [
-        {
-          label: "Categorie di veicoli",
-          value: {
-            issue_date: "2023-11-14",
-            vehicle_category_code: "A",
-            expiry_date: "2024-02-22"
-          },
-          id: "driving_privileges"
+      },
+      new Date(2035, 9, 20)
+    ],
+    [
+      {
+        expiration_date: {
+          name: "",
+          value: "01/01/2015"
         }
-      ]
+      },
+      new Date(2015, 0, 1)
+    ],
+    [
+      {
+        expiration_date: {
+          name: "",
+          value: undefined
+        }
+      },
+      undefined
+    ],
+    [
+      {
+        expiry: {
+          name: "",
+          value: "01/01/2015"
+        }
+      },
+      undefined
+    ]
+  ])("if %p should return %p", (value, expected) => {
+    const expireDate = getCredentialExpireDate(value);
+    expect(expireDate).toStrictEqual(expected);
+  });
+});
+
+describe("getCredentialExpireDays", () => {
+  it("should return undefined", () => {
+    const expireDate = getCredentialExpireDays({});
+    expect(expireDate).toBeUndefined();
+  });
+
+  test.each([
+    [new Date(2000, 0, 1), "2000-01-01", 0],
+    [new Date(2000, 0, 1, 23, 59), "2000-01-01", 0],
+    [new Date(2000, 0, 1, 0, 0), "2000-01-07", 6],
+    [new Date(2000, 0, 1, 23, 59), "2000-01-07", 6],
+    [new Date(2000, 0, 1, 23, 59), "pippo", undefined],
+    [new Date(2000, 0, 1, 23, 59), undefined, undefined]
+  ])(
+    "if current date is %p and expiration date is %p should return %p days",
+    (current, expiration, difference) => {
+      MockDate.set(current);
+      expect(new Date()).toStrictEqual(current);
+
+      const expireDays = getCredentialExpireDays({
+        expiry_date: {
+          name: "",
+          value: expiration
+        }
+      });
+      expect(expireDays).toStrictEqual(difference);
+
+      MockDate.reset();
+    }
+  );
+});
+
+describe("getCredentialExpireStatus", () => {
+  it("should return undefined", () => {
+    const expireStatus = getCredentialExpireStatus({});
+    expect(expireStatus).toBeUndefined();
+  });
+
+  test.each([
+    [new Date(2000, 0, 18), "expiring"],
+    [new Date(2000, 0, 30), "valid"],
+    [new Date(2000, 0, 9), "expired"]
+  ])("if %p should return %p", (expiryDate, expectedStatus) => {
+    MockDate.set(new Date(2000, 0, 10, 23, 59));
+    expect(new Date()).toStrictEqual(new Date(2000, 0, 10, 23, 59));
+
+    const status = getCredentialExpireStatus({
+      expiry_date: {
+        name: "",
+        value: format(expiryDate, "YYYY-MM-DD")
+      }
     });
+    expect(status).toStrictEqual(expectedStatus);
+    MockDate.reset();
+  });
+});
+
+describe("extractFiscalCode", () => {
+  it("extract a valid fiscal code", () => {
+    expect(extractFiscalCode("MRARSS00A01H501B")).toEqual(
+      O.some("MRARSS00A01H501B")
+    );
+  });
+
+  it("extract a valid fiscal code from a string with a prefix", () => {
+    expect(extractFiscalCode("TINIT-MRARSS00A01H50TB")).toEqual(
+      O.some("MRARSS00A01H50TB")
+    );
+  });
+
+  it("extract a valid fiscal code from a string with a suffix", () => {
+    expect(extractFiscalCode("MRARSS00A01H501B_TINIT")).toEqual(
+      O.some("MRARSS00A01H501B")
+    );
+  });
+
+  it("extract a valid fiscal code from a string with a prefix and a suffix", () => {
+    expect(extractFiscalCode("PREFIX--MRARSS00A01H501B--SUFFIX")).toEqual(
+      O.some("MRARSS00A01H501B")
+    );
+  });
+
+  it("returns none when the string does not contain any fiscal code", () => {
+    expect(extractFiscalCode("RANDOM_STRING_MRARS001H1B")).toEqual(O.none);
   });
 });

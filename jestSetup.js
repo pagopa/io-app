@@ -149,3 +149,15 @@ jest.mock("react-native", () => {
 
   return RN;
 });
+
+// eslint-disable-next-line functional/immutable-data
+NativeModules.CameraView = {
+  getConstants: jest.fn()
+};
+
+jest.mock("react-native-vision-camera", () => ({
+  useCodeScanner: jest.fn(() => ({
+    codeTypes: ["qr", "data-matrix"],
+    onCodeScanned: jest.fn()
+  }))
+}));

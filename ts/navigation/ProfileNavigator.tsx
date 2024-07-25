@@ -32,6 +32,7 @@ import TrialSystemPlayground from "../screens/profile/TrialSystemPlayground";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import { useIOSelector } from "../store/hooks";
 import { isSettingsVisibleAndHideProfileSelector } from "../store/reducers/backendStatus";
+import { IOMarkdownPlayground } from "../screens/profile/playgrounds/IOMarkdownPlayground";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -129,6 +130,10 @@ const ProfileStackNavigator = () => {
       <Stack.Screen
         name={ROUTES.MARKDOWN_PLAYGROUND}
         component={MarkdownPlayground}
+      />
+      <Stack.Screen
+        name={ROUTES.IO_MARKDOWN_PLAYGROUND}
+        component={IOMarkdownPlayground}
       />
       <Stack.Screen
         options={{

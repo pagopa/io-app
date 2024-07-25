@@ -2022,7 +2022,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                               "width": "100%",
                             },
                             {
-                              "paddingBottom": 0,
+                              "paddingBottom": 16,
                             },
                           ]
                         }
@@ -2858,7 +2858,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                               "width": "100%",
                             },
                             {
-                              "paddingBottom": 0,
+                              "paddingBottom": 16,
                             },
                           ]
                         }
@@ -3489,7 +3489,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                               "width": "100%",
                             },
                             {
-                              "paddingBottom": 0,
+                              "paddingBottom": 16,
                             },
                           ]
                         }

@@ -157,13 +157,6 @@ const WalletPaymentDetailContent = ({
     contextualHelp: emptyContextualHelp
   });
 
-  const navigateToMakePaymentScreen = () => {
-    dispatch(storeNewPaymentAttemptAction(rptId));
-    navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
-      screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
-    });
-  };
-
   const amountInfoBottomSheet = useIOBottomSheetAutoresizableModal({
     title: I18n.t("wallet.firstTransactionSummary.amountInfo.title"),
     component: (
@@ -183,8 +176,8 @@ const WalletPaymentDetailContent = ({
     O.toUndefined
   );
 
-  const amount = pipe(payment.amount, centsToAmount, amount =>
-    formatNumberAmount(amount, true, "right")
+  const amount = pipe(payment.amount, centsToAmount, amountValue =>
+    formatNumberAmount(amountValue, true, "right")
   );
 
   const dueDate = pipe(
@@ -204,7 +197,7 @@ const WalletPaymentDetailContent = ({
     O.getOrElse(() => "")
   );
 
-  const organizationFiscalCode = pipe(
+  const orgFiscalCode = pipe(
     rptId,
     RptIdFromString.decode,
     O.fromEither,
@@ -236,6 +229,22 @@ const WalletPaymentDetailContent = ({
       organization_name: payment.paName,
       service_name: description,
       expiration_date: dueDate
+    });
+  };
+
+  const navigateToMakePaymentScreen = () => {
+    analytics.trackPaymentStartFlow({
+      data_entry: paymentAnalyticsData?.startOrigin,
+      attempt: paymentAnalyticsData?.attempt,
+      organization_name: payment.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      amount,
+      expiration_date: dueDate
+    });
+    dispatch(storeNewPaymentAttemptAction(rptId));
+    navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+      screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
     });
   };
 
@@ -288,8 +297,8 @@ const WalletPaymentDetailContent = ({
         icon="entityCode"
         label={I18n.t("wallet.firstTransactionSummary.entityCode")}
         accessibilityLabel={I18n.t("wallet.firstTransactionSummary.entityCode")}
-        value={organizationFiscalCode}
-        onPress={() => handleOnCopy(organizationFiscalCode)}
+        value={orgFiscalCode}
+        onPress={() => handleOnCopy(orgFiscalCode)}
       />
       {amountInfoBottomSheet.bottomSheet}
     </GradientScrollView>

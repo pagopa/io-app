@@ -20,7 +20,7 @@ import {
   preferencesPnTestEnvironmentSetEnabled,
   preferencesIdPayTestSetEnabled,
   preferencesDesignSystemSetEnabled,
-  preferencesNewWalletSectionSetEnabled,
+  preferencesNewScanSectionSetEnabled,
   preferencesItWalletTestSetEnabled
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
@@ -46,7 +46,7 @@ export type PersistedPreferencesState = Readonly<{
   // changing the variable value later). Typescript cannot detect this so
   // be sure to handle such case when reading and using this value
   isDesignSystemEnabled: boolean;
-  isNewWalletSectionEnabled: boolean;
+  isNewScanSectionEnabled?: boolean;
   isItWalletTestEnabled?: boolean;
 }>;
 
@@ -62,11 +62,10 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isPnTestEnabled: false,
   isIdPayTestEnabled: false,
   isDesignSystemEnabled: false,
-  isNewWalletSectionEnabled: false,
+  isNewScanSectionEnabled: false,
   isItWalletTestEnabled: false
 };
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export default function preferencesReducer(
   state: PersistedPreferencesState = initialPreferencesState,
   action: Action
@@ -160,10 +159,10 @@ export default function preferencesReducer(
     };
   }
 
-  if (isActionOf(preferencesNewWalletSectionSetEnabled, action)) {
+  if (isActionOf(preferencesNewScanSectionSetEnabled, action)) {
     return {
       ...state,
-      isNewWalletSectionEnabled: action.payload.isNewWalletSectionEnabled
+      isNewScanSectionEnabled: action.payload.isNewScanSectionEnabled
     };
   }
 
@@ -216,8 +215,8 @@ export const isIdPayTestEnabledSelector = (state: GlobalState) =>
 export const isDesignSystemEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isDesignSystemEnabled ?? false;
 
-export const isNewWalletSectionLocallyEnabledSelector = (state: GlobalState) =>
-  state.persistedPreferences?.isNewWalletSectionEnabled ?? false;
+export const isNewScanSectionLocallyEnabledSelector = (state: GlobalState) =>
+  !!state.persistedPreferences?.isNewScanSectionEnabled;
 
 export const isItWalletTestEnabledSelector = (state: GlobalState) =>
   !!state.persistedPreferences?.isItWalletTestEnabled;
