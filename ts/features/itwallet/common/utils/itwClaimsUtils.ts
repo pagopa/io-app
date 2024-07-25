@@ -4,16 +4,16 @@
 
 import { patternDateFromString } from "@pagopa/ts-commons/lib/dates";
 import { PatternString } from "@pagopa/ts-commons/lib/strings";
-import { differenceInCalendarDays } from "date-fns";
-import { pipe } from "fp-ts/lib/function";
+import { differenceInCalendarDays, isValid } from "date-fns";
 import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
 import { ItwCredentialStatus } from "../components/ItwCredentialCard";
-import { CredentialCatalogDisplay } from "./itwMocksUtils";
 import { JsonFromString } from "./ItwCodecUtils";
+import { CredentialCatalogDisplay } from "./itwMocksUtils";
 import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
 /**
@@ -166,6 +166,9 @@ const PICTURE_URL_REGEX = "^data:image\\/png;base64,";
 const PICTURE_WITHOUT_URL_REGEX =
   "(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)";
 
+const FISCAL_CODE_WITH_PREFIX =
+  "(TINIT-[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])";
+
 /**
  * io-ts decoder for the date claim field of the credential.
  * The date format is checked against the regex dateFormatRegex, which is currenlty mocked.
@@ -221,6 +224,11 @@ export type DrivingPrivilegesClaimType = t.TypeOf<
 >;
 
 /**
+ * Decoder for the fiscal code. This is needed since we have to remove the INIT prefix when rendering it.
+ */
+export const FiscalCodeClaim = PatternString(FISCAL_CODE_WITH_PREFIX);
+
+/**
  * Alias for the string fallback of the claim field of the credential.
  */
 export const PlainTextClaim = t.string;
@@ -249,6 +257,8 @@ export const ClaimValue = t.union([
   ImageClaim,
   // Otherwise parse an image without URL
   ImageClaimNoUrl,
+  // Otherwise parse a fiscal code
+  FiscalCodeClaim,
   // Otherwise fallback to string
   PlainTextClaim
 ]);
@@ -332,7 +342,12 @@ export const getCredentialExpireDate = (
   const expireDate: ParsedCredential[keyof ParsedCredential] | undefined =
     credential.expiry_date || credential.expiration_date;
 
-  return expireDate && new Date(expireDate.value as string);
+  if (!expireDate?.value) {
+    return undefined;
+  }
+
+  const date = new Date(expireDate.value as string);
+  return isValid(date) ? date : undefined;
 };
 
 /**
