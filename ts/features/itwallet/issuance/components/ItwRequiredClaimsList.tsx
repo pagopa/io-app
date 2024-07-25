@@ -10,6 +10,7 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import * as O from "fp-ts/Option";
 import I18n from "../../../../i18n";
 import { localeDateFormat } from "../../../../utils/locale";
 import {
@@ -18,6 +19,8 @@ import {
   DateClaim,
   DrivingPrivilegesClaim,
   EvidenceClaim,
+  extractFiscalCode,
+  FiscalCodeClaim,
   ImageClaim,
   ImageClaimNoUrl,
   PlaceOfBirthClaim,
@@ -97,6 +100,12 @@ export const getClaimDisplayValue = (
           return decoded;
         } else if (DrivingPrivilegesClaim.is(decoded)) {
           return decoded.map(e => e.driving_privilege);
+        } else if (FiscalCodeClaim.is(decoded)) {
+          return pipe(
+            decoded,
+            extractFiscalCode,
+            O.getOrElseW(() => decoded)
+          );
         } else if (PlainTextClaim.is(decoded)) {
           return decoded; // must be the last one to be checked due to overlap with IPatternStringTag
         }
