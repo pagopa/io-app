@@ -487,7 +487,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     {
                                       "busy": undefined,
                                       "checked": undefined,
-                                      "disabled": false,
+                                      "disabled": undefined,
                                       "expanded": undefined,
                                       "selected": undefined,
                                     }
@@ -512,23 +512,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       [
                                         {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         {
                                           "transform": [
                                             {
@@ -536,17 +539,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -555,6 +555,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -562,7 +563,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           [
                                             {
@@ -590,61 +592,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          {
-                                            "width": 44,
-                                          }
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             [
                                               {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              [
-                                                {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -727,7 +722,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     {
                                       "busy": undefined,
                                       "checked": undefined,
-                                      "disabled": false,
+                                      "disabled": undefined,
                                       "expanded": undefined,
                                       "selected": undefined,
                                     }
@@ -752,23 +747,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       [
                                         {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         {
                                           "transform": [
                                             {
@@ -776,17 +774,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -795,6 +790,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -802,7 +798,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           [
                                             {
@@ -830,61 +827,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          {
-                                            "width": 44,
-                                          }
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             [
                                               {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              [
-                                                {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -967,7 +957,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     {
                                       "busy": undefined,
                                       "checked": undefined,
-                                      "disabled": false,
+                                      "disabled": undefined,
                                       "expanded": undefined,
                                       "selected": undefined,
                                     }
@@ -992,23 +982,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       [
                                         {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         {
                                           "transform": [
                                             {
@@ -1016,17 +1009,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -1035,6 +1025,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -1042,7 +1033,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           [
                                             {
@@ -1070,61 +1062,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          {
-                                            "width": 44,
-                                          }
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             [
                                               {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              [
-                                                {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -1207,7 +1192,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     {
                                       "busy": undefined,
                                       "checked": undefined,
-                                      "disabled": false,
+                                      "disabled": undefined,
                                       "expanded": undefined,
                                       "selected": undefined,
                                     }
@@ -1232,23 +1217,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       [
                                         {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         {
                                           "transform": [
                                             {
@@ -1256,17 +1244,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -1275,6 +1260,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -1282,7 +1268,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           [
                                             {
@@ -1310,61 +1297,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          {
-                                            "width": 44,
-                                          }
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             [
                                               {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              [
-                                                {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -1447,7 +1427,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     {
                                       "busy": undefined,
                                       "checked": undefined,
-                                      "disabled": false,
+                                      "disabled": undefined,
                                       "expanded": undefined,
                                       "selected": undefined,
                                     }
@@ -1472,23 +1452,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       [
                                         {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         {
                                           "transform": [
                                             {
@@ -1496,17 +1479,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -1515,6 +1495,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -1522,7 +1503,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           [
                                             {
@@ -1550,61 +1532,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          {
-                                            "width": 44,
-                                          }
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             [
                                               {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              [
-                                                {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -1687,7 +1662,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     {
                                       "busy": undefined,
                                       "checked": undefined,
-                                      "disabled": false,
+                                      "disabled": undefined,
                                       "expanded": undefined,
                                       "selected": undefined,
                                     }
@@ -1712,23 +1687,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       [
                                         {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         {
                                           "transform": [
                                             {
@@ -1736,17 +1714,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -1755,6 +1730,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -1762,7 +1738,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           [
                                             {
@@ -1790,61 +1767,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          {
-                                            "width": 44,
-                                          }
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             [
                                               {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              [
-                                                {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -1927,7 +1897,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     {
                                       "busy": undefined,
                                       "checked": undefined,
-                                      "disabled": false,
+                                      "disabled": undefined,
                                       "expanded": undefined,
                                       "selected": undefined,
                                     }
@@ -1952,23 +1922,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       [
                                         {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         {
                                           "transform": [
                                             {
@@ -1976,17 +1949,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -1995,6 +1965,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -2002,7 +1973,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           [
                                             {
@@ -2030,61 +2002,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          {
-                                            "width": 44,
-                                          }
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             [
                                               {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              [
-                                                {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -2167,7 +2132,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     {
                                       "busy": undefined,
                                       "checked": undefined,
-                                      "disabled": false,
+                                      "disabled": undefined,
                                       "expanded": undefined,
                                       "selected": undefined,
                                     }
@@ -2192,23 +2157,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       [
                                         {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         {
                                           "transform": [
                                             {
@@ -2216,17 +2184,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -2235,6 +2200,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -2242,7 +2208,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           [
                                             {
@@ -2270,61 +2237,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          {
-                                            "width": 44,
-                                          }
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             [
                                               {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              [
-                                                {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -2407,7 +2367,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     {
                                       "busy": undefined,
                                       "checked": undefined,
-                                      "disabled": false,
+                                      "disabled": undefined,
                                       "expanded": undefined,
                                       "selected": undefined,
                                     }
@@ -2432,23 +2392,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       [
                                         {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         {
                                           "transform": [
                                             {
@@ -2456,17 +2419,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -2475,6 +2435,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -2482,7 +2443,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           [
                                             {
@@ -2510,61 +2472,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          {
-                                            "width": 44,
-                                          }
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             [
                                               {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              [
-                                                {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -2647,7 +2602,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     {
                                       "busy": undefined,
                                       "checked": undefined,
-                                      "disabled": false,
+                                      "disabled": undefined,
                                       "expanded": undefined,
                                       "selected": undefined,
                                     }
@@ -2672,23 +2627,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       [
                                         {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         {
                                           "transform": [
                                             {
@@ -2696,17 +2654,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -2715,6 +2670,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -2722,7 +2678,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           [
                                             {
@@ -2750,61 +2707,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          {
-                                            "width": 44,
-                                          }
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             [
                                               {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              [
-                                                {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -3873,7 +3823,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                     {
                                       "busy": undefined,
                                       "checked": undefined,
-                                      "disabled": false,
+                                      "disabled": undefined,
                                       "expanded": undefined,
                                       "selected": undefined,
                                     }
@@ -3898,23 +3848,26 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       [
                                         {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         {
                                           "transform": [
                                             {
@@ -3922,17 +3875,14 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                             },
                                           ],
                                         },
-                                        {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -3941,6 +3891,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -3948,7 +3899,8 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           [
                                             {
@@ -3976,61 +3928,54 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                       />
                                       <View
                                         style={
-                                          {
-                                            "width": 44,
-                                          }
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             [
                                               {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              [
-                                                {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }

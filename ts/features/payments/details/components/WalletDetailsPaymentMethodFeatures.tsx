@@ -1,6 +1,5 @@
 import { Alert } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View } from "react-native";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
@@ -21,13 +20,8 @@ const WalletDetailsPaymentMethodFeatures = ({ paymentMethod }: Props) => {
   const isIdpayEnabled = useIOSelector(isIdPayEnabledSelector);
 
   if (isMethodExpired) {
-    const viewRef = React.createRef<View>();
     return (
-      <Alert
-        viewRef={viewRef}
-        variant="error"
-        content={I18n.t("wallet.methodDetails.expired")}
-      />
+      <Alert variant="error" content={I18n.t("wallet.methodDetails.expired")} />
     );
   }
 

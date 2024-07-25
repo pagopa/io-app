@@ -36,6 +36,7 @@ import {
 import { useManualConfigBottomSheet } from "../profile/components/services/ManualConfigBottomSheet";
 import ServicesContactComponent from "../profile/components/services/ServicesContactComponent";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
+import useContentWithFF from "../profile/useContentWithFF";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
@@ -61,6 +62,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
 
   // if the user is not new and he/she hasn't a preference set, pre-set with AUTO mode
   const mode = profileServicePreferenceMode;
+  const content = useContentWithFF("services.optIn.preferences.banner");
   const [modeSelected, setModeSelected] = useState<
     ServicesPreferencesModeEnum | undefined
   >(mode);
@@ -204,8 +206,8 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
             <Banner
               size="small"
               color="neutral"
-              pictogramName="activate"
-              content={I18n.t("services.optIn.preferences.banner")}
+              pictogramName="settings"
+              content={content}
             />
           </ContentWrapper>
           {manualConfigBottomSheet}

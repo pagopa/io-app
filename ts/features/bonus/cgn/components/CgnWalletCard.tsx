@@ -2,11 +2,11 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { Pressable } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { profileSelector } from "../../../../store/reducers/profile";
 import { withWalletCardBaseComponent } from "../../../newWallet/components/WalletCardBaseComponent";
+import { WalletCardPressableBase } from "../../../newWallet/components/WalletCardPressableBase";
 import CGN_ROUTES from "../navigation/routes";
 import { CgnCard, CgnCardProps } from "./CgnCard";
 
@@ -31,9 +31,9 @@ const WrappedCgnCard = (props: CgnWalletCardProps) => {
   };
 
   return (
-    <Pressable accessibilityRole="button" onPress={handleCardPress}>
+    <WalletCardPressableBase onPress={handleCardPress}>
       <CgnCard {...props} withEycaLogo={isUnder31} />
-    </Pressable>
+    </WalletCardPressableBase>
   );
 };
 

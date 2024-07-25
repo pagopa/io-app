@@ -51,7 +51,10 @@ import { apiUrlPrefix } from "../../config";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
 import ROUTES from "../../navigation/routes";
-import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import {
+  HeaderSecondLevelHookProps,
+  useHeaderSecondLevel
+} from "../../hooks/useHeaderSecondLevel";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 type NavigationProps = IOStackNavigationRouteProps<
@@ -266,14 +269,18 @@ const IdpLoginScreen = (props: Props) => {
   const { loggedOutWithIdpAuth, loggedInAuth } = props;
   const hasError = pot.isError(requestState);
 
-  useHeaderSecondLevel({
-    title: `${I18n.t("authentication.idp_login.headerTitle")} - ${
-      loggedOutWithIdpAuth?.idp.name
-    }`,
-    supportRequest: true,
-    contextualHelp,
-    faqCategories: ["authentication_SPID"]
-  });
+  const headerProps: HeaderSecondLevelHookProps = !loggedInAuth
+    ? {
+        title: `${I18n.t("authentication.idp_login.headerTitle")} - ${
+          loggedOutWithIdpAuth?.idp.name
+        }`,
+        supportRequest: true,
+        contextualHelp,
+        faqCategories: ["authentication_SPID"]
+      }
+    : { title: "", canGoBack: false };
+
+  useHeaderSecondLevel(headerProps);
 
   if (loggedInAuth) {
     return <IdpSuccessfulAuthentication />;

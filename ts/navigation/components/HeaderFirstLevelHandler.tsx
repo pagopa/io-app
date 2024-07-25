@@ -9,7 +9,6 @@ import {
   useStartSupportRequest
 } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
-import { searchMessagesEnabled } from "../../store/actions/search";
 import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { MainTabParamsList } from "../params/MainTabParamsList";
@@ -115,9 +114,9 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
 
   const messageSearchCallback = useCallback(() => {
     if (canNavigateIfIsArchivingCallback()) {
-      dispatch(searchMessagesEnabled(true));
+      navigation.navigate(MESSAGES_ROUTES.MESSAGES_SEARCH);
     }
-  }, [canNavigateIfIsArchivingCallback, dispatch]);
+  }, [canNavigateIfIsArchivingCallback, navigation]);
 
   const navigateToSettingMainScreen = useCallback(() => {
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
@@ -273,6 +272,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
       case MESSAGES_ROUTES.MESSAGES_HOME:
       default:
         return {
+          skipHeaderAutofocus: true,
           title: I18n.t("messages.contentTitle"),
           firstAction: helpAction,
           ...(isSettingsVisibleAndHideProfile

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Alert, View, ImageSourcePropType } from "react-native";
 import {
-  ButtonExtendedOutline,
+  ModuleSummary,
   ModuleAttachment,
   ModuleCheckout,
   ModuleCredential,
@@ -103,9 +103,9 @@ export const DSModules = () => {
         weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
-        ButtonExtendedOutline
+        ModuleSummary
       </H2>
-      {renderButtonExtendedOutline()}
+      {renderModuleSummary()}
 
       <VSpacer size={40} />
 
@@ -122,8 +122,8 @@ export const DSModules = () => {
 };
 
 const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
-  <DSComponentViewerBox name="ModuleAttachment">
-    <View>
+  <>
+    <DSComponentViewerBox name="ModuleAttachment, loading">
       {isDesignSystemEnabled ? (
         <ModuleAttachment
           title="Nome del documento.pdf"
@@ -140,7 +140,8 @@ const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
           onPress={onButtonPress}
         />
       )}
-      <VSpacer size={16} />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleAttachment, default variant">
       {isDesignSystemEnabled ? (
         <ModuleAttachment
           title="Nome del documento.pdf"
@@ -155,7 +156,6 @@ const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
           onPress={onButtonPress}
         />
       )}
-      <VSpacer size={16} />
       {isDesignSystemEnabled ? null : (
         <LegacyModuleAttachment
           title="Nome del documento.pdf"
@@ -163,7 +163,8 @@ const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
           onPress={onButtonPress}
         />
       )}
-      <VSpacer size={16} />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleAttachment, stress test">
       {isDesignSystemEnabled ? (
         <ModuleAttachment
           title="This is a very loooooooooooooooooooooong title"
@@ -178,7 +179,8 @@ const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
           onPress={onButtonPress}
         />
       )}
-      <VSpacer size={16} />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleAttachment, fetching">
       {isDesignSystemEnabled ? (
         <ModuleAttachment
           title="Nome del documento.pdf"
@@ -195,7 +197,8 @@ const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
           onPress={onButtonPress}
         />
       )}
-      <VSpacer size={16} />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleAttachment, disabled">
       {isDesignSystemEnabled ? (
         <ModuleAttachment
           title="Nome del documento.pdf"
@@ -212,13 +215,13 @@ const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
           onPress={onButtonPress}
         />
       )}
-    </View>
-  </DSComponentViewerBox>
+    </DSComponentViewerBox>
+  </>
 );
 
 const renderModulePaymentNotice = () => (
-  <DSComponentViewerBox name="ModulePaymentNotice">
-    <View>
+  <>
+    <DSComponentViewerBox name="ModulePaymentNotice, loading">
       <ModulePaymentNotice
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
@@ -227,7 +230,8 @@ const renderModulePaymentNotice = () => (
         isLoading={true}
         onPress={onButtonPress}
       />
-      <VSpacer size={16} />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModulePaymentNotice, default with amount">
       <ModulePaymentNotice
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
@@ -235,10 +239,10 @@ const renderModulePaymentNotice = () => (
         paymentNoticeAmount="1.000,00 €"
         onPress={onButtonPress}
       />
-      <VSpacer size={16} />
-
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModulePaymentNotice, various statuses">
       {noticeStatusArray.map(
-        (noticeStatus: PaymentNoticeStatusWithoutDefault) => (
+        (noticeStatus: PaymentNoticeStatusWithoutDefault, index: number) => (
           <React.Fragment key={`paymentNotice-${noticeStatus}`}>
             <ModulePaymentNotice
               title="Codice avviso"
@@ -247,28 +251,51 @@ const renderModulePaymentNotice = () => (
               badgeText={getBadgeTextByPaymentNoticeStatus(noticeStatus)}
               onPress={onButtonPress}
             />
-            <VSpacer size={16} />
+            {index < noticeStatusArray.length - 1 && <VSpacer size={8} />}
           </React.Fragment>
         )
       )}
+    </DSComponentViewerBox>
 
+    <DSComponentViewerBox name="ModulePaymentNotice, default, without title">
       <ModulePaymentNotice
         subtitle="TARI 2023 - Rata 01"
         paymentNoticeStatus="default"
         paymentNoticeAmount="1.000,00 €"
         onPress={onButtonPress}
       />
-    </View>
-  </DSComponentViewerBox>
+    </DSComponentViewerBox>
+  </>
 );
 
 const renderModuleCheckout = () => (
   <>
+    <DSComponentViewerBox name="ModuleCheckout, loading">
+      <ModuleCheckout isLoading />
+    </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleCheckout, default">
       <ModuleCheckout
         paymentLogo="amex"
         title="Amex"
         subtitle="arien_c********@**hoo.it"
+        ctaText="Modifica"
+        onPress={onButtonPress}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleCheckout, default, with image">
+      <ModuleCheckout
+        image={{
+          uri: "https://assets.cdn.platform.pagopa.it/apm/bancomatpay.png"
+        }}
+        title="Paga con Bancomat PAY"
+        ctaText="Modifica"
+        onPress={onButtonPress}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleCheckout, no description">
+      <ModuleCheckout
+        paymentLogo="amex"
+        title="Amex"
         ctaText="Modifica"
         onPress={onButtonPress}
       />
@@ -281,34 +308,55 @@ const renderModuleCheckout = () => (
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleCheckout, no CTA, with image">
+      <ModuleCheckout
+        image={{
+          uri: "https://assets.cdn.platform.pagopa.it/apm/bancomatpay.png"
+        }}
+        title="3,50 $"
+        subtitle="Piú o meno"
+        onPress={onButtonPress}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleCheckout, no CTA">
+      <ModuleCheckout
+        title="3,50 $"
+        subtitle="Piú o meno"
+        onPress={onButtonPress}
+      />
+    </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleCheckout, loading">
-      <ModuleCheckout isLoading ctaText="Loading" />
+      <ModuleCheckout isLoading />
     </DSComponentViewerBox>
   </>
 );
 
-const renderButtonExtendedOutline = () => (
-  <DSComponentViewerBox name="ButtonExtendedOutline (using Pressable API)">
-    <View>
-      <ButtonExtendedOutline
+const renderModuleSummary = () => (
+  <>
+    <DSComponentViewerBox name="ModuleSummary, default variant">
+      <ModuleSummary
         label={"Label name"}
         description={"This is a description of the element"}
-        onPress={() => {
-          alert("Action triggered");
-        }}
+        onPress={onButtonPress}
       />
-    </View>
-    <VSpacer size={16} />
-    <View>
-      <ButtonExtendedOutline
-        icon="chevronRightListItem"
-        label={"Label only"}
-        onPress={() => {
-          alert("Action triggered");
-        }}
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleSummary, custom icon, label only">
+      <View>
+        <ModuleSummary
+          icon="chevronRightListItem"
+          label={"Label only"}
+          onPress={onButtonPress}
+        />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleSummary, stress test">
+      <ModuleSummary
+        label={"A very looong loooooooong looooooooooooooong label"}
+        description={"This is a very looooooong description of the element"}
+        onPress={onButtonPress}
       />
-    </View>
-  </DSComponentViewerBox>
+    </DSComponentViewerBox>
+  </>
 );
 
 const mockIDPProviderItem = {
@@ -361,51 +409,51 @@ const renderModuleIDP = () => (
 const renderModuleCredential = () => (
   <>
     <DSComponentViewerBox name="ModuleCredential">
-      <View>
-        <ModuleCredential
-          icon="fingerprint"
-          label="Identità digitale"
-          onPress={onButtonPress}
-        />
-      </View>
+      <ModuleCredential
+        icon="fingerprint"
+        label="Identità digitale"
+        onPress={onButtonPress}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleCredential, with Badge">
-      <View>
-        <ModuleCredential
-          icon="fingerprint"
-          label="Identità digitale"
-          onPress={onButtonPress}
-          badge={{
-            text: "predefinita",
-            variant: "info"
-          }}
-        />
-      </View>
+      <ModuleCredential
+        icon="fingerprint"
+        label="Identità digitale"
+        onPress={onButtonPress}
+        badge={{
+          text: "predefinita",
+          variant: "info"
+        }}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleCredential, with long label">
-      <View>
-        <ModuleCredential
-          icon="fingerprint"
-          label="This is a very long long long label"
-          onPress={onButtonPress}
-          badge={{
-            text: "predefinita",
-            variant: "info"
-          }}
-        />
-      </View>
+      <ModuleCredential
+        icon="fingerprint"
+        label="This is a very long long long label"
+        onPress={onButtonPress}
+        badge={{
+          text: "predefinita",
+          variant: "info"
+        }}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleCredential, with image asset">
-      <View>
-        <ModuleCredential
-          image={CgnLogo}
-          label="Carta Giovani Nazionale"
-          badge={{
-            text: "già presente",
-            variant: "success"
-          }}
-        />
-      </View>
+      <ModuleCredential
+        image={CgnLogo}
+        label="Carta Giovani Nazionale"
+        badge={{
+          text: "già presente",
+          variant: "success"
+        }}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleCredential, fetching">
+      <ModuleCredential
+        icon="fingerprint"
+        label="Identità digitale"
+        onPress={onButtonPress}
+        isFetching={true}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleCredential, loading">
       <View>
@@ -418,34 +466,49 @@ const renderModuleCredential = () => (
 const renderModuleNavigation = () => (
   <>
     <DSComponentViewerBox name="ModuleNavigation">
-      <View>
-        <ModuleNavigation
-          icon="spid"
-          title="SPID"
-          subtitle="Usa credenziali e app (o SMS)"
-          onPress={onButtonPress}
-        />
-      </View>
+      <ModuleNavigation
+        icon="spid"
+        title="SPID"
+        subtitle="Usa credenziali e app (o SMS)"
+        onPress={onButtonPress}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleNavigation, with Image">
+      <ModuleNavigation
+        image={CgnLogo}
+        title="Carta Giovani Nazionale"
+        subtitle="Usa credenziali e app (o SMS)"
+        onPress={onButtonPress}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleNavigation, with Badge">
-      <View>
-        <ModuleNavigation
-          icon="spid"
-          title="SPID"
-          subtitle="Usa credenziali e app (o SMS)"
-          onPress={onButtonPress}
-          badge={{
-            text: "IN arrivo",
-            variant: "blue",
-            outline: true
-          }}
-        />
-      </View>
+      <ModuleNavigation
+        icon="spid"
+        title="SPID"
+        subtitle="Usa credenziali e app (o SMS)"
+        onPress={onButtonPress}
+        badge={{
+          text: "In arrivo",
+          variant: "blue",
+          outline: true
+        }}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleNavigation, with Badge, stress test">
+      <ModuleNavigation
+        icon="spid"
+        title="Testo relativo allo SPID davvero molto lungo"
+        subtitle="Usa credenziali e app (o SMS), ma anche qui il testo è molto lungo"
+        onPress={onButtonPress}
+        badge={{
+          text: "In arrivo",
+          variant: "blue",
+          outline: true
+        }}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleNavigation, loading">
-      <View>
-        <ModuleNavigation isLoading={true} />
-      </View>
+      <ModuleNavigation isLoading={true} />
     </DSComponentViewerBox>
   </>
 );

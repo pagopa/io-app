@@ -19,13 +19,14 @@ import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend
 import { thirdPartyFromIdSelector } from "../../store/reducers/thirdPartyById";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus";
-import * as config from "../../../../config";
 import { isLoadingOrUpdatingInbox } from "../../store/reducers/allPaginated";
 import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 
-// eslint-disable-next-line functional/immutable-data
-Object.defineProperty(config, "euCovidCertificateEnabled", { value: true });
+jest.mock("../../../../config.ts", () => ({
+  ...jest.requireActual("../../../../config.ts"),
+  euCovidCertificateEnabled: true
+}));
 
 describe("getPaginatedMessage", () => {
   it("when no paginated message is in store, it should dispatch a loadMessageById.request and retrieve its result from the store if it succeeds", () => {

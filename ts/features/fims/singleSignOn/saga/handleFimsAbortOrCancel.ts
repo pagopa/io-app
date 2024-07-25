@@ -6,7 +6,11 @@ import {
 import { call, select } from "typed-redux-saga/macro";
 import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
 import { fimsPartialAbortUrl } from "../store/reducers";
-import { buildAbsoluteUrl, logToMixPanel } from "./sagaUtils";
+import {
+  buildAbsoluteUrl,
+  formatHttpClientResponseForMixPanel,
+  logToMixPanel
+} from "./sagaUtils";
 import { handleFimsResourcesDeallocation } from "./handleFimsResourcesDeallocation";
 
 const abortTimeoutMillisecondsGenerator = () => 8000;
@@ -31,7 +35,9 @@ export function* handleFimsAbortOrCancel() {
       if (isFailureResponse(abortResponse)) {
         yield* call(
           logToMixPanel,
-          `Abort call failed: ${JSON.stringify(abortResponse)}`
+          `Abort call failed: ${formatHttpClientResponseForMixPanel(
+            abortResponse
+          )}`
         );
       }
     } else {
