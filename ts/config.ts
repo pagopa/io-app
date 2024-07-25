@@ -43,6 +43,10 @@ const DEFAULT_PAGE_SIZE = 12;
 
 // Default mixpanel EU url
 const DEFAULT_MIXPANEL_URL = "https://api-eu.mixpanel.com";
+// Default sentry dsn url
+// This can be public as per docs https://docs.sentry.io/concepts/key-terms/dsn-explainer/#dsn-utilization
+const DEFAULT_SENTRY_DSN =
+  "https://43b87dcfc91f9cfdfaf71b254eb8f58e@o4507197393469440.ingest.de.sentry.io/4507221483585616";
 
 export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
@@ -54,6 +58,11 @@ export const mixpanelUrl = pipe(
   E.getOrElse(() => DEFAULT_MIXPANEL_URL)
 );
 export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
+export const sentryDsn: string = pipe(
+  Config.SENTRY_DSN,
+  NonEmptyString.decode,
+  E.getOrElse(() => DEFAULT_SENTRY_DSN)
+);
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 
@@ -253,4 +262,4 @@ export const itwPidProviderBaseUrl = Config.ITW_PID_PROVIDER_BASE_URL;
 export const itwEaaProviderBaseUrl = Config.ITW_EAA_PROVIDER_BASE_URL;
 export const itwBypassIdentityMatch =
   Config.ITW_BYPASS_IDENTITY_MATCH === "YES";
-export const itwCieIdpHint = Config.ITW_CIE_IDPHINT;
+export const itwIdpHintTest = Config.ITW_IDP_HINT_TEST === "YES";

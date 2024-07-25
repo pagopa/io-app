@@ -20,7 +20,7 @@ export const ItwCredentialClaimsList = ({
   isPreview?: boolean;
   isHidden?: boolean;
 }) => {
-  const claims = parseClaims(data.parsedCredential);
+  const claims = parseClaims(data.parsedCredential, { exclude: ["unique_id"] });
 
   return (
     <>
