@@ -9,7 +9,7 @@ import { WalletApplicationStatusEnum } from "../../../../../../definitions/pagop
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import {
   paymentsGetMethodDetailsAction,
-  paymentsPayPalBannerSetVisibleAction,
+  paymentsPayPalBannerSetIsClosedAction,
   paymentsTogglePagoPaCapabilityAction
 } from "../actions";
 
@@ -49,7 +49,7 @@ const reducer = (
         ...state,
         walletDetails: pot.none
       };
-    case getType(paymentsPayPalBannerSetVisibleAction):
+    case getType(paymentsPayPalBannerSetIsClosedAction):
       return {
         ...state,
         isWalletPayPalBannerClosed: action.payload

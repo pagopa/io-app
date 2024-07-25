@@ -4,7 +4,7 @@ import { VSpacer, Banner } from "@pagopa/io-app-design-system";
 import Animated, { FadeOut } from "react-native-reanimated";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { paymentsPayPalBannerSetVisibleAction } from "../store/actions";
+import { paymentsPayPalBannerSetIsClosedAction } from "../store/actions";
 import { walletPayPalBannerClosedSelector } from "../store/selectors";
 
 const PaymentsMethodPspPayPalBanner = () => {
@@ -13,7 +13,7 @@ const PaymentsMethodPspPayPalBanner = () => {
   const bannerClosed = useIOSelector(walletPayPalBannerClosedSelector);
 
   const handleOnCloseBanner = () => {
-    dispatch(paymentsPayPalBannerSetVisibleAction(true));
+    dispatch(paymentsPayPalBannerSetIsClosedAction(true));
   };
 
   if (!bannerClosed) {

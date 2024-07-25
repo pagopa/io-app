@@ -40,12 +40,12 @@ export const paymentsTogglePagoPaCapabilityAction = createAsyncAction(
 )<TogglePagoPaCapabilityPayload, void, NetworkError, void>();
 
 /** This action is used to close/show the PayPal banner into a payment method details of type paypal */
-export const paymentsPayPalBannerSetVisibleAction = createStandardAction(
-  "PAYMENTS_PAYPAL_BANNER_SET_VISIBLE"
+export const paymentsPayPalBannerSetIsClosedAction = createStandardAction(
+  "PAYMENTS_PAYPAL_BANNER_SET_IS_CLOSED"
 )<boolean>();
 
 export type PaymentsMethodDetailsActions =
   | ActionType<typeof paymentsGetMethodDetailsAction>
   | ActionType<typeof paymentsDeleteMethodAction>
   | ActionType<typeof paymentsTogglePagoPaCapabilityAction>
-  | ActionType<typeof paymentsPayPalBannerSetVisibleAction>;
+  | ActionType<typeof paymentsPayPalBannerSetIsClosedAction>;
