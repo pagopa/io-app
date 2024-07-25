@@ -1890,9 +1890,10 @@ wallet:
         title: Abilita il metodo per effettuare pagamenti in app
         subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
       PAYMENT_METHODS_NOT_AVAILABLE:
-        title: Aggiungi un metodo per effettuare pagamenti in app
+        title: Vuoi pagare con carta? Aggiungila ora!
         subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
-        primaryAction: Aggiungi metodo
+        primaryAction: Aggiungi carta
+        secondaryAction: Usa altri metodi
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -3132,6 +3133,10 @@ features:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
         totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
     details:
+      payPal:
+        banner:
+          title: Do you want to pay in 3?
+          content: Don't use this method. During a payment, select "PayPal (Pay in 3 too)".
       pspAlert:
         description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
         action: "Cosa significa?"
@@ -3956,6 +3961,15 @@ permissionRequest:
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
 FIMS:
+  history:
+    exportData:
+      CTA: "Richiedi una copia via email"
+    profileCTA:
+      title: Accessi a servizi di terze parti 
+      subTitle: Rivedi gli accessi effettuati a servizi di terze parti tramite IO
+    historyScreen:
+      header: Accessi a servizi di terze parti
+      body: Qui puoi vedere tutti gli accessi a servizi esterni che hai fatto tramite IO e richiederne una copia via email
   loadingScreen:
     abort:
       title: "Operazione annullata"
