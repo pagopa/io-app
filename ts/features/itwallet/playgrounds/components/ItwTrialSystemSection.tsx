@@ -42,6 +42,7 @@ export const ItwTrialSystemSection = () => {
   return (
     <>
       <ListItemHeader label="Trial" />
+      <ListItemInfo label="ID" value={itwTrialId} />
       <ListItemInfo label="Current status" value={status ?? "Not present"} />
       <VSpacer size={8} />
       <>
@@ -54,15 +55,7 @@ export const ItwTrialSystemSection = () => {
             label={I18n.t("profile.main.trial.titleSection")}
             onPress={subscribe}
           />
-        ) : (
-          <ButtonSolid
-            disabled={isLoading}
-            fullWidth={true}
-            color="danger"
-            label={"Unsubscribe"}
-            onPress={constNull}
-          />
-        )}
+        ) : null}
       </>
       <VSpacer size={8} />
       <ButtonSolid
@@ -74,6 +67,7 @@ export const ItwTrialSystemSection = () => {
       />
       <VSpacer size={8} />
       <ButtonSolid
+        color="danger"
         loading={isUpdating}
         disabled={isLoading}
         fullWidth={true}
