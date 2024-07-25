@@ -99,8 +99,8 @@ jobs:
         continue-on-error: true 
         uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4.0.3
         with:
-          name: ItaliaApp.app.dSYM.zip
-          path: ios/ItaliaApp.app.dSYM.zip
+          name: IO.app.dSYM.zip
+          path: ios/IO.app.dSYM.zip
           retention-days: 60        
   notify-new-version:
     environment: dev
