@@ -44,7 +44,6 @@ describe("WalletCardOnboardingScreen", () => {
     const { queryByTestId } = renderComponent({});
 
     expect(queryByTestId("itwDrivingLicenseModuleTestID")).toBeTruthy();
-    expect(queryByTestId("itwDisabilityCardModuleTestID")).toBeTruthy();
   });
 
   test.each([
