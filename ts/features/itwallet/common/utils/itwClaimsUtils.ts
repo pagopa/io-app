@@ -4,16 +4,16 @@
 
 import { patternDateFromString } from "@pagopa/ts-commons/lib/dates";
 import { PatternString } from "@pagopa/ts-commons/lib/strings";
-import { differenceInCalendarDays } from "date-fns";
-import { pipe } from "fp-ts/lib/function";
+import { differenceInCalendarDays, isValid } from "date-fns";
 import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
 import { ItwCredentialStatus } from "../components/ItwCredentialCard";
-import { CredentialCatalogDisplay } from "./itwMocksUtils";
 import { JsonFromString } from "./ItwCodecUtils";
+import { CredentialCatalogDisplay } from "./itwMocksUtils";
 import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
 /**
@@ -69,19 +69,25 @@ export type ClaimDisplayFormat = {
  * If there's no locale that matches the current locale then we take the attribute key as the name.
  * The value is taken from the attribute value.
  * @param parsedCredential - the parsed credential.
+ * @param options.exclude - an array of keys to exclude from the claims. TODO [SIW-1383]: remove this dirty hack
  * @returns the array of {@link ClaimDisplayFormat} of the credential contained in its configuration schema.
  */
 export const parseClaims = (
-  parsedCredential: ParsedCredential
-): Array<ClaimDisplayFormat> =>
-  Object.entries(parsedCredential).map(([key, attribute]) => {
-    const attributeName =
-      typeof attribute.name === "string"
-        ? attribute.name
-        : attribute.name?.[getClaimsFullLocale()] || key;
+  parsedCredential: ParsedCredential,
+  options: { exclude?: Array<string> } = {}
+): Array<ClaimDisplayFormat> => {
+  const { exclude = [] } = options;
+  return Object.entries(parsedCredential)
+    .filter(([key]) => !exclude.includes(key))
+    .map(([key, attribute]) => {
+      const attributeName =
+        typeof attribute.name === "string"
+          ? attribute.name
+          : attribute.name?.[getClaimsFullLocale()] || key;
 
-    return { label: attributeName, value: attribute.value, id: key };
-  });
+      return { label: attributeName, value: attribute.value, id: key };
+    });
+};
 
 /**
  * Sorts the parsedCredential according to the order of the displayData.
@@ -342,7 +348,12 @@ export const getCredentialExpireDate = (
   const expireDate: ParsedCredential[keyof ParsedCredential] | undefined =
     credential.expiry_date || credential.expiration_date;
 
-  return expireDate && new Date(expireDate.value as string);
+  if (!expireDate?.value) {
+    return undefined;
+  }
+
+  const date = new Date(expireDate.value as string);
+  return isValid(date) ? date : undefined;
 };
 
 /**
