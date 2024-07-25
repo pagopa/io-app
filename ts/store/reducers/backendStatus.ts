@@ -21,7 +21,6 @@ import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
   fciEnabled,
-  itwEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled,
   uaDonationsEnabled
@@ -503,7 +502,6 @@ export const isBackendServicesStatusOffSelector = createSelector(
 export const isItwEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
-    itwEnabled &&
     pipe(
       backendStatus,
       O.map(
