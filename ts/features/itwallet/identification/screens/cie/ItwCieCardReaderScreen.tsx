@@ -43,7 +43,7 @@ import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 
 // This can be any URL, as long as it has http or https as its protocol, otherwise it cannot be managed by the webview.
-const CIE_L3_REDIRECT_URI = "https://cie.callback";
+const CIE_L3_REDIRECT_URI = "https://wallet.io.pagopa.it/index.html";
 // the timeout we sleep until move to consent form screen when authentication goes well
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
 const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
@@ -193,7 +193,7 @@ export const ItwCieCardReaderScreen = () => {
 
     switch (error.type) {
       case Cie.CieErrorType.WEB_VIEW_ERROR:
-        break; // TODO: handle CIE_L3_REDIRECT_URI that does not exist. Better use a valid url.
+        break;
       case Cie.CieErrorType.NFC_ERROR:
         setReadingState(ReadingState.error);
         break;

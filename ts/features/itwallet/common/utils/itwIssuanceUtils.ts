@@ -25,7 +25,7 @@ type AccessToken = Awaited<
 type IssuerConf = Parameters<Credential.Issuance.ObtainCredential>[0];
 
 // This can be any URL, as long as it has http or https as its protocol, otherwise it cannot be managed by the webview.
-const CIE_L3_REDIRECT_URI = "https://cie.callback";
+const CIE_L3_REDIRECT_URI = "https://wallet.io.pagopa.it/index.html";
 const CREDENTIAL_TYPE = "PersonIdentificationData";
 
 // Different scheme to avoid conflicts with the scheme handled by io-react-native-login-utils's activity
