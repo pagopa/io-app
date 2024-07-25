@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'authentication' state 1`] = `
+{
+  "kind": "LoggedOutWithoutIdp",
+  "reason": "NOT_LOGGED_IN",
+}
+`;
+
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'content' state 1`] = `
+{
+  "contextualHelp": {
+    "kind": "PotNone",
+  },
+  "idps": {
+    "kind": "undefined",
+  },
+  "municipality": {
+    "codiceCatastale": {
+      "kind": "PotNone",
+    },
+    "data": {
+      "kind": "PotNone",
+    },
+  },
+}
+`;
+
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'crossSessions' state 1`] = `
+{
+  "hashedFiscalCode": undefined,
+}
+`;
+
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'debug' state 1`] = `
+{
+  "isDebugModeEnabled": false,
+}
+`;
+
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'entities' state 1`] = `
+{
+  "calendarEvents": {
+    "byMessageId": {},
+  },
+  "messagesStatus": {},
+  "organizations": {
+    "all": [],
+    "nameByFiscalCode": {},
+  },
+  "paymentByRptId": {},
+}
+`;
+
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'identification' state 1`] = `
+{
+  "fail": undefined,
+  "progress": {
+    "kind": "unidentified",
+  },
+}
+`;
+
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'installation' state 1`] = `
+{
+  "appVersionHistory": [],
+  "isFirstRunAfterInstall": true,
+}
+`;
+
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'installation.appVersionHistory' state 1`] = `[]`;
+
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'notifications' state 1`] = `
+{
+  "installation": {
+    "id": "fakeInstallationId",
+    "registeredToken": undefined,
+    "token": undefined,
+  },
+  "pendingMessage": null,
+}
+`;
+
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'onboarding' state 1`] = `
+{
+  "isFingerprintAcknowledged": false,
+}
+`;
+
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'payments' state 1`] = `
+{
+  "creditCardInsertion": [],
+  "current": {
+    "kind": "UNSTARTED",
+  },
+  "history": [],
+  "lastDeleted": null,
+}
+`;
+
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'persistedPreferences' state 1`] = `
+{
+  "continueWithRootOrJailbreak": false,
+  "isCustomEmailChannelEnabled": {
+    "kind": "PotNone",
+  },
+  "isDesignSystemEnabled": false,
+  "isFingerprintEnabled": undefined,
+  "isIdPayTestEnabled": false,
+  "isMixpanelEnabled": null,
+  "isNewScanSectionEnabled": false,
+  "isPagoPATestEnabled": false,
+  "isPnTestEnabled": false,
+  "preferredCalendar": undefined,
+  "preferredLanguage": undefined,
+  "wasServiceAlertDisplayedOnce": false,
+}
+`;
+
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'profile' state 1`] = `
+{
+  "kind": "PotNone",
+}
+`;
+
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'wallet.wallets.walletById' state 1`] = `
+{
+  "kind": "PotNone",
+}
+`;
