@@ -6,14 +6,16 @@ import {
   Tag
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
+import { ImageSourcePropType, StyleSheet, View } from "react-native";
+import { AnimatedImage } from "../../../../components/AnimatedImage";
 import I18n from "../../../../i18n";
 import { CredentialType } from "../utils/itwMocksUtils";
+import { getCredentialNameFromType } from "../utils/itwCredentialUtils";
 
 export type ItwCredentialStatus = "valid" | "pending" | "expiring" | "expired";
 
 export type ItwCredentialCard = {
-  credentialType: CredentialType;
+  credentialType: string;
   status?: ItwCredentialStatus;
   isPreview?: boolean;
 };
@@ -34,10 +36,9 @@ export const ItwCredentialCard = ({
     <View style={isPreview && styles.previewContainer}>
       <View style={styles.cardContainer}>
         <View style={styles.card}>
-          <Image
-            style={styles.cardBackground}
+          <AnimatedImage
             source={cardBackgroundSource}
-            accessibilityIgnoresInvertColors={true}
+            style={styles.cardBackground}
           />
         </View>
         <View style={styles.infoContainer}>
@@ -48,7 +49,7 @@ export const ItwCredentialCard = ({
               numberOfLines={2}
               style={{ flex: 1 }}
             >
-              {cardLabelByCredentialType[credentialType].toUpperCase()}
+              {getCredentialNameFromType(credentialType, "").toUpperCase()}
             </Body>
             {statusTagProps && (
               <>
@@ -77,29 +78,22 @@ const DigitalVersionBadge = () => (
   </View>
 );
 
-const cardLabelByCredentialType: { [type in CredentialType]: string } = {
-  EuropeanDisabilityCard: I18n.t("features.itWallet.card.label.dc"),
-  EuropeanHealthInsuranceCard: I18n.t("features.itWallet.card.label.ts"),
-  mDL: I18n.t("features.itWallet.card.label.mdl"),
-  PersonIdentificationData: I18n.t("features.itWallet.card.label.eid")
-};
-
 const credentialCardBackgrounds: {
-  [type in CredentialType]: [ImageSourcePropType, ImageSourcePropType];
+  [type: string]: [ImageSourcePropType, ImageSourcePropType];
 } = {
-  EuropeanDisabilityCard: [
+  [CredentialType.EUROPEAN_DISABILITY_CARD]: [
     require("../../../../../img/features/itWallet/cards/dc.png"),
     require("../../../../../img/features/itWallet/cards/dc_off.png")
   ],
-  EuropeanHealthInsuranceCard: [
+  [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: [
     require("../../../../../img/features/itWallet/cards/ts.png"),
     require("../../../../../img/features/itWallet/cards/ts_off.png")
   ],
-  mDL: [
+  [CredentialType.DRIVING_LICENSE]: [
     require("../../../../../img/features/itWallet/cards/mdl.png"),
     require("../../../../../img/features/itWallet/cards/mdl_off.png")
   ],
-  PersonIdentificationData: [
+  [CredentialType.PID]: [
     require("../../../../../img/features/itWallet/cards/eid.png"),
     require("../../../../../img/features/itWallet/cards/eid_off.png")
   ]
