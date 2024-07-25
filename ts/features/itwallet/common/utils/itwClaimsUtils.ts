@@ -69,19 +69,25 @@ export type ClaimDisplayFormat = {
  * If there's no locale that matches the current locale then we take the attribute key as the name.
  * The value is taken from the attribute value.
  * @param parsedCredential - the parsed credential.
+ * @param options.exclude - an array of keys to exclude from the claims. TODO [SIW-1383]: remove this dirty hack
  * @returns the array of {@link ClaimDisplayFormat} of the credential contained in its configuration schema.
  */
 export const parseClaims = (
-  parsedCredential: ParsedCredential
-): Array<ClaimDisplayFormat> =>
-  Object.entries(parsedCredential).map(([key, attribute]) => {
-    const attributeName =
-      typeof attribute.name === "string"
-        ? attribute.name
-        : attribute.name?.[getClaimsFullLocale()] || key;
+  parsedCredential: ParsedCredential,
+  options: { exclude?: Array<string> } = {}
+): Array<ClaimDisplayFormat> => {
+  const { exclude = [] } = options;
+  return Object.entries(parsedCredential)
+    .filter(([key]) => !exclude.includes(key))
+    .map(([key, attribute]) => {
+      const attributeName =
+        typeof attribute.name === "string"
+          ? attribute.name
+          : attribute.name?.[getClaimsFullLocale()] || key;
 
-    return { label: attributeName, value: attribute.value, id: key };
-  });
+      return { label: attributeName, value: attribute.value, id: key };
+    });
+};
 
 /**
  * Sorts the parsedCredential according to the order of the displayData.
@@ -395,18 +401,3 @@ const FISCAL_CODE_REGEX =
  */
 export const extractFiscalCode = (s: string) =>
   pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));
-
-/**
- * Filters a claim from the credential.
- * TODO [SIW-1383]: remove this dirty hack
- * @param parsedCredential the parsed credential which contains the claim
- * @param key the key of the claim to be removed
- * @return the parsed credential without the claim
- */
-export const removeClaim = (
-  parsedCredential: ParsedCredential,
-  key: string
-): ParsedCredential => {
-  const { [key]: _, ...remainingCredentials } = parsedCredential;
-  return remainingCredentials;
-};
