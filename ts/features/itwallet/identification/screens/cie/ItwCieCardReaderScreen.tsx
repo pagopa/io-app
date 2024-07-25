@@ -41,6 +41,7 @@ import {
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import { itwIdpHintTest } from "../../../../../config";
 
 // This can be any URL, as long as it has http or https as its protocol, otherwise it cannot be managed by the webview.
 const CIE_L3_REDIRECT_URI = "https://wallet.io.pagopa.it/index.html";
@@ -290,7 +291,7 @@ export const ItwCieCardReaderScreen = () => {
           <Cie.WebViewComponent
             authUrl={cieAuthUrl.value}
             pin={ciePin}
-            useUat={isDevEnv}
+            useUat={itwIdpHintTest}
             onEvent={handleCieReadEvent}
             onSuccess={handleCieReadSuccess}
             onError={handleCieReadError}
