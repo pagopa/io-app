@@ -154,19 +154,19 @@ describe("ImageClaim", () => {
     expect(E.isRight(decoded)).toBe(true);
   });
   it("should decode a valid jpg image", () => {
-    const decoded = ImageClaim.decode("data:image/jpg;base64,${base64}");
+    const decoded = ImageClaim.decode(`data:image/jpg;base64,${base64}`);
     expect(E.isRight(decoded)).toBe(true);
   });
   it("should decode a valid jpeg image", () => {
-    const decoded = ImageClaim.decode("data:image/jpeg;base64,${base64}");
+    const decoded = ImageClaim.decode(`data:image/jpeg;base64,${base64}`);
     expect(E.isRight(decoded)).toBe(true);
   });
   it("should decode a valid bmp image", () => {
-    const decoded = ImageClaim.decode("data:image/bmp;base64,${base64}");
+    const decoded = ImageClaim.decode(`data:image/bmp;base64,${base64}`);
     expect(E.isRight(decoded)).toBe(true);
   });
   it("should decode an unsupported image", () => {
-    const decoded = ImageClaim.decode("data:image/gif;base64,${base64}");
+    const decoded = ImageClaim.decode(`data:image/gif;base64,${base64}`);
     expect(E.isLeft(decoded)).toBe(true);
   });
 });
