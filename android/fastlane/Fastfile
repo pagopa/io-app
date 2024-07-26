@@ -75,10 +75,11 @@ platform :android do
 
   desc "Download universal APK file from Google Play"
   lane :download_apk do
+    version_code = ENV['VERSION_CODE'].to_i
     download_universal_apk_from_google_play(
       package_name: "it.pagopa.io.app",
       destination: "io-app-universal.apk",
-      version_code: 100154837 # 2.67.0.2 TODO: to be set dynamically
+      version_code: version_code
     )
   end
 

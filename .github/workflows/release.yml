@@ -50,12 +50,15 @@ jobs:
         # We don't want to fail whole job if the dSYM upload step fails
         continue-on-error: true
         run: |
-          ./scripts/android-release.sh ./android/app
+          ./scripts/android-release.sh ./android/app          
           cd android
+          VERSION_CODE=$(sed -n 's/.*versionCode \(.*\)/\1/p' "app/build.gradle")
+          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
           bundle exec fastlane download_apk
         env:
           ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
           RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
+          VERSION_CODE: ${{ env.VERSION_CODE }}
       - id: upload-universal-apk          
         # We don't want to fail whole job if the dSYM upload step fails
         continue-on-error: true
