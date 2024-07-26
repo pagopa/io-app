@@ -50,7 +50,6 @@ export function* handleWalletPaymentAuthorization(
     const requestTransactionAuthorizationResult =
       yield* withPaymentsSessionToken(
         requestTransactionAuthorization,
-        paymentsStartPaymentAuthorizationAction.failure,
         action,
         {
           transactionId: action.payload.transactionId,
