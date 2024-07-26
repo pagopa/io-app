@@ -107,7 +107,6 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
   "isDesignSystemEnabled": false,
   "isFingerprintEnabled": undefined,
   "isIdPayTestEnabled": false,
-  "isItWalletTestEnabled": false,
   "isMixpanelEnabled": null,
   "isNewScanSectionEnabled": false,
   "isPagoPATestEnabled": false,

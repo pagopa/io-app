@@ -479,8 +479,6 @@ profile:
     idpay:
       idpayTest: IDPay
       idpayTestAlert: This change requires app reboot
-    itWallet:
-      itWalletTest: IT Wallet
     designSystemEnvironment: Experimental Design System
     newScanSection: New 'Scan' feature
     appVersion: Version

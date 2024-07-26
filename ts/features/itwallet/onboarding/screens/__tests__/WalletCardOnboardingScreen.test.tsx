@@ -49,7 +49,6 @@ describe("WalletCardOnboardingScreen", () => {
   test.each([
     { itwTrialStatus: SubscriptionStateEnum.DISABLED },
     { isItwEnabled: false },
-    { isItwTestEnabled: false },
     { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED },
     { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_DEACTIVATED }
   ] as ReadonlyArray<RenderOptions>)(
@@ -77,7 +76,6 @@ const renderComponent = ({
   isIdPayEnabled = true,
   isItwEnabled = true,
   itwTrialStatus = SubscriptionStateEnum.ACTIVE,
-  isItwTestEnabled = true,
   itwLifecycle = ItwLifecycleState.ITW_LIFECYCLE_VALID
 }: RenderOptions) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -100,8 +98,7 @@ const renderComponent = ({
           : pot.none
       },
       persistedPreferences: {
-        isIdPayTestEnabled: isIdPayEnabled,
-        isItWalletTestEnabled: isItwTestEnabled
+        isIdPayTestEnabled: isIdPayEnabled
       },
       backendStatus: {
         status: O.some({
