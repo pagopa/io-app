@@ -20,11 +20,15 @@ import React, {
   useRef,
   useState
 } from "react";
-import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
+import { Alert, FlatList, ListRenderItemInfo } from "react-native";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
+import { TranslationKeys } from "../../../locales/locales";
 import AppVersion from "../../components/AppVersion";
+import HeaderFirstLevel from "../../components/ui/HeaderFirstLevel";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
 import { showProfileBannerSelector } from "../../features/profileSettings/store/selectors";
+import { useHeaderFirstLevelActionPropHelp } from "../../hooks/useHeaderFirstLevelActionPropHelp";
 import { useHeaderProps } from "../../hooks/useHeaderProps";
 import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../i18n";
@@ -33,7 +37,6 @@ import ROUTES from "../../navigation/routes";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus";
-import { TranslationKeys } from "../../../locales/locales";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { isDevEnv } from "../../utils/environment";
 import DeveloperModeSection from "./DeveloperModeSection";
@@ -68,7 +71,7 @@ const ProfileMainScreen = () => {
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
   const showProfileBanner = useIOSelector(showProfileBannerSelector);
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
-  const scrollViewContentRef = useRef<ScrollView>(null);
+  const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
   const idResetTap = useRef<number>();
 
   useTabItemPressWhenScreenActive(
@@ -242,16 +245,35 @@ const ProfileMainScreen = () => {
     }
   });
 
+  const helpAction = useHeaderFirstLevelActionPropHelp(ROUTES.PROFILE_MAIN);
+
   useLayoutEffect(() => {
     if (isSettingsVisibleAndHideProfile) {
       navigation.setOptions({
         header: () => <HeaderSecondLevel {...headerProps} />
       });
+    } else {
+      const headerFirstLevelProps: HeaderFirstLevel = {
+        title: I18n.t("profile.main.title"),
+        type: "singleAction",
+        firstAction: helpAction,
+        animatedRef: scrollViewContentRef
+      };
+
+      navigation.setOptions({
+        header: () => <HeaderFirstLevel {...headerFirstLevelProps} />
+      });
     }
-  }, [headerProps, isSettingsVisibleAndHideProfile, navigation]);
+  }, [
+    headerProps,
+    helpAction,
+    isSettingsVisibleAndHideProfile,
+    navigation,
+    scrollViewContentRef
+  ]);
 
   return (
-    <ScrollView ref={scrollViewContentRef}>
+    <Animated.ScrollView ref={scrollViewContentRef}>
       {showProfileBanner && (
         <ContentWrapper>
           <VSpacer size={16} />
@@ -294,7 +316,7 @@ const ProfileMainScreen = () => {
       {(isDebugModeEnabled || isDevEnv) && <DeveloperModeSection />}
       {/* End Page */}
       <VSpacer size={24} />
-    </ScrollView>
+    </Animated.ScrollView>
   );
 };
 

@@ -30,6 +30,7 @@ import {
 import { easeGradient } from "react-native-easing-gradient";
 import LinearGradient from "react-native-linear-gradient";
 import Animated, {
+  AnimatedRef,
   Easing,
   Extrapolate,
   interpolate,
@@ -80,6 +81,7 @@ type IOScrollView = WithTestID<
     excludeEndContentMargin?: boolean;
     /* Include page margins */
     includeContentMargins?: boolean;
+    animatedRef?: AnimatedRef<Animated.ScrollView>;
   }>
 >;
 
@@ -124,7 +126,8 @@ export const IOScrollView = ({
   excludeEndContentMargin = false,
   includeContentMargins = true,
   debugMode = false,
-  testID
+  testID,
+  animatedRef
 }: IOScrollView) => {
   const theme = useIOTheme();
 
@@ -231,6 +234,7 @@ export const IOScrollView = ({
   return (
     <Fragment>
       <Animated.ScrollView
+        ref={animatedRef}
         testID={testID}
         onScroll={handleScroll}
         scrollEventThrottle={8}

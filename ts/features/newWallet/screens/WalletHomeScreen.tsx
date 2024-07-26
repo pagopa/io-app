@@ -1,19 +1,25 @@
 import {
-  GradientScrollView,
+  ActionProp,
   IOStyles,
   IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import React from "react";
-import { ScrollView } from "react-native";
+import React, { useCallback, useLayoutEffect, useMemo } from "react";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
+import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
+import { IOScrollView } from "../../../components/ui/IOScrollView";
+import { useHeaderFirstLevelActionPropHelp } from "../../../hooks/useHeaderFirstLevelActionPropHelp";
+import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../i18n";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
+import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../store/reducers/backendStatus";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
@@ -48,8 +54,65 @@ const WalletHomeScreen = ({ route }: Props) => {
     }, [isNewElementAdded])
   );
 
+  /* CODE RELATED TO THE HEADER */
+
+  const navigation = useIONavigation();
+  const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
+
+  /* Scroll to top when the active tab is tapped */
+  useTabItemPressWhenScreenActive(
+    () => scrollViewContentRef.current?.scrollTo({ y: 0, animated: true }),
+    false
+  );
+
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
+
+  const navigateToSettingMainScreen = useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.SETTINGS_MAIN
+    });
+  }, [navigation]);
+
+  const helpAction = useHeaderFirstLevelActionPropHelp(ROUTES.WALLET_HOME);
+
+  const settingsAction: ActionProp = useMemo(
+    () => ({
+      icon: "coggle",
+      accessibilityLabel: I18n.t("global.buttons.settings"),
+      onPress: navigateToSettingMainScreen
+    }),
+    [navigateToSettingMainScreen]
+  );
+
+  useLayoutEffect(() => {
+    const headerFirstLevelProps: HeaderFirstLevel = {
+      title: I18n.t("wallet.wallet"),
+      firstAction: helpAction,
+      testID: "wallet-home-header-title",
+      animatedRef: scrollViewContentRef,
+      ...(isSettingsVisibleAndHideProfile
+        ? {
+            type: "twoActions",
+            secondAction: settingsAction
+          }
+        : { type: "singleAction" })
+    };
+
+    navigation.setOptions({
+      header: () => <HeaderFirstLevel {...headerFirstLevelProps} />
+    });
+  }, [
+    helpAction,
+    isSettingsVisibleAndHideProfile,
+    navigation,
+    scrollViewContentRef,
+    settingsAction
+  ]);
+
   return (
-    <WalletScrollView>
+    <WalletScrollView animatedRef={scrollViewContentRef}>
       <VSpacer size={16} />
       <WalletPaymentsRedirectBanner />
       <WalletCardsContainer />
@@ -57,7 +120,10 @@ const WalletHomeScreen = ({ route }: Props) => {
   );
 };
 
-const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
+const WalletScrollView = ({
+  children,
+  animatedRef
+}: React.PropsWithChildren<any>) => {
   const navigation = useIONavigation();
   const cards = useIOSelector(selectWalletCards);
 
@@ -69,31 +135,36 @@ const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
 
   if (cards.length === 0) {
     return (
-      <ScrollView
+      <Animated.ScrollView
+        ref={animatedRef}
         contentContainerStyle={[
           IOStyles.flex,
           IOStyles.horizontalContentPadding
         ]}
       >
         {children}
-      </ScrollView>
+      </Animated.ScrollView>
     );
   }
 
   return (
-    <GradientScrollView
-      primaryActionProps={{
-        testID: "walletAddCardButtonTestID",
-        label: I18n.t("features.wallet.home.cta"),
-        accessibilityLabel: I18n.t("features.wallet.home.cta"),
-        icon: "addSmall",
-        iconPosition: "end",
-        onPress: handleAddToWalletButtonPress
-      }}
+    <IOScrollView
+      animatedRef={animatedRef}
       excludeSafeAreaMargins={true}
+      actions={{
+        type: "SingleButton",
+        primary: {
+          testID: "walletAddCardButtonTestID",
+          label: I18n.t("features.wallet.home.cta"),
+          accessibilityLabel: I18n.t("features.wallet.home.cta"),
+          icon: "addSmall",
+          iconPosition: "end",
+          onPress: handleAddToWalletButtonPress
+        }
+      }}
     >
       {children}
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 

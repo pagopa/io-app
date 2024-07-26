@@ -117,24 +117,21 @@ const RNNCloseButton = () => {
 const HeaderFirstLevelComponent = () => (
   <HeaderFirstLevel
     title="Portafoglio"
-    firstAction={
-      <IconButton
-        accessibilityLabel="Tap to trigger test alert"
-        icon="coggle"
-        onPress={() => {
-          Alert.alert("Settings");
-        }}
-      />
-    }
-    secondAction={
-      <IconButton
-        accessibilityLabel="Tap to trigger test alert"
-        icon="help"
-        onPress={() => {
-          Alert.alert("Assistance");
-        }}
-      />
-    }
+    type="twoActions"
+    firstAction={{
+      icon: "coggle",
+      accessibilityLabel: "Tap to trigger test alert",
+      onPress: () => {
+        Alert.alert("Settings");
+      }
+    }}
+    secondAction={{
+      icon: "help",
+      accessibilityLabel: "Tap to trigger test alert",
+      onPress: () => {
+        Alert.alert("Assistance");
+      }
+    }}
   />
 );
 

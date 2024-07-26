@@ -9,13 +9,17 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useCallback, useEffect, useRef } from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
+import React, { useCallback, useEffect, useLayoutEffect } from "react";
+import { ListRenderItemInfo, StyleSheet, View } from "react-native";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { Institution } from "../../../../../definitions/services/Institution";
 import SectionStatusComponent from "../../../../components/SectionStatus";
+import HeaderFirstLevel from "../../../../components/ui/HeaderFirstLevel";
+import { useHeaderFirstLevelActionPropHelp } from "../../../../hooks/useHeaderFirstLevelActionPropHelp";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import * as analytics from "../../common/analytics";
@@ -39,8 +43,6 @@ export const ServicesHomeScreen = () => {
   const navigation = useIONavigation();
   const isFirstRender = useFirstRender();
 
-  const flatListRef = useRef<FlatList<Institution>>(null);
-
   const {
     currentPage,
     data,
@@ -60,11 +62,6 @@ export const ServicesHomeScreen = () => {
     useCallback(() => {
       analytics.trackServicesHome();
     }, [])
-  );
-
-  useTabItemPressWhenScreenActive(
-    () => flatListRef.current?.scrollToOffset({ offset: 0, animated: true }),
-    false
   );
 
   useEffect(() => {
@@ -90,26 +87,28 @@ export const ServicesHomeScreen = () => {
     [navigation]
   );
 
-  const renderListHeaderComponent = useCallback(
+  const renderListHeaderComponent = () => (
+    <>
+      <FeaturedServiceList />
+      <FeaturedInstitutionList />
+      <ListItemHeader label={I18n.t("services.home.institutions.title")} />
+    </>
+  );
+
+  const SearchInputComponent = useCallback(
     () => (
-      <>
-        <SearchInput
-          accessibilityLabel={I18n.t("services.search.input.placeholder")}
-          cancelButtonLabel={I18n.t("services.search.input.cancel")}
-          clearAccessibilityLabel={I18n.t("services.search.input.clear")}
-          placeholder={I18n.t("services.search.input.placeholder")}
-          pressable={{
-            onPress: () => {
-              analytics.trackSearchStart({ source: "search_bar" });
-              navigateToSearch();
-            }
-          }}
-        />
-        <VSpacer size={16} />
-        <FeaturedServiceList />
-        <FeaturedInstitutionList />
-        <ListItemHeader label={I18n.t("services.home.institutions.title")} />
-      </>
+      <SearchInput
+        accessibilityLabel={I18n.t("services.search.input.placeholder")}
+        cancelButtonLabel={I18n.t("services.search.input.cancel")}
+        clearAccessibilityLabel={I18n.t("services.search.input.clear")}
+        placeholder={I18n.t("services.search.input.placeholder")}
+        pressable={{
+          onPress: () => {
+            analytics.trackSearchStart({ source: "search_bar" });
+            navigateToSearch();
+          }
+        }}
+      />
     ),
     [navigateToSearch]
   );
@@ -197,9 +196,66 @@ export const ServicesHomeScreen = () => {
     [navigateToInstitution]
   );
 
+  /* Code related to the header */
+
+  const scrollViewContentRef = useAnimatedRef<Animated.FlatList<Institution>>();
+
+  /* Scroll to top when the active tab is tapped */
+  useTabItemPressWhenScreenActive(
+    () =>
+      scrollViewContentRef.current?.scrollToOffset({
+        offset: 0,
+        animated: true
+      }),
+    false
+  );
+
+  const navigateToProfilePreferencesScreen = useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.PROFILE_PREFERENCES_SERVICES
+    });
+  }, [navigation]);
+
+  const helpAction = useHeaderFirstLevelActionPropHelp(
+    SERVICES_ROUTES.SERVICES_HOME
+  );
+
+  useLayoutEffect(() => {
+    const headerFirstLevelProps: HeaderFirstLevel = {
+      title: I18n.t("services.title"),
+      type: "twoActions",
+      animatedFlatListRef: scrollViewContentRef,
+      endBlock: <SearchInputComponent />,
+      firstAction: helpAction,
+      secondAction: {
+        icon: "coggle",
+        accessibilityLabel: I18n.t("global.buttons.edit"),
+        onPress: navigateToProfilePreferencesScreen
+      }
+      // thirdAction: {
+      //   icon: "search",
+      //   accessibilityLabel: I18n.t("global.accessibility.search"),
+      //   onPress: () => {
+      //     analytics.trackSearchStart({ source: "header_icon" });
+      //     navigation.navigate(SERVICES_ROUTES.SEARCH);
+      //   }
+      // }
+    };
+
+    navigation.setOptions({
+      header: () => <HeaderFirstLevel {...headerFirstLevelProps} />
+    });
+  }, [
+    SearchInputComponent,
+    helpAction,
+    navigateToProfilePreferencesScreen,
+    navigation,
+    scrollViewContentRef
+  ]);
+
   return (
     <>
-      <FlatList
+      <Animated.FlatList
         ItemSeparatorComponent={() => <Divider />}
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
@@ -213,7 +269,7 @@ export const ServicesHomeScreen = () => {
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.1}
         onRefresh={handleRefresh}
-        ref={flatListRef}
+        ref={scrollViewContentRef}
         refreshing={isRefreshing}
         renderItem={renderInstitutionItem}
       />
