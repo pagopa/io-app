@@ -105,6 +105,7 @@ const OtherCardsContainer = ({
 }: Pick<WalletCardsCategoryContainerProps, "isStacked">) => {
   const cards = useIOSelector(selectWalletOtherCards);
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
+  const isItwEnabled = useIOSelector(isItwEnabledSelector);
 
   if (cards.length === 0) {
     return null;
@@ -117,7 +118,7 @@ const OtherCardsContainer = ({
       cards={cards}
       isStacked={isStacked}
       header={
-        isItwTrialEnabled
+        isItwTrialEnabled && isItwEnabled
           ? {
               label: I18n.t("features.wallet.cards.categories.other")
             }

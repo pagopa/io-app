@@ -325,7 +325,9 @@ export const previewDateClaimsConfig: DateClaimConfig = {
  * @returns
  */
 export const groupCredentialClaims = (credential: StoredCredential) => {
-  const claims = parseClaims(credential.parsedCredential);
+  const claims = parseClaims(credential.parsedCredential, {
+    exclude: ["unique_id"]
+  });
 
   return claims.reduce((acc, claim) => {
     const section = sectionsByClaim[claim.id] || "noSection";
