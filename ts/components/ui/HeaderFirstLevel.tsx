@@ -111,11 +111,11 @@ export const HeaderFirstLevel = ({
 
   /* We show the divider only when the header is scrolled down */
   const offset = useScrollViewOffset(
-    (animatedRef ||
-      animatedFlatListRef) as AnimatedRef<Animated.ScrollView> | null
+    (animatedRef as AnimatedRef<Animated.ScrollView>) ||
+      (animatedFlatListRef as AnimatedRef<Animated.FlatList<any>>)
   );
 
-  const animatedBottomBorder = useAnimatedStyle(() => ({
+  const animatedDivider = useAnimatedStyle(() => ({
     opacity: withTiming(offset.value > 0 ? 1 : 0, { duration: 200 })
   }));
 
@@ -138,7 +138,7 @@ export const HeaderFirstLevel = ({
             ...styles.headerDivider,
             backgroundColor: IOColors[theme["divider-default"]]
           },
-          animatedBottomBorder
+          animatedDivider
         ]}
       />
 
