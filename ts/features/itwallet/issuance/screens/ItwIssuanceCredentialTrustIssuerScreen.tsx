@@ -14,6 +14,7 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
+import { DebugPrettyPrint } from "../../../../components/debug/DebugPrettyPrint";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -39,6 +40,7 @@ import {
   ItwRequestedClaimsList,
   RequiredClaim
 } from "../components/ItwRequiredClaimsList";
+import { DebugView } from "../../../../components/debug/DebugView";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -157,6 +159,14 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           {I18n.t("features.itWallet.issuance.credentialAuth.tos")}
         </ItwMarkdown>
       </ContentWrapper>
+      <DebugView>
+        <DebugPrettyPrint
+          title="Issuer configuration"
+          data={issuerConfOption}
+        />
+        <DebugPrettyPrint title="Parsed eID" data={eid.parsedCredential} />
+        <DebugPrettyPrint title="eID" data={eid} expandable={false} />
+      </DebugView>
       <FooterActions
         fixed={false}
         actions={{

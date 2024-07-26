@@ -1,8 +1,7 @@
-import React from "react";
-import * as t from "io-ts";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Alert } from "@pagopa/io-app-design-system";
+import React from "react";
+import { DebugPrettyPrint } from "../../../../components/debug/DebugPrettyPrint";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -12,10 +11,8 @@ import {
   IssuanceFailure,
   IssuanceFailureType
 } from "../../machine/eid/failure";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { selectFailureOption } from "../../machine/eid/selectors";
-import { useIOSelector } from "../../../../store/hooks";
-import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
 export const ItwIssuanceEidFailureScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -100,7 +97,7 @@ export const ItwIssuanceEidFailureScreen = () => {
 
     return (
       <OperationResultScreenContent {...resultScreenProps}>
-        <ErrorAlertDebugOnly failure={failure} />
+        <DebugPrettyPrint title="Failure" data={failure} />
       </OperationResultScreenContent>
     );
   };
@@ -112,22 +109,4 @@ export const ItwIssuanceEidFailureScreen = () => {
       failure => <ContentView failure={failure} />
     )
   );
-};
-
-const ErrorAlertDebugOnly = ({ failure }: { failure: IssuanceFailure }) => {
-  const isDebug = useIOSelector(isDebugModeEnabledSelector);
-
-  if (!isDebug) {
-    return null;
-  }
-
-  const renderErrorText = () =>
-    pipe(
-      failure.reason instanceof Error ? failure.reason.message : failure.reason,
-      t.string.decode,
-      O.fromEither,
-      O.getOrElse(() => "Unknown error")
-    );
-
-  return <Alert variant="error" content={renderErrorText()} />;
 };

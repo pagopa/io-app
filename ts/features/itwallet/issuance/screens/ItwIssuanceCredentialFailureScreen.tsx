@@ -1,12 +1,14 @@
-import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
+import { DebugPrettyPrint } from "../../../../components/debug/DebugPrettyPrint";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import {
+  CredentialIssuanceFailure,
   CredentialIssuanceFailureType,
   CredentialIssuanceFailureTypeEnum
 } from "../../machine/credential/failure";
@@ -19,13 +21,12 @@ export const ItwIssuanceCredentialFailureScreen = () => {
 
   return pipe(
     failureOption,
-    O.map(failure => failure.type),
-    O.alt(() => O.some(CredentialIssuanceFailureTypeEnum.GENERIC)),
+    O.alt(() => O.some({ type: CredentialIssuanceFailureTypeEnum.GENERIC })),
     O.fold(constNull, type => <ContentView failure={type} />)
   );
 };
 
-type ContentViewProps = { failure: CredentialIssuanceFailureType };
+type ContentViewProps = { failure: CredentialIssuanceFailure };
 
 /**
  * Renders the content of the screen
@@ -57,6 +58,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
     }
   };
 
-  const resultScreenProps = resultScreensMap[failure];
-  return <OperationResultScreenContent {...resultScreenProps} />;
+  const resultScreenProps = resultScreensMap[failure.type];
+  return (
+    <OperationResultScreenContent {...resultScreenProps}>
+      <DebugPrettyPrint title="Failure" data={failure} />
+    </OperationResultScreenContent>
+  );
 };

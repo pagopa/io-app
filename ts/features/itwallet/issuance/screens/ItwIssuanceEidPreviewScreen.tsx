@@ -2,12 +2,14 @@ import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
+import { DebugPrettyPrint } from "../../../../components/debug/DebugPrettyPrint";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import {
@@ -17,7 +19,7 @@ import {
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { selectEidOption } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { DebugView } from "../../../../components/debug/DebugView";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -64,7 +66,6 @@ export const ItwIssuanceEidPreviewScreen = () => {
 
     return (
       <IOScrollViewWithLargeHeader
-        excludeEndContentMargin
         canGoback={false}
         title={{
           label: I18n.t("features.itWallet.issuance.eidPreview.title")
@@ -88,6 +89,10 @@ export const ItwIssuanceEidPreviewScreen = () => {
         <ContentWrapper>
           <ItwCredentialClaimsList data={eid} isPreview={true} />
         </ContentWrapper>
+        <DebugView>
+          <DebugPrettyPrint title="Parsed eID" data={eid.parsedCredential} />
+          <DebugPrettyPrint title="eID" data={eid} expandable={false} />
+        </DebugView>
       </IOScrollViewWithLargeHeader>
     );
   };
