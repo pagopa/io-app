@@ -75,7 +75,10 @@ platform :android do
 
   desc "Download universal APK file from Google Play"
   lane :download_apk do
-    download_universal_apk_from_google_play
+    download_universal_apk_from_google_play(
+      package_name: "it.pagopa.io.app",
+      destination: "io-app-universal.apk"     
+    )
   end
 
   # You can define as many lanes as you want

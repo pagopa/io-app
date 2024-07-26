@@ -44,7 +44,18 @@ jobs:
           IO_APP_RELEASE_STORE_PASSWORD: ${{secrets.IO_APP_RELEASE_STORE_PASSWORD}}
           IO_APP_RELEASE_KEY_ALIAS: ${{secrets.IO_APP_RELEASE_KEY_ALIAS}}
           IO_APP_RELEASE_KEY_PASSWORD: ${{secrets.IO_APP_RELEASE_KEY_PASSWORD}}
+      - id: download-universal-apk-from-store
+        # We don't want to fail whole job if the dSYM upload step fails
+        continue-on-error: true
+        run: |
+          ./scripts/android-release.sh ./android/app
+          cd android
+          bundle exec fastlane download_apk
+        env:
+          ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}          
       - id: upload-apk
+        # We don't want to fail whole job if the dSYM upload step fails
+        continue-on-error: true
         uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         with:
           name: app-release.aab
@@ -108,6 +119,8 @@ jobs:
           path: ios/IO.app.dSYM.zip
           retention-days: 60
       - id: upload-ipa
+        # We don't want to fail whole job if the dSYM upload step fails
+        continue-on-error: true
         uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         with:
           name: IO.ipa
