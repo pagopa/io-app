@@ -615,11 +615,15 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
   ) => {
     // This method is the human-unreadable logic of the `getLoadNextPageMessagesActionIfAllowed` method
     // Check that one instead to filter out the case where the loadNextPageMessages.request action is returned.
-    const allPaginated = state.entities.messages.allPaginated;
+    const allPaginatedInstance = state.entities.messages.allPaginated;
     const selectedCollection =
-      category === "ARCHIVE" ? allPaginated.archive : allPaginated.inbox;
+      category === "ARCHIVE"
+        ? allPaginatedInstance.archive
+        : allPaginatedInstance.inbox;
     const oppositeCollection =
-      category === "ARCHIVE" ? allPaginated.inbox : allPaginated.archive;
+      category === "ARCHIVE"
+        ? allPaginatedInstance.inbox
+        : allPaginatedInstance.archive;
     const selectedCollectionNextValue = isSomeOrSomeError(
       selectedCollection.data
     )

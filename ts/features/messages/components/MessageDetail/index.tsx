@@ -35,7 +35,6 @@ import { H2 } from "../../../../components/core/typography/H2";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
 
 import CtaBar from "./CtaBar";
-import { LegacyRemoteContentBanner } from "./LegacyRemoteContentBanner";
 import { HeaderDueDateBar } from "./HeaderDueDateBar";
 import MessageContent from "./Content";
 import { MessageMarkdown } from "./MessageMarkdown";
@@ -127,7 +126,7 @@ const MessageDetailsComponent = ({
   // This is used to make sure that no attachments are shown before the
   // markdown content has rendered
   const [isContentLoadCompleted, setIsContentLoadCompleted] = useState(false);
-  const { markdown, hasRemoteContent } = messageDetails;
+  const { markdown } = messageDetails;
 
   const { id: messageId, title } = message;
   const thirdPartyDataPot = useIOSelector(state =>
@@ -178,13 +177,6 @@ const MessageDetailsComponent = ({
           {cleanMarkdownFromCTAs(messageMarkdown)}
         </MessageMarkdown>
         <VSpacer size={24} />
-
-        {hasRemoteContent && isContentLoadCompleted ? (
-          <>
-            <LegacyRemoteContentBanner />
-            <VSpacer size={24} />
-          </>
-        ) : null}
 
         {hasThirdPartyDataAttachments && isContentLoadCompleted && (
           <>
