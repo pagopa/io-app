@@ -18,7 +18,6 @@ export function* handleGetBizEventsTransactions(
   try {
     const getTransactionListResult = yield* withPaymentsSessionToken(
       getTransactionList,
-      getPaymentsBizEventsTransactionsAction.failure,
       action,
       {
         size: action.payload.size || DEFAULT_TRANSACTION_LIST_SIZE,

@@ -20,7 +20,6 @@ export function* handleGetBizEventsTransactionReceipt(
   try {
     const getTransactionReceiptResult = yield* withPaymentsSessionToken(
       getTransactionReceipt,
-      getPaymentsBizEventsReceiptAction.failure,
       action,
       {
         "event-id": action.payload.transactionId
