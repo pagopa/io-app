@@ -20,8 +20,7 @@ import {
   preferencesPnTestEnvironmentSetEnabled,
   preferencesIdPayTestSetEnabled,
   preferencesDesignSystemSetEnabled,
-  preferencesNewScanSectionSetEnabled,
-  preferencesItWalletTestSetEnabled
+  preferencesNewScanSectionSetEnabled
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
@@ -47,7 +46,6 @@ export type PersistedPreferencesState = Readonly<{
   // be sure to handle such case when reading and using this value
   isDesignSystemEnabled: boolean;
   isNewScanSectionEnabled?: boolean;
-  isItWalletTestEnabled?: boolean;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {
@@ -62,8 +60,7 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isPnTestEnabled: false,
   isIdPayTestEnabled: false,
   isDesignSystemEnabled: false,
-  isNewScanSectionEnabled: false,
-  isItWalletTestEnabled: false
+  isNewScanSectionEnabled: false
 };
 
 export default function preferencesReducer(
@@ -166,13 +163,6 @@ export default function preferencesReducer(
     };
   }
 
-  if (isActionOf(preferencesItWalletTestSetEnabled, action)) {
-    return {
-      ...state,
-      isItWalletTestEnabled: action.payload.isItWalletTestEnabled
-    };
-  }
-
   return state;
 }
 
@@ -217,9 +207,6 @@ export const isDesignSystemEnabledSelector = (state: GlobalState) =>
 
 export const isNewScanSectionLocallyEnabledSelector = (state: GlobalState) =>
   !!state.persistedPreferences?.isNewScanSectionEnabled;
-
-export const isItWalletTestEnabledSelector = (state: GlobalState) =>
-  !!state.persistedPreferences?.isItWalletTestEnabled;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<

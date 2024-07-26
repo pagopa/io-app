@@ -317,6 +317,7 @@ profile:
     forgetCurrentSession: Dimentica sessione corrente
     clearAsyncStorage: Cancella contenuto di AsyncStorage
     dumpAsyncStorage: Scarica contenuto di AsyncStorage
+    sentryTestEvent: Invia Exception a Sentry
     contextualHelpTitle: Cosa puoi fare nella sezione {{pageName}}
     legacyContextualHelpContent: !include profile/legacy_profile_account_main.md
     contextualHelpContent: !include profile/profile_account_main.md
@@ -478,8 +479,6 @@ profile:
     idpay:
       idpayTest: IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
-    itWallet:
-      itWalletTest: IT Wallet
     trial:
       titleSection: Partecipa alla sperimentazione
     designSystemEnvironment: Design System sperimentale
