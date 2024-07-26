@@ -54,7 +54,8 @@ jobs:
           cd android
           bundle exec fastlane download_apk
         env:
-          ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}          
+          ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
+          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
       - id: upload-apk
         if: false
         # We don't want to fail whole job if the dSYM upload step fails
