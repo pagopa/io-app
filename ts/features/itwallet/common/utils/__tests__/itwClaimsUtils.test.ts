@@ -1,11 +1,13 @@
 import MockDate from "mockdate";
 import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import {
   extractFiscalCode,
   getCredentialExpireDate,
   getCredentialExpireDays,
-  getCredentialExpireStatus
+  getCredentialExpireStatus,
+  ImageClaim
 } from "../itwClaimsUtils";
 
 describe("getCredentialExpireDate", () => {
@@ -141,5 +143,30 @@ describe("extractFiscalCode", () => {
 
   it("returns none when the string does not contain any fiscal code", () => {
     expect(extractFiscalCode("RANDOM_STRING_MRARS001H1B")).toEqual(O.none);
+  });
+});
+
+describe("ImageClaim", () => {
+  const base64 =
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAEElEQVR4nGKKrzEGBAAA//8CVAERMRFlewAAAABJRU5ErkJggg==";
+  it("should decode a valid png image", () => {
+    const decoded = ImageClaim.decode(`data:image/png;base64,${base64}`);
+    expect(E.isRight(decoded)).toBe(true);
+  });
+  it("should decode a valid jpg image", () => {
+    const decoded = ImageClaim.decode(`data:image/jpg;base64,${base64}`);
+    expect(E.isRight(decoded)).toBe(true);
+  });
+  it("should decode a valid jpeg image", () => {
+    const decoded = ImageClaim.decode(`data:image/jpeg;base64,${base64}`);
+    expect(E.isRight(decoded)).toBe(true);
+  });
+  it("should decode a valid bmp image", () => {
+    const decoded = ImageClaim.decode(`data:image/bmp;base64,${base64}`);
+    expect(E.isRight(decoded)).toBe(true);
+  });
+  it("should decode an unsupported image", () => {
+    const decoded = ImageClaim.decode(`data:image/gif;base64,${base64}`);
+    expect(E.isLeft(decoded)).toBe(true);
   });
 });

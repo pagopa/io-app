@@ -14,7 +14,6 @@ import {
   EvidenceClaim,
   FiscalCodeClaim,
   ImageClaim,
-  ImageClaimNoUrl,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
   PlainTextClaim,
@@ -29,8 +28,6 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bott
 import { getExpireStatus } from "../../../../utils/dates";
 
 const HIDDEN_CLAIM = "******";
-
-const base64Url = "data:image/png;base64,";
 
 /**
  * Component which renders a place of birth type claim.
@@ -323,10 +320,6 @@ export const ItwCredentialClaim = ({
           );
         } else if (ImageClaim.is(decoded)) {
           return <ImageClaimItem label={claim.label} claim={decoded} />;
-        } else if (ImageClaimNoUrl.is(decoded)) {
-          // TODO [SIW-1378] remove this branch when the image claim is always with url
-          const fixedImage = base64Url.concat(decoded);
-          return <ImageClaimItem label={claim.label} claim={fixedImage} />;
         } else if (DrivingPrivilegesClaim.is(decoded)) {
           return decoded.map((elem, index) => (
             <React.Fragment
