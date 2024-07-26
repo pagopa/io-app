@@ -162,7 +162,7 @@ const DATE_FORMAT_REGEX = "^\\d{4}-\\d{2}-\\d{2}$";
 /**
  * Regex for the picture URL format which is used to validate the image claim as a base64 encoded png image.
  */
-const PICTURE_URL_REGEX = "^data:image\\/(png|jpg|jpeg|bmp|gif|webp);base64,";
+const PICTURE_URL_REGEX = "^data:image\\/(png|jpg|jpeg|bmp);base64,";
 
 const FISCAL_CODE_WITH_PREFIX =
   "(TINIT-[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])";

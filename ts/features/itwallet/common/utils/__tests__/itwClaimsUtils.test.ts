@@ -165,16 +165,8 @@ describe("ImageClaim", () => {
     const decoded = ImageClaim.decode("data:image/bmp;base64,${base64}");
     expect(E.isRight(decoded)).toBe(true);
   });
-  it("should decode a valid gif image", () => {
+  it("should decode an unsupported image", () => {
     const decoded = ImageClaim.decode("data:image/gif;base64,${base64}");
-    expect(E.isRight(decoded)).toBe(true);
-  });
-  it("should decode a valid webp image", () => {
-    const decoded = ImageClaim.decode("data:image/webp;base64,${base64}");
-    expect(E.isRight(decoded)).toBe(true);
-  });
-  it("should not decode an unsupported image", () => {
-    const decoded = ImageClaim.decode("data:image/psd;base64,${base64}");
     expect(E.isLeft(decoded)).toBe(true);
   });
 });
