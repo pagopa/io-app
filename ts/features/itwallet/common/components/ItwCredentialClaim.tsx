@@ -135,14 +135,6 @@ const EvidenceClaimItem = ({ issuerName }: { issuerName: string }) => {
         body: I18n.t(
           "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle"
         )
-      },
-      {
-        title: I18n.t(
-          "features.itWallet.issuance.credentialPreview.bottomSheet.data.title"
-        ),
-        body: I18n.t(
-          "features.itWallet.issuance.credentialPreview.bottomSheet.data.subtitle"
-        )
       }
     ]
   });
