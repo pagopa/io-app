@@ -20,6 +20,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
+import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
@@ -31,6 +32,7 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { DebugView } from "../../../../components/debug/DebugView";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
@@ -87,6 +89,9 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
       )
     );
   };
+
+  useItwDisbleGestureNavigation();
+  useAvoidHardwareBackButton();
 
   useHeaderSecondLevel({
     title: "",
