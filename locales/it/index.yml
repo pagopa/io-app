@@ -1749,7 +1749,7 @@ wallet:
       success:
         title: "Grazie, l’operazione è stata eseguita con successo!"
         description1: "Abbiamo inviato una ricevuta a"
-        description2: "Puoi trovarla anche nel tuo Portafoglio."
+        description2: "Puoi trovarla anche nella sezione Pagamenti."
   abortWebView:
     title: Vuoi uscire dall'operazione in corso?
     confirm: Sì, esci
