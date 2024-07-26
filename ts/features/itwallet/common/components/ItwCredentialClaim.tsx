@@ -193,8 +193,8 @@ const ImageClaimItem = ({ label, claim }: { label: string; claim: string }) => (
       <Image
         source={{ uri: claim }}
         style={{
-          width: 250,
-          height: 250
+          width: 200,
+          aspectRatio: 3 / 4
         }}
         resizeMode="contain"
         accessibilityIgnoresInvertColors
@@ -330,12 +330,16 @@ export const ItwCredentialClaim = ({
           return <ImageClaimItem label={claim.label} claim={decoded} />;
         } else if (DrivingPrivilegesClaim.is(decoded)) {
           return decoded.map((elem, index) => (
-            <DrivingPrivilegesClaimItem
-              label={claim.label}
-              claim={elem}
-              key={`${index}_{elem.label}`}
-              detailsButtonVisible={!isPreview}
-            />
+            <React.Fragment
+              key={`${index}_${claim.label}_${elem.driving_privilege}`}
+            >
+              {index !== 0 && <Divider />}
+              <DrivingPrivilegesClaimItem
+                label={claim.label}
+                claim={elem}
+                detailsButtonVisible={!isPreview}
+              />
+            </React.Fragment>
           ));
         } else if (FiscalCodeClaim.is(decoded)) {
           const fiscalCode = pipe(
