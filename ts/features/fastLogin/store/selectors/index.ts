@@ -8,6 +8,10 @@ import { isPropertyWithMinAppVersionEnabled } from "../../../../store/reducers/f
 export const fastLoginOptInSelector = (state: GlobalState) =>
   state.features.loginFeatures.fastLogin.optIn;
 
+export const isFastLoginSessionRefreshToggleActiveSelector = (
+  state: GlobalState
+) => !!state.features.loginFeatures.fastLogin.sessionRefresh.enabled;
+
 const securityAdviceAcknowledgedSelector = (state: GlobalState) =>
   state.features.loginFeatures.fastLogin.securityAdviceAcknowledged;
 
@@ -48,7 +52,9 @@ export const fastLoginSessionRefreshFFEnabled = createSelector(
       backendStatus,
       mainLocalFlag: fastLoginEnabled,
       configPropertyName: "fastLogin",
-      optionalLocalFlag: fastLoginOptIn,
+      // In this case I do not have a local feature flag, but locally the
+      // value is chosen using a toogle. So I set this required field as true
+      optionalLocalFlag: true,
       optionalConfig: "sessionRefresh"
     })
 );
@@ -94,13 +100,17 @@ export const isFastLoginEnabledSelector = createSelector(
 /**
  * if the fast login is active and has been chosen by the user (opt-in is true)
  * then if the remote FF of this functionality (fastLoginSessionRefreshFFEnabled)
- * is active, the user will see the implementation of the session refresh when
+ * is active  or the user has activated the toogle in the ‘dev’ section of
+ * the settings (isFastLoginSessionRefreshToggleActiveSelector), the user will
+ * see the implementation of the session refresh when
  * returning to foreground after at least 2 minutes of background
  */
 export const isFastLoginSessionRefreshEnabledSelector = createSelector(
   isFastLoginEnabledSelector,
   fastLoginSessionRefreshFFEnabled,
-  (isFastLoginEnabled, sessionRefresh) => isFastLoginEnabled && sessionRefresh
+  isFastLoginSessionRefreshToggleActiveSelector,
+  (isFastLoginEnabled, sessionRefresh, isSessionRefreshToggleActive) =>
+    isFastLoginEnabled && (sessionRefresh || isSessionRefreshToggleActive)
 );
 
 const fastLoginTokenRefreshHandlerSelector = (state: GlobalState) =>

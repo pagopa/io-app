@@ -22,7 +22,11 @@ import I18n from "../../i18n";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../config";
-import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import {
+  fastLoginSessionRefreshFFEnabled,
+  isFastLoginEnabledSelector,
+  isFastLoginSessionRefreshToggleActiveSelector
+} from "../../features/fastLogin/store/selectors";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
 import { notificationsInstallationSelector } from "../../features/pushNotifications/store/reducers/installation";
@@ -55,6 +59,7 @@ import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
+import { setFastLoginSessionRefresh } from "../../features/fastLogin/store/actions/sessionRefreshActions";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -303,6 +308,21 @@ const DesignSystemSection = () => {
     isNewScanSectionLocallyEnabledSelector
   );
 
+  const isFastLoginSessionRefreshRemoteFFActive = useIOSelector(
+    fastLoginSessionRefreshFFEnabled
+  );
+
+  const isFastLoginSessionRefreshToggleActive = useIOSelector(
+    isFastLoginSessionRefreshToggleActiveSelector
+  );
+
+  const dispatchFastLoginSessionRefresh = React.useCallback(
+    (enabled: boolean) => {
+      dispatch(setFastLoginSessionRefresh({ enabled }));
+    },
+    [dispatch]
+  );
+
   const onNewScanSectionToggle = (enabled: boolean) => {
     dispatch(
       preferencesNewScanSectionSetEnabled({
@@ -340,6 +360,18 @@ const DesignSystemSection = () => {
         value={isNewScanSectionLocallyEnabled}
         onSwitchValueChange={onNewScanSectionToggle}
       />
+      {/* this control isFastLoginSessionRefreshRemoteFFActive is a
+      workaround to hide this toogle before this task
+      (https://pagopa.atlassian.net/browse/IOPID-2051)
+      is completed because otherwise nothing would be activated
+       */}
+      {isFastLoginSessionRefreshRemoteFFActive && (
+        <ListItemSwitch
+          label={I18n.t("profile.main.sessionRefresh")}
+          value={isFastLoginSessionRefreshToggleActive}
+          onSwitchValueChange={dispatchFastLoginSessionRefresh}
+        />
+      )}
     </ContentWrapper>
   );
 };
