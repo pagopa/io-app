@@ -8,10 +8,7 @@ import * as React from "react";
 import { Alert } from "react-native";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { H2 } from "../../../components/core/typography/H2";
-import PaymentButton from "../../messages/components/MessageDetail/PaymentButton";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
-import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 
 const onButtonPress = () => {
@@ -131,14 +128,6 @@ const renderBlockButtons = () => (
 
 const renderSpecificButtons = () => (
   <>
-    <DSComponentViewerBox name="PaymentButton">
-      <PaymentButton
-        amount={9999999999}
-        noticeNumber={"123112312312321321" as PaymentNoticeNumber}
-        organizationFiscalCode={"46545" as OrganizationFiscalCode}
-      />
-    </DSComponentViewerBox>
-
     <DSComponentViewerBox name="CopyButtonComponent">
       <CopyButtonComponent textToCopy={"Copied text by CopyButton"} />
     </DSComponentViewerBox>

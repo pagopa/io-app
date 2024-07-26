@@ -1,24 +1,17 @@
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as O from "fp-ts/lib/Option";
 import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
-import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
 import { MessageContent } from "../../../../../definitions/backend/MessageContent";
-import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
 import { Locales } from "../../../../../locales/locales";
 import { setLocale } from "../../../../i18n";
-import { CTA, CTAS } from "../../types/MessageCTA";
+import { CTAS } from "../../types/MessageCTA";
 import {
   cleanMarkdownFromCTAs,
   getMessageCTA,
-  getMessagePaymentExpirationInfo,
-  getRemoteLocale,
-  isCtaActionValid,
-  MessagePaymentExpirationInfo,
-  paymentExpirationInfo
+  getRemoteLocale
 } from "../messages";
 
 const messageBody = `### this is a message
@@ -44,18 +37,6 @@ en:
 ---
 ` + messageBody;
 
-const messageWithoutPaymentData: CreatedMessageWithContent = {
-  created_at: new Date(),
-  fiscal_code: "RSSMRA83A12H501D" as FiscalCode,
-  id: "93726BD8-D29C-48F2-AE6D-2F",
-  sender_service_id: "dev-service_0" as ServiceId,
-  time_to_live: 3600 as TimeToLiveSeconds,
-  content: {
-    subject: "Subject - test 1" as MessageSubject,
-    markdown: CTA_2 as MessageBodyMarkdown
-  }
-};
-
 const messageWithContentWithoutDueDate = {
   created_at: new Date(),
   fiscal_code: "RSSMRA83A12H501D" as FiscalCode,
@@ -79,21 +60,6 @@ const messageWithContentWithoutDueDate = {
 const messageWithContent = {
   ...messageWithContentWithoutDueDate,
   content: { ...messageWithContentWithoutDueDate.content, due_date: new Date() }
-};
-
-const messageInvalidAfterDueDate = {
-  ...messageWithContent,
-  content: {
-    ...messageWithContent.content,
-    payment_data: {
-      notice_number: "012345678912345678",
-      amount: 406,
-      invalid_after_due_date: true,
-      payee: {
-        fiscal_code: "00000000001" as OrganizationFiscalCode
-      }
-    }
-  }
 };
 
 // test "it" as default language
@@ -207,47 +173,6 @@ const test2CTA = (
   }
 };
 
-describe("isCtaActionValid", () => {
-  it("should be a valid internal navigation action", async () => {
-    const valid: CTA = { text: "dummy", action: "ioit://PROFILE_MAIN" };
-    const isValid = isCtaActionValid(valid);
-    expect(isValid).toBeTruthy();
-  });
-
-  it("should be not valid (wrong protocol)", async () => {
-    const invalidProtocol: CTA = {
-      text: "dummy",
-      action: "iosit://PROFILE_MAIN"
-    };
-    const isValid = isCtaActionValid(invalidProtocol);
-    expect(isValid).toBeFalsy();
-  });
-
-  it("should be not valid (wrong route)", async () => {
-    const invalidRoute: CTA = { text: "dummy", action: "iosit://WRONG_ROUTE" };
-    const isValid = isCtaActionValid(invalidRoute);
-    expect(isValid).toBeFalsy();
-  });
-
-  it("should be a valid RN Linking", async () => {
-    const phoneCtaValid: CTA = {
-      text: "dummy",
-      action: "iohandledlink://tel://3471615647"
-    };
-    const isValid = isCtaActionValid(phoneCtaValid);
-    expect(isValid).toBeTruthy();
-  });
-
-  it("should be a valid RN Linking (web)", async () => {
-    const webCtaValid: CTA = {
-      text: "dummy",
-      action: "iohandledlink://https://www.google.it"
-    };
-    const isValid = isCtaActionValid(webCtaValid);
-    expect(isValid).toBeTruthy();
-  });
-});
-
 describe("cleanMarkdownFromCTAs", () => {
   it("should be the same", async () => {
     const markdown = "simple text";
@@ -270,63 +195,5 @@ some noise`;
   it("should be cleaned (extended version)", async () => {
     const cleaned = cleanMarkdownFromCTAs(CTA_2 as MessageBodyMarkdown);
     expect(cleaned).toEqual(messageBody);
-  });
-});
-
-describe("getMessagePaymentExpirationInfo", () => {
-  it("should return an object with type UNEXPIRABLE if there isn't a duedate", () => {
-    const messagePaymentExpirationInfo = getMessagePaymentExpirationInfo(
-      messageWithContentWithoutDueDate.content.payment_data as NonNullable<
-        CreatedMessageWithContentAndAttachments["content"]["payment_data"]
-      >
-    );
-    const expectedInfo = {
-      kind: "UNEXPIRABLE"
-    };
-    expect(messagePaymentExpirationInfo).toStrictEqual(expectedInfo);
-  });
-  it("should return an object with type UNEXPIRABLE if there a duedate but invalid_after_due_date is false", () => {
-    const messagePaymentExpirationInfo = getMessagePaymentExpirationInfo(
-      messageWithContent.content.payment_data as NonNullable<
-        CreatedMessageWithContentAndAttachments["content"]["payment_data"]
-      >,
-      messageWithContent.content.due_date
-    );
-    const expectedInfo = {
-      kind: "UNEXPIRABLE",
-      expireStatus: "EXPIRED",
-      dueDate: messageWithContent.content.due_date
-    };
-    expect(messagePaymentExpirationInfo).toStrictEqual(expectedInfo);
-  });
-  it("should return an object with type EXPIRABLE if there a duedate and invalid_after_due_date is true", () => {
-    const messagePaymentExpirationInfo = getMessagePaymentExpirationInfo(
-      messageInvalidAfterDueDate.content.payment_data as NonNullable<
-        CreatedMessageWithContentAndAttachments["content"]["payment_data"]
-      >,
-      messageInvalidAfterDueDate.content.due_date
-    );
-
-    const expectedInfo = {
-      kind: "EXPIRABLE",
-      expireStatus: "EXPIRED",
-      dueDate: messageInvalidAfterDueDate.content.due_date
-    };
-    expect(messagePaymentExpirationInfo).toStrictEqual(expectedInfo);
-  });
-});
-
-describe("paymentExpirationInfo", () => {
-  it("should be None if there isn't payment data in the message", () => {
-    const expirationInfo = paymentExpirationInfo(messageWithoutPaymentData);
-    expect(O.isNone(expirationInfo)).toBe(true);
-  });
-  it("should be a MessagePaymentExpirationInfo if there is payment data in the message", () => {
-    const expirationInfo = paymentExpirationInfo(messageWithoutPaymentData);
-    if (O.isSome(expirationInfo)) {
-      expect(expirationInfo.value).toBeInstanceOf(
-        {} as MessagePaymentExpirationInfo
-      );
-    }
   });
 });
