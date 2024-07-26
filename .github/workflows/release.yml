@@ -1,14 +1,13 @@
 name: Release new app version
-on:
-  pull_request
-  # push:
-  #   tags: 
-  #     - '[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+'
+on:  
+  push:
+    tags: 
+      - '[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+'
 jobs:
-  # run-static-checks:
-  #    uses: ./.github/workflows/staticcheck.yaml
+  run-static-checks:
+     uses: ./.github/workflows/staticcheck.yaml
   release-android:
-    # needs: run-static-checks
+    needs: run-static-checks
     environment: prod
     runs-on: ubuntu-latest
     steps:
@@ -31,13 +30,13 @@ jobs:
         with:
           bundler-cache: true
       - id: build-release-android
-        if: false
         run: |
           ./scripts/android-release.sh ./android/app
           cd android && bundle exec fastlane alpha
           bundle exec fastlane promote_internal_to_alpha
         shell: bash
         env:
+          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
           ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE: ${{secrets.ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE}}
           ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
           ENCODED_IO_APP_RELEASE_KEYSTORE: ${{secrets.ENCODED_IO_APP_RELEASE_KEYSTORE}}
@@ -56,8 +55,8 @@ jobs:
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
           bundle exec fastlane download_apk
         env:
-          ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
           RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
+          ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}          
           VERSION_CODE: ${{ env.VERSION_CODE }}
       - id: upload-universal-apk          
         # We don't want to fail whole job if the dSYM upload step fails
@@ -67,7 +66,6 @@ jobs:
           name: io-app-universal.apk
           path: android/io-app-universal.apk
       - id: upload-aab
-        if: false
         # We don't want to fail whole job if the dSYM upload step fails
         continue-on-error: true
         uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
@@ -75,8 +73,7 @@ jobs:
           name: app-release.aab
           path: android/app/build/outputs/bundle/release/app-release.aab
   release-ios:
-    # needs: run-static-checks
-    if: false
+    needs: run-static-checks
     environment: prod
     runs-on: macos-13-xlarge
     steps:
@@ -117,6 +114,7 @@ jobs:
         env:
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
+          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
           APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
           APP_STORE_API_KEY_ISSUER_ID: ${{secrets.APP_STORE_API_KEY_ISSUER_ID}}
@@ -141,7 +139,6 @@ jobs:
           name: IO.ipa
           path: ios/IO.ipa
   notify-new-version:
-    if: false
     environment: dev
     runs-on: ubuntu-latest
     needs:
