@@ -14,6 +14,7 @@ import { PaymentsTransactionBizEventsActions } from "../../../bizEventsTransacti
 
 import { NetworkError } from "../../../../../utils/errors";
 import { SessionTokenResponse } from "../../../../../../definitions/pagopa/platform/SessionTokenResponse";
+import { Action } from "../../../../../store/actions/types";
 
 export const paymentsGetPagoPaPlatformSessionTokenAction = createAsyncAction(
   "PAYMENTS_GET_NEW_SESSION_TOKEN_REQUEST",
@@ -24,9 +25,20 @@ export const paymentsGetPagoPaPlatformSessionTokenAction = createAsyncAction(
 export const paymentsResetPagoPaPlatformSessionTokenAction =
   createStandardAction("PAYMENTS_RESET_SESSION_TOKEN")<undefined>();
 
+type PaymentsPendingActionPayload = { pendingAction: Action };
+export const savePaymentsPendingAction = createStandardAction(
+  "SAVE_PAYMENTS_PENDING_ACTION"
+)<PaymentsPendingActionPayload>();
+
+export const clearPaymentsPendingActions = createStandardAction(
+  "CLEAR_PAYMENTS_PENDING_ACTIONS"
+)<void>();
+
 export type PaymentsActions =
   | ActionType<typeof paymentsResetPagoPaPlatformSessionTokenAction>
   | ActionType<typeof paymentsGetPagoPaPlatformSessionTokenAction>
+  | ActionType<typeof savePaymentsPendingAction>
+  | ActionType<typeof clearPaymentsPendingActions>
   | PaymentsOnboardingActions
   | PaymentsMethodDetailsActions
   | PaymentsCheckoutActions
