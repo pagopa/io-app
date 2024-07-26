@@ -363,7 +363,7 @@ const DesignSystemSection = () => {
       {/* this control isFastLoginSessionRefreshRemoteFFActive is a
       workaround to hide this toogle before this task
       (https://pagopa.atlassian.net/browse/IOPID-2051)
-      is completed because otherwise nothing would be activated
+      is completed because otherwise nothing would be activated using this toogle
        */}
       {isFastLoginSessionRefreshRemoteFFActive && (
         <ListItemSwitch
