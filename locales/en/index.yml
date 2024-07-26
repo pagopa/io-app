@@ -3256,10 +3256,7 @@ features:
         bottomSheet:
           about:
             title: "Chi è?"
-            subtitle: "È la fonte che gestisce e protegge i tuoi dati. App IO ti consente di visualizzarli perché è in grado di verificare e proteggere la tua identità grazie a importanti procedure di sicurezza."
-          data:
-            title: "Protezione dei dati"
-            subtitle: "I tuoi dati non vengono salvati su questo dispositivo, ma conservati nella Wallet Instance e potrai decidere di revocarli in qualsiasi momento."
+            subtitle: "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla

@@ -1,12 +1,18 @@
-import * as O from "fp-ts/lib/Option";
+import { Alert } from "@pagopa/io-app-design-system";
 import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import * as t from "io-ts";
 import React from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
+import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
+  CredentialIssuanceFailure,
   CredentialIssuanceFailureType,
   CredentialIssuanceFailureTypeEnum
 } from "../../machine/credential/failure";
@@ -19,13 +25,12 @@ export const ItwIssuanceCredentialFailureScreen = () => {
 
   return pipe(
     failureOption,
-    O.map(failure => failure.type),
-    O.alt(() => O.some(CredentialIssuanceFailureTypeEnum.GENERIC)),
+    O.alt(() => O.some({ type: CredentialIssuanceFailureTypeEnum.GENERIC })),
     O.fold(constNull, type => <ContentView failure={type} />)
   );
 };
 
-type ContentViewProps = { failure: CredentialIssuanceFailureType };
+type ContentViewProps = { failure: CredentialIssuanceFailure };
 
 /**
  * Renders the content of the screen
@@ -57,6 +62,26 @@ const ContentView = ({ failure }: ContentViewProps) => {
     }
   };
 
-  const resultScreenProps = resultScreensMap[failure];
-  return <OperationResultScreenContent {...resultScreenProps} />;
+  const resultScreenProps = resultScreensMap[failure.type];
+  return (
+    <OperationResultScreenContent {...resultScreenProps}>
+      <ErrorAlertDebugOnly failure={failure} />
+    </OperationResultScreenContent>
+  );
+};
+
+const ErrorAlertDebugOnly = ({ failure }: ContentViewProps) => {
+  const isDebug = useIOSelector(isDebugModeEnabledSelector);
+
+  if (!isDebug) {
+    return null;
+  }
+
+  const errorText = pipe(
+    failure.reason instanceof Error ? failure.reason.message : failure.reason,
+    t.string.decode,
+    E.getOrElse(() => "Unknown error")
+  );
+
+  return <Alert variant="error" content={errorText} />;
 };
