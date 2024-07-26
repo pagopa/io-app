@@ -48,18 +48,6 @@ export const trackPNServiceActivated = () =>
     buildEventProperties("UX", "screen_view")
   );
 
-export const trackPNServiceStartDeactivation = () =>
-  void mixpanelTrack(
-    "PN_SERVICE_START_DEACTIVATION",
-    buildEventProperties("UX", "action")
-  );
-
-export const trackPNServiceStartActivation = () =>
-  void mixpanelTrack(
-    "PN_SERVICE_START_ACTIVATION",
-    buildEventProperties("UX", "action")
-  );
-
 export const trackPNPushSettings = (enabled: boolean) =>
   void mixpanelTrack(
     "PN_PUSH_SETTINGS",

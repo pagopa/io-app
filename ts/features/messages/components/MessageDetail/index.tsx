@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import {
   ActivityIndicator,
   ScrollView,
@@ -6,7 +6,6 @@ import {
   Text,
   View
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import {
   IOColors,
   IOStyles,
@@ -20,28 +19,21 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import I18n from "../../../../i18n";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   messageMarkdownSelector,
   messageTitleSelector,
   thirdPartyFromIdSelector
 } from "../../store/reducers/thirdPartyById";
-import { UIMessage, UIMessageDetails, UIMessageId } from "../../types";
+import { UIMessage, UIMessageDetails } from "../../types";
 import { UIService } from "../../../../store/reducers/entities/services/types";
 import variables from "../../../../theme/variables";
 import { cleanMarkdownFromCTAs } from "../../utils/messages";
 import OrganizationHeader from "../../../../components/OrganizationHeader";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H2 } from "../../../../components/core/typography/H2";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
-import { MESSAGES_ROUTES } from "../../navigation/routes";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { LegacyMessageAttachments } from "./LegacyMessageAttachments";
+
 import CtaBar from "./CtaBar";
 import { LegacyRemoteContentBanner } from "./LegacyRemoteContentBanner";
 import { HeaderDueDateBar } from "./HeaderDueDateBar";
@@ -132,7 +124,6 @@ const MessageDetailsComponent = ({
   service,
   serviceMetadata
 }: Props) => {
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   // This is used to make sure that no attachments are shown before the
   // markdown content has rendered
   const [isContentLoadCompleted, setIsContentLoadCompleted] = useState(false);
@@ -158,47 +149,6 @@ const MessageDetailsComponent = ({
 
   const messageTitle =
     useIOSelector(state => messageTitleSelector(state, messageId)) ?? title;
-
-  const serviceIdOpt = service?.id;
-  const openAttachment = useCallback(
-    (attachment: ThirdPartyAttachment) => {
-      navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-        screen: MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT,
-        params: {
-          messageId,
-          serviceId: serviceIdOpt,
-          attachmentId: attachment.id
-        }
-      });
-    },
-    [messageId, navigation, serviceIdOpt]
-  );
-
-  const renderThirdPartyAttachments = useCallback(
-    (
-      messageId: UIMessageId,
-      thirdPartyMessage: ThirdPartyMessageWithContent
-    ) => {
-      // In order not to break or refactor existing PN code, the backend
-      // model for third party attachments is converted into in-app
-      // model for attachments when the user generates the request. This
-      // is not a speed intensive operation nor a memory consuming task,
-      // since the attachment count should be negligible
-      const attachmentsOpt = thirdPartyMessage.third_party_message.attachments;
-      return attachmentsOpt ? (
-        <View style={IOStyles.horizontalContentPadding}>
-          <LegacyMessageAttachments
-            attachments={attachmentsOpt}
-            messageId={messageId}
-            openPreview={openAttachment}
-          />
-        </View>
-      ) : (
-        renderThirdPartyAttachmentsError()
-      );
-    },
-    [openAttachment]
-  );
 
   return (
     <>
@@ -249,8 +199,7 @@ const MessageDetailsComponent = ({
               () => renderThirdPartyAttachmentsLoading(),
               _ => renderThirdPartyAttachmentsLoading(),
               _ => renderThirdPartyAttachmentsError(),
-              thirdPartyMessage =>
-                renderThirdPartyAttachments(messageId, thirdPartyMessage),
+              _ => renderThirdPartyAttachmentsLoading(),
               _ => renderThirdPartyAttachmentsLoading(),
               _ => renderThirdPartyAttachmentsLoading(),
               _ => renderThirdPartyAttachmentsError()
