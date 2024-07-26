@@ -1,6 +1,7 @@
 import { Alert } from "@pagopa/io-app-design-system";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import React from "react";
 import {
@@ -76,13 +77,11 @@ const ErrorAlertDebugOnly = ({ failure }: ContentViewProps) => {
     return null;
   }
 
-  const renderErrorText = () =>
-    pipe(
-      failure.reason instanceof Error ? failure.reason.message : failure.reason,
-      t.string.decode,
-      O.fromEither,
-      O.getOrElse(() => "Unknown error")
-    );
+  const errorText = pipe(
+    failure.reason instanceof Error ? failure.reason.message : failure.reason,
+    t.string.decode,
+    E.getOrElse(() => "Unknown error")
+  );
 
-  return <Alert variant="error" content={renderErrorText()} />;
+  return <Alert variant="error" content={errorText} />;
 };
