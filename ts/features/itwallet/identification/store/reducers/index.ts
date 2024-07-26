@@ -3,6 +3,7 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { itwCieIsSupported, itwNfcIsEnabled } from "../actions";
 
+// TODO: [SIW-1404] remove this reducer and move the logic to xstate
 export type ItwIdentificationState = {
   isNfcEnabled: pot.Pot<boolean, Error>;
   isCieSupported: pot.Pot<boolean, Error>;

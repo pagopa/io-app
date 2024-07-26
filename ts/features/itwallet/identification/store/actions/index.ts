@@ -1,5 +1,6 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 
+// TODO: [SIW-1404] remove these actions and move the logic to xstate
 export const itwNfcIsEnabled = createAsyncAction(
   "ITW_NFC_IS_ENABLED_REQUEST",
   "ITW_NFC_IS_ENABLED_SUCCESS",

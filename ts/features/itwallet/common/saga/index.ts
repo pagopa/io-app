@@ -12,6 +12,7 @@ export function* watchItwSaga(): SagaIterator {
   yield* fork(handleWalletCredentialsRehydration);
   yield* fork(watchItwIdentificationSaga);
 
+  // TODO: [SIW-1404] remove this CIE check and move the logic to xstate
   yield* put(itwCieIsSupported.request());
   // IT Wallet trial status refresh
   yield* put(trialSystemActivationStatus.request(itwTrialId));
