@@ -17,7 +17,6 @@ import {
 } from "../../machine/credential/failure";
 import { selectFailureOption } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { DebugPrettyPrint } from "../../../../components/DebugPrettyPrint";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -70,11 +69,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   );
 };
 
-const ErrorAlertDebugOnly = ({
-  failure
-}: {
-  failure: CredentialIssuanceFailure;
-}) => {
+const ErrorAlertDebugOnly = ({ failure }: ContentViewProps) => {
   const isDebug = useIOSelector(isDebugModeEnabledSelector);
 
   if (!isDebug) {
@@ -88,8 +83,6 @@ const ErrorAlertDebugOnly = ({
       O.fromEither,
       O.getOrElse(() => "Unknown error")
     );
-
-  return <DebugPrettyPrint />;
 
   return <Alert variant="error" content={renderErrorText()} />;
 };
