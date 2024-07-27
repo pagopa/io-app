@@ -1,30 +1,32 @@
-import * as React from "react";
 import {
-  StyleSheet,
-  Pressable,
-  SafeAreaView,
-  View,
-  Text,
-  Platform
-} from "react-native";
-import { connect } from "react-redux";
-import { useState } from "react";
-import { widthPercentageToDP } from "react-native-responsive-screen";
-import {
-  HSpacer,
+  HStack,
   IOColors,
-  IOStyles,
+  Icon,
   hexToRgba,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
+import _ from "lodash";
+import * as React from "react";
+import { useState } from "react";
+import {
+  Platform,
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  Text
+} from "react-native";
+import { widthPercentageToDP } from "react-native-responsive-screen";
+import { connect } from "react-redux";
 import { ReduxProps } from "../store/actions/types";
+import { useIOSelector } from "../store/hooks";
+import { debugDataSelector } from "../store/reducers/debug";
 import { currentRouteSelector } from "../store/reducers/navigation";
+import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
 import { GlobalState } from "../store/reducers/types";
 import { getAppVersion } from "../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../utils/clipboard";
-import { useIOSelector } from "../store/hooks";
-import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
 import PagoPATestIndicator from "./PagoPATestIndicator";
+import { DebugDataOverlay } from "./debug/DebugDataOverlay";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
@@ -74,40 +76,57 @@ const styles = StyleSheet.create({
 const DebugInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
   const appVersion = getAppVersion();
   const [showRootName, setShowRootName] = useState(true);
+  const [isDebugDataVisibile, showDebugData] = useState(false);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
+  const debugData = useIOSelector(debugDataSelector);
 
   const appVersionText = `v. ${appVersion}`;
 
   return (
-    <SafeAreaView style={styles.versionContainer} pointerEvents="box-none">
-      <View style={IOStyles.row}>
-        <Pressable
-          style={styles.versionTextWrapper}
-          onPress={() => setShowRootName(prevState => !prevState)}
-          accessibilityRole="button"
-          accessibilityLabel={appVersionText}
-          accessibilityHint={"Tap here to show/hide the root name"}
-        >
-          <Text style={styles.versionText}>{appVersionText}</Text>
-        </Pressable>
-        {isPagoPATestEnabled && (
-          <>
-            <HSpacer size={4} />
-            <PagoPATestIndicator />
-          </>
+    <>
+      <SafeAreaView style={styles.versionContainer} pointerEvents="box-none">
+        <HStack space={4}>
+          <Pressable
+            style={styles.versionTextWrapper}
+            onPress={() => setShowRootName(prevState => !prevState)}
+            accessibilityRole="button"
+            accessibilityLabel={appVersionText}
+            accessibilityHint={"Tap here to show/hide the root name"}
+          >
+            <Text style={styles.versionText}>{appVersionText}</Text>
+          </Pressable>
+          {isPagoPATestEnabled && <PagoPATestIndicator />}
+          {!_.isEmpty(debugData) && (
+            <Pressable
+              style={styles.versionTextWrapper}
+              accessibilityRole="button"
+              accessibilityHint={"Opend the debug data"}
+              onPress={() => showDebugData(prevState => !prevState)}
+            >
+              <HStack space={4}>
+                <Icon name="ladybug" size={12} />
+                <Text style={styles.screenDebugText}>{_.size(debugData)}</Text>
+              </HStack>
+            </Pressable>
+          )}
+        </HStack>
+        {showRootName && (
+          <Pressable
+            style={styles.routeText}
+            accessibilityRole="button"
+            accessibilityHint={"Copy the technical screen name"}
+            onPress={() =>
+              clipboardSetStringWithFeedback(props.screenNameDebug)
+            }
+          >
+            <Text style={styles.screenDebugText}>{props.screenNameDebug}</Text>
+          </Pressable>
         )}
-      </View>
-      {showRootName && (
-        <Pressable
-          style={styles.routeText}
-          accessibilityRole="button"
-          accessibilityHint={"Copy the technical screen name"}
-          onPress={() => clipboardSetStringWithFeedback(props.screenNameDebug)}
-        >
-          <Text style={styles.screenDebugText}>{props.screenNameDebug}</Text>
-        </Pressable>
+      </SafeAreaView>
+      {isDebugDataVisibile && (
+        <DebugDataOverlay onDismissed={() => showDebugData(false)} />
       )}
-    </SafeAreaView>
+    </>
   );
 };
 
