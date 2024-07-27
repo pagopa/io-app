@@ -7,8 +7,6 @@ import {
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
-import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
   CredentialIssuanceFailure,
   CredentialIssuanceFailureType,
@@ -66,3 +64,4 @@ const ContentView = ({ failure }: ContentViewProps) => {
       <DebugPrettyPrint title="Failure" data={failure} />
     </OperationResultScreenContent>
   );
+};
