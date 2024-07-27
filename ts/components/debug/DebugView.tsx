@@ -1,4 +1,8 @@
-import { IOColors, ListItemHeader } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOVisualCostants,
+  ListItemHeader
+} from "@pagopa/io-app-design-system";
 import React from "react";
 import { View } from "react-native";
 import { withDebugEnabled } from "./withDebugEnabled";
@@ -23,7 +27,9 @@ export const DebugView = withDebugEnabled(
         paddingHorizontal: 24,
         paddingBottom: 12,
         backgroundColor: IOColors["grey-100"],
-        marginHorizontal: ignoreHorizontalMargins ? -24 : 0
+        marginHorizontal: ignoreHorizontalMargins
+          ? -IOVisualCostants.appMarginDefault
+          : 0
       }}
     >
       <ListItemHeader label={title} iconName="ladybug" />
