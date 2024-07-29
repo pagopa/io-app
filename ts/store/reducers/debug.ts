@@ -1,3 +1,5 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { PersistConfig, PersistPartial, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import {
   resetDebugData,
@@ -7,17 +9,16 @@ import {
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
-export type DebugState = Readonly<{
+type DebugState = Readonly<{
   isDebugModeEnabled: boolean;
-  debugData: Record<string, any>;
+  debugData?: Record<string, any>;
 }>;
 
 const INITIAL_STATE: DebugState = {
-  isDebugModeEnabled: false,
-  debugData: {}
+  isDebugModeEnabled: false
 };
 
-export function debugReducer(
+function debugReducer(
   state: DebugState = INITIAL_STATE,
   action: Action
 ): DebugState {
@@ -41,7 +42,7 @@ export function debugReducer(
       return {
         ...state,
         debugData: Object.fromEntries(
-          Object.entries(state.debugData).filter(
+          Object.entries(state.debugData || {}).filter(
             ([key]) => !action.payload.includes(key)
           )
         )
@@ -51,7 +52,25 @@ export function debugReducer(
   return state;
 }
 
+// Persistor
+const CURRENT_REDUX_DEBUG_STORE_VERSION = -1;
+
+const persistConfig: PersistConfig = {
+  key: "debug",
+  storage: AsyncStorage,
+  version: CURRENT_REDUX_DEBUG_STORE_VERSION,
+  whitelist: ["isDebugModeEnabled"]
+};
+
+export type PersistedDebugState = DebugState & PersistPartial;
+
+export const debugPersistor = persistReducer<DebugState, Action>(
+  persistConfig,
+  debugReducer
+);
+
 // Selector
 export const isDebugModeEnabledSelector = (state: GlobalState) =>
   state.debug.isDebugModeEnabled;
-export const debugDataSelector = (state: GlobalState) => state.debug.debugData;
+export const debugDataSelector = (state: GlobalState) =>
+  state.debug.debugData || {};
