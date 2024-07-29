@@ -63,14 +63,12 @@ export const DebugPrettyPrint = withDebugEnabled(
             {title}
           </LabelSmall>
           <HStack space={16}>
-            {expandable && (
-              <IconButton
-                icon={"copy"}
-                accessibilityLabel="copy"
-                onPress={() => clipboardSetStringWithFeedback(prettyData)}
-                color="contrast"
-              />
-            )}
+            <IconButton
+              icon={"copy"}
+              accessibilityLabel="copy"
+              onPress={() => clipboardSetStringWithFeedback(prettyData)}
+              color="contrast"
+            />
             {expandable && (
               <IconButton
                 icon={expanded ? "chevronTop" : "chevronBottom"}
