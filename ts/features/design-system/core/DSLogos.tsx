@@ -1,7 +1,9 @@
 import {
   Avatar,
   AvatarSearch,
+  H4,
   HSpacer,
+  HStack,
   IOColors,
   IOLogoPaymentCardType,
   IOLogoPaymentExtType,
@@ -14,12 +16,12 @@ import {
   LogoPaymentCard,
   LogoPaymentExt,
   VSpacer,
+  VStack,
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { H2 } from "../../../components/core/typography/H2";
 import { LogoPaymentExtended } from "../../../components/ui/LogoPaymentExtended";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import {
@@ -33,9 +35,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-start",
-    marginBottom: 16,
     marginLeft: (logoItemGutter / 2) * -1,
-    marginRight: (logoItemGutter / 2) * -1
+    marginRight: (logoItemGutter / 2) * -1,
+    rowGap: 16
   },
   horizontalScroll: {
     marginLeft: -IOVisualCostants.appMarginDefault,
@@ -44,63 +46,40 @@ const styles = StyleSheet.create({
   }
 });
 
+const sectionMargin = 40;
+const sectionTitleMargin = 16;
+
 export const DSLogos = () => {
   const theme = useIOTheme();
 
   return (
     <DesignSystemScreen title={"Logos"}>
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16 }}
-      >
-        Avatar
-      </H2>
-      {renderAvatar()}
+      <VStack space={sectionMargin}>
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Avatar</H4>
+          {renderAvatar()}
+        </VStack>
 
-      <VSpacer size={32} />
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Payment Networks (Small)</H4>
+          {renderPaymentLogosSmall()}
+        </VStack>
 
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16 }}
-      >
-        Payment Networks (Small)
-      </H2>
-      {renderPaymentLogosSmall()}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Payment Networks (Big)</H4>
+          {renderPaymentLogosBig()}
+        </VStack>
 
-      <VSpacer size={16} />
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Banks (Extended)</H4>
+          {renderLogoPaymentExtended()}
+        </VStack>
 
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16 }}
-      >
-        Payment Networks (Big)
-      </H2>
-      {renderPaymentLogosBig()}
-
-      <VSpacer size={16} />
-
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16 }}
-      >
-        Banks (Extended)
-      </H2>
-      {renderLogoPaymentExtended()}
-
-      <VSpacer size={16} />
-
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16 }}
-      >
-        Payment Networks (Card)
-      </H2>
-      {renderPaymentLogosCard()}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Payment Networks (Card)</H4>
+          {renderPaymentLogosCard()}
+        </VStack>
+      </VStack>
     </DesignSystemScreen>
   );
 };
@@ -146,16 +125,17 @@ const organizationsURIs = [
 ];
 
 const renderAvatar = () => (
-  <>
+  <VStack space={24}>
     <DSComponentViewerBox name={`Avatar, small size`}>
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         style={styles.horizontalScroll}
       >
-        {organizationsURIs.map(({ imageSource }, i) => (
-          <React.Fragment key={i}>
+        <HStack space={8}>
+          {organizationsURIs.map(({ imageSource }, i) => (
             <Avatar
+              key={i}
               size="small"
               logoUri={
                 imageSource
@@ -165,21 +145,22 @@ const renderAvatar = () => (
                   : undefined
               }
             />
-            {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
-            {i === organizationsURIs.length - 1 && <HSpacer size={32} />}
-          </React.Fragment>
-        ))}
+          ))}
+          <HSpacer size={32} />
+        </HStack>
       </ScrollView>
     </DSComponentViewerBox>
+
     <DSComponentViewerBox name={`Avatar, medium size`}>
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         style={styles.horizontalScroll}
       >
-        {organizationsURIs.map(({ imageSource }, i) => (
-          <React.Fragment key={i}>
+        <HStack space={8}>
+          {organizationsURIs.map(({ imageSource }, i) => (
             <Avatar
+              key={i}
               size="medium"
               logoUri={
                 imageSource
@@ -189,21 +170,22 @@ const renderAvatar = () => (
                   : undefined
               }
             />
-            {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
-            {i === organizationsURIs.length - 1 && <HSpacer size={32} />}
-          </React.Fragment>
-        ))}
+          ))}
+          <HSpacer size={32} />
+        </HStack>
       </ScrollView>
     </DSComponentViewerBox>
+
     <DSComponentViewerBox name={`AvatarSearch`}>
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         style={styles.horizontalScroll}
       >
-        {organizationsURIs.map(({ imageSource }, i) => (
-          <React.Fragment key={i}>
+        <HStack space={8}>
+          {organizationsURIs.map(({ imageSource }, i) => (
             <AvatarSearch
+              key={i}
               source={
                 imageSource
                   ? Array.isArray(imageSource)
@@ -212,13 +194,12 @@ const renderAvatar = () => (
                   : []
               }
             />
-            {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
-            {i === organizationsURIs.length - 1 && <HSpacer size={32} />}
-          </React.Fragment>
-        ))}
+          ))}
+          <HSpacer size={32} />
+        </HStack>
       </ScrollView>
     </DSComponentViewerBox>
-  </>
+  </VStack>
 );
 
 const renderPaymentLogosSmall = () => (
@@ -255,7 +236,7 @@ const renderPaymentLogosBig = () => (
 );
 
 const renderLogoPaymentExtended = () => (
-  <>
+  <VStack space={24}>
     <DSComponentViewerBox name={`LogoPaymentExtended · ABI code defined`}>
       <LogoPaymentExtended
         abiCode="03124"
@@ -273,11 +254,11 @@ const renderLogoPaymentExtended = () => (
         dimensions={{ height: 33, width: 150 }}
       />
     </DSComponentViewerBox>
-  </>
+  </VStack>
 );
 
 const renderPaymentLogosCard = () => (
-  <View style={styles.itemsWrapper}>
+  <VStack space={24}>
     {Object.entries(IOPaymentCardLogos).map(([logoItemName]) => (
       <DSLogoPaymentViewerBox
         key={logoItemName}
@@ -292,7 +273,6 @@ const renderPaymentLogosCard = () => (
         }
       />
     ))}
-    <VSpacer size={24} />
     <DSComponentViewerBox
       fullWidth
       name="Debug mode enabled, possible align values"
@@ -306,12 +286,12 @@ const renderPaymentLogosCard = () => (
           borderWidth: 1
         }}
       >
-        <LogoPaymentCard debugMode height={32} name="payPal" align="start" />
-        <VSpacer size={8} />
-        <LogoPaymentCard debugMode height={32} name="payPal" align="center" />
-        <VSpacer size={8} />
-        <LogoPaymentCard debugMode height={32} name="payPal" align="end" />
+        <VStack space={8}>
+          <LogoPaymentCard debugMode height={32} name="payPal" align="start" />
+          <LogoPaymentCard debugMode height={32} name="payPal" align="center" />
+          <LogoPaymentCard debugMode height={32} name="payPal" align="end" />
+        </VStack>
       </View>
     </DSComponentViewerBox>
-  </View>
+  </VStack>
 );
