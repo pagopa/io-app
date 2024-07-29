@@ -2,21 +2,17 @@ import {
   ContentWrapper,
   ForceScrollDownView,
   H2,
-  H3,
-  IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { sequenceS } from "fp-ts/lib/Apply";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
-import { SafeAreaView, View } from "react-native";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { FooterActions } from "../../../../components/ui/FooterActions";
-import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
@@ -47,7 +43,13 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
   useAvoidHardwareBackButton();
 
   if (isLoading) {
-    return <LoadingView />;
+    return (
+      <LoadingScreenContent
+        contentTitle={I18n.t(
+          "features.itWallet.issuance.credentialPreview.loading"
+        )}
+      />
+    );
   }
 
   return pipe(
@@ -133,32 +135,5 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
         }}
       />
     </ForceScrollDownView>
-  );
-};
-
-/**
- * Renders a loading spinner if the credential obtaines takes too long
- */
-const LoadingView = () => {
-  const navigation = useIONavigation();
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false
-    });
-  });
-
-  return (
-    <SafeAreaView style={[IOStyles.flex, IOStyles.centerJustified]}>
-      <ContentWrapper>
-        <View style={IOStyles.alignCenter}>
-          <LoadingIndicator />
-          <VSpacer size={24} />
-          <H3 style={{ textAlign: "center" }}>
-            Attendi ancora qualche secondo, senza uscire dall’app
-          </H3>
-        </View>
-      </ContentWrapper>
-    </SafeAreaView>
   );
 };
