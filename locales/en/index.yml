@@ -2170,6 +2170,14 @@ services:
   contextualHelpContent: !include services/services_home.md
   new: New
   home:
+    bottomSheet:
+      content:
+        servicesPreferences:
+          value: Who can contact you?
+          description: Choose who can contact you
+        settings: 
+          value: Settings
+          description: Manage your data and preferences
     featured:
       services:
         title: Featured
