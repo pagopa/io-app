@@ -10,15 +10,15 @@ import React from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { isCieSupportedSelector } from "../../../../store/reducers/cie";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
+import { itwIsCieSupportedSelector } from "../store/selectors";
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
-  const isCieSupportedPot = useIOSelector(isCieSupportedSelector);
+  const isCieSupportedPot = useIOSelector(itwIsCieSupportedSelector);
 
   const isCieSupported = React.useMemo(
     () => cieFlowForDevServerEnabled || pot.getOrElse(isCieSupportedPot, false),

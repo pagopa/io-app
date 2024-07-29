@@ -162,15 +162,7 @@ const DATE_FORMAT_REGEX = "^\\d{4}-\\d{2}-\\d{2}$";
 /**
  * Regex for the picture URL format which is used to validate the image claim as a base64 encoded png image.
  */
-const PICTURE_URL_REGEX = "^data:image\\/png;base64,";
-
-/**
- * Regex for the picture without URL format which is used to validate the image claim as a base64 encoded png image.
- * This is needed until the issuer adds the URL to the image claim.
- * TODO [SIW-1378]: remove this regex when the issuer adds the URL schema to the image claim.
- */
-const PICTURE_WITHOUT_URL_REGEX =
-  "(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)";
+const PICTURE_URL_REGEX = "^data:image\\/(png|jpg|jpeg|bmp);base64,";
 
 const FISCAL_CODE_WITH_PREFIX =
   "(TINIT-[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])";
@@ -241,9 +233,6 @@ export const PlainTextClaim = t.string;
 
 export const ImageClaim = PatternString(PICTURE_URL_REGEX);
 
-// TODO [SIW-1378]: remove this decoder when the issuer adds the URL schema to the image claim.
-export const ImageClaimNoUrl = PatternString(PICTURE_WITHOUT_URL_REGEX);
-
 /**
  * Decoder type for the claim field of the credential.
  * It includes all the possible types of claims and fallbacks to string.
@@ -261,8 +250,6 @@ export const ClaimValue = t.union([
   DateClaim,
   // Otherwise parse an image
   ImageClaim,
-  // Otherwise parse an image without URL
-  ImageClaimNoUrl,
   // Otherwise parse a fiscal code
   FiscalCodeClaim,
   // Otherwise fallback to string
@@ -325,7 +312,9 @@ export const previewDateClaimsConfig: DateClaimConfig = {
  * @returns
  */
 export const groupCredentialClaims = (credential: StoredCredential) => {
-  const claims = parseClaims(credential.parsedCredential);
+  const claims = parseClaims(credential.parsedCredential, {
+    exclude: ["unique_id"]
+  });
 
   return claims.reduce((acc, claim) => {
     const section = sectionsByClaim[claim.id] || "noSection";

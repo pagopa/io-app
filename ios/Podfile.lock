@@ -613,10 +613,16 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTImage
+  - RNSentry (5.22.2):
+    - hermes-engine
+    - React-Core
+    - React-hermes
+    - Sentry/HybridSDK (= 8.25.0)
   - RNShare (10.2.1):
     - React-Core
   - RNSVG (15.1.0):
     - React-Core
+  - Sentry/HybridSDK (8.25.0)
   - SocketRocket (0.6.1)
   - SwiftCBOR (0.4.7)
   - VisionCamera (3.9.2):
@@ -763,6 +769,7 @@ DEPENDENCIES:
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
@@ -785,6 +792,7 @@ SPEC REPOS:
     - libevent
     - Mixpanel-swift
     - OpenSSL-Universal
+    - Sentry
     - SocketRocket
     - SwiftCBOR
     - YogaKit
@@ -974,6 +982,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSentry:
+    :path: "../node_modules/@sentry/react-native"
   RNShare:
     :path: "../node_modules/react-native-share"
   RNSVG:
@@ -1085,8 +1095,10 @@ SPEC CHECKSUMS:
   RNReactNativeHapticFeedback: 6d24decfa94e037c2ecc312407d2a057b7933f10
   RNReanimated: 108a53626a492df35db30b98fc922a7189d1c601
   RNScreens: b8d370282cdeae9df85dd5eab20c88eb5181243b
+  RNSentry: f6a5aee809d646763640130714d1fdfe69aac36b
   RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
   RNSVG: 50cf2c7018e57cf5d3522d98d0a3a4dd6bf9d093
+  Sentry: cd86fc55628f5b7c572cabe66cc8f95a9d2f165a
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   SwiftCBOR: 465775bed0e8bac7bfb8160bcf7b95d7f75971e4
   VisionCamera: 36c460338692788a0d377dce7d32f8ba049fb4f2
