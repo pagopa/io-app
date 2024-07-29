@@ -21,10 +21,8 @@ import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
   fciEnabled,
-  itwEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled,
-  showBarcodeScanSection,
   uaDonationsEnabled
 } from "../../config";
 import { LocalizedMessageKeys } from "../../i18n";
@@ -35,7 +33,7 @@ import { Action } from "../actions/types";
 
 import {
   isIdPayTestEnabledSelector,
-  isNewWalletSectionLocallyEnabledSelector
+  isNewScanSectionLocallyEnabledSelector
 } from "./persistedPreferences";
 import { GlobalState } from "./types";
 
@@ -457,9 +455,7 @@ export const isIdPayEnabledSelector = createSelector(
  */
 export const isNewPaymentSectionEnabledSelector = createSelector(
   backendStatusSelector,
-  isNewWalletSectionLocallyEnabledSelector,
-  (backendStatus, isNeWalletSectionEnabled): boolean =>
-    isNeWalletSectionEnabled ||
+  (backendStatus): boolean =>
     pipe(
       backendStatus,
       O.map(bs =>
@@ -481,11 +477,12 @@ export const isNewPaymentSectionEnabledSelector = createSelector(
 // on the icon in the headers of the top-level screens.
 // It will be possible to delete this control and all the code it carries
 // it carries when isNewPaymentSectionEnabledSelector and
-// showBarcodeScanSection will be deleted
+// isNewScanSectionLocallyEnabled will be deleted
 export const isSettingsVisibleAndHideProfileSelector = createSelector(
   isNewPaymentSectionEnabledSelector,
-  isNewPaymentSectionEnable =>
-    isNewPaymentSectionEnable && showBarcodeScanSection
+  isNewScanSectionLocallyEnabledSelector,
+  (isNewPaymentSectionEnabled, isNewScanSectionLocallyEnabled) =>
+    isNewPaymentSectionEnabled && isNewScanSectionLocallyEnabled
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
@@ -505,7 +502,6 @@ export const isBackendServicesStatusOffSelector = createSelector(
 export const isItwEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
-    itwEnabled &&
     pipe(
       backendStatus,
       O.map(

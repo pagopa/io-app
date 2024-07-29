@@ -4,16 +4,16 @@
 
 import { patternDateFromString } from "@pagopa/ts-commons/lib/dates";
 import { PatternString } from "@pagopa/ts-commons/lib/strings";
-import { differenceInCalendarDays } from "date-fns";
-import { pipe } from "fp-ts/lib/function";
+import { differenceInCalendarDays, isValid } from "date-fns";
 import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
 import { ItwCredentialStatus } from "../components/ItwCredentialCard";
-import { CredentialCatalogDisplay } from "./itwMocksUtils";
 import { JsonFromString } from "./ItwCodecUtils";
+import { CredentialCatalogDisplay } from "./itwMocksUtils";
 import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
 /**
@@ -69,19 +69,25 @@ export type ClaimDisplayFormat = {
  * If there's no locale that matches the current locale then we take the attribute key as the name.
  * The value is taken from the attribute value.
  * @param parsedCredential - the parsed credential.
+ * @param options.exclude - an array of keys to exclude from the claims. TODO [SIW-1383]: remove this dirty hack
  * @returns the array of {@link ClaimDisplayFormat} of the credential contained in its configuration schema.
  */
 export const parseClaims = (
-  parsedCredential: ParsedCredential
-): Array<ClaimDisplayFormat> =>
-  Object.entries(parsedCredential).map(([key, attribute]) => {
-    const attributeName =
-      typeof attribute.name === "string"
-        ? attribute.name
-        : attribute.name?.[getClaimsFullLocale()] || key;
+  parsedCredential: ParsedCredential,
+  options: { exclude?: Array<string> } = {}
+): Array<ClaimDisplayFormat> => {
+  const { exclude = [] } = options;
+  return Object.entries(parsedCredential)
+    .filter(([key]) => !exclude.includes(key))
+    .map(([key, attribute]) => {
+      const attributeName =
+        typeof attribute.name === "string"
+          ? attribute.name
+          : attribute.name?.[getClaimsFullLocale()] || key;
 
-    return { label: attributeName, value: attribute.value, id: key };
-  });
+      return { label: attributeName, value: attribute.value, id: key };
+    });
+};
 
 /**
  * Sorts the parsedCredential according to the order of the displayData.
@@ -156,15 +162,7 @@ const DATE_FORMAT_REGEX = "^\\d{4}-\\d{2}-\\d{2}$";
 /**
  * Regex for the picture URL format which is used to validate the image claim as a base64 encoded png image.
  */
-const PICTURE_URL_REGEX = "^data:image\\/png;base64,";
-
-/**
- * Regex for the picture without URL format which is used to validate the image claim as a base64 encoded png image.
- * This is needed until the issuer adds the URL to the image claim.
- * TODO [SIW-1378]: remove this regex when the issuer adds the URL schema to the image claim.
- */
-const PICTURE_WITHOUT_URL_REGEX =
-  "(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)";
+const PICTURE_URL_REGEX = "^data:image\\/(png|jpg|jpeg|bmp);base64,";
 
 const FISCAL_CODE_WITH_PREFIX =
   "(TINIT-[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])";
@@ -235,9 +233,6 @@ export const PlainTextClaim = t.string;
 
 export const ImageClaim = PatternString(PICTURE_URL_REGEX);
 
-// TODO [SIW-1378]: remove this decoder when the issuer adds the URL schema to the image claim.
-export const ImageClaimNoUrl = PatternString(PICTURE_WITHOUT_URL_REGEX);
-
 /**
  * Decoder type for the claim field of the credential.
  * It includes all the possible types of claims and fallbacks to string.
@@ -255,8 +250,6 @@ export const ClaimValue = t.union([
   DateClaim,
   // Otherwise parse an image
   ImageClaim,
-  // Otherwise parse an image without URL
-  ImageClaimNoUrl,
   // Otherwise parse a fiscal code
   FiscalCodeClaim,
   // Otherwise fallback to string
@@ -319,7 +312,9 @@ export const previewDateClaimsConfig: DateClaimConfig = {
  * @returns
  */
 export const groupCredentialClaims = (credential: StoredCredential) => {
-  const claims = parseClaims(credential.parsedCredential);
+  const claims = parseClaims(credential.parsedCredential, {
+    exclude: ["unique_id"]
+  });
 
   return claims.reduce((acc, claim) => {
     const section = sectionsByClaim[claim.id] || "noSection";
@@ -342,7 +337,12 @@ export const getCredentialExpireDate = (
   const expireDate: ParsedCredential[keyof ParsedCredential] | undefined =
     credential.expiry_date || credential.expiration_date;
 
-  return expireDate && new Date(expireDate.value as string);
+  if (!expireDate?.value) {
+    return undefined;
+  }
+
+  const date = new Date(expireDate.value as string);
+  return isValid(date) ? date : undefined;
 };
 
 /**

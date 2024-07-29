@@ -86,12 +86,12 @@ const ItwPlayground = () => {
           onPress={() => undefined}
         />
         <VSpacer size={16} />
+        <ItwLifecycleSection />
+        <VSpacer size={16} />
         {
           /* F&F Experimentation */
           __DEV__ ? (
             <>
-              <ItwLifecycleSection />
-              <VSpacer size={16} />
               <ItwTrialSystemSection />
               <VSpacer size={16} />
             </>

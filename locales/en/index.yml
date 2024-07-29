@@ -3,8 +3,8 @@ accessibility:
   doubleTapToActivateHint: "Double tap to activate"
   buttons:
     torch:
-      turnOn: "Accendi la torcia"
-      turnOff: "Spegni la torcia"
+      turnOn: "Turn on the flashlight"
+      turnOff: "Turn off the flashlight"
 date:
   formats:
     default: "%d/%m/%Y"
@@ -317,7 +317,9 @@ profile:
     forgetCurrentSession: Forget current session
     clearAsyncStorage: Clear AsyncStorage
     dumpAsyncStorage: Dump AsyncStorage content to console
-    contextualHelpTitle: What you can do in your Profile
+    sentryTestEvent: Send Exception to Sentry
+    contextualHelpTitle: What you can do in {{pageName}} section 
+    legacyContextualHelpContent: !include profile/legacy_profile_account_main.md
     contextualHelpContent: !include profile/profile_account_main.md
     developerModeOn: Developer mode enabled
     cache:
@@ -440,7 +442,7 @@ profile:
           additionalInformation:
             description: "For more information, please read "
             cta: "the Privacy Policy and Terms and Conditions"
-          profileSettings: "You can change this choice anytime in Profile > Privacy Policy and Terms of Service"
+          profileSettings: "You can change this choice anytime in {{pageName}} > Privacy Policy and Terms of Service"
           cta:
             shareData: "Share"
             dontShareData: Please don't share data
@@ -477,10 +479,8 @@ profile:
     idpay:
       idpayTest: IDPay
       idpayTestAlert: This change requires app reboot
-    itWallet:
-      itWalletTest: IT Wallet
     designSystemEnvironment: Experimental Design System
-    newWalletSection: New wallet section
+    newScanSection: New 'Scan' feature
     appVersion: Version
     backendVersion: Backend Version
     debugMode: Debug mode
@@ -930,6 +930,7 @@ email:
     subtitle: You will receive IO's communications at
 onboarding:
   contextualHelpTitle: How does the biometric recognition work
+  legacyContextualHelpContent: !include onboarding/legacy_onboarding_fingerprint.md
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configure IO
@@ -978,7 +979,7 @@ onboarding:
     headerTitle: Configure IO
     available:
       title: Enable biometric recognition
-      settings: You can always change your choice in Profile > Security
+      settings: You can always change your choice in {{pageName}} > Security
       body:
         text: You can use your face or fingerprint to enter instead of the unlock code. This will let you access the app and authorise operation and payments more easily and safely.
         infoStart: You can use biometric recognition in place of the unlock code. This will let you access the app and authorize operations and payments with your
@@ -996,7 +997,7 @@ onboarding:
             value: Set up face or fingerprint
           step3:
             label: Step 3
-            value: Enable it in IO under Profile > Security
+            value: Enable it in IO under {{pageName}} > Security
     unavailable:
       title: Protect your device
       subtitle: IO sends you messages that are relevant to you. Make sure that only you can access the app by setting a code or sign to unlock the device.
@@ -1519,8 +1520,8 @@ wallet:
     idTransaction: Transaction identification code
     updatedAmount: Updated amount
     amountInfo:
-      title: Vedi un importo diverso?
-      message: pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests
+      title: Do you see a different amount?
+      message: pagoPA updates the amount in real time, so that you can pay without additional charges or interest. This may happen, for instance, when the institution applies notification fees (if it has sent you a notification with legal value) or if you are late with your payment.
       cta: Ok, va bene
     contextualHelpTitle: Transaction's summary
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
@@ -1888,9 +1889,10 @@ wallet:
         title: Abilita il metodo per effettuare pagamenti in app
         subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
       PAYMENT_METHODS_NOT_AVAILABLE:
-        title: Aggiungi un metodo per effettuare pagamenti in app
+        title: Vuoi pagare con carta? Aggiungila ora!
         subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
-        primaryAction: Aggiungi metodo
+        primaryAction: Aggiungi carta
+        secondaryAction: Usa altri metodi
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -2139,7 +2141,7 @@ services:
         title: "Preferences saved!"
         body: "You can always see the list of available services by visiting the Services section."
         cta: "Check available services"
-      banner: Puoi modificare la tua scelta in ogni momento da Profilo > Preferenze
+      banner: You can change this choice anytime in {{pageName}} > Preferences
       oldUsersBadge: "Current setup"
       choiceLabel: "You chose the"
       unavailable: "Not defined"
@@ -3111,7 +3113,7 @@ features:
           noticeHeading: Avvisi pagati di recente
           noticeBody: "Stiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
           allNoticesHeading: Tutti gli altri avvisi
-          allNoticesBody: Per ottenere le ricevute in formato PDF di operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
+          allNoticesBody: Per le operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
       multiplePayment: Pagamento multiplo
       title: Ricevute pagoPA
       button: Vedi tutte
@@ -3130,6 +3132,10 @@ features:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
         totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
     details:
+      payPal:
+        banner:
+          title: Do you want to pay in 3?
+          content: Don't use this method. During a payment, select "PayPal (Pay in 3 too)".
       pspAlert:
         description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
         action: "Cosa significa?"
@@ -3250,10 +3256,7 @@ features:
         bottomSheet:
           about:
             title: "Chi è?"
-            subtitle: "È la fonte che gestisce e protegge i tuoi dati. App IO ti consente di visualizzarli perché è in grado di verificare e proteggere la tua identità grazie a importanti procedure di sicurezza."
-          data:
-            title: "Protezione dei dati"
-            subtitle: "I tuoi dati non vengono salvati su questo dispositivo, ma conservati nella Wallet Instance e potrai decidere di revocarli in qualsiasi momento."
+            subtitle: "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
@@ -3298,7 +3301,7 @@ features:
       bottomSheets:
         mdl:
           title: "Patente: contesti di verifica"
-          content: "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Cartadi Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valorelegale del documento fisico.**"
+          content: "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Carta di Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valore legale del documento fisico.**"
       credentialDetails:
         personalDataTitle: "Personal data"
         documentDataTitle: "Document data"
@@ -3408,7 +3411,7 @@ idpay:
       bodyCta: "Come funziona?"
       banner:
         header: E se lo dimentichi?
-        body: Puoi reimpostare il codice in ogni momento da Profilo > Sicurezza.
+        body: You can reset the code anytime from {{pageName}} > Security.
       title: Paga con la tua carta d'identità elettronica
       description: Spendi il denaro delle iniziative a te previste usando la tua carta d’identità elettronica.
       buttons:
@@ -3511,7 +3514,7 @@ idpay:
             GENERIC: In questo momento non è possibile generare un codice
         successScreen:
           header: Ora puoi utilizzare la tua carta d’identità per pagare!
-          body: Se non ricordi il codice, puoi reimpostarlo in ogni momento dalla sezione Profilo > Sicurezza.
+          body: If you forget the code, reset it under {{pageName}} > Security.
           cta: Ok, chiudi
     beneficiaryDetails:
       infobox:
@@ -3590,7 +3593,7 @@ idpay:
         title: "Come funziona?"
         featureOne: "Puoi pagare presso tutti gli esercenti convenzionati: ti basterà appoggiare sul POS la tua carta d’identità elettronica."
         featureTwo: "Per autorizzare il pagamento, inserisci sul POS il tuo codice di sicurezza. Lo crei in app una volta sola e vale per qualsiasi iniziativa welfare compatibile."
-        featureThree: "Se dimentichi il codice, puoi generarne un altro in ogni momento in Profilo > Sicurezza."
+        featureThree: "If you forget the code, you can generate another one from {{pageName}} > Security."
   onboarding:
     success:
       pleaseWait: Un attimo di pazienza...
@@ -3745,18 +3748,21 @@ idpay:
         bodyLink: Scopri di più
         modal:
           title: Cosa significa?
-          content: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPer farlo, visita la sezione Profilo."
+          legacyContent: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPer farlo, visita la sezione Profilo."
+          content: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPuoi farlo dalle impostazioni dell'app"
           button: Ok, ho capito
       onboarding:
         header: Qual è il tuo IBAN?
         body: Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del
         bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47
         nameAssignInput: Assegna un nome
-        bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+        legacyBottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+        bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento dalle impostazioni dell'app
       enrollment:
         header: Scegli quale IBAN associare all’iniziativa
         subTitle: Associa un IBAN salvato nel tuo profilo per poter ricevere i rimborsi legati all’iniziativa.
-        footer: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+        legacyFooter: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+        footer: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento dalle impostazioni dell'app
       button:
         addNew: Aggiungi nuovo
       updateToast: IBAN associato correttamente
@@ -3951,6 +3957,15 @@ permissionRequest:
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
 FIMS:
+  history:
+    exportData:
+      CTA: "Richiedi una copia via email"
+    profileCTA:
+      title: Accessi a servizi di terze parti 
+      subTitle: Rivedi gli accessi effettuati a servizi di terze parti tramite IO
+    historyScreen:
+      header: Accessi a servizi di terze parti
+      body: Qui puoi vedere tutti gli accessi a servizi esterni che hai fatto tramite IO e richiederne una copia via email
   loadingScreen:
     abort:
       title: "Operazione annullata"

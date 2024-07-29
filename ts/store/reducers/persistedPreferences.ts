@@ -20,8 +20,7 @@ import {
   preferencesPnTestEnvironmentSetEnabled,
   preferencesIdPayTestSetEnabled,
   preferencesDesignSystemSetEnabled,
-  preferencesNewWalletSectionSetEnabled,
-  preferencesItWalletTestSetEnabled
+  preferencesNewScanSectionSetEnabled
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
@@ -46,8 +45,7 @@ export type PersistedPreferencesState = Readonly<{
   // changing the variable value later). Typescript cannot detect this so
   // be sure to handle such case when reading and using this value
   isDesignSystemEnabled: boolean;
-  isNewWalletSectionEnabled: boolean;
-  isItWalletTestEnabled?: boolean;
+  isNewScanSectionEnabled?: boolean;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {
@@ -62,8 +60,7 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isPnTestEnabled: false,
   isIdPayTestEnabled: false,
   isDesignSystemEnabled: false,
-  isNewWalletSectionEnabled: false,
-  isItWalletTestEnabled: false
+  isNewScanSectionEnabled: false
 };
 
 export default function preferencesReducer(
@@ -159,17 +156,10 @@ export default function preferencesReducer(
     };
   }
 
-  if (isActionOf(preferencesNewWalletSectionSetEnabled, action)) {
+  if (isActionOf(preferencesNewScanSectionSetEnabled, action)) {
     return {
       ...state,
-      isNewWalletSectionEnabled: action.payload.isNewWalletSectionEnabled
-    };
-  }
-
-  if (isActionOf(preferencesItWalletTestSetEnabled, action)) {
-    return {
-      ...state,
-      isItWalletTestEnabled: action.payload.isItWalletTestEnabled
+      isNewScanSectionEnabled: action.payload.isNewScanSectionEnabled
     };
   }
 
@@ -215,11 +205,8 @@ export const isIdPayTestEnabledSelector = (state: GlobalState) =>
 export const isDesignSystemEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isDesignSystemEnabled ?? false;
 
-export const isNewWalletSectionLocallyEnabledSelector = (state: GlobalState) =>
-  state.persistedPreferences?.isNewWalletSectionEnabled ?? false;
-
-export const isItWalletTestEnabledSelector = (state: GlobalState) =>
-  !!state.persistedPreferences?.isItWalletTestEnabled;
+export const isNewScanSectionLocallyEnabledSelector = (state: GlobalState) =>
+  !!state.persistedPreferences?.isNewScanSectionEnabled;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<
