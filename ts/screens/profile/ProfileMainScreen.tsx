@@ -262,8 +262,6 @@ const ProfileMainScreenFC = () => {
       </ContentWrapper>
       {/* Developer Section */}
       {(isDebugModeEnabled || isDevEnv) && <DeveloperModeSection />}
-      {/* End Page */}
-      <VSpacer size={24} />
     </>
   );
 };
@@ -286,9 +284,7 @@ const ProfileMainScreen = () => {
     return (
       <IOScrollViewWithLargeHeader
         title={{
-          label: isSettingsVisibleAndHideProfile
-            ? I18n.t("global.buttons.settings")
-            : ""
+          label: I18n.t("global.buttons.settings")
         }}
         headerActionsProp={{ showHelp: true }}
         contextualHelpMarkdown={{
@@ -306,6 +302,7 @@ const ProfileMainScreen = () => {
   return (
     <ScrollView ref={scrollViewContentRef}>
       <ProfileMainScreenFC />
+      <VSpacer size={24} />
     </ScrollView>
   );
 };
