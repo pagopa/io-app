@@ -1,14 +1,18 @@
 import {
-  HSpacer,
-  TabNavigation,
-  TabItem,
   ContentWrapper,
-  VSpacer
+  HStack,
+  IOVisualCostants,
+  TabItem,
+  TabNavigation,
+  VSpacer,
+  VStack
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Alert, ScrollView, StyleSheet, View } from "react-native";
+import { Alert, ScrollView } from "react-native";
 import { CgnCard } from "../../bonus/cgn/components/CgnCard";
 import { IdPayCard } from "../../idpay/wallet/components/IdPayCard";
+import { ItwCredentialCard } from "../../itwallet/common/components/ItwCredentialCard";
+import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
 import { PaymentCard } from "../../payments/common/components/PaymentCard";
 import { PaymentCardBig } from "../../payments/common/components/PaymentCardBig";
 import { PaymentCardSmall } from "../../payments/common/components/PaymentCardSmall";
@@ -30,17 +34,6 @@ import {
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
-import { ItwCredentialCard } from "../../itwallet/common/components/ItwCredentialCard";
-import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
-
-const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between"
-  }
-});
 
 const onPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -162,166 +155,176 @@ const featuredServicesDataForCarousel: FeaturedServicesCarouselProps = {
   ]
 };
 
+const cardHorizontalScrollGap = 16;
+const cardHorizontalScrollGapSmall = 8;
+const componentMargin = 32;
+const blockMargin = 48;
+
 const PaymentCards = () => (
-  <>
+  <VStack space={blockMargin}>
     <DesignSystemSection title="PaymentCard">
-      <DSComponentViewerBox name="PaymentCard">
-        <ScrollView
-          horizontal={true}
-          style={{ aspectRatio: 16 / 10, marginHorizontal: -24 }}
-          contentContainerStyle={{
-            paddingHorizontal: 24,
-            paddingVertical: 16
-          }}
-        >
-          <PaymentCard brand="MASTERCARD" hpan="9900" expireDate={validDate} />
-          <HSpacer size={16} />
-          <PaymentCard
-            holderEmail="anna_v********@**hoo.it"
-            expireDate={validDate}
-          />
-          <HSpacer size={16} />
-          <PaymentCard
-            brand="MASTERCARD"
-            hpan="9900"
-            expireDate={expiredDate}
-            isExpired={true}
-          />
-          <HSpacer size={16} />
-          <PaymentCard
-            holderEmail="anna_v********@**hoo.it"
-            expireDate={expiredDate}
-            isExpired={true}
-          />
-          <HSpacer size={16} />
-          <PaymentCard isLoading />
-        </ScrollView>
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="PaymentCardBig (Pre ITW)">
-        <ScrollView
-          horizontal={true}
-          style={{ marginHorizontal: -24 }}
-          contentContainerStyle={{ paddingHorizontal: 24 }}
-        >
-          <PaymentCardBig
-            cardType={"PAGOBANCOMAT"}
-            expirationDate={new Date()}
-            holderName="A very very very long citizen name"
-            abiCode="03069"
-          />
-          <HSpacer size={16} />
-          <PaymentCardBig
-            cardType={"PAYPAL"}
-            holderEmail="userPaypalEmail@email.com"
-          />
-          <HSpacer size={16} />
-          <PaymentCardBig
-            cardType={"COBADGE"}
-            holderName="Mario Rossi"
-            abiCode="08509"
-            expirationDate={new Date()}
-            cardIcon="visa"
-          />
-          <HSpacer size={16} />
-          <PaymentCardBig
-            cardType={"COBADGE"}
-            holderName="Mario Rossi"
-            abiCode="08508"
-            expirationDate={new Date()}
-            cardIcon="visa"
-          />
-          <HSpacer size={16} />
-          <PaymentCardBig
-            cardType={"BANCOMATPAY"}
-            holderName="Mario Rossi"
-            phoneNumber="+39 1234567890"
-          />
-          <HSpacer size={16} />
-          <PaymentCardBig isLoading={true} />
-        </ScrollView>
-      </DSComponentViewerBox>
+      <VStack space={componentMargin}>
+        <DSComponentViewerBox name="PaymentCard">
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            style={{
+              aspectRatio: 16 / 9,
+              marginHorizontal: -IOVisualCostants.appMarginDefault
+            }}
+            contentContainerStyle={{
+              paddingHorizontal: IOVisualCostants.appMarginDefault
+            }}
+          >
+            <HStack space={cardHorizontalScrollGap}>
+              <PaymentCard
+                brand="MASTERCARD"
+                hpan="9900"
+                expireDate={validDate}
+              />
+              <PaymentCard
+                holderEmail="anna_v********@**hoo.it"
+                expireDate={validDate}
+              />
+              <PaymentCard
+                brand="MASTERCARD"
+                hpan="9900"
+                expireDate={expiredDate}
+                isExpired={true}
+              />
+              <PaymentCard
+                holderEmail="anna_v********@**hoo.it"
+                expireDate={expiredDate}
+                isExpired={true}
+              />
+              <PaymentCard isLoading />
+            </HStack>
+          </ScrollView>
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="PaymentCardBig (Pre ITW)">
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            style={{ marginHorizontal: -IOVisualCostants.appMarginDefault }}
+            contentContainerStyle={{
+              paddingHorizontal: IOVisualCostants.appMarginDefault
+            }}
+          >
+            <HStack space={cardHorizontalScrollGap}>
+              <PaymentCardBig
+                cardType={"PAGOBANCOMAT"}
+                expirationDate={new Date()}
+                holderName="A very very very long citizen name"
+                abiCode="03069"
+              />
+              <PaymentCardBig
+                cardType={"PAYPAL"}
+                holderEmail="userPaypalEmail@email.com"
+              />
+              <PaymentCardBig
+                cardType={"COBADGE"}
+                holderName="Mario Rossi"
+                abiCode="08509"
+                expirationDate={new Date()}
+                cardIcon="visa"
+              />
+              <PaymentCardBig
+                cardType={"COBADGE"}
+                holderName="Mario Rossi"
+                abiCode="08508"
+                expirationDate={new Date()}
+                cardIcon="visa"
+              />
+              <PaymentCardBig
+                cardType={"BANCOMATPAY"}
+                holderName="Mario Rossi"
+                phoneNumber="+39 1234567890"
+              />
+              <PaymentCardBig isLoading={true} />
+            </HStack>
+          </ScrollView>
+        </DSComponentViewerBox>
+      </VStack>
     </DesignSystemSection>
     <DesignSystemSection title="PaymentCardSmall">
-      <DSComponentViewerBox name="Credit card">
-        <View style={styles.content}>
-          <PaymentCardSmall hpan="9900" brand="maestro" onPress={onPress} />
-          <HSpacer size={16} />
-          <PaymentCardSmall
-            hpan="9900"
-            brand="maestro"
-            expireDate={new Date(2021, 10)}
-          />
-        </View>
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="PagoBANCOMAT">
-        <View style={styles.content}>
-          <PaymentCardSmall
-            brand="pagoBancomat"
-            bankName="Intesa San Paolo"
-            onPress={onPress}
-          />
-          <HSpacer size={16} />
-          <PaymentCardSmall />
-        </View>
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="PayPal">
-        <View style={styles.content}>
-          <PaymentCardSmall
-            holderEmail="anna_v********@**hoo.it"
-            onPress={onPress}
-          />
-          <HSpacer size={16} />
-          <PaymentCardSmall
-            holderEmail="anna_v********@**hoo.it"
-            onPress={onPress}
-            expireDate={new Date(2021, 10)}
-          />
-        </View>
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Co-badge">
-        <View style={styles.content}>
-          <PaymentCardSmall
-            bankName="Intesa San Paolo"
-            brand="maestro"
-            onPress={onPress}
-          />
-          <HSpacer size={16} />
-          <PaymentCardSmall
-            bankName="Intesa San Paolo"
-            brand="maestro"
-            onPress={onPress}
-            expireDate={new Date(2021, 10)}
-          />
-        </View>
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="BANCOMAT Pay">
-        <View style={styles.content}>
-          <PaymentCardSmall
-            holderName="Anna Verdi"
-            holderPhone="+39 340 *** **62"
-            onPress={onPress}
-          />
-          <HSpacer size={16} />
-          <PaymentCardSmall
-            holderName="Anna Verdi"
-            holderPhone="+39 340 *** **62"
-            onPress={onPress}
-            expireDate={new Date(2021, 10)}
-          />
-        </View>
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="PaymentCardsCarousel">
-        <PaymentCardsCarousel {...cardsDataForCarousel} />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="PaymentCardsCarouselSkeleton">
-        <PaymentCardsCarouselSkeleton />
-      </DSComponentViewerBox>
+      <VStack space={componentMargin}>
+        <DSComponentViewerBox name="Credit card · Active and expired">
+          <HStack space={cardHorizontalScrollGapSmall}>
+            <PaymentCardSmall hpan="9900" brand="maestro" onPress={onPress} />
+            <PaymentCardSmall
+              hpan="9900"
+              brand="maestro"
+              expireDate={new Date(2021, 10)}
+              isExpired
+            />
+          </HStack>
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="PagoBANCOMAT · Active and without bankName">
+          <HStack space={cardHorizontalScrollGapSmall}>
+            <PaymentCardSmall
+              brand="pagoBancomat"
+              bankName="Intesa San Paolo"
+              onPress={onPress}
+            />
+            <PaymentCardSmall />
+          </HStack>
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="PayPal · Active and expired">
+          <HStack space={cardHorizontalScrollGapSmall}>
+            <PaymentCardSmall
+              holderEmail="anna_v********@**hoo.it"
+              onPress={onPress}
+            />
+            <PaymentCardSmall
+              holderEmail="anna_v********@**hoo.it"
+              expireDate={new Date(2021, 10)}
+              isExpired={true}
+            />
+          </HStack>
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Co-badge · Active and expired">
+          <HStack space={cardHorizontalScrollGapSmall}>
+            <PaymentCardSmall
+              bankName="Intesa San Paolo"
+              brand="maestro"
+              onPress={onPress}
+            />
+            <PaymentCardSmall
+              bankName="Intesa San Paolo"
+              brand="maestro"
+              expireDate={new Date(2021, 10)}
+              isExpired
+            />
+          </HStack>
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="BANCOMAT Pay · Active and expired">
+          <HStack space={cardHorizontalScrollGapSmall}>
+            <PaymentCardSmall
+              holderName="Anna Verdi"
+              holderPhone="+39 340 *** **62"
+              onPress={onPress}
+            />
+            <PaymentCardSmall
+              holderName="Anna Verdi"
+              holderPhone="+39 340 *** **62"
+              expireDate={new Date(2021, 10)}
+              isExpired
+            />
+          </HStack>
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="PaymentCardsCarousel">
+          <PaymentCardsCarousel {...cardsDataForCarousel} />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="PaymentCardsCarouselSkeleton">
+          <PaymentCardsCarouselSkeleton />
+        </DSComponentViewerBox>
+      </VStack>
     </DesignSystemSection>
-  </>
+  </VStack>
 );
 
 const BonusCards = () => (
-  <>
+  <VStack space={blockMargin}>
     <DesignSystemSection title="IdPayCard">
       <IdPayCard
         name="18 app"
@@ -333,159 +336,173 @@ const BonusCards = () => (
       />
     </DesignSystemSection>
     <DesignSystemSection title="CgnCard">
-      <DSComponentViewerBox name="Under 31">
-        <CgnCard expireDate={new Date(2023, 11, 2)} withEycaLogo={true} />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Expired">
-        <CgnCard withEycaLogo={true} />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Over 31">
-        <CgnCard expireDate={new Date(2023, 11, 2)} />
-      </DSComponentViewerBox>
+      <VStack space={componentMargin}>
+        <DSComponentViewerBox name="Under 31">
+          <CgnCard expireDate={new Date(2023, 11, 2)} withEycaLogo={true} />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Expired">
+          <CgnCard withEycaLogo={true} />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Over 31">
+          <CgnCard expireDate={new Date(2023, 11, 2)} />
+        </DSComponentViewerBox>
+      </VStack>
     </DesignSystemSection>
-  </>
+  </VStack>
 );
 
 const ServicesCards = () => (
-  <>
+  <VStack space={blockMargin}>
     <DesignSystemSection title="InstitutionCard">
-      <DSComponentViewerBox name="InstitutionCardsCarousel">
-        <FeaturedInstitutionsCarousel
-          {...featuredInstitutionsDataForCarousel}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="InstitutionCardsCarouselSkeleton">
-        <FeaturedInstitutionsCarouselSkeleton />
-      </DSComponentViewerBox>
+      <VStack space={componentMargin}>
+        <DSComponentViewerBox name="InstitutionCardsCarousel">
+          <FeaturedInstitutionsCarousel
+            {...featuredInstitutionsDataForCarousel}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="InstitutionCardsCarouselSkeleton">
+          <FeaturedInstitutionsCarouselSkeleton />
+        </DSComponentViewerBox>
+      </VStack>
     </DesignSystemSection>
     <DesignSystemSection title="ServiceCard">
-      <DSComponentViewerBox name="ServiceCardsCarousel">
-        <FeaturedServicesCarousel {...featuredServicesDataForCarousel} />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="ServiceCardsCarouselSkeleton">
-        <FeaturedServicesCarouselSkeleton />
-      </DSComponentViewerBox>
+      <VStack space={componentMargin}>
+        <DSComponentViewerBox name="ServiceCardsCarousel">
+          <FeaturedServicesCarousel {...featuredServicesDataForCarousel} />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="ServiceCardsCarouselSkeleton">
+          <FeaturedServicesCarouselSkeleton />
+        </DSComponentViewerBox>
+      </VStack>
     </DesignSystemSection>
-  </>
+  </VStack>
 );
 
 const ItwCards = () => (
-  <>
+  <VStack space={blockMargin}>
     <DesignSystemSection title="eID">
-      <DSComponentViewerBox name="Preview">
-        <ItwCredentialCard
-          credentialType={CredentialType.PID}
-          isPreview={true}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Valid">
-        <ItwCredentialCard credentialType={CredentialType.PID} />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Expired">
-        <ItwCredentialCard
-          credentialType={CredentialType.PID}
-          status="expired"
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Pending">
-        <ItwCredentialCard
-          credentialType={CredentialType.PID}
-          status="pending"
-        />
-      </DSComponentViewerBox>
+      <VStack space={componentMargin}>
+        <DSComponentViewerBox name="Preview">
+          <ItwCredentialCard
+            credentialType={CredentialType.PID}
+            isPreview={true}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Valid">
+          <ItwCredentialCard credentialType={CredentialType.PID} />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Expired">
+          <ItwCredentialCard
+            credentialType={CredentialType.PID}
+            status="expired"
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Pending">
+          <ItwCredentialCard
+            credentialType={CredentialType.PID}
+            status="pending"
+          />
+        </DSComponentViewerBox>
+      </VStack>
     </DesignSystemSection>
     <DesignSystemSection title="Driving License">
-      <DSComponentViewerBox name="Preview">
-        <ItwCredentialCard
-          credentialType={CredentialType.DRIVING_LICENSE}
-          isPreview={true}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Valid">
-        <ItwCredentialCard credentialType={CredentialType.DRIVING_LICENSE} />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Expired">
-        <ItwCredentialCard
-          credentialType={CredentialType.DRIVING_LICENSE}
-          status="expired"
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Expiring">
-        <ItwCredentialCard
-          credentialType={CredentialType.DRIVING_LICENSE}
-          status="expiring"
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Pending">
-        <ItwCredentialCard
-          credentialType={CredentialType.DRIVING_LICENSE}
-          status="pending"
-        />
-      </DSComponentViewerBox>
+      <VStack space={componentMargin}>
+        <DSComponentViewerBox name="Preview">
+          <ItwCredentialCard
+            credentialType={CredentialType.DRIVING_LICENSE}
+            isPreview={true}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Valid">
+          <ItwCredentialCard credentialType={CredentialType.DRIVING_LICENSE} />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Expired">
+          <ItwCredentialCard
+            credentialType={CredentialType.DRIVING_LICENSE}
+            status="expired"
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Expiring">
+          <ItwCredentialCard
+            credentialType={CredentialType.DRIVING_LICENSE}
+            status="expiring"
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Pending">
+          <ItwCredentialCard
+            credentialType={CredentialType.DRIVING_LICENSE}
+            status="pending"
+          />
+        </DSComponentViewerBox>
+      </VStack>
     </DesignSystemSection>
     <DesignSystemSection title="Disability Card">
-      <DSComponentViewerBox name="Preview">
-        <ItwCredentialCard
-          credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
-          isPreview={true}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Valid">
-        <ItwCredentialCard
-          credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Expired">
-        <ItwCredentialCard
-          credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
-          status="expired"
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Expiring">
-        <ItwCredentialCard
-          credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
-          status="expiring"
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Pending">
-        <ItwCredentialCard
-          credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
-          status="pending"
-        />
-      </DSComponentViewerBox>
+      <VStack space={componentMargin}>
+        <DSComponentViewerBox name="Preview">
+          <ItwCredentialCard
+            credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
+            isPreview={true}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Valid">
+          <ItwCredentialCard
+            credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Expired">
+          <ItwCredentialCard
+            credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
+            status="expired"
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Expiring">
+          <ItwCredentialCard
+            credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
+            status="expiring"
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Pending">
+          <ItwCredentialCard
+            credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
+            status="pending"
+          />
+        </DSComponentViewerBox>
+      </VStack>
     </DesignSystemSection>
     <DesignSystemSection title="Health Insurance Card">
-      <DSComponentViewerBox name="Preview">
-        <ItwCredentialCard
-          credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
-          isPreview={true}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Valid">
-        <ItwCredentialCard
-          credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Expired">
-        <ItwCredentialCard
-          credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
-          status="expired"
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Expiring">
-        <ItwCredentialCard
-          credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
-          status="expiring"
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Pending">
-        <ItwCredentialCard
-          credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
-          status="pending"
-        />
-      </DSComponentViewerBox>
+      <VStack space={componentMargin}>
+        <DSComponentViewerBox name="Preview">
+          <ItwCredentialCard
+            credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+            isPreview={true}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Valid">
+          <ItwCredentialCard
+            credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Expired">
+          <ItwCredentialCard
+            credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+            status="expired"
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Expiring">
+          <ItwCredentialCard
+            credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+            status="expiring"
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Pending">
+          <ItwCredentialCard
+            credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+            status="pending"
+          />
+        </DSComponentViewerBox>
+      </VStack>
     </DesignSystemSection>
-  </>
+  </VStack>
 );
 
 // for testing reasons, abi codes can be found here:
@@ -505,7 +522,7 @@ export const DSCards = () => {
         <TabItem label="Services" accessibilityLabel="Services" />
         <TabItem label="IT Wallet" accessibilityLabel="IT Wallet" />
       </TabNavigation>
-      <VSpacer size={16} />
+      <VSpacer size={24} />
       <ContentWrapper>
         {page === 0 && <PaymentCards />}
         {page === 1 && <BonusCards />}
