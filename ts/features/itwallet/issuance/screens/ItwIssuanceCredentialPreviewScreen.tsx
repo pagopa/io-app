@@ -11,14 +11,15 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
-import { DebugPrettyPrint } from "../../../../components/debug/DebugPrettyPrint";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
 import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
@@ -31,8 +32,6 @@ import {
   selectIsLoading
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { DebugView } from "../../../../components/debug/DebugView";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
@@ -98,6 +97,11 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
     goBack: dismissDialog.show
   });
 
+  useDebugInfo({
+    parsedCredential: credential.parsedCredential,
+    credential: credential.credential
+  });
+
   return (
     <ForceScrollDownView>
       <ContentWrapper>
@@ -109,17 +113,6 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
         <VSpacer size={24} />
         <ItwCredentialClaimsList data={credential} isPreview={true} />
       </ContentWrapper>
-      <DebugView>
-        <DebugPrettyPrint
-          title="Parsed credential"
-          data={credential.parsedCredential}
-        />
-        <DebugPrettyPrint
-          title="Credential"
-          data={credential}
-          expandable={false}
-        />
-      </DebugView>
       <FooterActions
         fixed={false}
         actions={{

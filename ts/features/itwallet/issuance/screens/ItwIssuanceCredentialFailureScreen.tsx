@@ -1,11 +1,11 @@
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
-import { DebugPrettyPrint } from "../../../../components/debug/DebugPrettyPrint";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
 import {
   CredentialIssuanceFailure,
@@ -37,6 +37,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const closeIssuance = () => machineRef.send({ type: "close" });
   const retryIssuance = () => machineRef.send({ type: "retry" });
 
+  useDebugInfo({
+    failure
+  });
+
   const resultScreensMap: Record<
     CredentialIssuanceFailureType,
     OperationResultScreenContentProps
@@ -59,9 +63,5 @@ const ContentView = ({ failure }: ContentViewProps) => {
   };
 
   const resultScreenProps = resultScreensMap[failure.type];
-  return (
-    <OperationResultScreenContent {...resultScreenProps}>
-      <DebugPrettyPrint title="Failure" data={failure} />
-    </OperationResultScreenContent>
-  );
+  return <OperationResultScreenContent {...resultScreenProps} />;
 };

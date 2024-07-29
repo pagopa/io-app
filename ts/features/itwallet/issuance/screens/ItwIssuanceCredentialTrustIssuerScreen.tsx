@@ -14,11 +14,12 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
-import { DebugPrettyPrint } from "../../../../components/debug/DebugPrettyPrint";
 import { FooterActions } from "../../../../components/ui/FooterActions";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
@@ -41,8 +42,6 @@ import {
   ItwRequestedClaimsList,
   RequiredClaim
 } from "../components/ItwRequiredClaimsList";
-import { DebugView } from "../../../../components/debug/DebugView";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -93,6 +92,12 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   useAvoidHardwareBackButton();
 
   useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });
+
+  useDebugInfo({
+    issuerConfOption,
+    parsedCredential: eid.parsedCredential,
+    credential: eid.credential
+  });
 
   const claims = parseClaims(eid.parsedCredential, { exclude: ["unique_id"] });
   const requiredClaims = claims.map(
@@ -164,14 +169,6 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           {I18n.t("features.itWallet.issuance.credentialAuth.tos")}
         </ItwMarkdown>
       </ContentWrapper>
-      <DebugView>
-        <DebugPrettyPrint
-          title="Issuer configuration"
-          data={issuerConfOption}
-        />
-        <DebugPrettyPrint title="Parsed eID" data={eid.parsedCredential} />
-        <DebugPrettyPrint title="eID" data={eid} expandable={false} />
-      </DebugView>
       <FooterActions
         fixed={false}
         actions={{

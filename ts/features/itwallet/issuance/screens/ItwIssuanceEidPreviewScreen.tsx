@@ -20,6 +20,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { selectEidOption } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { DebugView } from "../../../../components/debug/DebugView";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -63,6 +64,11 @@ export const ItwIssuanceEidPreviewScreen = () => {
         headerShown: true
       });
     }, []);
+
+    useDebugInfo({
+      parsedCredential: eid.parsedCredential,
+      credential: eid.credential
+    });
 
     return (
       <IOScrollViewWithLargeHeader
