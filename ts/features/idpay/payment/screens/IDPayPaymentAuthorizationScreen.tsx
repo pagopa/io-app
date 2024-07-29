@@ -151,7 +151,7 @@ const AuthorizationScreenContent = ({
     <VSpacer size={16} />
     <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
       <H6>{I18n.t("idpay.payment.authorization.toAuth")}</H6>
-      <H1>{formatNumberCurrencyCentsOrDefault(data.reward)}</H1>
+      <H1>{formatNumberCurrencyCentsOrDefault(data.rewardCents)}</H1>
     </View>
     <VSpacer size={16} />
     <Divider />
@@ -200,7 +200,7 @@ const AuthorizationScreenContent = ({
     <Divider />
     <ListItemInfo
       label={I18n.t("idpay.payment.authorization.availableAmount")}
-      value={formatNumberCurrencyCentsOrDefault(data.residualBudget)}
+      value={formatNumberCurrencyCentsOrDefault(data.residualBudgetCents)}
       accessibilityLabel={I18n.t("idpay.payment.authorization.availableAmount")}
     />
   </>

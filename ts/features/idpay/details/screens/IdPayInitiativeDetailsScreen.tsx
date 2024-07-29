@@ -137,14 +137,14 @@ const IdPayInitiativeDetailsScreen = () => {
   const getInitiativeCounters = (
     initiative: InitiativeDTO
   ): ReadonlyArray<BonusCardCounter> => {
-    const availableAmount = initiative.amount || 0;
-    const accruedAmount = initiative.accrued || 0;
+    const availableAmount = initiative.amountCents || 0;
+    const accruedAmount = initiative.accruedCents || 0;
 
     const amountProgress = pipe(
       sequenceS(O.Monad)({
-        amount: O.fromNullable(initiative.amount),
-        accrued: O.fromNullable(initiative.accrued),
-        refunded: O.fromNullable(initiative.refunded)
+        amount: O.fromNullable(initiative.amountCents),
+        accrued: O.fromNullable(initiative.accruedCents),
+        refunded: O.fromNullable(initiative.refundedCents)
       }),
       O.map(({ amount, accrued, refunded }) => ({
         total: amount + accrued + refunded,

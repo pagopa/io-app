@@ -32,7 +32,7 @@ const IDPayCardsList = (props: Props) => {
         <IDPayCardPreviewComponent
           key={initiative.initiativeId}
           initiativeName={initiative.initiativeName}
-          availableAmount={initiative.amount}
+          availableAmount={initiative.amountCents}
           logoUrl={initiative.logoURL}
           onPress={() => handleCardPress(initiative.initiativeId)}
         />

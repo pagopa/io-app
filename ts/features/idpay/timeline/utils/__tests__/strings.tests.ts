@@ -5,7 +5,7 @@ import {
 import { getRefundPeriodDateString } from "../strings";
 
 const T_REFUND: RefundDetailDTO = {
-  amount: 100,
+  amountCents: 100,
   eventId: "ABC",
   operationDate: new Date(),
   operationId: "ABC",
