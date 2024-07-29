@@ -3,20 +3,19 @@ import { View, StyleSheet, Text } from "react-native";
 import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 
 const styles = StyleSheet.create({
-  componentWrapper: {
-    marginBottom: 24
-  },
   componentWrapperFullWidth: {
     flexGrow: 1
-  },
-  lastItem: {
-    marginBottom: 0
   },
   labelWrapper: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-between"
+  },
+  labelBottom: {
     marginTop: 12
+  },
+  labelTop: {
+    marginBottom: 12
   },
   componentLabel: {
     fontSize: 10
@@ -30,15 +29,15 @@ type DSComponentViewerBoxProps = {
   name: string;
   colorMode?: "dark" | "light";
   fullWidth?: boolean;
-  last?: boolean;
+  reverse?: boolean;
   children: React.ReactNode;
 };
 
 export const DSComponentViewerBox = ({
   name,
   colorMode = "light",
-  last = false,
   fullWidth = false,
+  reverse = false,
   children
 }: DSComponentViewerBoxProps) => {
   const theme = useIOTheme();
@@ -46,13 +45,22 @@ export const DSComponentViewerBox = ({
   return (
     <View
       style={[
-        last ? styles.lastItem : styles.componentWrapper,
-        fullWidth && styles.componentWrapperFullWidth
+        fullWidth && styles.componentWrapperFullWidth,
+        reverse && { flexDirection: "column-reverse" }
       ]}
     >
-      {children}
-      <View style={styles.labelWrapper}>
-        {name && (
+      {reverse ? (
+        <View style={{ flexDirection: "column" }}>{children}</View>
+      ) : (
+        children
+      )}
+      {name && (
+        <View
+          style={[
+            styles.labelWrapper,
+            reverse ? styles.labelTop : styles.labelBottom
+          ]}
+        >
           <Text
             numberOfLines={1}
             ellipsizeMode="tail"
@@ -65,8 +73,8 @@ export const DSComponentViewerBox = ({
           >
             {name}
           </Text>
-        )}
-      </View>
+        </View>
+      )}
     </View>
   );
 };

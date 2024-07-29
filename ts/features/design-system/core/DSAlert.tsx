@@ -1,93 +1,99 @@
-import { Alert, VSpacer } from "@pagopa/io-app-design-system";
+import { Alert, H4, VStack, useIOTheme } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 
 /* Types */
-import { H2 } from "../../../components/core/typography/H2";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
-export const DSAlert = () => (
-  <DesignSystemScreen title={"Alert"}>
-    {/* Content only */}
-    <H2 color={"bluegrey"} weight={"Semibold"} style={{ marginBottom: 16 }}>
-      Content only
-    </H2>
+const componentInnerMargin = 8;
+const sectionTitleMargin = 16;
+const blockMargin = 40;
+
+export const DSAlert = () => {
+  const theme = useIOTheme();
+
+  return (
+    <DesignSystemScreen title={"Alert"}>
+      <VStack space={blockMargin}>
+        {/* Content only */}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Content only</H4>
+          {renderContentOnly()}
+        </VStack>
+
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Title + Content</H4>
+          {renderTitlePlusContent()}
+        </VStack>
+
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Content + Action</H4>
+          {renderContentPlusAction()}
+        </VStack>
+
+        {/* Full width */}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Full width</H4>
+          {renderFullWidth()}
+        </VStack>
+      </VStack>
+    </DesignSystemScreen>
+  );
+};
+
+const renderContentOnly = () => (
+  <VStack space={componentInnerMargin}>
     <Alert
       variant="error"
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
-
-    <VSpacer />
-
     <Alert
       variant="warning"
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
-
-    <VSpacer />
-
     <Alert
       variant="info"
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
-
-    <VSpacer />
-
     <Alert
       variant="success"
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
+  </VStack>
+);
 
-    <VSpacer size={40} />
-
-    <H2 color={"bluegrey"} weight={"Semibold"} style={{ marginBottom: 16 }}>
-      Title + Content
-    </H2>
-
+const renderTitlePlusContent = () => (
+  <VStack space={componentInnerMargin}>
     <Alert
       variant="error"
       title="Alert title"
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
-
-    <VSpacer />
-
     <Alert
       variant="warning"
       title="Alert title"
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
-
-    <VSpacer />
-
     <Alert
       variant="info"
       title="Alert title"
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
-
-    <VSpacer />
-
     <Alert
       variant="success"
       title="Alert title"
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
-
-    <VSpacer />
-
     <Alert
       variant="info"
       title="A very very very looooooooooong title"
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
+  </VStack>
+);
 
-    <VSpacer size={40} />
-
-    <H2 color={"bluegrey"} weight={"Semibold"} style={{ marginBottom: 16 }}>
-      Content + Action
-    </H2>
-
+const renderContentPlusAction = () => (
+  <VStack space={componentInnerMargin}>
     <Alert
       variant="error"
       action="Alert action"
@@ -96,9 +102,6 @@ export const DSAlert = () => (
       }}
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
-
-    <VSpacer />
-
     <Alert
       variant="warning"
       action="Alert action"
@@ -107,9 +110,6 @@ export const DSAlert = () => (
       }}
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
-
-    <VSpacer />
-
     <Alert
       variant="info"
       action="Alert action"
@@ -118,9 +118,6 @@ export const DSAlert = () => (
       }}
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
-
-    <VSpacer />
-
     <Alert
       variant="success"
       action="Alert action"
@@ -129,55 +126,38 @@ export const DSAlert = () => (
       }}
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
+  </VStack>
+);
 
-    <VSpacer size={40} />
-
-    {/* Full width */}
-    <H2 color={"bluegrey"} weight={"Semibold"} style={{ marginBottom: 16 }}>
-      Full width
-    </H2>
-    <DSFullWidthComponent>
+const renderFullWidth = () => (
+  <DSFullWidthComponent>
+    <VStack space={componentInnerMargin}>
       <Alert
         fullWidth
         variant="error"
         content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
       />
-
-      <VSpacer />
-
       <Alert
         fullWidth
         variant="warning"
         content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
       />
-
-      <VSpacer />
-
       <Alert
         fullWidth
         variant="info"
         content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
       />
-
-      <VSpacer />
-
       <Alert
         fullWidth
         variant="success"
         content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
       />
-
-      <VSpacer />
-
       <Alert
         fullWidth
         variant="info"
         title="Alert title"
         content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
       />
-
-      <VSpacer />
-
       <Alert
         fullWidth
         variant="info"
@@ -187,6 +167,6 @@ export const DSAlert = () => (
         }}
         content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
       />
-    </DSFullWidthComponent>
-  </DesignSystemScreen>
+    </VStack>
+  </DSFullWidthComponent>
 );
