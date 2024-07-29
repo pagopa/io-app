@@ -2,7 +2,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -12,6 +11,8 @@ import { useWalletOnboardingWebView } from "../hooks/useWalletOnboardingWebView"
 import { PaymentsOnboardingRoutes } from "../navigation/routes";
 import { paymentsOnboardingGetMethodsAction } from "../store/actions";
 import { selectPaymentOnboardingMethods } from "../store/selectors";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 const PaymentsOnboardingSelectMethodScreen = () => {
   const navigation = useIONavigation();
@@ -61,8 +62,13 @@ const PaymentsOnboardingSelectMethodScreen = () => {
       />
     );
   }
+
   return (
-    <RNavScreenWithLargeHeader
+    <IOScrollViewWithLargeHeader
+      headerActionsProp={{
+        showHelp: true
+      }}
+      faqCategories={["wallet", "wallet_methods"]}
       title={{
         label: I18n.t("wallet.onboarding.paymentMethodsList.header.title")
       }}
@@ -76,7 +82,7 @@ const PaymentsOnboardingSelectMethodScreen = () => {
         paymentMethods={availablePaymentMethods ?? []}
         isLoadingWebView={isLoading || isPendingOnboarding}
       />
-    </RNavScreenWithLargeHeader>
+    </IOScrollViewWithLargeHeader>
   );
 };
 
