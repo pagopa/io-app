@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: overlayColor
   },
   scroll: {
-    flexGrow: 1
+    flexGrow: 0
   },
   scrollContainer: {
     paddingHorizontal: 16
