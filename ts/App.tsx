@@ -15,7 +15,7 @@ import RootContainer from "./RootContainer";
 import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
 import { sentryDsn } from "./config";
-import { isDevEnv, isLocalEnv } from "./utils/environment";
+import { isDevEnv } from "./utils/environment";
 
 const removeUserFromEvent = (event: ErrorEvent | TransactionEvent) => {
   // console.log(JSON.stringify(event));
