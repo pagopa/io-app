@@ -72,6 +72,7 @@ const WalletOnboardingPaymentMethodsList = ({
 
   return (
     <FlatList
+      scrollEnabled={false}
       removeClippedSubviews={false}
       contentContainerStyle={IOStyles.horizontalContentPadding}
       data={paymentMethods}

@@ -162,17 +162,6 @@ export const HeaderFirstLevelHandler = ({
                 secondAction: walletAction
               })
         };
-      case ROUTES.PAYMENTS_HOME:
-        return {
-          title: I18n.t("features.payments.title"),
-          firstAction: helpAction,
-          ...(isSettingsVisibleAndHideProfile
-            ? {
-                type: "twoActions",
-                secondAction: settingsAction
-              }
-            : { type: "singleAction" })
-        };
       case MESSAGES_ROUTES.MESSAGES_HOME:
       default:
         return {
