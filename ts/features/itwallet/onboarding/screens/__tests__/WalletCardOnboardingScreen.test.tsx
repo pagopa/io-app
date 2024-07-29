@@ -15,12 +15,12 @@ import { appReducer } from "../../../../../store/reducers";
 import { BackendStatusState } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { ITW_TRIAL_ID } from "../../../common/utils/itwTrialUtils";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
 import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+import { itwTrialId } from "../../../../../config";
 
 type RenderOptions = {
   isIdPayEnabled?: boolean;
@@ -44,13 +44,11 @@ describe("WalletCardOnboardingScreen", () => {
     const { queryByTestId } = renderComponent({});
 
     expect(queryByTestId("itwDrivingLicenseModuleTestID")).toBeTruthy();
-    expect(queryByTestId("itwDisabilityCardModuleTestID")).toBeTruthy();
   });
 
   test.each([
     { itwTrialStatus: SubscriptionStateEnum.DISABLED },
     { isItwEnabled: false },
-    { isItwTestEnabled: false },
     { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED },
     { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_DEACTIVATED }
   ] as ReadonlyArray<RenderOptions>)(
@@ -78,7 +76,6 @@ const renderComponent = ({
   isIdPayEnabled = true,
   isItwEnabled = true,
   itwTrialStatus = SubscriptionStateEnum.ACTIVE,
-  isItwTestEnabled = true,
   itwLifecycle = ItwLifecycleState.ITW_LIFECYCLE_VALID
 }: RenderOptions) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -96,13 +93,12 @@ const renderComponent = ({
         }
       },
       trialSystem: {
-        [ITW_TRIAL_ID as TrialId]: itwTrialStatus
+        [itwTrialId as TrialId]: itwTrialStatus
           ? pot.some(itwTrialStatus)
           : pot.none
       },
       persistedPreferences: {
-        isIdPayTestEnabled: isIdPayEnabled,
-        isItWalletTestEnabled: isItwTestEnabled
+        isIdPayTestEnabled: isIdPayEnabled
       },
       backendStatus: {
         status: O.some({

@@ -19,6 +19,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
+import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims } from "../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
@@ -39,6 +40,7 @@ import {
   ItwRequestedClaimsList,
   RequiredClaim
 } from "../components/ItwRequiredClaimsList";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -85,9 +87,12 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
     machineRef.send({ type: "close" })
   );
 
+  useItwDisbleGestureNavigation();
+  useAvoidHardwareBackButton();
+
   useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });
 
-  const claims = parseClaims(eid.parsedCredential);
+  const claims = parseClaims(eid.parsedCredential, { exclude: ["unique_id"] });
   const requiredClaims = claims.map(
     claim =>
       ({
