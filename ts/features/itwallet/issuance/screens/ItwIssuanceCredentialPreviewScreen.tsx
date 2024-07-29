@@ -42,6 +42,9 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
 
+  useItwDisbleGestureNavigation();
+  useAvoidHardwareBackButton();
+
   if (isLoading) {
     return <LoadingView />;
   }
@@ -87,9 +90,6 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
       )
     );
   };
-
-  useItwDisbleGestureNavigation();
-  useAvoidHardwareBackButton();
 
   useHeaderSecondLevel({
     title: "",

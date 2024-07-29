@@ -52,6 +52,9 @@ const ItwIssuanceCredentialTrustIssuerScreen = () => {
     selectCredentialTypeOption
   );
 
+  useItwDisbleGestureNavigation();
+  useAvoidHardwareBackButton();
+
   return pipe(
     sequenceS(O.Monad)({
       credentialType: credentialTypeOption,
@@ -86,9 +89,6 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const dismissDialog = useItwDismissalDialog(() =>
     machineRef.send({ type: "close" })
   );
-
-  useItwDisbleGestureNavigation();
-  useAvoidHardwareBackButton();
 
   useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });
 
