@@ -6,25 +6,11 @@ Created on 03/05/2024
 - Apply [fix/ios-17-regression](https://github.com/wix/Detox/pull/4171).
 - Remove this patch once bumped `detox` to `v20`.
 
-### react-native-reanimated
-Created on **18/03/2024**
-This patch resolves [react-native-reanimated/issues/3286](https://github.com/software-mansion/react-native-reanimated/issues/3286) by applying [react-native-reanimated/pull/3298](https://github.com/software-mansion/react-native-reanimated/pull/3298). Remove this patch once bumped `react-native-reanimated` from `v2` to `v3` and checked the issue is gone.
-
 ### react-native-pdf+6.4.0
 Created on **16/03/2024**
 
 #### Reason:
 - Make PDF annotations on iOS read-only to align with Android behaviour.
-
-### react-native-vision-camera+2.15.4
-Created on **24/07/2023** 
-FIXME: remove this patch after this [PR](https://github.com/mrousavy/react-native-vision-camera/pull/1666) has been merged and a new vision camera version has been released.
-
-Updated on **01/10/2023** 
-FIXME: Fixed in the v2 branch [here](https://github.com/mrousavy/react-native-vision-camera/issues/1840#issuecomment-1741734963). Remove this patch when `v2.16.2` has been released.
-
-#### Reason:
-- This patch going to remove all codes related to `colorSpace` to fix an issue on iOS 17.0.2 that cause the crash on camera load
 
 ### react-native-device-info+8.3.3
 Created on **15/12/2021**
