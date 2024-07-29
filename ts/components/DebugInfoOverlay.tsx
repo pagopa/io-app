@@ -1,11 +1,10 @@
 import {
   HStack,
   IOColors,
-  Icon,
+  VStack,
   hexToRgba,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
-import _ from "lodash";
 import * as React from "react";
 import { useState } from "react";
 import {
@@ -19,13 +18,13 @@ import { widthPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
 import { ReduxProps } from "../store/actions/types";
 import { useIOSelector } from "../store/hooks";
-import { debugDataSelector } from "../store/reducers/debug";
 import { currentRouteSelector } from "../store/reducers/navigation";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
 import { GlobalState } from "../store/reducers/types";
 import { getAppVersion } from "../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../utils/clipboard";
 import PagoPATestIndicator from "./PagoPATestIndicator";
+import { DebugDataIndicator } from "./debug/DebugDataIndicator";
 import { DebugDataOverlay } from "./debug/DebugDataOverlay";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
@@ -68,8 +67,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     maxWidth: widthPercentageToDP(80),
     paddingHorizontal: 8,
-    backgroundColor: debugItemBgColor,
-    marginTop: 4
+    backgroundColor: debugItemBgColor
   }
 });
 
@@ -78,50 +76,43 @@ const DebugInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
   const [showRootName, setShowRootName] = useState(true);
   const [isDebugDataVisibile, showDebugData] = useState(false);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
-  const debugData = useIOSelector(debugDataSelector);
 
   const appVersionText = `v. ${appVersion}`;
 
   return (
     <>
       <SafeAreaView style={styles.versionContainer} pointerEvents="box-none">
-        <HStack space={4}>
-          <Pressable
-            style={styles.versionTextWrapper}
-            onPress={() => setShowRootName(prevState => !prevState)}
-            accessibilityRole="button"
-            accessibilityLabel={appVersionText}
-            accessibilityHint={"Tap here to show/hide the root name"}
-          >
-            <Text style={styles.versionText}>{appVersionText}</Text>
-          </Pressable>
-          {isPagoPATestEnabled && <PagoPATestIndicator />}
-          {!_.isEmpty(debugData) && (
+        <VStack space={4} alignItems="center">
+          <HStack space={4}>
             <Pressable
               style={styles.versionTextWrapper}
+              onPress={() => setShowRootName(prevState => !prevState)}
               accessibilityRole="button"
-              accessibilityHint={"Opend the debug data"}
-              onPress={() => showDebugData(prevState => !prevState)}
+              accessibilityLabel={appVersionText}
+              accessibilityHint={"Tap here to show/hide the root name"}
             >
-              <HStack space={4}>
-                <Icon name="ladybug" size={12} />
-                <Text style={styles.screenDebugText}>{_.size(debugData)}</Text>
-              </HStack>
+              <Text style={styles.versionText}>{appVersionText}</Text>
+            </Pressable>
+            {isPagoPATestEnabled && <PagoPATestIndicator />}
+          </HStack>
+          {showRootName && (
+            <Pressable
+              style={styles.routeText}
+              accessibilityRole="button"
+              accessibilityHint={"Copy the technical screen name"}
+              onPress={() =>
+                clipboardSetStringWithFeedback(props.screenNameDebug)
+              }
+            >
+              <Text style={styles.screenDebugText}>
+                {props.screenNameDebug}
+              </Text>
             </Pressable>
           )}
-        </HStack>
-        {showRootName && (
-          <Pressable
-            style={styles.routeText}
-            accessibilityRole="button"
-            accessibilityHint={"Copy the technical screen name"}
-            onPress={() =>
-              clipboardSetStringWithFeedback(props.screenNameDebug)
-            }
-          >
-            <Text style={styles.screenDebugText}>{props.screenNameDebug}</Text>
-          </Pressable>
-        )}
+          <DebugDataIndicator
+            onPress={() => showDebugData(prevState => !prevState)}
+          />
+        </VStack>
       </SafeAreaView>
       {isDebugDataVisibile && (
         <DebugDataOverlay onDismissed={() => showDebugData(false)} />

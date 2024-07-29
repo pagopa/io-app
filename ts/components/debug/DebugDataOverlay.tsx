@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 999,
-    paddingTop: 48
+    paddingTop: 60
   },
   overlay: {
     position: "absolute",
