@@ -172,6 +172,7 @@ const TestAuthenticationScreen = () => {
         testID={"usernameInput"}
         icon="profile"
         onValidate={isUsernameFieldValid}
+        errorMessage={`${I18n.t("global.username")} is invalid`}
         disabled={isLoading}
         textInputProps={{
           inputMode: "text",

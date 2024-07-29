@@ -106,8 +106,8 @@ const InputComponentWrapper = (
 const InputValidationComponentWrapper = (
   props: Omit<
     React.ComponentProps<typeof TextInputValidation>,
-    "value" | "onChangeText"
-  > & { value?: string }
+    "value" | "onChangeText" | "errorMessage"
+  > & { value?: string; errorMessage?: string }
 ) => {
   const [inputValue, setInputValue] = React.useState(props.value ?? "");
 
@@ -115,6 +115,7 @@ const InputValidationComponentWrapper = (
     <TextInputValidation
       {...props}
       value={inputValue}
+      errorMessage={props.errorMessage ?? "error"}
       onChangeText={setInputValue}
     />
   );

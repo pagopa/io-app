@@ -111,7 +111,7 @@ const renderTag = () => (
       </View>
     </DSComponentViewerBox>
     <DSComponentViewerBox name={"Tag · With icon, no text"}>
-      <Tag variant="attachment" />
+      <Tag variant="attachment" iconAccessibilityLabel="Allegati" />
     </DSComponentViewerBox>
     <DSComponentViewerBox name={"Tag · Without icon"}>
       <VSpacer size={8} />
