@@ -6,7 +6,6 @@ import { loadMessageDetails, loadThirdPartyMessage } from "../../actions";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import {
   hasAttachmentsSelector,
-  isThirdPartyMessageSelector,
   messageMarkdownSelector,
   messageTitleSelector,
   thirdPartyFromIdSelector,
@@ -49,25 +48,6 @@ describe("thirdPartyFromIdSelector", () => {
     expect(thirdPartyMessageFromSelector).toStrictEqual(
       pot.some(thirdPartyMessage)
     );
-  });
-});
-
-describe("isThirdPartyMessageSelector", () => {
-  it("Should return false for an unmatching message Id", () => {
-    const messageId = "m1" as UIMessageId;
-    const state = appReducer(undefined, applicationChangeState("active"));
-    const isThirdPartyMessage = isThirdPartyMessageSelector(state, messageId);
-    expect(isThirdPartyMessage).toBe(false);
-  });
-  it("Should return true for a matching message Id", () => {
-    const messageId = "m1" as UIMessageId;
-    const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
-      id: messageId,
-      content: { id: messageId as string } as ThirdPartyMessageWithContent
-    });
-    const state = appReducer(undefined, loadThirdPartyMessageSuccess);
-    const isThirdPartyMessage = isThirdPartyMessageSelector(state, messageId);
-    expect(isThirdPartyMessage).toBe(true);
   });
 });
 

@@ -23,7 +23,6 @@ import {
 import {
   MessagePreconditionStatus,
   foldPreconditionStatus,
-  isShownPreconditionStatusSelector,
   preconditionReducer,
   preconditionsCategoryTagSelector,
   preconditionsContentMarkdownSelector,
@@ -458,23 +457,6 @@ describe("preconditionsContentMarkdownSelector", () => {
       } as GlobalState;
       const content = preconditionsContentMarkdownSelector(globalStatus);
       expect(content).toStrictEqual(expectedOutput);
-    });
-  });
-});
-
-describe("isShownPreconditionStatusSelector", () => {
-  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
-    const expectedOutput = status.state === "shown";
-    it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
-      const globalStatus = {
-        entities: {
-          messages: {
-            precondition: status
-          }
-        }
-      } as GlobalState;
-      const isShown = isShownPreconditionStatusSelector(globalStatus);
-      expect(isShown).toStrictEqual(expectedOutput);
     });
   });
 });

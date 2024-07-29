@@ -107,8 +107,6 @@ export function* watchMessagesSaga(
     handleMessageArchivingRestoring
   );
 
-  yield* fork(watchLoadMessageData);
-
   // handle the request for a new downloadAttachment
   yield* takeLatest(
     downloadAttachment.request,
@@ -127,9 +125,8 @@ export function* watchMessagesSaga(
 
   // clear cache when user explicitly logs out
   yield* takeEvery(logoutSuccess, handleClearAllAttachments);
-}
 
-function* watchLoadMessageData() {
+  // handle message details data loading composition
   yield* takeLatest(getMessageDataAction.request, handleLoadMessageData);
 
   const retryDataOrUndefined = yield* select(

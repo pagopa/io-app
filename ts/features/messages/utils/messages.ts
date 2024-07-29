@@ -133,7 +133,7 @@ export const getServiceCTA = (
  * @param cta
  * @param serviceMetadata
  */
-export const isCtaActionValid = (
+const isCtaActionValid = (
   cta: CTA,
   serviceMetadata?: ServiceMetadata
 ): boolean => {
@@ -166,7 +166,7 @@ export const isCtaActionValid = (
  * @param ctas
  * @param serviceMetadata
  */
-export const hasCtaValidActions = (
+const hasCtaValidActions = (
   ctas: CTAS,
   serviceMetadata?: ServiceMetadata
 ): boolean => {

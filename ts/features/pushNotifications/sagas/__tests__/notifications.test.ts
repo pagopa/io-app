@@ -28,7 +28,7 @@ import {
 import NavigationService from "../../../../navigation/NavigationService";
 import { isPaymentOngoingSelector } from "../../../../store/reducers/wallet/payment";
 import { navigateToMainNavigatorAction } from "../../../../store/actions/navigation";
-import { navigateToMessageRouterAction } from "../../../messages/store/actions/navigation";
+import { navigateToMessageRouterAction } from "../../utils/navigation";
 import { UIMessageId } from "../../../messages/types";
 import * as Analytics from "../../../messages/analytics";
 import { isArchivingDisabledSelector } from "../../../messages/store/reducers/archiving";

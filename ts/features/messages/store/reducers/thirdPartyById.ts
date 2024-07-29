@@ -53,15 +53,6 @@ export const thirdPartyFromIdSelector = (
   ioMessageId: UIMessageId
 ) => state.entities.messages.thirdPartyById[ioMessageId] ?? pot.none;
 
-export const isThirdPartyMessageSelector = (
-  state: GlobalState,
-  ioMessageId: UIMessageId
-) =>
-  pipe(
-    state.entities.messages.thirdPartyById[ioMessageId],
-    thirdPartyMessageOrUndefined => !!thirdPartyMessageOrUndefined
-  );
-
 export const messageTitleSelector = (
   state: GlobalState,
   ioMessageId: UIMessageId
