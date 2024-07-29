@@ -8,9 +8,9 @@ import { isPropertyWithMinAppVersionEnabled } from "../../../../store/reducers/f
 export const fastLoginOptInSelector = (state: GlobalState) =>
   state.features.loginFeatures.fastLogin.optIn;
 
-export const isFastLoginSessionRefreshToggleActiveSelector = (
+export const isAutomaticSessionRefreshToggleActiveSelector = (
   state: GlobalState
-) => !!state.features.loginFeatures.fastLogin.sessionRefresh.enabled;
+) => !!state.features.loginFeatures.fastLogin.automaticSessionRefresh.enabled;
 
 const securityAdviceAcknowledgedSelector = (state: GlobalState) =>
   state.features.loginFeatures.fastLogin.securityAdviceAcknowledged;
@@ -41,11 +41,11 @@ export const fastLoginOptInFFEnabled = createSelector(
 );
 
 /**
- * return the remote config about FastLoginSessionRefresh enabled/disabled
+ * return the remote config about AutomaticSessionRefresh enabled/disabled
  * based on a minumum version of the app.
- * if there is no data, false is the default value -> (FastLoginSessionRefresh disabled)
+ * if there is no data, false is the default value -> (AutomaticSessionRefresh disabled)
  */
-export const fastLoginSessionRefreshFFEnabled = createSelector(
+export const automaticSessionRefreshFFEnabled = createSelector(
   backendStatusSelector,
   backendStatus =>
     isPropertyWithMinAppVersionEnabled({
@@ -99,16 +99,16 @@ export const isFastLoginEnabledSelector = createSelector(
 
 /**
  * if the fast login is active and has been chosen by the user (opt-in is true)
- * then if the remote FF of this functionality (fastLoginSessionRefreshFFEnabled)
+ * then if the remote FF of this functionality (automaticSessionRefreshFFEnabled)
  * is active  or the user has activated the toogle in the ‘dev’ section of
- * the settings (isFastLoginSessionRefreshToggleActiveSelector), the user will
+ * the settings (isAutomaticSessionRefreshToggleActiveSelector), the user will
  * see the implementation of the session refresh when
  * returning to foreground after at least 2 minutes of background
  */
-export const isFastLoginSessionRefreshEnabledSelector = createSelector(
+export const isAutomaticSessionRefreshEnabledSelector = createSelector(
   isFastLoginEnabledSelector,
-  fastLoginSessionRefreshFFEnabled,
-  isFastLoginSessionRefreshToggleActiveSelector,
+  automaticSessionRefreshFFEnabled,
+  isAutomaticSessionRefreshToggleActiveSelector,
   (isFastLoginEnabled, sessionRefresh, isSessionRefreshToggleActive) =>
     isFastLoginEnabled && (sessionRefresh || isSessionRefreshToggleActive)
 );
@@ -118,8 +118,8 @@ const fastLoginTokenRefreshHandlerSelector = (state: GlobalState) =>
 
 export const fastLoginPendingActionsSelector = createSelector(
   fastLoginTokenRefreshHandlerSelector,
-  fastLoginTokenRefreshHandlerSelector =>
-    uniqWith(fastLoginTokenRefreshHandlerSelector.pendingActions, isEqual)
+  fastLoginTokenRefresh =>
+    uniqWith(fastLoginTokenRefresh.pendingActions, isEqual)
 );
 
 export const isFastLoginUserInteractionNeededForSessionExpiredSelector = (

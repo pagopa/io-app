@@ -1,31 +1,31 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
-import { setFastLoginSessionRefresh } from "../actions/sessionRefreshActions";
+import { setAutomaticSessionRefresh } from "../actions/sessionRefreshActions";
 import { Action } from "../../../../store/actions/types";
 import {
   logoutFailure,
   logoutSuccess
 } from "../../../../store/actions/authentication";
 
-export type FastLoginSessionRefreshState = {
+export type AutomaticSessionRefreshState = {
   enabled: boolean | undefined;
 };
 
-export const fastLoginSessionRefreshInitialState: FastLoginSessionRefreshState =
+export const automaticSessionRefreshInitialState: AutomaticSessionRefreshState =
   {
     enabled: undefined
   };
 
-const fastLoginSessionRefreshReducer = (
-  state: FastLoginSessionRefreshState = fastLoginSessionRefreshInitialState,
+const AutomaticSessionRefreshReducer = (
+  state: AutomaticSessionRefreshState = automaticSessionRefreshInitialState,
   action: Action
-): FastLoginSessionRefreshState => {
+): AutomaticSessionRefreshState => {
   switch (action.type) {
     case getType(logoutSuccess):
     case getType(logoutFailure):
-      return fastLoginSessionRefreshInitialState;
-    case getType(setFastLoginSessionRefresh):
+      return automaticSessionRefreshInitialState;
+    case getType(setAutomaticSessionRefresh):
       return {
         ...state,
         enabled: action.payload.enabled
@@ -44,7 +44,7 @@ const persistConfig: PersistConfig = {
   whitelist: ["enabled"]
 };
 
-export const fastLoginSessionRefreshPersistor = persistReducer<
-  FastLoginSessionRefreshState,
+export const automaticSessionRefreshPersistor = persistReducer<
+  AutomaticSessionRefreshState,
   Action
->(persistConfig, fastLoginSessionRefreshReducer);
+>(persistConfig, AutomaticSessionRefreshReducer);

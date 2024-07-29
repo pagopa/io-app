@@ -1,10 +1,10 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { FastLoginSessionRefreshState } from "../reducers/sessionRefreshReducer";
+import { AutomaticSessionRefreshState } from "../reducers/sessionRefreshReducer";
 
-export const setFastLoginSessionRefresh = createStandardAction(
-  "SET_FAST_LOGIN_SESSION_REFRESH"
-)<FastLoginSessionRefreshState>();
+export const setAutomaticSessionRefresh = createStandardAction(
+  "SET_AUTOMATIC_SESSION_REFRESH_AFTER_TWO_MIN_BACKGROUND"
+)<AutomaticSessionRefreshState>();
 
-export type fastLoginSessionRefreshActions = ActionType<
-  typeof setFastLoginSessionRefresh
+export type automaticSessionRefreshActions = ActionType<
+  typeof setAutomaticSessionRefresh
 >;
