@@ -1,5 +1,11 @@
 import React from "react";
-import { Pressable, ScrollView, StyleSheet } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useIOSelector } from "../../store/hooks";
 import { debugDataSelector } from "../../store/reducers/debug";
 import { DebugPrettyPrint } from "./DebugPrettyPrint";
@@ -10,15 +16,15 @@ type DebugDataOverlayProps = {
 
 export const DebugDataOverlay = ({ onDismissed }: DebugDataOverlayProps) => {
   const debugData = useIOSelector(debugDataSelector);
-
   return (
-    <Pressable
-      style={styles.container}
-      accessibilityRole="none"
-      onPress={onDismissed}
-      pointerEvents="box-none"
-    >
-      <ScrollView>
+    <SafeAreaView style={styles.container}>
+      <TouchableWithoutFeedback onPress={onDismissed} accessibilityRole="none">
+        <View style={styles.overlay} />
+      </TouchableWithoutFeedback>
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.scrollContainer}
+      >
         {Object.entries(debugData).map(([key, value]) => (
           <DebugPrettyPrint
             key={`debug_data_${key}`}
@@ -29,11 +35,11 @@ export const DebugDataOverlay = ({ onDismissed }: DebugDataOverlayProps) => {
           />
         ))}
       </ScrollView>
-    </Pressable>
+    </SafeAreaView>
   );
 };
 
-const backgroundColor = "#000000B0";
+const overlayColor = "#000000B0";
 
 const styles = StyleSheet.create({
   container: {
@@ -42,9 +48,21 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor,
-    padding: 16,
-    paddingTop: 110,
-    zIndex: 999
+    zIndex: 999,
+    paddingTop: 48
+  },
+  overlay: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: overlayColor
+  },
+  scroll: {
+    flexGrow: 1
+  },
+  scrollContainer: {
+    paddingHorizontal: 16
   }
 });
