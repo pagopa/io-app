@@ -13,11 +13,13 @@ import React from "react";
 import { SafeAreaView, View } from "react-native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
 import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
@@ -30,7 +32,6 @@ import {
   selectIsLoading
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
@@ -94,6 +95,10 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   useHeaderSecondLevel({
     title: "",
     goBack: dismissDialog.show
+  });
+
+  useDebugInfo({
+    parsedCredential: credential.parsedCredential
   });
 
   return (

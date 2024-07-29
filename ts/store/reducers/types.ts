@@ -14,7 +14,7 @@ import { BackoffErrorState } from "./backoffError";
 import { CieState } from "./cie";
 import { ContentState } from "./content";
 import { CrossSessionsState } from "./crossSessions";
-import { DebugState } from "./debug";
+import { PersistedDebugState } from "./debug";
 import { EmailValidationState } from "./emailValidation";
 import { PersistedEntitiesState } from "./entities";
 import { PersistedIdentificationState } from "./identification";
@@ -48,7 +48,7 @@ export type GlobalState = Readonly<{
   content: ContentState;
   identification: PersistedIdentificationState;
   installation: InstallationState;
-  debug: DebugState;
+  debug: PersistedDebugState;
   search: SearchState;
   payments: PaymentsState;
   emailValidation: EmailValidationState;

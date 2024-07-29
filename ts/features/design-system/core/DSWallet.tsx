@@ -1,4 +1,9 @@
-import { Banner, ListItemSwitch, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Banner,
+  ListItemSwitch,
+  VSpacer,
+  VStack
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
 import { WalletCardsCategoryContainer } from "../../newWallet/components/WalletCardsCategoryContainer";
@@ -96,6 +101,8 @@ export const DSWallet = () => {
     {} as { [category in WalletCardCategory]: ReadonlyArray<WalletCard> }
   );
 
+  const blockMargin = 48;
+
   return (
     <DesignSystemScreen title={"Wallet"}>
       <ListItemSwitch
@@ -103,53 +110,55 @@ export const DSWallet = () => {
         value={isStacked}
         onSwitchValueChange={setStacked}
       />
-      <DesignSystemSection title="With IT Wallet">
-        <WalletCardsCategoryContainer
-          cards={cardsByCategory.itw}
-          header={{
-            label: "IT Wallet",
-            iconName: "fiscalCodeIndividual"
-          }}
-          isStacked={isStacked}
-        />
-        <WalletCardsCategoryContainer
-          cards={cardsByCategory.payment}
-          header={{
-            label: "Metodi di pagamento",
-            iconName: "creditCard"
-          }}
-          isStacked={isStacked}
-          footer={
-            <>
-              <VSpacer size={16} />
-              <Banner
-                color="turquoise"
-                pictogramName="idea"
-                size="small"
-                content="Categories can have footers!"
-              />
-            </>
-          }
-        />
-        <WalletCardsCategoryContainer
-          cards={[...cardsByCategory.cgn, ...cardsByCategory.bonus]}
-          header={{
-            label: "Altro"
-          }}
-          isStacked={isStacked}
-        />
-      </DesignSystemSection>
+      <VStack space={blockMargin}>
+        <DesignSystemSection title="With IT Wallet">
+          <WalletCardsCategoryContainer
+            cards={cardsByCategory.itw}
+            header={{
+              label: "IT Wallet",
+              iconName: "fiscalCodeIndividual"
+            }}
+            isStacked={isStacked}
+          />
+          <WalletCardsCategoryContainer
+            cards={cardsByCategory.payment}
+            header={{
+              label: "Metodi di pagamento",
+              iconName: "creditCard"
+            }}
+            isStacked={isStacked}
+            footer={
+              <>
+                <VSpacer size={16} />
+                <Banner
+                  color="turquoise"
+                  pictogramName="idea"
+                  size="small"
+                  content="Categories can have footers!"
+                />
+              </>
+            }
+          />
+          <WalletCardsCategoryContainer
+            cards={[...cardsByCategory.cgn, ...cardsByCategory.bonus]}
+            header={{
+              label: "Altro"
+            }}
+            isStacked={isStacked}
+          />
+        </DesignSystemSection>
 
-      <DesignSystemSection title="Without IT Wallet">
-        <WalletCardsCategoryContainer
-          cards={[
-            ...cardsByCategory.payment,
-            ...cardsByCategory.cgn,
-            ...cardsByCategory.bonus
-          ]}
-          isStacked={isStacked}
-        />
-      </DesignSystemSection>
+        <DesignSystemSection title="Without IT Wallet">
+          <WalletCardsCategoryContainer
+            cards={[
+              ...cardsByCategory.payment,
+              ...cardsByCategory.cgn,
+              ...cardsByCategory.bonus
+            ]}
+            isStacked={isStacked}
+          />
+        </DesignSystemSection>
+      </VStack>
     </DesignSystemScreen>
   );
 };

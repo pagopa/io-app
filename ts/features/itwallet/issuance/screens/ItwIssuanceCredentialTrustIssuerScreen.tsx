@@ -15,9 +15,11 @@ import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
@@ -40,7 +42,6 @@ import {
   ItwRequestedClaimsList,
   RequiredClaim
 } from "../components/ItwRequiredClaimsList";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -91,6 +92,11 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   );
 
   useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });
+
+  useDebugInfo({
+    issuerConfOption,
+    parsedCredential: eid.parsedCredential
+  });
 
   const claims = parseClaims(eid.parsedCredential, { exclude: ["unique_id"] });
   const requiredClaims = claims.map(
