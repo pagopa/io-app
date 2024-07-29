@@ -81,7 +81,6 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
         backgroundColor={blueHeaderColor}
         barStyle="light-content"
       />
-      {/* <ScrollView> */}
       <View style={[styles.blueHeader, { backgroundColor: blueHeaderColor }]}>
         <View style={styles.cardContainer} onLayout={getTitleHeight}>
           <PaymentCard {...card} />
