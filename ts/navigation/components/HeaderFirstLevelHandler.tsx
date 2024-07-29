@@ -26,6 +26,22 @@ type HeaderFirstLevelHandlerProps = {
   currentRouteName: keyof MainTabParamsList;
 };
 
+const useNavigateToSettingMainScreen = () => {
+  const navigation = useIONavigation();
+
+  return useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.SETTINGS_MAIN
+    });
+  }, [navigation]);
+};
+
+export const useHeaderFirstLevelActionPropSettings = (): ActionProp => ({
+  icon: "coggle",
+  accessibilityLabel: I18n.t("global.buttons.settings"),
+  onPress: useNavigateToSettingMainScreen()
+});
+
 /**
  * This Component aims to handle the header of the first level screens. based on the current route
  * it will set the header title and the contextual help and the actions related to the screen
@@ -74,11 +90,7 @@ export const HeaderFirstLevelHandler = ({
     }
   }, [canNavigateIfIsArchivingCallback, navigation]);
 
-  const navigateToSettingMainScreen = useCallback(() => {
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.SETTINGS_MAIN
-    });
-  }, [navigation]);
+  const navigateToSettingMainScreen = useNavigateToSettingMainScreen();
 
   const navigateToSettingMainScreenFromMessageSection = useCallback(() => {
     if (canNavigateIfIsArchivingCallback()) {
@@ -86,25 +98,16 @@ export const HeaderFirstLevelHandler = ({
     }
   }, [canNavigateIfIsArchivingCallback, navigateToSettingMainScreen]);
 
-  const settingsAction: ActionProp = useMemo(
-    () => ({
-      icon: "coggle",
-      accessibilityLabel: I18n.t("global.buttons.settings"),
-      onPress: navigateToSettingMainScreen
-    }),
-    [navigateToSettingMainScreen]
-  );
+  const settingsAction = useHeaderFirstLevelActionPropSettings();
+  const helpAction = useHeaderFirstLevelActionPropHelp(currentRouteName);
 
-  const settingsActionInMessageSection: ActionProp = useMemo(
+  const settingsActionInMessageSection = useMemo(
     () => ({
-      icon: "coggle",
-      accessibilityLabel: I18n.t("global.buttons.settings"),
+      ...settingsAction,
       onPress: navigateToSettingMainScreenFromMessageSection
     }),
-    [navigateToSettingMainScreenFromMessageSection]
+    [navigateToSettingMainScreenFromMessageSection, settingsAction]
   );
-
-  const helpAction = useHeaderFirstLevelActionPropHelp(currentRouteName);
 
   const {
     bottomSheet: WalletHomeHeaderBottomSheet,

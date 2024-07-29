@@ -1,17 +1,13 @@
-import {
-  ActionProp,
-  IOStyles,
-  IOToast,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { IOStyles, IOToast, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useCallback, useLayoutEffect, useMemo } from "react";
+import React, { useLayoutEffect } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useHeaderFirstLevelActionPropHelp } from "../../../hooks/useHeaderFirstLevelActionPropHelp";
 import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../i18n";
+import { useHeaderFirstLevelActionPropSettings } from "../../../navigation/components/HeaderFirstLevelHandler";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
@@ -69,22 +65,8 @@ const WalletHomeScreen = ({ route }: Props) => {
     isSettingsVisibleAndHideProfileSelector
   );
 
-  const navigateToSettingMainScreen = useCallback(() => {
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.SETTINGS_MAIN
-    });
-  }, [navigation]);
-
   const helpAction = useHeaderFirstLevelActionPropHelp(ROUTES.WALLET_HOME);
-
-  const settingsAction: ActionProp = useMemo(
-    () => ({
-      icon: "coggle",
-      accessibilityLabel: I18n.t("global.buttons.settings"),
-      onPress: navigateToSettingMainScreen
-    }),
-    [navigateToSettingMainScreen]
-  );
+  const settingsAction = useHeaderFirstLevelActionPropSettings();
 
   useLayoutEffect(() => {
     const headerFirstLevelProps: HeaderFirstLevel = {

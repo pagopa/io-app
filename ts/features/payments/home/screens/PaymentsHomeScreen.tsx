@@ -1,6 +1,6 @@
-import { ActionProp, IOStyles } from "@pagopa/io-app-design-system";
+import { IOStyles } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { useCallback, useLayoutEffect, useMemo } from "react";
+import { useCallback, useLayoutEffect } from "react";
 import Animated, {
   LinearTransition,
   useAnimatedRef
@@ -23,6 +23,7 @@ import {
   isPaymentsSectionEmptySelector,
   isPaymentsSectionLoadingSelector
 } from "../store/selectors";
+import { useHeaderFirstLevelActionPropSettings } from "../../../../navigation/components/HeaderFirstLevelHandler";
 
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
@@ -45,22 +46,8 @@ const PaymentsHomeScreen = () => {
     isSettingsVisibleAndHideProfileSelector
   );
 
-  const navigateToSettingMainScreen = useCallback(() => {
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.SETTINGS_MAIN
-    });
-  }, [navigation]);
-
   const helpAction = useHeaderFirstLevelActionPropHelp(ROUTES.PAYMENTS_HOME);
-
-  const settingsAction: ActionProp = useMemo(
-    () => ({
-      icon: "coggle",
-      accessibilityLabel: I18n.t("global.buttons.settings"),
-      onPress: navigateToSettingMainScreen
-    }),
-    [navigateToSettingMainScreen]
-  );
+  const settingsAction = useHeaderFirstLevelActionPropSettings();
 
   useLayoutEffect(() => {
     const headerFirstLevelProps: HeaderFirstLevel = {
