@@ -1,14 +1,20 @@
 import { getType } from "typesafe-actions";
-import { setDebugModeEnabled } from "../actions/debug";
+import {
+  resetDebugData,
+  setDebugData,
+  setDebugModeEnabled
+} from "../actions/debug";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
 export type DebugState = Readonly<{
   isDebugModeEnabled: boolean;
+  debugData: Record<string, any>;
 }>;
 
 const INITIAL_STATE: DebugState = {
-  isDebugModeEnabled: false
+  isDebugModeEnabled: false,
+  debugData: {}
 };
 
 export function debugReducer(
@@ -19,7 +25,26 @@ export function debugReducer(
     case getType(setDebugModeEnabled):
       return {
         ...state,
-        isDebugModeEnabled: action.payload
+        isDebugModeEnabled: action.payload,
+        debugData: {}
+      };
+
+    /**
+     * Debug data to be displayed in DebugInfoOverlay
+     */
+    case getType(setDebugData):
+      return {
+        ...state,
+        debugData: action.payload
+      };
+    case getType(resetDebugData):
+      return {
+        ...state,
+        debugData: Object.fromEntries(
+          Object.entries(state.debugData).filter(
+            ([key]) => !action.payload.includes(key)
+          )
+        )
       };
   }
 
@@ -29,3 +54,4 @@ export function debugReducer(
 // Selector
 export const isDebugModeEnabledSelector = (state: GlobalState) =>
   state.debug.isDebugModeEnabled;
+export const debugDataSelector = (state: GlobalState) => state.debug.debugData;
