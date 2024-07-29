@@ -1,21 +1,21 @@
 import {
-  H3,
+  H4,
   IOColors,
   LoadingSpinner,
   Pictogram,
   ProgressLoader,
-  VSpacer,
+  VStack,
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
+import { CircularProgress } from "../../../components/ui/CircularProgress";
 import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
 import I18n from "../../../i18n";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { CircularProgress } from "../../../components/ui/CircularProgress";
 
 // Image dimension
 const imgDimension = 188;
@@ -29,9 +29,6 @@ const styles = StyleSheet.create({
     borderColor: hexToRgba(IOColors.black, 0.15),
     padding: 16,
     overflow: "hidden"
-  },
-  sectionTitle: {
-    marginBottom: 16
   },
   imgWrapper: {
     height: imgDimension + 30,
@@ -83,7 +80,15 @@ const ProgressLoaderViewerBox = () => {
   }, []);
 
   return (
-    <View style={{ borderRadius: 8, overflow: "hidden" }}>
+    <View
+      style={{
+        borderRadius: 16,
+        borderCurve: "continuous",
+        overflow: "hidden",
+        borderColor: hexToRgba(IOColors.black, 0.15),
+        borderWidth: 1
+      }}
+    >
       <View style={{ backgroundColor: IOColors.white, padding: 16 }}>
         <ProgressLoader progress={progress} />
       </View>
@@ -109,76 +114,71 @@ const CircularProgressViewerBox = () => (
   </CircularProgress>
 );
 
+const sectionMargin = 40;
+const sectionTitleMargin = 16;
+
 export const DSLoaders = () => {
   const theme = useIOTheme();
 
   return (
     <DesignSystemScreen title={"Loaders"}>
-      {/* Present in the main Messages screen */}
-      <H3
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={styles.sectionTitle}
-      >
-        Activity Indicator
-      </H3>
-      <SpinnerViewerBox name="ActivityIndicator · Large size, primary legacy color">
-        <ActivityIndicator
-          animating={true}
-          size={"large"}
-          color={IOColors.blue}
-          accessible={true}
-          accessibilityHint={I18n.t(
-            "global.accessibility.activityIndicator.hint"
-          )}
-          accessibilityLabel={I18n.t(
-            "global.accessibility.activityIndicator.label"
-          )}
-          importantForAccessibility={"no-hide-descendants"}
-          testID={"activityIndicator"}
-        />
-      </SpinnerViewerBox>
+      <VStack space={sectionMargin}>
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Activity Indicator</H4>
+          <SpinnerViewerBox name="ActivityIndicator · Large size, primary legacy color">
+            <ActivityIndicator
+              animating={true}
+              size={"large"}
+              color={IOColors.blue}
+              accessible={true}
+              accessibilityHint={I18n.t(
+                "global.accessibility.activityIndicator.hint"
+              )}
+              accessibilityLabel={I18n.t(
+                "global.accessibility.activityIndicator.label"
+              )}
+              importantForAccessibility={"no-hide-descendants"}
+              testID={"activityIndicator"}
+            />
+          </SpinnerViewerBox>
+        </VStack>
 
-      <VSpacer />
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Loading Indicator</H4>
+          <SpinnerViewerBox name="LoadingIndicator, with predefined visual attributes">
+            <LoadingIndicator />
+          </SpinnerViewerBox>
+        </VStack>
 
-      <H3
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={styles.sectionTitle}
-      >
-        Loading Indicator
-      </H3>
-      <SpinnerViewerBox name="LoadingIndicator, with predefined visual attributes">
-        <LoadingIndicator />
-      </SpinnerViewerBox>
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Loading Spinner</H4>
+          <VStack space={16}>
+            <SpinnerViewerBox name="LoadingSpinner · Size 24, primary color">
+              <LoadingSpinner color="blueIO-500" />
+            </SpinnerViewerBox>
+            <SpinnerViewerBox
+              name="LoadingSpinner · Size 24, white color"
+              variant="primary"
+            >
+              <LoadingSpinner color="white" />
+            </SpinnerViewerBox>
+            <SpinnerViewerBox name="LoadingSpinner · Size 48, default color">
+              <LoadingSpinner size={48} />
+            </SpinnerViewerBox>
+          </VStack>
+        </VStack>
 
-      <H3
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={styles.sectionTitle}
-      >
-        Loading Spinner
-      </H3>
-      <SpinnerViewerBox name="LoadingSpinner · Size 24, primary color">
-        <LoadingSpinner color="blueIO-500" />
-      </SpinnerViewerBox>
-      <SpinnerViewerBox
-        name="LoadingSpinner · Size 24, white color"
-        variant="primary"
-      >
-        <LoadingSpinner color="white" />
-      </SpinnerViewerBox>
-      <SpinnerViewerBox name="LoadingSpinner · Size 48, default color">
-        <LoadingSpinner size={48} />
-      </SpinnerViewerBox>
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ProgressLoader</H4>
+          <ProgressLoaderViewerBox />
+        </VStack>
 
-      <H3>ProgressLoader</H3>
-      <ProgressLoaderViewerBox />
-
-      <VSpacer />
-
-      <H3>CircularProgress (CIE Card Reading)</H3>
-      <CircularProgressViewerBox />
+        <VStack space={sectionTitleMargin}>
+          {/* CIE Card Reading */}
+          <H4 color={theme["textHeading-default"]}>CircularProgress</H4>
+          <CircularProgressViewerBox />
+        </VStack>
+      </VStack>
     </DesignSystemScreen>
   );
 };

@@ -483,6 +483,7 @@ profile:
       titleSection: Partecipa alla sperimentazione
     designSystemEnvironment: Design System sperimentale
     newScanSection: Nuova funzione 'Inquadra'
+    sessionRefresh: Attiva il refresh della sessione
     appVersion: Versione
     backendVersion: Versione Backend
     debugMode: Modalità debug
