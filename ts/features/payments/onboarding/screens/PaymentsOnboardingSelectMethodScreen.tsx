@@ -12,7 +12,6 @@ import { PaymentsOnboardingRoutes } from "../navigation/routes";
 import { paymentsOnboardingGetMethodsAction } from "../store/actions";
 import { selectPaymentOnboardingMethods } from "../store/selectors";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 const PaymentsOnboardingSelectMethodScreen = () => {
   const navigation = useIONavigation();
