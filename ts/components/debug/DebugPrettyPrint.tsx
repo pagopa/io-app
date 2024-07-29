@@ -3,13 +3,14 @@ WARNING: This component is not referenced anywhere, but is used
 for development purposes. for development purposes. Don't REMOVE it!
 */
 import {
+  HStack,
   IOColors,
   IconButton,
   LabelSmall,
   useTypographyFactory
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Prettify } from "../../types/helpers";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { withDebugEnabled } from "./withDebugEnabled";
@@ -49,7 +50,7 @@ export const DebugPrettyPrint = withDebugEnabled(
         return null;
       }
       return (
-        <View style={styles.content}>
+        <View style={styles.content} pointerEvents="box-only">
           <CustomBodyMonospace>{prettyData}</CustomBodyMonospace>
         </View>
       );
@@ -57,23 +58,29 @@ export const DebugPrettyPrint = withDebugEnabled(
 
     return (
       <View testID="DebugPrettyPrintTestID" style={styles.container}>
-        <Pressable
-          accessibilityRole="button"
-          style={styles.header}
-          onPress={() => clipboardSetStringWithFeedback(prettyData)}
-        >
+        <View style={styles.header}>
           <LabelSmall weight="Bold" color="white">
             {title}
           </LabelSmall>
-          {expandable ? (
-            <IconButton
-              icon={expanded ? "chevronTop" : "chevronBottom"}
-              accessibilityLabel="expand"
-              onPress={() => setExpanded(_ => !_)}
-              color="contrast"
-            />
-          ) : null}
-        </Pressable>
+          <HStack space={16}>
+            {expandable && (
+              <IconButton
+                icon={"copy"}
+                accessibilityLabel="copy"
+                onPress={() => clipboardSetStringWithFeedback(prettyData)}
+                color="contrast"
+              />
+            )}
+            {expandable && (
+              <IconButton
+                icon={expanded ? "chevronTop" : "chevronBottom"}
+                accessibilityLabel="expand"
+                onPress={() => setExpanded(_ => !_)}
+                color="contrast"
+              />
+            )}
+          </HStack>
+        </View>
         {content}
       </View>
     );
