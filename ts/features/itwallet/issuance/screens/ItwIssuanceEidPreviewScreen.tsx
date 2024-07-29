@@ -64,8 +64,7 @@ export const ItwIssuanceEidPreviewScreen = () => {
     }, []);
 
     useDebugInfo({
-      parsedCredential: eid.parsedCredential,
-      credential: eid.credential
+      parsedCredential: eid.parsedCredential
     });
 
     return (

@@ -98,8 +98,7 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   });
 
   useDebugInfo({
-    parsedCredential: credential.parsedCredential,
-    credential: credential.credential
+    parsedCredential: credential.parsedCredential
   });
 
   return (

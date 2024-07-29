@@ -95,8 +95,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
 
   useDebugInfo({
     issuerConfOption,
-    parsedCredential: eid.parsedCredential,
-    credential: eid.credential
+    parsedCredential: eid.parsedCredential
   });
 
   const claims = parseClaims(eid.parsedCredential, { exclude: ["unique_id"] });
