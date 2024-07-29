@@ -13,11 +13,8 @@ import {
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
-  migrateToPaginatedMessages,
-  MigrationResult,
   reloadAllMessages,
   requestAutomaticMessagesRefresh,
-  resetMigrationStatus,
   setShownMessageCategoryAction,
   upsertMessageStatusAttributes
 } from "../actions";
@@ -55,12 +52,6 @@ type Collection = {
   lastUpdateTime: Date;
 };
 
-export type MigrationStatus = O.Option<
-  | { _tag: "started"; total: number }
-  | { _tag: "succeeded"; total: number }
-  | ({ _tag: "failed" } & MigrationResult)
->;
-
 export type MessageOperation = "archive" | "restore";
 export type MessageOperationFailure = {
   error: Error;
@@ -74,14 +65,12 @@ export type AllPaginated = {
   archive: Collection;
   inbox: Collection;
   latestMessageOperation?: E.Either<MessageOperationFailure, MessageOperation>;
-  migration: MigrationStatus;
   shownCategory: MessageListCategory;
 };
 
 const INITIAL_STATE: AllPaginated = {
   archive: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
   inbox: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
-  migration: O.none,
   shownCategory: "INBOX"
 };
 
@@ -120,34 +109,6 @@ const reducer = (
 
     case getType(requestAutomaticMessagesRefresh):
       return reduceAutomaticMessageRefreshRequest(state, action);
-
-    /* BEGIN Migration-related block */
-    case getType(migrateToPaginatedMessages.request):
-      return {
-        ...state,
-        migration: O.some({
-          _tag: "started",
-          total: Object.keys(action.payload).length
-        })
-      };
-
-    case getType(migrateToPaginatedMessages.success):
-      return {
-        ...state,
-        migration: O.some({ _tag: "succeeded", total: action.payload })
-      };
-    case getType(migrateToPaginatedMessages.failure):
-      return {
-        ...state,
-        migration: O.some({ _tag: "failed", ...action.payload })
-      };
-
-    case getType(resetMigrationStatus):
-      return {
-        ...state,
-        migration: O.none
-      };
-    /* END Migration-related block */
 
     case getType(clearCache):
       return {

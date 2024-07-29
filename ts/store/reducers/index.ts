@@ -211,7 +211,6 @@ export function createRootReducer(
             // data should be kept across multiple sessions
             entities: {
               organizations: state.entities.organizations,
-              messagesStatus: state.entities.messagesStatus,
               paymentByRptId: state.entities.paymentByRptId,
               calendarEvents: state.entities.calendarEvents,
               // eslint-disable-next-line no-underscore-dangle

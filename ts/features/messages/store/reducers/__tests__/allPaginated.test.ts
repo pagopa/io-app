@@ -11,10 +11,8 @@ import {
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
-  migrateToPaginatedMessages,
   reloadAllMessages,
   requestAutomaticMessagesRefresh,
-  resetMigrationStatus,
   setShownMessageCategoryAction,
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
@@ -692,37 +690,6 @@ describe("allPaginated reducer", () => {
       );
       expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
     });
-
-    it("should keep its `showCategory` value (migrateToPaginatedMessages.request)", () => {
-      const allPaginatedFinalState = reducer(
-        allPaginatedInitialState(),
-        migrateToPaginatedMessages.request({})
-      );
-      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
-    });
-    it("should keep its `showCategory` value (migrateToPaginatedMessages.success)", () => {
-      const allPaginatedFinalState = reducer(
-        allPaginatedInitialState(),
-        migrateToPaginatedMessages.success(0)
-      );
-      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
-    });
-    it("should keep its `showCategory` value (migrateToPaginatedMessages.failure)", () => {
-      const allPaginatedFinalState = reducer(
-        allPaginatedInitialState(),
-        migrateToPaginatedMessages.failure({ failed: [], succeeded: [] })
-      );
-      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
-    });
-
-    it("should keep its `showCategory` value (resetMigrationStatus)", () => {
-      const allPaginatedFinalState = reducer(
-        allPaginatedInitialState(),
-        resetMigrationStatus()
-      );
-      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
-    });
-
     it("should keep its `showCategory` value (clearCache)", () => {
       const allPaginatedFinalState = reducer(
         allPaginatedInitialState(),
@@ -772,7 +739,6 @@ describe("allPaginated reducer", () => {
 const defaultState: AllPaginated = {
   inbox: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
   archive: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
-  migration: O.none,
   shownCategory: "INBOX"
 };
 

@@ -18,16 +18,12 @@ import { PotTransform } from "../../transforms/potTransform";
 import messagesReducer, {
   MessagesState
 } from "../../../features/messages/store/reducers";
-import messagesStatusReducer, {
-  MessagesStatus
-} from "../../../features/messages/store/reducers/messagesStatus";
 import calendarEventsReducer, { CalendarEventsState } from "./calendarEvents";
 import organizationsReducer, { OrganizationsState } from "./organizations";
 import { paymentByRptIdReducer, PaymentByRptIdState } from "./payments";
 
 export type EntitiesState = Readonly<{
   messages: MessagesState;
-  messagesStatus: MessagesStatus;
   organizations: OrganizationsState;
   paymentByRptId: PaymentByRptIdState;
   calendarEvents: CalendarEventsState;
@@ -78,7 +74,6 @@ export const entitiesPersistConfig: PersistConfig = {
 
 const reducer = combineReducers<EntitiesState, Action>({
   messages: messagesReducer,
-  messagesStatus: messagesStatusReducer,
   organizations: organizationsReducer,
   paymentByRptId: paymentByRptIdReducer,
   calendarEvents: calendarEventsReducer
