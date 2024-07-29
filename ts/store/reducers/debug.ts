@@ -11,11 +11,12 @@ import { GlobalState } from "./types";
 
 type DebugState = Readonly<{
   isDebugModeEnabled: boolean;
-  debugData?: Record<string, any>;
+  debugData: Record<string, any>;
 }>;
 
 const INITIAL_STATE: DebugState = {
-  isDebugModeEnabled: false
+  isDebugModeEnabled: false,
+  debugData: {}
 };
 
 function debugReducer(
@@ -42,7 +43,7 @@ function debugReducer(
       return {
         ...state,
         debugData: Object.fromEntries(
-          Object.entries(state.debugData || {}).filter(
+          Object.entries(state.debugData).filter(
             ([key]) => !action.payload.includes(key)
           )
         )
@@ -72,5 +73,4 @@ export const debugPersistor = persistReducer<DebugState, Action>(
 // Selector
 export const isDebugModeEnabledSelector = (state: GlobalState) =>
   state.debug.isDebugModeEnabled;
-export const debugDataSelector = (state: GlobalState) =>
-  state.debug.debugData || {};
+export const debugDataSelector = (state: GlobalState) => state.debug.debugData;
