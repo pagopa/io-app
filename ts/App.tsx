@@ -37,7 +37,7 @@ Sentry.init({
   beforeSendTransaction(event) {
     return removeUserFromEvent(event);
   },
-  enabled: !isLocalEnv && !isDevEnv,
+  enabled: !isDevEnv,
   sampleRate: 0.3
 });
 
