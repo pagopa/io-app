@@ -1,21 +1,24 @@
 import React, { useMemo } from "react";
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/Either";
+import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
-import { View, Image } from "react-native";
+import { Image } from "react-native";
 import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import {
   ClaimDisplayFormat,
   ClaimValue,
   DateClaimConfig,
+  DrivingPrivilegeClaimType,
   DrivingPrivilegesClaim,
-  DrivingPrivilegesClaimType,
   EvidenceClaim,
+  FiscalCodeClaim,
   ImageClaim,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
   PlainTextClaim,
   dateClaimsConfig,
+  extractFiscalCode,
   previewDateClaimsConfig
 } from "../utils/itwClaimsUtils";
 import I18n from "../../../../i18n";
@@ -40,10 +43,7 @@ const PlaceOfBirthClaimItem = ({
 }) => {
   const value = `${claim.locality} (${claim.country})`;
   return (
-    <>
-      <ListItemInfo label={label} value={value} accessibilityLabel={value} />
-      <Divider />
-    </>
+    <ListItemInfo label={label} value={value} accessibilityLabel={value} />
   );
 };
 
@@ -59,20 +59,15 @@ const PlainTextClaimItem = ({
   label: string;
   claim: string;
 }) => (
-  <>
-    <ListItemInfo
-      label={label}
-      value={claim}
-      accessibilityLabel={`${label} ${
-        claim === HIDDEN_CLAIM
-          ? I18n.t(
-              "features.itWallet.presentation.credentialDetails.hiddenClaim"
-            )
-          : claim
-      }`}
-    />
-    <Divider />
-  </>
+  <ListItemInfo
+    label={label}
+    value={claim}
+    accessibilityLabel={`${label} ${
+      claim === HIDDEN_CLAIM
+        ? I18n.t("features.itWallet.presentation.credentialDetails.hiddenClaim")
+        : claim
+    }`}
+  />
 );
 
 /**
@@ -113,16 +108,14 @@ const DateClaimItem = ({
   }, [expirationBadgeVisible, claim]);
 
   return (
-    <View key={`${label}-${value}`}>
-      <ListItemInfo
-        label={label}
-        value={value}
-        icon={iconVisible ? "calendar" : undefined}
-        accessibilityLabel={`${label} ${value}`}
-        endElement={endElement}
-      />
-      <Divider />
-    </View>
+    <ListItemInfo
+      key={`${label}-${value}`}
+      label={label}
+      value={value}
+      icon={iconVisible ? "calendar" : undefined}
+      accessibilityLabel={`${label} ${value}`}
+      endElement={endElement}
+    />
   );
 };
 
@@ -141,14 +134,6 @@ const EvidenceClaimItem = ({ issuerName }: { issuerName: string }) => {
         ),
         body: I18n.t(
           "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle"
-        )
-      },
-      {
-        title: I18n.t(
-          "features.itWallet.issuance.credentialPreview.bottomSheet.data.title"
-        ),
-        body: I18n.t(
-          "features.itWallet.issuance.credentialPreview.bottomSheet.data.subtitle"
         )
       }
     ]
@@ -172,7 +157,6 @@ const EvidenceClaimItem = ({ issuerName }: { issuerName: string }) => {
         accessibilityLabel={`${label} ${issuerName}`}
       />
       {issuedByBottomSheet.bottomSheet}
-      <Divider />
     </>
   );
 };
@@ -195,44 +179,52 @@ const UnknownClaimItem = ({ label }: { label: string; _claim?: never }) => (
  * @param claim - the claim value
  */
 const ImageClaimItem = ({ label, claim }: { label: string; claim: string }) => (
-  <>
-    <ListItemInfo
-      label={label}
-      value={
-        <Image
-          source={{ uri: claim }}
-          style={{
-            width: 250,
-            height: 250
-          }}
-          resizeMode="contain"
-          accessibilityIgnoresInvertColors
-        />
-      }
-      accessibilityLabel={`${label} ${claim}`}
-    />
-    <Divider />
-  </>
+  <ListItemInfo
+    label={label}
+    value={
+      <Image
+        source={{ uri: claim }}
+        style={{
+          width: 200,
+          aspectRatio: 3 / 4
+        }}
+        resizeMode="contain"
+        accessibilityIgnoresInvertColors
+      />
+    }
+    accessibilityLabel={`${label} ${claim}`}
+  />
 );
 
 /**
  * Component which renders a driving privileges type claim.
  * It features a bottom sheet with information about the issued and expiration date of the claim.
- * @param label - the label of the claim
- * @param claim - the claim value
- * @returns
+ * @param label the label of the claim
+ * @param claim the claim value
+ * @param detailsButtonVisible a flag to show or hide the details button
+ * @returns a list item component with the driving privileges claim
  */
 const DrivingPrivilegesClaimItem = ({
   label,
-  claim
+  claim,
+  detailsButtonVisible
 }: {
   label: string;
-  claim: DrivingPrivilegesClaimType;
+  claim: DrivingPrivilegeClaimType;
+  detailsButtonVisible?: boolean;
 }) => {
+  const localExpiryDate = localeDateFormat(
+    new Date(claim.expiry_date),
+    I18n.t("global.dateFormats.shortFormat")
+  );
+  const localIssueDate = localeDateFormat(
+    new Date(claim.issue_date),
+    I18n.t("global.dateFormats.shortFormat")
+  );
   const privilegeBottomSheet = useIOBottomSheetAutoresizableModal({
     title: I18n.t(
       "features.itWallet.verifiableCredentials.claims.mdl.category",
-      { category: claim.vehicle_category_code }
+      { category: claim.driving_privilege }
     ),
     component: (
       <>
@@ -240,41 +232,52 @@ const DrivingPrivilegesClaimItem = ({
           label={I18n.t(
             "features.itWallet.verifiableCredentials.claims.mdl.issuedDate"
           )}
-          value={claim.issue_date}
-          accessibilityLabel={`${label} ${claim.issue_date}`}
+          value={localIssueDate}
+          accessibilityLabel={`${label} ${localIssueDate}`}
         />
         <Divider />
         <ListItemInfo
           label={I18n.t(
             "features.itWallet.verifiableCredentials.claims.mdl.expirationDate"
           )}
-          value={claim.expiry_date}
-          accessibilityLabel={`${label} ${claim.expiry_date}`}
+          value={localExpiryDate}
+          accessibilityLabel={`${label} ${localExpiryDate}`}
+        />
+        <Divider />
+        <ListItemInfo
+          label={I18n.t(
+            "features.itWallet.verifiableCredentials.claims.mdl.restrictionConditions"
+          )}
+          value={claim.restrictions_conditions || "-"}
+          accessibilityLabel={`${label} ${claim.restrictions_conditions}`}
         />
       </>
     )
   });
+
+  const endElement: ListItemInfo["endElement"] = detailsButtonVisible
+    ? {
+        type: "buttonLink",
+        componentProps: {
+          label: I18n.t("global.buttons.show"),
+          onPress: () => privilegeBottomSheet.present(),
+          accessibilityLabel: I18n.t("global.buttons.show")
+        }
+      }
+    : undefined;
+
   return (
     <>
       <ListItemInfo
         label={label}
-        value={claim.vehicle_category_code}
-        endElement={{
-          type: "iconButton",
-          componentProps: {
-            icon: "info",
-            accessibilityLabel: "test",
-            onPress: () => privilegeBottomSheet.present()
-          }
-        }}
-        accessibilityLabel={`${label} ${claim}`}
+        value={claim.driving_privilege}
+        endElement={endElement}
+        accessibilityLabel={`${label} ${claim.driving_privilege}`}
       />
-      <Divider />
       {privilegeBottomSheet.bottomSheet}
     </>
   );
 };
-
 /**
  * Component which renders a claim.
  * It renders a different component based on the type of the claim.
@@ -318,9 +321,25 @@ export const ItwCredentialClaim = ({
         } else if (ImageClaim.is(decoded)) {
           return <ImageClaimItem label={claim.label} claim={decoded} />;
         } else if (DrivingPrivilegesClaim.is(decoded)) {
-          return (
-            <DrivingPrivilegesClaimItem label={claim.label} claim={decoded} />
+          return decoded.map((elem, index) => (
+            <React.Fragment
+              key={`${index}_${claim.label}_${elem.driving_privilege}`}
+            >
+              {index !== 0 && <Divider />}
+              <DrivingPrivilegesClaimItem
+                label={claim.label}
+                claim={elem}
+                detailsButtonVisible={!isPreview}
+              />
+            </React.Fragment>
+          ));
+        } else if (FiscalCodeClaim.is(decoded)) {
+          const fiscalCode = pipe(
+            decoded,
+            extractFiscalCode,
+            O.getOrElseW(() => decoded)
           );
+          return <PlainTextClaimItem label={claim.label} claim={fiscalCode} />;
         } else if (PlainTextClaim.is(decoded)) {
           return <PlainTextClaimItem label={claim.label} claim={decoded} />; // must be the last one to be checked due to overlap with IPatternStringTag
         } else {

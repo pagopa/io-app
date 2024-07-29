@@ -12,20 +12,21 @@ import {
   upsertMessageStatusAttributes
 } from "../../store/actions";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { serviceByIdPotSelector } from "../../../services/details/store/reducers/servicesById";
+import { serviceByIdPotSelector } from "../../../services/details/store/reducers";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { messageDetailsByIdSelector } from "../../store/reducers/detailsById";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { thirdPartyFromIdSelector } from "../../store/reducers/thirdPartyById";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus";
-import * as config from "../../../../config";
 import { isLoadingOrUpdatingInbox } from "../../store/reducers/allPaginated";
 import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 
-// eslint-disable-next-line functional/immutable-data
-Object.defineProperty(config, "euCovidCertificateEnabled", { value: true });
+jest.mock("../../../../config.ts", () => ({
+  ...jest.requireActual("../../../../config.ts"),
+  euCovidCertificateEnabled: true
+}));
 
 describe("getPaginatedMessage", () => {
   it("when no paginated message is in store, it should dispatch a loadMessageById.request and retrieve its result from the store if it succeeds", () => {
@@ -316,7 +317,10 @@ describe("setMessageReadIfNeeded", () => {
       ])
       .next(
         upsertMessageStatusAttributes.failure({
-          payload: { message: paginatedMessage, update: { tag: "reading" } },
+          payload: {
+            message: paginatedMessage,
+            update: { tag: "reading" }
+          },
           error: new Error()
         })
       )

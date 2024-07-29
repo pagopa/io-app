@@ -5,12 +5,16 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
+import { AnimatedImage } from "../../../../components/AnimatedImage";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
+import { selectIsLoading } from "../../machine/eid/selectors";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -19,6 +23,13 @@ import ItwMarkdown from "../../common/components/ItwMarkdown";
  * with a primary and secondary action.
  */
 const ItwDiscoveryInfoScreen = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+
+  useOnFirstRender(() => {
+    machineRef.send({ type: "start" });
+  });
+
   useHeaderSecondLevel({
     title: "",
     contextualHelp: emptyContextualHelp,
@@ -27,9 +38,8 @@ const ItwDiscoveryInfoScreen = () => {
 
   return (
     <ForceScrollDownView threshold={50}>
-      <Image
+      <AnimatedImage
         source={require("../../../../../img/features/itWallet/discovery/itw_hero.png")}
-        accessibilityIgnoresInvertColors={true}
         style={styles.hero}
       />
       <VSpacer size={24} />
@@ -48,9 +58,10 @@ const ItwDiscoveryInfoScreen = () => {
         actions={{
           type: "SingleButton",
           primary: {
+            loading: isLoading,
             label: I18n.t("global.buttons.continue"),
             accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: () => undefined
+            onPress: () => machineRef.send({ type: "accept-tos" })
           }
         }}
       />

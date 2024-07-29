@@ -13,6 +13,7 @@ import {
   useIOTheme,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
+import * as Sentry from "@sentry/react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as React from "react";
 import { ComponentProps } from "react";
@@ -24,6 +25,7 @@ import { isPlaygroundsEnabled } from "../../config";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
+import { notificationsInstallationSelector } from "../../features/pushNotifications/store/reducers/installation";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
@@ -31,9 +33,7 @@ import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
-  preferencesItWalletTestSetEnabled,
-  preferencesNewHomeSectionSetEnabled,
-  preferencesNewWalletSectionSetEnabled,
+  preferencesNewScanSectionSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
@@ -44,12 +44,9 @@ import {
   walletTokenSelector
 } from "../../store/reducers/authentication";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
-import { notificationsInstallationSelector } from "../../features/pushNotifications/store/reducers/installation";
 import {
   isIdPayTestEnabledSelector,
-  isItWalletTestEnabledSelector,
-  isNewHomeSectionEnabledSelector,
-  isNewWalletSectionEnabledSelector,
+  isNewScanSectionLocallyEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -57,6 +54,7 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
+import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -73,6 +71,11 @@ type DevDataCopyListItem = {
 } & Pick<
   ComponentProps<typeof ListItemInfoCopy>,
   "label" | "testID" | "onPress"
+>;
+
+type TestEnvironmentsListItem = Pick<
+  ComponentProps<typeof ListItemSwitch>,
+  "label" | "value" | "description" | "testID" | "onSwitchValueChange"
 >;
 
 type DevActionButton = {
@@ -102,6 +105,10 @@ const DeveloperActionsSection = () => {
       ],
       { cancelable: false }
     );
+  };
+
+  const sendSentryTestEvent = () => {
+    Sentry.captureException(new Error("Random test Error"));
   };
 
   const dumpAsyncStorage = () => {
@@ -146,6 +153,12 @@ const DeveloperActionsSection = () => {
       color: "primary",
       label: I18n.t("profile.main.dumpAsyncStorage"),
       onPress: dumpAsyncStorage
+    },
+    {
+      condition: true,
+      color: "primary",
+      label: I18n.t("profile.main.sentryTestEvent"),
+      onPress: sendSentryTestEvent
     }
   ];
 
@@ -286,25 +299,14 @@ const DesignSystemSection = () => {
   const { themeType, setTheme } = useIOThemeContext();
   const dispatch = useIODispatch();
 
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewWalletSectionEnabledSelector
-  );
-  const isNewHomeSectionEnabled = useIOSelector(
-    isNewHomeSectionEnabledSelector
+  const isNewScanSectionLocallyEnabled = useIOSelector(
+    isNewScanSectionLocallyEnabledSelector
   );
 
-  const onNewWalletSectionToggle = (enabled: boolean) => {
+  const onNewScanSectionToggle = (enabled: boolean) => {
     dispatch(
-      preferencesNewWalletSectionSetEnabled({
-        isNewWalletSectionEnabled: enabled
-      })
-    );
-  };
-
-  const onNewHomeSectionToggle = (enabled: boolean) => {
-    dispatch(
-      preferencesNewHomeSectionSetEnabled({
-        isNewHomeSectionEnabled: enabled
+      preferencesNewScanSectionSetEnabled({
+        isNewScanSectionEnabled: enabled
       })
     );
   };
@@ -334,24 +336,24 @@ const DesignSystemSection = () => {
       />
       <Divider />
       <ListItemSwitch
-        label={I18n.t("profile.main.newWalletSection")}
-        value={isNewWalletSectionEnabled}
-        onSwitchValueChange={onNewWalletSectionToggle}
-      />
-      <Divider />
-      <ListItemSwitch
-        label={I18n.t("profile.main.newHomeSection")}
-        value={isNewHomeSectionEnabled}
-        onSwitchValueChange={onNewHomeSectionToggle}
+        label={I18n.t("profile.main.newScanSection")}
+        value={isNewScanSectionLocallyEnabled}
+        onSwitchValueChange={onNewScanSectionToggle}
       />
     </ContentWrapper>
   );
 };
 
 const PlaygroundsSection = () => {
+  const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
-  const isItWalletTestEnabled = useIOSelector(isItWalletTestEnabledSelector);
+  const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
+
+  const onAddTestCard = () => {
+    dispatch(walletAddCoBadgeStart(undefined));
+  };
+
   const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
     {
       value: "Lollipop",
@@ -365,6 +367,13 @@ const PlaygroundsSection = () => {
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
           screen: ROUTES.MARKDOWN_PLAYGROUND
+        })
+    },
+    {
+      value: "IO Markdown",
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.IO_MARKDOWN_PLAYGROUND
         })
     },
     {
@@ -398,12 +407,16 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      condition: isItWalletTestEnabled,
       value: "IT Wallet",
       onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.ITW_PLAYGROUND
+        navigation.navigate(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.PLAYGROUNDS
         })
+    },
+    {
+      condition: isPagoPATestEnabled,
+      value: I18n.t("profile.main.addTestCard.title"),
+      onPress: onAddTestCard
     }
   ];
 
@@ -456,24 +469,6 @@ const DeveloperTestEnvironmentSection = ({
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
   const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
-  const isItWalletTestEnabled = useIOSelector(isItWalletTestEnabledSelector);
-  const onAddTestCard = () => {
-    if (!isPagoPATestEnabled) {
-      Alert.alert(
-        I18n.t("profile.main.addCard.warning.title"),
-        I18n.t("profile.main.addCard.warning.message"),
-        [
-          {
-            text: I18n.t("profile.main.addCard.warning.closeButton"),
-            style: "cancel"
-          }
-        ],
-        { cancelable: false }
-      );
-      return;
-    }
-    dispatch(walletAddCoBadgeStart(undefined));
-  };
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -521,51 +516,51 @@ const DeveloperTestEnvironmentSection = ({
     handleShowModal();
   };
 
-  const onItWalletTestToggle = (enabled: boolean) => {
-    dispatch(
-      preferencesItWalletTestSetEnabled({ isItWalletTestEnabled: enabled })
-    );
-    handleShowModal();
-  };
+  const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
+    {
+      label: I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
+      description: I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert"),
+      value: isPagoPATestEnabled,
+      onSwitchValueChange: onPagoPAEnvironmentToggle
+    },
+    {
+      label: I18n.t("profile.main.pnEnvironment.pnEnv"),
+      value: isPnTestEnabled,
+      onSwitchValueChange: onPnEnvironmentToggle
+    },
+    {
+      label: I18n.t("profile.main.idpay.idpayTest"),
+      description: I18n.t("profile.main.idpay.idpayTestAlert"),
+      value: isIdPayTestEnabled,
+      onSwitchValueChange: onIdPayTestToggle
+    }
+  ];
+
   return (
-    <ContentWrapper>
-      <ListItemHeader
-        label={I18n.t("profile.main.testEnvironmentSectionHeader")}
-      />
-      <ListItemSwitch
-        label={I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv")}
-        description={I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")}
-        value={isPagoPATestEnabled}
-        onSwitchValueChange={onPagoPAEnvironmentToggle}
-      />
-      <Divider />
-      {/* Add Test Card CTA */}
-      <ListItemNav
-        value={I18n.t("profile.main.addCard.titleSection")}
-        accessibilityLabel={I18n.t("profile.main.addCard.titleSection")}
-        onPress={onAddTestCard}
-      />
-      <Divider />
-      <ListItemSwitch
-        label={I18n.t("profile.main.pnEnvironment.pnEnv")}
-        value={isPnTestEnabled}
-        onSwitchValueChange={onPnEnvironmentToggle}
-      />
-      <Divider />
-      <ListItemSwitch
-        label={I18n.t("profile.main.idpay.idpayTest")}
-        description={I18n.t("profile.main.idpay.idpayTestAlert")}
-        value={isIdPayTestEnabled}
-        onSwitchValueChange={onIdPayTestToggle}
-      />
-      <ListItemSwitch
-        label={I18n.t("profile.main.itWallet.itWalletTest")}
-        description={I18n.t("profile.main.itWallet.itWalletTestDescription")}
-        value={isItWalletTestEnabled}
-        onSwitchValueChange={onItWalletTestToggle}
-      />
-      <Divider />
-    </ContentWrapper>
+    <FlatList
+      ListHeaderComponent={
+        <ListItemHeader
+          label={I18n.t("profile.main.testEnvironmentSectionHeader")}
+        />
+      }
+      scrollEnabled={false}
+      keyExtractor={(item: TestEnvironmentsListItem, index: number) =>
+        `${item.label}-${index}`
+      }
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
+      data={testEnvironmentsListItems}
+      renderItem={({ item }) => (
+        <ListItemSwitch
+          label={item.label}
+          description={item.description}
+          value={item.value}
+          onSwitchValueChange={item.onSwitchValueChange}
+        />
+      )}
+      ItemSeparatorComponent={() => <Divider />}
+    />
   );
 };
 

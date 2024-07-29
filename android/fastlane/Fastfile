@@ -30,7 +30,7 @@ platform :android do
     gradle(
       task: "assemble",
       build_type: "Debug",
-      flags: "-x bundleReleaseJsAndAssets --no-daemon"
+      # flags: "-x bundleReleaseJsAndAssets --no-daemon"
     )
   end
 
@@ -42,7 +42,7 @@ platform :android do
     gradle(
       task: "bundle",
       build_type: "Release",
-      flags: "-x bundleReleaseJsAndAssets --no-daemon"
+      # flags: "-x bundleReleaseJsAndAssets --no-daemon"
     )
   end
 
@@ -71,6 +71,16 @@ platform :android do
   lane :deploy do
     gradle(task: "assembleRelease")
     supply
+  end
+
+  desc "Download universal APK file from Google Play"
+  lane :download_apk do
+    version_code = ENV['VERSION_CODE'].to_i
+    download_universal_apk_from_google_play(
+      package_name: "it.pagopa.io.app",
+      destination: "io-app-universal.apk",
+      version_code: version_code
+    )
   end
 
   # You can define as many lanes as you want

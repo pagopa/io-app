@@ -3,8 +3,8 @@ accessibility:
   doubleTapToActivateHint: "Double tap to activate"
   buttons:
     torch:
-      turnOn: "Accendi la torcia"
-      turnOff: "Spegni la torcia"
+      turnOn: "Turn on the flashlight"
+      turnOff: "Turn off the flashlight"
 date:
   formats:
     default: "%d/%m/%Y"
@@ -81,7 +81,7 @@ global:
   unknown: unknown
   disclaimer_beta: If you're having trouble signing in, please let us know!
   sectionStatus:
-    moreInfo: more info
+    moreInfo: "Want to know more?"
   accessibility:
     minusSymbol: minus
     switchLabel: "Select to activate"
@@ -297,6 +297,8 @@ profile:
     description: Use the barcode to communicate your fiscal code when asked.
     help: !include profile/profile_fiscal_code.md
     facSimile: FAC-SIMILE
+    copyCode: Copy fiscal code
+    codeCopied: Fiscal code copied!
   sections:
     spid: SPID PROFILE
   unknown: UNKNOWN
@@ -315,7 +317,9 @@ profile:
     forgetCurrentSession: Forget current session
     clearAsyncStorage: Clear AsyncStorage
     dumpAsyncStorage: Dump AsyncStorage content to console
-    contextualHelpTitle: What you can do in your Profile
+    sentryTestEvent: Send Exception to Sentry
+    contextualHelpTitle: What you can do in {{pageName}} section 
+    legacyContextualHelpContent: !include profile/legacy_profile_account_main.md
     contextualHelpContent: !include profile/profile_account_main.md
     developerModeOn: Developer mode enabled
     cache:
@@ -354,9 +358,9 @@ profile:
           title: Delete your profile
           description: You can delete your IO profile at any time.
           banner: Your profile will be deleted within 30 days of your request.
-          body: 
+          body:
             p1: If you decide to continue, you will no longer be able to retrieve the messages or preferences you have set in the app.
-            p2: 
+            p2:
               firstPart: "Any bonuses or discounts you get via the IO app "
               lastPart: won't be available anymore.
             p3: You can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE.
@@ -376,12 +380,25 @@ profile:
           body: "We've taken over your request and we will delete your account within 30 days. You can re-subscribe to the IO App at any time with SPID or CIE."
           cta: Close
       exportData:
-        cta: Request a copy of your data
+        cta: Ask for a copy of the data
         title: Access your data
+        subtitle: You can download your IO profile data at any time.
         description: Receive a copy of the data associated with your IO profile
-        info:
-          title: You can download your IO profile information at any time.
-          body: !include profile/profile_download_data.md
+        detail:
+          bulletList:
+            title: "Your data are:"
+            item1: your tax code;
+            item2: your email address and, if applicable, confirmation of its validation;
+            item3: the text of the Messages you received;
+            item4: your notification preferences.
+          paragraph1: The information will be downloaded in YAML format, a standard format for exchanging data between different applications.
+          paragraph2:
+            part1: "You will get "
+            part2: "a message on IO "
+            part3: with a link and password that lasts 15 days.
+          paragraph3:
+            part1: For more information see the.
+            link: IO Privacy Policy.
         alert:
           requestTitle: Are you sure you want to export all your data?
           oldRequest: We are already proceeding to export all your data
@@ -425,7 +442,7 @@ profile:
           additionalInformation:
             description: "For more information, please read "
             cta: "the Privacy Policy and Terms and Conditions"
-          profileSettings: "You can change this choice anytime in Profile > Privacy Policy and Terms of Service"
+          profileSettings: "You can change this choice anytime in {{pageName}} > Privacy Policy and Terms of Service"
           cta:
             shareData: "Share"
             dontShareData: Please don't share data
@@ -463,23 +480,15 @@ profile:
       idpayTest: IDPay
       idpayTestAlert: This change requires app reboot
     designSystemEnvironment: Experimental Design System
-    newWalletSection: New wallet section
-    newHomeSection: New messages home
+    newScanSection: New 'Scan' feature
     appVersion: Version
     backendVersion: Backend Version
     debugMode: Debug mode
     designSystem: Design System
-    addCard:
-      titleSection: Add test card
-      warning:
-        title: Warning
-        message: To add a new test card, you must enable the pagoPA test environment from the settings.
-        closeButton: Close
     trial:
       titleSection: Join a trial
-    itWallet:
-      itWalletTest: IT Wallet
-      itWalletTestDescription: Enable the IT Wallet test environment
+    addTestCard:
+      title: Add test card
     banner:
       title: Do you want to display your fiscal code?
       action: Go to "Your data" section
@@ -576,9 +585,6 @@ profile:
           content: If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
           cta: Ok!
       error: An error occurred with your request
-userMetadata:
-  errors:
-    upsertVersion: Can't upsert user metadata with this version
 navigation:
   messages: Messages
   profile: Profile
@@ -924,6 +930,7 @@ email:
     subtitle: You will receive IO's communications at
 onboarding:
   contextualHelpTitle: How does the biometric recognition work
+  legacyContextualHelpContent: !include onboarding/legacy_onboarding_fingerprint.md
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configure IO
@@ -972,7 +979,7 @@ onboarding:
     headerTitle: Configure IO
     available:
       title: Enable biometric recognition
-      settings: You can always change your choice in Profile > Security
+      settings: You can always change your choice in {{pageName}} > Security
       body:
         text: You can use your face or fingerprint to enter instead of the unlock code. This will let you access the app and authorise operation and payments more easily and safely.
         infoStart: You can use biometric recognition in place of the unlock code. This will let you access the app and authorize operations and payments with your
@@ -990,7 +997,7 @@ onboarding:
             value: Set up face or fingerprint
           step3:
             label: Step 3
-            value: Enable it in IO under Profile > Security
+            value: Enable it in IO under {{pageName}} > Security
     unavailable:
       title: Protect your device
       subtitle: IO sends you messages that are relevant to you. Make sure that only you can access the app by setting a code or sign to unlock the device.
@@ -1513,8 +1520,8 @@ wallet:
     idTransaction: Transaction identification code
     updatedAmount: Updated amount
     amountInfo:
-      title: Vedi un importo diverso?
-      message: pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests
+      title: Do you see a different amount?
+      message: pagoPA updates the amount in real time, so that you can pay without additional charges or interest. This may happen, for instance, when the institution applies notification fees (if it has sent you a notification with legal value) or if you are late with your payment.
       cta: Ok, va bene
     contextualHelpTitle: Transaction's summary
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
@@ -1841,6 +1848,7 @@ wallet:
     outcome:
       SUCCESS:
         title: Hai pagato {{amount}}
+        subtitle: The receipt is in the Payments section.
         button: Ok, chiudi
         banner:
           title: Puoi dirci com’è andata?
@@ -1881,9 +1889,10 @@ wallet:
         title: Abilita il metodo per effettuare pagamenti in app
         subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
       PAYMENT_METHODS_NOT_AVAILABLE:
-        title: Aggiungi un metodo per effettuare pagamenti in app
+        title: Vuoi pagare con carta? Aggiungila ora!
         subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
-        primaryAction: Aggiungi metodo
+        primaryAction: Aggiungi carta
+        secondaryAction: Usa altri metodi
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -1920,9 +1929,10 @@ messages:
       read: "Message"
       unread: "Unread message"
       archived: Archived
-      description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
+      description: "{{newMessage}} {{selected}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "received on"
       received_at: "received at"
+      selected: "selected"
   contextualHelpTitle: About this section
   contextualHelpContent: !include messages/messages_home.md
   counting:
@@ -2009,9 +2019,19 @@ messages:
     archive:
       success: "Successfully archived!"
       failure: "Failed to archive"
+    generic:
+      failure: "Operation failed"
+      success: "Operazione successful!"
     restore:
       success: "Successfully unarchived."
       failure: "Failed to unarchive"
+  search:
+    emptyState:
+      title: "Enter at least three letters"
+    input:
+      cancel: "Cancel"
+      clear: "Erase"
+      placeholderShort: "Enter text"
 messageDetails:
   accessibilityAttachmentIcon: "Includes attachments"
   contextualHelpTitle: Message details
@@ -2115,14 +2135,13 @@ send_email_messages:
     title: Email a preview
     subtitle: You will get a preview of the message at your email address if the service allows.
 services:
-  accessibility:
-    edit: Edit services setup
   optIn:
     preferences:
       completed:
         title: "Preferences saved!"
         body: "You can always see the list of available services by visiting the Services section."
         cta: "Check available services"
+      banner: You can change this choice anytime in {{pageName}} > Preferences
       oldUsersBadge: "Current setup"
       choiceLabel: "You chose the"
       unavailable: "Not defined"
@@ -2147,41 +2166,8 @@ services:
           title: "If you confirm, you won't receive any message"
           body: "With manual configuration the services on IO, present and future, will not be able to contact you. To allow the services you are interested in to contact you, you will have to configure them one by one by enabling “Contact you in app” in each service detail page."
   title: Services
-  subTitle: Enable or disable the services that are allowed to send you messages
   contextualHelpTitle: About this section
   contextualHelpContent: !include services/services_home.md
-  serviceIsEnabled: Contact you in app
-  serviceNotEnabled: The service is not enabled
-  pushNotifications: Send you push notifications
-  messageReadStatus: Receive read receipts
-  emailForwarding: Send you e-mail
-  tosAndPrivacy: Terms of use and Privacy
-  tosLink: Terms and conditions
-  privacyLink: Privacy information
-  otherAppsInfo: You can find this service also
-  otherAppWeb: Online on
-  otherAppIos: iOS App
-  otherAppAndroid: Android App
-  contactsAndInfo: Contacts and info
-  visitWebsite: Browse Website
-  askForAssistance: Get support
-  contactAddress: Address
-  contactPhone: Phone
-  contactSupport: Support
-  tab:
-    locals: Local
-    national: National
-    all: All
-  loading:
-    title: Loading the services list
-    subtitle: Please wait...
-  enableAll: Use quick setup
-  disableAll: Use manual setup
-  updatingServiceMode: Please wait...
-  disableAllTitle: "Do you really want to disable all the services?"
-  disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
-  close: Close
-  emptyListMessage: There are no services available at this time, pull down to refresh
   new: New
   home:
     featured:
@@ -2235,23 +2221,6 @@ services:
       title: "Terms of use and Privacy"
       tosLink: "Terms and conditions"
       privacyLink: "Privacy information"
-serviceDetail:
-  fiscalCode: "Institution's fiscal code"
-  fiscalCodeAccessibility: "Institution's fiscal code"
-  fiscalCodeAccessibilityCopy: "Copy Institution's fiscal code"
-  contacts:
-    title: "This service can:"
-  headerTitle: "Service details"
-  contextualHelpContent: !include services/service_detail.md
-  onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
-  disableTitle: "Do you really want to disable the service?"
-  disableMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"
-  lockedMailAlert: "The email forwarding of messages is globally {{enabled}}:"
-  updatePreferences: Update your preferences
-  goTo: Go to preferences
-  enabled: enabled
-  disabled: disabled
-  notValidated: To enable the email forwarding you must validate your email address.
 identification:
   instructions:
     unlockCode: unlock code
@@ -2681,7 +2650,7 @@ bonus:
         error:
           noCode: Codes for this discount are temporary over, please try again later
       title:
-        deals: Deals and opportunities
+        deals: Opportunities
         description: Description
         services: Services
         contactInfo: Addresses
@@ -2690,10 +2659,10 @@ bonus:
         discountCode: Discount code
         conditions: Conditions
       cta:
-        label: Navigate to operator website
+        label: Go to partner's website
         landingPage: Get the benefit
         discountUrl: Go to the benefit
-        website: Go to the website
+        website: Go to partner's website
       categories:
         all: All the operators
         counting: and other {{count}}
@@ -2716,14 +2685,14 @@ bonus:
       goToDetail: View your Carta Giovani
     detail:
       cta:
-        buyers: Discover the CGN benefits
+        buyers: Discover CGN opportunities.
         discover: Discover the benefits
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number
-          pending: Check EYCA discounts
+          pending: Discover EYCA opportunities.
           bottomSheet: Check the EYCA website
-          showEycaDiscounts: Check EYCA discounts
+          showEycaDiscounts: Discover EYCA opportunities.
       information:
         active: "Your card is active and can be used until {{date}}"
         warning: "Attention! "
@@ -2737,7 +2706,7 @@ bonus:
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
         eycaError: "We had some issues with EYCA's systems."
         eycaBottomSheetTitle: "EYCA card number"
-        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy using the card at participating merchants, you will be able to obtain discounts and concessions on cultural activities, shops, transport, catering and accommodation even in European countries participating in the circuit."
+        eycaDescription: "Until 31 years old, your **Carta Giovani Nazionale is a member of the EYCA circuit**(European Youth Card Association).\n\n Use the Card at partners to enjoy cultural activities, shopping, transport, restaurants and accommodation in European countries partecipating in the circuit."
         eycaNumber: Card number
         badge:
           active: Active
@@ -2784,7 +2753,7 @@ bonus:
         toast: "The request to deactivate the card has been successfully executed"
         alert:
           title: "Deactivate card"
-          message: "Are you sure to deactivate your Carta Giovani Nazionale? If you confirm, you will lose the possibility to access the benefits provided by the initiative and the card will disappear from your Wallet."
+          message: "Do you really want to deactivate your Carta Giovani Nazionale? If you confirm, you will no longer be able to access the opportunities and the card will disappear from your Wallet."
     otp:
       error: "Due to a technical problem we were unable to generate a discount code. Please try again."
       code:
@@ -3104,8 +3073,14 @@ features:
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
         payment: Payment methods
+        other: Altro
     onboarding:
       title: Cosa vuoi aggiungere al portafoglio?
+      sections:
+        itw: IT Wallet
+        other: Altro
+      badge:
+        active: Già presente
       options:
         cgn: Carta Giovani Nazionale
         welfare: Iniziative welfare
@@ -3130,7 +3105,7 @@ features:
           title: Nessuna ricevuta trovata
           body: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
         banner:
-          content: Stiamo generando le ricevute di pagamento in formato PDF.
+          content: "Stiamo generando le ricevute in formato PDF: se in questa lista trovi dei doppioni, ignorali pure!"
           action: Scopri di più
         title: Operazioni precedenti
         bottomSheet:
@@ -3138,7 +3113,7 @@ features:
           noticeHeading: Avvisi pagati di recente
           noticeBody: "Stiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
           allNoticesHeading: Tutti gli altri avvisi
-          allNoticesBody: Per ottenere le ricevute di operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
+          allNoticesBody: Per le operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
       multiplePayment: Pagamento multiplo
       title: Ricevute pagoPA
       button: Vedi tutte
@@ -3153,7 +3128,14 @@ features:
         shareButton: Save or share
         error: Impossibile scaricare la ricevuta, riprova più tardi.
         download: Scarica ricevuta
+      details:
+        totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
+        totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
     details:
+      payPal:
+        banner:
+          title: Do you want to pay in 3?
+          content: Don't use this method. During a payment, select "PayPal (Pay in 3 too)".
       pspAlert:
         description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
         action: "Cosa significa?"
@@ -3162,25 +3144,29 @@ features:
     errors:
       transactionCreationError: C’è un problema con i sistemi di pagamento.
   itWallet:
+    credentialName:
+      eid: Identità Digitale
+      mdl: Patente di Guida
+      dc: Carta Europea della Disabilità
+      ts: Tessera Sanitaria
+    wallet:
+      active: Attivo
+      inactive: Non attivo
     card:
       status:
         expired: Non valida
         expiring: In scadenza
         pending: In lavorazione
-      label:
-        eid: Identità Digitale
-        mdl: Patente di Guida
-        dc: Carta Europea della Disabilità
-        ts: Tessera Sanitaria
       digital: Versione digitale
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
         body: "Riprova tra qualche minuto. Se si ripete, contatta l'assistenza."
       alert:
-        title: "Vuoi interrompere l’operazione?"
-        confirm: "Sì, interrompi"
-        cancel: "No, vai indietro"
+        title: Vuoi interrompere l'operazione?
+        body: Dovrai ripetere di nuovo tutti i passaggi
+        confirm: Sì, interrompi
+        cancel: No, riprendi
       dataSource:
         multi: "Forniti da {{credentialSource}}"
         single: "Fornito da {{credentialSource}}"
@@ -3211,18 +3197,24 @@ features:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
+          restrictionConditions: "Codici"
       unrecognizedData:
         title: "Non riconosci alcuni dati?"
         body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
         cta: "Chiedi informazioni o segnala errori"
     discovery:
+      banner:
+        title: È arrivato IT Wallet
+        content: Attiva IT Wallet per aggiungere al Portafoglio di IO la versione  digitale dei tuoi documenti!
+        action: Inizia
       title: Attiva IT Wallet
       content: "###### Cos'è e come funziona? \n IT Wallet è la nuova funzionalità di IO che ti permette di aggiungere al Portafoglio la tua **Identità Digitale** e di portare sempre con te **la versione digitale dei documenti fisici** che già possiedi, come la Tessera Sanitaria e presto molti altri. \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
-      tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()
+      tos: Per maggiori informazioni, leggi l’[informativa Privacy](https://io.italia.it/informativa-sperimentazione) e i [Termini e Condizioni d’uso](https://io.italia.it/tos-sperimentazione)
     identification:
       mode:
-        title: Con quale metodo vuoi identificarti?
-        header: Metodi disponibili
+        title: Attiva IT Wallet con la tua identità digitale
+        description: È un passaggio necessario solo la prima volta per garantire la sicurezza dei tuoi dati.
+        header: Scegli come identificarti
         method:
           spid:
             title: SPID
@@ -3233,17 +3225,18 @@ features:
           cieId:
             title: CieID
             subtitle: Usa credenziali e app CieID
+        privacy: Identificandoti dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione) di **Istituto Poligrafico e Zecca dello Stato**.
       nfc:
         title: Attiva l'NFC per continuare
-        description: La funzionalità NFC permette al dispositivo di leggere la tua CIE.
-        header: "Ecco come:"
+        description: Per consentire a IO di leggere la tua CIE, attiva l'NFC dalle Impostazioni del tuo dispositivo.
+        header: Come fare
         steps:
           label: Step {{value}}
-          1: Vai alle impostazioni
-          2: Cerca "NFC"
-          3: Attivalo
-        primaryAction: Vai alle impostazioni
-        secondaryAction: Ho fatto
+          1: Apri "Impostazioni"
+          2: Cerca la funzionalità "NFC"
+          3: Attiva la funzionalità
+        primaryAction: Apri impostazioni
+        secondaryAction: Continua
     issuance:
       credentialAuth:
         title: "{{credentialName}}: dati necessari"
@@ -3252,9 +3245,7 @@ features:
         disclaimer:
           0: I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.
           1: I dati saranno condivisi solo per il tempo necessario al rilascio della credenziale.
-        tos:
-          0: "Per maggiori informazioni, leggi"
-          1: l’informativa Privacy e i Termini e Condizioni d’uso
+        tos: "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione/)."
       eidPreview:
         title: "Stiamo aggiungendo i seguenti dati al Portafoglio:"
         actions:
@@ -3265,10 +3256,7 @@ features:
         bottomSheet:
           about:
             title: "Chi è?"
-            subtitle: "È la fonte che gestisce e protegge i tuoi dati. App IO ti consente di visualizzarli perché è in grado di verificare e proteggere la tua identità grazie a importanti procedure di sicurezza."
-          data:
-            title: "Protezione dei dati"
-            subtitle: "I tuoi dati non vengono salvati su questo dispositivo, ma conservati nella Wallet Instance e potrai decidere di revocarli in qualsiasi momento."
+            subtitle: "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
@@ -3280,10 +3268,40 @@ features:
           actions:
             continue: Aggiungi primo documento
             close: Continua più tardi
+      credentialResult:
+        toast: Fatto! Hai aggiunto {{credentialName}}
+      notMatchingIdentityError:
+        title: Identità non riconosciuta
+        body: Non puoi attivare IT Wallet con un'identità diversa da quella che usi per accedere a IO. Verifica le credenziali di accesso e riprova.
+        primaryAction: Ho capito
+        secondaryAction: Segnala un problema
+      genericError:
+        title: Si è verificato un errore imprevisto
+        body: La tua richiesta verso l'ente che emette il documento non è andata a buon fine.
+        primaryAction: Riprova
+        secondaryAction: Chiudi
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
+      error:
+        title: Il tuo dispositivo non supporta IT Wallet
+        body: Il tuo dispositivo non ha i requisiti di sicurezza necessari per questa funzionalità.
+        primaryAction: Chiudi
+        secondaryAction: Scopri di più
     presentation:
+      alerts:
+        mdl:
+          content: "In questa fase, la versione digitale della Patente non ha lo stesso valore del documento fisico: dovrai presentarla insieme a un documento di identità valido."
+          action: Scopri di più
+        expired:
+          content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
+          action: Aggiorna il documento
+        expiring:
+          content: Mancano {{days}} giorni alla scadenza del documento.
+      bottomSheets:
+        mdl:
+          title: "Patente: contesti di verifica"
+          content: "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Carta di Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valore legale del documento fisico.**"
       credentialDetails:
         personalDataTitle: "Personal data"
         documentDataTitle: "Document data"
@@ -3393,7 +3411,7 @@ idpay:
       bodyCta: "Come funziona?"
       banner:
         header: E se lo dimentichi?
-        body: Puoi reimpostare il codice in ogni momento da Profilo > Sicurezza.
+        body: You can reset the code anytime from {{pageName}} > Security.
       title: Paga con la tua carta d'identità elettronica
       description: Spendi il denaro delle iniziative a te previste usando la tua carta d’identità elettronica.
       buttons:
@@ -3496,7 +3514,7 @@ idpay:
             GENERIC: In questo momento non è possibile generare un codice
         successScreen:
           header: Ora puoi utilizzare la tua carta d’identità per pagare!
-          body: Se non ricordi il codice, puoi reimpostarlo in ogni momento dalla sezione Profilo > Sicurezza.
+          body: If you forget the code, reset it under {{pageName}} > Security.
           cta: Ok, chiudi
     beneficiaryDetails:
       infobox:
@@ -3575,7 +3593,7 @@ idpay:
         title: "Come funziona?"
         featureOne: "Puoi pagare presso tutti gli esercenti convenzionati: ti basterà appoggiare sul POS la tua carta d’identità elettronica."
         featureTwo: "Per autorizzare il pagamento, inserisci sul POS il tuo codice di sicurezza. Lo crei in app una volta sola e vale per qualsiasi iniziativa welfare compatibile."
-        featureThree: "Se dimentichi il codice, puoi generarne un altro in ogni momento in Profilo > Sicurezza."
+        featureThree: "If you forget the code, you can generate another one from {{pageName}} > Security."
   onboarding:
     success:
       pleaseWait: Un attimo di pazienza...
@@ -3730,18 +3748,21 @@ idpay:
         bodyLink: Scopri di più
         modal:
           title: Cosa significa?
-          content: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPer farlo, visita la sezione Profilo."
+          legacyContent: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPer farlo, visita la sezione Profilo."
+          content: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPuoi farlo dalle impostazioni dell'app"
           button: Ok, ho capito
       onboarding:
         header: Qual è il tuo IBAN?
         body: Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del
         bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47
         nameAssignInput: Assegna un nome
-        bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+        legacyBottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+        bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento dalle impostazioni dell'app
       enrollment:
         header: Scegli quale IBAN associare all’iniziativa
         subTitle: Associa un IBAN salvato nel tuo profilo per poter ricevere i rimborsi legati all’iniziativa.
-        footer: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+        legacyFooter: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+        footer: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento dalle impostazioni dell'app
       button:
         addNew: Aggiungi nuovo
       updateToast: IBAN associato correttamente
@@ -3891,7 +3912,7 @@ bonusCard:
 transaction:
   details:
     error:
-      title: É stato riscontrato un errore
+      title: We couldn't retrieve the receipt
     title: Dettaglio operazione
     totalAmount: Totale
     totalFee: Il totale comprende
@@ -3905,8 +3926,8 @@ transaction:
       paymentMethod: Metodo di pagamento
       authCode: Codice autorizzativo
       rrn: RRN
-      executedBy: Eseguito da
-      headedTo: Intestato a
+      executedBy: Eseguita da
+      headedTo: Metodo intestato a
       alert:
         content: Rivolgiti all’Ente Creditore se hai bisogno della ricevuta.
     operation:
@@ -3936,6 +3957,15 @@ permissionRequest:
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
 FIMS:
+  history:
+    exportData:
+      CTA: "Richiedi una copia via email"
+    profileCTA:
+      title: Accessi a servizi di terze parti 
+      subTitle: Rivedi gli accessi effettuati a servizi di terze parti tramite IO
+    historyScreen:
+      header: Accessi a servizi di terze parti
+      body: Qui puoi vedere tutti gli accessi a servizi esterni che hai fatto tramite IO e richiederne una copia via email
   loadingScreen:
     abort:
       title: "Operazione annullata"

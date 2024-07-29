@@ -12,15 +12,13 @@ import React, {
   useMemo,
   useState
 } from "react";
-import {
-  Alert,
-  AlertButton,
-  ListRenderItemInfo,
-  SectionList
-} from "react-native";
+import { Alert, AlertButton, FlatList, ListRenderItemInfo } from "react-native";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
+import { FIMS_ROUTES } from "../../features/fims/common/navigation";
+import { fimsIsHistoryEnabledSelector } from "../../features/fims/history/store/selectors";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
@@ -33,7 +31,6 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
-import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 
 type Props = {
   navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_PRIVACY_MAIN">;
@@ -68,6 +65,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
 
   const userDataProcessing = useIOSelector(userDataProcessingSelector);
   const prevUserDataProcessing = usePrevious(userDataProcessing);
+  const isFimsHistoryEnabled = useIOSelector(fimsIsHistoryEnabledSelector);
   const [requestProcess, setRequestProcess] = useState(false);
   const isLoading =
     pot.isLoading(userDataProcessing.DELETE) ||
@@ -186,6 +184,19 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     handleUserDataRequestAlert
   ]);
 
+  const spreadableMaybeFimsHistoryListItem = isFimsHistoryEnabled
+    ? [
+        {
+          value: I18n.t("FIMS.history.profileCTA.title"),
+          description: I18n.t("FIMS.history.profileCTA.subTitle"),
+          onPress: () =>
+            navigation.navigate(FIMS_ROUTES.MAIN, {
+              screen: FIMS_ROUTES.HISTORY
+            })
+        }
+      ]
+    : [];
+
   const isRequestProcessing = useCallback(
     (choice: UserDataProcessingChoiceEnum): boolean =>
       !pot.isLoading(userDataProcessing[choice]) &&
@@ -241,6 +252,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
           : undefined,
         testID: "profile-export-data"
       },
+      ...spreadableMaybeFimsHistoryListItem,
       {
         // Remove account
         value: I18n.t("profile.main.privacy.removeAccount.title"),
@@ -263,6 +275,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         testID: "profile-delete"
       }
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [dispatch, handleUserDataRequestAlert, isRequestProcessing, navigation]
   );
 
@@ -300,12 +313,9 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         loadingOpacity={0.9}
         loadingCaption={I18n.t("profile.main.privacy.loading")}
       >
-        <SectionList
-          sections={[
-            {
-              data: privacyNavListItems
-            }
-          ]}
+        <FlatList
+          scrollEnabled={false}
+          data={privacyNavListItems}
           keyExtractor={extractKey}
           renderItem={renderPrivacyNavItem}
           ItemSeparatorComponent={Divider}

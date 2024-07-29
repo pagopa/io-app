@@ -30,6 +30,8 @@ import {
   notificationsInstallationTokenRegistered,
   updateNotificationInstallationFailure
 } from "../store/actions/notifications";
+import { isArchivingDisabledSelector } from "../../messages/store/reducers/archiving";
+import { resetMessageArchivingAction } from "../../messages/store/actions/archiving";
 
 export const notificationsPlatform: PlatformEnum =
   Platform.select<PlatformEnum>({
@@ -120,6 +122,17 @@ export function* handlePendingMessageStateIfAllowedSaga(
 
     if (shouldResetToMainNavigator) {
       yield* call(navigateToMainNavigatorAction);
+    }
+
+    // It the archiving/restoring of messages is not disabled, make
+    // sure to cancel it, whatever status it may be in (since it
+    // hides the bottom tab bar and we cannot trigger a navigation
+    // flow that may later deliver the user back to a main tab bar
+    // screen where such tab bar is hidden)
+    const isArchivingDisabled = yield* select(isArchivingDisabledSelector);
+    if (!isArchivingDisabled) {
+      // Auto-reset does not provide feedback to the user
+      yield* put(resetMessageArchivingAction(undefined));
     }
 
     // Navigate to message router screen

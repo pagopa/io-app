@@ -1,4 +1,5 @@
 ItaliaApp.app*
+IO.app*
 include
 *.a
 fastlane/report.xml

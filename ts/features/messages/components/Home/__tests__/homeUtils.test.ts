@@ -8,18 +8,20 @@ import {
   accessibilityLabelForMessageItem,
   getInitialReloadAllMessagesActionIfNeeded,
   getLoadNextPageMessagesActionIfAllowed,
+  getLoadPreviousPageMessagesActionIfAllowed,
   getLoadServiceDetailsActionIfNeeded,
   getMessagesViewPagerInitialPageIndex,
   getReloadAllMessagesActionForRefreshIfAllowed,
   messageListCategoryToViewPageIndex,
-  messageListItemHeight,
   messageViewPageIndexToListCategory,
-  nextPageLoadingWaitMillisecondsGenerator
+  nextPageLoadingWaitMillisecondsGenerator,
+  refreshIntervalMillisecondsGenerator
 } from "../homeUtils";
-import { pageSize } from "../../../../../config";
+import { maximumItemsFromAPI, pageSize } from "../../../../../config";
 import { Action } from "../../../../../store/actions/types";
 import {
   loadNextPageMessages,
+  loadPreviousPageMessages,
   reloadAllMessages
 } from "../../../store/actions";
 import { UIMessage } from "../../../types";
@@ -32,6 +34,7 @@ import {
   isStrictSome,
   isStrictSomeError
 } from "../../../../../utils/pot";
+import { INITIAL_STATE } from "../../../store/reducers/archiving";
 
 const createGlobalState = (
   archiveData: allPaginated.MessagePagePot,
@@ -49,7 +52,8 @@ const createGlobalState = (
             data: inboxData
           },
           shownCategory
-        }
+        },
+        archiving: INITIAL_STATE
       }
     }
   } as GlobalState);
@@ -291,7 +295,7 @@ describe("accessibilityLabelForMessageItem", () => {
     const serviceName = "Service Name";
     const title = "Message Title";
     const createdAt = new Date(1990, 0, 2, 1, 1, 1);
-    const expectedOutput = `Unread message, received by ${organizationName}, ${serviceName}. ${title}. \n    received on ${format(
+    const expectedOutput = `Unread message , received by ${organizationName}, ${serviceName}. ${title}. \n    received on ${format(
       createdAt,
       "MMMM Do YYYY"
     )}\n  . `;
@@ -311,7 +315,7 @@ describe("accessibilityLabelForMessageItem", () => {
     const title = "Message Title";
     const createdAt = new Date();
     createdAt.setTime(createdAt.getTime() - 60 * 60 * 1000);
-    const expectedOutput = `Unread message, received by ${organizationName}, ${serviceName}. ${title}. received at ${format(
+    const expectedOutput = `Unread message , received by ${organizationName}, ${serviceName}. ${title}. received at ${format(
       createdAt,
       "H:mm"
     )}. `;
@@ -330,7 +334,7 @@ describe("accessibilityLabelForMessageItem", () => {
     const serviceName = "Service Name";
     const title = "Message Title";
     const createdAt = new Date(1990, 0, 2, 1, 1, 1);
-    const expectedOutput = `Message, received by ${organizationName}, ${serviceName}. ${title}. \n    received on ${format(
+    const expectedOutput = `Message , received by ${organizationName}, ${serviceName}. ${title}. \n    received on ${format(
       createdAt,
       "MMMM Do YYYY"
     )}\n  . `;
@@ -350,7 +354,7 @@ describe("accessibilityLabelForMessageItem", () => {
     const title = "Message Title";
     const createdAt = new Date();
     createdAt.setTime(createdAt.getTime() - 60 * 60 * 1000);
-    const expectedOutput = `Message, received by ${organizationName}, ${serviceName}. ${title}. received at ${format(
+    const expectedOutput = `Message , received by ${organizationName}, ${serviceName}. ${title}. received at ${format(
       createdAt,
       "H:mm"
     )}. `;
@@ -366,21 +370,16 @@ describe("accessibilityLabelForMessageItem", () => {
   });
 });
 
-describe("messageListItemHeight", () => {
-  it("should return 130", () => {
-    const height = messageListItemHeight();
-    expect(height).toBe(130);
-  });
-});
-
 describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return undefined, defined organization fiscal code", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.none
+          details: {
+            byId: {
+              [serviceId]: pot.none
+            }
           }
         }
       }
@@ -396,10 +395,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return undefined, undefined organization fiscal code, service pot.noneLoading", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.noneLoading
+          details: {
+            byId: {
+              [serviceId]: pot.noneLoading
+            }
           }
         }
       }
@@ -414,10 +415,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return undefined, undefined organization fiscal code, service pot.someLoading", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.someLoading({})
+          details: {
+            byId: {
+              [serviceId]: pot.someLoading({})
+            }
           }
         }
       }
@@ -432,9 +435,11 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return loadServiceDetail.request, undefined organization fiscal code, service unmatching", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {}
+          details: {
+            byId: {}
+          }
         }
       }
     } as GlobalState;
@@ -449,10 +454,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.none", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.none
+          details: {
+            byId: {
+              [serviceId]: pot.none
+            }
           }
         }
       }
@@ -468,10 +475,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.noneUpdating", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.noneUpdating({})
+          details: {
+            byId: {
+              [serviceId]: pot.noneUpdating({})
+            }
           }
         }
       }
@@ -487,10 +496,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.noneError", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.noneError(new Error())
+          details: {
+            byId: {
+              [serviceId]: pot.noneError(new Error())
+            }
           }
         }
       }
@@ -506,10 +517,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.some", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.some({})
+          details: {
+            byId: {
+              [serviceId]: pot.some({})
+            }
           }
         }
       }
@@ -525,10 +538,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.someUpdating", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.someUpdating({}, {})
+          details: {
+            byId: {
+              [serviceId]: pot.someUpdating({}, {})
+            }
           }
         }
       }
@@ -544,10 +559,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.someError", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.someError({}, new Error())
+          details: {
+            byId: {
+              [serviceId]: pot.someError({}, new Error())
+            }
           }
         }
       }
@@ -666,7 +683,8 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
                               ? selectedCategoryLastRequestValue
                               : O.none
                         }
-                      }
+                      },
+                      archiving: INITIAL_STATE
                     }
                   }
                 } as GlobalState;
@@ -706,6 +724,13 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
   );
 });
 
+describe("refreshIntervalMillisecondsGenerator", () => {
+  it("should return 60000 milliseconds", () => {
+    const refreshInterval = refreshIntervalMillisecondsGenerator();
+    expect(refreshInterval).toBe(60000);
+  });
+});
+
 describe("getReloadAllMessagesActionForRefreshIfAllowed", () => {
   const pots = [
     pot.none,
@@ -743,7 +768,8 @@ describe("getReloadAllMessagesActionForRefreshIfAllowed", () => {
                   inbox: {
                     data: inboxPot
                   }
-                }
+                },
+                archiving: INITIAL_STATE
               }
             }
           } as GlobalState;
@@ -752,6 +778,131 @@ describe("getReloadAllMessagesActionForRefreshIfAllowed", () => {
           expect(reloadAllMessagesAction).toStrictEqual(expectedOutput);
         });
       })
+    )
+  );
+});
+
+describe("getLoadNextPreviousPageMessagesActionIfAllowed", () => {
+  const generateMessagePots = (previousPageMessageId?: string) => [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating({ page: [], previous: previousPageMessageId }),
+    pot.noneError(""),
+    pot.some({ page: [], previous: previousPageMessageId }),
+    pot.someLoading({ page: [], previous: previousPageMessageId }),
+    pot.someUpdating(
+      { page: [], previous: previousPageMessageId },
+      { page: [], previous: previousPageMessageId }
+    ),
+    pot.someError({ page: [], previous: previousPageMessageId }, "")
+  ];
+  const lastUpdateTimes = [
+    new Date(new Date().getTime() - refreshIntervalMillisecondsGenerator() - 1), // Can update
+    new Date(new Date().getTime() + 60 * 60 * 1000) // Cannot update
+  ];
+  const expectedOutputGenerator = (
+    shownCategoryMessagePot: pot.Pot<{ previous?: string }, unknown>,
+    previousPageMessageId: string | undefined,
+    dateIndex: number,
+    archivingStatus: string,
+    otherCategoryMessagePot: pot.Pot<unknown, unknown>,
+    shownCategory: string
+  ) => {
+    const shownCategoryMessageOption = pot.toOption(shownCategoryMessagePot);
+    if (
+      !previousPageMessageId ||
+      dateIndex === 1 ||
+      O.isNone(shownCategoryMessageOption) ||
+      !shownCategoryMessageOption.value.previous ||
+      archivingStatus === "processing" ||
+      pot.isLoading(shownCategoryMessagePot) ||
+      pot.isUpdating(shownCategoryMessagePot) ||
+      pot.isLoading(otherCategoryMessagePot) ||
+      pot.isUpdating(otherCategoryMessagePot)
+    ) {
+      return undefined;
+    }
+    return loadPreviousPageMessages.request({
+      pageSize: maximumItemsFromAPI,
+      cursor: previousPageMessageId,
+      filter: {
+        getArchived: shownCategory === "ARCHIVE"
+      }
+    });
+  };
+  // eslint-disable-next-line sonarjs/cognitive-complexity
+  ["INBOX", "ARCHIVE"].forEach(shownCategory =>
+    [undefined, "01J2C0Z8H1XFTNRHRJHB20QZHG"].forEach(previousPageMessageId =>
+      generateMessagePots(previousPageMessageId).forEach(
+        shownCategoryMessagePot =>
+          generateMessagePots().forEach(otherCategoryMessagePot =>
+            ["disabled", "enabled", "processing"].forEach(archivingStatus =>
+              lastUpdateTimes.forEach((lastUpdateTime, dateIndex) => {
+                const expectedOutput = expectedOutputGenerator(
+                  shownCategoryMessagePot,
+                  previousPageMessageId,
+                  dateIndex,
+                  archivingStatus,
+                  otherCategoryMessagePot,
+                  shownCategory
+                );
+                it(`should return '${
+                  expectedOutput
+                    ? "loadPreviousPageMessages.request"
+                    : "undefined"
+                }' for category '${shownCategory}' with pot '${
+                  shownCategoryMessagePot.kind
+                }' previous Id '${previousPageMessageId}' date that '${
+                  dateIndex === 0 ? "allows" : "denies"
+                }' update, while other category is '${
+                  otherCategoryMessagePot.kind
+                }' and archving status is '${archivingStatus}'`, () => {
+                  const state = {
+                    entities: {
+                      messages: {
+                        allPaginated: {
+                          archive:
+                            shownCategory === "ARCHIVE"
+                              ? {
+                                  data: shownCategoryMessagePot,
+                                  lastRequest: O.none,
+                                  lastUpdateTime
+                                }
+                              : {
+                                  data: otherCategoryMessagePot,
+                                  lastRequest: O.none,
+                                  lastUpdateTime: new Date(0)
+                                },
+                          inbox:
+                            shownCategory === "INBOX"
+                              ? {
+                                  data: shownCategoryMessagePot,
+                                  lastRequest: O.none,
+                                  lastUpdateTime
+                                }
+                              : {
+                                  data: otherCategoryMessagePot,
+                                  lastRequest: O.none,
+                                  lastUpdateTime: new Date(0)
+                                },
+                          shownCategory
+                        },
+                        archiving: {
+                          status: archivingStatus
+                        }
+                      }
+                    }
+                  } as GlobalState;
+                  const loadPreviousPageMessagesAction =
+                    getLoadPreviousPageMessagesActionIfAllowed(state);
+                  expect(loadPreviousPageMessagesAction).toStrictEqual(
+                    expectedOutput
+                  );
+                });
+              })
+            )
+          )
+      )
     )
   );
 });

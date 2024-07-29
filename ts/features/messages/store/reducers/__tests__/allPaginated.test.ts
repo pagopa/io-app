@@ -1,7 +1,6 @@
 import { getType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-
 import {
   defaultRequestPayload,
   defaultRequestError,
@@ -14,6 +13,7 @@ import {
   loadPreviousPageMessages,
   migrateToPaginatedMessages,
   reloadAllMessages,
+  requestAutomaticMessagesRefresh,
   resetMigrationStatus,
   setShownMessageCategoryAction,
   upsertMessageStatusAttributes,
@@ -118,7 +118,7 @@ describe("allPaginated reducer", () => {
           pot.isLoading(reducer(undefined, actionRequest).archive.data)
         ).toBe(false);
       });
-      // eslint-disable-next-line sonarjs/no-identical-functions
+
       it("should set the Inbox lastRequest to 'all'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
           O.some("all")
@@ -234,7 +234,7 @@ describe("allPaginated reducer", () => {
           pot.isLoading(reducer(undefined, actionRequest).archive.data)
         ).toBe(false);
       });
-      // eslint-disable-next-line sonarjs/no-identical-functions
+
       it("should set the Inbox lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
           O.some("next")
@@ -389,7 +389,7 @@ describe("allPaginated reducer", () => {
           pot.isLoading(reducer(undefined, actionRequest).archive.data)
         ).toBe(false);
       });
-      // eslint-disable-next-line sonarjs/no-identical-functions
+
       it("should set the Inbox lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
           O.some("previous")
@@ -472,7 +472,8 @@ describe("allPaginated reducer", () => {
           previous: "abcde",
           next: "12345"
         }),
-        lastRequest: O.none
+        lastRequest: O.none,
+        lastUpdateTime: new Date(0)
       }
     };
 
@@ -769,8 +770,8 @@ describe("allPaginated reducer", () => {
 });
 
 const defaultState: AllPaginated = {
-  inbox: { data: pot.none, lastRequest: O.none },
-  archive: { data: pot.none, lastRequest: O.none },
+  inbox: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
+  archive: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
   migration: O.none,
   shownCategory: "INBOX"
 };
@@ -788,6 +789,7 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.none,
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -796,6 +798,7 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.none,
       inbox: pot.none,
       lastRequest: O.none,
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -804,6 +807,7 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("previous"),
+      lastUpdateTime: new Date(0),
       expectedArchive: true,
       expectedInbox: true
     },
@@ -812,6 +816,7 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.none,
       lastRequest: O.some("previous"),
+      lastUpdateTime: new Date(0),
       expectedArchive: true,
       expectedInbox: false
     },
@@ -820,6 +825,7 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("next"),
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -827,11 +833,19 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("all"),
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     }
   ].forEach(
-    ({ archive, inbox, lastRequest, expectedArchive, expectedInbox }) => {
+    ({
+      archive,
+      inbox,
+      lastRequest,
+      lastUpdateTime,
+      expectedArchive,
+      expectedInbox
+    }) => {
       describe(`given { archive: ${archive.kind}, inbox: ${
         inbox.kind
       }, lastRequest: ${lastRequest.toString()} `, () => {
@@ -843,12 +857,14 @@ describe("isLoadingPreviousPage selector", () => {
                 archive: {
                   data: archive,
                   lastRequest:
-                    lastRequest as AllPaginated["archive"]["lastRequest"]
+                    lastRequest as AllPaginated["archive"]["lastRequest"],
+                  lastUpdateTime
                 },
                 inbox: {
                   data: inbox,
                   lastRequest:
-                    lastRequest as AllPaginated["inbox"]["lastRequest"]
+                    lastRequest as AllPaginated["inbox"]["lastRequest"],
+                  lastUpdateTime
                 }
               })
             )
@@ -863,12 +879,14 @@ describe("isLoadingPreviousPage selector", () => {
                 archive: {
                   data: archive,
                   lastRequest:
-                    lastRequest as AllPaginated["archive"]["lastRequest"]
+                    lastRequest as AllPaginated["archive"]["lastRequest"],
+                  lastUpdateTime
                 },
                 inbox: {
                   data: inbox,
                   lastRequest:
-                    lastRequest as AllPaginated["inbox"]["lastRequest"]
+                    lastRequest as AllPaginated["inbox"]["lastRequest"],
+                  lastUpdateTime
                 }
               })
             )
@@ -886,6 +904,7 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.none,
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -894,6 +913,7 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.none,
       inbox: pot.none,
       lastRequest: O.none,
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -902,6 +922,7 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("next"),
+      lastUpdateTime: new Date(0),
       expectedArchive: true,
       expectedInbox: true
     },
@@ -910,6 +931,7 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.none,
       lastRequest: O.some("next"),
+      lastUpdateTime: new Date(0),
       expectedArchive: true,
       expectedInbox: false
     },
@@ -918,6 +940,7 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("previous"),
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -925,11 +948,19 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("all"),
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     }
   ].forEach(
-    ({ archive, inbox, lastRequest, expectedArchive, expectedInbox }) => {
+    ({
+      archive,
+      inbox,
+      lastRequest,
+      lastUpdateTime,
+      expectedArchive,
+      expectedInbox
+    }) => {
       describe(`given { archive: ${archive.kind}, inbox: ${
         inbox.kind
       }, lastRequest: ${lastRequest.toString()} `, () => {
@@ -941,12 +972,14 @@ describe("isLoadingNextPage selector", () => {
                 archive: {
                   data: archive,
                   lastRequest:
-                    lastRequest as AllPaginated["archive"]["lastRequest"]
+                    lastRequest as AllPaginated["archive"]["lastRequest"],
+                  lastUpdateTime
                 },
                 inbox: {
                   data: inbox,
                   lastRequest:
-                    lastRequest as AllPaginated["inbox"]["lastRequest"]
+                    lastRequest as AllPaginated["inbox"]["lastRequest"],
+                  lastUpdateTime
                 }
               })
             )
@@ -961,12 +994,14 @@ describe("isLoadingNextPage selector", () => {
                 archive: {
                   data: archive,
                   lastRequest:
-                    lastRequest as AllPaginated["archive"]["lastRequest"]
+                    lastRequest as AllPaginated["archive"]["lastRequest"],
+                  lastUpdateTime
                 },
                 inbox: {
                   data: inbox,
                   lastRequest:
-                    lastRequest as AllPaginated["inbox"]["lastRequest"]
+                    lastRequest as AllPaginated["inbox"]["lastRequest"],
+                  lastUpdateTime
                 }
               })
             )
@@ -1038,7 +1073,8 @@ describe("isLoadingOrUpdatingInbox selector", () => {
               ...defaultState,
               inbox: {
                 data: inbox,
-                lastRequest: O.none
+                lastRequest: O.none,
+                lastUpdateTime: new Date(0)
               }
             })
           )
@@ -1751,14 +1787,13 @@ describe("shouldShowRefreshControllOnListSelector", () => {
   categories.forEach(category =>
     messagePagePotData.forEach(messagePagePot =>
       messageRequests.forEach(messageRequest => {
-        // eslint-disable-next-line no-underscore-dangle
         const expectedOutput =
           (messagePagePot.kind === "PotSomeLoading" ||
             messagePagePot.kind === "PotSomeUpdating") &&
           O.isSome(messageRequest) &&
           (messageRequest.value === "all" ||
             messageRequest.value === "previous");
-        // eslint-disable-next-line no-underscore-dangle
+
         it(`should return ${expectedOutput}, ${category}, '${
           O.isSome(messageRequest) ? messageRequest.value : "None"
         }' lastRequest, ${messagePagePot.kind}`, () => {
@@ -1895,6 +1930,138 @@ describe("isPaymentMessageWithPaidNoticeSelector", () => {
     } as MessageCategory;
     const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
     expect(isPaid).toBe(true);
+  });
+});
+
+describe("allPaginated reducer", () => {
+  it("'lastUpdateTime' should match expected values for initial state", () => {
+    const allPaginatedState = reducer(
+      undefined,
+      applicationChangeState("active")
+    );
+    expect(allPaginatedState.archive.lastUpdateTime).toStrictEqual(new Date(0));
+    expect(allPaginatedState.inbox.lastUpdateTime).toStrictEqual(new Date(0));
+  });
+  const expectedResultForIndex = (index: number, archived?: boolean) => {
+    const isChangingTimeIndex = index === 1 || index === 4;
+    return {
+      archiveShouldHaveOriginalValue: !archived || !isChangingTimeIndex,
+      inboxShoudlHaveOriginalValue: archived || !isChangingTimeIndex
+    };
+  };
+  [undefined, false, true].forEach(archived =>
+    [
+      reloadAllMessages.request({
+        pageSize,
+        filter: { getArchived: archived }
+      }),
+      reloadAllMessages.success({
+        filter: { getArchived: archived },
+        messages: [],
+        pagination: {}
+      }),
+      reloadAllMessages.failure({
+        error: new Error(""),
+        filter: { getArchived: archived }
+      }),
+      loadPreviousPageMessages.request({
+        filter: { getArchived: archived },
+        pageSize
+      }),
+      loadPreviousPageMessages.success({
+        filter: { getArchived: archived },
+        messages: [],
+        pagination: {}
+      }),
+      loadPreviousPageMessages.failure({
+        error: new Error(""),
+        filter: { getArchived: archived }
+      }),
+      loadNextPageMessages.request({
+        filter: { getArchived: archived },
+        pageSize
+      }),
+      loadNextPageMessages.success({
+        filter: { getArchived: archived },
+        messages: [],
+        pagination: {}
+      }),
+      loadNextPageMessages.failure({
+        error: new Error(""),
+        filter: { getArchived: archived }
+      })
+    ].forEach((dispatchedAction, index) => {
+      it(`'lastUpdateTime' should match expected value for action '${
+        dispatchedAction.type
+      }' with filter '${
+        archived ? "ARCHIVED" : archived === false ? "INBOX" : "undefined"
+      }'`, () => {
+        const reducerState = reducer(undefined, dispatchedAction);
+        const result = expectedResultForIndex(index, archived);
+        if (result.archiveShouldHaveOriginalValue) {
+          expect(reducerState.archive.lastUpdateTime).toStrictEqual(
+            new Date(0)
+          );
+        } else {
+          expect(reducerState.archive.lastUpdateTime).not.toStrictEqual(
+            new Date(0)
+          );
+        }
+        if (result.inboxShoudlHaveOriginalValue) {
+          expect(reducerState.inbox.lastUpdateTime).toStrictEqual(new Date(0));
+        } else {
+          expect(reducerState.inbox.lastUpdateTime).not.toStrictEqual(
+            new Date(0)
+          );
+        }
+      });
+    })
+  );
+  it("'inbox.lastUpdateTime' should be 'new Date(0)' after 'requestAutomaticMessagesRefresh('INBOX')' dispatch", () => {
+    const lastUpdateTime = new Date();
+    const initialState = {
+      archive: {
+        data: pot.none,
+        lastRequest: O.none,
+        lastUpdateTime
+      },
+      inbox: {
+        data: pot.none,
+        lastRequest: O.none,
+        lastUpdateTime
+      },
+      migration: O.none,
+      shownCategory: "INBOX"
+    } as AllPaginated;
+    const reducerState = reducer(
+      initialState,
+      requestAutomaticMessagesRefresh("INBOX")
+    );
+    expect(reducerState.archive.lastUpdateTime).toStrictEqual(lastUpdateTime);
+    expect(reducerState.inbox.lastUpdateTime).toStrictEqual(new Date(0));
+  });
+  it("'archive.lastUpdateTime' should be 'new Date(0)' after 'requestAutomaticMessagesRefresh('ARCHIVE')' dispatch", () => {
+    const lastUpdateTime = new Date();
+    const initialState = {
+      archive: {
+        data: pot.none,
+        lastRequest: O.none,
+        lastUpdateTime
+      },
+      inbox: {
+        data: pot.none,
+        lastRequest: O.none,
+        lastUpdateTime
+      },
+      migration: O.none,
+      shownCategory: "INBOX"
+    } as AllPaginated;
+    const reducerState = reducer(
+      initialState,
+      requestAutomaticMessagesRefresh("ARCHIVE")
+    );
+    expect(reducerState.archive.lastUpdateTime).toStrictEqual(new Date(0));
+    expect(reducerState.inbox.lastUpdateTime).toStrictEqual(lastUpdateTime);
   });
 });
 

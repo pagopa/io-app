@@ -3,7 +3,7 @@
 exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,14 +326,14 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "flex": 1,
                             "justifyContent": "center",
@@ -334,12 +346,12 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                           accessibilityIgnoresInvertColors={true}
                           resizeMode="contain"
                           source={
-                            Object {
+                            {
                               "testUri": "../../../img/pictograms/payment-completed.png",
                             }
                           }
                           style={
-                            Object {
+                            {
                               "height": 102,
                               "width": 102,
                             }
@@ -348,7 +360,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                         />
                         <View
                           style={
-                            Object {
+                            {
                               "height": 24,
                             }
                           }
@@ -360,21 +372,21 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                           defaultWeight="Bold"
                           font="TitilliumSansPro"
                           fontStyle={
-                            Object {
+                            {
                               "fontSize": 20,
                               "lineHeight": 24,
                             }
                           }
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "textAlign": "center",
                               },
-                              Object {
+                              {
                                 "fontSize": 20,
                                 "lineHeight": 24,
                               },
-                              Object {
+                              {
                                 "color": "#17324D",
                                 "fontFamily": "Titillium Sans Pro",
                                 "fontStyle": "normal",
@@ -389,7 +401,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                         </Text>
                         <View
                           style={
-                            Object {
+                            {
                               "height": 16,
                             }
                           }
@@ -400,21 +412,21 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                           defaultWeight="Regular"
                           font="TitilliumSansPro"
                           fontStyle={
-                            Object {
+                            {
                               "fontSize": 16,
                               "lineHeight": 24,
                             }
                           }
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "textAlign": "center",
                               },
-                              Object {
+                              {
                                 "fontSize": 16,
                                 "lineHeight": 24,
                               },
-                              Object {
+                              {
                                 "color": "#475A6D",
                                 "fontFamily": "Titillium Sans Pro",
                                 "fontStyle": "normal",
@@ -431,7 +443,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                       <View
                         pointerEvents="box-none"
                         style={
-                          Object {
+                          {
                             "marginTop": -50,
                             "overflow": "hidden",
                             "paddingTop": 50,
@@ -443,20 +455,20 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                         <View
                           onLayout={[Function]}
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "backgroundColor": "#FFFFFF",
                                 "elevation": 20,
                                 "paddingHorizontal": 24,
                                 "shadowColor": "#0E0F13",
-                                "shadowOffset": Object {
+                                "shadowOffset": {
                                   "height": 50,
                                   "width": 0,
                                 },
                                 "shadowOpacity": 0.5,
                                 "shadowRadius": 37,
                               },
-                              Object {
+                              {
                                 "paddingBottom": 16,
                                 "paddingTop": 16,
                               },
@@ -465,14 +477,14 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "flexDirection": "row",
                               }
                             }
                           >
                             <View
                               style={
-                                Object {
+                                {
                                   "alignContent": "center",
                                   "flex": 1,
                                   "justifyContent": "center",
@@ -483,9 +495,20 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                 accessibilityLabel="Continua"
                                 accessibilityRole="button"
                                 accessibilityState={
-                                  Object {
+                                  {
                                     "busy": false,
+                                    "checked": undefined,
                                     "disabled": false,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
+                                }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
                                   }
                                 }
                                 accessible={true}
@@ -500,13 +523,13 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                 onResponderTerminate={[Function]}
                                 onResponderTerminationRequest={[Function]}
                                 onStartShouldSetResponder={[Function]}
-                                style={Object {}}
+                                style={{}}
                                 testID="primaryButtonId"
                               >
                                 <View
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "alignItems": "center",
                                         "borderRadius": 4,
                                         "elevation": 0,
@@ -515,20 +538,20 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                         "paddingHorizontal": 16,
                                         "textAlignVertical": "center",
                                       },
-                                      Object {
+                                      {
                                         "overflow": "hidden",
                                       },
                                       false,
-                                      Object {
+                                      {
                                         "height": 40,
                                       },
-                                      Object {
+                                      {
                                         "backgroundColor": "#0073E6",
                                       },
-                                      Object {
+                                      {
                                         "backgroundColor": undefined,
-                                        "transform": Array [
-                                          Object {
+                                        "transform": [
+                                          {
                                             "scale": undefined,
                                           },
                                         ],
@@ -538,8 +561,8 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                 >
                                   <View
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "alignItems": "center",
                                           "flexDirection": "row",
                                           "justifyContent": "center",
@@ -558,22 +581,22 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                       ellipsizeMode="tail"
                                       font="TitilliumSansPro"
                                       fontStyle={
-                                        Object {
+                                        {
                                           "fontSize": 16,
                                         }
                                       }
                                       importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.3}
+                                      maxFontSizeMultiplier={1.25}
                                       numberOfLines={1}
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "alignSelf": "center",
                                           },
-                                          Object {
+                                          {
                                             "fontSize": 16,
                                           },
-                                          Object {
+                                          {
                                             "color": "#FFFFFF",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
@@ -598,8 +621,8 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

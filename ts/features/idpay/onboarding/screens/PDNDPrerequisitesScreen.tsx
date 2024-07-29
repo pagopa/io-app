@@ -1,5 +1,5 @@
 import {
-  ButtonExtendedOutline,
+  ModuleSummary,
   ButtonSolid,
   ContentWrapper,
   FooterWithButtons,
@@ -22,7 +22,7 @@ import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import { serviceByIdPotSelector } from "../../../services/details/store/reducers/servicesById";
+import { serviceByIdPotSelector } from "../../../services/details/store/reducers";
 import { getPDNDCriteriaDescription } from "../utils/strings";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../xstate/selectors";
@@ -117,7 +117,7 @@ export const PDNDPrerequisitesScreen = () => {
         <View style={[IOStyles.horizontalContentPadding, styles.listContainer]}>
           {pdndCriteria.map((criteria, index) => (
             <React.Fragment key={index}>
-              <ButtonExtendedOutline
+              <ModuleSummary
                 label={I18n.t(
                   `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
                 )}

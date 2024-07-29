@@ -5,6 +5,7 @@ import {
   useNavigation
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/params";
 import { CDC_ROUTES } from "../../features/bonus/cdc/navigation/routes";
 import {
@@ -15,12 +16,12 @@ import {
 import CGN_ROUTES from "../../features/bonus/cgn/navigation/routes";
 import { FciParamsList } from "../../features/fci/navigation/params";
 import { FCI_ROUTES } from "../../features/fci/navigation/routes";
+import {
+  FIMS_ROUTES,
+  FimsParamsList
+} from "../../features/fims/common/navigation";
 import { FimsLegacyParamsList } from "../../features/fimsLegacy/navigation/params";
 import FIMS_LEGACY_ROUTES from "../../features/fimsLegacy/navigation/routes";
-import {
-  FIMS_SSO_ROUTES,
-  FimsSSOParamsList
-} from "../../features/fims/singleSignOn/navigation";
 import { IdPayBarcodeParamsList } from "../../features/idpay/barcode/navigation/params";
 import { IdPayBarcodeRoutes } from "../../features/idpay/barcode/navigation/routes";
 import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
@@ -46,12 +47,14 @@ import {
   IDPayUnsubscriptionParamsList,
   IDPayUnsubscriptionRoutes
 } from "../../features/idpay/unsubscription/navigation/navigator";
+import { ItwParamsList } from "../../features/itwallet/navigation/ItwParamsList";
+import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import { MessagesParamsList } from "../../features/messages/navigation/params";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
-import { WalletParamsList as NewWalletParamsList } from "../../features/newWallet/navigation/params";
-import { WalletRoutes as NewWalletRoutes } from "../../features/newWallet/navigation/routes";
 import { PaymentsBarcodeParamsList } from "../../features/payments/barcode/navigation/params";
 import { PaymentsBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
+import { PaymentsTransactionBizEventsParamsList } from "../../features/payments/bizEventsTransaction/navigation/params";
+import { PaymentsTransactionBizEventsRoutes } from "../../features/payments/bizEventsTransaction/navigation/routes";
 import { PaymentsCheckoutParamsList } from "../../features/payments/checkout/navigation/params";
 import { PaymentsCheckoutRoutes } from "../../features/payments/checkout/navigation/routes";
 import { PaymentsMethodDetailsParamsList } from "../../features/payments/details/navigation/params";
@@ -62,15 +65,11 @@ import { PaymentsTransactionParamsList } from "../../features/payments/transacti
 import { PaymentsTransactionRoutes } from "../../features/payments/transaction/navigation/routes";
 import { ServicesParamsList } from "../../features/services/common/navigation/params";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
-import { PaymentsTransactionBizEventsParamsList } from "../../features/payments/bizEventsTransaction/navigation/params";
-import { PaymentsTransactionBizEventsRoutes } from "../../features/payments/bizEventsTransaction/navigation/routes";
 import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
 import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
-import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
-import { ItwParamsList } from "../../features/itwallet/navigation/ItwParamsList";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { CheckEmailParamsList } from "./CheckEmailParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
@@ -88,6 +87,7 @@ export type AppParamsList = {
   [ROUTES.MAIN]: NavigatorScreenParams<MainTabParamsList>;
 
   [MESSAGES_ROUTES.MESSAGES_NAVIGATOR]: NavigatorScreenParams<MessagesParamsList>;
+  [MESSAGES_ROUTES.MESSAGES_SEARCH]: undefined;
   [ROUTES.WALLET_NAVIGATOR]: NavigatorScreenParams<WalletParamsList>;
   [SERVICES_ROUTES.SERVICES_NAVIGATOR]: NavigatorScreenParams<ServicesParamsList>;
   [SERVICES_ROUTES.SEARCH]: undefined;
@@ -107,7 +107,7 @@ export type AppParamsList = {
   [UADONATION_ROUTES.WEBVIEW]: NavigatorScreenParams<UAWebviewScreenNavigationParams>;
   [CDC_ROUTES.BONUS_REQUEST_MAIN]: NavigatorScreenParams<CdcBonusRequestParamsList>;
   [FIMS_LEGACY_ROUTES.MAIN]: NavigatorScreenParams<FimsLegacyParamsList>;
-  [FIMS_SSO_ROUTES.MAIN]: NavigatorScreenParams<FimsSSOParamsList>;
+  [FIMS_ROUTES.MAIN]: NavigatorScreenParams<FimsParamsList>;
   [FCI_ROUTES.MAIN]: NavigatorScreenParams<FciParamsList>;
 
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: NavigatorScreenParams<IDPayOnboardingParamsList>;
@@ -121,8 +121,6 @@ export type AppParamsList = {
   [IdPayCodeRoutes.IDPAY_CODE_MAIN]: NavigatorScreenParams<IdPayCodeParamsList>;
 
   [IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN]: NavigatorScreenParams<IdPayBarcodeParamsList>;
-
-  [NewWalletRoutes.WALLET_NAVIGATOR]: NavigatorScreenParams<NewWalletParamsList>;
 
   [PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR]: NavigatorScreenParams<PaymentsOnboardingParamsList>;
   [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR]: NavigatorScreenParams<PaymentsCheckoutParamsList>;
@@ -151,6 +149,14 @@ export type IOStackNavigationProp<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
 > = StackNavigationProp<AppParamsList & ParamList, RouteName>;
+export type IOTabNavigationProp<
+  ParamList extends ParamListBase,
+  RouteName extends keyof ParamList = string
+> = BottomTabNavigationProp<MainTabParamsList & ParamList, RouteName>;
 
 export const useIONavigation = () =>
   useNavigation<IOStackNavigationProp<AppParamsList, keyof AppParamsList>>();
+export const useIOTabNavigation = () =>
+  useNavigation<
+    IOTabNavigationProp<MainTabParamsList, keyof MainTabParamsList>
+  >();
