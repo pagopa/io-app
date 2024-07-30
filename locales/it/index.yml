@@ -2735,7 +2735,7 @@ bonus:
         title: "Purtroppo non hai i requisiti per attivare la Carta Giovani Nazionale."
         body: "La Carta Giovani Nazionali è disponibile solo per i cittadini italiani ed europei residenti in Italia, dai 18 ai 35 anni di età."
       timeout:
-        title: "Stiamo lavorando la tua richiesta."
+        title: "Stiamo lavorando alla tua richiesta."
         body: "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
       alreadyActive:
         title: "La tua Carta Giovani Nazionale è già attiva!"
