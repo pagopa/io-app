@@ -1,64 +1,40 @@
-import * as React from "react";
-import { Alert, StyleSheet, View } from "react-native";
 import {
   Body,
+  BodyMonospace,
   ButtonText,
   Caption,
   Chip,
+  Divider,
   H1,
   H2,
   H3,
   H4,
   H5,
   H6,
+  HStack,
   Hero,
   IOColors,
   Label,
-  LabelSmall,
   LabelLink,
-  BodyMonospace,
-  HSpacer,
+  LabelSmall,
+  MdH1,
+  MdH2,
+  MdH3,
+  MdH4,
+  MdH5,
+  MdH6,
   VSpacer,
-  useIOTheme,
-  Divider
+  VStack
 } from "@pagopa/io-app-design-system";
-import { Body as LegacyBody } from "../../../components/core/typography/Body";
-import { H1 as LegacyH1 } from "../../../components/core/typography/H1";
-import { H2 as LegacyH2 } from "../../../components/core/typography/H2";
-import { H3 as LegacyH3 } from "../../../components/core/typography/H3";
-import { H4 as LegacyH4 } from "../../../components/core/typography/H4";
-import { H5 as LegacyH5 } from "../../../components/core/typography/H5";
-import { Label as LegacyLabel } from "../../../components/core/typography/Label";
-import { LabelSmall as LegacyLabelSmall } from "../../../components/core/typography/LabelSmall";
-import { Link as LegacyLink } from "../../../components/core/typography/Link";
-import { Monospace as LegacyMonospace } from "../../../components/core/typography/Monospace";
+import * as React from "react";
+import { Alert, View } from "react-native";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: "row",
-    flexWrap: "wrap"
-  },
-  distancedTitle: {
-    marginTop: 12
-  }
-});
+const blockMargin = 40;
 
-const sectionTitleMargin = 16;
-
-export const DSTypography = () => {
-  const theme = useIOTheme();
-
-  return (
-    <DesignSystemScreen title={"Typography"}>
-      <LegacyH2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: sectionTitleMargin }}
-      >
-        New typographic scale
-      </LegacyH2>
-
+export const DSTypography = () => (
+  <DesignSystemScreen title={"Typography"}>
+    <VStack space={blockMargin}>
       <HeroRow />
       <H1Row />
       <H2Row />
@@ -66,368 +42,189 @@ export const DSTypography = () => {
       <H4Row />
       <H5Row />
       <H6Row />
-
       <ButtonTextRow />
       <CaptionRow />
       <ChipRow />
-
-      <LegacyBody>Body</LegacyBody>
-      <LegacyBody>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a felis
-        congue, congue leo sit amet, semper ex. Nulla consectetur non quam vel
-        porttitor. Vivamus ac ex non nunc pellentesque molestie. Aliquam id
-        lorem aliquam, aliquam massa eget, commodo erat. Maecenas finibus dui
-        massa, eget pharetra mauris posuere semper.
-      </LegacyBody>
-      <VSpacer size={40} />
+      <BodyRow />
       <BodyMonospace>BodyMonoSpace</BodyMonospace>
-      <VSpacer size={40} />
-
       <LabelSmallRow />
       <LabelRow />
       <LabelLink onPress={() => Alert.alert("onPress LabelLink!")}>
         LabelLink
       </LabelLink>
-
-      <VSpacer size={40} />
-      <Divider />
-      <VSpacer size={40} />
-
-      <LegacyH2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: sectionTitleMargin }}
-      >
-        Legacy typographic scale
-      </LegacyH2>
-      {/* <FontFamilyShowroom /> */}
-      {/*  <DarkBackgroundTypographicScale /> */}
-      <LegacyH1Row />
-      <LegacyH2Row />
-      <LegacyH3Row />
-      <LegacyH4Row />
-      <LegacyH5Row />
-      <Body>Body</Body>
-      <LegacyLabelSmallRow />
-      <LegacyLabelRow />
-      <LegacyLink onPress={() => Alert.alert("onPress link!")}>Link</LegacyLink>
-      <LegacyMonospace>MonoSpace</LegacyMonospace>
-      <VSpacer size={40} />
-    </DesignSystemScreen>
-  );
-};
+    </VStack>
+    <VSpacer size={blockMargin} />
+    <Divider />
+    <VSpacer size={blockMargin} />
+    <VStack space={blockMargin}>
+      <MdH1Row />
+      <MdH2Row />
+      <MdH3Row />
+      <MdH4Row />
+      <MdH5Row />
+      <MdH6Row />
+    </VStack>
+  </DesignSystemScreen>
+);
 
 const getTitle = (element: string) => `Heading ${element}`;
 const getLongerTitle = (element: string) =>
   `Very loooong looong title set with Heading ${element}`;
 
-const LegacyH1Row = () => (
-  <>
-    <View>
-      <LegacyH1>{getTitle("H1")}</LegacyH1>
-      <LegacyH1 style={styles.distancedTitle}>{getLongerTitle("H1")}</LegacyH1>
-    </View>
-    <VSpacer size={40} />
-  </>
-);
-
-const LegacyH2Row = () => (
-  <>
-    <View>
-      <LegacyH2>{getTitle("H2")}</LegacyH2>
-      <LegacyH2 style={styles.distancedTitle}>{getLongerTitle("H2")}</LegacyH2>
-      <LegacyH2 style={styles.distancedTitle} weight={"Semibold"}>
-        {getTitle("H2 Semibold")}
-      </LegacyH2>
-    </View>
-    <VSpacer size={40} />
-  </>
-);
-
-const LegacyH3Row = () => (
-  <>
-    <View style={styles.row}>
-      <LegacyH3>Header H3 SB</LegacyH3>
-      <HSpacer size={16} />
-      <LegacyH3 color={"bluegreyLight"}>Header H3 SB</LegacyH3>
-      <HSpacer size={16} />
-      <View style={{ backgroundColor: IOColors.bluegrey }}>
-        <LegacyH3 color={"white"}>Header H3 SB</LegacyH3>
-      </View>
-    </View>
-    <VSpacer size={16} />
-    <View style={styles.row}>
-      <View style={{ backgroundColor: IOColors.bluegrey }}>
-        <LegacyH3 color={"white"} weight={"Bold"}>
-          Header H3 Bold
-        </LegacyH3>
-      </View>
-    </View>
-    <VSpacer size={40} />
-  </>
-);
-
-const LegacyH4Row = () => (
-  <>
-    <View style={styles.row}>
-      {/* Bold */}
-      <LegacyH4>Header H4 Bold</LegacyH4>
-      <HSpacer size={16} />
-      <LegacyH4 color={"blue"}>Header H4 Bold</LegacyH4>
-      <HSpacer size={16} />
-      <View style={{ backgroundColor: IOColors.bluegrey }}>
-        <LegacyH4 color={"white"}>Header H4 Bold</LegacyH4>
-      </View>
-    </View>
-    <VSpacer size={16} />
-    <View style={styles.row}>
-      {/* Semibold */}
-      <View style={{ backgroundColor: IOColors.bluegrey }}>
-        <LegacyH4 color={"white"} weight={"Semibold"}>
-          Header H4 Semibold
-        </LegacyH4>
-      </View>
-    </View>
-    <VSpacer size={16} />
-    <View style={styles.row}>
-      {/* Regular */}
-      <LegacyH4 weight={"Regular"} color={"bluegreyDark"}>
-        Header H4
-      </LegacyH4>
-      <HSpacer size={16} />
-      <LegacyH4 weight={"Regular"} color={"bluegrey"}>
-        Header H4
-      </LegacyH4>
-      <HSpacer size={16} />
-      <LegacyH4 weight={"Regular"} color={"bluegreyLight"}>
-        Header H4
-      </LegacyH4>
-      <HSpacer size={16} />
-      <View style={{ backgroundColor: IOColors.bluegrey }}>
-        <LegacyH4 weight={"Regular"} color={"white"}>
-          Header H4
-        </LegacyH4>
-      </View>
-    </View>
-    <VSpacer size={40} />
-  </>
-);
-
-const LegacyH5Row = () => (
-  <>
-    <View style={styles.row}>
-      <LegacyH5>Header H5 SB</LegacyH5>
-      <HSpacer size={16} />
-      <LegacyH5 color={"bluegrey"}>Header H5 SB</LegacyH5>
-      <HSpacer size={16} />
-      <LegacyH5 color={"blue"}>Header H5 SB</LegacyH5>
-      <HSpacer size={16} />
-      <View style={{ backgroundColor: IOColors.bluegrey }}>
-        <LegacyH5 color={"white"}>Header H5 SB</LegacyH5>
-      </View>
-    </View>
-    <VSpacer size={16} />
-    <View style={styles.row}>
-      <LegacyH5 weight={"Regular"}>Header H5</LegacyH5>
-      <HSpacer size={16} />
-      <LegacyH5 weight={"Regular"} color={"bluegrey"}>
-        Header H5
-      </LegacyH5>
-      <HSpacer size={16} />
-      <LegacyH5 weight={"Regular"} color={"blue"}>
-        Header H5
-      </LegacyH5>
-    </View>
-    <VSpacer size={40} />
-  </>
-);
-
-const LegacyLabelSmallRow = () => (
-  <>
-    <View style={styles.row}>
-      <LegacyLabelSmall>Label small</LegacyLabelSmall>
-      <HSpacer size={16} />
-      <LegacyLabelSmall color={"bluegrey"}>Label small</LegacyLabelSmall>
-      <HSpacer size={16} />
-      <LegacyLabelSmall color={"red"}>Label small</LegacyLabelSmall>
-      <HSpacer size={16} />
-      <View style={{ backgroundColor: IOColors.bluegrey }}>
-        <LegacyLabelSmall color={"white"}>Label small</LegacyLabelSmall>
-      </View>
-    </View>
-    <VSpacer size={40} />
-  </>
-);
-
-const LegacyLabelRow = () => (
-  <>
-    <View style={styles.row}>
-      <LegacyLabel>Label</LegacyLabel>
-      <HSpacer size={16} />
-      <LegacyLabel color={"bluegrey"}>Label</LegacyLabel>
-      <HSpacer size={16} />
-      <View style={{ backgroundColor: IOColors.bluegrey }}>
-        <LegacyLabel color={"white"}>Label</LegacyLabel>
-      </View>
-    </View>
-    <VSpacer size={40} />
-  </>
-);
-
 const HeroRow = () => (
-  <>
-    <View>
-      <Hero>{getTitle("Hero")}</Hero>
-      <Hero>{getLongerTitle("Hero")}</Hero>
-    </View>
-    <VSpacer size={40} />
-  </>
+  <View>
+    <Hero>{getTitle("Hero")}</Hero>
+    <Hero>{getLongerTitle("Hero")}</Hero>
+  </View>
 );
 
 const H1Row = () => (
-  <>
-    <View>
-      <H1>{getTitle("H1")}</H1>
-      <H1 style={styles.distancedTitle}>{getLongerTitle("H1")}</H1>
-    </View>
-    <VSpacer size={40} />
-  </>
+  <VStack space={8}>
+    <H1>{getTitle("H1")}</H1>
+    <H1>{getLongerTitle("H1")}</H1>
+  </VStack>
 );
 
 const H2Row = () => (
-  <>
-    <View>
-      <H2>{getTitle("H2")}</H2>
-      <H2 style={styles.distancedTitle}>{getLongerTitle("H2")}</H2>
-    </View>
-    <VSpacer size={40} />
-  </>
+  <VStack space={8}>
+    <H2>{getTitle("H2")}</H2>
+    <H2>{getLongerTitle("H2")}</H2>
+  </VStack>
 );
 
 const H3Row = () => (
-  <>
-    <View style={styles.row}>
-      <H3>Header H3</H3>
-      <HSpacer size={16} />
-      <H3 color="grey-650">Header H3</H3>
-      <HSpacer size={16} />
-      <View style={{ backgroundColor: IOColors["grey-700"] }}>
-        <H3 color={"white"}>Header H3</H3>
-      </View>
+  <HStack space={16}>
+    <H3>Header H3</H3>
+    <H3 color="grey-650">Header H3</H3>
+    <View style={{ backgroundColor: IOColors["grey-700"] }}>
+      <H3 color={"white"}>Header H3</H3>
     </View>
-    <VSpacer size={40} />
-  </>
+  </HStack>
 );
 
 const H4Row = () => (
-  <>
-    <View style={styles.row}>
-      {/* Bold */}
-      <H4>Header H4</H4>
-      <HSpacer size={16} />
-      <H4 color="blueIO-500">Header H4</H4>
-      <HSpacer size={16} />
-      <View style={{ backgroundColor: IOColors["grey-700"] }}>
-        <H4 color={"white"}>Header H4</H4>
-      </View>
+  <HStack space={16}>
+    <H4>Header H4</H4>
+    <H4 color="blueIO-500">Header H4</H4>
+    <View style={{ backgroundColor: IOColors["grey-700"] }}>
+      <H4 color={"white"}>Header H4</H4>
     </View>
-    <VSpacer size={40} />
-  </>
+  </HStack>
 );
 
 const H5Row = () => (
-  <>
-    <View style={styles.row}>
-      <H5>Header H5</H5>
-      <HSpacer size={16} />
-      <H5 color="grey-650">Header H5</H5>
-      <HSpacer size={16} />
-      <H5 color={"blueIO-500"}>Header H5</H5>
-    </View>
-    <VSpacer size={40} />
-  </>
+  <HStack space={16}>
+    <H5>Header H5</H5>
+    <H5 color="grey-650">Header H5</H5>
+    <H5 color={"blueIO-500"}>Header H5</H5>
+  </HStack>
 );
 
 const H6Row = () => (
-  <>
-    <View style={styles.row}>
-      <H6>Header H6</H6>
-      <HSpacer size={16} />
-      <H6 color="grey-650">Header H6</H6>
-      <HSpacer size={16} />
-      <H6 color={"blueIO-500"}>Header H6</H6>
-    </View>
-    <VSpacer size={40} />
-  </>
+  <HStack space={16}>
+    <H6>Header H6</H6>
+    <H6 color="grey-650">Header H6</H6>
+    <H6 color={"blueIO-500"}>Header H6</H6>
+  </HStack>
 );
 
 const ButtonTextRow = () => (
-  <>
-    <View style={styles.row}>
-      <View style={{ backgroundColor: IOColors["grey-700"] }}>
-        <ButtonText>ButtonText</ButtonText>
-      </View>
-      <HSpacer size={16} />
-      <ButtonText color="grey-700">ButtonText</ButtonText>
-      <HSpacer size={16} />
-      <ButtonText color="blueIO-500">ButtonText</ButtonText>
+  <HStack space={16}>
+    <ButtonText color="grey-700">ButtonText</ButtonText>
+    <ButtonText color="blueIO-500">ButtonText</ButtonText>
+    <View style={{ backgroundColor: IOColors["grey-700"] }}>
+      <ButtonText>ButtonText</ButtonText>
     </View>
-    <VSpacer size={40} />
-  </>
+  </HStack>
 );
 
 const CaptionRow = () => (
-  <>
-    <View style={styles.row}>
-      <Caption>Caption</Caption>
-      <HSpacer size={16} />
-      <Caption color="grey-650">Caption</Caption>
-      <HSpacer size={16} />
-      <Caption color={"blueIO-500"}>Caption</Caption>
-    </View>
-    <VSpacer size={40} />
-  </>
+  <HStack space={16}>
+    <Caption>Caption</Caption>
+    <Caption color="grey-650">Caption</Caption>
+    <Caption color={"blueIO-500"}>Caption</Caption>
+  </HStack>
 );
 
 const ChipRow = () => (
-  <>
-    <View style={styles.row}>
-      <Chip>Chip</Chip>
-      <HSpacer size={16} />
-      <Chip color="grey-650">Chip</Chip>
-      <HSpacer size={16} />
-      <Chip color={"blueIO-500"}>Chip</Chip>
-    </View>
-    <VSpacer size={40} />
-  </>
+  <HStack space={16}>
+    <Chip>Chip</Chip>
+    <Chip color="grey-650">Chip</Chip>
+    <Chip color={"blueIO-500"}>Chip</Chip>
+  </HStack>
+);
+
+const BodyRow = () => (
+  <VStack space={16}>
+    <Body>Body</Body>
+    <Body>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a felis
+      congue, congue leo sit amet, semper ex. Nulla consectetur non quam vel
+      porttitor. Vivamus ac ex non nunc pellentesque molestie. Aliquam id lorem
+      aliquam, aliquam massa eget, commodo erat. Maecenas finibus dui massa,
+      eget pharetra mauris posuere semper.
+    </Body>
+  </VStack>
 );
 
 const LabelSmallRow = () => (
-  <>
-    <View style={styles.row}>
-      <LabelSmall>Label small</LabelSmall>
-      <HSpacer size={16} />
-      <LabelSmall color={"bluegrey"}>Label small</LabelSmall>
-      <HSpacer size={16} />
-      <LabelSmall color={"red"}>Label small</LabelSmall>
-      <HSpacer size={16} />
-      <View style={{ backgroundColor: IOColors.bluegrey }}>
-        <LabelSmall color={"white"}>Label small</LabelSmall>
-      </View>
+  <HStack space={16}>
+    <LabelSmall>Label small</LabelSmall>
+    <LabelSmall color={"bluegrey"}>Label small</LabelSmall>
+    <LabelSmall color={"red"}>Label small</LabelSmall>
+    <View style={{ backgroundColor: IOColors.bluegrey }}>
+      <LabelSmall color={"white"}>Label small</LabelSmall>
     </View>
-    <VSpacer size={40} />
-  </>
+  </HStack>
 );
 
 const LabelRow = () => (
-  <>
-    <View style={styles.row}>
-      <Label>Label</Label>
-      <HSpacer size={16} />
-      <View style={{ backgroundColor: IOColors.bluegrey }}>
-        <Label color={"white"}>Label</Label>
-      </View>
+  <HStack space={16}>
+    <Label>Label</Label>
+    <View style={{ backgroundColor: IOColors.bluegrey }}>
+      <Label color={"white"}>Label</Label>
     </View>
-    <VSpacer size={40} />
-  </>
+  </HStack>
+);
+
+export const MdH1Row = () => (
+  <VStack space={8}>
+    <MdH1>{getTitle("Markdown H1")}</MdH1>
+    <MdH1>{getLongerTitle("Markdown H1")}</MdH1>
+  </VStack>
+);
+
+export const MdH2Row = () => (
+  <VStack space={4}>
+    <MdH2>{getTitle("Markdown H2")}</MdH2>
+    <MdH2>{getLongerTitle("Markdown H2")}</MdH2>
+  </VStack>
+);
+
+export const MdH3Row = () => (
+  <VStack space={4}>
+    <MdH3>{getTitle("Markdown H3")}</MdH3>
+    <MdH3>{getLongerTitle("Markdown H3")}</MdH3>
+  </VStack>
+);
+
+export const MdH4Row = () => (
+  <VStack space={4}>
+    <MdH4>{getTitle("Markdown H4")}</MdH4>
+    <MdH4>{getLongerTitle("Markdown H4")}</MdH4>
+  </VStack>
+);
+
+export const MdH5Row = () => (
+  <VStack space={4}>
+    <MdH5>{getTitle("Markdown H5")}</MdH5>
+    <MdH5>{getLongerTitle("Markdown H5")}</MdH5>
+  </VStack>
+);
+
+export const MdH6Row = () => (
+  <VStack space={4}>
+    <MdH6>{getTitle("Markdown H6")}</MdH6>
+    <MdH6>{getLongerTitle("Markdown H6")}</MdH6>
+  </VStack>
 );

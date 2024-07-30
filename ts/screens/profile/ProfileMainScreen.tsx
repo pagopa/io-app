@@ -25,6 +25,7 @@ import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { TranslationKeys } from "../../../locales/locales";
 import AppVersion from "../../components/AppVersion";
 import HeaderFirstLevel from "../../components/ui/HeaderFirstLevel";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
 import { showProfileBannerSelector } from "../../features/profileSettings/store/selectors";
@@ -57,27 +58,15 @@ const ListItem = memo(ListItemNav);
 /**
  * A screen to show all the options related to the user profile
  */
-const ProfileMainScreen = () => {
+const ProfileMainScreenFC = () => {
   const { hideModal } = React.useContext(LightModalContext);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const { show } = useIOToast();
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
-  const contextualHelpTitleContent = useContentWithFF(
-    "profile.main.contextualHelpTitle"
-  );
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
   const showProfileBanner = useIOSelector(showProfileBannerSelector);
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
-  const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
   const idResetTap = useRef<number>();
-
-  useTabItemPressWhenScreenActive(
-    () => scrollViewContentRef.current?.scrollTo({ y: 0, animated: true }),
-    false
-  );
 
   useEffect(
     () => () => {
@@ -231,6 +220,68 @@ const ProfileMainScreen = () => {
 
   const logoutLabel = I18n.t("profile.logout.menulabel");
 
+  return (
+    <>
+      {showProfileBanner && (
+        <ContentWrapper>
+          <VSpacer size={16} />
+          <Banner
+            title={I18n.t("profile.main.banner.title")}
+            action={I18n.t("profile.main.banner.action")}
+            pictogramName="help"
+            color="neutral"
+            size="big"
+            onPress={navigateToProfile}
+            onClose={handleCloseBanner}
+            labelClose={I18n.t("profile.main.banner.close")}
+          />
+        </ContentWrapper>
+      )}
+      <VSpacer size={16} />
+      <FlatList
+        scrollEnabled={false}
+        keyExtractor={keyExtractor}
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+        data={profileNavListItems}
+        renderItem={renderProfileNavItem}
+        ItemSeparatorComponent={Divider}
+      />
+      <VSpacer size={8} />
+      <ContentWrapper>
+        <ListItemAction
+          label={logoutLabel}
+          icon="logout"
+          variant="danger"
+          testID="logoutButton"
+          onPress={onLogoutPress}
+          accessibilityLabel={logoutLabel}
+        />
+        <AppVersion onPress={onTapAppVersion} />
+      </ContentWrapper>
+      {/* Developer Section */}
+      {(isDebugModeEnabled || isDevEnv) && <DeveloperModeSection />}
+    </>
+  );
+};
+
+const ProfileMainScreen = () => {
+  const navigation = useIONavigation();
+  const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
+
+  const contextualHelpTitleContent = useContentWithFF(
+    "profile.main.contextualHelpTitle"
+  );
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
+
+  useTabItemPressWhenScreenActive(
+    () => scrollViewContentRef.current?.scrollTo({ y: 0, animated: true }),
+    false
+  );
+
   const headerProps = useHeaderProps({
     title: "",
     backAccessibilityLabel: I18n.t("global.buttons.back"),
@@ -272,49 +323,28 @@ const ProfileMainScreen = () => {
     scrollViewContentRef
   ]);
 
+  if (isSettingsVisibleAndHideProfile) {
+    return (
+      <IOScrollViewWithLargeHeader
+        title={{
+          label: I18n.t("global.buttons.settings")
+        }}
+        headerActionsProp={{ showHelp: true }}
+        contextualHelpMarkdown={{
+          title: contextualHelpTitleContent as TranslationKeys,
+          body: isSettingsVisibleAndHideProfile
+            ? "profile.main.contextualHelpContent"
+            : "profile.main.legacyContextualHelpContent"
+        }}
+        faqCategories={["profile"]}
+      >
+        <ProfileMainScreenFC />
+      </IOScrollViewWithLargeHeader>
+    );
+  }
   return (
     <Animated.ScrollView ref={scrollViewContentRef}>
-      {showProfileBanner && (
-        <ContentWrapper>
-          <VSpacer size={16} />
-          <Banner
-            title={I18n.t("profile.main.banner.title")}
-            action={I18n.t("profile.main.banner.action")}
-            pictogramName="help"
-            color="neutral"
-            size="big"
-            onPress={navigateToProfile}
-            onClose={handleCloseBanner}
-            labelClose={I18n.t("profile.main.banner.close")}
-          />
-        </ContentWrapper>
-      )}
-      <VSpacer size={16} />
-      <FlatList
-        scrollEnabled={false}
-        keyExtractor={keyExtractor}
-        contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
-        }}
-        data={profileNavListItems}
-        renderItem={renderProfileNavItem}
-        ItemSeparatorComponent={Divider}
-      />
-      <VSpacer size={8} />
-      <ContentWrapper>
-        <ListItemAction
-          label={logoutLabel}
-          icon="logout"
-          variant="danger"
-          testID="logoutButton"
-          onPress={onLogoutPress}
-          accessibilityLabel={logoutLabel}
-        />
-        <AppVersion onPress={onTapAppVersion} />
-      </ContentWrapper>
-      {/* Developer Section */}
-      {(isDebugModeEnabled || isDevEnv) && <DeveloperModeSection />}
-      {/* End Page */}
+      <ProfileMainScreenFC />
       <VSpacer size={24} />
     </Animated.ScrollView>
   );
