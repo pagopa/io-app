@@ -65,6 +65,9 @@ const ProfileMainScreenFC = () => {
   const { show } = useIOToast();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
   const showProfileBanner = useIOSelector(showProfileBannerSelector);
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
   const idResetTap = useRef<number>();
 
@@ -224,7 +227,7 @@ const ProfileMainScreenFC = () => {
     <>
       {showProfileBanner && (
         <ContentWrapper>
-          <VSpacer size={16} />
+          {!isSettingsVisibleAndHideProfile && <VSpacer size={16} />}
           <Banner
             title={I18n.t("profile.main.banner.title")}
             action={I18n.t("profile.main.banner.action")}
