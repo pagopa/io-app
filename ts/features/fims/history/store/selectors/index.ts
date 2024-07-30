@@ -22,3 +22,6 @@ export const fimsIsHistoryEnabledSelector = (state: GlobalState) =>
     O.map(backendStatus => backendStatus.config.fims.historyEnabled !== false),
     O.getOrElse(() => false)
   );
+
+export const fimsIsExportingHistorySelector = (state: GlobalState) =>
+  state.features.fims.history.isExportingHistory;

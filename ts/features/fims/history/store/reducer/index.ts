@@ -2,13 +2,15 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { ConsentsResponseDTO } from "../../../../../../definitions/fims/ConsentsResponseDTO";
 import { Action } from "../../../../../store/actions/types";
-import { fimsHistoryGet } from "../actions";
+import { fimsHistoryExport, fimsHistoryGet } from "../actions";
 
 export type FimsHistoryState = {
+  isExportingHistory: boolean;
   consentsList: pot.Pot<ConsentsResponseDTO, string>;
 };
 
 const INITIAL_STATE: FimsHistoryState = {
+  isExportingHistory: false,
   consentsList: pot.none
 };
 
@@ -20,15 +22,18 @@ const reducer = (
     case getType(fimsHistoryGet.request):
       return action.payload.shouldReloadFromScratch
         ? {
+            ...state,
             consentsList: pot.noneLoading
           }
         : {
+            ...state,
             consentsList: pot.toLoading(state.consentsList)
           };
     case getType(fimsHistoryGet.success):
       const currentHistoryItems =
         pot.toUndefined(state.consentsList)?.items ?? [];
       return {
+        ...state,
         consentsList: pot.some({
           ...action.payload,
           items: [...currentHistoryItems, ...action.payload.items]
@@ -36,7 +41,19 @@ const reducer = (
       };
     case getType(fimsHistoryGet.failure):
       return {
+        ...state,
         consentsList: pot.toError(state.consentsList, action.payload)
+      };
+    case getType(fimsHistoryExport.request):
+      return {
+        ...state,
+        isExportingHistory: true
+      };
+    case getType(fimsHistoryExport.success):
+    case getType(fimsHistoryExport.failure):
+      return {
+        ...state,
+        isExportingHistory: false
       };
   }
   return state;

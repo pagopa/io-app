@@ -1,5 +1,4 @@
 import { Body, Divider, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
 import * as React from "react";
 import { FlatList, SafeAreaView, View } from "react-native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
@@ -8,9 +7,10 @@ import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { FimsHistoryListItem } from "../components/FimsHistoryListItem";
 import { LoadingFimsHistoryItemsFooter } from "../components/FimsHistoryLoaders";
-import { fimsHistoryGet } from "../store/actions";
+import { fimsHistoryExport, fimsHistoryGet } from "../store/actions";
 import {
   fimsHistoryToUndefinedSelector,
+  fimsIsExportingHistorySelector,
   isFimsHistoryLoadingSelector
 } from "../store/selectors";
 
@@ -18,6 +18,7 @@ export const FimsHistoryScreen = () => {
   const dispatch = useIODispatch();
   const isLoading = useIOSelector(isFimsHistoryLoadingSelector);
   const consents = useIOSelector(fimsHistoryToUndefinedSelector);
+  const isExportingHistory = useIOSelector(fimsIsExportingHistorySelector);
 
   React.useEffect(() => {
     dispatch(fimsHistoryGet.request({ shouldReloadFromScratch: true }));
@@ -66,8 +67,10 @@ export const FimsHistoryScreen = () => {
         actions={{
           type: "SingleButton",
           primary: {
+            loading: isExportingHistory,
             label: I18n.t("FIMS.history.exportData.CTA"),
-            onPress: constNull // full export functionality coming soon
+            onPress: () =>
+              !isExportingHistory && dispatch(fimsHistoryExport.request())
           }
         }}
       />

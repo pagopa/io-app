@@ -12,4 +12,12 @@ export const fimsHistoryGet = createAsyncAction(
   "FIMS_GET_HISTORY_FAILURE"
 )<FimsHistoryGetPayloadType, ConsentsResponseDTO, string>();
 
-export type FimsHistoryActions = ActionType<typeof fimsHistoryGet>;
+export const fimsHistoryExport = createAsyncAction(
+  "FIMS_HISTORY_EXPORT_REQUEST",
+  "FIMS_HISTORY_EXPORT_SUCCESS",
+  "FIMS_HISTORY_EXPORT_FAILURE"
+)<undefined, undefined, string>();
+
+export type FimsHistoryActions =
+  | ActionType<typeof fimsHistoryGet>
+  | ActionType<typeof fimsHistoryExport>;
