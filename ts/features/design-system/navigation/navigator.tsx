@@ -1,6 +1,7 @@
 import {
   IOVisualCostants,
   IconButton,
+  useIOExperimentalDesign,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { ThemeProvider, useNavigation } from "@react-navigation/native";
@@ -10,9 +11,7 @@ import {
   createStackNavigator
 } from "@react-navigation/stack";
 import * as React from "react";
-import { useMemo } from "react";
 import { Alert, Platform, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { makeFontStyleObject } from "../../../components/core/fonts";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import {
@@ -55,6 +54,7 @@ import { DSLegacyListItems } from "../core/DSLegacyListItems";
 import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
 import { DSLegacySelection } from "../core/DSLegacySelection";
 import { DSLegacyTextFields } from "../core/DSLegacyTextFields";
+import { DSLegacyTypography } from "../core/DSLegacyTypography";
 import DSListItemScreen from "../core/DSListItemScreen";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
@@ -87,7 +87,10 @@ const RNNBackButton = () => {
   return (
     <View style={{ marginLeft: IOVisualCostants.appMarginDefault }}>
       <IconButton
-        icon="backiOS"
+        icon={Platform.select({
+          android: "backAndroid",
+          default: "backiOS"
+        })}
         color={themeType === "dark" ? "contrast" : "neutral"}
         onPress={() => {
           navigation.goBack();
@@ -148,23 +151,19 @@ const customModalHeaderConf: StackNavigationOptions = {
 };
 
 export const DesignSystemNavigator = () => {
+  const { isExperimental } = useIOExperimentalDesign();
   const { themeType } = useIOThemeContext();
-  const insets = useSafeAreaInsets();
 
-  const customHeaderConf: StackNavigationOptions = useMemo(
-    () => ({
-      headerTitleStyle: {
-        ...makeFontStyleObject("Regular", false, "ReadexPro"),
-        fontSize: 14
-      },
-      headerTitleAlign: "center",
-
-      headerStyle: { height: insets.top + IOVisualCostants.headerHeight },
-      headerLeft: RNNBackButton,
-      headerMode: "screen"
-    }),
-    [insets]
-  );
+  const customHeaderConf: StackNavigationOptions = {
+    headerTitleStyle: {
+      ...(isExperimental
+        ? makeFontStyleObject("Regular", false, "ReadexPro")
+        : makeFontStyleObject("Semibold", false, "TitilliumSansPro")),
+      fontSize: 14
+    },
+    headerTitleAlign: "center",
+    headerLeft: RNNBackButton
+  };
 
   return (
     <ThemeProvider
@@ -550,6 +549,14 @@ export const DesignSystemNavigator = () => {
         </Stack.Group>
 
         {/* LEGACY */}
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.LEGACY.TYPOGRAPHY.route}
+          component={DSLegacyTypography}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.TYPOGRAPHY.title
+          }}
+        />
+
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route}
           component={DSLegacyPictograms}
