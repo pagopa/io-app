@@ -164,6 +164,8 @@ const DATE_FORMAT_REGEX = "^\\d{4}-\\d{2}-\\d{2}$";
  */
 const PICTURE_URL_REGEX = "^data:image\\/(png|jpg|jpeg|bmp);base64,";
 
+const URL_REGEX = "^https?://";
+
 const FISCAL_CODE_WITH_PREFIX =
   "(TINIT-[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])";
 
@@ -226,6 +228,10 @@ export type DrivingPrivilegesClaimType = t.TypeOf<
  */
 export const FiscalCodeClaim = PatternString(FISCAL_CODE_WITH_PREFIX);
 
+export const UrlClaim = PatternString(URL_REGEX);
+
+export const BoolClaim = t.boolean;
+
 /**
  * Alias for the string fallback of the claim field of the credential.
  */
@@ -252,6 +258,10 @@ export const ClaimValue = t.union([
   ImageClaim,
   // Otherwise parse a fiscal code
   FiscalCodeClaim,
+  // Otherwise parse bool value
+  BoolClaim,
+  // Otherwise parse an url value
+  UrlClaim,
   // Otherwise fallback to string
   PlainTextClaim
 ]);
@@ -395,3 +405,22 @@ const FISCAL_CODE_REGEX =
  */
 export const extractFiscalCode = (s: string) =>
   pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));
+
+/**
+ * This utility functions removes very long claims (like Base64 images) from the parsed credential. Usefull to print for debug purposes
+ */
+export const getHumanReadableParsedCredential = (
+  parsedCredential: ParsedCredential
+): ParsedCredential =>
+  Object.fromEntries(
+    Object.entries(parsedCredential).map(([key, { name, value }]) => [
+      key,
+      {
+        name,
+        value:
+          typeof value === "string" && value.length > 100
+            ? `${value.slice(0, 100)}...`
+            : value
+      }
+    ])
+  );
