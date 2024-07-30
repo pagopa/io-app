@@ -1,6 +1,5 @@
 import {
   H4,
-  IOColors,
   IOPictograms,
   IOPictogramsLegacy,
   Pictogram,
