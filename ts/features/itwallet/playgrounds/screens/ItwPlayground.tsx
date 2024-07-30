@@ -10,11 +10,10 @@ import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { isDevEnv } from "../../../../utils/environment";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
-import {
-  ItwCredentialIssuanceMachineContext,
-  ItwEidIssuanceMachineContext
-} from "../../machine/provider";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwTrialSystemSection } from "../components/ItwTrialSystemSection";
 
@@ -44,21 +43,24 @@ A malformed link [Error](httssdps://www.error.com) that show toast error.
  * @returns a screen with a list of playgrounds for the ITW
  */
 const ItwPlayground = () => {
-  const eidMachineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
 
   useFocusEffect(
     React.useCallback(() => {
       // Resets the machine in case they were left in s failure state
-      eidMachineRef.send({ type: "reset" });
       credentialMachineRef.send({ type: "reset" });
-    }, [eidMachineRef, credentialMachineRef])
+    }, [credentialMachineRef])
   );
 
   useHeaderSecondLevel({
     title: "ITW Playground"
   });
+
+  const handleStartCredentialIssuance =
+    (credentialType: CredentialType) => () => {
+      credentialMachineRef.send({ type: "select-credential", credentialType });
+    };
 
   return (
     <ScrollView>
@@ -69,28 +71,34 @@ const ItwPlayground = () => {
           value="mDL issuing"
           accessibilityLabel={"mDL Issuing"}
           description="Start the issuing flow to get your mobile driving license"
-          onPress={() => undefined}
+          onPress={handleStartCredentialIssuance(
+            CredentialType.DRIVING_LICENSE
+          )}
         />
         <Divider />
         <ListItemNav
           value="TS issuing"
           accessibilityLabel={"TS Issuing"}
           description="Start the issuing flow to get your health insurance card"
-          onPress={() => undefined}
+          onPress={handleStartCredentialIssuance(
+            CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+          )}
         />
         <Divider />
         <ListItemNav
           value="DC issuing"
           accessibilityLabel={"DC Issuing"}
           description="Start the issuing flow to get your european disability card card"
-          onPress={() => undefined}
+          onPress={handleStartCredentialIssuance(
+            CredentialType.EUROPEAN_DISABILITY_CARD
+          )}
         />
         <VSpacer size={16} />
         <ItwLifecycleSection />
         <VSpacer size={16} />
         {
           /* F&F Experimentation */
-          __DEV__ ? (
+          isDevEnv ? (
             <>
               <ItwTrialSystemSection />
               <VSpacer size={16} />
