@@ -2754,7 +2754,7 @@ bonus:
         alert:
           title: "Deactivate card"
           message: "Do you really want to deactivate your Carta Giovani Nazionale? If you confirm, you will no longer be able to access the opportunities and the card will disappear from your Wallet."
-        expired: Elimina Carta Giovani Nazionale
+        expired: Delete Carta Giovani Nazionale
     otp:
       error: "Due to a technical problem we were unable to generate a discount code. Please try again."
       code:
