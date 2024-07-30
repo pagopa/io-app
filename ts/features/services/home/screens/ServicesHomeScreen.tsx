@@ -89,6 +89,7 @@ export const ServicesHomeScreen = () => {
 
   const renderListHeaderComponent = () => (
     <>
+      <SearchInputComponent />
       <FeaturedServiceList />
       <FeaturedInstitutionList />
       <ListItemHeader label={I18n.t("services.home.institutions.title")} />
@@ -223,23 +224,22 @@ export const ServicesHomeScreen = () => {
   useLayoutEffect(() => {
     const headerFirstLevelProps: HeaderFirstLevel = {
       title: I18n.t("services.title"),
-      type: "twoActions",
+      type: "threeActions",
       animatedFlatListRef: scrollViewContentRef,
-      endBlock: <SearchInputComponent />,
       firstAction: helpAction,
       secondAction: {
         icon: "coggle",
         accessibilityLabel: I18n.t("global.buttons.edit"),
         onPress: navigateToProfilePreferencesScreen
+      },
+      thirdAction: {
+        icon: "search",
+        accessibilityLabel: I18n.t("global.accessibility.search"),
+        onPress: () => {
+          analytics.trackSearchStart({ source: "header_icon" });
+          navigation.navigate(SERVICES_ROUTES.SEARCH);
+        }
       }
-      // thirdAction: {
-      //   icon: "search",
-      //   accessibilityLabel: I18n.t("global.accessibility.search"),
-      //   onPress: () => {
-      //     analytics.trackSearchStart({ source: "header_icon" });
-      //     navigation.navigate(SERVICES_ROUTES.SEARCH);
-      //   }
-      // }
     };
 
     navigation.setOptions({
