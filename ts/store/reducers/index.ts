@@ -45,7 +45,7 @@ import contentReducer, {
   initialContentState as contentInitialContentState
 } from "./content";
 import crossSessionsReducer from "./crossSessions";
-import { debugReducer } from "./debug";
+import { debugPersistor } from "./debug";
 import emailValidationReducer from "./emailValidation";
 import entitiesReducer, {
   entitiesPersistConfig,
@@ -158,7 +158,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
     entitiesPersistConfig,
     entitiesReducer
   ),
-  debug: debugReducer,
+  debug: debugPersistor,
   persistedPreferences: persistedPreferencesReducer,
   installation: installationReducer,
   payments: paymentsReducer,
