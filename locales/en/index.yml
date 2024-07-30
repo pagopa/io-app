@@ -481,6 +481,7 @@ profile:
       idpayTestAlert: This change requires app reboot
     designSystemEnvironment: Experimental Design System
     newScanSection: New 'Scan' feature
+    sessionRefresh: Activate Session Refresh
     appVersion: Version
     backendVersion: Backend Version
     debugMode: Debug mode

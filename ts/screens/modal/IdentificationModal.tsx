@@ -25,8 +25,8 @@ import {
   View
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../i18n";
 import {
   identificationCancel,
@@ -256,6 +256,8 @@ const IdentificationModal = () => {
     />
   ));
 
+  const { top: topInset } = useSafeAreaInsets();
+
   const pictogramKey: IOPictograms = isValidatingTask ? "passcode" : "key";
 
   // Managing the countdown and the remaining attempts
@@ -339,9 +341,12 @@ const IdentificationModal = () => {
       onRequestClose={onRequestCloseHandler}
     >
       {Platform.OS === "ios" && <StatusBar barStyle={"light-content"} />}
-      <SafeAreaView style={[styles.safeArea, { backgroundColor: blueColor }]}>
+      <View style={[styles.contentWrapper, { backgroundColor: blueColor }]}>
         {isValidatingTask && (
-          <View accessible style={styles.closeButton}>
+          <View
+            accessible
+            style={[styles.closeButton, { marginTop: topInset }]}
+          >
             <ContentWrapper>
               <VSpacer size={VERTICAL_PADDING} />
               <IconButton
@@ -418,13 +423,13 @@ const IdentificationModal = () => {
             </View>
           </ContentWrapper>
         </ScrollView>
-      </SafeAreaView>
+      </View>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: { flexGrow: 1 },
+  contentWrapper: { flexGrow: 1 },
   closeButton: {
     zIndex: 100,
     flexGrow: 1,
