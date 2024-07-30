@@ -1,5 +1,6 @@
 import { assign, fromPromise, setup } from "xstate5";
 import { ItwTags } from "../tags";
+import { ItwSessionExpiredError } from "../../api/client";
 import {
   InitializeWalletActorOutput,
   ObtainCredentialActorInput,
@@ -34,7 +35,8 @@ export const itwCredentialIssuanceMachine = setup({
         type: CredentialIssuanceFailureTypeEnum.GENERIC,
         reason: (event as any).error
       }
-    }))
+    })),
+    handleSessionExpired: notImplemented
   },
   actors: {
     initializeWallet: fromPromise<InitializeWalletActorOutput>(notImplemented),
@@ -47,6 +49,10 @@ export const itwCredentialIssuanceMachine = setup({
       ObtainCredentialActorInput
     >(notImplemented),
     disposeWallet: fromPromise(notImplemented)
+  },
+  guards: {
+    isSessionExpired: ({ event }: { event: CredentialIssuanceEvents }) =>
+      "error" in event && event.error instanceof ItwSessionExpiredError
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
@@ -75,10 +81,16 @@ export const itwCredentialIssuanceMachine = setup({
             wiaCryptoContext: event.output.wiaCryptoContext
           }))
         },
-        onError: {
-          target: "#itwCredentialIssuanceMachine.Failure",
-          actions: "setFailure"
-        }
+        onError: [
+          {
+            guard: "isSessionExpired",
+            target: "SessionExpired"
+          },
+          {
+            target: "#itwCredentialIssuanceMachine.Failure",
+            actions: "setFailure"
+          }
+        ]
       }
     },
     RequestingCredential: {
@@ -173,6 +185,10 @@ export const itwCredentialIssuanceMachine = setup({
           target: "#itwCredentialIssuanceMachine.DisplayingTrustIssuer"
         }
       }
+    },
+    SessionExpired: {
+      entry: ["handleSessionExpired"],
+      always: { target: "Idle" }
     }
   }
 });

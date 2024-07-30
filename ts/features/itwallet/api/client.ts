@@ -3,6 +3,8 @@ import { defaultRetryingFetch } from "../../../utils/fetch";
 import { itwWalletProviderBaseUrl } from "../../../config";
 import { SessionToken } from "../../../types/SessionToken";
 
+export class ItwSessionExpiredError extends Error {}
+
 /**
  * Authorization headers which contains the bearer token for the current session.
  */
@@ -42,7 +44,7 @@ const getAuthHeadersForWalletProvider = (
   const urlTarget = new PolyfillURL(url);
   const urlWp = new PolyfillURL(itwWalletProviderBaseUrl);
   if (urlTarget.origin === urlWp.origin) {
-    return { Authorization: `Bearer ${sessionToken}` };
+    return { Authorization: `Bearer xx${sessionToken}` };
   }
   return {};
 };
@@ -53,6 +55,7 @@ const getAuthHeadersForWalletProvider = (
  * @param url - The URL object to check against the wallet provider base URL
  * @param sessionToken - The session token bearer token to be added to the Authorization header
  * @returns A fetch function that can be used to make requests to the wallet provider.
+ * @throws ItwSessionExpiredError
  */
 export function createItWalletFetch(
   url: string,
@@ -60,6 +63,16 @@ export function createItWalletFetch(
 ): typeof fetch {
   const authHeader = getAuthHeadersForWalletProvider(url, sessionToken);
   const fetch = defaultRetryingFetch();
+
   return (input: RequestInfo | URL, init?: RequestInit) =>
-    fetch(input, addAuthHeaders(authHeader, init));
+    fetch(input, addAuthHeaders(authHeader, init)).then(
+      throwSessionExpiredOrContinue
+    );
 }
+
+const throwSessionExpiredOrContinue = (response: Response) => {
+  if (!response.ok && response.status === 401) {
+    throw new ItwSessionExpiredError();
+  }
+  return response;
+};
