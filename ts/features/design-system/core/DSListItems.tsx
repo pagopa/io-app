@@ -3,6 +3,7 @@ import * as React from "react";
 
 import {
   Divider,
+  H4,
   Icon,
   ListItemAction,
   ListItemHeader,
@@ -13,18 +14,17 @@ import {
   ListItemTransaction,
   ListItemTransactionLogo,
   ListItemTransactionStatusWithBadge,
-  VSpacer,
+  VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import { Alert, View } from "react-native";
-import { H2 } from "../../../components/core/typography/H2";
+import { Alert } from "react-native";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
-import CgnMerchantDiscountItem from "../../bonus/cgn/components/merchants/CgnMerchantsDiscountItem";
-import { BankPreviewItem } from "../../wallet/onboarding/bancomat/components/BankPreviewItem";
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
+import CgnMerchantDiscountItem from "../../bonus/cgn/components/merchants/CgnMerchantsDiscountItem";
 import { getBadgeTextByTransactionStatus } from "../../payments/common/utils";
+import { BankPreviewItem } from "../../wallet/onboarding/bancomat/components/BankPreviewItem";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const onButtonPress = () => {
@@ -35,157 +35,138 @@ const onCopyButtonPress = () => {
   Alert.alert("Copied!", "Value copied");
 };
 
+const sectionTitleMargin = 16;
+const sectionMargin = 48;
+const componentMargin = 32;
+
 export const DSListItems = () => {
   const theme = useIOTheme();
+
   return (
     <DesignSystemScreen title="List Items">
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16, marginTop: 16 }}
-      >
-        ListItemNav
-      </H2>
-      {renderListItemNav()}
+      <VStack space={sectionMargin}>
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ListItemNav</H4>
+          {renderListItemNav()}
+        </VStack>
 
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16, marginTop: 16 }}
-      >
-        ListItemInfoCopy
-      </H2>
-      {renderListItemInfoCopy()}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ListItemInfoCopy</H4>
+          {renderListItemInfoCopy()}
+        </VStack>
 
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16, marginTop: 16 }}
-      >
-        ListItemInfo
-      </H2>
-      {renderListItemInfo()}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ListItemInfo</H4>
+          {renderListItemInfo()}
+        </VStack>
 
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16, marginTop: 16 }}
-      >
-        ListItemHeader
-      </H2>
-      {renderListItemHeader()}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ListItemHeader</H4>
+          {renderListItemHeader()}
+        </VStack>
 
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16, marginTop: 16 }}
-      >
-        ListItemAction
-      </H2>
-      {renderListItemAction()}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ListItemAction</H4>
+          {renderListItemAction()}
+        </VStack>
 
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16, marginTop: 16 }}
-      >
-        ListItemTransaction
-      </H2>
-      {renderListItemTransaction()}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ListItemTransaction</H4>
+          {renderListItemTransaction()}
+        </VStack>
 
-      <VSpacer size={24} />
-
-      <H2
-        color={"bluegrey"}
-        weight={"Semibold"}
-        style={{ marginBottom: 16, marginTop: 16 }}
-      >
-        Specific
-      </H2>
-      <DSComponentViewerBox name="BankPreviewItem -- using PressableListItemBase">
-        <BankPreviewItem
-          bank={{
-            abi: "03069",
-            logoUrl: "https://assets.cdn.io.pagopa.it/logos/abi/03069.png",
-            name: "Intesa Sanpaolo"
-          }}
-          onPress={() => alert("Action triggered")}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="CgnMerchantDiscountItem">
-        <CgnMerchantDiscountItem
-          discount={{
-            name: "Small Rubber Chips" as NonEmptyString,
-            id: "28201" as NonEmptyString,
-            description: undefined,
-            discount: 25,
-            discountUrl: "https://localhost",
-            endDate: new Date(),
-            isNew: false,
-            productCategories: [ProductCategoryEnum.cultureAndEntertainment],
-            startDate: new Date()
-          }}
-          operatorName={"Operator name"}
-          merchantType={undefined}
-        />
-      </DSComponentViewerBox>
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Specific</H4>
+          <VStack space={24}>
+            <DSComponentViewerBox name="BankPreviewItem -- using PressableListItemBase">
+              <BankPreviewItem
+                onPress={onButtonPress}
+                bank={{
+                  abi: "03069",
+                  logoUrl:
+                    "https://assets.cdn.io.pagopa.it/logos/abi/03069.png",
+                  name: "Intesa Sanpaolo"
+                }}
+              />
+            </DSComponentViewerBox>
+            <DSComponentViewerBox name="CgnMerchantDiscountItem">
+              <CgnMerchantDiscountItem
+                discount={{
+                  name: "Small Rubber Chips" as NonEmptyString,
+                  id: "28201" as NonEmptyString,
+                  description: undefined,
+                  discount: 25,
+                  discountUrl: "https://localhost",
+                  endDate: new Date(),
+                  isNew: false,
+                  productCategories: [
+                    ProductCategoryEnum.cultureAndEntertainment
+                  ],
+                  startDate: new Date()
+                }}
+                operatorName={"Operator name"}
+                merchantType={undefined}
+              />
+            </DSComponentViewerBox>
+          </VStack>
+        </VStack>
+      </VStack>
     </DesignSystemScreen>
   );
 };
+
 const renderListItemNav = () => (
-  <>
+  <VStack space={componentMargin}>
     <DSComponentViewerBox name="ListItemNav">
-      <View>
-        <ListItemNav
-          value={"Value"}
-          onPress={onButtonPress}
-          accessibilityLabel="Empty just for testing purposes"
-        />
-        <Divider />
-        <ListItemNav
-          value={"Value"}
-          description="Description"
-          onPress={onButtonPress}
-          accessibilityLabel="Empty just for testing purposes"
-        />
-        <Divider />
-        <ListItemNav
-          value="A looong looooong looooooooong looooooooooong title"
-          description="Description"
-          onPress={onButtonPress}
-          accessibilityLabel="Empty just for testing purposes"
-        />
-        <Divider />
-        <ListItemNav
-          value={"Value"}
-          icon="gallery"
-          onPress={onButtonPress}
-          accessibilityLabel="Empty just for testing purposes"
-        />
-        <Divider />
-        <ListItemNav
-          value={"Value"}
-          description="Description"
-          icon="gallery"
-          onPress={onButtonPress}
-          accessibilityLabel="Empty just for testing purposes"
-        />
-        <Divider />
-        <ListItemNav
-          value={"Value"}
-          description="This is a list item nav with badge"
-          onPress={() => {
-            alert("Action triggered");
-          }}
-          accessibilityLabel="Empty just for testing purposes"
-          topElement={{
-            badgeProps: {
-              text: "Novità",
-              variant: "blue"
-            }
-          }}
-        />
-      </View>
+      <ListItemNav
+        value={"Value"}
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <Divider />
+      <ListItemNav
+        value={"Value"}
+        description="Description"
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <Divider />
+      <ListItemNav
+        value="A looong looooong looooooooong looooooooooong title"
+        description="Description"
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <Divider />
+      <ListItemNav
+        value={"Value"}
+        icon="gallery"
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <Divider />
+      <ListItemNav
+        value={"Value"}
+        description="Description"
+        icon="gallery"
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <Divider />
+      <ListItemNav
+        value={"Value"}
+        description="This is a list item nav with badge"
+        onPress={() => {
+          alert("Action triggered");
+        }}
+        accessibilityLabel="Empty just for testing purposes"
+        topElement={{
+          badgeProps: {
+            text: "Novità",
+            variant: "blue"
+          }
+        }}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemNav, without chevron">
       <ListItemNav
@@ -215,77 +196,73 @@ const renderListItemNav = () => (
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemNavAlert">
-      <View>
-        <ListItemNavAlert
-          value={"Value"}
-          onPress={onButtonPress}
-          accessibilityLabel="Empty just for testing purposes"
-        />
-        <Divider />
-        <ListItemNavAlert
-          value={"Value"}
-          description="Description"
-          onPress={onButtonPress}
-          accessibilityLabel="Empty just for testing purposes"
-        />
-        <Divider />
-        <ListItemNavAlert
-          withoutIcon
-          value={"Value"}
-          onPress={onButtonPress}
-          accessibilityLabel="Empty just for testing purposes"
-        />
-        <Divider />
-        <ListItemNavAlert
-          withoutIcon
-          value={"Value"}
-          description="Description"
-          onPress={onButtonPress}
-          accessibilityLabel="Empty just for testing purposes"
-        />
-      </View>
+      <ListItemNavAlert
+        value={"Value"}
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <Divider />
+      <ListItemNavAlert
+        value={"Value"}
+        description="Description"
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <Divider />
+      <ListItemNavAlert
+        withoutIcon
+        value={"Value"}
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <Divider />
+      <ListItemNavAlert
+        withoutIcon
+        value={"Value"}
+        description="Description"
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
     </DSComponentViewerBox>
-  </>
+  </VStack>
 );
 
 const renderListItemInfoCopy = () => (
   <DSComponentViewerBox name="ListItemInfoCopy">
-    <View>
-      <ListItemInfoCopy
-        label={"Label"}
-        value="Value"
-        onPress={onCopyButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
-      />
-      <Divider />
-      <ListItemInfoCopy
-        label={"Codice fiscale"}
-        value="01199250158"
-        onPress={onCopyButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
-        icon="institution"
-      />
-      <Divider />
-      <ListItemInfoCopy
-        label={"Carta di credito"}
-        value="4975 3013 5042 7899"
-        onPress={onCopyButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
-        icon="creditCard"
-      />
-      <Divider />
-      <ListItemInfoCopy
-        label={"Indirizzo"}
-        value={`P.za Colonna, 370\n00186 Roma (RM)`}
-        onPress={onCopyButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
-      />
-    </View>
+    <ListItemInfoCopy
+      label={"Label"}
+      value="Value"
+      onPress={onCopyButtonPress}
+      accessibilityLabel="Empty just for testing purposes"
+    />
+    <Divider />
+    <ListItemInfoCopy
+      label={"Codice fiscale"}
+      value="01199250158"
+      onPress={onCopyButtonPress}
+      accessibilityLabel="Empty just for testing purposes"
+      icon="institution"
+    />
+    <Divider />
+    <ListItemInfoCopy
+      label={"Carta di credito"}
+      value="4975 3013 5042 7899"
+      onPress={onCopyButtonPress}
+      accessibilityLabel="Empty just for testing purposes"
+      icon="creditCard"
+    />
+    <Divider />
+    <ListItemInfoCopy
+      label={"Indirizzo"}
+      value={`P.za Colonna, 370\n00186 Roma (RM)`}
+      onPress={onCopyButtonPress}
+      accessibilityLabel="Empty just for testing purposes"
+    />
   </DSComponentViewerBox>
 );
 
 const renderListItemAction = () => (
-  <>
+  <VStack space={componentMargin}>
     <DSComponentViewerBox name="ListItemAction · Primary variant">
       <ListItemAction
         variant="primary"
@@ -344,82 +321,80 @@ const renderListItemAction = () => (
         accessibilityLabel="Empty just for testing purposes"
       />
     </DSComponentViewerBox>
-  </>
+  </VStack>
 );
 
 const renderListItemInfo = () => (
   <DSComponentViewerBox name="ListItemInfo">
-    <View>
-      <ListItemInfo
-        label="Label"
-        value={"Value"}
-        accessibilityLabel="Empty just for testing purposes"
-      />
-      <Divider />
-      <ListItemInfo
-        label="Label"
-        value="A looong looooong looooooooong looooooooooong title"
-        accessibilityLabel="Empty just for testing purposes"
-      />
-      <Divider />
-      <ListItemInfo
-        icon="creditCard"
-        label="Label"
-        value="A looong looooong looooooooong looooooooooong title"
-        accessibilityLabel="Empty just for testing purposes"
-        endElement={{
-          type: "buttonLink",
-          componentProps: {
-            label: "Modifica",
-            onPress: onButtonPress,
-            accessibilityLabel: ""
-          }
-        }}
-      />
-      <Divider />
-      <ListItemInfo
-        icon="psp"
-        label="Label"
-        value="A looong looooong looooooooong looooooooooong title"
-        accessibilityLabel="Empty just for testing purposes"
-        endElement={{
-          type: "iconButton",
-          componentProps: {
-            icon: "info",
-            onPress: onButtonPress,
-            accessibilityLabel: ""
-          }
-        }}
-      />
-      <Divider />
-      <ListItemInfo
-        icon="psp"
-        label="Label"
-        value="A looong looooong looooooooong looooooooooong title"
-        accessibilityLabel="Empty just for testing purposes"
-        endElement={{
-          type: "badge",
-          componentProps: {
-            text: "pagato",
-            variant: "success"
-          }
-        }}
-      />
-      <Divider />
-      <ListItemInfo
-        label="Label"
-        value={"Value"}
-        icon="gallery"
-        accessibilityLabel="Empty just for testing purposes"
-      />
-    </View>
+    <ListItemInfo
+      label="Label"
+      value={"Value"}
+      accessibilityLabel="Empty just for testing purposes"
+    />
+    <Divider />
+    <ListItemInfo
+      label="Label"
+      value="A looong looooong looooooooong looooooooooong title"
+      accessibilityLabel="Empty just for testing purposes"
+    />
+    <Divider />
+    <ListItemInfo
+      icon="creditCard"
+      label="Label"
+      value="A looong looooong looooooooong looooooooooong title"
+      accessibilityLabel="Empty just for testing purposes"
+      endElement={{
+        type: "buttonLink",
+        componentProps: {
+          label: "Modifica",
+          onPress: onButtonPress,
+          accessibilityLabel: ""
+        }
+      }}
+    />
+    <Divider />
+    <ListItemInfo
+      icon="psp"
+      label="Label"
+      value="A looong looooong looooooooong looooooooooong title"
+      accessibilityLabel="Empty just for testing purposes"
+      endElement={{
+        type: "iconButton",
+        componentProps: {
+          icon: "info",
+          onPress: onButtonPress,
+          accessibilityLabel: ""
+        }
+      }}
+    />
+    <Divider />
+    <ListItemInfo
+      icon="psp"
+      label="Label"
+      value="A looong looooong looooooooong looooooooooong title"
+      accessibilityLabel="Empty just for testing purposes"
+      endElement={{
+        type: "badge",
+        componentProps: {
+          text: "pagato",
+          variant: "success"
+        }
+      }}
+    />
+    <Divider />
+    <ListItemInfo
+      label="Label"
+      value={"Value"}
+      icon="gallery"
+      accessibilityLabel="Empty just for testing purposes"
+    />
   </DSComponentViewerBox>
 );
 
 /* LIST ITEM HEADER */
 
 const renderListItemHeader = () => (
-  <>
+  <VStack space={componentMargin}>
     <DSComponentViewerBox name="ListItemHeader, without icon">
       <ListItemHeader
         label="Label"
@@ -496,7 +471,7 @@ const renderListItemHeader = () => (
         }}
       />
     </DSComponentViewerBox>
-  </>
+  </VStack>
 );
 
 /* LIST ITEM TRANSACTION */
@@ -533,8 +508,8 @@ const transactionStatusArray: Array<mockTransactionStatusData> = [
 ];
 
 const renderListItemTransaction = () => (
-  <DSComponentViewerBox name="ListItemTransaction">
-    <View>
+  <VStack space={componentMargin}>
+    <DSComponentViewerBox name="ListItemTransaction, loading variant">
       <ListItemTransaction
         title="Title"
         subtitle="subtitle"
@@ -543,11 +518,11 @@ const renderListItemTransaction = () => (
         isLoading={true}
         onPress={onButtonPress}
       />
+    </DSComponentViewerBox>
 
-      <Divider />
-
+    <DSComponentViewerBox name="ListItemTransaction, various states">
       {transactionStatusArray.map(
-        ({ status, asset }: mockTransactionStatusData) => (
+        ({ status, asset }: mockTransactionStatusData, i) => (
           <React.Fragment key={`transactionStatus-${status}`}>
             <ListItemTransaction
               title="Title"
@@ -557,11 +532,13 @@ const renderListItemTransaction = () => (
               badgeText={getBadgeTextByTransactionStatus(status)}
               onPress={onButtonPress}
             />
-            <Divider />
+            {i < transactionStatusArray.length - 1 && <Divider />}
           </React.Fragment>
         )
       )}
+    </DSComponentViewerBox>
 
+    <DSComponentViewerBox name="ListItemTransaction, with amount">
       <ListItemTransaction
         title="Title"
         subtitle="subtitle"
@@ -591,9 +568,20 @@ const renderListItemTransaction = () => (
         hasChevronRight={true}
         onPress={onButtonPress}
       />
+    </DSComponentViewerBox>
 
-      <Divider />
+    <DSComponentViewerBox name="ListItemTransaction, refunded">
+      <ListItemTransaction
+        title="Refunded transaction"
+        subtitle="This one has a custom icon and transaction amount with a green color"
+        transactionStatus="refunded"
+        paymentLogoIcon={<Icon name="refund" color="bluegrey" />}
+        transactionAmount="€ 100"
+        onPress={onButtonPress}
+      />
+    </DSComponentViewerBox>
 
+    <DSComponentViewerBox name="ListItemTransaction, clickable and not clickable">
       <ListItemTransaction
         title="This one is not clickable"
         subtitle="subtitle"
@@ -612,9 +600,9 @@ const renderListItemTransaction = () => (
         onPress={onButtonPress}
         transactionStatus="success"
       />
+    </DSComponentViewerBox>
 
-      <Divider />
-
+    <DSComponentViewerBox name="ListItemTransaction, custom icon">
       <ListItemTransaction
         title="Custom icon"
         subtitle="This one has a custom icon on the left"
@@ -623,17 +611,6 @@ const renderListItemTransaction = () => (
         transactionAmount=""
         onPress={onButtonPress}
       />
-
-      <Divider />
-
-      <ListItemTransaction
-        title="Refunded transaction"
-        subtitle="This one has a custom icon and transaction amount with a green color"
-        transactionStatus="refunded"
-        paymentLogoIcon={<Icon name="refund" color="bluegrey" />}
-        transactionAmount="€ 100"
-        onPress={onButtonPress}
-      />
-    </View>
-  </DSComponentViewerBox>
+    </DSComponentViewerBox>
+  </VStack>
 );
