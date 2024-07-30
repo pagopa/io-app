@@ -56,8 +56,9 @@ const FooterButton = memo(({ isLoading, onPress }: FooterButtonProps) => {
   const { bottom } = useSafeAreaInsets();
 
   return withKeyboard(
-    <View style={{ marginBottom: bottom }}>
+    <View style={{ marginBottom: bottom === 0 ? 24 : bottom }}>
       <ContentWrapper>
+        <VSpacer size={16} />
         <ButtonSolid
           fullWidth
           loading={isLoading}
