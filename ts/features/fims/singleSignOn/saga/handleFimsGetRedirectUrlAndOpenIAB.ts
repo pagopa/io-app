@@ -407,10 +407,10 @@ const processHtmlFormTag = (
       formData.set("action", action.trim());
     }
   } else if (tagInput === name.toLowerCase()) {
-    const name = attributes.name;
+    const attributeName = attributes.name;
     const value = attributes.value;
-    if (name && value) {
-      formData.set(name.trim(), value.trim());
+    if (attributeName && value) {
+      formData.set(attributeName.trim(), value.trim());
     }
   }
 };
@@ -428,6 +428,7 @@ const validateAndProcessExtractedFormData = (
     return E.left(`Missing form 'action' value`);
   }
   try {
+    /* eslint-disable no-new */
     new URL(relyingPartyRedirectUrl);
   } catch {
     return E.left(`Invalid form 'action' value`);

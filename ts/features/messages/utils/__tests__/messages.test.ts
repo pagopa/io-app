@@ -131,15 +131,15 @@ it:
 some noise`;
 
     const maybeCTA = getMessageCTA(CTA_1 as MessageBodyMarkdown);
-    expect(O.isNone(maybeCTA));
+    expect(O.isNone(maybeCTA)).toBeTruthy();
   });
 
-  it("should not have a valid CTA", () => {
+  it("should not have a valid CTA, unrelated content", () => {
     const maybeCTA = getMessageCTA("nothing of nothing" as MessageBodyMarkdown);
     expect(O.isNone(maybeCTA)).toBeTruthy();
   });
 
-  it("should not have a valid CTA", () => {
+  it("should not have a valid CTA, invalid content format", () => {
     const NO_CTA = `---
 it:
     act_1:

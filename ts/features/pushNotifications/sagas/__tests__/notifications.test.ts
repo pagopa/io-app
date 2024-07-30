@@ -191,16 +191,19 @@ describe("updateInstallationSaga", () => {
 
     describe("and the session becomes invalid", () => {
       it("should send the push notification token", () => {
-        const pushNotificationToken = "newGoogleOrApplePushNotificationToken";
-        const globalState = updateState([
+        const anotherPushNotificationToken =
+          "newGoogleOrApplePushNotificationToken";
+        const anotherGlobalState = updateState([
           applicationChangeState("active"),
-          updateNotificationsInstallationToken(pushNotificationToken),
-          notificationsInstallationTokenRegistered(pushNotificationToken),
+          updateNotificationsInstallationToken(anotherPushNotificationToken),
+          notificationsInstallationTokenRegistered(
+            anotherPushNotificationToken
+          ),
           sessionInvalid()
         ]);
         const createOrUpdateInstallation = jest.fn();
         return expectSaga(updateInstallationSaga, createOrUpdateInstallation)
-          .withState(globalState)
+          .withState(anotherGlobalState)
           .provide([
             [
               matchers.call.fn(createOrUpdateInstallation),
@@ -211,10 +214,14 @@ describe("updateInstallationSaga", () => {
             installationID: installationId,
             body: {
               platform: notificationsPlatform,
-              pushChannel: pushNotificationToken
+              pushChannel: anotherPushNotificationToken
             }
           })
-          .put(notificationsInstallationTokenRegistered(pushNotificationToken))
+          .put(
+            notificationsInstallationTokenRegistered(
+              anotherPushNotificationToken
+            )
+          )
           .run();
       });
     });
