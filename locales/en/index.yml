@@ -318,7 +318,7 @@ profile:
     clearAsyncStorage: Clear AsyncStorage
     dumpAsyncStorage: Dump AsyncStorage content to console
     sentryTestEvent: Send Exception to Sentry
-    contextualHelpTitle: What you can do in {{pageName}} section 
+    contextualHelpTitle: What you can do in {{pageName}} section
     legacyContextualHelpContent: !include profile/legacy_profile_account_main.md
     contextualHelpContent: !include profile/profile_account_main.md
     developerModeOn: Developer mode enabled
@@ -3307,6 +3307,9 @@ features:
         personalDataTitle: "Personal data"
         documentDataTitle: "Document data"
         lastUpdated: "Last updated on {{lastUpdateTime}}"
+        boolClaim:
+          true: Si
+          false: No
         hiddenClaim: "Hidden"
         status:
           valid: Valid
@@ -3962,7 +3965,7 @@ FIMS:
     exportData:
       CTA: "Richiedi una copia via email"
     profileCTA:
-      title: Accessi a servizi di terze parti 
+      title: Accessi a servizi di terze parti
       subTitle: Rivedi gli accessi effettuati a servizi di terze parti tramite IO
     historyScreen:
       header: Accessi a servizi di terze parti
