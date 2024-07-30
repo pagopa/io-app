@@ -2614,11 +2614,11 @@ bonus:
       online: Online
       places: Places
       navigationTitle: Benefits
-      screenTitle: Scopri le opportunità
-      merchantsAll: Tutti i partner
+      screenTitle: Discover opportunities
+      merchantsAll: All partners
       tabs:
-        perInitiative: Per categoria
-        perMerchant: Per partner
+        perInitiative: By category
+        perMerchant: By partner
       cta:
         filter: Filter
       categoriesList:
