@@ -78,7 +78,6 @@ const PlainTextClaimItem = ({
 const DateClaimItem = ({
   label,
   claim,
-  iconVisible,
   expirationBadgeVisible
 }: {
   label: string;
@@ -112,7 +111,6 @@ const DateClaimItem = ({
       key={`${label}-${value}`}
       label={label}
       value={value}
-      icon={iconVisible ? "calendar" : undefined}
       accessibilityLabel={`${label} ${value}`}
       endElement={endElement}
     />

@@ -36,6 +36,7 @@ import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlertsSection";
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 
 // TODO: use the real credential update time
 const today = new Date();
@@ -78,6 +79,10 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
     supportRequest: true,
     variant: "contrast",
     backgroundColor: themeColor
+  });
+
+  useDebugInfo({
+    parsedCredential: credential.parsedCredential
   });
 
   const credentialStatus = getCredentialExpireStatus(
