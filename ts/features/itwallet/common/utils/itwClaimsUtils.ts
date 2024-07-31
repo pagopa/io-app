@@ -27,6 +27,21 @@ import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
  */
 
 /**
+ * We strongly discurage direct claim manipulation, but some spacial cased must be addressed with direct access
+ */
+export enum WellKnownClaim {
+  /**
+   * Unique ID must be excluded from every credential and should not rendered in the claims list
+   */
+  unique_id = "unique_ID",
+  /**
+   * Claim used to display a QR Code for the Disability Card. It must be exlcuded from the common claims list
+   * and rendered using a {@see QRCodeImage}
+   */
+  link_qr_code = "link_qr_code"
+}
+
+/**
  * Retrieves the organization name from the evidence claim of the given credential.
  * If the evidence claim is not present or cannot be decoded, a fallback value is returned.
  * @param credential - The parsed credential object.
@@ -323,7 +338,7 @@ export const previewDateClaimsConfig: DateClaimConfig = {
  */
 export const groupCredentialClaims = (credential: StoredCredential) => {
   const claims = parseClaims(credential.parsedCredential, {
-    exclude: ["unique_id"]
+    exclude: [WellKnownClaim.unique_id]
   });
 
   return claims.reduce((acc, claim) => {

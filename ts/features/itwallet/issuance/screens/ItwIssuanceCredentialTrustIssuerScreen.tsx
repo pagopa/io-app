@@ -23,7 +23,7 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
-import { parseClaims } from "../../common/utils/itwClaimsUtils";
+import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
@@ -98,7 +98,9 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
     parsedCredential: eid.parsedCredential
   });
 
-  const claims = parseClaims(eid.parsedCredential, { exclude: ["unique_id"] });
+  const claims = parseClaims(eid.parsedCredential, {
+    exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
+  });
   const requiredClaims = claims.map(
     claim =>
       ({
