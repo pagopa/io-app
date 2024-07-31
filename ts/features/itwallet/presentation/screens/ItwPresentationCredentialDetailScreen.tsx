@@ -1,6 +1,5 @@
 import {
   ContentWrapper,
-  Divider,
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -10,6 +9,7 @@ import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import I18n from "../../../../i18n";
@@ -19,12 +19,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
-import { ItwCredentialClaimsSection } from "../../common/components/ItwCredentialClaimsSection";
-import { ItwReleaserName } from "../../common/components/ItwReleaserName";
-import {
-  getCredentialExpireStatus,
-  parseClaims
-} from "../../common/utils/itwClaimsUtils";
+import { getCredentialExpireStatus } from "../../common/utils/itwClaimsUtils";
 import {
   ItWalletError,
   getItwGenericMappedError
@@ -35,8 +30,9 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlertsSection";
+import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection";
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
-import { useDebugInfo } from "../../../../hooks/useDebugInfo";
+import { getHumanReadableParsedCredential } from "../../common/utils/debug";
 
 // TODO: use the real credential update time
 const today = new Date();
@@ -82,7 +78,9 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
   });
 
   useDebugInfo({
-    parsedCredential: credential.parsedCredential
+    parsedCredential: getHumanReadableParsedCredential(
+      credential.parsedCredential
+    )
   });
 
   const credentialStatus = getCredentialExpireStatus(
@@ -109,17 +107,13 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
           <VSpacer size={16} />
           <ItwPresentationAlertsSection credential={credential} />
           <VSpacer size={16} />
-          <ItwCredentialClaimsSection
+          <ItwPresentationClaimsSection
             title={I18n.t(
               "features.itWallet.presentation.credentialDetails.documentDataTitle"
             )}
-            claims={parseClaims(credential.parsedCredential, {
-              exclude: ["unique_id"]
-            })}
+            data={credential}
             canHideValues={true}
           />
-          <Divider />
-          <ItwReleaserName credential={credential} />
           <VSpacer size={24} />
           <ItwPresentationDetailFooter
             lastUpdateTime={today}
