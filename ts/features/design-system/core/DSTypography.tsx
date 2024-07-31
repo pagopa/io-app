@@ -15,14 +15,12 @@ import {
   Hero,
   IOColors,
   Label,
-  LabelLink,
+  LabelMini,
   LabelSmall,
+  LabelSmallAlt,
   MdH1,
   MdH2,
   MdH3,
-  MdH4,
-  MdH5,
-  MdH6,
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
@@ -30,7 +28,10 @@ import * as React from "react";
 import { Alert, View } from "react-native";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
+const linkOnPress = () => Alert.alert("onPress triggered");
+
 const blockMargin = 40;
+const typographicStyleMargin = 16;
 
 export const DSTypography = () => (
   <DesignSystemScreen title={"Typography"}>
@@ -46,12 +47,12 @@ export const DSTypography = () => (
       <CaptionRow />
       <ChipRow />
       <BodyRow />
-      <BodyMonospace>BodyMonoSpace</BodyMonospace>
-      <LabelSmallRow />
-      <LabelRow />
-      <LabelLink onPress={() => Alert.alert("onPress LabelLink!")}>
-        LabelLink
-      </LabelLink>
+      <VStack space={typographicStyleMargin}>
+        <LabelSmallRow />
+        <LabelSmallAltRow />
+        <LabelMiniRow />
+        <LabelRow />
+      </VStack>
     </VStack>
     <VSpacer size={blockMargin} />
     <Divider />
@@ -60,9 +61,6 @@ export const DSTypography = () => (
       <MdH1Row />
       <MdH2Row />
       <MdH3Row />
-      <MdH4Row />
-      <MdH5Row />
-      <MdH6Row />
     </VStack>
   </DesignSystemScreen>
 );
@@ -164,26 +162,128 @@ const BodyRow = () => (
       aliquam, aliquam massa eget, commodo erat. Maecenas finibus dui massa,
       eget pharetra mauris posuere semper.
     </Body>
+    <Body weight="Semibold">Body Semibold</Body>
+    <Body weight="Bold">Body Bold</Body>
+    <Body asLink onPress={linkOnPress}>
+      Body asLink
+    </Body>
+    <BodyMonospace>BodyMonoSpace</BodyMonospace>
   </VStack>
 );
 
-const LabelSmallRow = () => (
-  <HStack space={16}>
-    <LabelSmall>Label small</LabelSmall>
-    <LabelSmall color={"bluegrey"}>Label small</LabelSmall>
-    <LabelSmall color={"red"}>Label small</LabelSmall>
-    <View style={{ backgroundColor: IOColors.bluegrey }}>
-      <LabelSmall color={"white"}>Label small</LabelSmall>
+export const LabelSmallRow = () => (
+  <>
+    <HStack space={typographicStyleMargin}>
+      <LabelSmall>Label small</LabelSmall>
+      <LabelSmall color="grey-700">Label small</LabelSmall>
+      <LabelSmall color={"red"}>Label small</LabelSmall>
+      <View style={{ backgroundColor: IOColors["grey-700"] }}>
+        <LabelSmall color={"white"}>Label small</LabelSmall>
+      </View>
+      <LabelSmall asLink onPress={linkOnPress}>
+        Label small asLink
+      </LabelSmall>
+    </HStack>
+    <HStack space={typographicStyleMargin}>
+      <LabelSmall weight="Semibold">Label small SB</LabelSmall>
+      <LabelSmall weight="Semibold" color="grey-700">
+        Label small SB
+      </LabelSmall>
+      <LabelSmall weight="Semibold" color={"red"}>
+        Label small SB
+      </LabelSmall>
+      <View style={{ backgroundColor: IOColors["grey-700"] }}>
+        <LabelSmall weight="Semibold" color={"white"}>
+          Label small SB
+        </LabelSmall>
+      </View>
+      <LabelSmall asLink onPress={linkOnPress} weight="Semibold">
+        Label small SB asLink
+      </LabelSmall>
+    </HStack>
+    <HStack space={typographicStyleMargin}>
+      <LabelSmall weight="Regular">Label small Regular</LabelSmall>
+      <LabelSmall weight="Regular" color="grey-700">
+        Label small Regular
+      </LabelSmall>
+      <LabelSmall weight="Regular" color={"red"}>
+        Label small Regular
+      </LabelSmall>
+      <View style={{ backgroundColor: IOColors["grey-700"] }}>
+        <LabelSmall weight="Regular" color={"white"}>
+          Label small Regular
+        </LabelSmall>
+      </View>
+      <LabelSmall asLink onPress={linkOnPress} weight="Regular">
+        Label small Regular asLink
+      </LabelSmall>
+    </HStack>
+  </>
+);
+
+export const LabelMiniRow = () => (
+  <>
+    <HStack space={typographicStyleMargin}>
+      <LabelMini>Label mini</LabelMini>
+      <LabelMini color="grey-700">Label mini</LabelMini>
+      <LabelMini color={"red"}>Label mini</LabelMini>
+      <View style={{ backgroundColor: IOColors["grey-700"] }}>
+        <LabelMini color={"white"}>Label mini</LabelMini>
+      </View>
+    </HStack>
+    <HStack space={typographicStyleMargin}>
+      <LabelMini weight="Semibold">Label mini SB</LabelMini>
+      <LabelMini weight="Semibold" color="grey-700">
+        Label mini SB
+      </LabelMini>
+      <LabelMini weight="Semibold" color={"red"}>
+        Label mini SB
+      </LabelMini>
+      <View style={{ backgroundColor: IOColors["grey-700"] }}>
+        <LabelMini weight="Semibold" color={"white"}>
+          Label mini SB
+        </LabelMini>
+      </View>
+    </HStack>
+    <HStack space={typographicStyleMargin}>
+      <LabelMini weight="Regular">Label mini Regular</LabelMini>
+      <LabelMini weight="Regular" color="grey-700">
+        Label mini Regular
+      </LabelMini>
+      <LabelMini weight="Regular" color={"red"}>
+        Label mini Regular
+      </LabelMini>
+      <View style={{ backgroundColor: IOColors["grey-700"] }}>
+        <LabelMini weight="Regular" color={"white"}>
+          Label mini Regular
+        </LabelMini>
+      </View>
+    </HStack>
+  </>
+);
+
+export const LabelSmallAltRow = () => (
+  <HStack space={typographicStyleMargin}>
+    <LabelSmallAlt>Label small alt</LabelSmallAlt>
+    <LabelSmallAlt color={"bluegrey"}>Label small alt</LabelSmallAlt>
+    <View style={{ backgroundColor: IOColors["grey-700"] }}>
+      <LabelSmallAlt color={"white"}>Label small alt</LabelSmallAlt>
     </View>
   </HStack>
 );
 
-const LabelRow = () => (
-  <HStack space={16}>
+export const LabelRow = () => (
+  <HStack space={typographicStyleMargin}>
     <Label>Label</Label>
-    <View style={{ backgroundColor: IOColors.bluegrey }}>
+    <View style={{ backgroundColor: IOColors["grey-700"] }}>
       <Label color={"white"}>Label</Label>
     </View>
+    <Label asLink onPress={linkOnPress}>
+      Label asLink
+    </Label>
+    <Label weight="Regular" asLink onPress={linkOnPress}>
+      Label Regular asLink
+    </Label>
   </HStack>
 );
 
@@ -205,26 +305,5 @@ export const MdH3Row = () => (
   <VStack space={4}>
     <MdH3>{getTitle("Markdown H3")}</MdH3>
     <MdH3>{getLongerTitle("Markdown H3")}</MdH3>
-  </VStack>
-);
-
-export const MdH4Row = () => (
-  <VStack space={4}>
-    <MdH4>{getTitle("Markdown H4")}</MdH4>
-    <MdH4>{getLongerTitle("Markdown H4")}</MdH4>
-  </VStack>
-);
-
-export const MdH5Row = () => (
-  <VStack space={4}>
-    <MdH5>{getTitle("Markdown H5")}</MdH5>
-    <MdH5>{getLongerTitle("Markdown H5")}</MdH5>
-  </VStack>
-);
-
-export const MdH6Row = () => (
-  <VStack space={4}>
-    <MdH6>{getTitle("Markdown H6")}</MdH6>
-    <MdH6>{getLongerTitle("Markdown H6")}</MdH6>
   </VStack>
 );
