@@ -13,7 +13,7 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
-import { ImageURISource, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -35,7 +35,6 @@ import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import {
   selectCredentialTypeOption,
   selectIsLoading,
-  selectIssuerConfigurationOption,
   selectRequestedCredentialOption
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
@@ -80,9 +79,6 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
-  const issuerConfOption = ItwCredentialIssuanceMachineContext.useSelector(
-    selectIssuerConfigurationOption
-  );
 
   const handleContinuePress = () => {
     machineRef.send({ type: "confirm-trust-data" });
@@ -98,7 +94,6 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });
 
   useDebugInfo({
-    issuerConfOption,
     parsedCredential: eid.parsedCredential
   });
 
@@ -113,26 +108,15 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
       } as RequiredClaim)
   );
 
-  const issuerName = pipe(
-    issuerConfOption,
-    O.map(config => config.federation_entity.organization_name),
-    O.toUndefined
-  );
-
-  const issuerLogoUri = pipe(
-    issuerConfOption,
-    O.map(
-      config => ({ uri: config.federation_entity.logo_uri } as ImageURISource)
-    ),
-    O.toUndefined
-  );
-
   return (
     <ForceScrollDownView>
       <ContentWrapper>
         <VSpacer size={24} />
         <View style={styles.header}>
-          <Avatar size="small" logoUri={issuerLogoUri} />
+          <Avatar
+            size="small"
+            logoUri={require("../../../../../img/features/itWallet/issuer/IPZS.png")}
+          />
           <HSpacer size={8} />
           <Icon name={"transactions"} color={"grey-450"} size={24} />
           <HSpacer size={8} />
@@ -149,7 +133,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
         </H2>
         <ItwMarkdown>
           {I18n.t("features.itWallet.issuance.credentialAuth.subtitle", {
-            organization: issuerName
+            organization: "Istituto Poligrafico e Zecca dello Stato"
           })}
         </ItwMarkdown>
         <VSpacer size={8} />
