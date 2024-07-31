@@ -11,12 +11,13 @@ import {
   DateClaimConfig,
   DrivingPrivilegeClaimType,
   DrivingPrivilegesClaim,
+  EmptyStringClaim,
   EvidenceClaim,
   FiscalCodeClaim,
   ImageClaim,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
-  PlainTextClaim,
+  StringClaim,
   dateClaimsConfig,
   extractFiscalCode,
   previewDateClaimsConfig
@@ -26,6 +27,7 @@ import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { localeDateFormat } from "../../../../utils/locale";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { getExpireStatus } from "../../../../utils/dates";
+import { isStringNullyOrEmpty } from "../../../../utils/strings";
 
 const HIDDEN_CLAIM = "******";
 
@@ -241,14 +243,18 @@ const DrivingPrivilegesClaimItem = ({
           value={localExpiryDate}
           accessibilityLabel={`${label} ${localExpiryDate}`}
         />
-        <Divider />
-        <ListItemInfo
-          label={I18n.t(
-            "features.itWallet.verifiableCredentials.claims.mdl.restrictionConditions"
-          )}
-          value={claim.restrictions_conditions || "-"}
-          accessibilityLabel={`${label} ${claim.restrictions_conditions}`}
-        />
+        {claim.restrictions_conditions && (
+          <>
+            <Divider />
+            <ListItemInfo
+              label={I18n.t(
+                "features.itWallet.verifiableCredentials.claims.mdl.restrictionConditions"
+              )}
+              value={claim.restrictions_conditions || "-"}
+              accessibilityLabel={`${label} ${claim.restrictions_conditions}`}
+            />
+          </>
+        )}
       </>
     )
   });
@@ -338,7 +344,10 @@ export const ItwCredentialClaim = ({
             O.getOrElseW(() => decoded)
           );
           return <PlainTextClaimItem label={claim.label} claim={fiscalCode} />;
-        } else if (PlainTextClaim.is(decoded)) {
+        } else if (EmptyStringClaim.is(decoded)) {
+          return null; // We want to hide the claim if it's empty
+        }
+        if (StringClaim.is(decoded)) {
           return <PlainTextClaimItem label={claim.label} claim={decoded} />; // must be the last one to be checked due to overlap with IPatternStringTag
         } else {
           return <UnknownClaimItem label={claim.label} _claim={decoded} />;
