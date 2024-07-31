@@ -113,6 +113,12 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
       } as RequiredClaim)
   );
 
+  const issuerName = pipe(
+    issuerConfOption,
+    O.map(config => config.federation_entity.organization_name),
+    O.toUndefined
+  );
+
   const issuerLogoUri = pipe(
     issuerConfOption,
     O.map(
@@ -143,7 +149,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
         </H2>
         <ItwMarkdown>
           {I18n.t("features.itWallet.issuance.credentialAuth.subtitle", {
-            organization: "Istituto Poligrafico e Zecca"
+            organization: issuerName
           })}
         </ItwMarkdown>
         <VSpacer size={8} />
