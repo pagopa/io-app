@@ -13,10 +13,7 @@ import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollV
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  isIdPayEnabledSelector,
-  isItwEnabledSelector
-} from "../../../../store/reducers/backendStatus";
+import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
 import { isCgnInformationAvailableSelector } from "../../../bonus/cgn/store/reducers/details";
@@ -43,7 +40,6 @@ const WalletCardOnboardingScreen = () => {
   const navigation = useIONavigation();
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
-  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const isCgnAlreadyActive = useIOSelector(isCgnInformationAvailableSelector);
 
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
@@ -72,10 +68,6 @@ const WalletCardOnboardingScreen = () => {
 
     dispatch(loadAvailableBonuses.request());
     dispatch(cgnActivationStart());
-  };
-
-  const navigateToInitiativesList = () => {
-    // TODO add navigation to welfare initiatives list
   };
 
   const navigateToPaymentMethodOnboarding = () => {
@@ -183,17 +175,6 @@ const WalletCardOnboardingScreen = () => {
           badge={isCgnAlreadyActive ? activeBadge : undefined}
         />
         <VSpacer size={8} />
-        {isIdPayEnabled && (
-          <>
-            <ModuleCredential
-              testID="idPayModuleTestID"
-              icon="bonus"
-              label={I18n.t("features.wallet.onboarding.options.welfare")}
-              onPress={navigateToInitiativesList}
-            />
-            <VSpacer size={8} />
-          </>
-        )}
         <ModuleCredential
           testID="paymentsModuleTestID"
           icon="creditCard"
