@@ -481,6 +481,7 @@ profile:
       idpayTestAlert: This change requires app reboot
     designSystemEnvironment: Experimental Design System
     newScanSection: New 'Scan' feature
+    sessionRefresh: Activate Session Refresh
     appVersion: Version
     backendVersion: Backend Version
     debugMode: Debug mode
@@ -3256,10 +3257,7 @@ features:
         bottomSheet:
           about:
             title: "Chi è?"
-            subtitle: "È la fonte che gestisce e protegge i tuoi dati. App IO ti consente di visualizzarli perché è in grado di verificare e proteggere la tua identità grazie a importanti procedure di sicurezza."
-          data:
-            title: "Protezione dei dati"
-            subtitle: "I tuoi dati non vengono salvati su questo dispositivo, ma conservati nella Wallet Instance e potrai decidere di revocarli in qualsiasi momento."
+            subtitle: "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
@@ -3304,7 +3302,7 @@ features:
       bottomSheets:
         mdl:
           title: "Patente: contesti di verifica"
-          content: "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Cartadi Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valorelegale del documento fisico.**"
+          content: "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Carta di Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valore legale del documento fisico.**"
       credentialDetails:
         personalDataTitle: "Personal data"
         documentDataTitle: "Document data"

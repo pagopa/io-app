@@ -34,7 +34,6 @@ export function* handleWalletPaymentCreateTransaction(
   try {
     const newTransactionResult = yield* withPaymentsSessionToken(
       newTransaction,
-      paymentsCreateTransactionAction.failure,
       action,
       {
         body: action.payload.data

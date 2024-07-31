@@ -14,7 +14,6 @@ export function* handleWalletPaymentGetDetails(
   try {
     const getPaymentRequestInfoResult = yield* withPaymentsSessionToken(
       getPaymentRequestInfo,
-      paymentsGetPaymentDetailsAction.failure,
       action,
       {
         rpt_id: action.payload

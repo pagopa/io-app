@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.67.0-rc.3](https://github.com/pagopa/io-app/compare/2.67.0-rc.2...2.67.0-rc.3) (2024-07-26)
+
+
+### Bug Fixes
+
+* [[IOBP-758](https://pagopa.atlassian.net/browse/IOBP-758)] Refresh payments session token failure screens ([#6029](https://github.com/pagopa/io-app/issues/6029)) ([32aac92](https://github.com/pagopa/io-app/commit/32aac9274d549c7c70530a901270e89e642f79bf))
+* **IT Wallet:** [[SIW-1403](https://pagopa.atlassian.net/browse/SIW-1403)] Check CIE support independently of user authentication ([#6044](https://github.com/pagopa/io-app/issues/6044)) ([957c16e](https://github.com/pagopa/io-app/commit/957c16e7d04fd04db3dfb4e9d889efd19ffa0085))
+* **IT Wallet:** [[SIW-1407](https://pagopa.atlassian.net/browse/SIW-1407)] Add spacing in mDL banner text ([#6047](https://github.com/pagopa/io-app/issues/6047)) ([17935c5](https://github.com/pagopa/io-app/commit/17935c5096d103aaeccefb93a5edd547834ae6cd))
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-355](https://pagopa.atlassian.net/browse/IOAPPX-355)] Update release pipeline to upload bundle artifacts ([#6034](https://github.com/pagopa/io-app/issues/6034)) ([a90cc32](https://github.com/pagopa/io-app/commit/a90cc322a32f6f7f78b4ac3575b24538f5b45eb2))
+* **IT Wallet:** [[SIW-1378](https://pagopa.atlassian.net/browse/SIW-1378)] Remove image claim decoding without URL schema ([#6050](https://github.com/pagopa/io-app/issues/6050)) ([037e62b](https://github.com/pagopa/io-app/commit/037e62bfba2817f0119e503ab8801a257f7696df))
+* **IT Wallet:** [[SIW-1405](https://pagopa.atlassian.net/browse/SIW-1405)] Add WI reset button in IT Wallet playgrounds ([#6046](https://github.com/pagopa/io-app/issues/6046)) ([d201502](https://github.com/pagopa/io-app/commit/d201502c26505074553f748275eb2993de01ba3e))
+* **IT Wallet:** [[SIW-1406](https://pagopa.atlassian.net/browse/SIW-1406)] Remove gesture navigation in IT Wallet credential issuance screens ([#6048](https://github.com/pagopa/io-app/issues/6048)) ([9a73358](https://github.com/pagopa/io-app/commit/9a73358b31436f7f7ef6fc969bc1f29303b9d543))
+* **IT Wallet:** [[SIW-1408](https://pagopa.atlassian.net/browse/SIW-1408)] Add more info about failure in credential issuance failure screen ([#6049](https://github.com/pagopa/io-app/issues/6049)) ([3631686](https://github.com/pagopa/io-app/commit/36316860361e73d40f7862718030f71fd15ef9d0))
+* **IT Wallet:** [[SIW-1410](https://pagopa.atlassian.net/browse/SIW-1410)] Update copy in issuer claim bottom sheet ([#6051](https://github.com/pagopa/io-app/issues/6051)) ([0791a67](https://github.com/pagopa/io-app/commit/0791a672081cdb9d98dc95a484d8a863e0b6023a))
+
 ## [2.67.0-rc.2](https://github.com/pagopa/io-app/compare/2.67.0-rc.1...2.67.0-rc.2) (2024-07-25)
 
 

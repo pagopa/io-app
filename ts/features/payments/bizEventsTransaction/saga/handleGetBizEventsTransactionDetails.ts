@@ -21,7 +21,6 @@ export function* handleGetBizEventsTransactionDetails(
   try {
     const getTransactionDetailsResult = yield* withPaymentsSessionToken(
       getTransactionDetails,
-      getPaymentsBizEventsTransactionDetailsAction.failure,
       action,
       {
         "transaction-id": action.payload.transactionId

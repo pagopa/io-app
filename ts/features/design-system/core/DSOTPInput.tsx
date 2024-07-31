@@ -1,18 +1,20 @@
-import * as React from "react";
-import { useHeaderHeight } from "@react-navigation/elements";
-import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import {
-  H5,
-  IOStyles,
-  VSpacer,
-  OTPInput,
-  LabelSmall,
+  Body,
+  ButtonOutline,
   ButtonSolid,
   ContentWrapper,
-  ButtonOutline,
-  H3
+  H4,
+  H5,
+  IOVisualCostants,
+  OTPInput,
+  VStack,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
-import { useState } from "react";
+import { useHeaderHeight } from "@react-navigation/elements";
+import * as React from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
+import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
 
 const OTP_LENGTH = 8;
 const OTP_COMPARE = "12345678";
@@ -29,20 +31,20 @@ const OTPWrapper = ({
   autoFocus = false
 }: WrapperProps) => {
   const [value, setValue] = useState("");
-  const onValueChange = React.useCallback((v: string) => {
+  const onValueChange = useCallback((v: string) => {
     if (v.length <= OTP_LENGTH) {
       setValue(v);
     }
   }, []);
 
-  const onValidate = React.useCallback(
+  const onValidate = useCallback(
     (v: string) => !validation || v === OTP_COMPARE,
     [validation]
   );
 
-  return React.useMemo(
+  return useMemo(
     () => (
-      <>
+      <VStack space={16}>
         <OTPInput
           value={value}
           accessibilityLabel={"OTP Input"}
@@ -53,9 +55,8 @@ const OTPWrapper = ({
           errorMessage={"Wrong OTP"}
           autoFocus={autoFocus}
         />
-        <VSpacer />
         <ButtonSolid onPress={() => setValue("")} label={"Pulisci valore"} />
-      </>
+      </VStack>
     ),
     [value, onValueChange, secret, onValidate, autoFocus]
   );
@@ -82,68 +83,86 @@ const scrollVerticallyToView = (
  * @returns a screen with a flexed view where you can test components
  */
 export const DSOTPInput = () => {
-  const scrollViewRef = React.useRef<ScrollView>(null);
-  const autofocusableOTPViewRef = React.useRef<View>(null);
+  const theme = useIOTheme();
+
+  const scrollViewRef = useRef<ScrollView>(null);
+  const autofocusableOTPViewRef = useRef<View>(null);
   const [showAutofocusableOTP, setShowAutofocusableOTP] = useState(false);
   const headerHeight = useHeaderHeight();
 
   const ToggleButton = showAutofocusableOTP ? ButtonSolid : ButtonOutline;
 
+  const { screenEndMargin } = useScreenEndMargin();
+
+  const sectionTitleMargin = 16;
+  const blockMargin = 40;
+
   return (
-    <View
-      style={{
-        flexGrow: 1
-      }}
-    >
+    <View style={{ flexGrow: 1 }}>
       <KeyboardAvoidingView
         behavior={Platform.select({
           ios: "padding",
           android: undefined
         })}
-        contentContainerStyle={[IOStyles.flex, { paddingBottom: 70 }]}
-        style={IOStyles.flex}
+        contentContainerStyle={{
+          flex: 1,
+          paddingBottom: 100 + screenEndMargin
+        }}
         keyboardVerticalOffset={headerHeight}
       >
         <ScrollView ref={scrollViewRef}>
           <ContentWrapper>
-            <H3>OTP Input</H3>
-            <VSpacer />
-            <H5>Default</H5>
-            <VSpacer />
-            <OTPWrapper />
-            <VSpacer />
-            <H5>Secret</H5>
-            <VSpacer />
-            <OTPWrapper secret />
-            <VSpacer />
-            <H5>Validation+Secret</H5>
-            <LabelSmall>Correct OTP {`${OTP_COMPARE}`}</LabelSmall>
-            <VSpacer />
-            <OTPWrapper secret validation />
-            <VSpacer />
-            <H5>Autofocus</H5>
-            <VSpacer />
-            <ToggleButton
-              onPress={() => {
-                setShowAutofocusableOTP(!showAutofocusableOTP);
-                setTimeout(() => {
-                  scrollVerticallyToView(
-                    scrollViewRef,
-                    autofocusableOTPViewRef
-                  );
-                }, 100);
-              }}
-              label={`${
-                showAutofocusableOTP ? "Hide" : "Show"
-              } Autofocusable OTP`}
-            />
-            <VSpacer />
-            {showAutofocusableOTP && (
-              <View ref={autofocusableOTPViewRef}>
-                <OTPWrapper autoFocus />
-                <VSpacer />
-              </View>
-            )}
+            <H4
+              color={theme["textHeading-default"]}
+              style={{ marginVertical: IOVisualCostants.appMarginDefault }}
+            >
+              OTP Input
+            </H4>
+
+            <VStack space={blockMargin}>
+              <VStack space={sectionTitleMargin}>
+                <H5 color={theme["textHeading-default"]}>Default</H5>
+                <OTPWrapper />
+              </VStack>
+
+              <VStack space={sectionTitleMargin}>
+                <H5 color={theme["textHeading-default"]}>Secret</H5>
+                <OTPWrapper secret />
+              </VStack>
+
+              <VStack space={sectionTitleMargin}>
+                <View>
+                  <H5 color={theme["textHeading-default"]}>
+                    {"Validation + Secret"}
+                  </H5>
+                  <Body>Correct OTP {`${OTP_COMPARE}`}</Body>
+                </View>
+                <OTPWrapper secret validation />
+              </VStack>
+
+              <VStack space={sectionTitleMargin}>
+                <H5 color={theme["textHeading-default"]}>Autofocus</H5>
+                <ToggleButton
+                  onPress={() => {
+                    setShowAutofocusableOTP(!showAutofocusableOTP);
+                    setTimeout(() => {
+                      scrollVerticallyToView(
+                        scrollViewRef,
+                        autofocusableOTPViewRef
+                      );
+                    }, 100);
+                  }}
+                  label={`${
+                    showAutofocusableOTP ? "Hide" : "Show"
+                  } Autofocusable OTP`}
+                />
+                {showAutofocusableOTP && (
+                  <View ref={autofocusableOTPViewRef}>
+                    <OTPWrapper autoFocus />
+                  </View>
+                )}
+              </VStack>
+            </VStack>
           </ContentWrapper>
         </ScrollView>
       </KeyboardAvoidingView>

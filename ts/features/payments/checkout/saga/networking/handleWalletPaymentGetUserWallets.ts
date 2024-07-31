@@ -14,7 +14,6 @@ export function* handleWalletPaymentGetUserWallets(
   try {
     const getWalletsByIdUserResult = yield* withPaymentsSessionToken(
       getWalletsByIdUser,
-      paymentsGetPaymentUserMethodsAction.failure,
       action,
       {},
       "pagoPAPlatformSessionToken"
