@@ -251,20 +251,6 @@ export const isCGNEnabledSelector = createSelector(
     ) ?? false
 );
 
-/**
- * return the remote config about FIMS enabled/disabled
- * if there is no data, false is the default value -> (FIMS disabled)
- */
-export const isFIMSEnabledSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): boolean =>
-    pipe(
-      backendStatus,
-      O.map(bs => bs.config.fims.enabled),
-      O.toUndefined
-    ) ?? false
-);
-
 export const fimsDomainSelector = createSelector(
   backendStatusSelector,
   (backendStatus): string | undefined =>

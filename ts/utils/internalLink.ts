@@ -4,10 +4,9 @@
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { fciEnabled, fimsEnabled, uaDonationsEnabled } from "../config";
+import { fciEnabled, uaDonationsEnabled } from "../config";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
-import FIMS_LEGACY_ROUTES from "../features/fimsLegacy/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
@@ -56,10 +55,6 @@ const uaDonationsRoutesToNavigationLink: Record<string, string> = {
   [UADONATION_ROUTES.WEBVIEW]: "/uadonations-webview"
 };
 
-const fimsRoutesToNavigationLink: Record<string, string> = {
-  [FIMS_LEGACY_ROUTES.WEBVIEW]: "/fims/webview"
-};
-
 const fciRoutesToNavigationLink: Record<string, string> = {
   [FCI_ROUTES.MAIN]: "/fci/main"
 };
@@ -69,7 +64,6 @@ const allowedRoutes = {
   ...cgnRoutesToNavigationLink,
   ...legacyRoutesToNavigationLink,
   ...(uaDonationsEnabled ? uaDonationsRoutesToNavigationLink : {}),
-  ...(fimsEnabled ? fimsRoutesToNavigationLink : {}),
   ...(fciEnabled ? fciRoutesToNavigationLink : {})
 };
 
@@ -117,7 +111,7 @@ export function getInternalRoute(href: string): string {
       return pipe(
         allowedRoutes[path.toUpperCase()],
         O.fromNullable,
-        O.map(path => path + (params ? "?" + params : "")),
+        O.map(innerPath => innerPath + (params ? "?" + params : "")),
         O.getOrElse(() =>
           extractedPath.startsWith("/") ? extractedPath : "/" + extractedPath
         )
