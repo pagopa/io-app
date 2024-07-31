@@ -800,6 +800,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -1793,6 +1794,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -2003,6 +2005,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [

@@ -65,7 +65,7 @@ const MessagesArchive = ({
 
   const ListEmptyComponent = () => (
     <EmptyListComponent
-      pictogram={"airBaloon"}
+      pictogram={"empty"}
       title={I18n.t("messages.archive.emptyMessage.title")}
       subtitle={I18n.t("messages.archive.emptyMessage.subtitle")}
     />

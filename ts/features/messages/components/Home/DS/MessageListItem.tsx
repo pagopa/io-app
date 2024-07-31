@@ -15,6 +15,7 @@ import {
 import React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import Svg, { Circle } from "react-native-svg";
+import I18n from "../../../../../i18n";
 import { CustomPressableListItemBase } from "./CustomPressableListItemBase";
 import { DoubleAvatar } from "./DoubleAvatar";
 
@@ -160,7 +161,12 @@ export const MessageListItem = ({
             {badgeVariant === "legalMessage" && (
               <>
                 <HSpacer size={8} />
-                <Tag variant="attachment" iconAccessibilityLabel="Attachment" />
+                <Tag
+                  variant="attachment"
+                  iconAccessibilityLabel={I18n.t(
+                    "features.pn.details.attachmentsSection.title"
+                  )}
+                />
               </>
             )}
           </View>
