@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useCallback, useMemo, useState, useEffect } from "react";
+import React, { useCallback, useMemo, useState, useEffect, memo } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import {
@@ -9,30 +9,27 @@ import {
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-import { connect } from "react-redux";
 
+import _isEqual from "lodash/isEqual";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 import {
   idpLoginUrlChanged,
   loginFailure,
   loginSuccess
 } from "../../store/actions/authentication";
-import { Dispatch } from "../../store/actions/types";
 import {
-  isLoggedIn,
+  loggedInAuthSelector,
   loggedOutWithIdpAuthSelector,
   selectedIdentityProviderSelector
 } from "../../store/reducers/authentication";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
-import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import {
   getIdpLoginUri,
@@ -55,16 +52,8 @@ import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../hooks/useHeaderSecondLevel";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
-
-type NavigationProps = IOStackNavigationRouteProps<
-  AuthenticationParamsList,
-  "AUTHENTICATION_IDP_LOGIN"
->;
-
-type Props = NavigationProps &
-  ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
 
 enum ErrorType {
   "LOADING_ERROR" = "LOADING_ERROR",
@@ -89,7 +78,24 @@ const styles = StyleSheet.create({
  * A screen that allows the user to login with an IDP.
  * The IDP page is opened in a WebView
  */
-const IdpLoginScreen = (props: Props) => {
+const IdpLoginScreen = () => {
+  const dispatch = useIODispatch();
+  const { navigate } = useIONavigation();
+  const selectedIdp = useIOSelector(selectedIdentityProviderSelector, _isEqual);
+  const selectedIdpTextData = useIOSelector(
+    idpContextualHelpDataFromIdSelector(selectedIdp?.id),
+    _isEqual
+  );
+  const loggedOutWithIdpAuth = useIOSelector(
+    loggedOutWithIdpAuthSelector,
+    _isEqual
+  );
+  const loggedInAuth = useIOSelector(loggedInAuthSelector, _isEqual);
+  const assistanceToolConfig = useIOSelector(
+    assistanceToolConfigSelector,
+    _isEqual
+  );
+
   const [requestState, setRequestState] = useState<pot.Pot<true, ErrorType>>(
     pot.noneLoading
   );
@@ -100,7 +106,7 @@ const IdpLoginScreen = (props: Props) => {
     setRequestState(pot.noneError(ErrorType.LOGIN_ERROR));
   }, []);
 
-  const idpId = props.loggedOutWithIdpAuth?.idp.id;
+  const idpId = loggedOutWithIdpAuth?.idp.id;
   const loginUri = idpId ? getIdpLoginUri(idpId, 2) : undefined;
   const {
     retryLollipopLogin,
@@ -109,35 +115,38 @@ const IdpLoginScreen = (props: Props) => {
   } = useLollipopLoginSource(handleOnLollipopCheckFailure, loginUri);
 
   const choosenTool = useMemo(
-    () => assistanceToolRemoteConfig(props.assistanceToolConfig),
-    [props.assistanceToolConfig]
+    () => assistanceToolRemoteConfig(assistanceToolConfig),
+    [assistanceToolConfig]
   );
 
   const idp = useMemo(
-    () => props.loggedOutWithIdpAuth?.idp.id as keyof IdpData,
-    [props.loggedOutWithIdpAuth]
+    () => loggedOutWithIdpAuth?.idp.id as keyof IdpData,
+    [loggedOutWithIdpAuth]
   );
 
-  const handleLoadingError = (
-    error: WebViewErrorEvent | WebViewHttpErrorEvent
-  ): void => {
-    trackSpidLoginError(props.loggedOutWithIdpAuth?.idp.id, error);
-    const webViewHttpError = error as WebViewHttpErrorEvent;
-    if (webViewHttpError.nativeEvent.statusCode) {
-      const { statusCode, url } = webViewHttpError.nativeEvent;
-      if (url.includes(apiUrlPrefix) || statusCode !== 403) {
+  const handleLoadingError = useCallback(
+    (error: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
+      trackSpidLoginError(loggedOutWithIdpAuth?.idp.id, error);
+      const webViewHttpError = error as WebViewHttpErrorEvent;
+      if (webViewHttpError.nativeEvent.statusCode) {
+        const { statusCode, url } = webViewHttpError.nativeEvent;
+        if (url.includes(apiUrlPrefix) || statusCode !== 403) {
+          setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
+        }
+      } else {
         setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
       }
-    } else {
-      setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
-    }
-  };
+    },
+    [loggedOutWithIdpAuth?.idp.id]
+  );
 
   const handleLoginFailure = useCallback(
     (code?: string) => {
-      props.dispatchLoginFailure(
-        new Error(`login failure with code ${code || "n/a"}`),
-        idp
+      dispatch(
+        loginFailure({
+          error: new Error(`login failure with code ${code || "n/a"}`),
+          idp
+        })
       );
       const logText = pipe(
         code,
@@ -155,13 +164,18 @@ const IdpLoginScreen = (props: Props) => {
       setRequestState(pot.noneError(ErrorType.LOGIN_ERROR));
       setErrorCode(code);
     },
-    [choosenTool, idp, props]
+    [dispatch, choosenTool, idp]
   );
 
-  const handleLoginSuccess = (token: SessionToken) => {
-    handleSendAssistanceLog(choosenTool, `login success`);
-    props.dispatchLoginSuccess(token, idp);
-  };
+  const handleLoginSuccess = useCallback(
+    (token: SessionToken) => {
+      handleSendAssistanceLog(choosenTool, `login success`);
+      if (idp) {
+        dispatch(loginSuccess({ token, idp }));
+      }
+    },
+    [choosenTool, dispatch, idp]
+  );
 
   const onRetryButtonPressed = useCallback((): void => {
     setRequestState(pot.noneLoading);
@@ -175,7 +189,7 @@ const IdpLoginScreen = (props: Props) => {
       if (url) {
         const urlBasePath = getUrlBasepath(url);
         if (urlBasePath !== loginTrace) {
-          props.dispatchIdpLoginUrlChanged(urlBasePath);
+          dispatch(idpLoginUrlChanged({ url: urlBasePath }));
           setLoginTrace(urlBasePath);
         }
       }
@@ -192,33 +206,41 @@ const IdpLoginScreen = (props: Props) => {
         event.loading || isAssertion ? pot.noneLoading : pot.some(true)
       );
     },
-    [loginTrace, props]
+    [dispatch, loginTrace]
   );
 
-  const handleShouldStartLoading = (event: WebViewNavigation): boolean => {
-    const url = event.url;
-    // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
-    const idpIntent = getIntentFallbackUrl(url);
-    if (O.isSome(idpIntent)) {
-      void mixpanelTrack("SPID_LOGIN_INTENT", {
-        idp: props.loggedOutWithIdpAuth?.idp
-      });
-      void Linking.openURL(idpIntent.value);
-      return false;
-    }
+  const handleShouldStartLoading = useCallback(
+    (event: WebViewNavigation): boolean => {
+      const url = event.url;
+      // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
+      const idpIntent = getIntentFallbackUrl(url);
+      if (O.isSome(idpIntent)) {
+        void mixpanelTrack("SPID_LOGIN_INTENT", {
+          idp: loggedOutWithIdpAuth?.idp
+        });
+        void Linking.openURL(idpIntent.value);
+        return false;
+      }
 
-    if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
-      return false;
-    }
+      if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
+        return false;
+      }
 
-    const isLoginUrlWithToken = onLoginUriChanged(
+      const isLoginUrlWithToken = onLoginUriChanged(
+        handleLoginFailure,
+        handleLoginSuccess
+      )(event);
+      // URL can be loaded if it's not the login URL containing the session token - this avoids
+      // making a (useless) GET request with the session in the URL
+      return !isLoginUrlWithToken;
+    },
+    [
       handleLoginFailure,
-      handleLoginSuccess
-    )(event);
-    // URL can be loaded if it's not the login URL containing the session token - this avoids
-    // making a (useless) GET request with the session in the URL
-    return !isLoginUrlWithToken;
-  };
+      handleLoginSuccess,
+      loggedOutWithIdpAuth?.idp,
+      shouldBlockUrlNavigationWhileCheckingLollipop
+    ]
+  );
 
   const renderMask = () => {
     // in order to prevent graphic glitches when navigating
@@ -235,7 +257,7 @@ const IdpLoginScreen = (props: Props) => {
   };
 
   const navigateToAuthErrorScreen = useCallback(() => {
-    props.navigation.navigate(ROUTES.AUTHENTICATION, {
+    navigate(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTH_ERROR_SCREEN,
       params: {
         errorCode,
@@ -244,7 +266,7 @@ const IdpLoginScreen = (props: Props) => {
         onRetrySpid: onRetryButtonPressed
       }
     });
-  }, [errorCode, onRetryButtonPressed, props.navigation]);
+  }, [errorCode, onRetryButtonPressed, navigate]);
 
   useEffect(() => {
     if (pot.isError(requestState)) {
@@ -253,7 +275,7 @@ const IdpLoginScreen = (props: Props) => {
   }, [navigateToAuthErrorScreen, requestState]);
 
   const contextualHelp = useMemo(() => {
-    if (O.isNone(props.selectedIdpTextData)) {
+    if (O.isNone(selectedIdpTextData)) {
       return {
         title: I18n.t("authentication.idp_login.contextualHelpTitle"),
         body: (
@@ -264,23 +286,50 @@ const IdpLoginScreen = (props: Props) => {
       };
     }
     return emptyContextualHelp;
-  }, [props.selectedIdpTextData]);
+  }, [selectedIdpTextData]);
 
-  const { loggedOutWithIdpAuth, loggedInAuth } = props;
   const hasError = pot.isError(requestState);
 
-  const headerProps: HeaderSecondLevelHookProps = !loggedInAuth
-    ? {
-        title: `${I18n.t("authentication.idp_login.headerTitle")} - ${
-          loggedOutWithIdpAuth?.idp.name
-        }`,
-        supportRequest: true,
-        contextualHelp,
-        faqCategories: ["authentication_SPID"]
-      }
-    : { title: "", canGoBack: false };
+  const headerProps: HeaderSecondLevelHookProps = useMemo(
+    () =>
+      !loggedInAuth
+        ? {
+            title: `${I18n.t("authentication.idp_login.headerTitle")} - ${
+              loggedOutWithIdpAuth?.idp.name
+            }`,
+            supportRequest: true,
+            contextualHelp,
+            faqCategories: ["authentication_SPID"]
+          }
+        : { title: "", canGoBack: false },
+    [contextualHelp, loggedInAuth, loggedOutWithIdpAuth?.idp.name]
+  );
 
   useHeaderSecondLevel(headerProps);
+
+  const content = useMemo(
+    () => (
+      <WebView
+        cacheEnabled={false}
+        androidCameraAccessDisabled
+        androidMicrophoneAccessDisabled
+        javaScriptEnabled
+        textZoom={100}
+        originWhitelist={originSchemasWhiteList}
+        source={webviewSource}
+        onError={handleLoadingError}
+        onHttpError={handleLoadingError}
+        onNavigationStateChange={handleNavigationStateChange}
+        onShouldStartLoadWithRequest={handleShouldStartLoading}
+      />
+    ),
+    [
+      handleLoadingError,
+      handleNavigationStateChange,
+      handleShouldStartLoading,
+      webviewSource
+    ]
+  );
 
   if (loggedInAuth) {
     return <IdpSuccessfulAuthentication />;
@@ -303,50 +352,10 @@ const IdpLoginScreen = (props: Props) => {
 
   return (
     <View style={styles.webViewWrapper}>
-      {!hasError && (
-        <WebView
-          cacheEnabled={false}
-          androidCameraAccessDisabled={true}
-          androidMicrophoneAccessDisabled={true}
-          textZoom={100}
-          originWhitelist={originSchemasWhiteList}
-          source={webviewSource}
-          onError={handleLoadingError}
-          onHttpError={handleLoadingError}
-          javaScriptEnabled={true}
-          onNavigationStateChange={handleNavigationStateChange}
-          onShouldStartLoadWithRequest={handleShouldStartLoading}
-        />
-      )}
+      {!hasError && content}
       {renderMask()}
     </View>
   );
 };
 
-const mapStateToProps = (state: GlobalState) => {
-  const selectedIdp = selectedIdentityProviderSelector(state);
-
-  const selectedIdpTextData = idpContextualHelpDataFromIdSelector(
-    selectedIdp?.id
-  )(state);
-
-  return {
-    loggedOutWithIdpAuth: loggedOutWithIdpAuthSelector(state),
-    loggedInAuth: isLoggedIn(state.authentication)
-      ? state.authentication
-      : undefined,
-    selectedIdpTextData,
-    assistanceToolConfig: assistanceToolConfigSelector(state)
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchIdpLoginUrlChanged: (url: string) =>
-    dispatch(idpLoginUrlChanged({ url })),
-  dispatchLoginSuccess: (token: SessionToken, idp?: keyof IdpData) =>
-    idp ? dispatch(loginSuccess({ token, idp })) : undefined,
-  dispatchLoginFailure: (error: Error, idp?: keyof IdpData) =>
-    dispatch(loginFailure({ error, idp }))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(IdpLoginScreen);
+export default memo(IdpLoginScreen);
