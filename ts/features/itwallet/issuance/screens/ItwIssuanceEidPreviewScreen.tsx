@@ -2,7 +2,6 @@ import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
@@ -11,11 +10,8 @@ import { identificationRequest } from "../../../../store/actions/identification"
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
+import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
-import {
-  ItWalletError,
-  getItwGenericMappedError
-} from "../../common/utils/itwErrorsUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { selectEidOption } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
@@ -96,19 +92,10 @@ export const ItwIssuanceEidPreviewScreen = () => {
     );
   };
 
-  /**
-   * Error view component which currently displays a generic error.
-   * @param error - optional ItWalletError to be displayed.
-   */
-  const ErrorView = ({ error: _ }: { error?: ItWalletError }) => {
-    const mappedError = getItwGenericMappedError(() => navigation.goBack());
-    return <OperationResultScreenContent {...mappedError} />;
-  };
-
   return pipe(
     eidOption,
     O.fold(
-      () => <ErrorView />,
+      () => <ItwGenericErrorContent />,
       eid => <ContentView eid={eid} />
     )
   );

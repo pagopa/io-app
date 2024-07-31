@@ -7,7 +7,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { sequenceS } from "fp-ts/lib/Apply";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
@@ -21,6 +21,7 @@ import { identificationRequest } from "../../../../store/actions/identification"
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
+import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { getHumanReadableParsedCredential } from "../../common/utils/debug";
@@ -53,7 +54,10 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
       credentialType: credentialTypeOption,
       credential: credentialOption
     }),
-    O.fold(constNull, props => <ContentView {...props} />)
+    O.fold(
+      () => <ItwGenericErrorContent />,
+      props => <ContentView {...props} />
+    )
   );
 };
 

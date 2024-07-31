@@ -10,7 +10,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { sequenceS } from "fp-ts/lib/Apply";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
@@ -20,6 +20,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
@@ -59,7 +60,10 @@ const ItwIssuanceCredentialTrustIssuerScreen = () => {
       requestedCredential: requestedCredentialOption,
       eid: eidOption
     }),
-    O.fold(constNull, props => <ContentView {...props} />)
+    O.fold(
+      () => <ItwGenericErrorContent />,
+      props => <ContentView {...props} />
+    )
   );
 };
 
