@@ -136,10 +136,12 @@ const NewOptInScreen = () => {
         <FeatureInfo
           pictogramName="notification"
           body={I18n.t("authentication.opt_in.notification")}
-          actionLabel={I18n.t("authentication.opt_in.security_suggests")}
-          actionOnPress={() => {
-            trackLoginSessionOptInInfo();
-            return presentSecuritySuggestionBottomSheet();
+          action={{
+            label: I18n.t("authentication.opt_in.security_suggests"),
+            onPress: () => {
+              trackLoginSessionOptInInfo();
+              return presentSecuritySuggestionBottomSheet();
+            }
           }}
         />
       </ContentWrapper>

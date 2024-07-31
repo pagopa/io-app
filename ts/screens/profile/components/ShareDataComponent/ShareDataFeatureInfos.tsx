@@ -89,9 +89,11 @@ const AnalyticsFeatureInfo = ({ trackAction }: FeatureProps) => {
     <>
       <FeatureInfo
         iconName="analytics"
-        actionLabel={I18n.t("profile.main.privacy.shareData.screen.why.cta")}
-        actionOnPress={handleOnPress}
         body={analyticsBody}
+        action={{
+          label: I18n.t("profile.main.privacy.shareData.screen.why.cta"),
+          onPress: handleOnPress
+        }}
       />
       {bottomSheet}
     </>
@@ -107,8 +109,6 @@ const SecurityFeatureInfo = ({ trackAction }: FeatureProps) => {
   return (
     <FeatureInfo
       iconName="locked"
-      actionLabel={I18n.t("profile.main.privacy.shareData.screen.security.cta")}
-      actionOnPress={handleOnPress}
       body={
         <Body>
           {I18n.t(
@@ -124,6 +124,10 @@ const SecurityFeatureInfo = ({ trackAction }: FeatureProps) => {
           )}
         </Body>
       }
+      action={{
+        label: I18n.t("profile.main.privacy.shareData.screen.security.cta"),
+        onPress: handleOnPress
+      }}
     />
   );
 };
@@ -137,8 +141,6 @@ const GDPRFeatureInfo = ({ trackAction }: FeatureProps) => {
   return (
     <FeatureInfo
       iconName="security"
-      actionLabel={I18n.t("profile.main.privacy.shareData.screen.gdpr.cta")}
-      actionOnPress={handleOnPress}
       body={
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.gdpr.description.one")}
@@ -149,6 +151,10 @@ const GDPRFeatureInfo = ({ trackAction }: FeatureProps) => {
           </Label>
         </Body>
       }
+      action={{
+        label: I18n.t("profile.main.privacy.shareData.screen.gdpr.cta"),
+        onPress: handleOnPress
+      }}
     />
   );
 };
