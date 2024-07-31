@@ -7,7 +7,7 @@ import {
   H3,
   IOColors,
   IOStyles,
-  LabelLink,
+  Label,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
@@ -92,9 +92,9 @@ const IdPayCodeDisplayScreen = () => {
             <Body color="grey-700" weight="Bold">
               {I18n.t("idpay.code.onboarding.bodyBold")}
             </Body>
-            <LabelLink onPress={presentCieBottomSheet}>
+            <Label asLink onPress={presentCieBottomSheet}>
               {I18n.t("idpay.code.onboarding.bodyCta")}
-            </LabelLink>
+            </Label>
             <VSpacer size={24} />
             <CodeDisplayComponent code={idPayCode} />
             <VSpacer size={24} />

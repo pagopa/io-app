@@ -2,7 +2,7 @@ import {
   ContentWrapper,
   H2,
   IOStyles,
-  LabelLink,
+  Label,
   OTPInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -53,9 +53,9 @@ const ForgottenPin = () => (
       {I18n.t("bottomSheets.ciePin.content")}
     </LegacyMarkdown>
     <VSpacer size={24} />
-    <LabelLink onPress={onOpenForgotPinPage}>
+    <Label asLink onPress={onOpenForgotPinPage}>
       {I18n.t("authentication.cie.pin.bottomSheetCTA")}
-    </LabelLink>
+    </Label>
     <VSpacer size={24} />
   </View>
 );
@@ -130,14 +130,15 @@ export const ItwCiePinScreen = () => {
           <ContentWrapper>
             <H2>{I18n.t("authentication.cie.pin.pinCardTitle")}</H2>
             <VSpacer size={8} />
-            <LabelLink
+            <Label
+              asLink
               onPress={() => {
                 trackLoginCiePinInfo();
                 present();
               }}
             >
               {I18n.t("authentication.cie.pin.subtitleCTA")}
-            </LabelLink>
+            </Label>
             <VSpacer size={24} />
             <View style={IOStyles.flex}>
               <OTPInput

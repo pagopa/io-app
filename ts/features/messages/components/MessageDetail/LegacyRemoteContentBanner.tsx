@@ -1,5 +1,5 @@
 import React from "react";
-import { Body, LabelLink, LabelSmall } from "@pagopa/io-app-design-system";
+import { Body, LabelSmall } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
@@ -29,15 +29,15 @@ export const LegacyRemoteContentBanner = () => {
         </LabelSmall>
         {I18n.t("messageDetails.banner.content3")}
         {"\n"}
-        <LabelLink
-          fontSize="small"
+        <LabelSmall
+          asLink
           onPress={() => {
             trackRemoteContentInfo();
             present();
           }}
         >
           {I18n.t("messageDetails.banner.action")}
-        </LabelLink>
+        </LabelSmall>
       </StatusContent>
       {bottomSheet}
     </>

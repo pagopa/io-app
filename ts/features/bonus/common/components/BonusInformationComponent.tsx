@@ -13,7 +13,7 @@ import {
   IOSpacer,
   IOSpacingScale,
   IOVisualCostants,
-  LabelLink,
+  Label,
   VSpacer,
   buttonSolidHeight
 } from "@pagopa/io-app-design-system";
@@ -86,13 +86,14 @@ const getTosFooter = (
                 <Body color="bluegreyDark">
                   {I18n.t("bonus.bonusVacanze.advice")}
                 </Body>
-                <LabelLink
+                <Label
+                  asLink
                   weight={"Semibold"}
                   numberOfLines={1}
                   onPress={() => handleModalPress(bT)}
                 >
                   {I18n.t("bonus.tos.title")}
-                </LabelLink>
+                </Label>
               </>
             ),
             // if tos and regulation url is defined

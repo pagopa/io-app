@@ -12,7 +12,7 @@ import {
   HSpacer,
   IOStyles,
   IconButton,
-  LabelLink,
+  Label,
   ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -102,10 +102,11 @@ const FciDataSharingScreen = (): React.ReactElement => {
       />
       <HSpacer size={8} />
       <View style={{ flex: 1 }}>
-        <H6 weight="Regular" color={"bluegrey"}>
+        <H6 color={"bluegrey"}>
           {I18n.t("features.fci.shareDataScreen.alertText")}
           <HSpacer size={8} />
-          <LabelLink
+          <Label
+            asLink
             onPress={() => {
               trackFciUserExit(route.name, fciEnvironment, "modifica_email");
               navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
@@ -118,7 +119,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
             }}
           >
             {I18n.t("features.fci.shareDataScreen.alertLink")}
-          </LabelLink>
+          </Label>
         </H6>
       </View>
     </View>

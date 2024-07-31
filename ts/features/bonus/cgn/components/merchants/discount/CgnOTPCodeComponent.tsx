@@ -1,7 +1,7 @@
 import * as React from "react";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { View, StyleSheet } from "react-native";
-import { Icon, LabelLink } from "@pagopa/io-app-design-system";
+import { Icon, Label } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../../i18n";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
@@ -80,7 +80,9 @@ const CgnOTPCodeContent = ({ onCodePress }: Props) => {
               {I18n.t("bonus.cgn.otp.error")}
             </H4>
 
-            <LabelLink>{I18n.t("global.buttons.retry")}</LabelLink>
+            <Label onPress={requestOtp} asLink>
+              {I18n.t("global.buttons.retry")}
+            </Label>
           </View>
         </TouchableWithoutFeedback>
       );
