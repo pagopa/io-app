@@ -1,332 +1,144 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-
 import * as React from "react";
 
-import { StyleSheet, View } from "react-native";
 import {
-  IOColors,
-  HSpacer,
-  VSpacer,
-  ContentWrapper,
-  TabItem,
   BodyMonospace,
-  TabNavigation
+  ContentWrapper,
+  H4,
+  H6,
+  HStack,
+  IOColors,
+  TabItem,
+  TabNavigation,
+  VStack,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
+import { View } from "react-native";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
-import { H2 } from "../../../components/core/typography/H2";
-import { H3 } from "../../../components/core/typography/H3";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
+const tabItemMargin = 8;
+const componentMargin = 16;
+const innerBlockMargin = 24;
+const sectionTitleMargin = 16;
+const blockTitleMargin = 24;
+const blockMargin = 48;
+
+const blueBackground = IOColors["blueIO-850"];
+
+const handlePress = () => {};
+
 export const DSTabNavigation = () => {
-  const handlePress = () => {};
+  const theme = useIOTheme();
 
   return (
     <DesignSystemScreen
       title={DESIGN_SYSTEM_ROUTES.COMPONENTS.TAB_NAVIGATION.title}
       noMargin={true}
     >
-      <ContentWrapper>
-        <H2>Tab Item</H2>
-        <VSpacer size={24} />
-        <H3>Light</H3>
-        <VSpacer size={16} />
-        <View>
-          <DSComponentViewerBox name="Light">
-            <View style={{ flexDirection: "row" }}>
-              <TabItem
-                label="Label tab"
-                accessibilityLabel="Label tab"
-                onPress={handlePress}
-              />
-              <HSpacer size={8} />
-              <TabItem
-                label="Label tab"
-                accessibilityLabel="Label tab"
-                icon={"starEmpty"}
-                onPress={handlePress}
-              />
-            </View>
-          </DSComponentViewerBox>
-
-          <DSComponentViewerBox name="Light Selected">
-            <View style={{ flexDirection: "row" }}>
-              <TabItem
-                label="Label tab"
-                accessibilityLabel="Label tab"
-                selected={true}
-                onPress={handlePress}
-              />
-              <HSpacer size={8} />
-              <TabItem
-                label="Label tab"
-                accessibilityLabel="Label tab"
-                icon={"starEmpty"}
-                selected={true}
-                onPress={handlePress}
-              />
-            </View>
-          </DSComponentViewerBox>
-
-          <DSComponentViewerBox name="Light Disabled" last={true}>
-            <View style={{ flexDirection: "row" }}>
-              <TabItem
-                label="Label tab"
-                accessibilityLabel="Label tab"
-                disabled
-                onPress={handlePress}
-              />
-              <HSpacer size={8} />
-              <TabItem
-                label="Label tab"
-                accessibilityLabel="Label tab"
-                disabled
-                icon={"starEmpty"}
-                onPress={handlePress}
-              />
-            </View>
-          </DSComponentViewerBox>
-        </View>
-        <VSpacer size={24} />
-        <H3>Dark</H3>
-        <VSpacer size={16} />
-        <View style={[styles.dark, { borderRadius: 16, padding: 16 }]}>
-          <DSComponentViewerBox name="Dark" colorMode="dark">
-            <View style={{ flexDirection: "row" }}>
-              <TabItem
-                label="Label tab"
-                accessibilityLabel="Label tab"
-                color="dark"
-                onPress={handlePress}
-              />
-              <HSpacer size={8} />
-              <TabItem
-                label="Label tab"
-                accessibilityLabel="Label tab"
-                icon={"starEmpty"}
-                color="dark"
-                onPress={handlePress}
-              />
-            </View>
-          </DSComponentViewerBox>
-
-          <DSComponentViewerBox name="Dark Selected" colorMode="dark">
-            <View style={{ flexDirection: "row" }}>
-              <TabItem
-                label="Label tab"
-                accessibilityLabel="Label tab"
-                color="dark"
-                selected={true}
-                onPress={handlePress}
-              />
-              <HSpacer size={8} />
-              <TabItem
-                label="Label tab"
-                accessibilityLabel="Label tab"
-                icon={"starEmpty"}
-                color="dark"
-                selected={true}
-                onPress={handlePress}
-              />
-            </View>
-          </DSComponentViewerBox>
-          <DSComponentViewerBox
-            name="Dark Disabled"
-            colorMode="dark"
-            last={true}
-          >
-            <View style={{ flexDirection: "row" }}>
-              <TabItem
-                label="Label tab"
-                accessibilityLabel="Label tab"
-                color="dark"
-                disabled={true}
-                onPress={handlePress}
-              />
-              <HSpacer size={8} />
-              <TabItem
-                label="Label tab"
-                accessibilityLabel="Label tab"
-                icon={"starEmpty"}
-                color="dark"
-                disabled={true}
-                onPress={handlePress}
-              />
-            </View>
-          </DSComponentViewerBox>
-        </View>
-        <VSpacer size={32} />
-      </ContentWrapper>
-      <ContentWrapper>
-        <H2>Tab Navigation</H2>
-        <VSpacer size={24} />
-        <H3>Light</H3>
-        <VSpacer size={16} />
-      </ContentWrapper>
-      <View>
-        <TabNavigationWithState>
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-        </TabNavigationWithState>
-
-        <VSpacer size={24} />
-
-        <TabNavigationWithState>
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-        </TabNavigationWithState>
-
-        <VSpacer size={24} />
-
-        <TabNavigationWithState>
-          <TabItem
-            label="Label tab"
-            accessibilityLabel="Label tab"
-            icon="starEmpty"
-            iconSelected="starFilled"
-          />
-          <TabItem
-            label="Label tab"
-            accessibilityLabel="Label tab"
-            icon="starEmpty"
-            iconSelected="starFilled"
-          />
-          <TabItem
-            label="Label tab"
-            accessibilityLabel="Label tab"
-            icon="starEmpty"
-            iconSelected="starFilled"
-          />
-          <TabItem
-            label="Label tab"
-            accessibilityLabel="Label tab"
-            icon="starEmpty"
-            iconSelected="starFilled"
-          />
-          <TabItem
-            label="Label tab"
-            accessibilityLabel="Label tab"
-            icon="starEmpty"
-            iconSelected="starFilled"
-          />
-        </TabNavigationWithState>
-      </View>
-
-      <ContentWrapper>
-        <VSpacer size={32} />
-        <H3>Dark</H3>
-        <VSpacer size={16} />
-      </ContentWrapper>
-
-      <View style={[styles.dark, { paddingVertical: 24 }]}>
-        <TabNavigationWithState color="dark">
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-        </TabNavigationWithState>
-
-        <VSpacer size={24} />
-
-        <TabNavigationWithState color="dark">
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-        </TabNavigationWithState>
-
-        <VSpacer size={24} />
-
-        <TabNavigationWithState color="dark">
-          <TabItem
-            label="Label tab"
-            accessibilityLabel="Label tab"
-            icon="starEmpty"
-          />
-          <TabItem
-            label="Label tab"
-            accessibilityLabel="Label tab"
-            icon="starEmpty"
-          />
-          <TabItem
-            label="Label tab"
-            accessibilityLabel="Label tab"
-            icon="starEmpty"
-          />
-          <TabItem
-            label="Label tab"
-            accessibilityLabel="Label tab"
-            icon="starEmpty"
-          />
-          <TabItem
-            label="Label tab"
-            accessibilityLabel="Label tab"
-            icon="starEmpty"
-          />
-        </TabNavigationWithState>
-      </View>
-
-      <ContentWrapper>
-        <VSpacer size={24} />
-        <H3>Tab alignment</H3>
-        <VSpacer size={16} />
-      </ContentWrapper>
-
-      <View>
+      <VStack space={blockMargin}>
         <ContentWrapper>
-          <BodyMonospace>{`center (default)`}</BodyMonospace>
+          <VStack space={blockTitleMargin}>
+            <H4 color={theme["textHeading-default"]}>Tab Item</H4>
+
+            <VStack space={innerBlockMargin}>
+              <VStack space={sectionTitleMargin}>
+                <H6 color={theme["textHeading-default"]}>Light</H6>
+                {renderTabItemLight()}
+              </VStack>
+
+              <VStack space={sectionTitleMargin}>
+                <H6 color={theme["textHeading-default"]}>Dark</H6>
+                {renderTabItemDark()}
+              </VStack>
+            </VStack>
+          </VStack>
         </ContentWrapper>
 
-        <VSpacer size={16} />
+        <VStack space={blockTitleMargin}>
+          <ContentWrapper>
+            <H4 color={theme["textHeading-default"]}>Tab Navigation</H4>
+          </ContentWrapper>
 
-        <TabNavigationWithState>
-          <TabItem label="Long label" accessibilityLabel="Long label" />
-          <TabItem label="Label" accessibilityLabel="Label" />
-          <TabItem label="Label" accessibilityLabel="Label" />
-        </TabNavigationWithState>
+          <VStack space={innerBlockMargin}>
+            <VStack space={sectionTitleMargin}>
+              <ContentWrapper>
+                <H6 color={theme["textHeading-default"]}>Light</H6>
+              </ContentWrapper>
+              {renderTabNavigationLight()}
+            </VStack>
 
-        <VSpacer size={24} />
+            <VStack space={sectionTitleMargin}>
+              <ContentWrapper>
+                <H6 color={theme["textHeading-default"]}>Dark</H6>
+              </ContentWrapper>
+              {renderTabNavigationDark()}
+            </VStack>
+          </VStack>
+        </VStack>
 
-        <ContentWrapper>
-          <BodyMonospace>{`start`}</BodyMonospace>
-        </ContentWrapper>
+        <VStack space={blockTitleMargin}>
+          <ContentWrapper>
+            <H4 color={theme["textHeading-default"]}>Tab Alignment</H4>
+          </ContentWrapper>
 
-        <VSpacer size={16} />
+          <VStack space={innerBlockMargin}>
+            <VStack space={sectionTitleMargin}>
+              <ContentWrapper>
+                <BodyMonospace style={{ alignSelf: "center" }}>
+                  center (default)
+                </BodyMonospace>
+              </ContentWrapper>
+              <TabNavigationWithState>
+                <TabItem label="Long label" accessibilityLabel="Long label" />
+                <TabItem label="Label" accessibilityLabel="Label" />
+                <TabItem label="Label" accessibilityLabel="Label" />
+              </TabNavigationWithState>
+            </VStack>
 
-        <TabNavigationWithState tabAlignment="start">
-          <TabItem label="Long label" accessibilityLabel="Long label" />
-          <TabItem label="Label" accessibilityLabel="Label" />
-          <TabItem label="Label" accessibilityLabel="Label" />
-        </TabNavigationWithState>
+            <VStack space={sectionTitleMargin}>
+              <ContentWrapper>
+                <BodyMonospace style={{ alignSelf: "flex-start" }}>
+                  start
+                </BodyMonospace>
+              </ContentWrapper>
+              <TabNavigationWithState tabAlignment="start">
+                <TabItem label="Long label" accessibilityLabel="Long label" />
+                <TabItem label="Label" accessibilityLabel="Label" />
+                <TabItem label="Label" accessibilityLabel="Label" />
+              </TabNavigationWithState>
+            </VStack>
 
-        <VSpacer size={24} />
+            <VStack space={sectionTitleMargin}>
+              <ContentWrapper>
+                <BodyMonospace style={{ alignSelf: "flex-end" }}>
+                  end
+                </BodyMonospace>
+              </ContentWrapper>
+              <TabNavigationWithState tabAlignment="end">
+                <TabItem label="Long label" accessibilityLabel="Long label" />
+                <TabItem label="Label" accessibilityLabel="Label" />
+                <TabItem label="Label" accessibilityLabel="Label" />
+              </TabNavigationWithState>
+            </VStack>
 
-        <ContentWrapper>
-          <BodyMonospace>{`end`}</BodyMonospace>
-        </ContentWrapper>
-
-        <VSpacer size={16} />
-
-        <TabNavigationWithState tabAlignment="end">
-          <TabItem label="Long label" accessibilityLabel="Long label" />
-          <TabItem label="Label" accessibilityLabel="Label" />
-          <TabItem label="Label" accessibilityLabel="Label" />
-        </TabNavigationWithState>
-
-        <VSpacer size={24} />
-
-        <ContentWrapper>
-          <BodyMonospace>{`stretch`}</BodyMonospace>
-        </ContentWrapper>
-
-        <VSpacer size={16} />
-
-        <TabNavigationWithState tabAlignment="stretch">
-          <TabItem label="Long label" accessibilityLabel="Long label" />
-          <TabItem label="Label" accessibilityLabel="Label" />
-          <TabItem label="Label" accessibilityLabel="Label" />
-        </TabNavigationWithState>
-      </View>
-      <VSpacer size={40} />
+            <VStack space={sectionTitleMargin}>
+              <ContentWrapper>
+                <BodyMonospace style={{ alignSelf: "flex-start" }}>
+                  stretch
+                </BodyMonospace>
+              </ContentWrapper>
+              <TabNavigationWithState tabAlignment="stretch">
+                <TabItem label="Long label" accessibilityLabel="Long label" />
+                <TabItem label="Label" accessibilityLabel="Label" />
+                <TabItem label="Label" accessibilityLabel="Label" />
+              </TabNavigationWithState>
+            </VStack>
+          </VStack>
+        </VStack>
+      </VStack>
     </DesignSystemScreen>
   );
 };
@@ -341,8 +153,227 @@ const TabNavigationWithState = (props: TabNavigation) => {
   );
 };
 
-const styles = StyleSheet.create({
-  dark: {
-    backgroundColor: IOColors["blueIO-850"]
-  }
-});
+const renderTabItemLight = () => (
+  <VStack space={componentMargin}>
+    <DSComponentViewerBox name="Light">
+      <HStack space={tabItemMargin}>
+        <TabItem
+          label="Label tab"
+          accessibilityLabel="Label tab"
+          onPress={handlePress}
+        />
+        <TabItem
+          label="Label tab"
+          accessibilityLabel="Label tab"
+          icon={"starEmpty"}
+          onPress={handlePress}
+        />
+      </HStack>
+    </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="Light · Selected">
+      <HStack space={tabItemMargin}>
+        <TabItem
+          label="Label tab"
+          accessibilityLabel="Label tab"
+          selected={true}
+          onPress={handlePress}
+        />
+        <TabItem
+          label="Label tab"
+          accessibilityLabel="Label tab"
+          icon={"starEmpty"}
+          selected={true}
+          onPress={handlePress}
+        />
+      </HStack>
+    </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="Light · Disabled">
+      <HStack space={tabItemMargin}>
+        <TabItem
+          label="Label tab"
+          accessibilityLabel="Label tab"
+          disabled
+          onPress={handlePress}
+        />
+        <TabItem
+          label="Label tab"
+          accessibilityLabel="Label tab"
+          disabled
+          icon={"starEmpty"}
+          onPress={handlePress}
+        />
+      </HStack>
+    </DSComponentViewerBox>
+  </VStack>
+);
+
+const renderTabItemDark = () => (
+  <View
+    style={{
+      backgroundColor: blueBackground,
+      borderRadius: 24,
+      padding: 24,
+      borderCurve: "continuous"
+    }}
+  >
+    <VStack space={componentMargin}>
+      <DSComponentViewerBox name="Dark" colorMode="dark">
+        <HStack space={tabItemMargin}>
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            color="dark"
+            onPress={handlePress}
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon={"starEmpty"}
+            color="dark"
+            onPress={handlePress}
+          />
+        </HStack>
+      </DSComponentViewerBox>
+
+      <DSComponentViewerBox name="Dark · Selected" colorMode="dark">
+        <HStack space={tabItemMargin}>
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            color="dark"
+            selected={true}
+            onPress={handlePress}
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon={"starFilled"}
+            color="dark"
+            selected={true}
+            onPress={handlePress}
+          />
+        </HStack>
+      </DSComponentViewerBox>
+
+      <DSComponentViewerBox name="Dark · Disabled" colorMode="dark">
+        <HStack space={tabItemMargin}>
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            color="dark"
+            disabled={true}
+            onPress={handlePress}
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon={"starEmpty"}
+            color="dark"
+            disabled={true}
+            onPress={handlePress}
+          />
+        </HStack>
+      </DSComponentViewerBox>
+    </VStack>
+  </View>
+);
+
+const renderTabNavigationLight = () => (
+  <VStack space={componentMargin}>
+    <TabNavigationWithState>
+      <TabItem label="Label tab" accessibilityLabel="Label tab" />
+      <TabItem label="Label tab" accessibilityLabel="Label tab" />
+    </TabNavigationWithState>
+
+    <TabNavigationWithState>
+      <TabItem label="Label tab" accessibilityLabel="Label tab" />
+      <TabItem label="Label tab" accessibilityLabel="Label tab" />
+      <TabItem label="Label tab" accessibilityLabel="Label tab" />
+    </TabNavigationWithState>
+
+    <TabNavigationWithState>
+      <TabItem
+        label="Label tab"
+        accessibilityLabel="Label tab"
+        icon="starEmpty"
+        iconSelected="starFilled"
+      />
+      <TabItem
+        label="Label tab"
+        accessibilityLabel="Label tab"
+        icon="starEmpty"
+        iconSelected="starFilled"
+      />
+      <TabItem
+        label="Label tab"
+        accessibilityLabel="Label tab"
+        icon="starEmpty"
+        iconSelected="starFilled"
+      />
+      <TabItem
+        label="Label tab"
+        accessibilityLabel="Label tab"
+        icon="starEmpty"
+        iconSelected="starFilled"
+      />
+      <TabItem
+        label="Label tab"
+        accessibilityLabel="Label tab"
+        icon="starEmpty"
+        iconSelected="starFilled"
+      />
+    </TabNavigationWithState>
+  </VStack>
+);
+
+const renderTabNavigationDark = () => (
+  <View style={{ paddingVertical: 24, backgroundColor: blueBackground }}>
+    <VStack space={componentMargin}>
+      <TabNavigationWithState color="dark">
+        <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        <TabItem label="Label tab" accessibilityLabel="Label tab" />
+      </TabNavigationWithState>
+
+      <TabNavigationWithState color="dark">
+        <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        <TabItem label="Label tab" accessibilityLabel="Label tab" />
+      </TabNavigationWithState>
+
+      <TabNavigationWithState color="dark">
+        <TabItem
+          label="Label tab"
+          accessibilityLabel="Label tab"
+          icon="starEmpty"
+          iconSelected="starFilled"
+        />
+        <TabItem
+          label="Label tab"
+          accessibilityLabel="Label tab"
+          icon="starEmpty"
+          iconSelected="starFilled"
+        />
+        <TabItem
+          label="Label tab"
+          accessibilityLabel="Label tab"
+          icon="starEmpty"
+          iconSelected="starFilled"
+        />
+        <TabItem
+          label="Label tab"
+          accessibilityLabel="Label tab"
+          icon="starEmpty"
+          iconSelected="starFilled"
+        />
+        <TabItem
+          label="Label tab"
+          accessibilityLabel="Label tab"
+          icon="starEmpty"
+          iconSelected="starFilled"
+        />
+      </TabNavigationWithState>
+    </VStack>
+  </View>
+);
