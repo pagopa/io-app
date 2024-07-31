@@ -41,12 +41,6 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToEidRequestScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.EID_REQUEST
-    });
-  },
-
   navigateToEidPreviewScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ISSUANCE.EID_PREVIEW

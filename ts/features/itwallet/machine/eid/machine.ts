@@ -31,7 +31,6 @@ export const itwEidIssuanceMachine = setup({
     navigateToTosScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
     navigateToIdpSelectionScreen: notImplemented,
-    navigateToEidRequestScreen: notImplemented,
     navigateToEidPreviewScreen: notImplemented,
     navigateToSuccessScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
@@ -313,13 +312,10 @@ export const itwEidIssuanceMachine = setup({
       }
     },
     Issuance: {
-      entry: "navigateToEidRequestScreen",
+      entry: "navigateToEidPreviewScreen",
       initial: "RequestingEid",
       states: {
         RequestingEid: {
-          on: {
-            back: { target: "#itwEidIssuanceMachine.UserIdentification" }
-          },
           tags: [ItwTags.Loading],
           invoke: {
             src: "requestEid",
@@ -345,6 +341,7 @@ export const itwEidIssuanceMachine = setup({
           }
         },
         CheckingIdentityMatch: {
+          tags: [ItwTags.Loading],
           description:
             "Checking whether the issued eID matches the identity of the currently logged-in user.",
           always: [
@@ -361,7 +358,6 @@ export const itwEidIssuanceMachine = setup({
           ]
         },
         DisplayingPreview: {
-          entry: "navigateToEidPreviewScreen",
           on: {
             "add-to-wallet": {
               actions: [
