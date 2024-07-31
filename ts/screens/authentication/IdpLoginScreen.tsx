@@ -290,6 +290,7 @@ const IdpLoginScreen = () => {
 
   const hasError = pot.isError(requestState);
 
+  // Wrapped with `useMemo` to prevent unnecessary executions of `useLayoutEffect` inside `useHeaderSecondLevel`, it seemed to cause bugs when opening certain Idps.
   const headerProps: HeaderSecondLevelHookProps = useMemo(
     () =>
       !loggedInAuth
@@ -307,6 +308,7 @@ const IdpLoginScreen = () => {
 
   useHeaderSecondLevel(headerProps);
 
+  // Wrapped with `useMemo` to prevent unnecessary re-renders, it seemed to cause bugs when attempting to open certain Idps.
   const content = useMemo(
     () => (
       <WebView
@@ -358,4 +360,5 @@ const IdpLoginScreen = () => {
   );
 };
 
+// Exported with `memo` to protect from unnecessary re-renders triggered by `navigation.setOptions` from `useHeaderSecondLevel`
 export default memo(IdpLoginScreen);
