@@ -35,6 +35,7 @@ import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import {
   selectCredentialTypeOption,
   selectIsLoading,
+  selectIssuerConfigurationOption,
   selectRequestedCredentialOption
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
@@ -82,6 +83,9 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
+  const issuerConfOption = ItwCredentialIssuanceMachineContext.useSelector(
+    selectIssuerConfigurationOption
+  );
 
   const handleContinuePress = () => {
     machineRef.send({ type: "confirm-trust-data" });
@@ -94,6 +98,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });
 
   useDebugInfo({
+    issuerConfOption,
     parsedCredential: eid.parsedCredential
   });
 
