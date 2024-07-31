@@ -36,7 +36,7 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
         {I18n.t("authentication.unlockmodal.description1_4")}{" "}
       </Body>
       <VSpacer size={24} />
-      <H6 weight="Semibold">{I18n.t("authentication.unlockmodal.title2")}</H6>
+      <H6>{I18n.t("authentication.unlockmodal.title2")}</H6>
       <VSpacer size={24} />
       <FeatureInfo
         iconName="security"
