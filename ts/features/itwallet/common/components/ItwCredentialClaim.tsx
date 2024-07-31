@@ -27,7 +27,6 @@ import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { localeDateFormat } from "../../../../utils/locale";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { getExpireStatus } from "../../../../utils/dates";
-import { isStringNullyOrEmpty } from "../../../../utils/strings";
 
 const HIDDEN_CLAIM = "******";
 
