@@ -44,7 +44,7 @@ const getAuthHeadersForWalletProvider = (
   const urlTarget = new PolyfillURL(url);
   const urlWp = new PolyfillURL(itwWalletProviderBaseUrl);
   if (urlTarget.origin === urlWp.origin) {
-    return { Authorization: `Bearer xx${sessionToken}` };
+    return { Authorization: `Bearer ${sessionToken}` };
   }
   return {};
 };
