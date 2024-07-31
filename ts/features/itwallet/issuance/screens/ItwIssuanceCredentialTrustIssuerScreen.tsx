@@ -15,10 +15,13 @@ import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
+import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims } from "../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
@@ -85,9 +88,17 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
     machineRef.send({ type: "close" })
   );
 
+  useItwDisbleGestureNavigation();
+  useAvoidHardwareBackButton();
+
   useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });
 
-  const claims = parseClaims(eid.parsedCredential);
+  useDebugInfo({
+    issuerConfOption,
+    parsedCredential: eid.parsedCredential
+  });
+
+  const claims = parseClaims(eid.parsedCredential, { exclude: ["unique_id"] });
   const requiredClaims = claims.map(
     claim =>
       ({

@@ -13,7 +13,7 @@ import {
   itwPidProviderBaseUrl,
   itWalletIssuanceRedirectUri,
   itWalletIssuanceRedirectUriCie,
-  itwCieIdpHint
+  itwIdpHintTest
 } from "../../../../config";
 import { type IdentificationContext } from "../../machine/eid/context";
 import { StoredCredential } from "./itwTypesUtils";
@@ -24,18 +24,9 @@ type AccessToken = Awaited<
 
 type IssuerConf = Parameters<Credential.Issuance.ObtainCredential>[0];
 
-// TODO [SIW-1359]: get the correct urls for production
-const SPID_HINT = "https://demo.spid.gov.it";
-
 // This can be any URL, as long as it has http or https as its protocol, otherwise it cannot be managed by the webview.
-const CIE_L3_REDIRECT_URI = "https://cie.callback";
+const CIE_L3_REDIRECT_URI = "https://wallet.io.pagopa.it/index.html";
 const CREDENTIAL_TYPE = "PersonIdentificationData";
-
-const idpHintsMap: Record<IdentificationContext["mode"], string> = {
-  cieId: itwCieIdpHint,
-  ciePin: itwCieIdpHint,
-  spid: SPID_HINT
-};
 
 // Different scheme to avoid conflicts with the scheme handled by io-react-native-login-utils's activity
 const getRedirectUri = (identificationMode: IdentificationContext["mode"]) =>
@@ -88,7 +79,7 @@ const startCieAuthFlow = async ({
   const params = new URLSearchParams({
     client_id: clientId,
     request_uri: issuerRequestUri,
-    idphint: idpHintsMap.ciePin
+    idphint: getIdpHint({ mode: "ciePin", pin: "" }) // PIN is not needed for the hint
   });
 
   return {
@@ -133,7 +124,7 @@ const completeCieAuthFlow = async ({
   const query = Object.fromEntries(new URL(callbackUrl).searchParams);
   const { code } = Credential.Issuance.parseAuthroizationResponse(query);
 
-  const { accessToken, tokenRequestSignedDPop } =
+  const { accessToken, dPoPContext } =
     await Credential.Issuance.authorizeAccess(
       issuerConf,
       code,
@@ -146,7 +137,7 @@ const completeCieAuthFlow = async ({
       }
     );
 
-  return { accessToken, tokenRequestSignedDPop };
+  return { accessToken, dPoPContext };
 };
 
 type FullAuthFlowParams = {
@@ -172,6 +163,8 @@ const startAndCompleteFullAuthFlow = async ({
     identification.mode === "spid"
       ? { authorize: openAuthenticationSession }
       : undefined;
+
+  const idpHint = getIdpHint(identification);
 
   const startFlow: Credential.Issuance.StartFlow = () => ({
     issuerUrl: itwPidProviderBaseUrl,
@@ -202,12 +195,12 @@ const startAndCompleteFullAuthFlow = async ({
       issuerRequestUri,
       clientId,
       issuerConf,
-      idpHintsMap[identification.mode], // TODO [SIW-1359]: pass the IDP id to the SPID hint
+      idpHint,
       redirectUri,
       authorizationContext
     );
 
-  const { accessToken, tokenRequestSignedDPop } =
+  const { accessToken, dPoPContext } =
     await Credential.Issuance.authorizeAccess(
       issuerConf,
       code,
@@ -222,7 +215,7 @@ const startAndCompleteFullAuthFlow = async ({
 
   return {
     accessToken,
-    tokenRequestSignedDPop,
+    dPoPContext,
     credentialDefinition,
     clientId,
     issuerConf
@@ -233,7 +226,7 @@ type PidIssuanceParams = {
   issuerConf: IssuerConf;
   accessToken: AccessToken;
   clientId: string;
-  tokenRequestSignedDPop: string;
+  dPoPContext: CryptoContext;
   credentialDefinition: AuthorizationDetail;
 };
 
@@ -248,7 +241,7 @@ const getPid = async ({
   issuerConf,
   clientId,
   accessToken,
-  tokenRequestSignedDPop,
+  dPoPContext,
   credentialDefinition
 }: PidIssuanceParams): Promise<StoredCredential> => {
   const credentialKeyTag = uuid.v4().toString();
@@ -260,7 +253,7 @@ const getPid = async ({
     accessToken,
     clientId,
     credentialDefinition,
-    tokenRequestSignedDPop,
+    dPoPContext,
     { credentialCryptoContext }
   );
 
@@ -287,4 +280,63 @@ export {
   completeCieAuthFlow,
   startAndCompleteFullAuthFlow,
   getPid
+};
+
+/**
+ * Consts for the IDP hints in test for SPID and CIE and in production for CIE.
+ * In production for SPID the hint is retrieved from the IDP ID via the {@link getSpidProductionIdpHint} function.
+ */
+const SPID_HINT_TEST = "https://demo.spid.gov.it";
+const CIE_HINT_TEST =
+  "https://collaudo.idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO";
+const CIE_HINT_PROD =
+  "https://idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO";
+
+/**
+ * Object of the SPID IDP IDs and the corresponding production hint URLs.
+ */
+const SPID_IDP_HINTS: { [key: string]: string } = {
+  arubaid: "https://loginspid.aruba.it",
+  ehtid: "https://id.eht.eu",
+  infocamereid: "https://loginspid.infocamere.it",
+  infocertid: "https://identity.infocert.it",
+  intesiid: "https://idp.intesigroup.com",
+  lepidaid: "https://id.lepida.it/idp/shibboleth",
+  namirialid: "https://idp.namirialtsp.com/idp",
+  posteid: "https://posteid.poste.it",
+  sielteid: "https://identity.sieltecloud.it",
+  spiditalia: "https://spid.register.it",
+  timid: "https://login.id.tim.it/affwebservices/public/saml2sso",
+  teamsystemid: "https://spid.teamsystem.com/idp"
+};
+
+/**
+ * Get the IDP hint based on the identification context.
+ * If the {@link itwIdpHintTest} is true the hint will be the test one, otherwise the production one.
+ * In production for SPID the hint is retrieved from the IDP ID via the {@link getSpidProductionIdpHint} function,
+ * for CIE the hint is always the same and it's defined in the {@link CIE_HINT_PROD} constant.
+ * @param idCtx the identification context which contains the mode and the IDP ID if the mode is SPID
+ * @returns the IDP hint to be provided to the {@link openAuthenticationSession} function
+ */
+const getIdpHint = (idCtx: IdentificationContext) => {
+  const isSpidMode = idCtx.mode === "spid";
+  if (itwIdpHintTest) {
+    return isSpidMode ? SPID_HINT_TEST : CIE_HINT_TEST;
+  } else {
+    return isSpidMode ? getSpidProductionIdpHint(idCtx.idpId) : CIE_HINT_PROD;
+  }
+};
+
+/**
+ * Map of the SPID IDP IDs and the corresponding production hint URLs.
+ * If the IDP ID is not present in the map an error is thrown.
+ * @param spidIdpId
+ * @throws {@link Error} if the IDP ID is not present in the map
+ * @returns
+ */
+const getSpidProductionIdpHint = (spidIdpId: string) => {
+  if (!(spidIdpId in SPID_IDP_HINTS)) {
+    throw new Error(`Unknown idp ${spidIdpId}`);
+  }
+  return SPID_IDP_HINTS[spidIdpId];
 };

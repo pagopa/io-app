@@ -46,7 +46,10 @@ import {
 import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
-import { paymentsGetPaymentDetailsAction } from "../store/actions/networking";
+import {
+  paymentsGetPaymentDetailsAction,
+  paymentsGetPaymentUserMethodsAction
+} from "../store/actions/networking";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { storeNewPaymentAttemptAction } from "../../history/store/actions";
@@ -56,6 +59,9 @@ import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import * as analytics from "../analytics";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
+import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import { walletPaymentEnabledUserWalletsSelector } from "../store/selectors/paymentMethods";
 import { isPaymentDumbDate } from "../utils";
 
 type WalletPaymentDetailScreenNavigationParams = {
@@ -133,6 +139,10 @@ const WalletPaymentDetailContent = ({
   const dispatch = useIODispatch();
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
+  const userWalletsPots = useIOSelector(
+    walletPaymentEnabledUserWalletsSelector
+  );
 
   useOnFirstRender(() => {
     analytics.trackPaymentSummaryInfoScreen({
@@ -157,6 +167,50 @@ const WalletPaymentDetailContent = ({
     supportRequest: true,
     contextualHelp: emptyContextualHelp
   });
+
+  const navigateToMakePaymentScreen = () => {
+    analytics.trackPaymentStartFlow({
+      data_entry: paymentAnalyticsData?.startOrigin,
+      attempt: paymentAnalyticsData?.attempt,
+      organization_name: payment.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      amount,
+      expiration_date: dueDate
+    });
+    dispatch(storeNewPaymentAttemptAction(rptId));
+    dispatch(
+      paymentsGetPaymentUserMethodsAction.request({
+        onResponse: wallets => {
+          if (!wallets || wallets?.length > 0) {
+            navigation.navigate(
+              PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR,
+              {
+                screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
+              }
+            );
+          } else if (wallets && wallets.length === 0) {
+            const paymentDetails = pot.toUndefined(paymentDetailsPot);
+            dispatch(
+              paymentsInitOnboardingWithRptIdToResume({
+                rptId: paymentDetails?.rptId
+              })
+            );
+            navigation.replace(
+              PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR,
+              {
+                screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
+                params: {
+                  outcome:
+                    WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE
+                }
+              }
+            );
+          }
+        }
+      })
+    );
+  };
 
   const amountInfoBottomSheet = useIOBottomSheetAutoresizableModal({
     title: I18n.t("wallet.firstTransactionSummary.amountInfo.title"),
@@ -236,28 +290,14 @@ const WalletPaymentDetailContent = ({
     });
   };
 
-  const navigateToMakePaymentScreen = () => {
-    analytics.trackPaymentStartFlow({
-      data_entry: paymentAnalyticsData?.startOrigin,
-      attempt: paymentAnalyticsData?.attempt,
-      organization_name: payment.paName,
-      service_name: paymentAnalyticsData?.serviceName,
-      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
-      amount,
-      expiration_date: dueDate
-    });
-    dispatch(storeNewPaymentAttemptAction(rptId));
-    navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
-      screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
-    });
-  };
-
   return (
     <GradientScrollView
       primaryActionProps={{
         label: "Vai al pagamento",
         accessibilityLabel: "Vai al pagmento",
-        onPress: navigateToMakePaymentScreen
+        onPress: navigateToMakePaymentScreen,
+        loading: pot.isLoading(userWalletsPots),
+        disabled: pot.isLoading(userWalletsPots)
       }}
     >
       <ListItemInfo

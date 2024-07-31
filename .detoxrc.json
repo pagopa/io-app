@@ -4,12 +4,12 @@
   "apps": {
     "ios.release": {
       "type": "ios.app",
-      "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/ItaliaApp.app",
+      "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/IO.app",
       "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Release -sdk iphonesimulator -derivedDataPath ios/build"
     },
     "ios.debug": {
       "type": "ios.app",
-      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ItaliaApp.app",
+      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/IO.app",
       "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build"
     }
   },
