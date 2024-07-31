@@ -1,11 +1,11 @@
-import * as React from "react";
-import { StyleSheet, Text, View } from "react-native";
 import {
   IOColors,
+  IOText,
   Icon,
-  hexToRgba,
-  makeFontStyleObject
+  hexToRgba
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { StyleSheet, View } from "react-native";
 
 const debugItemBgColor = hexToRgba(IOColors.white, 0.4);
 const debugItemBorderColor = hexToRgba(IOColors.black, 0.1);
@@ -21,21 +21,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     borderRadius: 8,
     backgroundColor: debugItemBgColor
-  },
-  testText: {
-    letterSpacing: 0.2,
-    marginLeft: 4,
-    fontSize: 9,
-    textTransform: "uppercase",
-    color: IOColors["grey-850"],
-    ...makeFontStyleObject("Semibold")
   }
 });
 
 const PagoPATestIndicator = () => (
   <View style={styles.indicatoWrapper}>
     <Icon name="productPagoPA" color="grey-850" size={20} />
-    <Text style={styles.testText}>Test</Text>
+    <IOText
+      weight="Semibold"
+      color="grey-850"
+      size={9}
+      style={{ marginLeft: 4, textTransform: "uppercase", letterSpacing: 0.2 }}
+    >
+      Test
+    </IOText>
   </View>
 );
 

@@ -83,7 +83,6 @@ const PaymentCardSmall = ({
         <VSpacer size={8} />
         <Chip
           ellipsizeMode="tail"
-          weight="Regular"
           numberOfLines={1}
           color={props.isExpired ? "error-850" : "grey-700"}
         >

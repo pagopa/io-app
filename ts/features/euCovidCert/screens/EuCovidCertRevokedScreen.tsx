@@ -1,7 +1,7 @@
 import {
   Divider,
   H3,
-  LabelSmall,
+  Label,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -42,12 +42,12 @@ const EuCovidCertRevokedContentComponent = (props: Props) => {
     <>
       <VSpacer size={8} />
       {createdAt && (
-        <LabelSmall fontSize="regular" color="grey-700">
+        <Label color="grey-700">
           {localeDateFormat(
             createdAt,
             I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithTime")
           )}
-        </LabelSmall>
+        </Label>
       )}
       <VSpacer size={8} />
       <Divider />

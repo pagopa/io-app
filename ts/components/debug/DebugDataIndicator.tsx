@@ -1,13 +1,13 @@
 import {
   HStack,
   IOColors,
+  IOText,
   Icon,
-  hexToRgba,
-  makeFontStyleObject
+  hexToRgba
 } from "@pagopa/io-app-design-system";
 import _ from "lodash";
 import * as React from "react";
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import { useIOSelector } from "../../store/hooks";
 import { debugDataSelector } from "../../store/reducers/debug";
 
@@ -32,7 +32,18 @@ export const DebugDataIndicator = (props: DebugDataIndicatorProps) => {
     >
       <HStack space={4} alignItems="center">
         <Icon name="ladybug" size={16} color="warning-850" />
-        <Text style={styles.text}>{dataSize}</Text>
+        <IOText
+          size={14}
+          font={"TitilliumSansPro"}
+          weight={"Semibold"}
+          color="warning-850"
+          style={{
+            letterSpacing: 0.2,
+            textTransform: "uppercase"
+          }}
+        >
+          {dataSize}
+        </IOText>
       </HStack>
     </Pressable>
   );
@@ -52,12 +63,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     borderRadius: 8,
     backgroundColor: debugItemBgColor
-  },
-  text: {
-    letterSpacing: 0.2,
-    fontSize: 14,
-    textTransform: "uppercase",
-    color: IOColors["warning-850"],
-    ...makeFontStyleObject("Semibold")
   }
 });

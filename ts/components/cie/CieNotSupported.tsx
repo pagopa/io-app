@@ -58,7 +58,7 @@ const CieNotSupported = () => {
           </H3>
         </View>
         <VSpacer size={24} />
-        <Body style={[IOStyles.selfCenter, { textAlign: "center" }]}>
+        <Body style={{ textAlign: "center", alignSelf: "center" }}>
           {I18n.t("authentication.landing.cie_unsupported.body")}
         </Body>
         <VSpacer size={24} />
