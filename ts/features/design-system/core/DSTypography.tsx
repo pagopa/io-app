@@ -22,7 +22,8 @@ import {
   MdH2,
   MdH3,
   VSpacer,
-  VStack
+  VStack,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, View } from "react-native";
@@ -90,67 +91,103 @@ const H2Row = () => (
   </VStack>
 );
 
-const H3Row = () => (
-  <HStack space={16}>
-    <H3>Header H3</H3>
-    <H3 color="grey-650">Header H3</H3>
-    <View style={{ backgroundColor: IOColors["grey-700"] }}>
-      <H3 color={"white"}>Header H3</H3>
-    </View>
-  </HStack>
-);
+const H3Row = () => {
+  const theme = useIOTheme();
 
-const H4Row = () => (
-  <HStack space={16}>
-    <H4>Header H4</H4>
-    <H4 color="blueIO-500">Header H4</H4>
-    <View style={{ backgroundColor: IOColors["grey-700"] }}>
-      <H4 color={"white"}>Header H4</H4>
-    </View>
-  </HStack>
-);
+  return (
+    <HStack space={16}>
+      <H3>Header H3</H3>
+      <H3 color={theme["interactiveElem-default"]}>Header H3</H3>
+      <View
+        style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+      >
+        <H3 color={"white"}>Header H3</H3>
+      </View>
+    </HStack>
+  );
+};
 
-const H5Row = () => (
-  <HStack space={16}>
-    <H5>Header H5</H5>
-    <H5 color="grey-650">Header H5</H5>
-    <H5 color={"blueIO-500"}>Header H5</H5>
-  </HStack>
-);
+const H4Row = () => {
+  const theme = useIOTheme();
 
-const H6Row = () => (
-  <HStack space={16}>
-    <H6>Header H6</H6>
-    <H6 color="grey-650">Header H6</H6>
-    <H6 color={"blueIO-500"}>Header H6</H6>
-  </HStack>
-);
+  return (
+    <HStack space={16}>
+      <H4>Header H4</H4>
+      <H4 color={theme["interactiveElem-default"]}>Header H4</H4>
+      <View
+        style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+      >
+        <H4 color={"white"}>Header H4</H4>
+      </View>
+    </HStack>
+  );
+};
 
-const ButtonTextRow = () => (
-  <HStack space={16}>
-    <ButtonText color="grey-700">ButtonText</ButtonText>
-    <ButtonText color="blueIO-500">ButtonText</ButtonText>
-    <View style={{ backgroundColor: IOColors["grey-700"] }}>
-      <ButtonText>ButtonText</ButtonText>
-    </View>
-  </HStack>
-);
+const H5Row = () => {
+  const theme = useIOTheme();
 
-const CaptionRow = () => (
-  <HStack space={16}>
-    <Caption>Caption</Caption>
-    <Caption color="grey-650">Caption</Caption>
-    <Caption color={"blueIO-500"}>Caption</Caption>
-  </HStack>
-);
+  return (
+    <HStack space={16}>
+      <H5>Header H5</H5>
+      <H5 color={theme["textHeading-tertiary"]}>Header H5</H5>
+      <H5 color={theme["interactiveElem-default"]}>Header H5</H5>
+    </HStack>
+  );
+};
 
-const ChipRow = () => (
-  <HStack space={16}>
-    <Chip>Chip</Chip>
-    <Chip color="grey-650">Chip</Chip>
-    <Chip color={"blueIO-500"}>Chip</Chip>
-  </HStack>
-);
+const H6Row = () => {
+  const theme = useIOTheme();
+
+  return (
+    <HStack space={16}>
+      <H6>Header H6</H6>
+      <H6 color={theme["textHeading-tertiary"]}>Header H6</H6>
+      <H6 color={theme["interactiveElem-default"]}>Header H6</H6>
+    </HStack>
+  );
+};
+
+const ButtonTextRow = () => {
+  const theme = useIOTheme();
+
+  return (
+    <HStack space={16}>
+      <ButtonText color={theme["textBody-tertiary"]}>ButtonText</ButtonText>
+      <ButtonText color={theme["interactiveElem-default"]}>
+        ButtonText
+      </ButtonText>
+      <View
+        style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+      >
+        <ButtonText>ButtonText</ButtonText>
+      </View>
+    </HStack>
+  );
+};
+
+const CaptionRow = () => {
+  const theme = useIOTheme();
+
+  return (
+    <HStack space={16}>
+      <Caption>Caption</Caption>
+      <Caption color={theme["textBody-tertiary"]}>Caption</Caption>
+      <Caption color={theme["interactiveElem-default"]}>Caption</Caption>
+    </HStack>
+  );
+};
+
+const ChipRow = () => {
+  const theme = useIOTheme();
+
+  return (
+    <HStack space={16}>
+      <Chip>Chip</Chip>
+      <Chip color={theme["textBody-tertiary"]}>Chip</Chip>
+      <Chip color={theme["interactiveElem-default"]}>Chip</Chip>
+    </HStack>
+  );
+};
 
 const BodyRow = () => (
   <VStack space={16}>
@@ -171,121 +208,137 @@ const BodyRow = () => (
   </VStack>
 );
 
-export const LabelSmallRow = () => (
-  <>
-    <HStack space={typographicStyleMargin}>
-      <LabelSmall>Label small</LabelSmall>
-      <LabelSmall color="grey-700">Label small</LabelSmall>
-      <LabelSmall color={"red"}>Label small</LabelSmall>
-      <View style={{ backgroundColor: IOColors["grey-700"] }}>
-        <LabelSmall color={"white"}>Label small</LabelSmall>
-      </View>
-      <LabelSmall asLink onPress={linkOnPress}>
-        Label small asLink
-      </LabelSmall>
-    </HStack>
-    <HStack space={typographicStyleMargin}>
-      <LabelSmall weight="Semibold">Label small SB</LabelSmall>
-      <LabelSmall weight="Semibold" color="grey-700">
-        Label small SB
-      </LabelSmall>
-      <LabelSmall weight="Semibold" color={"red"}>
-        Label small SB
-      </LabelSmall>
-      <View style={{ backgroundColor: IOColors["grey-700"] }}>
-        <LabelSmall weight="Semibold" color={"white"}>
+export const LabelSmallRow = () => {
+  const theme = useIOTheme();
+  return (
+    <>
+      <HStack space={typographicStyleMargin}>
+        <LabelSmall>Label small</LabelSmall>
+        <LabelSmall color={"red"}>Label small</LabelSmall>
+        <View
+          style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+        >
+          <LabelSmall color={"white"}>Label small</LabelSmall>
+        </View>
+        <LabelSmall asLink onPress={linkOnPress}>
+          Label small asLink
+        </LabelSmall>
+      </HStack>
+      <HStack space={typographicStyleMargin}>
+        <LabelSmall weight="Semibold">Label small SB</LabelSmall>
+        <LabelSmall weight="Semibold" color={"red"}>
           Label small SB
         </LabelSmall>
-      </View>
-      <LabelSmall asLink onPress={linkOnPress} weight="Semibold">
-        Label small SB asLink
-      </LabelSmall>
-    </HStack>
-    <HStack space={typographicStyleMargin}>
-      <LabelSmall weight="Regular">Label small Regular</LabelSmall>
-      <LabelSmall weight="Regular" color="grey-700">
-        Label small Regular
-      </LabelSmall>
-      <LabelSmall weight="Regular" color={"red"}>
-        Label small Regular
-      </LabelSmall>
-      <View style={{ backgroundColor: IOColors["grey-700"] }}>
-        <LabelSmall weight="Regular" color={"white"}>
+        <View
+          style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+        >
+          <LabelSmall weight="Semibold" color={"white"}>
+            Label small SB
+          </LabelSmall>
+        </View>
+        <LabelSmall asLink onPress={linkOnPress} weight="Semibold">
+          Label small SB asLink
+        </LabelSmall>
+      </HStack>
+      <HStack space={typographicStyleMargin}>
+        <LabelSmall weight="Regular">Label small Regular</LabelSmall>
+        <LabelSmall weight="Regular" color={"red"}>
           Label small Regular
         </LabelSmall>
-      </View>
-      <LabelSmall asLink onPress={linkOnPress} weight="Regular">
-        Label small Regular asLink
-      </LabelSmall>
-    </HStack>
-  </>
-);
+        <View
+          style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+        >
+          <LabelSmall weight="Regular" color={"white"}>
+            Label small Regular
+          </LabelSmall>
+        </View>
+        <LabelSmall asLink onPress={linkOnPress} weight="Regular">
+          Label small Regular asLink
+        </LabelSmall>
+      </HStack>
+    </>
+  );
+};
 
-export const LabelMiniRow = () => (
-  <>
-    <HStack space={typographicStyleMargin}>
-      <LabelMini>Label mini</LabelMini>
-      <LabelMini color="grey-700">Label mini</LabelMini>
-      <LabelMini color={"red"}>Label mini</LabelMini>
-      <View style={{ backgroundColor: IOColors["grey-700"] }}>
-        <LabelMini color={"white"}>Label mini</LabelMini>
-      </View>
-    </HStack>
-    <HStack space={typographicStyleMargin}>
-      <LabelMini weight="Semibold">Label mini SB</LabelMini>
-      <LabelMini weight="Semibold" color="grey-700">
-        Label mini SB
-      </LabelMini>
-      <LabelMini weight="Semibold" color={"red"}>
-        Label mini SB
-      </LabelMini>
-      <View style={{ backgroundColor: IOColors["grey-700"] }}>
-        <LabelMini weight="Semibold" color={"white"}>
+export const LabelMiniRow = () => {
+  const theme = useIOTheme();
+
+  return (
+    <>
+      <HStack space={typographicStyleMargin}>
+        <LabelMini>Label mini</LabelMini>
+        <LabelMini color={"red"}>Label mini</LabelMini>
+        <View
+          style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+        >
+          <LabelMini color={"white"}>Label mini</LabelMini>
+        </View>
+      </HStack>
+      <HStack space={typographicStyleMargin}>
+        <LabelMini weight="Semibold">Label mini SB</LabelMini>
+        <LabelMini weight="Semibold" color={"red"}>
           Label mini SB
         </LabelMini>
-      </View>
-    </HStack>
-    <HStack space={typographicStyleMargin}>
-      <LabelMini weight="Regular">Label mini Regular</LabelMini>
-      <LabelMini weight="Regular" color="grey-700">
-        Label mini Regular
-      </LabelMini>
-      <LabelMini weight="Regular" color={"red"}>
-        Label mini Regular
-      </LabelMini>
-      <View style={{ backgroundColor: IOColors["grey-700"] }}>
-        <LabelMini weight="Regular" color={"white"}>
+        <View
+          style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+        >
+          <LabelMini weight="Semibold" color={"white"}>
+            Label mini SB
+          </LabelMini>
+        </View>
+      </HStack>
+      <HStack space={typographicStyleMargin}>
+        <LabelMini weight="Regular">Label mini Regular</LabelMini>
+        <LabelMini weight="Regular" color={"red"}>
           Label mini Regular
         </LabelMini>
+        <View
+          style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+        >
+          <LabelMini weight="Regular" color={"white"}>
+            Label mini Regular
+          </LabelMini>
+        </View>
+      </HStack>
+    </>
+  );
+};
+
+export const LabelSmallAltRow = () => {
+  const theme = useIOTheme();
+
+  return (
+    <HStack space={typographicStyleMargin}>
+      <LabelSmallAlt>Label small alt</LabelSmallAlt>
+      <View
+        style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+      >
+        <LabelSmallAlt color={"white"}>Label small alt</LabelSmallAlt>
       </View>
     </HStack>
-  </>
-);
+  );
+};
 
-export const LabelSmallAltRow = () => (
-  <HStack space={typographicStyleMargin}>
-    <LabelSmallAlt>Label small alt</LabelSmallAlt>
-    <LabelSmallAlt color={"bluegrey"}>Label small alt</LabelSmallAlt>
-    <View style={{ backgroundColor: IOColors["grey-700"] }}>
-      <LabelSmallAlt color={"white"}>Label small alt</LabelSmallAlt>
-    </View>
-  </HStack>
-);
+export const LabelRow = () => {
+  const theme = useIOTheme();
 
-export const LabelRow = () => (
-  <HStack space={typographicStyleMargin}>
-    <Label>Label</Label>
-    <View style={{ backgroundColor: IOColors["grey-700"] }}>
-      <Label color={"white"}>Label</Label>
-    </View>
-    <Label asLink onPress={linkOnPress}>
-      Label asLink
-    </Label>
-    <Label weight="Regular" asLink onPress={linkOnPress}>
-      Label Regular asLink
-    </Label>
-  </HStack>
-);
+  return (
+    <HStack space={typographicStyleMargin}>
+      <Label>Label</Label>
+      <View
+        style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+      >
+        <Label color={"white"}>Label</Label>
+      </View>
+      <Label asLink onPress={linkOnPress}>
+        Label asLink
+      </Label>
+      <Label weight="Regular" asLink onPress={linkOnPress}>
+        Label Regular asLink
+      </Label>
+    </HStack>
+  );
+};
 
 export const MdH1Row = () => (
   <VStack space={8}>
