@@ -62,7 +62,6 @@ import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { walletPaymentEnabledUserWalletsSelector } from "../store/selectors/paymentMethods";
-import { isPaymentDumbDate } from "../utils";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -239,9 +238,6 @@ const WalletPaymentDetailContent = ({
     payment.dueDate,
     O.fromNullable,
     O.map(_ => format(_, "DD/MM/YYYY")),
-    O.map(formattedDate =>
-      isPaymentDumbDate(formattedDate) ? undefined : formattedDate
-    ),
     O.toUndefined
   );
 
