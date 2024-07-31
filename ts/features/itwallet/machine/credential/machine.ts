@@ -188,6 +188,7 @@ export const itwCredentialIssuanceMachine = setup({
     },
     SessionExpired: {
       entry: ["handleSessionExpired"],
+      // Since the refresh token request does not change the current screen, restart the machine
       always: { target: "Idle" }
     }
   }
