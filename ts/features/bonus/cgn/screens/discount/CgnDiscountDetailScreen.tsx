@@ -16,10 +16,12 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 import { LayoutChangeEvent, Platform, StyleSheet, View } from "react-native";
-import { isReady } from "../../../../../common/model/RemoteValue";
-import { useIOSelector } from "../../../../../store/hooks";
+import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import {
+  cgnSelectedDiscountCodeSelector,
   cgnSelectedDiscountSelector,
   cgnSelectedMerchantSelector
 } from "../../store/reducers/merchants";
@@ -33,12 +35,25 @@ import { mixpanelTrack } from "../../../../../mixpanel";
 import { getCgnUserAgeRange } from "../../utils/dates";
 import { profileSelector } from "../../../../../store/reducers/profile";
 import { openWebUrl } from "../../../../../utils/url";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import CGN_ROUTES from "../../navigation/routes";
+import {
+  resetMerchantDiscountCode,
+  setMerchantDiscountCode
+} from "../../store/actions/merchants";
+import { cgnCodeFromBucket } from "../../store/actions/bucket";
+import { cgnBucketSelector } from "../../store/reducers/bucket";
+import { CgnDetailsParamsList } from "../../navigation/params";
+import { cgnGenerateOtp } from "../../store/actions/otp";
 
 const gradientSafeAreaHeight: IOSpacingScale = 96;
 
 const CgnDiscountDetailScreen = () => {
+  const dispatch = useIODispatch();
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_DISCOUNT_CODE">
+    >();
   const discountDetailsRemoteValue = useIOSelector(cgnSelectedDiscountSelector);
   const merchantDetailsRemoteValue = useIOSelector(cgnSelectedMerchantSelector);
   const discountDetails = isReady(discountDetailsRemoteValue)
@@ -48,19 +63,21 @@ const CgnDiscountDetailScreen = () => {
     ? merchantDetailsRemoteValue.value
     : undefined;
 
-  const navigation = useIONavigation();
-
   const [titleHeight, setTitleHeight] = React.useState(0);
   const translationY = useSharedValue(0);
   const gradientOpacity = useSharedValue(1);
   const insets = useSafeAreaInsets();
   const endMargins = useScreenEndMargin();
 
+  const bucketResponse = useIOSelector(cgnBucketSelector);
+  const discountCode = useIOSelector(cgnSelectedDiscountCodeSelector);
   const profile = pot.toUndefined(useIOSelector(profileSelector));
   const cgnUserAgeRange = React.useMemo(
     () => getCgnUserAgeRange(profile?.date_of_birth),
     [profile]
   );
+
+  const loading = isLoading(bucketResponse);
 
   const mixpanelCgnEvent = React.useCallback(
     (eventName: string) =>
@@ -97,17 +114,6 @@ const CgnDiscountDetailScreen = () => {
     [endMargins]
   );
 
-  useHeaderSecondLevel({
-    title: discountDetails?.name || "",
-    scrollValues: {
-      contentOffsetY: translationY,
-      triggerOffset: titleHeight
-    },
-    transparent: true,
-    canGoBack: true,
-    supportRequest: true
-  });
-
   const onNavigateToDiscountUrl = () => {
     mixpanelCgnEvent("CGN_DISCOUNT_URL_REQUEST");
     openWebUrl(discountDetails?.discountUrl, () =>
@@ -115,7 +121,22 @@ const CgnDiscountDetailScreen = () => {
     );
   };
 
+  const navigateToDiscountCode = () => {
+    navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT_CODE);
+  };
+
+  const showErrorToast = () => {
+    IOToast.error(I18n.t("global.genericError"));
+  };
+
   const onPressDiscountCode = () => {
+    if (!discountDetails) {
+      return;
+    }
+    if (discountCode) {
+      navigateToDiscountCode();
+      return;
+    }
     switch (merchantDetails?.discountCodeType) {
       case DiscountCodeTypeEnum.landingpage:
         const landingPageUrl = discountDetails?.landingPageUrl;
@@ -132,16 +153,52 @@ const CgnDiscountDetailScreen = () => {
           }
         });
         break;
-      case DiscountCodeTypeEnum.copy:
-        mixpanelCgnEvent("CGN_DISCOUNT_CODE_COPY");
+      case DiscountCodeTypeEnum.api:
+        mixpanelCgnEvent("CGN_OTP_START_REQUEST");
+        dispatch(
+          cgnGenerateOtp.request({
+            onSuccess: navigateToDiscountCode,
+            onError: showErrorToast
+          })
+        );
         break;
-      case DiscountCodeTypeEnum.redirect:
-        mixpanelCgnEvent("CGN_DISCOUNT_CODE_REDIRECT");
+      case DiscountCodeTypeEnum.bucket:
+        mixpanelCgnEvent("CGN_BUCKET_CODE_START_REQUEST");
+        dispatch(
+          cgnCodeFromBucket.request({
+            discountId: discountDetails.id,
+            onSuccess: navigateToDiscountCode,
+            onError: showErrorToast
+          })
+        );
+        break;
+      case DiscountCodeTypeEnum.static:
+        if (!discountDetails?.staticCode) {
+          return;
+        }
+        mixpanelCgnEvent("CGN_STATIC_CODE_REQUEST");
+        dispatch(setMerchantDiscountCode(discountDetails.staticCode));
+        navigateToDiscountCode();
         break;
       default:
         break;
     }
   };
+
+  useHeaderSecondLevel({
+    title: discountDetails?.name || "",
+    scrollValues: {
+      contentOffsetY: translationY,
+      triggerOffset: titleHeight
+    },
+    transparent: true,
+    canGoBack: true,
+    supportRequest: true
+  });
+
+  React.useEffect(() => {
+    dispatch(resetMerchantDiscountCode());
+  }, [dispatch]);
 
   const FooterButtonActions = () => {
     const primaryAction: GradientBottomActions["primaryActionProps"] =
@@ -150,7 +207,9 @@ const CgnDiscountDetailScreen = () => {
             label: I18n.t(
               `bonus.cgn.merchantDetail.discount.cta.${merchantDetails.discountCodeType}`
             ),
-            onPress: onPressDiscountCode
+            onPress: onPressDiscountCode,
+            disabled: loading,
+            loading
           }
         : undefined;
     const secondaryAction: GradientBottomActions["secondaryActionProps"] =
@@ -236,30 +295,5 @@ const styles = StyleSheet.create({
     borderColor: IOColors["hanPurple-250"]
   }
 });
-
-// ------------------------ render utils
-
-// const CgnDiscountDetailScreenSkeleton = () => (
-//   <GradientScrollView primaryActionProps={undefined}>
-//     <Placeholder.Box
-//       animate="fade"
-//       radius={styles.merchantImage.borderRadius}
-//       width="100%"
-//       height={210}
-//     />
-//     <VSpacer size={24} />
-//     <Placeholder.Line animate="fade" textSize={24} />
-//     <VSpacer size={16} />
-//     <Placeholder.Line animate="fade" textSize={24} width="50%" />
-//     <VSpacer size={48} />
-//     <Placeholder.Box animate="fade" width={100} height={16} radius={4} />
-//     <VSpacer size={24} />
-//     <Placeholder.Box animate="fade" width="100%" height={170} radius={8} />
-//     <VSpacer size={8} />
-//     <Placeholder.Box animate="fade" width="100%" height={170} radius={8} />
-//     <VSpacer size={24} />
-//     <ListItemHeader label="" />
-//   </GradientScrollView>
-// );
 
 export default CgnDiscountDetailScreen;

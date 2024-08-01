@@ -39,8 +39,18 @@ export const selectMerchantDiscount = createStandardAction(
   "CGN_SELECT_MERCHANT_DISCOUNT"
 )<Discount>();
 
+export const setMerchantDiscountCode = createStandardAction(
+  "CGN_SET_MERCHANT_DISCOUNT_CODE"
+)<string>();
+
+export const resetMerchantDiscountCode = createStandardAction(
+  "CGN_RESET_MERCHANT_DISCOUNT_CODE"
+)<void>();
+
 export type CgnMerchantsAction =
   | ActionType<typeof cgnOfflineMerchants>
   | ActionType<typeof cgnOnlineMerchants>
   | ActionType<typeof cgnSelectedMerchant>
-  | ActionType<typeof selectMerchantDiscount>;
+  | ActionType<typeof selectMerchantDiscount>
+  | ActionType<typeof setMerchantDiscountCode>
+  | ActionType<typeof resetMerchantDiscountCode>;

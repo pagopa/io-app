@@ -41,7 +41,7 @@ const CgnOTPCodeContent = ({ onCodePress }: Props) => {
 
   const requestOtp = () => {
     onCodePress("CGN_OTP_START_REQUEST");
-    dispatch(cgnGenerateOtp.request());
+    // dispatch(cgnGenerateOtp.request());
     setIsCodeVisible(true);
   };
 

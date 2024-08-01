@@ -7,7 +7,9 @@ import {
   cgnOfflineMerchants,
   cgnOnlineMerchants,
   cgnSelectedMerchant,
-  selectMerchantDiscount
+  resetMerchantDiscountCode,
+  selectMerchantDiscount,
+  setMerchantDiscountCode
 } from "../actions/merchants";
 import {
   remoteError,
@@ -26,13 +28,15 @@ export type CgnMerchantsState = {
   offlineMerchants: RemoteValue<OfflineMerchants["items"], NetworkError>;
   selectedMerchant: RemoteValue<Merchant, NetworkError>;
   selectedDiscount: RemoteValue<Discount, NetworkError>;
+  selectedDiscountCode?: string;
 };
 
 const INITIAL_STATE: CgnMerchantsState = {
   onlineMerchants: remoteUndefined,
   offlineMerchants: remoteUndefined,
   selectedMerchant: remoteUndefined,
-  selectedDiscount: remoteUndefined
+  selectedDiscount: remoteUndefined,
+  selectedDiscountCode: undefined
 };
 
 const reducer = (
@@ -96,6 +100,18 @@ const reducer = (
         ...state,
         selectedDiscount: remoteReady(action.payload)
       };
+    // Set discount code
+    case getType(setMerchantDiscountCode):
+      return {
+        ...state,
+        selectedDiscountCode: action.payload
+      };
+    // Reset discount code
+    case getType(resetMerchantDiscountCode):
+      return {
+        ...state,
+        selectedDiscountCode: undefined
+      };
   }
   return state;
 };
@@ -123,4 +139,9 @@ export const cgnSelectedMerchantSelector = createSelector(
 export const cgnSelectedDiscountSelector = createSelector(
   cgnMerchantsSelector,
   merchantsState => merchantsState.selectedDiscount
+);
+
+export const cgnSelectedDiscountCodeSelector = createSelector(
+  cgnMerchantsSelector,
+  merchantsState => merchantsState.selectedDiscountCode
 );
