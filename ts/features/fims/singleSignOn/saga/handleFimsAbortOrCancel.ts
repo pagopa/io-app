@@ -5,13 +5,13 @@ import {
 } from "@pagopa/io-react-native-http-client";
 import { call, select } from "typed-redux-saga/macro";
 import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
-import { fimsPartialAbortUrl } from "../store/reducers";
+import { fimsPartialAbortUrl } from "../store/selectors";
+import { deallocateFimsResourcesAndNavigateBack } from "./handleFimsResourcesDeallocation";
 import {
   buildAbsoluteUrl,
   formatHttpClientResponseForMixPanel,
   logToMixPanel
 } from "./sagaUtils";
-import { handleFimsResourcesDeallocation } from "./handleFimsResourcesDeallocation";
 
 const abortTimeoutMillisecondsGenerator = () => 8000;
 
@@ -48,5 +48,5 @@ export function* handleFimsAbortOrCancel() {
     }
   }
 
-  yield* call(handleFimsResourcesDeallocation);
+  yield* call(deallocateFimsResourcesAndNavigateBack);
 }

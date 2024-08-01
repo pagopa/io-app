@@ -1,13 +1,14 @@
 import { SagaIterator } from "redux-saga";
-import { takeLatest } from "typed-redux-saga";
+import { put, select, takeLatest } from "typed-redux-saga/macro";
 import {
   fimsCancelOrAbortAction,
   fimsGetConsentsListAction,
   fimsGetRedirectUrlAndOpenIABAction
 } from "../store/actions";
+import { fimsRelyingPartyUrlIfFastLoginSelector } from "../store/selectors";
+import { handleFimsAbortOrCancel } from "./handleFimsAbortOrCancel";
 import { handleFimsGetConsentsList } from "./handleFimsGetConsentsList";
 import { handleFimsGetRedirectUrlAndOpenIAB } from "./handleFimsGetRedirectUrlAndOpenIAB";
-import { handleFimsAbortOrCancel } from "./handleFimsAbortOrCancel";
 
 export function* watchFimsSSOSaga(): SagaIterator {
   yield* takeLatest(
@@ -19,4 +20,13 @@ export function* watchFimsSSOSaga(): SagaIterator {
     handleFimsGetRedirectUrlAndOpenIAB
   );
   yield* takeLatest(fimsCancelOrAbortAction, handleFimsAbortOrCancel);
+
+  const fimsRelyingPartyUrl = yield* select(
+    fimsRelyingPartyUrlIfFastLoginSelector
+  );
+  if (fimsRelyingPartyUrl) {
+    yield* put(
+      fimsGetConsentsListAction.request({ ctaUrl: fimsRelyingPartyUrl })
+    );
+  }
 }

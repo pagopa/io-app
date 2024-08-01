@@ -13,9 +13,11 @@ import { fimsTokenSelector } from "../../../../store/reducers/authentication";
 import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
 import {
   formatHttpClientResponseForMixPanel,
+  isFastLoginFailure,
   isValidRedirectResponse,
   logToMixPanel
 } from "./sagaUtils";
+import { deallocateFimsAndRenewFastLoginSession } from "./handleFimsResourcesDeallocation";
 
 export function* handleFimsGetConsentsList(
   action: ActionType<typeof fimsGetConsentsListAction.request>
@@ -87,6 +89,12 @@ export function* handleFimsGetConsentsList(
     if (isCancelledFailure(getConsentsResult)) {
       return;
     }
+
+    if (isFastLoginFailure(getConsentsResult)) {
+      yield* call(deallocateFimsAndRenewFastLoginSession);
+      return;
+    }
+
     logToMixPanel(
       `consent data fetch error: ${formatHttpClientResponseForMixPanel(
         getConsentsResult
