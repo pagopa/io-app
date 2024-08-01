@@ -25,10 +25,14 @@ import {
 } from "../../../lollipop/store/reducers/lollipop";
 import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
 import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
-import { handleFimsResourcesDeallocation } from "./handleFimsResourcesDeallocation";
+import {
+  deallocateFimsAndRenewFastLoginSession,
+  deallocateFimsResourcesAndNavigateBack
+} from "./handleFimsResourcesDeallocation";
 import {
   buildAbsoluteUrl,
   formatHttpClientResponseForMixPanel,
+  isFastLoginFailure,
   isRedirect,
   isValidRedirectResponse,
   logToMixPanel
@@ -71,6 +75,10 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
 
   if (rpRedirectResponse.type === "failure") {
     if (isCancelledFailure(rpRedirectResponse)) {
+      return;
+    }
+    if (isFastLoginFailure(rpRedirectResponse)) {
+      yield* call(deallocateFimsAndRenewFastLoginSession);
       return;
     }
     logToMixPanel(
@@ -125,7 +133,7 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
   // ----------------- end lolliPoP -----------------
 
   yield* put(fimsGetRedirectUrlAndOpenIABAction.success());
-  yield* call(handleFimsResourcesDeallocation);
+  yield* call(deallocateFimsResourcesAndNavigateBack);
   return openAuthenticationSession(inAppBrowserRedirectUrl, "", true);
 }
 
