@@ -108,6 +108,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
         <H2>{I18n.t("features.itWallet.issuance.eidPreview.title")}</H2>
         <VSpacer size={24} />
         <ItwCredentialClaimsList data={eid} isPreview={true} />
+        <VSpacer size={24} />
       </View>
       <FooterActions
         fixed={false}
