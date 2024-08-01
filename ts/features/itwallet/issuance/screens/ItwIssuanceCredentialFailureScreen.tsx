@@ -1,16 +1,12 @@
-import { Alert } from "@pagopa/io-app-design-system";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
-import * as t from "io-ts";
 import React from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
-import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
   CredentialIssuanceFailure,
   CredentialIssuanceFailureType,
@@ -18,10 +14,15 @@ import {
 } from "../../machine/credential/failure";
 import { selectFailureOption } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
     ItwCredentialIssuanceMachineContext.useSelector(selectFailureOption);
+
+  useItwDisbleGestureNavigation();
+  useAvoidHardwareBackButton();
 
   return pipe(
     failureOption,
@@ -40,6 +41,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   const closeIssuance = () => machineRef.send({ type: "close" });
   const retryIssuance = () => machineRef.send({ type: "retry" });
+
+  useDebugInfo({
+    failure
+  });
 
   const resultScreensMap: Record<
     CredentialIssuanceFailureType,
@@ -63,25 +68,5 @@ const ContentView = ({ failure }: ContentViewProps) => {
   };
 
   const resultScreenProps = resultScreensMap[failure.type];
-  return (
-    <OperationResultScreenContent {...resultScreenProps}>
-      <ErrorAlertDebugOnly failure={failure} />
-    </OperationResultScreenContent>
-  );
-};
-
-const ErrorAlertDebugOnly = ({ failure }: ContentViewProps) => {
-  const isDebug = useIOSelector(isDebugModeEnabledSelector);
-
-  if (!isDebug) {
-    return null;
-  }
-
-  const errorText = pipe(
-    failure.reason instanceof Error ? failure.reason.message : failure.reason,
-    t.string.decode,
-    E.getOrElse(() => "Unknown error")
-  );
-
-  return <Alert variant="error" content={errorText} />;
+  return <OperationResultScreenContent {...resultScreenProps} />;
 };

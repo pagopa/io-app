@@ -8,12 +8,12 @@ export type ItwIssuanceState = {
   integrityKeyTag: O.Option<string>;
 };
 
-const INITIAL_STATE: ItwIssuanceState = {
+export const itwIssuanceInitialState: ItwIssuanceState = {
   integrityKeyTag: O.none
 };
 
 const reducer = (
-  state: ItwIssuanceState = INITIAL_STATE,
+  state: ItwIssuanceState = itwIssuanceInitialState,
   action: Action
 ): ItwIssuanceState => {
   switch (action.type) {

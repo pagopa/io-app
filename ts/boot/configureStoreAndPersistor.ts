@@ -43,6 +43,10 @@ import {
 } from "../store/reducers/installation";
 import { NotificationsState } from "../features/pushNotifications/store/reducers";
 import { getInitialState as getInstallationInitialState } from "../features/pushNotifications/store/reducers/installation";
+import {
+  itwCredentialsPersistConfig,
+  itwPersistConfig
+} from "../features/itwallet/common/store/reducers";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { walletsPersistConfig } from "../store/reducers/wallet";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
@@ -438,13 +442,12 @@ const rootPersistConfig: PersistConfig = {
   migrate: createMigrate(migrations, { debug: isDevEnv }),
   // Entities and features implement a persisted reduce that avoids persisting messages.
   // Other entities section will be persisted
-  blacklist: ["entities", "features", "lollipop"],
+  blacklist: ["debug", "entities", "features", "lollipop"],
   // Sections of the store that must be persisted and rehydrated with this storage.
   whitelist: [
     "onboarding",
     "notifications",
     "profile",
-    "debug",
     "persistedPreferences",
     "installation",
     "payments",
@@ -465,7 +468,9 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
     rootPersistConfig,
     authenticationPersistConfig,
     walletsPersistConfig,
-    entitiesPersistConfig
+    entitiesPersistConfig,
+    itwPersistConfig,
+    itwCredentialsPersistConfig
   ])
 );
 
