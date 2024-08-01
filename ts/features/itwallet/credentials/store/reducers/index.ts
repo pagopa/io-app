@@ -11,13 +11,13 @@ export type ItwCredentialsState = {
   credentials: Array<O.Option<StoredCredential>>;
 };
 
-const initialState: ItwCredentialsState = {
+export const itwCredentialsInitialState: ItwCredentialsState = {
   eid: O.none,
   credentials: []
 };
 
 const reducer = (
-  state: ItwCredentialsState = initialState,
+  state: ItwCredentialsState = itwCredentialsInitialState,
   action: Action
 ): ItwCredentialsState => {
   switch (action.type) {
@@ -53,7 +53,7 @@ const reducer = (
     }
 
     case getType(itwLifecycleWalletReset):
-      return { ...initialState };
+      return { ...itwCredentialsInitialState };
 
     default:
       return state;
