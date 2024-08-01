@@ -1,19 +1,19 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18n-js";
 import React, { useCallback, useEffect } from "react";
-import I18n from "../../../i18n";
+import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { zendeskTokenSelector } from "../../../store/reducers/authentication";
 import { isStrictSome } from "../../../utils/pot";
 import {
+  getZendeskConfig,
+  getZendeskIdentity,
   initSupportAssistance,
   setUserIdentity,
-  showSupportTickets,
-  getZendeskIdentity,
-  getZendeskConfig
+  showSupportTickets
 } from "../../../utils/supportAssistance";
-import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
-import ZendeskEmptyTicketsComponent from "../components/ZendeskEmptyTicketsComponent";
+import { ZendeskNoTicketsEmptyState } from "../components/ZendeskNoTicketsEmptyState";
 import { ZendeskParamsList } from "../navigation/params";
 import {
   zendeskRequestTicketNumber,
@@ -89,7 +89,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   // if is some and there are 0 tickets show the Empty list component
   if (pot.isNone(ticketNumber) || ticketNumber.value === 0) {
     return (
-      <ZendeskEmptyTicketsComponent
+      <ZendeskNoTicketsEmptyState
         assistanceForPayment={assistanceForPayment}
         assistanceForCard={assistanceForCard}
         assistanceForFci={assistanceForFci}
