@@ -1,14 +1,8 @@
-import { IOColors, makeFontStyleObject } from "@pagopa/io-app-design-system";
+import { ButtonText } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { useEffect } from "react";
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  Text,
-  View
-} from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 import doubtImage from "../../../../../img/pictograms/doubt.png";
 import paymentCompletedImage from "../../../../../img/pictograms/payment-completed.png";
 import { H2 } from "../../../../components/core/typography/H2";
@@ -30,12 +24,6 @@ const styles = StyleSheet.create({
   migrationMessageText: {
     textAlign: "center",
     marginBottom: 40
-  },
-  migrationMessageButtonText: {
-    color: IOColors.white,
-    fontSize: 16,
-    lineHeight: 18,
-    ...makeFontStyleObject("Bold", undefined, "TitilliumSansPro")
   },
   activityIndicator: {
     padding: 12
@@ -79,9 +67,7 @@ const MigratingMessage = ({ status, onRetry, onEnd }: Props) => {
                 >
                   {/* TODO: Replace with BaseTypography component (custom Text
                 componented based on RN Text) */}
-                  <Text style={styles.migrationMessageButtonText}>
-                    {I18n.t("global.buttons.retry")}
-                  </Text>
+                  <ButtonText>{I18n.t("global.buttons.retry")}</ButtonText>
                 </Pressable>
               </View>
             );

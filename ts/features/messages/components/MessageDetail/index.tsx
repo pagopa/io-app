@@ -1,51 +1,40 @@
-import React, { useCallback, useState } from "react";
-import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import {
-  IOColors,
-  IOStyles,
-  VSpacer,
-  makeFontStyleObject
-} from "@pagopa/io-app-design-system";
+import { IOStyles, LabelSmall, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-import I18n from "../../../../i18n";
+import React, { useCallback, useState } from "react";
+import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { H1 } from "../../../../components/core/typography/H1";
+import { H2 } from "../../../../components/core/typography/H2";
+import OrganizationHeader from "../../../../components/OrganizationHeader";
+import StatusContent from "../../../../components/SectionStatus/StatusContent";
+import I18n from "../../../../i18n";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
+import { UIService } from "../../../../store/reducers/entities/services/types";
+import variables from "../../../../theme/variables";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 import {
   messageMarkdownSelector,
   messageTitleSelector,
   thirdPartyFromIdSelector
 } from "../../store/reducers/thirdPartyById";
 import { UIMessage, UIMessageDetails, UIMessageId } from "../../types";
-import { UIService } from "../../../../store/reducers/entities/services/types";
-import variables from "../../../../theme/variables";
 import { cleanMarkdownFromCTAs } from "../../utils/messages";
-import OrganizationHeader from "../../../../components/OrganizationHeader";
-import { H1 } from "../../../../components/core/typography/H1";
-import { H2 } from "../../../../components/core/typography/H2";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
-import StatusContent from "../../../../components/SectionStatus/StatusContent";
-import { MESSAGES_ROUTES } from "../../navigation/routes";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { LegacyMessageAttachments } from "./LegacyMessageAttachments";
-import CtaBar from "./CtaBar";
-import { LegacyRemoteContentBanner } from "./LegacyRemoteContentBanner";
-import { HeaderDueDateBar } from "./HeaderDueDateBar";
 import MessageContent from "./Content";
+import CtaBar from "./CtaBar";
+import { HeaderDueDateBar } from "./HeaderDueDateBar";
+import { LegacyMessageAttachments } from "./LegacyMessageAttachments";
+import { LegacyRemoteContentBanner } from "./LegacyRemoteContentBanner";
 import { MessageMarkdown } from "./MessageMarkdown";
 
 const styles = StyleSheet.create({
@@ -55,15 +44,6 @@ const styles = StyleSheet.create({
   attachmentsTitle: {
     paddingHorizontal: variables.spacerLargeHeight,
     marginBottom: variables.spacerHeight
-  },
-  message: {
-    paddingStart: variables.spacerWidth,
-    color: IOColors.white,
-    fontSize: variables.headerBodyFontSize,
-    ...makeFontStyleObject("Regular", undefined, "TitilliumSansPro")
-  },
-  messageBold: {
-    ...makeFontStyleObject("Bold", undefined, "TitilliumSansPro")
   }
 });
 
@@ -93,13 +73,13 @@ const renderThirdPartyAttachmentsError = () => (
       iconName={"notice"}
       labelPaddingVertical={16}
     >
-      <Text style={styles.message}>
+      <LabelSmall weight="Regular" color="white" style={{ paddingStart: 16 }}>
         {I18n.t("messageDetails.attachments.unavailable.firstPart")}
-        <Text style={styles.messageBold}>
+        <LabelSmall weight="Bold" color="white">
           {I18n.t("messageDetails.attachments.unavailable.secondPart")}
-        </Text>
+        </LabelSmall>
         {I18n.t("messageDetails.attachments.unavailable.thirdPart")}
-      </Text>
+      </LabelSmall>
     </StatusContent>
     <VSpacer size={24} />
   </>
