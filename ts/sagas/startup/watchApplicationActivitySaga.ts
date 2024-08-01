@@ -1,28 +1,17 @@
 import { AppStateStatus } from "react-native";
-import {
-  call,
-  fork,
-  put,
-  select,
-  take,
-  takeLatest
-} from "typed-redux-saga/macro";
+import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { backgroundActivityTimeout } from "../../config";
 import NavigationService from "../../navigation/NavigationService";
 import { applicationChangeState } from "../../store/actions/application";
-import {
-  identificationRequest,
-  identificationSuccess
-} from "../../store/actions/identification";
+import { identificationRequest } from "../../store/actions/identification";
 import { ReduxSagaEffect } from "../../types/utils";
 import {
   StartupStatusEnum,
   isStartupLoaded
 } from "../../store/reducers/startup";
 import { handlePendingMessageStateIfAllowedSaga } from "../../features/pushNotifications/sagas/notifications";
-import { isAutomaticSessionRefreshEnabledSelector } from "../../features/fastLogin/store/selectors";
-import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
+import { refreshSessionTokenAfterTwoMinBackgroundSaga } from "./refreshSessionTokenAfterTwoMinBackgroundSaga";
 
 /**
  * Listen to APP_STATE_CHANGE_ACTION and:
@@ -95,27 +84,11 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
             appState: newApplicationState,
             timestamp: Date.now()
           };
-
-          const isAutomaticSessionRefreshEnabled = yield* select(
-            isAutomaticSessionRefreshEnabledSelector
-          );
-
           if (timeSinceLastStateChange >= backgroundActivityTimeoutMillis) {
             // The app was in background for a long time, request identification
             yield* put(identificationRequest());
-            // if the session refresh feature is active,
-            if (isAutomaticSessionRefreshEnabled) {
-              // after successful identification,
-              yield* take(identificationSuccess);
-              // the regeneration of the session token will be performed.
-              yield* put(
-                refreshSessionToken.request({
-                  withUserInteraction: false,
-                  showIdentificationModalAtStartup: false,
-                  showLoader: true
-                })
-              );
-            }
+            // refresh session token
+            yield* call(refreshSessionTokenAfterTwoMinBackgroundSaga);
           }
         }
       }
