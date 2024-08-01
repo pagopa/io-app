@@ -1,6 +1,6 @@
 import {
   ContentWrapper,
-  IOVisualCostants,
+  IOSpacingScale,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/Option";
@@ -118,10 +118,12 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
   );
 };
 
+const cardPaddingHorizontal: IOSpacingScale = 16;
+
 const styles = StyleSheet.create({
   cardContainer: {
     position: "relative",
-    paddingHorizontal: IOVisualCostants.appMarginDefault
+    paddingHorizontal: cardPaddingHorizontal
   },
   cardBackdrop: {
     height: "200%", // Twice the card in order to avoid the white background when the scrollview bounces
