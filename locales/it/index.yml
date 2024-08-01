@@ -2680,6 +2680,16 @@ bonus:
       information:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
+      discount:
+        description: Descrizione
+        conditions: Condizioni
+        validity: Validità
+        cta:
+          api: Attiva codice sconto
+          static: Vai al codice sconto
+          bucket: Vai al codice sconto
+          landingpage: Vai all'opportunità
+        secondaryCta: Vai all'opportunità
     cta:
       activeBonus: Richiedi la Carta
       deactivateBonus: Disattiva Carta Giovani Nazionale

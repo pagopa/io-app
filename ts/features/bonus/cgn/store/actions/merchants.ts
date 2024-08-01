@@ -1,10 +1,15 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
 import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/OnlineMerchants";
 import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchantSearchRequest } from "../../../../../../definitions/cgn/merchants/OfflineMerchantSearchRequest";
 import { OnlineMerchantSearchRequest } from "../../../../../../definitions/cgn/merchants/OnlineMerchantSearchRequest";
+import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 
 /**
  * get and handle list of online merchants conventioned with CGN
@@ -30,7 +35,12 @@ export const cgnSelectedMerchant = createAsyncAction(
   "CGN_SELECTED_MERCHANT_FAILURE"
 )<Merchant["id"], Merchant, NetworkError>();
 
+export const selectMerchantDiscount = createStandardAction(
+  "CGN_SELECT_MERCHANT_DISCOUNT"
+)<Discount>();
+
 export type CgnMerchantsAction =
   | ActionType<typeof cgnOfflineMerchants>
   | ActionType<typeof cgnOnlineMerchants>
-  | ActionType<typeof cgnSelectedMerchant>;
+  | ActionType<typeof cgnSelectedMerchant>
+  | ActionType<typeof selectMerchantDiscount>;
