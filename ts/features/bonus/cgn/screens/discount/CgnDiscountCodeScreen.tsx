@@ -1,3 +1,4 @@
+import { Second } from "@pagopa/ts-commons/lib/units";
 import {
   H1,
   H2,
@@ -19,6 +20,25 @@ import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { CgnDiscountExpireProgressBar } from "../../components/merchants/discount/CgnDiscountExpireProgressBar";
 import { cgnOtpDataSelector } from "../../store/reducers/otp";
 import { isReady } from "../../../../../common/model/RemoteValue";
+import { Otp } from "../../../../../../definitions/cgn/Otp";
+
+const getOtpTTL = (otp: Otp): Second => {
+  const now = new Date();
+  const expiration = (otp.expires_at.getTime() - now.getTime()) / 1000;
+  if (expiration > 0) {
+    // take the min between ttl and computed seconds
+    return (
+      otp.ttl ? Math.min(Math.ceil(expiration), otp.ttl) : expiration
+    ) as Second;
+  }
+  // expires is in the past relative to the dice current time, use ttl as fallback
+  return otp.ttl as Second;
+};
+
+const getOtpExpirationTotal = (otp: Otp): Second =>
+  Math.floor(
+    (otp.expires_at.getTime() - new Date().getTime()) / 1000
+  ) as Second;
 
 const CgnDiscountCodeScreen = () => {
   const discountCode = useIOSelector(cgnSelectedDiscountCodeSelector);
@@ -69,14 +89,15 @@ const CgnDiscountCodeScreen = () => {
               <>
                 <VSpacer size={32} />
                 <CgnDiscountExpireProgressBar
-                  secondsExpirationTotal={discountOtp.value.ttl}
-                  secondsToExpiration={discountOtp.value.ttl}
+                  secondsExpirationTotal={getOtpExpirationTotal(
+                    discountOtp.value
+                  )}
+                  secondsToExpiration={getOtpTTL(discountOtp.value)}
                   setIsExpired={setIsDiscountCodeExpired}
                 />
               </>
             )}
           </View>
-          {/* </GradientScrollView> */}
         </IOScrollView>
         <FooterActions
           actions={{
