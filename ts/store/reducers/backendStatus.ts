@@ -30,7 +30,8 @@ import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
-
+import { StatusMessages } from "../../../definitions/content/StatusMessages";
+import { StatusMessage } from "../../../definitions/content/StatusMessage";
 import {
   isIdPayTestEnabledSelector,
   isNewScanSectionLocallyEnabledSelector
@@ -550,4 +551,28 @@ const sectionStatusUncachedSelector = (
   pipe(
     state.backendStatus.status,
     O.chainNullableK(status => status.sections[sectionStatusKey])
+  );
+
+const statusMessagesSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): StatusMessages | undefined =>
+    pipe(
+      backendStatus,
+      O.map(bs => bs.statusMessages),
+      O.toUndefined
+    )
+);
+
+export const statusMessageByRouteSelector = (routeName: string) =>
+  createSelector(
+    statusMessagesSelector,
+    (statusMessages): ReadonlyArray<StatusMessage> | undefined =>
+      pipe(
+        statusMessages,
+        O.fromNullable,
+        O.map(({ items }) =>
+          items.filter(message => message.routes.includes(routeName))
+        ),
+        O.toUndefined
+      )
   );
