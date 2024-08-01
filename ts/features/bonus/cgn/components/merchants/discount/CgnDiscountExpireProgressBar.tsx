@@ -28,9 +28,6 @@ export const CgnDiscountExpireProgressBar = ({
       setIsExpired(true);
     }
     return () => clearInterval(timer);
-    // possible over-engineering, but we actually
-    // only need to run zero checks once the code is expired,
-    // there is no reason to rerun this hook every second
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCodeExpired]);
   const formattedSecondsToExpiration = format(
