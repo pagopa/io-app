@@ -2171,6 +2171,14 @@ services:
   contextualHelpContent: !include services/services_home.md
   new: Nuovo
   home:
+    bottomSheet:
+      content:
+        servicesPreferences:
+          value: Chi può scriverti?
+          description: Scegli chi può contattarti
+        settings: 
+          value: Tutte le impostazioni
+          description: Gestisci i tuoi dati e le preferenze d'uso
     featured:
       services:
         title: In primo piano
