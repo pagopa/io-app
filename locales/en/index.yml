@@ -2173,6 +2173,14 @@ services:
   contextualHelpContent: !include services/services_home.md
   new: New
   home:
+    bottomSheet:
+      content:
+        servicesPreferences:
+          value: Who can contact you?
+          description: Choose who can contact you
+        settings: 
+          value: Settings
+          description: Manage your data and preferences
     featured:
       services:
         title: Featured
@@ -3975,7 +3983,11 @@ FIMS:
       title: "Operazione annullata"
     consents:
       title: "Attendi qualche secondo"
-    in-app-browser:
+    idle:
+      title: "Attendi qualche secondo"
+    fastLogin_forced_restart:
+      title: "Attendi qualche secondo"
+    in-app-browser-loading:
       title: "Ti stiamo indirizzando al servizio"
       subtitle: "Attendi qualche secondo"
   consentsScreen:
