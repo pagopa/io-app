@@ -167,8 +167,6 @@ const PICTURE_URL_REGEX = "^data:image\\/(png|jpg|jpeg|bmp);base64,";
 const FISCAL_CODE_WITH_PREFIX =
   "(TINIT-[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])";
 
-const EMPTY_STRING_REGEX = "^$";
-
 /**
  * io-ts decoder for the date claim field of the credential.
  * The date format is checked against the regex dateFormatRegex, which is currenlty mocked.
@@ -230,9 +228,16 @@ export const FiscalCodeClaim = PatternString(FISCAL_CODE_WITH_PREFIX);
 
 /**
  * Empty string fallback of the claim field of the credential.
- * This is needed because the claim field is a string and it could be empty.
  */
-export const EmptyStringClaim = PatternString(EMPTY_STRING_REGEX);
+export const EmptyStringClaim = new t.Type<string, string, unknown>(
+  "EmptyString",
+  (input: unknown): input is string => input === "", // Type guard
+  (input, context) =>
+    typeof input === "string" && input === ""
+      ? t.success(input)
+      : t.failure(input, context, "Expected an empty string"),
+  t.identity
+);
 
 /**
  * Alias for the string claim field of the credential.
