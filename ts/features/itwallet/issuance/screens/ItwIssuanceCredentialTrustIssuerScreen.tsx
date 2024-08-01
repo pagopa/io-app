@@ -25,7 +25,10 @@ import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGe
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims } from "../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
+import {
+  CredentialType,
+  ISSUER_MOCK_NAME
+} from "../../common/utils/itwMocksUtils";
 import {
   RequestObject,
   StoredCredential
@@ -137,7 +140,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
         </H2>
         <ItwMarkdown>
           {I18n.t("features.itWallet.issuance.credentialAuth.subtitle", {
-            organization: "Istituto Poligrafico e Zecca"
+            organization: ISSUER_MOCK_NAME
           })}
         </ItwMarkdown>
         <VSpacer size={8} />
