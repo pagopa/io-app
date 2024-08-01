@@ -300,6 +300,7 @@ export const ItwCredentialClaim = ({
     ClaimValue.decode,
     E.fold(
       () => <UnknownClaimItem label={claim.label} />,
+      // eslint-disable-next-line sonarjs/cognitive-complexity
       _decoded => {
         const decoded = hidden ? HIDDEN_CLAIM : _decoded;
         if (PlaceOfBirthClaim.is(decoded)) {
@@ -347,6 +348,10 @@ export const ItwCredentialClaim = ({
           return null; // We want to hide the claim if it's empty
         }
         if (StringClaim.is(decoded)) {
+          // This is needed because otherwise empty string will be rendered as a claim due to the decoded value being HIDDEN_CLAIM
+          if (hidden && EmptyStringClaim.is(_decoded)) {
+            return null;
+          }
           return <PlainTextClaimItem label={claim.label} claim={decoded} />; // must be the last one to be checked due to overlap with IPatternStringTag
         } else {
           return <UnknownClaimItem label={claim.label} _claim={decoded} />;
