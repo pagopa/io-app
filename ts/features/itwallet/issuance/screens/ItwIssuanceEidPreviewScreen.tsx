@@ -1,9 +1,16 @@
-import { ContentWrapper } from "@pagopa/io-app-design-system";
+import {
+  ForceScrollDownView,
+  H2,
+  HeaderSecondLevel,
+  IOVisualCostants,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import React from "react";
+import { StyleSheet, View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -49,12 +56,6 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: true
-    });
-  }, [navigation]);
-
   useDebugInfo({
     parsedCredential: eid.parsedCredential
   });
@@ -84,31 +85,58 @@ const ContentView = ({ eid }: ContentViewProps) => {
     );
   };
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      header: () => (
+        <HeaderSecondLevel
+          title=""
+          type="singleAction"
+          firstAction={{
+            icon: "closeLarge",
+            onPress: dismissDialog.show,
+            accessibilityLabel: I18n.t("global.buttons.close")
+          }}
+        />
+      )
+    });
+  }, [navigation, dismissDialog]);
+
   return (
-    <IOScrollViewWithLargeHeader
-      canGoback={false}
-      title={{
-        label: I18n.t("features.itWallet.issuance.eidPreview.title")
-      }}
-      actions={{
-        type: "TwoButtons",
-        primary: {
-          label: I18n.t(
-            "features.itWallet.issuance.eidPreview.actions.primary"
-          ),
-          onPress: handleSaveToWallet
-        },
-        secondary: {
-          label: I18n.t(
-            "features.itWallet.issuance.eidPreview.actions.secondary"
-          ),
-          onPress: dismissDialog.show
-        }
-      }}
-    >
-      <ContentWrapper>
+    <ForceScrollDownView contentContainerStyle={styles.scroll}>
+      <View style={styles.contentWrapper}>
+        <H2>{I18n.t("features.itWallet.issuance.eidPreview.title")}</H2>
+        <VSpacer size={24} />
         <ItwCredentialClaimsList data={eid} isPreview={true} />
-      </ContentWrapper>
-    </IOScrollViewWithLargeHeader>
+      </View>
+      <FooterActions
+        fixed={false}
+        actions={{
+          type: "TwoButtons",
+          primary: {
+            label: I18n.t(
+              "features.itWallet.issuance.eidPreview.actions.primary"
+            ),
+            onPress: handleSaveToWallet
+          },
+          secondary: {
+            label: I18n.t(
+              "features.itWallet.issuance.eidPreview.actions.secondary"
+            ),
+            onPress: dismissDialog.show
+          }
+        }}
+      />
+    </ForceScrollDownView>
   );
 };
+
+const styles = StyleSheet.create({
+  scroll: {
+    flexGrow: 1
+  },
+  contentWrapper: {
+    flexGrow: 1,
+    paddingHorizontal: IOVisualCostants.appMarginDefault
+  }
+});
