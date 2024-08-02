@@ -32,7 +32,7 @@ import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { ContextualHelpPropsMarkdown } from "../BaseScreenComponent";
 import { PIN_LENGTH_SIX } from "../../../utils/constants";
-import PictogramOnSmallDevice from "../../../screens/authentication/components/PictogramOnSmallDevice";
+import PictogramHiddenOnSmallDevice from "../../../screens/authentication/components/PictogramHiddenOnSmallDevice";
 import usePinValidationBottomSheet from "./usePinValidationBottomSheet";
 import { PinCaouselItemProps, PinCarouselItem } from "./PinCarouselItem";
 
@@ -223,8 +223,11 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
     <View testID="pin-creation-screen" style={IOStyles.flex}>
       <View style={[IOStyles.flex, IOStyles.centerJustified]}>
         <VSpacer size={8} />
-        <PictogramOnSmallDevice name="key" size={64} />
-        <VSpacer size={8} />
+        <PictogramHiddenOnSmallDevice
+          name="key"
+          size={64}
+          bottomSpaceSize={8}
+        />
         <Carousel
           ref={carouselRef}
           testID="pin-creation-carousel"

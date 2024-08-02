@@ -26,7 +26,7 @@ import {
 import { useSecuritySuggestionsBottomSheet } from "../../hooks/useSecuritySuggestionBottomSheet";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
-import PictogramOnSmallDevice from "./components/PictogramOnSmallDevice";
+import PictogramHiddenOnSmallDevice from "./components/PictogramHiddenOnSmallDevice";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.opt_in.contextualHelpTitle",
@@ -37,7 +37,7 @@ export type ChosenIdentifier = {
   identifier: "SPID" | "CIE";
 };
 
-const NewOptInScreen = () => {
+const OptInScreen = () => {
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
@@ -93,8 +93,7 @@ const NewOptInScreen = () => {
       }}
     >
       <ContentWrapper>
-        <PictogramOnSmallDevice name="passcode" />
-        <VSpacer size={24} />
+        <PictogramHiddenOnSmallDevice bottomSpaceSize={24} name="passcode" />
         <View style={IOStyles.selfCenter}>
           <Badge
             text={I18n.t("authentication.opt_in.news")}
@@ -138,4 +137,4 @@ const NewOptInScreen = () => {
   );
 };
 
-export default NewOptInScreen;
+export default OptInScreen;
