@@ -146,10 +146,10 @@ export const isUserSelectedPaymentSelector = (
 
 export const userSelectedPaymentRptIdSelector = (
   state: GlobalState,
-  message: UIMessageDetails | undefined
+  messageOrUndefined: UIMessageDetails | undefined
 ) =>
   pipe(
-    message,
+    messageOrUndefined,
     O.fromNullable,
     O.chainNullableK(message => message.paymentData),
     O.map(getRptIdStringFromPaymentData),

@@ -36,6 +36,7 @@ import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlertsSection";
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 
 // TODO: use the real credential update time
 const today = new Date();
@@ -80,6 +81,10 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
     backgroundColor: themeColor
   });
 
+  useDebugInfo({
+    parsedCredential: credential.parsedCredential
+  });
+
   const credentialStatus = getCredentialExpireStatus(
     credential.parsedCredential
   );
@@ -108,7 +113,9 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
             title={I18n.t(
               "features.itWallet.presentation.credentialDetails.documentDataTitle"
             )}
-            claims={parseClaims(credential.parsedCredential)}
+            claims={parseClaims(credential.parsedCredential, {
+              exclude: ["unique_id"]
+            })}
             canHideValues={true}
           />
           <Divider />

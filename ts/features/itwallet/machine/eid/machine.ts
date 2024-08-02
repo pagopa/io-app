@@ -31,7 +31,6 @@ export const itwEidIssuanceMachine = setup({
     navigateToTosScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
     navigateToIdpSelectionScreen: notImplemented,
-    navigateToEidRequestScreen: notImplemented,
     navigateToEidPreviewScreen: notImplemented,
     navigateToSuccessScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
@@ -121,7 +120,7 @@ export const itwEidIssuanceMachine = setup({
           target: "WalletInstanceAttestationObtainment"
         },
         onError: {
-          actions: assign(setFailure(IssuanceFailureType.UNSUPPORTED_DEVICE)),
+          actions: assign(setFailure(IssuanceFailureType.GENERIC)), // TODO: [SIW-1390] Use unsupported device from io-rn-wallet
           target: "#itwEidIssuanceMachine.Failure"
         }
       }
@@ -140,7 +139,7 @@ export const itwEidIssuanceMachine = setup({
           target: "UserIdentification"
         },
         onError: {
-          actions: assign(setFailure(IssuanceFailureType.UNSUPPORTED_DEVICE)),
+          actions: assign(setFailure(IssuanceFailureType.GENERIC)),
           target: "#itwEidIssuanceMachine.Failure"
         }
       }
@@ -245,7 +244,9 @@ export const itwEidIssuanceMachine = setup({
                   target: "ReadingCieCard"
                 },
                 onError: {
-                  actions: assign(setFailure(IssuanceFailureType.GENERIC)),
+                  actions: assign(
+                    setFailure(IssuanceFailureType.ISSUER_GENERIC)
+                  ),
                   target: "#itwEidIssuanceMachine.Failure"
                 }
               },
@@ -297,13 +298,10 @@ export const itwEidIssuanceMachine = setup({
       }
     },
     Issuance: {
-      entry: "navigateToEidRequestScreen",
+      entry: "navigateToEidPreviewScreen",
       initial: "RequestingEid",
       states: {
         RequestingEid: {
-          on: {
-            back: { target: "#itwEidIssuanceMachine.UserIdentification" }
-          },
           tags: [ItwTags.Loading],
           invoke: {
             src: "requestEid",
@@ -322,13 +320,14 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.UserIdentification"
               },
               {
-                actions: assign(setFailure(IssuanceFailureType.GENERIC)),
+                actions: assign(setFailure(IssuanceFailureType.ISSUER_GENERIC)),
                 target: "#itwEidIssuanceMachine.Failure"
               }
             ]
           }
         },
         CheckingIdentityMatch: {
+          tags: [ItwTags.Loading],
           description:
             "Checking whether the issued eID matches the identity of the currently logged-in user.",
           always: [
@@ -345,7 +344,6 @@ export const itwEidIssuanceMachine = setup({
           ]
         },
         DisplayingPreview: {
-          entry: "navigateToEidPreviewScreen",
           on: {
             "add-to-wallet": {
               actions: [

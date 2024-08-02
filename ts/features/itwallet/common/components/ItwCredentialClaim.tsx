@@ -14,7 +14,6 @@ import {
   EvidenceClaim,
   FiscalCodeClaim,
   ImageClaim,
-  ImageClaimNoUrl,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
   PlainTextClaim,
@@ -29,8 +28,6 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bott
 import { getExpireStatus } from "../../../../utils/dates";
 
 const HIDDEN_CLAIM = "******";
-
-const base64Url = "data:image/png;base64,";
 
 /**
  * Component which renders a place of birth type claim.
@@ -81,7 +78,6 @@ const PlainTextClaimItem = ({
 const DateClaimItem = ({
   label,
   claim,
-  iconVisible,
   expirationBadgeVisible
 }: {
   label: string;
@@ -115,7 +111,6 @@ const DateClaimItem = ({
       key={`${label}-${value}`}
       label={label}
       value={value}
-      icon={iconVisible ? "calendar" : undefined}
       accessibilityLabel={`${label} ${value}`}
       endElement={endElement}
     />
@@ -137,14 +132,6 @@ const EvidenceClaimItem = ({ issuerName }: { issuerName: string }) => {
         ),
         body: I18n.t(
           "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle"
-        )
-      },
-      {
-        title: I18n.t(
-          "features.itWallet.issuance.credentialPreview.bottomSheet.data.title"
-        ),
-        body: I18n.t(
-          "features.itWallet.issuance.credentialPreview.bottomSheet.data.subtitle"
         )
       }
     ]
@@ -196,8 +183,8 @@ const ImageClaimItem = ({ label, claim }: { label: string; claim: string }) => (
       <Image
         source={{ uri: claim }}
         style={{
-          width: 250,
-          height: 250
+          width: 200,
+          aspectRatio: 3 / 4
         }}
         resizeMode="contain"
         accessibilityIgnoresInvertColors
@@ -331,18 +318,18 @@ export const ItwCredentialClaim = ({
           );
         } else if (ImageClaim.is(decoded)) {
           return <ImageClaimItem label={claim.label} claim={decoded} />;
-        } else if (ImageClaimNoUrl.is(decoded)) {
-          // TODO [SIW-1378] remove this branch when the image claim is always with url
-          const fixedImage = base64Url.concat(decoded);
-          return <ImageClaimItem label={claim.label} claim={fixedImage} />;
         } else if (DrivingPrivilegesClaim.is(decoded)) {
           return decoded.map((elem, index) => (
-            <DrivingPrivilegesClaimItem
-              label={claim.label}
-              claim={elem}
-              key={`${index}_{elem.label}`}
-              detailsButtonVisible={!isPreview}
-            />
+            <React.Fragment
+              key={`${index}_${claim.label}_${elem.driving_privilege}`}
+            >
+              {index !== 0 && <Divider />}
+              <DrivingPrivilegesClaimItem
+                label={claim.label}
+                claim={elem}
+                detailsButtonVisible={!isPreview}
+              />
+            </React.Fragment>
           ));
         } else if (FiscalCodeClaim.is(decoded)) {
           const fiscalCode = pipe(

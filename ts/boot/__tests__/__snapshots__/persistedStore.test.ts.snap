@@ -34,6 +34,7 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
 
 exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'debug' state 1`] = `
 {
+  "debugData": {},
   "isDebugModeEnabled": false,
 }
 `;
@@ -43,7 +44,6 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
   "calendarEvents": {
     "byMessageId": {},
   },
-  "messagesStatus": {},
   "organizations": {
     "all": [],
     "nameByFiscalCode": {},
@@ -107,7 +107,6 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
   "isDesignSystemEnabled": false,
   "isFingerprintEnabled": undefined,
   "isIdPayTestEnabled": false,
-  "isItWalletTestEnabled": false,
   "isMixpanelEnabled": null,
   "isNewScanSectionEnabled": false,
   "isPagoPATestEnabled": false,

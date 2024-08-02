@@ -11,34 +11,35 @@ import { WalletClientStatusEnum } from "../../../../../../../definitions/pagopa/
 
 describe("Test handleWalletPaymentGetUserWallets saga", () => {
   const T_SESSION_TOKEN = "ABCD";
+  const getWalletsByIdUserResponse: Wallets = {
+    wallets: [
+      {
+        walletId: "walletId",
+        creationDate: new Date(),
+        paymentMethodId: "paymentMethodId",
+        paymentMethodAsset: "paymentMethodAsset",
+        applications: [],
+        clients: {
+          IO: {
+            status: WalletClientStatusEnum.ENABLED,
+            lastUsage: new Date()
+          }
+        },
+        status: WalletStatusEnum.VALIDATED,
+        updateDate: new Date()
+      }
+    ]
+  };
+
   it(`should put ${getType(
     paymentsGetPaymentUserMethodsAction.success
   )} when getWalletsByIdUser is 200`, () => {
     const mockGetWalletsByIdUser = jest.fn();
-    const getWalletsByIdUserResponse: Wallets = {
-      wallets: [
-        {
-          walletId: "walletId",
-          creationDate: new Date(),
-          paymentMethodId: "paymentMethodId",
-          paymentMethodAsset: "paymentMethodAsset",
-          applications: [],
-          clients: {
-            IO: {
-              status: WalletClientStatusEnum.ENABLED,
-              lastUsage: new Date()
-            }
-          },
-          status: WalletStatusEnum.VALIDATED,
-          updateDate: new Date()
-        }
-      ]
-    };
 
     testSaga(
       handleWalletPaymentGetUserWallets,
       mockGetWalletsByIdUser,
-      paymentsGetPaymentUserMethodsAction.request()
+      paymentsGetPaymentUserMethodsAction.request({})
     )
       .next()
       .next(T_SESSION_TOKEN)
@@ -58,7 +59,7 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
     testSaga(
       handleWalletPaymentGetUserWallets,
       mockGetWalletsByIdUser,
-      paymentsGetPaymentUserMethodsAction.request()
+      paymentsGetPaymentUserMethodsAction.request({})
     )
       .next()
       .next(T_SESSION_TOKEN)
@@ -80,7 +81,7 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
     testSaga(
       handleWalletPaymentGetUserWallets,
       mockGetWalletsByIdUser,
-      paymentsGetPaymentUserMethodsAction.request()
+      paymentsGetPaymentUserMethodsAction.request({})
     )
       .next()
       .next(T_SESSION_TOKEN)
@@ -92,5 +93,28 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
       )
       .next()
       .isDone();
+  });
+
+  it(`should invoke onResponse if passed as attribute`, () => {
+    const mockGetWalletsByIdUser = jest.fn();
+    const mockOnResponse = jest.fn();
+
+    testSaga(
+      handleWalletPaymentGetUserWallets,
+      mockGetWalletsByIdUser,
+      paymentsGetPaymentUserMethodsAction.request({
+        onResponse: mockOnResponse
+      })
+    )
+      .next()
+      .next(T_SESSION_TOKEN)
+      .next(E.right({ status: 200, value: getWalletsByIdUserResponse }))
+      .put(
+        paymentsGetPaymentUserMethodsAction.success(getWalletsByIdUserResponse)
+      )
+      .next()
+      .isDone();
+
+    expect(mockOnResponse).toHaveBeenCalled();
   });
 });
