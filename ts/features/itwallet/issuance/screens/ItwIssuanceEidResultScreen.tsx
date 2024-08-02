@@ -2,9 +2,14 @@ import React from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 export const ItwIssuanceEidResultScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+
+  useItwDisbleGestureNavigation();
+  useAvoidHardwareBackButton();
 
   const handleContinue = () => {
     machineRef.send({ type: "add-new-credential" });

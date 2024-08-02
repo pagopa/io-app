@@ -3,16 +3,13 @@ import {
   AmountInEuroCentsFromNumber,
   PaymentNoticeQrCodeFromString,
   RptId,
-  rptIdFromPaymentNoticeQrCode,
-  RptIdFromString
+  rptIdFromPaymentNoticeQrCode
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { ITuple2, Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
-import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
 import {
   DetailEnum,
   Detail_v2Enum
@@ -43,20 +40,6 @@ import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
 import { maybeNotNullyString } from "./strings";
-
-/**
- * Converts a NoticeNumber coming from a Message to an RptId needed by PagoPA
- */
-export function getRptIdFromNoticeNumber(
-  organizationFiscalCode: OrganizationFiscalCode,
-  noticeNumber: PaymentNoticeNumber
-): O.Option<RptId> {
-  return pipe(
-    `${organizationFiscalCode}${noticeNumber}`,
-    RptIdFromString.decode,
-    O.fromEither
-  );
-}
 
 /**
  * Converts a PaymentAmount coming from a Message to an AmountInEuroCents
