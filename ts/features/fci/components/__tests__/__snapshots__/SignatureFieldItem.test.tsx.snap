@@ -141,6 +141,8 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
             }
           />
           <View
+            accessibilityElementsHidden={true}
+            importantForAccessibility="no-hide-descendants"
             pointerEvents="none"
           >
             <View

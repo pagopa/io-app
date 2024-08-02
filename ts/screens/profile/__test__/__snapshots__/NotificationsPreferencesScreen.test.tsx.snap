@@ -683,9 +683,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -909,9 +910,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -2118,9 +2120,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -2344,9 +2347,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -3553,9 +3557,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -3779,9 +3784,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -4988,9 +4994,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -5214,9 +5221,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": true,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -6423,9 +6431,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -6649,9 +6658,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -7858,9 +7868,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -8084,9 +8095,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -9293,9 +9305,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -9519,9 +9532,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -10728,9 +10742,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": true,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -10954,9 +10969,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -12163,9 +12179,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -12389,9 +12406,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -13598,9 +13616,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": true,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -13824,9 +13843,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": true,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -15033,9 +15053,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -15259,9 +15280,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -16468,9 +16490,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": true,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -16694,9 +16717,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -17903,9 +17927,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -18129,9 +18154,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -19338,9 +19364,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -19564,9 +19591,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -20773,9 +20801,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -20999,9 +21028,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -22208,9 +22238,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -22434,9 +22465,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": true,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -23643,9 +23675,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -23869,9 +23902,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -25078,9 +25112,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -25304,9 +25339,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
