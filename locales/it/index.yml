@@ -1788,10 +1788,12 @@ wallet:
       noticeNumber:
         title: Inserisci il codice avviso
         subtitle: Ha 18 cifre, lo trovi vicino al codice QR.
+        validationError: Ha 18 cifre, inizia con 0, 1 o 3.
         placeholder: Codice avviso
       fiscalCode:
         title: Inserisci il codice fiscale dell’Ente Creditore
         subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
+        validationError: Inserisci 11 cifre.
         placeholder: Codice fiscale Ente Creditore
     abortDialog:
       title: Vuoi interrompere l'operazione?
