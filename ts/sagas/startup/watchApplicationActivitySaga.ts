@@ -11,7 +11,7 @@ import {
   isStartupLoaded
 } from "../../store/reducers/startup";
 import { handlePendingMessageStateIfAllowedSaga } from "../../features/pushNotifications/sagas/notifications";
-import { refreshSessionTokenAfterTwoMinBackgroundSaga } from "./refreshSessionTokenAfterTwoMinBackgroundSaga";
+import { refreshSessionTokenAfterIdentificationSuccessSaga } from "./refreshSessionTokenAfterIdentificationSuccessSaga";
 
 /**
  * Listen to APP_STATE_CHANGE_ACTION and:
@@ -88,7 +88,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
             // The app was in background for a long time, request identification
             yield* put(identificationRequest());
             // refresh session token
-            yield* call(refreshSessionTokenAfterTwoMinBackgroundSaga);
+            yield* call(refreshSessionTokenAfterIdentificationSuccessSaga);
           }
         }
       }

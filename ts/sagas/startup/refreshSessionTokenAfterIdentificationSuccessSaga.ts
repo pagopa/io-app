@@ -5,10 +5,9 @@ import { identificationSuccess } from "../../store/actions/identification";
 
 /**
  * This function is called to regenerate the session token
- * when a user returns the app to the foreground after
- * holding the app for at least 2 minutes in the background
+ * after successful identification
  */
-export function* refreshSessionTokenAfterTwoMinBackgroundSaga(): Generator {
+export function* refreshSessionTokenAfterIdentificationSuccessSaga(): Generator {
   const isAutomaticSessionRefreshEnabled = yield* select(
     isAutomaticSessionRefreshEnabledSelector
   );
