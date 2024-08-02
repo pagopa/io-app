@@ -22,7 +22,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
-import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
@@ -56,7 +56,7 @@ const ItwIssuanceCredentialTrustIssuerScreen = () => {
     selectCredentialTypeOption
   );
 
-  useItwDisbleGestureNavigation();
+  useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
   return pipe(

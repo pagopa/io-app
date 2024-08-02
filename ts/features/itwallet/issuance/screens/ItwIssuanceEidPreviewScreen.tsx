@@ -12,7 +12,7 @@ import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
-import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { selectEidOption, selectIsLoading } from "../../machine/eid/selectors";
@@ -22,7 +22,7 @@ export const ItwIssuanceEidPreviewScreen = () => {
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
 
-  useItwDisbleGestureNavigation();
+  useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
   if (isLoading) {
