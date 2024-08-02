@@ -26,7 +26,10 @@ import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGe
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
+import {
+  CredentialType,
+  ISSUER_MOCK_NAME
+} from "../../common/utils/itwMocksUtils";
 import {
   RequestObject,
   StoredCredential
@@ -35,7 +38,6 @@ import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import {
   selectCredentialTypeOption,
   selectIsLoading,
-  selectIssuerConfigurationOption,
   selectRequestedCredentialOption
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
@@ -83,9 +85,6 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
-  const issuerConfOption = ItwCredentialIssuanceMachineContext.useSelector(
-    selectIssuerConfigurationOption
-  );
 
   const handleContinuePress = () => {
     machineRef.send({ type: "confirm-trust-data" });
@@ -98,7 +97,6 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });
 
   useDebugInfo({
-    issuerConfOption,
     parsedCredential: eid.parsedCredential
   });
 
@@ -138,7 +136,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
         </H2>
         <ItwMarkdown>
           {I18n.t("features.itWallet.issuance.credentialAuth.subtitle", {
-            organization: "Istituto Poligrafico e Zecca dello Stato"
+            organization: ISSUER_MOCK_NAME
           })}
         </ItwMarkdown>
         <VSpacer size={8} />
