@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, View } from "react-native";
+import { View } from "react-native";
 import {
   Badge,
   ContentWrapper,
@@ -7,7 +7,6 @@ import {
   GradientScrollView,
   H3,
   IOStyles,
-  Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
@@ -27,13 +26,12 @@ import {
 import { useSecuritySuggestionsBottomSheet } from "../../hooks/useSecuritySuggestionBottomSheet";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import PictogramOnSmallDevice from "./components/PictogramOnSmallDevice";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.opt_in.contextualHelpTitle",
   body: "authentication.opt_in.contextualHelpContent"
 };
-
-export const MIN_HEIGHT_TO_SHOW_FULL_RENDER = 820;
 
 export type ChosenIdentifier = {
   identifier: "SPID" | "CIE";
@@ -95,15 +93,7 @@ const NewOptInScreen = () => {
       }}
     >
       <ContentWrapper>
-        {/*
-          if the device height is > 820 then the pictogram will be visible,
-          otherwise it will not be visible
-          */}
-        {Dimensions.get("screen").height > MIN_HEIGHT_TO_SHOW_FULL_RENDER && (
-          <View style={IOStyles.selfCenter} testID="pictogram-test">
-            <Pictogram name="passcode" size={120} />
-          </View>
-        )}
+        <PictogramOnSmallDevice name="passcode" />
         <VSpacer size={24} />
         <View style={IOStyles.selfCenter}>
           <Badge

@@ -5,7 +5,6 @@ import {
   ContentWrapper,
   IOStyles,
   NumberPad,
-  Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -33,6 +32,7 @@ import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { ContextualHelpPropsMarkdown } from "../BaseScreenComponent";
 import { PIN_LENGTH_SIX } from "../../../utils/constants";
+import PictogramOnSmallDevice from "../../../screens/authentication/components/PictogramOnSmallDevice";
 import usePinValidationBottomSheet from "./usePinValidationBottomSheet";
 import { PinCaouselItemProps, PinCarouselItem } from "./PinCarouselItem";
 
@@ -223,9 +223,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
     <View testID="pin-creation-screen" style={IOStyles.flex}>
       <View style={[IOStyles.flex, IOStyles.centerJustified]}>
         <VSpacer size={8} />
-        <View style={IOStyles.alignCenter}>
-          <Pictogram name="key" size={64} />
-        </View>
+        <PictogramOnSmallDevice name="key" size={64} />
         <VSpacer size={8} />
         <Carousel
           ref={carouselRef}
