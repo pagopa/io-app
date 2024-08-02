@@ -29,13 +29,14 @@ const WalletHomeScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
   const isNewElementAdded = React.useRef(route.params?.newMethodAdded || false);
 
-  React.useEffect(() => {
-    // TODO SIW-960 Move cards request to app startup
-    dispatch(walletToggleLoadingState(true));
-    dispatch(getPaymentsWalletUserMethods.request());
-    dispatch(idPayWalletGet.request());
-    dispatch(cgnDetails.request());
-  }, [dispatch]);
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(walletToggleLoadingState(true));
+      dispatch(getPaymentsWalletUserMethods.request());
+      dispatch(idPayWalletGet.request());
+      dispatch(cgnDetails.request());
+    }, [dispatch])
+  );
 
   // Handles the "New element added" toast display once the user returns to this screen
   useFocusEffect(
