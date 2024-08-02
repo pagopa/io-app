@@ -61,6 +61,12 @@ const CgnDiscountCodeScreen = () => {
     clipboardSetStringWithFeedback(discountCode);
   };
 
+  React.useEffect(() => {
+    if (isReady(discountOtp)) {
+      setIsDiscountCodeExpired(getOtpExpirationTotal(discountOtp.value) <= 0);
+    }
+  }, [discountOtp]);
+
   if (discountCode) {
     return (
       <>
