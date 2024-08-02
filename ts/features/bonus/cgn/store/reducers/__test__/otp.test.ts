@@ -13,9 +13,14 @@ import { getGenericError } from "../../../../../../utils/errors";
 
 describe("cgnOtpReducer", () => {
   it("should be loading", () => {
+    const onError = jest.fn();
+    const onSuccess = jest.fn();
     const globalState: GlobalState = appReducer(
       undefined,
-      cgnGenerateOtp.request()
+      cgnGenerateOtp.request({
+        onError,
+        onSuccess
+      })
     );
     expect(cgnOtpDataSelector(globalState)).toEqual(remoteLoading);
   });
