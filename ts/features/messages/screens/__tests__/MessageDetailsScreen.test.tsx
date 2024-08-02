@@ -15,7 +15,7 @@ import {
   toUIMessageDetails
 } from "../../../messages/store/reducers/transformers";
 import {
-  messageWithExpairedPayment,
+  messageWithExpiredPayment,
   messageWithValidPayment,
   message_1
 } from "../../../messages/__mocks__/message";
@@ -56,9 +56,7 @@ describe("MessageDetailsScreen", () => {
       applicationChangeState("active"),
       loadMessageById.success(toUIMessage(message_1)),
       loadServiceDetail.success(service_1),
-      loadMessageDetails.success(
-        toUIMessageDetails(messageWithExpairedPayment)
-      ),
+      loadMessageDetails.success(toUIMessageDetails(messageWithExpiredPayment)),
       loadThirdPartyMessage.success({
         id: message_1.id as UIMessageId,
         content: thirdPartyMessage
@@ -81,9 +79,7 @@ describe("MessageDetailsScreen", () => {
       applicationChangeState("active"),
       loadMessageById.success(toUIMessage(message_1)),
       loadServiceDetail.success(service_1),
-      loadMessageDetails.success(
-        toUIMessageDetails(messageWithExpairedPayment)
-      ),
+      loadMessageDetails.success(toUIMessageDetails(messageWithExpiredPayment)),
       loadThirdPartyMessage.success({
         id: message_1.id as UIMessageId,
         content: {
