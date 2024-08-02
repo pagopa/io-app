@@ -1788,7 +1788,7 @@ wallet:
       noticeNumber:
         title: Inserisci il codice avviso
         subtitle: Ha 18 cifre, lo trovi vicino al codice QR.
-        validationError: Enter 18 digits. The code starts with 0, 1 or 3.
+        validationError: It has 18 digits, starts with 0, 1 or 3.
         placeholder: Codice avviso
       fiscalCode:
         title: Inserisci il codice fiscale dell’Ente Creditore
