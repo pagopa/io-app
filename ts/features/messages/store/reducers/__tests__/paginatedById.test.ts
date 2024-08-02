@@ -62,13 +62,13 @@ describe("paginatedById reducer", () => {
         isRead: false,
         isArchived: false
       };
-      const initialState = { [message.id]: pot.some(message) };
+      const nonEmptyInitialState = { [message.id]: pot.some(message) };
       const action = upsertMessageStatusAttributes.success({
         message,
         update: { tag: "bulk", isArchived: true }
       });
       it("then message state is updated", () => {
-        const state = reducer(initialState, action);
+        const state = reducer(nonEmptyInitialState, action);
         expect(pot.toUndefined(state[message.id])?.isArchived).toBeTruthy();
         expect(pot.toUndefined(state[message.id])?.isRead).toBeTruthy();
       });
