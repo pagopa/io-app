@@ -107,7 +107,7 @@ describe("pnUserSelectedPaymentRptIdSelector", () => {
     );
     expect(pnUserSelectedPaymentRptId).toBeUndefined();
   });
-  it("should return undefined when user selected payments do not match", () => {
+  it("should return undefined when there are no user selected payments", () => {
     const appState = appReducer(undefined, applicationChangeState("active"));
     const pnUserSelectedPaymentRptId = pnUserSelectedPaymentRptIdSelector(
       appState,

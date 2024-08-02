@@ -767,6 +767,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               onTouchEnd={[Function]}
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
                                   [
@@ -972,6 +973,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               testID="show-more-data-action"
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
                                   [
@@ -1246,6 +1248,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       onStartShouldSetResponder={[Function]}
                                     >
                                       <View
+                                        accessibilityElementsHidden={true}
                                         importantForAccessibility="no-hide-descendants"
                                         style={
                                           [
@@ -1594,6 +1597,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       onStartShouldSetResponder={[Function]}
                                     >
                                       <View
+                                        accessibilityElementsHidden={true}
                                         importantForAccessibility="no-hide-descendants"
                                         style={
                                           [
