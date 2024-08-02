@@ -1,11 +1,8 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as O from "fp-ts/lib/Option";
-
 import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { pipe } from "fp-ts/lib/function";
 import { PaymentAmount } from "../../../definitions/backend/PaymentAmount";
-import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeNumber";
 import I18n from "../../i18n";
 import { Transaction } from "../../types/pagopa";
 import {
@@ -17,7 +14,6 @@ import {
   getAmountFromPaymentAmount,
   getCodiceAvviso,
   getErrorDescriptionV2,
-  getRptIdFromNoticeNumber,
   getTransactionFee,
   getTransactionIUV,
   getV2ErrorMainType
@@ -31,27 +27,6 @@ describe("getAmountFromPaymentAmount", () => {
       O.getOrElse(() => "💰" as AmountInEuroCents)
     );
     expect(amountInEuroCents).toEqual("01" as AmountInEuroCents);
-  });
-});
-
-describe("getRptIdFromNoticeNumber", () => {
-  const anOrganizationFiscalCode = "00000123456" as OrganizationFiscalCode;
-  const aNoticeNumber = "002160020399398578" as PaymentNoticeNumber;
-  const anRptId = {
-    organizationFiscalCode: "00000123456",
-    paymentNoticeNumber: {
-      applicationCode: "02",
-      auxDigit: "0",
-      checkDigit: "78",
-      iuv13: "1600203993985"
-    }
-  };
-  it("should convert a PaymentNoticeNumber into an RptId", () => {
-    const rptId = pipe(
-      getRptIdFromNoticeNumber(anOrganizationFiscalCode, aNoticeNumber),
-      O.getOrElseW(() => ({} as RptId))
-    );
-    expect(rptId).toEqual(anRptId);
   });
 });
 
