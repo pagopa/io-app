@@ -44,7 +44,8 @@ import {
 import { cgnCodeFromBucket } from "../../store/actions/bucket";
 import { cgnBucketSelector } from "../../store/reducers/bucket";
 import { CgnDetailsParamsList } from "../../navigation/params";
-import { cgnGenerateOtp } from "../../store/actions/otp";
+import { cgnGenerateOtp, resetOtpState } from "../../store/actions/otp";
+import { cgnOtpDataSelector } from "../../store/reducers/otp";
 
 const gradientSafeAreaHeight: IOSpacingScale = 96;
 
@@ -70,6 +71,7 @@ const CgnDiscountDetailScreen = () => {
   const endMargins = useScreenEndMargin();
 
   const bucketResponse = useIOSelector(cgnBucketSelector);
+  const discountOtp = useIOSelector(cgnOtpDataSelector);
   const discountCode = useIOSelector(cgnSelectedDiscountCodeSelector);
   const profile = pot.toUndefined(useIOSelector(profileSelector));
   const cgnUserAgeRange = React.useMemo(
@@ -77,7 +79,7 @@ const CgnDiscountDetailScreen = () => {
     [profile]
   );
 
-  const loading = isLoading(bucketResponse);
+  const loading = isLoading(bucketResponse) || isLoading(discountOtp);
 
   const mixpanelCgnEvent = React.useCallback(
     (eventName: string) =>
@@ -198,6 +200,7 @@ const CgnDiscountDetailScreen = () => {
 
   React.useEffect(() => {
     dispatch(resetMerchantDiscountCode());
+    dispatch(resetOtpState());
   }, [dispatch]);
 
   const FooterButtonActions = () => {

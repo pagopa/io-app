@@ -26,7 +26,7 @@ export function* cgnGenerateOtp(
         yield* put(cgnGenerateOtpAction.success(generateOtpResult.right.value));
         yield* put(setMerchantDiscountCode(generateOtpResult.right.value.code));
         action.payload.onSuccess();
-      } else {
+      } else if (generateOtpResult.right.status !== 401) {
         yield* put(
           cgnGenerateOtpAction.failure(
             getNetworkError(

@@ -46,7 +46,7 @@ export function* cgnBucketConsuption(
         );
         cgnCodeFromBucketRequest.payload.onError();
         return;
-      } else {
+      } else if (discountBucketCodeResult.right.status !== 401) {
         yield* put(
           cgnCodeFromBucket.success({
             kind: "unhandled"
@@ -55,10 +55,10 @@ export function* cgnBucketConsuption(
         cgnCodeFromBucketRequest.payload.onError();
         return;
       }
+    } else {
+      cgnCodeFromBucketRequest.payload.onError();
+      throw new Error(readablePrivacyReport(discountBucketCodeResult.left));
     }
-
-    cgnCodeFromBucketRequest.payload.onError();
-    throw new Error(readablePrivacyReport(discountBucketCodeResult.left));
   } catch (e) {
     cgnCodeFromBucketRequest.payload.onError();
     yield* put(cgnCodeFromBucket.failure(getNetworkError(e)));

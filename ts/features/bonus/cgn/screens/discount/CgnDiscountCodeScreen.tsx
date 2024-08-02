@@ -1,5 +1,6 @@
 import { Second } from "@pagopa/ts-commons/lib/units";
 import {
+  Body,
   H1,
   H2,
   Icon,
@@ -65,7 +66,7 @@ const CgnDiscountCodeScreen = () => {
       <>
         <IOScrollView
           headerConfig={{
-            title: "Ecco il tuo codice",
+            title: I18n.t(`bonus.cgn.merchantDetail.discount.title`),
             isModal: true,
             type: "singleAction",
             firstAction: {
@@ -76,7 +77,7 @@ const CgnDiscountCodeScreen = () => {
           }}
         >
           <H2 color={theme["textHeading-default"]} accessibilityRole="header">
-            Ecco il codice sconto!
+            {I18n.t(`bonus.cgn.merchantDetail.discount.title`)}
           </H2>
           <VSpacer size={24} />
           <View style={styles.discountCodeContainer}>
@@ -84,10 +85,17 @@ const CgnDiscountCodeScreen = () => {
               <Icon name="tag" color="grey-300" />
             </View>
             <VSpacer size={4} />
-            <H1 style={styles.labelCode}>{discountCode}</H1>
-            {isReady(discountOtp) && (
+            <H1
+              style={[
+                styles.labelCode,
+                isDiscountCodeExpired ? styles.codeExpired : undefined
+              ]}
+            >
+              {discountCode}
+            </H1>
+            {isReady(discountOtp) && !isDiscountCodeExpired && (
               <>
-                <VSpacer size={32} />
+                <VSpacer size={16} />
                 <CgnDiscountExpireProgressBar
                   secondsExpirationTotal={getOtpExpirationTotal(
                     discountOtp.value
@@ -97,13 +105,19 @@ const CgnDiscountCodeScreen = () => {
                 />
               </>
             )}
+            {isDiscountCodeExpired && (
+              <Body style={IOStyles.selfCenter}>
+                {I18n.t(`bonus.cgn.merchantDetail.discount.expired`)}
+              </Body>
+            )}
           </View>
         </IOScrollView>
         <FooterActions
           actions={{
             type: "SingleButton",
             primary: {
-              label: "Copia codice sconto",
+              label: I18n.t(`bonus.cgn.merchantDetail.discount.copyButton`),
+              disabled: isDiscountCodeExpired,
               onPress: handleOnPressCopy
             }
           }}
@@ -122,7 +136,13 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 8
   },
-  labelCode: { alignSelf: "center", textAlign: "center" }
+  labelCode: {
+    alignSelf: "center",
+    textAlign: "center"
+  },
+  codeExpired: {
+    textDecorationLine: "line-through"
+  }
 });
 
 export default CgnDiscountCodeScreen;

@@ -17,7 +17,7 @@ export const CgnDiscountExpireProgressBar = ({
   setIsExpired
 }: Props) => {
   const [seconds, setSeconds] = React.useState(secondsToExpiration);
-  const isCodeExpired = seconds === 0;
+  const isCodeExpired = seconds <= 0;
   React.useEffect(() => {
     const timer = setInterval(() => {
       setSeconds(currentSecs => currentSecs - 1);

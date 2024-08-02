@@ -2690,6 +2690,9 @@ bonus:
           bucket: Vai al codice sconto
           landingpage: Vai all'opportunità
         secondaryCta: Vai all'opportunità
+        title: Ecco il codice sconto!
+        expired: Codice sconto scaduto!
+        copyButton: Copia codice sconto
     cta:
       activeBonus: Richiedi la Carta
       deactivateBonus: Disattiva Carta Giovani Nazionale
