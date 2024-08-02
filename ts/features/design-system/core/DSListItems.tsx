@@ -116,48 +116,33 @@ export const DSListItems = () => {
 const renderListItemNav = () => (
   <VStack space={componentMargin}>
     <DSComponentViewerBox name="ListItemNav">
-      <ListItemNav
-        value={"Value"}
-        onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
-      />
+      <ListItemNav value={"Value"} onPress={onButtonPress} />
       <Divider />
       <ListItemNav
         value={"Value"}
         description="Description"
         onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
       />
       <Divider />
       <ListItemNav
         value="A looong looooong looooooooong looooooooooong title"
         description="Description"
         onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
       />
       <Divider />
-      <ListItemNav
-        value={"Value"}
-        icon="gallery"
-        onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
-      />
+      <ListItemNav value={"Value"} icon="gallery" onPress={onButtonPress} />
       <Divider />
       <ListItemNav
         value={"Value"}
         description="Description"
         icon="gallery"
         onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
       />
       <Divider />
       <ListItemNav
         value={"Value"}
         description="This is a list item nav with badge"
-        onPress={() => {
-          alert("Action triggered");
-        }}
-        accessibilityLabel="Empty just for testing purposes"
+        onPress={onButtonPress}
         topElement={{
           badgeProps: {
             text: "Novità",
@@ -170,20 +155,14 @@ const renderListItemNav = () => (
       <ListItemNav
         value={"Value"}
         description="This is a list item nav without chevron icon"
-        onPress={() => {
-          alert("Action triggered");
-        }}
-        accessibilityLabel="Empty just for testing purposes"
+        onPress={onButtonPress}
         hideChevron
       />
       <Divider />
       <ListItemNav
         value={"Value"}
         description="This is a list item nav with badge without chevron"
-        onPress={() => {
-          alert("Action triggered");
-        }}
-        accessibilityLabel="Empty just for testing purposes"
+        onPress={onButtonPress}
         topElement={{
           badgeProps: {
             text: "Novità",
@@ -194,32 +173,21 @@ const renderListItemNav = () => (
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemNavAlert">
-      <ListItemNavAlert
-        value={"Value"}
-        onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
-      />
+      <ListItemNavAlert value={"Value"} onPress={onButtonPress} />
       <Divider />
       <ListItemNavAlert
         value={"Value"}
         description="Description"
         onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
       />
       <Divider />
-      <ListItemNavAlert
-        withoutIcon
-        value={"Value"}
-        onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
-      />
+      <ListItemNavAlert withoutIcon value={"Value"} onPress={onButtonPress} />
       <Divider />
       <ListItemNavAlert
         withoutIcon
         value={"Value"}
         description="Description"
         onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
       />
     </DSComponentViewerBox>
   </VStack>
@@ -231,14 +199,12 @@ const renderListItemInfoCopy = () => (
       label={"Label"}
       value="Value"
       onPress={onCopyButtonPress}
-      accessibilityLabel="Empty just for testing purposes"
     />
     <Divider />
     <ListItemInfoCopy
       label={"Codice fiscale"}
       value="01199250158"
       onPress={onCopyButtonPress}
-      accessibilityLabel="Empty just for testing purposes"
       icon="institution"
     />
     <Divider />
@@ -246,7 +212,6 @@ const renderListItemInfoCopy = () => (
       label={"Carta di credito"}
       value="4975 3013 5042 7899"
       onPress={onCopyButtonPress}
-      accessibilityLabel="Empty just for testing purposes"
       icon="creditCard"
     />
     <Divider />
@@ -254,7 +219,6 @@ const renderListItemInfoCopy = () => (
       label={"Indirizzo"}
       value={`P.za Colonna, 370\n00186 Roma (RM)`}
       onPress={onCopyButtonPress}
-      accessibilityLabel="Empty just for testing purposes"
     />
   </DSComponentViewerBox>
 );
@@ -266,35 +230,30 @@ const renderListItemAction = () => (
         variant="primary"
         label={"Link interno oppure link ad una pagina esterna"}
         onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
       />
       <ListItemAction
         variant="primary"
         icon="website"
         label={"Link interno oppure link ad una pagina esterna"}
         onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
       />
       <ListItemAction
         variant="primary"
         icon="device"
         label={"Scarica l'app"}
         onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
       />
       <ListItemAction
         variant="primary"
         icon="security"
         label={"Informativa sulla privacy"}
         onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
       />
       <ListItemAction
         variant="primary"
         icon="chat"
         label={"Richiedi assistenza"}
         onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemAction · Danger variant">
@@ -302,21 +261,18 @@ const renderListItemAction = () => (
         variant="danger"
         label={"Danger action"}
         onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
       />
       <ListItemAction
         variant="danger"
         icon="trashcan"
         label={"Elimina"}
         onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
       />
       <ListItemAction
         variant="danger"
         icon="logout"
         label={"Esci da IO"}
         onPress={onButtonPress}
-        accessibilityLabel="Empty just for testing purposes"
       />
     </DSComponentViewerBox>
   </VStack>
@@ -324,23 +280,17 @@ const renderListItemAction = () => (
 
 const renderListItemInfo = () => (
   <DSComponentViewerBox name="ListItemInfo">
-    <ListItemInfo
-      label="Label"
-      value={"Value"}
-      accessibilityLabel="Empty just for testing purposes"
-    />
+    <ListItemInfo label="Label" value={"Value"} />
     <Divider />
     <ListItemInfo
       label="Label"
       value="A looong looooong looooooooong looooooooooong title"
-      accessibilityLabel="Empty just for testing purposes"
     />
     <Divider />
     <ListItemInfo
       icon="creditCard"
       label="Label"
       value="A looong looooong looooooooong looooooooooong title"
-      accessibilityLabel="Empty just for testing purposes"
       endElement={{
         type: "buttonLink",
         componentProps: {
@@ -355,7 +305,6 @@ const renderListItemInfo = () => (
       icon="psp"
       label="Label"
       value="A looong looooong looooooooong looooooooooong title"
-      accessibilityLabel="Empty just for testing purposes"
       endElement={{
         type: "iconButton",
         componentProps: {
@@ -370,7 +319,6 @@ const renderListItemInfo = () => (
       icon="psp"
       label="Label"
       value="A looong looooong looooooooong looooooooooong title"
-      accessibilityLabel="Empty just for testing purposes"
       endElement={{
         type: "badge",
         componentProps: {
@@ -380,12 +328,7 @@ const renderListItemInfo = () => (
       }}
     />
     <Divider />
-    <ListItemInfo
-      label="Label"
-      value={"Value"}
-      icon="gallery"
-      accessibilityLabel="Empty just for testing purposes"
-    />
+    <ListItemInfo label="Label" value={"Value"} icon="gallery" />
   </DSComponentViewerBox>
 );
 
@@ -394,13 +337,9 @@ const renderListItemInfo = () => (
 const renderListItemHeader = () => (
   <VStack space={componentMargin}>
     <DSComponentViewerBox name="ListItemHeader, without icon">
+      <ListItemHeader label="Label" />
       <ListItemHeader
         label="Label"
-        accessibilityLabel="Empty just for testing purposes"
-      />
-      <ListItemHeader
-        label="Label"
-        accessibilityLabel="Empty just for testing purposes"
         endElement={{
           type: "buttonLink",
           componentProps: {
@@ -412,7 +351,6 @@ const renderListItemHeader = () => (
       />
       <ListItemHeader
         label="Label"
-        accessibilityLabel="Empty just for testing purposes"
         endElement={{
           type: "iconButton",
           componentProps: {
@@ -424,15 +362,10 @@ const renderListItemHeader = () => (
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemHeader, with icon">
-      <ListItemHeader
-        label="Label"
-        iconName="gallery"
-        accessibilityLabel="Empty just for testing purposes"
-      />
+      <ListItemHeader label="Label" iconName="gallery" />
       <ListItemHeader
         iconName="creditCard"
         label="Label"
-        accessibilityLabel="Empty just for testing purposes"
         endElement={{
           type: "buttonLink",
           componentProps: {
@@ -445,7 +378,6 @@ const renderListItemHeader = () => (
       <ListItemHeader
         iconName="psp"
         label="Label"
-        accessibilityLabel="Empty just for testing purposes"
         endElement={{
           type: "iconButton",
           componentProps: {
@@ -459,7 +391,6 @@ const renderListItemHeader = () => (
       <ListItemHeader
         iconName="psp"
         label="Label"
-        accessibilityLabel="Empty just for testing purposes"
         endElement={{
           type: "badge",
           componentProps: {
