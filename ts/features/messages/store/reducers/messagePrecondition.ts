@@ -342,20 +342,6 @@ export const preconditionsContentMarkdownSelector = (state: GlobalState) =>
     )
   );
 
-export const isShownPreconditionStatusSelector = (state: GlobalState) =>
-  pipe(
-    state.entities.messages.precondition,
-    foldPreconditionStatus(
-      constFalse,
-      constFalse,
-      constFalse,
-      constFalse,
-      constFalse,
-      constTrue,
-      constFalse
-    )
-  );
-
 export const preconditionsFooterSelector = (state: GlobalState) =>
   pipe(
     state.entities.messages.precondition,

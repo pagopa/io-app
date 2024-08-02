@@ -14,9 +14,6 @@ import {
 import * as React from "react";
 import { Alert, ImageSourcePropType } from "react-native";
 import CgnLogo from "../../../../img/bonus/cgn/cgn_logo.png";
-import { useIOSelector } from "../../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import { LegacyModuleAttachment } from "../../messages/components/MessageDetail/LegacyModuleAttachment";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -44,14 +41,13 @@ const componentMargin = 24;
 const componentInnerMargin = 8;
 
 export const DSModules = () => {
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const theme = useIOTheme();
   return (
     <DesignSystemScreen title="Modules">
       <VStack space={sectionMargin}>
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>ModuleAttachment</H4>
-          {renderModuleAttachment(isDesignSystemEnabled)}
+          {renderModuleAttachment()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
@@ -88,102 +84,47 @@ export const DSModules = () => {
   );
 };
 
-const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
+const renderModuleAttachment = () => (
   <VStack space={componentMargin}>
     <DSComponentViewerBox name="ModuleAttachment, loading">
-      {isDesignSystemEnabled ? (
-        <ModuleAttachment
-          title="Nome del documento.pdf"
-          format="pdf"
-          isLoading={true}
-          onPress={onButtonPress}
-        />
-      ) : (
-        <LegacyModuleAttachment
-          title="Nome del documento.pdf"
-          subtitle="123 Kb"
-          format="pdf"
-          isLoading={true}
-          onPress={onButtonPress}
-        />
-      )}
+      <ModuleAttachment
+        title="Nome del documento.pdf"
+        format="pdf"
+        isLoading={true}
+        onPress={onButtonPress}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleAttachment, default variant">
       <VStack space={componentInnerMargin}>
-        {isDesignSystemEnabled ? (
-          <ModuleAttachment
-            title="Nome del documento.pdf"
-            format="pdf"
-            onPress={onButtonPress}
-          />
-        ) : (
-          <LegacyModuleAttachment
-            title="Nome del documento.pdf"
-            subtitle="123 Kb"
-            format="pdf"
-            onPress={onButtonPress}
-          />
-        )}
-        {isDesignSystemEnabled ? null : (
-          <LegacyModuleAttachment
-            title="Nome del documento.pdf"
-            format="pdf"
-            onPress={onButtonPress}
-          />
-        )}
+        <ModuleAttachment
+          title="Nome del documento.pdf"
+          format="pdf"
+          onPress={onButtonPress}
+        />
       </VStack>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleAttachment, stress test">
-      {isDesignSystemEnabled ? (
-        <ModuleAttachment
-          title="This is a very loooooooooooooooooooooong title"
-          format="pdf"
-          onPress={onButtonPress}
-        />
-      ) : (
-        <LegacyModuleAttachment
-          title={"This is a very loooooooooooooooooooooong title"}
-          subtitle={"This is a very loooooooooooong subtitle"}
-          format="pdf"
-          onPress={onButtonPress}
-        />
-      )}
+      <ModuleAttachment
+        title="This is a very loooooooooooooooooooooong title"
+        format="pdf"
+        onPress={onButtonPress}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleAttachment, fetching">
-      {isDesignSystemEnabled ? (
-        <ModuleAttachment
-          title="Nome del documento.pdf"
-          format="pdf"
-          isFetching={true}
-          onPress={onButtonPress}
-        />
-      ) : (
-        <LegacyModuleAttachment
-          title="Nome del documento.pdf"
-          subtitle="123 Kb"
-          format="pdf"
-          isFetching={true}
-          onPress={onButtonPress}
-        />
-      )}
+      <ModuleAttachment
+        title="Nome del documento.pdf"
+        format="pdf"
+        isFetching={true}
+        onPress={onButtonPress}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleAttachment, disabled">
-      {isDesignSystemEnabled ? (
-        <ModuleAttachment
-          title="Nome del documento.pdf"
-          format="pdf"
-          disabled={true}
-          onPress={onButtonPress}
-        />
-      ) : (
-        <LegacyModuleAttachment
-          title="Nome del documento.pdf"
-          subtitle="123 Kb"
-          format="pdf"
-          disabled={true}
-          onPress={onButtonPress}
-        />
-      )}
+      <ModuleAttachment
+        title="Nome del documento.pdf"
+        format="pdf"
+        disabled={true}
+        onPress={onButtonPress}
+      />
     </DSComponentViewerBox>
   </VStack>
 );

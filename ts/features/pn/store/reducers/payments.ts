@@ -106,15 +106,15 @@ const buttonStateFromUpdatedPaymentCount =
     payments: ReadonlyArray<NotificationPaymentInfo> | undefined,
     maxVisiblePaymentCount: number
   ) =>
-  (updatedPaymentStatistics: PaymentStatistics) =>
+  (updatedPaymentStats: PaymentStatistics) =>
     pipe(payments?.length ?? 0, paymentCount =>
       pipe(
         paymentCount <= maxVisiblePaymentCount &&
-          paymentCount === updatedPaymentStatistics.errorPaymentCount,
+          paymentCount === updatedPaymentStats.errorPaymentCount,
         B.fold(
           () =>
             pipe(
-              updatedPaymentStatistics.updatedPaymentCount > 0,
+              updatedPaymentStats.updatedPaymentCount > 0,
               B.fold(
                 () => "visibleLoading" as const,
                 () => "visibleEnabled" as const
