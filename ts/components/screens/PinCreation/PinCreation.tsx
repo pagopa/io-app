@@ -32,7 +32,7 @@ import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { ContextualHelpPropsMarkdown } from "../BaseScreenComponent";
 import { PIN_LENGTH_SIX } from "../../../utils/constants";
-import PictogramHiddenOnSmallDevice from "../../../screens/authentication/components/PictogramHiddenOnSmallDevice";
+import PictogramHiddenOnSmallDevice from "../../PictogramHiddenOnSmallDevice";
 import usePinValidationBottomSheet from "./usePinValidationBottomSheet";
 import { PinCaouselItemProps, PinCarouselItem } from "./PinCarouselItem";
 

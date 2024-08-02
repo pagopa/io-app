@@ -26,7 +26,7 @@ import {
 import { useSecuritySuggestionsBottomSheet } from "../../hooks/useSecuritySuggestionBottomSheet";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
-import PictogramHiddenOnSmallDevice from "./components/PictogramHiddenOnSmallDevice";
+import PictogramHiddenOnSmallDevice from "../../components/PictogramHiddenOnSmallDevice";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.opt_in.contextualHelpTitle",
