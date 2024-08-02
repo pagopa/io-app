@@ -1,6 +1,7 @@
 import {
   IOVisualCostants,
   IconButton,
+  useIOExperimentalDesign,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { ThemeProvider, useNavigation } from "@react-navigation/native";
@@ -10,9 +11,7 @@ import {
   createStackNavigator
 } from "@react-navigation/stack";
 import * as React from "react";
-import { useMemo } from "react";
 import { Alert, Platform, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { makeFontStyleObject } from "../../../components/core/fonts";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import {
@@ -39,12 +38,14 @@ import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
+import { DSIOMarkdown } from "../core/DSIOMarkdown";
 import { DSIOScrollView } from "../core/DSIOScrollView";
 import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithLargeHeader";
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
 import { DSIcons } from "../core/DSIcons";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyAccordion } from "../core/DSLegacyAccordion";
+import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
 import { DSLegacyAlert } from "../core/DSLegacyAlert";
 import { DSLegacyBadges } from "../core/DSLegacyBadges";
 import { DSLegacyButtons } from "../core/DSLegacyButtons";
@@ -52,6 +53,7 @@ import { DSLegacyListItems } from "../core/DSLegacyListItems";
 import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
 import { DSLegacySelection } from "../core/DSLegacySelection";
 import { DSLegacyTextFields } from "../core/DSLegacyTextFields";
+import { DSLegacyTypography } from "../core/DSLegacyTypography";
 import DSListItemScreen from "../core/DSListItemScreen";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
@@ -72,7 +74,6 @@ import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
-import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -85,7 +86,10 @@ const RNNBackButton = () => {
   return (
     <View style={{ marginLeft: IOVisualCostants.appMarginDefault }}>
       <IconButton
-        icon="backiOS"
+        icon={Platform.select({
+          android: "backAndroid",
+          default: "backiOS"
+        })}
         color={themeType === "dark" ? "contrast" : "neutral"}
         onPress={() => {
           navigation.goBack();
@@ -146,23 +150,19 @@ const customModalHeaderConf: StackNavigationOptions = {
 };
 
 export const DesignSystemNavigator = () => {
+  const { isExperimental } = useIOExperimentalDesign();
   const { themeType } = useIOThemeContext();
-  const insets = useSafeAreaInsets();
 
-  const customHeaderConf: StackNavigationOptions = useMemo(
-    () => ({
-      headerTitleStyle: {
-        ...makeFontStyleObject("Regular", false, "ReadexPro"),
-        fontSize: 14
-      },
-      headerTitleAlign: "center",
-
-      headerStyle: { height: insets.top + IOVisualCostants.headerHeight },
-      headerLeft: RNNBackButton,
-      headerMode: "screen"
-    }),
-    [insets]
-  );
+  const customHeaderConf: StackNavigationOptions = {
+    headerTitleStyle: {
+      ...(isExperimental
+        ? makeFontStyleObject("Regular", false, "ReadexPro")
+        : makeFontStyleObject("Semibold", false, "TitilliumSansPro")),
+      fontSize: 14
+    },
+    headerTitleAlign: "center",
+    headerLeft: RNNBackButton
+  };
 
   return (
     <ThemeProvider
@@ -374,6 +374,14 @@ export const DesignSystemNavigator = () => {
           }}
         />
 
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.IO_MARKDOWN.route}
+          component={DSIOMarkdown}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.IO_MARKDOWN.title
+          }}
+        />
+
         {/* HEADERS */}
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.HEADERS.FIRST_LEVEL.route}
@@ -528,6 +536,14 @@ export const DesignSystemNavigator = () => {
         </Stack.Group>
 
         {/* LEGACY */}
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.LEGACY.TYPOGRAPHY.route}
+          component={DSLegacyTypography}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.TYPOGRAPHY.title
+          }}
+        />
+
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route}
           component={DSLegacyPictograms}

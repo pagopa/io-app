@@ -332,6 +332,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                       }
                     >
                       <View
+                        accessibilityRole="button"
                         accessibilityState={
                           {
                             "busy": undefined,

@@ -84,6 +84,7 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
 
+apply from: new File(["node", "--print", "require.resolve('@sentry/react-native/package.json')"].execute().text.trim(), "../sentry.gradle")
 android {
     ndkVersion rootProject.ext.ndkVersion
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -112,8 +113,8 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 100154833
-        versionName "2.66.0.1"
+        versionCode 100154839
+        versionName "2.68.0.0"
         multiDexEnabled true
         // The resConfigs attribute will remove all not required localized resources while building the application,
         // including the localized resources from libraries.
@@ -196,6 +197,8 @@ dependencies {
         because "Firebase messaging 22.0.0 removes Firebase Instance ID API but out current version of the mixpanel sdk requires it https://github.com/mixpanel/mixpanel-android/issues/744 https://firebase.google.com/support/release-notes/android#messaging_v22-0-0"
     }
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+    // Specifing this avoid :app:checkDebugDuplicateClasses failure
+    implementation "com.google.guava:guava:27.0.1-android"
 }
 
 // Add the following line to the bottom of the file:

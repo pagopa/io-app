@@ -1,10 +1,4 @@
 import {
-  URL as PolyfillURL,
-  URLSearchParams as PolyfillURLSearchParams
-} from "react-native-url-polyfill";
-import { Parser as HTMLParser2 } from "htmlparser2";
-import * as E from "fp-ts/lib/Either";
-import {
   HttpCallConfig,
   HttpClientFailureResponse,
   HttpClientResponse,
@@ -12,21 +6,37 @@ import {
   isCancelledFailure,
   nativeRequest
 } from "@pagopa/io-react-native-http-client";
+import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import * as E from "fp-ts/lib/Either";
+import { Parser as HTMLParser2 } from "htmlparser2";
+import {
+  URL as PolyfillURL,
+  URLSearchParams as PolyfillURLSearchParams
+} from "react-native-url-polyfill";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
-import { ReduxSagaEffect } from "../../../../types/utils";
-import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
+import { ReduxSagaEffect } from "../../../../types/utils";
 import { LollipopConfig } from "../../../lollipop";
+import { generateKeyInfo } from "../../../lollipop/saga";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../../../lollipop/store/reducers/lollipop";
-import { generateKeyInfo } from "../../../lollipop/saga";
 import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
-import { buildAbsoluteUrl, logToMixPanel } from "./sagaUtils";
-import { handleFimsResourcesDeallocation } from "./handleFimsResourcesDeallocation";
+import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
+import {
+  deallocateFimsAndRenewFastLoginSession,
+  deallocateFimsResourcesAndNavigateBack
+} from "./handleFimsResourcesDeallocation";
+import {
+  buildAbsoluteUrl,
+  formatHttpClientResponseForMixPanel,
+  isFastLoginFailure,
+  isRedirect,
+  isValidRedirectResponse,
+  logToMixPanel
+} from "./sagaUtils";
 
 // note: IAB => InAppBrowser
 
@@ -35,9 +45,13 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
 ) {
   const oidcProviderDomain = yield* select(fimsDomainSelector);
   if (!oidcProviderDomain) {
-    logToMixPanel(`missing FIMS, domain is ${oidcProviderDomain}`);
+    const debugMessage = `missing FIMS, domain is ${oidcProviderDomain}`;
+    logToMixPanel(debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure("missing FIMS domain")
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage: "missing FIMS domain",
+        debugMessage
+      })
     );
     return;
   }
@@ -45,13 +59,13 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
 
   const acceptUrl = buildAbsoluteUrl(maybeAcceptUrl ?? "", oidcProviderDomain);
   if (!acceptUrl) {
-    logToMixPanel(
-      `unable to accept grants, could not buld url. obtained URL: ${maybeAcceptUrl}`
-    );
+    const debugMessage = `unable to accept grants, could not buld url. obtained URL: ${maybeAcceptUrl}`;
+    logToMixPanel(debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "unable to accept grants: invalid URL"
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage: "unable to accept grants: invalid URL",
+        debugMessage
+      })
     );
     return;
   }
@@ -67,15 +81,19 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     if (isCancelledFailure(rpRedirectResponse)) {
       return;
     }
-    logToMixPanel(
-      `could not get RelyingParty redirect URL, ${JSON.stringify(
-        rpRedirectResponse
-      )}`
-    );
+    if (isFastLoginFailure(rpRedirectResponse)) {
+      yield* call(deallocateFimsAndRenewFastLoginSession);
+      return;
+    }
+    const debugMessage = `could not get RelyingParty redirect URL, ${formatHttpClientResponseForMixPanel(
+      rpRedirectResponse
+    )}`;
+    logToMixPanel(debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "could not get RelyingParty redirect URL"
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage: "could not get RelyingParty redirect URL",
+        debugMessage
+      })
     );
     return;
   }
@@ -100,18 +118,18 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
   );
 
   if (!inAppBrowserRedirectUrl) {
-    logToMixPanel(
-      `IAB url call failed or without a valid redirect, code: ${
-        inAppBrowserUrlResponse.type === "failure"
-          ? // eslint-disable-next-line sonarjs/no-nested-template-literals
-            `${inAppBrowserUrlResponse.code}, message: ${inAppBrowserUrlResponse.message}`
-          : inAppBrowserUrlResponse.status
-      }`
-    );
+    const debugMessage = `IAB url call failed or without a valid redirect, code: ${
+      inAppBrowserUrlResponse.type === "failure"
+        ? // eslint-disable-next-line sonarjs/no-nested-template-literals
+          `${inAppBrowserUrlResponse.code}, message: ${inAppBrowserUrlResponse.message}`
+        : inAppBrowserUrlResponse.status
+    }`;
+    logToMixPanel(debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "IAB url call failed or without a valid redirect"
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage: "IAB url call failed or without a valid redirect",
+        debugMessage
+      })
     );
     return;
   }
@@ -119,13 +137,13 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
   // ----------------- end lolliPoP -----------------
 
   yield* put(fimsGetRedirectUrlAndOpenIABAction.success());
-  yield* call(handleFimsResourcesDeallocation);
+  yield* call(deallocateFimsResourcesAndNavigateBack);
   return openAuthenticationSession(inAppBrowserRedirectUrl, "", true);
 }
 
 const recurseUntilRPUrl = async (
   httpClientConfig: HttpCallConfig,
-  oidcDomain: string
+  fimsDomain: string
 ): Promise<HttpClientResponse> => {
   const res = await nativeRequest({
     ...httpClientConfig,
@@ -151,11 +169,11 @@ const recurseUntilRPUrl = async (
     return response;
   }
 
-  const isOIDCProviderBaseUrl = redirectUrl
+  const isFIMSProviderBaseUrl = redirectUrl
     .toLowerCase()
-    .startsWith(oidcDomain.toLowerCase());
+    .startsWith(fimsDomain.toLowerCase());
 
-  if (!isOIDCProviderBaseUrl) {
+  if (!isFIMSProviderBaseUrl) {
     return res;
   } else {
     return await recurseUntilRPUrl(
@@ -165,7 +183,7 @@ const recurseUntilRPUrl = async (
         url: redirectUrl,
         followRedirects: false
       },
-      oidcDomain
+      fimsDomain
     );
   }
 };
@@ -177,14 +195,6 @@ const extractValidRedirect = (
   isValidRedirectResponse(data)
     ? buildAbsoluteUrl(data.headers.location, originalRequestUrl)
     : undefined;
-
-const isValidRedirectResponse = (
-  res: HttpClientResponse
-): res is HttpClientSuccessResponse =>
-  res.type === "success" &&
-  isRedirect(res.status) &&
-  !!res.headers.location &&
-  res.headers.location.trim().length > 0;
 
 const getLollipopParamsFromUrlString = (url: string) => {
   try {
@@ -198,9 +208,6 @@ const getLollipopParamsFromUrlString = (url: string) => {
     return undefined;
   }
 };
-
-const isRedirect = (statusCode: number) =>
-  statusCode >= 300 && statusCode < 400;
 
 type RelyingPartyOutput = {
   relyingPartyUrl: string;
@@ -216,13 +223,14 @@ function* postToRelyingPartyWithImplicitCodeFlow(
   );
   if (E.isLeft(formPostDataEither)) {
     const errorMessage = formPostDataEither.left;
-    logToMixPanel(
-      `Form extraction from HTML page failed, implicit code flow: ${errorMessage}`
-    );
+    const debugMessage = `Form extraction from HTML page failed, implicit code flow: ${errorMessage}`;
+    logToMixPanel(debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "Could not process redirection page, Implicit code flow"
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage:
+          "Could notprocess redirection page, Implicit code flow",
+        debugMessage
+      })
     );
     return undefined;
   }
@@ -239,13 +247,14 @@ function* postToRelyingPartyWithImplicitCodeFlow(
   );
   if (E.isLeft(lollipopSignatureEither)) {
     const errorMessage = lollipopSignatureEither.left;
-    logToMixPanel(
-      `Could not sign request with LolliPoP, Implicit code flow: ${errorMessage}`
-    );
+    const debugMessage = `Could not sign request with LolliPoP, Implicit code flow: ${errorMessage}`;
+    logToMixPanel(debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "could not sign request with LolliPoP, Implicit code flow"
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage:
+          "could not sign request with LolliPoP, Implicit code flow",
+        debugMessage
+      })
     );
     return undefined;
   }
@@ -276,13 +285,14 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
 ): Generator<ReduxSagaEffect, RelyingPartyOutput | undefined, any> {
   const relyingPartyRedirectUrl = rpRedirectResponse.headers.location;
   if (!relyingPartyRedirectUrl || relyingPartyRedirectUrl.trim().length === 0) {
-    logToMixPanel(
-      `could not find valid Location header for Relying Party redirect url, authorization code flow: ${!!relyingPartyRedirectUrl}`
-    );
+    const debugMessage = `could not find valid Location header for Relying Party redirect url, authorization code flow: ${!!relyingPartyRedirectUrl}`;
+    logToMixPanel(debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "Could not find valid Location header, Authorization code flow"
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage:
+          "Could not find valid Location header, Authorization code flow",
+        debugMessage
+      })
     );
     return undefined;
   }
@@ -292,13 +302,13 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
   );
   const state = lollipopParamsMap?.get("state");
   if (!lollipopParamsMap || !state) {
-    logToMixPanel(
-      `could not extract lollipop params or state from RelyingParty URL, params: ${!!lollipopParamsMap}, state: ${!!state}`
-    );
+    const debugMessage = `could not extract lollipop params or state from RelyingParty URL, params: ${!!lollipopParamsMap}, state: ${!!state}`;
+    logToMixPanel(debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "could not extract data from RelyingParty URL"
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage: "could not extract data from RelyingParty URL",
+        debugMessage
+      })
     );
     return undefined;
   }
@@ -311,13 +321,14 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
   );
   if (E.isLeft(lollipopSignatureEither)) {
     const errorMessage = lollipopSignatureEither.left;
-    logToMixPanel(
-      `Could not sign request with LolliPoP, Authorization code flow: ${errorMessage}`
-    );
+    const debugMessage = `Could not sign request with LolliPoP, Authorization code flow: ${errorMessage}`;
+    logToMixPanel(debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "could not sign request with LolliPoP, Authorization code flow"
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage:
+          "could not sign request with LolliPoP, Authorization code flow",
+        debugMessage
+      })
     );
     return undefined;
   }
@@ -412,10 +423,10 @@ const processHtmlFormTag = (
       formData.set("action", action.trim());
     }
   } else if (tagInput === name.toLowerCase()) {
-    const name = attributes.name;
+    const attributeName = attributes.name;
     const value = attributes.value;
-    if (name && value) {
-      formData.set(name.trim(), value.trim());
+    if (attributeName && value) {
+      formData.set(attributeName.trim(), value.trim());
     }
   }
 };
@@ -433,6 +444,7 @@ const validateAndProcessExtractedFormData = (
     return E.left(`Missing form 'action' value`);
   }
   try {
+    /* eslint-disable no-new */
     new URL(relyingPartyRedirectUrl);
   } catch {
     return E.left(`Invalid form 'action' value`);

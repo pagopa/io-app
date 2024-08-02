@@ -10,13 +10,12 @@ import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import {
   ItwCredentialIssuanceMachineContext,
   ItwEidIssuanceMachineContext
 } from "../../machine/provider";
-import { ITW_ROUTES } from "../../navigation/routes";
+import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwTrialSystemSection } from "../components/ItwTrialSystemSection";
 
 // Sample markdown text
@@ -45,7 +44,6 @@ A malformed link [Error](httssdps://www.error.com) that show toast error.
  * @returns a screen with a list of playgrounds for the ITW
  */
 const ItwPlayground = () => {
-  const navigation = useIONavigation();
   const eidMachineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
@@ -62,42 +60,9 @@ const ItwPlayground = () => {
     title: "ITW Playground"
   });
 
-  const navigateToDiscovery = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.INFO
-    });
-  };
-
-  const navigateToCredentialDetail = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.EID_DETAIL
-    });
-  };
-
-  const navigateToCredentialPreview = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW
-    });
-  };
-
-  const navigateToCredentialAuth = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_AUTH
-    });
-  };
-
   return (
     <ScrollView>
       <ContentWrapper>
-        {/* Activation Playground */}
-        <ListItemHeader label="Activation" />
-        <ListItemNav
-          value="Wallet activation"
-          accessibilityLabel={"Discovery Playground"}
-          description="Start the eID issuing flow"
-          onPress={navigateToDiscovery}
-        />
-        <VSpacer size={16} />
         {/* Issuing Playground */}
         <ListItemHeader label="Credentials issuing" />
         <ListItemNav
@@ -121,32 +86,17 @@ const ItwPlayground = () => {
           onPress={() => undefined}
         />
         <VSpacer size={16} />
-        {/* Screens Playground */}
-        <ListItemHeader label="Screens" />
-        <ListItemNav
-          value="Credential preview (mDL)"
-          accessibilityLabel="Credential preview (mdl) Playground"
-          description="Open the credential preview screen"
-          onPress={navigateToCredentialPreview}
-        />
-        <Divider />
-        <ListItemNav
-          value="Credential detail (eID)"
-          accessibilityLabel={"Credential detail (eID) Playground"}
-          description="Open the eID credential detail screen"
-          onPress={navigateToCredentialDetail}
-        />
-        <Divider />
-        <ListItemNav
-          value="Credential auth (mDL)"
-          accessibilityLabel={"Credential auth (mdl) Playground"}
-          description="Open the eID credential detail screen"
-          onPress={navigateToCredentialAuth}
-        />
+        <ItwLifecycleSection />
         <VSpacer size={16} />
-        {/* F&F Experimentation */}
-        <ItwTrialSystemSection />
-        <VSpacer size={16} />
+        {
+          /* F&F Experimentation */
+          __DEV__ ? (
+            <>
+              <ItwTrialSystemSection />
+              <VSpacer size={16} />
+            </>
+          ) : null
+        }
         {/* Other Playgrounds */}
         <ListItemHeader label="Miscellaneous" />
         <H3>{"IT Wallet markdown preview"}</H3>

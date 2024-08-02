@@ -113,15 +113,6 @@ export const downloadsReducer = (
   return state;
 };
 
-/**
- * From attachment to the download pot
- */
-export const downloadPotForMessageAttachmentSelector = (
-  state: GlobalState,
-  messageId: UIMessageId,
-  attachmentId: string
-) => state.entities.messages.downloads[messageId]?.[attachmentId] ?? pot.none;
-
 export const isRequestedAttachmentDownloadSelector = (
   state: GlobalState,
   messageId: UIMessageId,

@@ -2,6 +2,7 @@ import { constTrue, constUndefined, pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { StyleSheet } from "react-native";
 import { ActionType } from "typesafe-actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
@@ -14,10 +15,8 @@ import { MessageListCategory } from "../../types/messageListCategory";
 import { UIMessage } from "../../types";
 import I18n from "../../../../i18n";
 import { convertReceivedDateToAccessible } from "../../utils/convertDateToWordDistance";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { isLoadingServiceByIdSelector } from "../../../services/details/store/reducers";
 import {
+  isPaymentMessageWithPaidNoticeSelector,
   messagePagePotFromCategorySelector,
   shownMessageCategorySelector
 } from "../../store/reducers/allPaginated";
@@ -28,9 +27,18 @@ import {
   isStrictSomeError
 } from "../../../../utils/pot";
 import { isArchivingInProcessingModeSelector } from "../../store/reducers/archiving";
+import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
+import { EnhancedHeight, StandardHeight } from "./DS/MessageListItem";
+import { SkeletonHeight } from "./DS/MessageListItemSkeleton";
 
+export type LayoutInfo = {
+  index: number;
+  length: number;
+  offset: number;
+};
+
+export const minDelayBetweenNavigationMilliseconds = 750;
 export const nextPageLoadingWaitMillisecondsGenerator = () => 2000;
-export const messageListItemHeight = () => 130;
 export const refreshIntervalMillisecondsGenerator = () => 60000;
 
 export const getInitialReloadAllMessagesActionIfNeeded = (
@@ -82,20 +90,6 @@ export const accessibilityLabelForMessageItem = (
     receivedAt: convertReceivedDateToAccessible(message.createdAt),
     state: ""
   });
-
-export const getLoadServiceDetailsActionIfNeeded = (
-  state: GlobalState,
-  serviceId: ServiceId,
-  organizationFiscalCode?: string
-): ActionType<typeof loadServiceDetail.request> | undefined => {
-  if (!organizationFiscalCode) {
-    const isLoading = isLoadingServiceByIdSelector(state, serviceId);
-    if (!isLoading) {
-      return loadServiceDetail.request(serviceId);
-    }
-  }
-  return undefined;
-};
 
 export const getLoadNextPageMessagesActionIfAllowed = (
   state: GlobalState,
@@ -228,3 +222,39 @@ const isDoingAnAsyncOperationOnMessages = (state: GlobalState) =>
       constTrue
     )
   );
+
+export const generateMessageListLayoutInfo = (
+  loadingList: ReadonlyArray<number>,
+  messageList: ReadonlyArray<UIMessage> | undefined,
+  state: GlobalState
+) => {
+  if (messageList) {
+    const messageListLayoutInfo: Array<LayoutInfo> = [];
+    // eslint-disable-next-line functional/no-let
+    for (let i = 0; i < messageList.length; i++) {
+      const message = messageList[i];
+      const messageHasBadge =
+        message.category.tag === TagEnum.PN ||
+        isPaymentMessageWithPaidNoticeSelector(state, message.category);
+      const itemLayoutInfo: LayoutInfo = {
+        index: i,
+        length: messageHasBadge ? EnhancedHeight : StandardHeight,
+        offset:
+          i > 0
+            ? messageListLayoutInfo[i - 1].offset +
+              messageListLayoutInfo[i - 1].length +
+              StyleSheet.hairlineWidth
+            : 0
+      };
+      // eslint-disable-next-line functional/immutable-data
+      messageListLayoutInfo.push(itemLayoutInfo);
+    }
+    return messageListLayoutInfo;
+  } else {
+    return loadingList.map((_, index) => ({
+      index,
+      length: SkeletonHeight,
+      offset: index * SkeletonHeight
+    }));
+  }
+};

@@ -9,11 +9,9 @@ import {
   getInitialReloadAllMessagesActionIfNeeded,
   getLoadNextPageMessagesActionIfAllowed,
   getLoadPreviousPageMessagesActionIfAllowed,
-  getLoadServiceDetailsActionIfNeeded,
   getMessagesViewPagerInitialPageIndex,
   getReloadAllMessagesActionForRefreshIfAllowed,
   messageListCategoryToViewPageIndex,
-  messageListItemHeight,
   messageViewPageIndexToListCategory,
   nextPageLoadingWaitMillisecondsGenerator,
   refreshIntervalMillisecondsGenerator
@@ -27,8 +25,6 @@ import {
 } from "../../../store/actions";
 import { UIMessage } from "../../../types";
 import { format } from "../../../../../utils/dates";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { loadServiceDetail } from "../../../../services/details/store/actions/details";
 import {
   isLoadingOrUpdating,
   isSomeOrSomeError,
@@ -371,222 +367,6 @@ describe("accessibilityLabelForMessageItem", () => {
   });
 });
 
-describe("messageListItemHeight", () => {
-  it("should return 130", () => {
-    const height = messageListItemHeight();
-    expect(height).toBe(130);
-  });
-});
-
-describe("getLoadServiceDetailsActionIfNeeded", () => {
-  it("should return undefined, defined organization fiscal code", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.none
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const organizationFiscalCode = "11359591002";
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      organizationFiscalCode
-    );
-    expect(loadServiceDetailRequestAction).toBeUndefined();
-  });
-  it("should return undefined, undefined organization fiscal code, service pot.noneLoading", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.noneLoading
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toBeUndefined();
-  });
-  it("should return undefined, undefined organization fiscal code, service pot.someLoading", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.someLoading({})
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toBeUndefined();
-  });
-  it("should return loadServiceDetail.request, undefined organization fiscal code, service unmatching", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {}
-          }
-        }
-      }
-    } as GlobalState;
-    const expectedOutput = loadServiceDetail.request(serviceId);
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toStrictEqual(expectedOutput);
-  });
-  it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.none", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.none
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const expectedOutput = loadServiceDetail.request(serviceId);
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toStrictEqual(expectedOutput);
-  });
-  it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.noneUpdating", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.noneUpdating({})
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const expectedOutput = loadServiceDetail.request(serviceId);
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toStrictEqual(expectedOutput);
-  });
-  it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.noneError", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.noneError(new Error())
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const expectedOutput = loadServiceDetail.request(serviceId);
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toStrictEqual(expectedOutput);
-  });
-  it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.some", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.some({})
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const expectedOutput = loadServiceDetail.request(serviceId);
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toStrictEqual(expectedOutput);
-  });
-  it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.someUpdating", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.someUpdating({}, {})
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const expectedOutput = loadServiceDetail.request(serviceId);
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toStrictEqual(expectedOutput);
-  });
-  it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.someError", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.someError({}, new Error())
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const expectedOutput = loadServiceDetail.request(serviceId);
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toStrictEqual(expectedOutput);
-  });
-});
-
 describe("getLoadNextPageMessagesActionIfNeeded", () => {
   const nextValues = [undefined, "01J0KB1T5XVKHERASERQ01CG4J"];
   const generatePots = (
@@ -623,11 +403,15 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
   ) => {
     // This method is the human-unreadable logic of the `getLoadNextPageMessagesActionIfAllowed` method
     // Check that one instead to filter out the case where the loadNextPageMessages.request action is returned.
-    const allPaginated = state.entities.messages.allPaginated;
+    const allPaginatedInstance = state.entities.messages.allPaginated;
     const selectedCollection =
-      category === "ARCHIVE" ? allPaginated.archive : allPaginated.inbox;
+      category === "ARCHIVE"
+        ? allPaginatedInstance.archive
+        : allPaginatedInstance.inbox;
     const oppositeCollection =
-      category === "ARCHIVE" ? allPaginated.inbox : allPaginated.archive;
+      category === "ARCHIVE"
+        ? allPaginatedInstance.inbox
+        : allPaginatedInstance.archive;
     const selectedCollectionNextValue = isSomeOrSomeError(
       selectedCollection.data
     )

@@ -49,13 +49,9 @@ export const preferencesDesignSystemSetEnabled = createStandardAction(
   "PREFERENCES_DESIGN_SYSTEM_SET_ENABLED"
 )<{ isDesignSystemEnabled: boolean }>();
 
-export const preferencesNewWalletSectionSetEnabled = createStandardAction(
-  "PREFERENCES_NEW_WALLET_SECTION_SET_ENABLED"
-)<{ isNewWalletSectionEnabled: boolean }>();
-
-export const preferencesItWalletTestSetEnabled = createStandardAction(
-  "PREFERENCES_ITWALLET_TEST_SET_ENABLED"
-)<{ isItWalletTestEnabled: boolean }>();
+export const preferencesNewScanSectionSetEnabled = createStandardAction(
+  "PREFERENCES_NEW_SCAN_SECTION_SET_ENABLED"
+)<{ isNewScanSectionEnabled: boolean }>();
 
 export type PersistedPreferencesActions = ActionType<
   | typeof preferenceFingerprintIsEnabledSaveSuccess
@@ -69,6 +65,5 @@ export type PersistedPreferencesActions = ActionType<
   | typeof preferencesPnTestEnvironmentSetEnabled
   | typeof preferencesIdPayTestSetEnabled
   | typeof preferencesDesignSystemSetEnabled
-  | typeof preferencesNewWalletSectionSetEnabled
-  | typeof preferencesItWalletTestSetEnabled
+  | typeof preferencesNewScanSectionSetEnabled
 >;

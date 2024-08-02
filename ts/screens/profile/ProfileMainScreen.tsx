@@ -2,41 +2,40 @@ import {
   Banner,
   ContentWrapper,
   Divider,
-  HeaderSecondLevel,
   IOVisualCostants,
   ListItemAction,
   ListItemNav,
   VSpacer,
-  useIOTheme,
   useIOToast
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import React, {
-  useCallback,
-  useState,
-  useRef,
   ComponentProps,
-  useMemo,
   memo,
+  useCallback,
   useEffect,
-  useLayoutEffect
+  useMemo,
+  useRef,
+  useState
 } from "react";
 import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
 import AppVersion from "../../components/AppVersion";
 import { LightModalContext } from "../../components/ui/LightModal";
+import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
+import { showProfileBannerSelector } from "../../features/profileSettings/store/selectors";
+import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { setDebugModeEnabled } from "../../store/actions/debug";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus";
+import { TranslationKeys } from "../../../locales/locales";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { isDevEnv } from "../../utils/environment";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { showProfileBannerSelector } from "../../features/profileSettings/store/selectors";
-import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
-import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
-import { useHeaderProps } from "../../hooks/useHeaderProps";
-import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import DeveloperModeSection from "./DeveloperModeSection";
+import useContentWithFF from "./useContentWithFF";
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
@@ -53,15 +52,11 @@ const ListItem = memo(ListItemNav);
 /**
  * A screen to show all the options related to the user profile
  */
-const ProfileMainScreen = () => {
+const ProfileMainScreenFC = () => {
   const { hideModal } = React.useContext(LightModalContext);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const theme = useIOTheme();
   const { show } = useIOToast();
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
   const showProfileBanner = useIOSelector(showProfileBannerSelector);
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
@@ -225,31 +220,8 @@ const ProfileMainScreen = () => {
 
   const logoutLabel = I18n.t("profile.logout.menulabel");
 
-  const headerProps = useHeaderProps({
-    title: "",
-    backAccessibilityLabel: I18n.t("global.buttons.back"),
-    goBack: () => navigation.goBack(),
-    showHelp: true,
-    faqCategories: ["profile"],
-    contextualHelpMarkdown: {
-      title: "profile.main.contextualHelpTitle",
-      body: "profile.main.contextualHelpContent"
-    }
-  });
-
-  useLayoutEffect(() => {
-    if (isSettingsVisibleAndHideProfile) {
-      navigation.setOptions({
-        header: () => <HeaderSecondLevel {...headerProps} />
-      });
-    }
-  }, [headerProps, isSettingsVisibleAndHideProfile, navigation]);
-
   return (
-    <ScrollView
-      ref={scrollViewContentRef}
-      style={{ backgroundColor: theme["appBackground-primary"] }}
-    >
+    <>
       {showProfileBanner && (
         <ContentWrapper>
           <VSpacer size={16} />
@@ -290,7 +262,46 @@ const ProfileMainScreen = () => {
       </ContentWrapper>
       {/* Developer Section */}
       {(isDebugModeEnabled || isDevEnv) && <DeveloperModeSection />}
-      {/* End Page */}
+    </>
+  );
+};
+
+const ProfileMainScreen = () => {
+  const contextualHelpTitleContent = useContentWithFF(
+    "profile.main.contextualHelpTitle"
+  );
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
+  const scrollViewContentRef = useRef<ScrollView>(null);
+
+  useTabItemPressWhenScreenActive(
+    () => scrollViewContentRef.current?.scrollTo({ y: 0, animated: true }),
+    false
+  );
+
+  if (isSettingsVisibleAndHideProfile) {
+    return (
+      <IOScrollViewWithLargeHeader
+        title={{
+          label: I18n.t("global.buttons.settings")
+        }}
+        headerActionsProp={{ showHelp: true }}
+        contextualHelpMarkdown={{
+          title: contextualHelpTitleContent as TranslationKeys,
+          body: isSettingsVisibleAndHideProfile
+            ? "profile.main.contextualHelpContent"
+            : "profile.main.legacyContextualHelpContent"
+        }}
+        faqCategories={["profile"]}
+      >
+        <ProfileMainScreenFC />
+      </IOScrollViewWithLargeHeader>
+    );
+  }
+  return (
+    <ScrollView ref={scrollViewContentRef}>
+      <ProfileMainScreenFC />
       <VSpacer size={24} />
     </ScrollView>
   );
