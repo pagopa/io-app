@@ -34,14 +34,9 @@ describe("Test EuCovidCertRevokedScreen", () => {
   });
 });
 
-const renderComponent = (
-  store: Store,
-  revokedCertificate: RevokedCertificate
-) => ({
+const renderComponent = (store: Store, certificate: RevokedCertificate) => ({
   component: renderScreenWithNavigationStoreContext<GlobalState>(
-    () => (
-      <EuCovidCertRevokedScreen headerData={revokedCertificate.headerData} />
-    ),
+    () => <EuCovidCertRevokedScreen headerData={certificate.headerData} />,
     EUCOVIDCERT_ROUTES.CERTIFICATE,
     {},
     store
