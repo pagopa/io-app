@@ -9,13 +9,7 @@ import { Dispatch } from "redux";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import { getExpireStatus } from "../../../utils/dates";
-import {
-  PaymentData,
-  UIMessage,
-  UIMessageDetails,
-  UIMessageId
-} from "../types";
+import { PaymentData, UIMessage, UIMessageId } from "../types";
 import { NetworkError, getNetworkError } from "../../../utils/errors";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { getAmountFromPaymentAmount } from "../../../utils/payment";
@@ -23,7 +17,6 @@ import { trackPNPaymentStart } from "../../pn/analytics";
 import { addUserSelectedPaymentRptId } from "../store/actions";
 import { Action } from "../../../store/actions/types";
 import { startPaymentFlowWithRptIdWorkaround } from "../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
-import { MessagePaymentExpirationInfo } from "./messages";
 
 export const gapBetweenItemsInAGrid = 8;
 
@@ -34,23 +27,6 @@ export const errorToReason = (error: Error) => error.message;
 
 export const unknownToReason = (e: unknown) =>
   pipe(e, getNetworkError, networkErrorToError, errorToReason);
-
-export const getPaymentExpirationInfo = (
-  messageDetails: UIMessageDetails
-): MessagePaymentExpirationInfo => {
-  const { paymentData, dueDate } = messageDetails;
-  if (paymentData && dueDate) {
-    const expireStatus = getExpireStatus(dueDate);
-    return {
-      kind: paymentData.invalidAfterDueDate ? "EXPIRABLE" : "UNEXPIRABLE",
-      expireStatus,
-      dueDate
-    };
-  }
-  return {
-    kind: "UNEXPIRABLE"
-  };
-};
 
 export const getRptIdStringFromPaymentData = (
   paymentData: PaymentData

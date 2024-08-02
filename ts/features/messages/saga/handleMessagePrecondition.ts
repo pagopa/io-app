@@ -1,7 +1,7 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, race, select, take } from "typed-redux-saga/macro";
-import { ActionType, getType } from "typesafe-actions";
+import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../../api/backend";
 import { convertUnknownToError } from "../../../utils/errors";
 import { isTestEnv } from "../../../utils/environment";
@@ -9,9 +9,8 @@ import { withRefreshApiCall } from "../../fastLogin/saga/utils";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
 import { trackDisclaimerLoadError } from "../analytics";
 import {
-  clearLegacyMessagePrecondition,
   errorPreconditionStatusAction,
-  getLegacyMessagePrecondition,
+  idlePreconditionStatusAction,
   loadingContentPreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
   toErrorPayload,
@@ -26,9 +25,7 @@ import {
 
 export function* handleMessagePrecondition(
   getThirdPartyMessagePrecondition: BackendClient["getThirdPartyMessagePrecondition"],
-  action:
-    | ActionType<typeof getLegacyMessagePrecondition.request>
-    | ActionType<typeof retrievingDataPreconditionStatusAction>
+  action: ActionType<typeof retrievingDataPreconditionStatusAction>
 ) {
   yield* race({
     response: call(
@@ -36,7 +33,7 @@ export function* handleMessagePrecondition(
       getThirdPartyMessagePrecondition(),
       action
     ),
-    cancel: take(clearLegacyMessagePrecondition)
+    cancel: take(idlePreconditionStatusAction)
   });
 }
 
@@ -44,14 +41,9 @@ function* messagePreconditionWorker(
   getThirdPartyMessagePrecondition: ReturnType<
     BackendClient["getThirdPartyMessagePrecondition"]
   >,
-  action:
-    | ActionType<typeof getLegacyMessagePrecondition.request>
-    | ActionType<typeof retrievingDataPreconditionStatusAction>
+  action: ActionType<typeof retrievingDataPreconditionStatusAction>
 ) {
-  const messageIdAndCategoryTag = yield* call(
-    getMessageIdAndCategoryTag,
-    action
-  );
+  const messageIdAndCategoryTag = yield* call(getMessageIdAndCategoryTag);
   try {
     if (!messageIdAndCategoryTag) {
       throw Error("Unable to get `messageId` or `categoryTag`");
@@ -70,7 +62,6 @@ function* messagePreconditionWorker(
     if (E.isRight(result)) {
       if (result.right.status === 200) {
         const content = result.right.value;
-        yield* put(getLegacyMessagePrecondition.success(content));
         yield* put(
           loadingContentPreconditionStatusAction(
             toLoadingContentPayload(content)
@@ -87,7 +78,6 @@ function* messagePreconditionWorker(
     if (categoryTag) {
       trackDisclaimerLoadError(categoryTag);
     }
-    yield* put(getLegacyMessagePrecondition.failure(convertUnknownToError(e)));
     yield* put(
       errorPreconditionStatusAction(
         toErrorPayload(`${convertUnknownToError(e)}`)
@@ -96,22 +86,11 @@ function* messagePreconditionWorker(
   }
 }
 
-export function* getMessageIdAndCategoryTag(
-  action:
-    | ActionType<typeof getLegacyMessagePrecondition.request>
-    | ActionType<typeof retrievingDataPreconditionStatusAction>
-): Generator<
+export function* getMessageIdAndCategoryTag(): Generator<
   ReduxSagaEffect,
   { messageId: UIMessageId; categoryTag: MessageCategory["tag"] } | undefined,
   any
 > {
-  if (action.type === getType(getLegacyMessagePrecondition.request)) {
-    return {
-      messageId: action.payload.id,
-      categoryTag: action.payload.categoryTag
-    };
-  }
-
   const messageId = yield* select(preconditionsMessageIdSelector);
   const categoryTag = yield* select(preconditionsCategoryTagSelector);
   return messageId && categoryTag

@@ -2,6 +2,7 @@ import { ActionType, createAsyncAction } from "typesafe-actions";
 import { ConsentsResponseDTO } from "../../../../../../definitions/fims/ConsentsResponseDTO";
 
 export type FimsHistoryGetPayloadType = {
+  shouldReloadFromScratch?: boolean;
   continuationToken?: string;
 };
 

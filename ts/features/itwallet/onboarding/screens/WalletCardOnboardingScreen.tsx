@@ -17,16 +17,14 @@ import {
   isIdPayEnabledSelector,
   isItwEnabledSelector
 } from "../../../../store/reducers/backendStatus";
-import { isItWalletTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
 import { isCgnInformationAvailableSelector } from "../../../bonus/cgn/store/reducers/details";
 import { loadAvailableBonuses } from "../../../bonus/common/store/actions/availableBonusesTypes";
 import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
-import { isTrialActiveSelector } from "../../../trialSystem/store/reducers";
+import { isItwTrialActiveSelector } from "../../../trialSystem/store/reducers";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { ITW_TRIAL_ID } from "../../common/utils/itwTrialUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import {
@@ -48,8 +46,7 @@ const WalletCardOnboardingScreen = () => {
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const isCgnAlreadyActive = useIOSelector(isCgnInformationAvailableSelector);
 
-  const isItWalletEnabled = useIOSelector(isItWalletTestEnabledSelector);
-  const isItwTrialEnabled = useIOSelector(isTrialActiveSelector(ITW_TRIAL_ID));
+  const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
@@ -57,11 +54,10 @@ const WalletCardOnboardingScreen = () => {
   const isItwSectionVisible = React.useMemo(
     // IT Wallet cedential catalog should be visible if
     () =>
-      isItWalletEnabled && // Local FF is enabled
       isItwTrialEnabled && // User is part of the trial
       isItwValid && // An eID has ben obtained and wallet is valid
       isItwEnabled, // Remote FF is enabled
-    [isItWalletEnabled, isItwTrialEnabled, isItwValid, isItwEnabled]
+    [isItwTrialEnabled, isItwValid, isItwEnabled]
   );
 
   const isCredentialLoading =
@@ -140,40 +136,6 @@ const WalletCardOnboardingScreen = () => {
               }
             />
 
-            <VSpacer size={8} />
-            <ModuleCredential
-              testID="itwDisabilityCardModuleTestID"
-              icon="accessibility"
-              label={getCredentialNameFromType(
-                CredentialType.EUROPEAN_DISABILITY_CARD
-              )}
-              onPress={
-                itwCredentialsTypes.includes(
-                  CredentialType.EUROPEAN_DISABILITY_CARD
-                )
-                  ? undefined
-                  : beginCredentialIssuance(
-                      CredentialType.EUROPEAN_DISABILITY_CARD
-                    )
-              }
-              isFetching={
-                isCredentialLoading &&
-                pipe(
-                  selectedCredentialOption,
-                  O.map(
-                    type => type === CredentialType.EUROPEAN_DISABILITY_CARD
-                  ),
-                  O.getOrElse(constFalse)
-                )
-              }
-              badge={
-                itwCredentialsTypes.includes(
-                  CredentialType.EUROPEAN_DISABILITY_CARD
-                )
-                  ? activeBadge
-                  : undefined
-              }
-            />
             <VSpacer size={16} />
             <ListItemHeader
               label={I18n.t("features.wallet.onboarding.sections.other")}

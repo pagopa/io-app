@@ -1,25 +1,22 @@
-import * as React from "react";
-import { Alert, View, ImageSourcePropType } from "react-native";
 import {
-  ModuleSummary,
+  H4,
   ModuleAttachment,
   ModuleCheckout,
   ModuleCredential,
   ModuleIDP,
   ModuleNavigation,
   ModulePaymentNotice,
+  ModuleSummary,
   PaymentNoticeStatus,
-  VSpacer,
+  VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { Alert, ImageSourcePropType } from "react-native";
+import CgnLogo from "../../../../img/bonus/cgn/cgn_logo.png";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
-import { H2 } from "../../../components/core/typography/H2";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { LegacyModuleAttachment } from "../../messages/components/MessageDetail/LegacyModuleAttachment";
-import { useIOSelector } from "../../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import CgnLogo from "../../../../img/bonus/cgn/cgn_logo.png";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -38,189 +35,102 @@ const noticeStatusArray: Array<PaymentNoticeStatusWithoutDefault> = [
   "canceled"
 ];
 
+const sectionTitleMargin = 16;
+const sectionMargin = 48;
+const componentMargin = 24;
+const componentInnerMargin = 8;
+
 export const DSModules = () => {
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const theme = useIOTheme();
   return (
     <DesignSystemScreen title="Modules">
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16 }}
-      >
-        ModuleAttachment
-      </H2>
-      {renderModuleAttachment(isDesignSystemEnabled)}
+      <VStack space={sectionMargin}>
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ModuleAttachment</H4>
+          {renderModuleAttachment()}
+        </VStack>
 
-      <VSpacer size={40} />
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ModulePaymentNotice</H4>
+          {renderModulePaymentNotice()}
+        </VStack>
 
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16 }}
-      >
-        ModulePaymentNotice
-      </H2>
-      {renderModulePaymentNotice()}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ModuleCheckout</H4>
+          {renderModuleCheckout()}
+        </VStack>
 
-      <VSpacer size={40} />
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ModuleCredential</H4>
+          {renderModuleCredential()}
+        </VStack>
 
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16 }}
-      >
-        ModuleCheckout
-      </H2>
-      {renderModuleCheckout()}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ModuleNavigation</H4>
+          {renderModuleNavigation()}
+        </VStack>
 
-      <VSpacer size={40} />
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ModuleSummary</H4>
+          {renderModuleSummary()}
+        </VStack>
 
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16, marginTop: 16 }}
-      >
-        ModuleCredential
-      </H2>
-      {renderModuleCredential()}
-
-      <VSpacer size={40} />
-
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16, marginTop: 16 }}
-      >
-        ModuleNavigation
-      </H2>
-      {renderModuleNavigation()}
-
-      <VSpacer size={40} />
-
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16 }}
-      >
-        ModuleSummary
-      </H2>
-      {renderModuleSummary()}
-
-      <VSpacer size={40} />
-
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16 }}
-      >
-        ModuleIDP
-      </H2>
-      {renderModuleIDP()}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ModuleIDP</H4>
+          {renderModuleIDP()}
+        </VStack>
+      </VStack>
     </DesignSystemScreen>
   );
 };
 
-const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
-  <>
+const renderModuleAttachment = () => (
+  <VStack space={componentMargin}>
     <DSComponentViewerBox name="ModuleAttachment, loading">
-      {isDesignSystemEnabled ? (
-        <ModuleAttachment
-          title="Nome del documento.pdf"
-          format="pdf"
-          isLoading={true}
-          onPress={onButtonPress}
-        />
-      ) : (
-        <LegacyModuleAttachment
-          title="Nome del documento.pdf"
-          subtitle="123 Kb"
-          format="pdf"
-          isLoading={true}
-          onPress={onButtonPress}
-        />
-      )}
+      <ModuleAttachment
+        title="Nome del documento.pdf"
+        format="pdf"
+        isLoading={true}
+        onPress={onButtonPress}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleAttachment, default variant">
-      {isDesignSystemEnabled ? (
+      <VStack space={componentInnerMargin}>
         <ModuleAttachment
           title="Nome del documento.pdf"
           format="pdf"
           onPress={onButtonPress}
         />
-      ) : (
-        <LegacyModuleAttachment
-          title="Nome del documento.pdf"
-          subtitle="123 Kb"
-          format="pdf"
-          onPress={onButtonPress}
-        />
-      )}
-      {isDesignSystemEnabled ? null : (
-        <LegacyModuleAttachment
-          title="Nome del documento.pdf"
-          format="pdf"
-          onPress={onButtonPress}
-        />
-      )}
+      </VStack>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleAttachment, stress test">
-      {isDesignSystemEnabled ? (
-        <ModuleAttachment
-          title="This is a very loooooooooooooooooooooong title"
-          format="pdf"
-          onPress={onButtonPress}
-        />
-      ) : (
-        <LegacyModuleAttachment
-          title={"This is a very loooooooooooooooooooooong title"}
-          subtitle={"This is a very loooooooooooong subtitle"}
-          format="pdf"
-          onPress={onButtonPress}
-        />
-      )}
+      <ModuleAttachment
+        title="This is a very loooooooooooooooooooooong title"
+        format="pdf"
+        onPress={onButtonPress}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleAttachment, fetching">
-      {isDesignSystemEnabled ? (
-        <ModuleAttachment
-          title="Nome del documento.pdf"
-          format="pdf"
-          isFetching={true}
-          onPress={onButtonPress}
-        />
-      ) : (
-        <LegacyModuleAttachment
-          title="Nome del documento.pdf"
-          subtitle="123 Kb"
-          format="pdf"
-          isFetching={true}
-          onPress={onButtonPress}
-        />
-      )}
+      <ModuleAttachment
+        title="Nome del documento.pdf"
+        format="pdf"
+        isFetching={true}
+        onPress={onButtonPress}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleAttachment, disabled">
-      {isDesignSystemEnabled ? (
-        <ModuleAttachment
-          title="Nome del documento.pdf"
-          format="pdf"
-          disabled={true}
-          onPress={onButtonPress}
-        />
-      ) : (
-        <LegacyModuleAttachment
-          title="Nome del documento.pdf"
-          subtitle="123 Kb"
-          format="pdf"
-          disabled={true}
-          onPress={onButtonPress}
-        />
-      )}
+      <ModuleAttachment
+        title="Nome del documento.pdf"
+        format="pdf"
+        disabled={true}
+        onPress={onButtonPress}
+      />
     </DSComponentViewerBox>
-  </>
+  </VStack>
 );
 
 const renderModulePaymentNotice = () => (
-  <>
+  <VStack space={componentMargin}>
     <DSComponentViewerBox name="ModulePaymentNotice, loading">
       <ModulePaymentNotice
         title="Codice avviso"
@@ -241,22 +151,21 @@ const renderModulePaymentNotice = () => (
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModulePaymentNotice, various statuses">
-      {noticeStatusArray.map(
-        (noticeStatus: PaymentNoticeStatusWithoutDefault, index: number) => (
-          <React.Fragment key={`paymentNotice-${noticeStatus}`}>
+      <VStack space={componentInnerMargin}>
+        {noticeStatusArray.map(
+          (noticeStatus: PaymentNoticeStatusWithoutDefault) => (
             <ModulePaymentNotice
+              key={`paymentNotice-${noticeStatus}`}
               title="Codice avviso"
               subtitle="9999 9999 9999 9999 99"
               paymentNoticeStatus={noticeStatus}
               badgeText={getBadgeTextByPaymentNoticeStatus(noticeStatus)}
               onPress={onButtonPress}
             />
-            {index < noticeStatusArray.length - 1 && <VSpacer size={8} />}
-          </React.Fragment>
-        )
-      )}
+          )
+        )}
+      </VStack>
     </DSComponentViewerBox>
-
     <DSComponentViewerBox name="ModulePaymentNotice, default, without title">
       <ModulePaymentNotice
         subtitle="TARI 2023 - Rata 01"
@@ -265,11 +174,11 @@ const renderModulePaymentNotice = () => (
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>
-  </>
+  </VStack>
 );
 
 const renderModuleCheckout = () => (
-  <>
+  <VStack space={componentMargin}>
     <DSComponentViewerBox name="ModuleCheckout, loading">
       <ModuleCheckout isLoading />
     </DSComponentViewerBox>
@@ -325,14 +234,11 @@ const renderModuleCheckout = () => (
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>
-    <DSComponentViewerBox name="ModuleCheckout, loading">
-      <ModuleCheckout isLoading />
-    </DSComponentViewerBox>
-  </>
+  </VStack>
 );
 
 const renderModuleSummary = () => (
-  <>
+  <VStack space={componentMargin}>
     <DSComponentViewerBox name="ModuleSummary, default variant">
       <ModuleSummary
         label={"Label name"}
@@ -341,13 +247,11 @@ const renderModuleSummary = () => (
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleSummary, custom icon, label only">
-      <View>
-        <ModuleSummary
-          icon="chevronRightListItem"
-          label={"Label only"}
-          onPress={onButtonPress}
-        />
-      </View>
+      <ModuleSummary
+        icon="chevronRightListItem"
+        label={"Label only"}
+        onPress={onButtonPress}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleSummary, stress test">
       <ModuleSummary
@@ -356,7 +260,7 @@ const renderModuleSummary = () => (
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>
-  </>
+  </VStack>
 );
 
 const mockIDPProviderItem = {
@@ -368,46 +272,43 @@ const mockIDPProviderItem = {
 };
 
 const renderModuleIDP = () => (
-  <>
+  <VStack space={componentMargin}>
     <DSComponentViewerBox name="ModuleIDP, default variant">
-      <View>
-        <ModuleIDP
-          name={mockIDPProviderItem.name}
-          logo={mockIDPProviderItem.logo as ImageSourcePropType}
-          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={onButtonPress}
-          testID={`idp-${mockIDPProviderItem.id}-button`}
-        />
-      </View>
+      <ModuleIDP
+        name={mockIDPProviderItem.name}
+        logo={mockIDPProviderItem.logo as ImageSourcePropType}
+        localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
+        onPress={onButtonPress}
+        testID={`idp-${mockIDPProviderItem.id}-button`}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleIDP, loose spacing (saved) variant">
-      <View>
-        <ModuleIDP
-          withLooseSpacing
-          name={mockIDPProviderItem.name}
-          logo={mockIDPProviderItem.logo as ImageSourcePropType}
-          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={onButtonPress}
-          testID={`idp-${mockIDPProviderItem.id}-button`}
-        />
-      </View>
+      <ModuleIDP
+        withLooseSpacing
+        name={mockIDPProviderItem.name}
+        logo={mockIDPProviderItem.logo as ImageSourcePropType}
+        localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
+        onPress={onButtonPress}
+        testID={`idp-${mockIDPProviderItem.id}-button`}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleIDP, default variant, stress test">
-      <View>
-        <ModuleIDP
-          name={"This is a very loooooong IDP provider name"}
-          logo={mockIDPProviderItem.logo as ImageSourcePropType}
-          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={onButtonPress}
-          testID={`idp-${mockIDPProviderItem.id}-button`}
-        />
-      </View>
+      <ModuleIDP
+        name={"This is a very loooooong IDP provider name"}
+        logo={mockIDPProviderItem.logo as ImageSourcePropType}
+        localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
+        onPress={onButtonPress}
+        testID={`idp-${mockIDPProviderItem.id}-button`}
+      />
     </DSComponentViewerBox>
-  </>
+  </VStack>
 );
 
 const renderModuleCredential = () => (
-  <>
+  <VStack space={componentMargin}>
+    <DSComponentViewerBox name="ModuleCredential, loading">
+      <ModuleCredential isLoading={true} />
+    </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleCredential">
       <ModuleCredential
         icon="fingerprint"
@@ -455,16 +356,14 @@ const renderModuleCredential = () => (
         isFetching={true}
       />
     </DSComponentViewerBox>
-    <DSComponentViewerBox name="ModuleCredential, loading">
-      <View>
-        <ModuleCredential isLoading={true} />
-      </View>
-    </DSComponentViewerBox>
-  </>
+  </VStack>
 );
 
 const renderModuleNavigation = () => (
-  <>
+  <VStack space={componentMargin}>
+    <DSComponentViewerBox name="ModuleNavigation, loading">
+      <ModuleNavigation isLoading={true} />
+    </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleNavigation">
       <ModuleNavigation
         icon="spid"
@@ -507,8 +406,5 @@ const renderModuleNavigation = () => (
         }}
       />
     </DSComponentViewerBox>
-    <DSComponentViewerBox name="ModuleNavigation, loading">
-      <ModuleNavigation isLoading={true} />
-    </DSComponentViewerBox>
-  </>
+  </VStack>
 );

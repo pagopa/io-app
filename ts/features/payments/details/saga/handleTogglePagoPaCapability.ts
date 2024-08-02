@@ -35,7 +35,6 @@ export function* handleTogglePagoPaCapability(
 
     const updateWalletResult = yield* withPaymentsSessionToken(
       updateWalletApplicationsById,
-      paymentsTogglePagoPaCapabilityAction.failure,
       action,
       {
         walletId: action.payload.walletId,
