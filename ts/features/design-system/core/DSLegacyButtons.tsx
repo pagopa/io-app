@@ -5,12 +5,8 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-
 import { Alert } from "react-native";
-import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
-import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
-import PaymentButton from "../../messages/components/MessageDetail/PaymentButton";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
@@ -125,13 +121,6 @@ const renderBlockButtons = () => (
 
 const renderSpecificButtons = () => (
   <VStack space={componentMargin}>
-    <DSComponentViewerBox name="PaymentButton">
-      <PaymentButton
-        amount={9999999999}
-        noticeNumber={"123112312312321321" as PaymentNoticeNumber}
-        organizationFiscalCode={"46545" as OrganizationFiscalCode}
-      />
-    </DSComponentViewerBox>
     <DSComponentViewerBox name="CopyButtonComponent">
       <CopyButtonComponent textToCopy={"Copied text by CopyButton"} />
     </DSComponentViewerBox>
