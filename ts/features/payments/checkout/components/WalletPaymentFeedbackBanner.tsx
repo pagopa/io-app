@@ -1,39 +1,54 @@
-// import { Banner, VSpacer } from "@pagopa/io-app-design-system";
-// import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
-// import { default as React } from "react";
-// import { View } from "react-native";
-// import I18n from "../../../../i18n";
-// import { mixpanelTrack } from "../../../../mixpanel";
-// import { WALLET_PAYMENT_FEEDBACK_URL } from "../utils";
+import { Banner, VSpacer } from "@pagopa/io-app-design-system";
+import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import { default as React } from "react";
+import { View } from "react-native";
+import { mixpanelTrack } from "../../../../mixpanel";
+import { useIOSelector } from "../../../../store/hooks";
+import {
+  isPaymentsFeedbackBannerEnabledSelector,
+  paymentsFeedbackBannerConfigSelector
+} from "../../../../store/reducers/backendStatus";
+import { getFullLocale } from "../../../../utils/locale";
 
-// This banner is temporarily disabled. Remove the next line to re-enable it
-const WalletPaymentFeebackBanner = () => null;
-// const WalletPaymentFeebackBanner = () => {
-//   const bannerViewRef = React.useRef<View>(null);
+const WalletPaymentFeebackBanner = () => {
+  const bannerViewRef = React.useRef<View>(null);
+  const isBannerEnabled = useIOSelector(
+    isPaymentsFeedbackBannerEnabledSelector
+  );
+  const feedbackBannerConfig = useIOSelector(
+    paymentsFeedbackBannerConfigSelector
+  );
+  const locale = getFullLocale();
 
-//   const handleBannerPress = () => {
-//     void mixpanelTrack("VOC_USER_EXIT", {
-//       screen_name: "PAYMENT_OUTCOMECODE_MESSAGE"
-//     });
+  const handleBannerPress = () => {
+    if (!feedbackBannerConfig?.action) {
+      return;
+    }
+    void mixpanelTrack("VOC_USER_EXIT", {
+      screen_name: "PAYMENT_OUTCOMECODE_MESSAGE"
+    });
+    return openAuthenticationSession(feedbackBannerConfig.action.url, "");
+  };
 
-//     return openAuthenticationSession(WALLET_PAYMENT_FEEDBACK_URL, "");
-//   };
+  if (!isBannerEnabled || !feedbackBannerConfig) {
+    return null;
+  }
 
-//   return (
-//     <>
-//       <VSpacer size={24} />
-//       <Banner
-//         color="neutral"
-//         pictogramName="feedback"
-//         size="big"
-//         viewRef={bannerViewRef}
-//         title={I18n.t("wallet.payment.outcome.SUCCESS.banner.title")}
-//         content={I18n.t("wallet.payment.outcome.SUCCESS.banner.content")}
-//         action={I18n.t("wallet.payment.outcome.SUCCESS.banner.action")}
-//         onPress={handleBannerPress}
-//       />
-//     </>
-//   );
-// };
+  return (
+    <>
+      <VSpacer size={24} />
+      <Banner
+        color="neutral"
+        pictogramName="feedback"
+        size="big"
+        viewRef={bannerViewRef}
+        title={feedbackBannerConfig.title?.[locale]}
+        content={feedbackBannerConfig.description[locale]}
+        action={feedbackBannerConfig.action?.label[locale]}
+        onPress={handleBannerPress}
+      />
+    </>
+  );
+};
 
 export { WalletPaymentFeebackBanner };

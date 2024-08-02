@@ -17,6 +17,7 @@ import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { Sections } from "../../../definitions/content/Sections";
 import { UaDonationsBanner } from "../../../definitions/content/UaDonationsBanner";
 import { UaDonationsConfig } from "../../../definitions/content/UaDonationsConfig";
+import { Banner } from "../../../definitions/content/Banner";
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
@@ -514,6 +515,41 @@ export const isItwEnabledSelector = createSelector(
           ) && bs.config.itw.enabled
       ),
       O.getOrElse(() => false)
+    )
+);
+
+/**
+ * Return the remote feature flag about the payment feedback banner enabled/disabled
+ * that is shown after a successful payment.
+ */
+export const isPaymentsFeedbackBannerEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    pipe(
+      backendStatus,
+      O.map(bs =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? bs.config.newPaymentSection.feedbackBanner?.min_app_version.ios
+            : bs.config.newPaymentSection.feedbackBanner?.min_app_version
+                .android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
+    )
+);
+
+/**
+ * Return the remote config about the payment feedback banner
+ */
+export const paymentsFeedbackBannerConfigSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): Banner | undefined =>
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.newPaymentSection.feedbackBanner),
+      O.toUndefined
     )
 );
 
