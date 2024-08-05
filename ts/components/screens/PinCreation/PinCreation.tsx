@@ -229,13 +229,15 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
           Android, then the pictogram will be visible,
           otherwise it will not be visible
           */}
-        {Dimensions.get("screen").height > MIN_HEIGHT_TO_SHOW_FULL_RENDER &&
-          Platform.OS !== "android" && (
-            <View style={IOStyles.selfCenter}>
-              <Pictogram name="key" size={64} />
-            </View>
-          )}
-        <VSpacer size={8} />
+        {!(
+          Dimensions.get("screen").height < MIN_HEIGHT_TO_SHOW_FULL_RENDER &&
+          Platform.OS === "android"
+        ) && (
+          <View style={IOStyles.selfCenter}>
+            <Pictogram name="key" size={64} />
+            <VSpacer size={8} />
+          </View>
+        )}
         <Carousel
           ref={carouselRef}
           testID="pin-creation-carousel"
