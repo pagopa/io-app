@@ -26,12 +26,12 @@ export function* handleExportFimsHistorySaga(
       action
     )) as SagaCallReturnType<typeof exportHistory>;
 
-    const actionToPut = pipe(
+    yield* pipe(
       exportHistoryResult,
       E.foldW(
         _failure => {
           IOToast.error(I18n.t("FIMS.history.exportData.errorToast"));
-          return fimsHistoryExport.failure("FAIL");
+          return put(fimsHistoryExport.failure("FAIL"));
         },
         success => {
           switch (success.status) {
@@ -49,12 +49,10 @@ export function* handleExportFimsHistorySaga(
               IOToast.error(I18n.t("FIMS.history.exportData.errorToast"));
               break;
           }
-          return fimsHistoryExport.success();
+          return put(fimsHistoryExport.success());
         }
       )
     );
-
-    yield* put(actionToPut);
   } catch (e: any) {
     yield* put(fimsHistoryExport.failure(e.toString()));
   }
