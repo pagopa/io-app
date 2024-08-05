@@ -705,6 +705,7 @@ authentication:
         placeholderLabel: PIN of Electronic Identity Card
         label: Insertion field for Electronic Identity Card pins
         hint: Enter the 8 digits pin of your Electronic Identity Card in this field.
+        deleteLabel: You have deleted {{number}}
       pinCardTitle: Enter the PIN of your ID Card
       pinCardHeader: Login with CIE
       pinCardContent: The PIN code consists of 8 digits. Four digits have been delivered to you at the registry office and another four digits have been sent to your home along with the card. Put them together, in that order, and enter them here please.
