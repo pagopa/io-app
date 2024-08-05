@@ -37,7 +37,7 @@ const SuccessComponent = (props: {
         subTitle={I18n.t("features.fci.errors.expired.subTitle")}
         onPress={() => dispatch(fciEndRequest())}
         email={issuer_email}
-        pictogram={"timeout"}
+        pictogram={"ended"}
         testID={"ExpiredSignatureRequestTestID"}
       />
     );
@@ -55,7 +55,7 @@ const SuccessComponent = (props: {
           title={I18n.t("features.fci.errors.waitForQtsp.title")}
           subTitle={I18n.t("features.fci.errors.waitForQtsp.subTitle")}
           onPress={() => dispatch(fciEndRequest())}
-          pictogram={"hourglass"}
+          pictogram={"timing"}
           testID={"WaitQtspSignatureRequestTestID"}
         />
       );
@@ -65,7 +65,7 @@ const SuccessComponent = (props: {
           title={I18n.t("features.fci.errors.signed.title")}
           subTitle={I18n.t("features.fci.errors.signed.subTitle")}
           onPress={() => dispatch(fciEndRequest())}
-          pictogram={"fireworks"}
+          pictogram={"success"}
           testID={"SignedSignatureRequestTestID"}
         />
       );
@@ -86,7 +86,7 @@ const SuccessComponent = (props: {
           subTitle={I18n.t("features.fci.errors.generic.cancelled.subTitle")}
           email={issuer_email}
           onPress={() => dispatch(fciEndRequest())}
-          pictogram={"timeout"}
+          pictogram={"ended"}
           testID={"CancelledSignatureRequestTestID"}
         />
       );

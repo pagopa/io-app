@@ -341,7 +341,7 @@ profile:
       subtitle: Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei dati personali.
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo...
       removeAccount:
-        title: Elimina il tuo account
+        title: Elimina il tuo profilo
         description: Elimina il tuo profilo e i tuoi dati personali
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
         alert:
@@ -1788,10 +1788,12 @@ wallet:
       noticeNumber:
         title: Inserisci il codice avviso
         subtitle: Ha 18 cifre, lo trovi vicino al codice QR.
+        validationError: Ha 18 cifre, inizia con 0, 1 o 3.
         placeholder: Codice avviso
       fiscalCode:
         title: Inserisci il codice fiscale dell’Ente Creditore
         subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
+        validationError: Inserisci 11 cifre.
         placeholder: Codice fiscale Ente Creditore
     abortDialog:
       title: Vuoi interrompere l'operazione?
@@ -2171,6 +2173,14 @@ services:
   contextualHelpContent: !include services/services_home.md
   new: Nuovo
   home:
+    bottomSheet:
+      content:
+        servicesPreferences:
+          value: Chi può scriverti?
+          description: Scegli chi può contattarti
+        settings: 
+          value: Tutte le impostazioni
+          description: Gestisci i tuoi dati e le preferenze d'uso
     featured:
       services:
         title: In primo piano
@@ -3973,7 +3983,11 @@ FIMS:
       title: "Operazione annullata"
     consents:
       title: "Attendi qualche secondo"
-    in-app-browser:
+    idle:
+      title: "Attendi qualche secondo"
+    fastLogin_forced_restart:
+      title: "Attendi qualche secondo"
+    in-app-browser-loading:
       title: "Ti stiamo indirizzando al servizio"
       subtitle: "Attendi qualche secondo"
   consentsScreen:
