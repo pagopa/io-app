@@ -20,9 +20,14 @@ export type FimsFlowStateTags =
   | "abort"
   | "fastLogin_forced_restart";
 
+export type FimsErrorStateType = {
+  standardMessage: string;
+  debugMessage: string;
+};
+
 export type FimsSSOState = {
   currentFlowState: FimsFlowStateTags;
-  consentsData: pot.Pot<ConsentData, string>; // string -> errMessage
+  consentsData: pot.Pot<ConsentData, FimsErrorStateType>;
   relyingPartyUrl?: string;
 };
 

@@ -366,6 +366,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         onTouchEnd={[Function]}
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -3089,6 +3090,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         onTouchEnd={[Function]}
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -5812,6 +5814,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                         onTouchEnd={[Function]}
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -6360,6 +6363,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                         onTouchEnd={[Function]}
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
