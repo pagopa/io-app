@@ -265,8 +265,10 @@ startup:
   profileEnabled: Profilo utente abilitato
   userDeletePendingAlert:
     title: Eliminazione profilo in corso
-    message: Se hai cambiato idea, puoi annullare la richiesta nella sezione Privacy del tuo Profilo.
-    cta_1: Vai al Profilo
+    messageLegacy: Se hai cambiato idea, puoi annullare la richiesta nella sezione Privacy del tuo Profilo.
+    message: Se hai cambiato idea, puoi annullare la richiesta nella sezione Privacy all'interno delle Impostazioni.
+    cta_1_legacy: Vai al Profilo
+    cta_1: Vai alle Impostazioni
     cta_2: Ignora
   contextualHelp:
     title: Problemi di inizializzazione?

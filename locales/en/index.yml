@@ -265,8 +265,10 @@ startup:
   profileEnabled: User profile activated
   userDeletePendingAlert:
     title: Profile deletion in progress
-    message: If you have changed your mind, you can cancel the deletion request within the Privacy section of your Profile.
-    cta_1: Go to Profile
+    messageLegacy: If you have changed your mind, you can cancel the deletion request within the Privacy section of your Profile.
+    message: If you have changed your mind, you can cancel the deletion request within the Privacy section of your Settings.
+    cta_1_legacy: Go to Profile
+    cta_1: Go to Settings
     cta_2: Discard
   contextualHelp:
     title: Startup problems?
