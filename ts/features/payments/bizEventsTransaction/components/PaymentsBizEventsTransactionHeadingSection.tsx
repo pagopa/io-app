@@ -78,6 +78,8 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
     );
   };
 
+  const totalAmount = calculateTotalAmount(transactionInfo);
+
   return (
     <View style={[IOStyles.horizontalContentPadding, IOStyles.bgWhite]}>
       <VSpacer size={16} />
@@ -87,11 +89,15 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
         onPress={handlePressTransactionDetails}
       />
       <VSpacer size={8} />
-      <PaymentsBizEventsTransactionTotalAmount
-        loading={isLoading}
-        totalAmount={calculateTotalAmount(transactionInfo)}
-      />
-      <VSpacer size={8} />
+      {totalAmount && (
+        <>
+          <PaymentsBizEventsTransactionTotalAmount
+            loading={isLoading}
+            totalAmount={totalAmount}
+          />
+          <VSpacer size={8} />
+        </>
+      )}
       <FeeAmountSection />
       <VSpacer size={8} />
     </View>
