@@ -14,14 +14,14 @@ import {
   fimsCancelOrAbortAction,
   fimsGetConsentsListAction
 } from "../store/actions/";
+import { FimsFlowSuccessBody } from "../components/FimsSuccessBody";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
+import { FimsParamsList } from "../../common/navigation";
 import {
   fimsConsentsDataSelector,
   fimsErrorStateSelector,
   fimsLoadingStateSelector
-} from "../store/reducers";
-import { FimsFlowSuccessBody } from "../components/FimsSuccessBody";
-import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
-import { FimsParamsList } from "../../common/navigation";
+} from "../store/selectors";
 
 export type FimsFlowHandlerScreenRouteParams = { ctaUrl: string };
 
@@ -68,10 +68,10 @@ export const FimsFlowHandlerScreen = (
   }
   if (loadingState !== undefined) {
     const subtitle =
-      loadingState === "in-app-browser" || loadingState === "abort" ? (
+      loadingState === "in-app-browser-loading" || loadingState === "abort" ? (
         <View style={IOStyles.alignCenter}>
           <LabelSmall color="grey-650" weight="Regular">
-            {I18n.t("FIMS.loadingScreen.in-app-browser.subtitle")}
+            {I18n.t("FIMS.loadingScreen.in-app-browser-loading.subtitle")}
           </LabelSmall>
         </View>
       ) : (

@@ -13,6 +13,7 @@ import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { disposeWalletAttestation } from "../../common/utils/itwAttestationUtils";
+import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { assert } from "../../../../utils/assert";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -147,5 +148,8 @@ export const createEidIssuanceActionsImplementation = (
 
   requestAssistance: () => {},
 
-  disposeWalletAttestation
+  disposeWalletAttestation,
+
+  handleSessionExpired: () =>
+    dispatch(checkCurrentSession.success({ isSessionValid: false }))
 });
