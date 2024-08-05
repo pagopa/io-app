@@ -17,17 +17,13 @@ import {
   loadNextPageMessages,
   loadPreviousPageMessages,
   loadThirdPartyMessage,
-  migrateToPaginatedMessages,
   reloadAllMessages,
   removeCachedAttachment,
   upsertMessageStatusAttributes
 } from "../store/actions";
 import { retryDataAfterFastLoginSessionExpirationSelector } from "../store/reducers/messageGetStatus";
 import { BackendClient } from "../../../api/backend";
-import {
-  getLegacyMessagePrecondition,
-  retrievingDataPreconditionStatusAction
-} from "../store/actions/preconditions";
+import { retrievingDataPreconditionStatusAction } from "../store/actions/preconditions";
 import { startProcessingMessageArchivingAction } from "../store/actions/archiving";
 import { handleDownloadAttachment } from "./handleDownloadAttachment";
 import {
@@ -44,7 +40,6 @@ import {
   handleMessageArchivingRestoring,
   raceUpsertMessageStatusAttributes
 } from "./handleUpsertMessageStatusAttributes";
-import { handleMigrateToPagination } from "./handleMigrateToPagination";
 import { handleMessagePrecondition } from "./handleMessagePrecondition";
 import { handleThirdPartyMessage } from "./handleThirdPartyMessage";
 import { handlePaymentUpdateRequests } from "./handlePaymentUpdateRequests";
@@ -89,10 +84,7 @@ export function* watchMessagesSaga(
   );
 
   yield* takeLatest(
-    [
-      getLegacyMessagePrecondition.request,
-      retrievingDataPreconditionStatusAction
-    ],
+    retrievingDataPreconditionStatusAction,
     handleMessagePrecondition,
     backendClient.getThirdPartyMessagePrecondition
   );
@@ -115,14 +107,6 @@ export function* watchMessagesSaga(
     handleMessageArchivingRestoring
   );
 
-  yield* fork(watchLoadMessageData);
-
-  yield* takeLatest(
-    migrateToPaginatedMessages.request,
-    handleMigrateToPagination,
-    backendClient.upsertMessageStatusAttributes
-  );
-
   // handle the request for a new downloadAttachment
   yield* takeLatest(
     downloadAttachment.request,
@@ -141,9 +125,8 @@ export function* watchMessagesSaga(
 
   // clear cache when user explicitly logs out
   yield* takeEvery(logoutSuccess, handleClearAllAttachments);
-}
 
-function* watchLoadMessageData() {
+  // handle message details data loading composition
   yield* takeLatest(getMessageDataAction.request, handleLoadMessageData);
 
   const retryDataOrUndefined = yield* select(
