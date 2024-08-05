@@ -56,7 +56,6 @@ export function* handleExportFimsHistorySaga(
 
     yield* put(actionToPut);
   } catch (e: any) {
-    IOToast.error(JSON.stringify(e));
     yield* put(fimsHistoryExport.failure(e.toString()));
   }
 }

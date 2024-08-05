@@ -1,6 +1,6 @@
 import { Body, Divider, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { FlatList, SafeAreaView, View } from "react-native";
+import { Alert, FlatList, SafeAreaView, View } from "react-native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -44,6 +44,23 @@ export const FimsHistoryScreen = () => {
     title: I18n.t("FIMS.history.historyScreen.header"),
     supportRequest: true
   });
+
+  const handleExportOnPress = () =>
+    Alert.alert(
+      I18n.t("FIMS.history.exportData.alerts.areYouSure"),
+      undefined,
+      [
+        { text: I18n.t("global.buttons.cancel"), style: "cancel" },
+        {
+          text: I18n.t("global.buttons.confirm"),
+          isPreferred: true,
+          onPress: () => {
+            dispatch(fimsHistoryExport.request());
+          }
+        }
+      ]
+    );
+
   return (
     <>
       <SafeAreaView>
@@ -69,8 +86,7 @@ export const FimsHistoryScreen = () => {
           primary: {
             loading: isExportingHistory,
             label: I18n.t("FIMS.history.exportData.CTA"),
-            onPress: () =>
-              !isExportingHistory && dispatch(fimsHistoryExport.request())
+            onPress: handleExportOnPress
           }
         }}
       />
