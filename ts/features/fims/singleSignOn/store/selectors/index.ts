@@ -7,6 +7,8 @@ import { isStrictNone } from "../../../../../utils/pot";
 import { getDomainFromUrl } from "../../saga/sagaUtils";
 import { ConsentData } from "../../types";
 import { foldFimsFlowStateK } from "../../utils";
+import { FimsErrorStateType } from "../reducers";
+import { isDebugModeEnabledSelector } from "../../../../../store/reducers/debug";
 
 export const fimsConsentsDataSelector = (state: GlobalState) =>
   state.features.fims.sso.consentsData;
@@ -25,7 +27,7 @@ export const fimsPartialAbortUrl = (state: GlobalState) =>
   pipe(state, fimsConsentsDataSelector, abortUrlFromConsentsPot, O.toUndefined);
 
 export const abortUrlFromConsentsPot = (
-  consentsPot: pot.Pot<ConsentData, string>
+  consentsPot: pot.Pot<ConsentData, FimsErrorStateType>
 ) =>
   pipe(
     consentsPot,
@@ -34,12 +36,18 @@ export const abortUrlFromConsentsPot = (
     O.map(consents => consents._links.abort.href)
   );
 
-export const fimsErrorStateSelector = (state: GlobalState) =>
+export const fimsErrorStateSelector = (state: GlobalState) => {
   // this selector will be used to map the error message
   // once we have a clear error mapping
-  pot.isError(state.features.fims.sso.consentsData)
-    ? state.features.fims.sso.consentsData.error
-    : undefined;
+  if (pot.isError(state.features.fims.sso.consentsData)) {
+    const isDebug = isDebugModeEnabledSelector(state);
+    return isDebug
+      ? state.features.fims.sso.consentsData.error.debugMessage
+      : state.features.fims.sso.consentsData.error.standardMessage;
+  }
+
+  return undefined;
+};
 
 export const fimsLoadingStateSelector = (state: GlobalState) =>
   pipe(

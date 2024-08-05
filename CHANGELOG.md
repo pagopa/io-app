@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.68.0-rc.0](https://github.com/pagopa/io-app/compare/2.67.0-rc.3...2.68.0-rc.0) (2024-08-01)
+
+
+### Features
+
+* [[IOPAE-1311](https://pagopa.atlassian.net/browse/IOPAE-1311)] Bottom sheet displayed when the user taps on the settings icon in the services section ([#6061](https://github.com/pagopa/io-app/issues/6061)) ([8962b62](https://github.com/pagopa/io-app/commit/8962b62ddb5e336c0030cc7a56fd1828a9f7cf24))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1459](https://pagopa.atlassian.net/browse/SIW-1459)] Issuer name and logo in trust issuer screen ([#6084](https://github.com/pagopa/io-app/issues/6084)) ([f9345ac](https://github.com/pagopa/io-app/commit/f9345ac3c004ecd4a4b4cab39293ab3d546c93c0))
+* [[IOBP-796](https://pagopa.atlassian.net/browse/IOBP-796)] Payment method details scroll with new header second level ([#6059](https://github.com/pagopa/io-app/issues/6059)) ([0c668f3](https://github.com/pagopa/io-app/commit/0c668f35a9cf7d6c4e9b99922b3eacdbc6895a5d))
+* CTA bottom margin inside `RemoveAccountDetailScreen` ([#6069](https://github.com/pagopa/io-app/issues/6069)) ([a343772](https://github.com/pagopa/io-app/commit/a34377239a07c7cc63121ef4f1a03d34c0d7212e))
+* **Cross:** [[IOAPPX-361](https://pagopa.atlassian.net/browse/IOAPPX-361)] Runtime crash on Android devices without custom tabs support  ([#6080](https://github.com/pagopa/io-app/issues/6080)) ([3ba4191](https://github.com/pagopa/io-app/commit/3ba4191ea302a351aeb0488e381020e1b76e8aa2))
+* **Cross:** [[IOAPPX-363](https://pagopa.atlassian.net/browse/IOAPPX-363)] Discard activity state persistence in Android ([#6075](https://github.com/pagopa/io-app/issues/6075)) ([01481f8](https://github.com/pagopa/io-app/commit/01481f800f15c6322d8b9ec8ccddb471bedf6615))
+* **IT Wallet:** [[SIW-1429](https://pagopa.atlassian.net/browse/SIW-1429)] Fix wallet content update after session refresh ([#6063](https://github.com/pagopa/io-app/issues/6063)) ([e2801a5](https://github.com/pagopa/io-app/commit/e2801a58954eb88b12c6c64eff7469ba76525e85))
+* **IT Wallet:** [[SIW-1443](https://pagopa.atlassian.net/browse/SIW-1443)] Reset persisted ITW store after logout ([#6073](https://github.com/pagopa/io-app/issues/6073)) ([c0b676f](https://github.com/pagopa/io-app/commit/c0b676fbc023367e56b4c973dd97305aef898ff3))
+* [[IOBP-773](https://pagopa.atlassian.net/browse/IOBP-773),[IOBP-759](https://pagopa.atlassian.net/browse/IOBP-759)] Hide dueDate if not provided in the payment details ([#5985](https://github.com/pagopa/io-app/issues/5985)) ([690c3ab](https://github.com/pagopa/io-app/commit/690c3ab18dc3f01a5e9969a3e617b67d3f3d4a71))
+* regression inside `IdentificationModal` in `validatingTask` mode ([#6067](https://github.com/pagopa/io-app/issues/6067)) ([a3d06ab](https://github.com/pagopa/io-app/commit/a3d06ab8cd7fc2153256e587a9efac2c2523db76))
+
+
+### Chores
+
+* [[IOCOM-1628](https://pagopa.atlassian.net/browse/IOCOM-1628)] FIMS FastLogin handling ([#6041](https://github.com/pagopa/io-app/issues/6041)) ([de021da](https://github.com/pagopa/io-app/commit/de021daa40b8652672bc0721b5030b42463dc159))
+* [[IOPID-2086](https://pagopa.atlassian.net/browse/IOPID-2086)] Fix LepidaID ([#6078](https://github.com/pagopa/io-app/issues/6078)) ([342009e](https://github.com/pagopa/io-app/commit/342009ebd5e3aedb0cdbf09e2452d534ce71c9c7))
+* **Cross:** [[IOAPPX-345](https://pagopa.atlassian.net/browse/IOAPPX-345)] Refactor the entire DS section using `Stack` components ([#5974](https://github.com/pagopa/io-app/issues/5974)) ([1bc9cec](https://github.com/pagopa/io-app/commit/1bc9cec01d7b71244cce6fae917c26dac4426344))
+* **IT Wallet:** [[SIW-1414](https://pagopa.atlassian.net/browse/SIW-1414)] Disable swipe navigation in IT Wallet issuance flows ([#6065](https://github.com/pagopa/io-app/issues/6065)) ([b4f67de](https://github.com/pagopa/io-app/commit/b4f67de9d59a8b4eb47d91b8205966cd7402bfeb))
+* [[IOPID-2077](https://pagopa.atlassian.net/browse/IOPID-2077)] Add correct title in settings section ([#6066](https://github.com/pagopa/io-app/issues/6066)) ([fe498a5](https://github.com/pagopa/io-app/commit/fe498a50c26fbf23e499e106151f9a12f41f318e))
+* **IT Wallet:** [[SIW-1415](https://pagopa.atlassian.net/browse/SIW-1415)] Add debug info to IT Wallet screens in debug mode ([#6055](https://github.com/pagopa/io-app/issues/6055)) ([aa1fcc6](https://github.com/pagopa/io-app/commit/aa1fcc6d5dca93e45d4633c8f23b709c90329773))
+* [[IOPID-2050](https://pagopa.atlassian.net/browse/IOPID-2050)] Add session refresh Feature Flag ([#6045](https://github.com/pagopa/io-app/issues/6045)) ([e36579b](https://github.com/pagopa/io-app/commit/e36579b0ab9cd829847282af5e527999fa50c4aa)), closes [/github.com/pagopa/io-app/blob/128dfab2bfdcc7bc7ba1783daf7eb05ccfa18b23/ts/screens/profile/DeveloperModeSection.tsx#L368](https://github.com/pagopa//github.com/pagopa/io-app/blob/128dfab2bfdcc7bc7ba1783daf7eb05ccfa18b23/ts/screens/profile/DeveloperModeSection.tsx/issues/L368)
+* Disables Sentry when the build is coming from local development ([#6060](https://github.com/pagopa/io-app/issues/6060)) ([8c0fe6b](https://github.com/pagopa/io-app/commit/8c0fe6b9367b165f112a80b3029372bd53069ffe))
+* **IT Wallet:** [[SIW-1416](https://pagopa.atlassian.net/browse/SIW-1416)] Remove calendar icon in claim list ([#6058](https://github.com/pagopa/io-app/issues/6058)) ([f0a8b48](https://github.com/pagopa/io-app/commit/f0a8b4883daeec1fd8850b9d99b257547c18b504))
+
 ## [2.67.0-rc.3](https://github.com/pagopa/io-app/compare/2.67.0-rc.2...2.67.0-rc.3) (2024-07-26)
 
 

@@ -20,7 +20,7 @@ import {
   updatePaymentForMessage
 } from "../../actions";
 import {
-  initialState,
+  initialState as paymentsInitialState,
   paymentStatusForUISelector,
   userSelectedPaymentRptIdSelector,
   paymentsReducer,
@@ -40,7 +40,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 describe("Messages payments reducer's tests", () => {
   it("Should match initial state upon initialization", () => {
     const firstState = paymentsReducer(undefined, {} as Action);
-    expect(firstState).toEqual(initialState);
+    expect(firstState).toEqual(paymentsInitialState);
   });
   it("Should have undefined value for an undefined Message Id", () => {
     const requestAction = updatePaymentForMessage.request({

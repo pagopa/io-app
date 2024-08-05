@@ -17,6 +17,7 @@ import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
   cancelPreviousAttachmentDownload,
   cancelQueuedPaymentUpdates,
+  resetGetMessageDataAction,
   updatePaymentForMessage
 } from "../store/actions";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
@@ -100,6 +101,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
     dispatch(cancelPreviousAttachmentDownload());
     dispatch(cancelQueuedPaymentUpdates());
     dispatch(cancelPaymentStatusTracking());
+    dispatch(resetGetMessageDataAction());
     navigation.goBack();
   }, [dispatch, navigation]);
 

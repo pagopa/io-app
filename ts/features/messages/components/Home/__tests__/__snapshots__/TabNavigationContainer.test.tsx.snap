@@ -393,7 +393,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     "checked": undefined,
                                     "disabled": false,
                                     "expanded": undefined,
-                                    "selected": undefined,
+                                    "selected": false,
                                   }
                                 }
                                 accessibilityValue={
@@ -585,7 +585,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     "checked": undefined,
                                     "disabled": false,
                                     "expanded": undefined,
-                                    "selected": undefined,
+                                    "selected": true,
                                   }
                                 }
                                 accessibilityValue={
@@ -1147,7 +1147,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     "checked": undefined,
                                     "disabled": false,
                                     "expanded": undefined,
-                                    "selected": undefined,
+                                    "selected": true,
                                   }
                                 }
                                 accessibilityValue={
@@ -1352,7 +1352,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     "checked": undefined,
                                     "disabled": false,
                                     "expanded": undefined,
-                                    "selected": undefined,
+                                    "selected": false,
                                   }
                                 }
                                 accessibilityValue={
