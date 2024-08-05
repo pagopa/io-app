@@ -16,11 +16,13 @@ import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog"
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { selectEidOption, selectIsLoading } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { useItwHandleCieIdExternalApp } from "../../common/hooks/useItwHandleCieIdExternalApp";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
 
+  useItwHandleCieIdExternalApp();
   useItwDisbleGestureNavigation();
   useAvoidHardwareBackButton();
 

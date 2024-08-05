@@ -64,5 +64,10 @@ export const createEidIssuanceGuardsImplementation = (
     );
 
     return authenticatedUserFiscalCode === eidFiscalCode;
-  }
+  },
+
+  isOperationAborted: ({ event }: { event: EidIssuanceEvents }) =>
+    "error" in event &&
+    event.error instanceof Errors.AuthorizationError &&
+    event.error.message === "CieIdOperationAborted"
 });

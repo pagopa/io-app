@@ -7,7 +7,7 @@ import { type StoredCredential } from "../../common/utils/itwTypesUtils";
 import { IssuanceFailure } from "./failure";
 
 export type IdentificationContext =
-  | { mode: "cieId" }
+  | { mode: "cieId"; abortController: AbortController }
   | { mode: "ciePin"; pin: string }
   | { mode: "spid"; idpId: string };
 
