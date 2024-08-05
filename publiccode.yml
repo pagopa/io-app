@@ -53,7 +53,7 @@ it:
     misureMinimeSicurezza: true
     gdpr: true
   riuso:
-    codiceIPA: PCM
+    codiceIPA: 5n2tr557
 description:
   it:
     genericName: Mobile Application

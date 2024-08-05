@@ -3,7 +3,7 @@
  */
 
 import { patternDateFromString } from "@pagopa/ts-commons/lib/dates";
-import { PatternString } from "@pagopa/ts-commons/lib/strings";
+import { NonEmptyString, PatternString } from "@pagopa/ts-commons/lib/strings";
 import { differenceInCalendarDays, isValid } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -219,9 +219,22 @@ export const UrlClaim = PatternString(URL_REGEX);
 export const BoolClaim = t.boolean;
 
 /**
- * Alias for the string fallback of the claim field of the credential.
+ * Empty string fallback of the claim field of the credential.
  */
-export const PlainTextClaim = t.string;
+export const EmptyStringClaim = new t.Type<string, string, unknown>(
+  "EmptyString",
+  (input: unknown): input is string => input === "", // Type guard
+  (input, context) =>
+    typeof input === "string" && input === ""
+      ? t.success(input)
+      : t.failure(input, context, "Expected an empty string"),
+  t.identity
+);
+
+/**
+ * Alias for the string claim field of the credential.
+ */
+export const StringClaim = NonEmptyString;
 
 /**
  * Decoder for an URL image in base64 format
@@ -252,7 +265,9 @@ export const ClaimValue = t.union([
   // Otherwise parse an url value
   UrlClaim,
   // Otherwise fallback to string
-  PlainTextClaim
+  StringClaim,
+  // Otherwise fallback to empty string
+  EmptyStringClaim
 ]);
 
 export type DateClaimConfig = Partial<{

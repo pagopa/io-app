@@ -18,14 +18,16 @@ import {
   ClaimValue,
   DateClaim,
   DrivingPrivilegesClaim,
+  EmptyStringClaim,
   EvidenceClaim,
   extractFiscalCode,
   FiscalCodeClaim,
   ImageClaim,
   BoolClaim,
   PlaceOfBirthClaim,
-  PlainTextClaim
+  StringClaim
 } from "../../common/utils/itwClaimsUtils";
+import { isStringNullyOrEmpty } from "../../../../utils/strings";
 
 export type RequiredClaim = {
   claim: ClaimDisplayFormat;
@@ -64,6 +66,7 @@ const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => (
 
 /**
  * Component which renders the claim value or multiple values in case of an array.
+ * If the claim is an empty string or null, it will not render it.
  * @param claim The claim to render
  * @returns An {@link H6} element with the claim value or multiple {@link H6} elements in case of an array
  */
@@ -73,7 +76,7 @@ const ClaimText = ({ claim }: { claim: ClaimDisplayFormat }) => {
     displayValue.map((value, index) => (
       <H6 key={`${index}_${value}`}>{value}</H6>
     ))
-  ) : (
+  ) : isStringNullyOrEmpty(displayValue) ? null : ( // We want to exclude empty strings and null values
     <H6>{displayValue}</H6>
   );
 };
@@ -110,7 +113,7 @@ export const getClaimDisplayValue = (
           return I18n.t(
             `features.itWallet.presentation.credentialDetails.boolClaim.${decoded}`
           );
-        } else if (PlainTextClaim.is(decoded)) {
+        } else if (StringClaim.is(decoded) || EmptyStringClaim.is(decoded)) {
           return decoded; // must be the last one to be checked due to overlap with IPatternStringTag
         }
 
