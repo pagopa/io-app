@@ -145,6 +145,9 @@ const WalletPaymentInputFiscalCodeScreen = () => {
                 accessibilityLabel={I18n.t(
                   "wallet.payment.manual.fiscalCode.placeholder"
                 )}
+                errorMessage={I18n.t(
+                  "wallet.payment.manual.fiscalCode.validationError"
+                )}
                 value={inputState.fiscalCodeText}
                 icon="fiscalCodeIndividual"
                 onChangeText={value =>

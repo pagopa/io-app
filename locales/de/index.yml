@@ -327,7 +327,6 @@ profile:
       description: "Deine Rechte und Pflichten bei der Nutzung der IO-App"
       loading: "Warte ein paar Sekunden, wir überprüfen dein Profil..."
       removeAccount:
-        title: "Dein Konto löschen"
         error: "Bei der Anfrage zur Kontolöschung ist ein Fehler aufgetreten. Bitte versuche es erneut."
         alert:
           cta:

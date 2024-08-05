@@ -42,7 +42,9 @@ export const captureScreenshot = <T>(
     .then(screenshotUri => {
       const imagePath = savePath(screenshotUri, options);
       void rename(screenshotUri, imagePath)
-        .then(imagePath => saveImageToGallery(imagePath, options?.album)())
+        .then(destinationPath =>
+          saveImageToGallery(destinationPath, options?.album)()
+        )
         .then(
           E.fold(
             () => onEvent?.onNoPermissions?.(),

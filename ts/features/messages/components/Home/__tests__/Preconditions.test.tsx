@@ -11,7 +11,6 @@ import * as messagePrecondition from "../../../store/reducers/messagePreconditio
 import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
 import * as analytics from "../../../analytics";
 import {
-  clearLegacyMessagePrecondition,
   idlePreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
   toIdlePayload,
@@ -167,7 +166,7 @@ describe("Preconditions", () => {
     });
   });
 
-  it("should provide 'PreconditionsFooter' with a dismiss callback that dispatches 'clearLegacyMessagePrecondition' and 'idlePreconditionStatusAction'", () => {
+  it("should provide 'PreconditionsFooter' with a dismiss callback that dispatches 'idlePreconditionStatusAction'", () => {
     // eslint-disable-next-line functional/no-let
     let onDismissCallback: (() => void) | undefined = jest.fn();
     jest
@@ -188,11 +187,8 @@ describe("Preconditions", () => {
 
     onDismissCallback?.();
 
-    expect(mockDispatch.mock.calls.length).toBe(2);
+    expect(mockDispatch.mock.calls.length).toBe(1);
     expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
-      clearLegacyMessagePrecondition()
-    );
-    expect(mockDispatch.mock.calls[1][0]).toStrictEqual(
       idlePreconditionStatusAction(toIdlePayload())
     );
   });
