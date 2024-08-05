@@ -5,11 +5,12 @@ import {
   ContentWrapper,
   IOStyles,
   NumberPad,
+  Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import React, { useCallback, useRef, useState } from "react";
-import { View, Alert as NativeAlert } from "react-native";
+import { View, Alert as NativeAlert, Dimensions, Platform } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { defaultPin } from "../../../config";
 import { isValidPinNumber } from "../../../features/fastLogin/utils/pinPolicy";
@@ -32,7 +33,6 @@ import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { ContextualHelpPropsMarkdown } from "../BaseScreenComponent";
 import { PIN_LENGTH_SIX } from "../../../utils/constants";
-import PictogramHiddenOnSmallDevice from "../../PictogramHiddenOnSmallDevice";
 import usePinValidationBottomSheet from "./usePinValidationBottomSheet";
 import { PinCaouselItemProps, PinCarouselItem } from "./PinCarouselItem";
 
@@ -68,6 +68,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const { present, bottomSheet } = usePinValidationBottomSheet();
   const { showAlert } = useOnboardingAbortAlert();
+  const MIN_HEIGHT_TO_SHOW_FULL_RENDER = 780;
 
   useOnFirstRender(() => {
     trackPinScreen(getFlowType(isOnboarding, isFirstOnBoarding));
@@ -223,11 +224,18 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
     <View testID="pin-creation-screen" style={IOStyles.flex}>
       <View style={[IOStyles.flex, IOStyles.centerJustified]}>
         <VSpacer size={8} />
-        <PictogramHiddenOnSmallDevice
-          name="key"
-          size={64}
-          bottomSpaceSize={8}
-        />
+        {/*
+          if the device height is > 780 and the OS isn't
+          Android, then the pictogram will be visible,
+          otherwise it will not be visible
+          */}
+        {Dimensions.get("screen").height > MIN_HEIGHT_TO_SHOW_FULL_RENDER &&
+          Platform.OS !== "android" && (
+            <View style={IOStyles.selfCenter}>
+              <Pictogram name="key" size={64} />
+            </View>
+          )}
+        <VSpacer size={8} />
         <Carousel
           ref={carouselRef}
           testID="pin-creation-carousel"
