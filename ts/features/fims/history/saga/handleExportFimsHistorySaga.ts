@@ -1,12 +1,14 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
+import { constNull, pipe } from "fp-ts/lib/function";
+import { Alert } from "react-native";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import I18n from "../../../../i18n";
+import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { FimsHistoryClient } from "../api/client";
 import { fimsHistoryExport } from "../store/actions";
-import { SagaCallReturnType } from "../../../../types/utils";
 
 export function* handleExportFimsHistorySaga(
   exportHistory: FimsHistoryClient["exports"],
@@ -28,19 +30,23 @@ export function* handleExportFimsHistorySaga(
       exportHistoryResult,
       E.foldW(
         _failure => {
-          IOToast.error(`failure: ${_failure.toLocaleString()}`);
+          IOToast.error(I18n.t("FIMS.history.exportData.errorToast"));
           return fimsHistoryExport.failure("FAIL");
         },
         success => {
           switch (success.status) {
             case 202:
-              IOToast.success(`success: ${success.status}`);
+              IOToast.success(I18n.t("FIMS.history.exportData.successToast"));
               break;
             case 409:
-              IOToast.info(`exporting: ${success.status}`);
+              Alert.alert(
+                I18n.t("FIMS.history.exportData.alerts.alreadyExporting.title"),
+                I18n.t("FIMS.history.exportData.alerts.alreadyExporting.body"),
+                [{ text: I18n.t("global.buttons.ok"), onPress: constNull }]
+              );
               break;
             default:
-              IOToast.error(`unknown status: ${success.status}`);
+              IOToast.error(I18n.t("FIMS.history.exportData.errorToast"));
               break;
           }
           return fimsHistoryExport.success();
