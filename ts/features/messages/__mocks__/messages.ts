@@ -13,7 +13,7 @@ import {
 import { UIMessageId } from "../types";
 
 export const defaultRequestPayload = {
-  pageSize: 8,
+  pageSize: 12,
   filter: { getArchived: false }
 };
 

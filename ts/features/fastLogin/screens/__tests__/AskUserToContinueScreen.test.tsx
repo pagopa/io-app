@@ -20,7 +20,7 @@ const secondaryActionButtonTitle = "Cancel";
 const defaultProps = {
   title: "Test title",
   subtitle: "Test subtitle",
-  pictogramName: "timeout" as IOPictograms,
+  pictogramName: "timing" as IOPictograms,
   primaryAction: {
     label: primaryActionButtonTitle,
     accessibilityLabel: primaryActionButtonTitle,

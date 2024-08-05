@@ -97,6 +97,9 @@ const WalletPaymentInputNoticeNumberScreen = () => {
                 accessibilityLabel={I18n.t(
                   "wallet.payment.manual.noticeNumber.placeholder"
                 )}
+                errorMessage={I18n.t(
+                  "wallet.payment.manual.noticeNumber.validationError"
+                )}
                 value={inputState.noticeNumberText}
                 icon="docPaymentCode"
                 onChangeText={value =>

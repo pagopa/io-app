@@ -2,20 +2,24 @@ import {
   ContentWrapper,
   IOColors,
   IOSpacingScale,
+  IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue
+} from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { LayoutChangeEvent, StyleSheet, View } from "react-native";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { useIOSelector } from "../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import {
   PaymentCard,
   PaymentCardComponentProps
 } from "../../common/components/PaymentCard";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 type Props = {
   card: PaymentCardComponentProps;
@@ -31,33 +35,61 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
   children
 }: React.PropsWithChildren<Props>) => {
   const isDSenabled = useIOSelector(isDesignSystemEnabledSelector);
+  const insets = useSafeAreaInsets();
+  const translationY = useSharedValue(0);
+  const [titleHeight, setTitleHeight] = React.useState(0);
   const blueHeaderColor = isDSenabled ? IOColors["blueIO-600"] : IOColors.blue;
 
+  useHeaderSecondLevel({
+    title: headerTitle,
+    backgroundColor: blueHeaderColor,
+    variant: "contrast",
+    faqCategories: ["wallet_methods"],
+    supportRequest: true,
+    transparent: true,
+    scrollValues: {
+      contentOffsetY: translationY,
+      triggerOffset: titleHeight
+    }
+  });
+
+  const scrollHandler = useAnimatedScrollHandler(event => {
+    // eslint-disable-next-line functional/immutable-data
+    translationY.value = event.contentOffset.y;
+  });
+
+  const getTitleHeight = (event: LayoutChangeEvent) => {
+    const { height } = event.nativeEvent.layout;
+    if (titleHeight === 0) {
+      setTitleHeight(height - insets.top - IOVisualCostants.headerHeight);
+    }
+  };
+
   return (
-    <BaseScreenComponent
-      contextualHelp={emptyContextualHelp}
-      headerTitle={headerTitle}
-      faqCategories={["wallet_methods"]}
-      goBack={true}
-      titleColor="white"
-      dark={true}
-      headerBackgroundColor={blueHeaderColor}
+    <Animated.ScrollView
+      onScroll={scrollHandler}
+      scrollEventThrottle={8}
+      snapToOffsets={[0, titleHeight]}
+      snapToEnd={false}
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingBottom: 48,
+        backgroundColor: IOColors.white
+      }}
     >
       <FocusAwareStatusBar
         backgroundColor={blueHeaderColor}
         barStyle="light-content"
       />
-      <ScrollView>
-        <View style={[styles.blueHeader, { backgroundColor: blueHeaderColor }]}>
-          <View style={styles.cardContainer}>
-            <PaymentCard {...card} />
-          </View>
+      <View style={[styles.blueHeader, { backgroundColor: blueHeaderColor }]}>
+        <View style={styles.cardContainer} onLayout={getTitleHeight}>
+          <PaymentCard {...card} />
         </View>
-        <VSpacer size={24} />
-        <ContentWrapper>{children}</ContentWrapper>
-        <VSpacer size={40} />
-      </ScrollView>
-    </BaseScreenComponent>
+      </View>
+      <VSpacer size={24} />
+      <ContentWrapper>{children}</ContentWrapper>
+      <VSpacer size={40} />
+    </Animated.ScrollView>
   );
 };
 
@@ -72,7 +104,7 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   blueHeader: {
-    paddingTop: "75%",
+    paddingTop: "105%",
     marginTop: "-75%",
     marginBottom: "15%"
   }
