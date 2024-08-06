@@ -32,9 +32,6 @@ import { isDevEnv } from "../../utils/environment";
 import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
 import { notificationsReducer } from "../../features/pushNotifications/store/reducers";
 import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
-import { itwIssuanceInitialState } from "../../features/itwallet/issuance/store/reducers";
-import { itwCredentialsInitialState } from "../../features/itwallet/credentials/store/reducers";
-import { itwLifecycleInitialState } from "../../features/itwallet/lifecycle/store/reducers";
 import { itwIdentificationInitialState } from "../../features/itwallet/identification/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
@@ -254,15 +251,12 @@ export function createRootReducer(
               },
               // eslint-disable-next-line no-underscore-dangle
               _persist: state.features._persist,
+              // IT Wallet must be kept
               itWallet: {
                 identification: itwIdentificationInitialState,
-                issuance: itwIssuanceInitialState,
-                lifecycle: itwLifecycleInitialState,
-                credentials: {
-                  ...itwCredentialsInitialState,
-                  // eslint-disable-next-line no-underscore-dangle
-                  _persist: state.features.itWallet.credentials._persist
-                },
+                issuance: state.features.itWallet.issuance,
+                lifecycle: state.features.itWallet.lifecycle,
+                credentials: state.features.itWallet.credentials,
                 // eslint-disable-next-line no-underscore-dangle
                 _persist: state.features.itWallet._persist
               }
