@@ -7,7 +7,7 @@ import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
 import { itwCredentialsRemove, itwCredentialsStore } from "../../actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { itwLifecycleWalletReset } from "../../../../lifecycle/store/actions";
+import { itwLifecycleReducersReset } from "../../../../lifecycle/store/actions";
 
 const curriedAppReducer =
   (action: Action) => (state: GlobalState | undefined) =>
@@ -98,7 +98,7 @@ describe("ITW credentials reducer", () => {
       curriedAppReducer(applicationChangeState("active")),
       curriedAppReducer(itwCredentialsStore(mockedEid)),
       curriedAppReducer(itwCredentialsStore(mockedCredential)),
-      curriedAppReducer(itwLifecycleWalletReset())
+      curriedAppReducer(itwLifecycleReducersReset())
     );
 
     expect(targetSate.features.itWallet.credentials).toEqual({

@@ -6,8 +6,7 @@ import { Errors } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import {
   checkWalletInstanceStateSaga,
-  getAttestationOrResetWalletInstance,
-  handleWalletInstanceReset
+  getAttestationOrResetWalletInstance
 } from "../checkWalletInstanceStateSaga";
 import { ItwLifecycleState } from "../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -15,6 +14,7 @@ import { getAttestation } from "../../../common/utils/itwAttestationUtils";
 import { ensureIntegrityServiceIsReady } from "../../../common/utils/itwIntegrityUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { sessionTokenSelector } from "../../../../../store/reducers/authentication";
+import { handleWalletInstanceReset } from "../handleWalletInstanceResetSaga";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({
   deleteKey: jest.fn

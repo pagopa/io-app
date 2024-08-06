@@ -13,7 +13,6 @@ import {
   itwLifecycleIsOperationalSelector,
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
-import { walletRemoveCardsByType } from "../../../newWallet/store/actions/cards";
 
 export const ItwLifecycleSection = () => {
   const dispatch = useIODispatch();
@@ -23,7 +22,6 @@ export const ItwLifecycleSection = () => {
 
   const resetWalletInstance = () => {
     dispatch(itwLifecycleWalletReset());
-    dispatch(walletRemoveCardsByType("itw"));
   };
 
   const getLifecycleStateLabel = () => {
