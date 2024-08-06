@@ -13,15 +13,20 @@ import {
   fimsHistoryToUndefinedSelector,
   isFimsHistoryLoadingSelector
 } from "../store/selectors";
+import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
 
 export const FimsHistoryScreen = () => {
   const dispatch = useIODispatch();
+
+  const requiresAppUpdate = useIOSelector(fimsRequiresAppUpdateSelector);
   const isLoading = useIOSelector(isFimsHistoryLoadingSelector);
   const consents = useIOSelector(fimsHistoryToUndefinedSelector);
 
   React.useEffect(() => {
-    dispatch(fimsHistoryGet.request({ shouldReloadFromScratch: true }));
-  }, [dispatch]);
+    if (!requiresAppUpdate) {
+      dispatch(fimsHistoryGet.request({ shouldReloadFromScratch: true }));
+    }
+  }, [dispatch, requiresAppUpdate]);
 
   const fetchMore = React.useCallback(() => {
     if (consents?.continuationToken) {
@@ -43,6 +48,9 @@ export const FimsHistoryScreen = () => {
     title: I18n.t("FIMS.history.historyScreen.header"),
     supportRequest: true
   });
+  if (requiresAppUpdate) {
+    return null;
+  }
   return (
     <>
       <SafeAreaView>

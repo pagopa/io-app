@@ -22,6 +22,7 @@ import {
   fimsErrorStateSelector,
   fimsLoadingStateSelector
 } from "../store/selectors";
+import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
 
 export type FimsFlowHandlerScreenRouteParams = { ctaUrl: string };
 
@@ -36,6 +37,7 @@ export const FimsFlowHandlerScreen = (
   const { ctaUrl } = props.route.params;
   const dispatch = useIODispatch();
 
+  const requiresAppUpdate = useIOSelector(fimsRequiresAppUpdateSelector);
   const loadingState = useIOSelector(fimsLoadingStateSelector);
   const consentsPot = useIOSelector(fimsConsentsDataSelector);
   const errorState = useIOSelector(fimsErrorStateSelector);
@@ -58,10 +60,14 @@ export const FimsFlowHandlerScreen = (
   });
 
   React.useEffect(() => {
-    if (ctaUrl) {
+    if (ctaUrl && !requiresAppUpdate) {
       dispatch(fimsGetConsentsListAction.request({ ctaUrl }));
     }
-  }, [ctaUrl, dispatch]);
+  }, [ctaUrl, dispatch, requiresAppUpdate]);
+
+  if (requiresAppUpdate) {
+    return null;
+  }
 
   if (errorState !== undefined) {
     return <FimsErrorBody title={errorState} />;
