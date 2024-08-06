@@ -14,6 +14,8 @@ import {
   isFimsHistoryLoadingSelector
 } from "../store/selectors";
 import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { openAppStoreUrl } from "../../../../utils/url";
 
 export const FimsHistoryScreen = () => {
   const dispatch = useIODispatch();
@@ -49,7 +51,17 @@ export const FimsHistoryScreen = () => {
     supportRequest: true
   });
   if (requiresAppUpdate) {
-    return null;
+    return (
+      <OperationResultScreenContent
+        isHeaderVisible
+        title={I18n.t("titleUpdateAppAlert")}
+        pictogram="umbrellaNew"
+        action={{
+          label: I18n.t("btnUpdateApp"),
+          onPress: () => openAppStoreUrl
+        }}
+      />
+    );
   }
   return (
     <>

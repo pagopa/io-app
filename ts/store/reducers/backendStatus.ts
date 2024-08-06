@@ -267,12 +267,15 @@ export const isFIMSEnabledSelector = createSelector(
 );
 
 export const fimsRequiresAppUpdateSelector = (state: GlobalState) =>
-  pipe(state, backendStatusSelector, backendStatus =>
-    isPropertyWithMinAppVersionEnabled({
-      backendStatus,
-      mainLocalFlag: true,
-      configPropertyName: "fims"
-    })
+  pipe(
+    state,
+    backendStatusSelector,
+    backendStatus =>
+      !isPropertyWithMinAppVersionEnabled({
+        backendStatus,
+        mainLocalFlag: true,
+        configPropertyName: "fims"
+      })
   );
 
 export const fimsDomainSelector = createSelector(

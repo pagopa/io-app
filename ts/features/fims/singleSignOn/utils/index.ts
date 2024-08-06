@@ -1,11 +1,7 @@
-import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ActionType } from "typesafe-actions";
 import { FimsFlowStateTags, FimsSSOState } from "../store/reducers";
 import { startApplicationInitialization } from "../../../../store/actions/application";
-import { GlobalState } from "../../../../store/reducers/types";
-import { backendStatusSelector } from "../../../../store/reducers/backendStatus";
-import { isPropertyWithMinAppVersionEnabled } from "../../../../store/reducers/featureFlagWithMinAppVersionStatus";
 
 export const foldFimsFlowState = <A>(
   flowState: FimsFlowStateTags,
