@@ -68,6 +68,10 @@ export type NfcEnabled = {
   type: "nfc-enabled";
 };
 
+export type Abort = {
+  type: "abort";
+};
+
 export type EidIssuanceEvents =
   | Reset
   | Start
@@ -84,4 +88,5 @@ export type EidIssuanceEvents =
   | Back
   | Close
   | NfcEnabled
+  | Abort
   | ErrorActorEvent;

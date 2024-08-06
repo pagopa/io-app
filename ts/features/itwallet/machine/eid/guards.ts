@@ -67,7 +67,6 @@ export const createEidIssuanceGuardsImplementation = (
   },
 
   isOperationAborted: ({ event }: { event: EidIssuanceEvents }) =>
-    "error" in event &&
-    event.error instanceof Errors.AuthorizationError &&
-    event.error.message === "CieIdOperationAborted"
+    // @ts-expect-error update io-react-native-wallet
+    "error" in event && event.error instanceof Errors.OperationAbortedError
 });

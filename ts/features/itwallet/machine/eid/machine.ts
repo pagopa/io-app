@@ -1,5 +1,4 @@
 import { assign, fromPromise, setup, or } from "xstate5";
-import { noop } from "lodash";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { WalletAttestationResult } from "../../common/utils/itwAttestationUtils";
 import { assert } from "../../../../utils/assert";
@@ -47,7 +46,8 @@ export const itwEidIssuanceMachine = setup({
     requestAssistance: notImplemented,
     setWalletInstanceToOperational: notImplemented,
     setWalletInstanceToValid: notImplemented,
-    disposeWalletAttestation: notImplemented
+    disposeWalletAttestation: notImplemented,
+    abortIdentification: notImplemented
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
@@ -310,12 +310,7 @@ export const itwEidIssuanceMachine = setup({
       states: {
         RequestingEid: {
           on: {
-            back: {
-              actions: ({ context }) =>
-                context.identification?.mode === "cieId"
-                  ? context.identification.abortController.abort()
-                  : noop()
-            }
+            abort: { actions: "abortIdentification" }
           },
           tags: [ItwTags.Loading],
           invoke: {

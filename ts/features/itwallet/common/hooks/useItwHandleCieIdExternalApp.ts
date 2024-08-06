@@ -37,7 +37,7 @@ export function useItwHandleCieIdExternalApp() {
       appState === "active" &&
       !callbackUrl
     ) {
-      machineRef.send({ type: "back" });
+      machineRef.send({ type: "abort" });
     }
     // eslint-disable-next-line functional/immutable-data
     prevAppState.current = appState;

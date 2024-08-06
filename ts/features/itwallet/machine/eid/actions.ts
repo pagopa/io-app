@@ -147,5 +147,11 @@ export const createEidIssuanceActionsImplementation = (
 
   requestAssistance: () => {},
 
-  disposeWalletAttestation
+  disposeWalletAttestation,
+
+  abortIdentification: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    context.identification?.abortController?.abort();
+  }
 });

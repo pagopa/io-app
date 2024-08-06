@@ -199,9 +199,7 @@ const startAndCompleteFullAuthFlow = async ({
       redirectUri,
       authorizationContext,
       // @ts-expect-error update io-react-native-wallet
-      identification.mode === "cieId"
-        ? identification.abortController.signal
-        : undefined
+      identification.abortController?.signal
     );
 
   const { accessToken, dPoPContext } =
