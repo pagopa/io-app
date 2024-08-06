@@ -25,6 +25,7 @@ import {
   isArchivingInSchedulingModeSelector
 } from "../../features/messages/store/reducers/archiving";
 import { resetMessageArchivingAction } from "../../features/messages/store/actions/archiving";
+import { useStatusAlertProps } from "../../components/StatusMessages";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
@@ -80,6 +81,7 @@ type Props = {
  * THIS COMPONENT WILL BE REMOVED ONCE REACT NAVIGATION WILL BE UPGRADED TO V6
  */
 export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
+  const alertProps = useStatusAlertProps(currentRouteName);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const store = useIOStore();
@@ -238,9 +240,13 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   );
 
   const headerProps: HeaderFirstLevelProps = useMemo(() => {
+    const commonProp = {
+      ignoreSafeAreaMargin: alertProps !== undefined
+    };
     switch (currentRouteName) {
       case SERVICES_ROUTES.SERVICES_HOME:
         return {
+          ...commonProp,
           title: I18n.t("services.title"),
           type: "threeActions",
           firstAction: helpAction,
@@ -251,6 +257,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
       // and isSettingsVisibleAndHideProfileSelector FF will be deleted
       case ROUTES.PROFILE_MAIN:
         return {
+          ...commonProp,
           title: I18n.t("profile.main.title"),
           type: "singleAction",
           firstAction: helpAction
@@ -258,6 +265,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
       case ROUTES.WALLET_HOME:
         if (isNewWalletSectionEnabled) {
           return {
+            ...commonProp,
             title: I18n.t("wallet.wallet"),
             firstAction: helpAction,
             testID: "wallet-home-header-title",
@@ -270,6 +278,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           };
         }
         return {
+          ...commonProp,
           title: I18n.t("wallet.wallet"),
           firstAction: helpAction,
           backgroundColor: "dark",
@@ -287,6 +296,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         };
       case ROUTES.PAYMENTS_HOME:
         return {
+          ...commonProp,
           title: I18n.t("features.payments.title"),
           firstAction: helpAction,
           ...(isSettingsVisibleAndHideProfile
@@ -299,6 +309,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
       case MESSAGES_ROUTES.MESSAGES_HOME:
       default:
         return {
+          ...commonProp,
           skipHeaderAutofocus: true,
           title: I18n.t("messages.contentTitle"),
           firstAction: helpAction,
@@ -315,16 +326,17 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         };
     }
   }, [
+    alertProps,
     currentRouteName,
     helpAction,
+    settingsActionInServicesSection,
+    searchInstitutionAction,
     isNewWalletSectionEnabled,
     isSettingsVisibleAndHideProfile,
     settingsAction,
     walletAction,
-    searchMessageAction,
-    searchInstitutionAction,
     settingsActionInMessageSection,
-    settingsActionInServicesSection
+    searchMessageAction
   ]);
 
   return (

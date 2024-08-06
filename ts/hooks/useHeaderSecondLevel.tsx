@@ -8,6 +8,7 @@ import {
 } from "../components/screens/BaseScreenComponent";
 import I18n from "../i18n";
 import { FAQsCategoriesType } from "../utils/faq";
+import { useStatusAlertProps } from "../components/StatusMessages";
 import { useStartSupportRequest } from "./useStartSupportRequest";
 
 type ScrollValues = React.ComponentProps<
@@ -81,6 +82,7 @@ export const useHeaderSecondLevel = ({
   variant,
   backgroundColor
 }: HeaderSecondLevelHookProps) => {
+  const alertProps = useStatusAlertProps();
   const startSupportRequest = useStartSupportRequest({
     faqCategories,
     contextualHelpMarkdown,
@@ -91,13 +93,14 @@ export const useHeaderSecondLevel = ({
   const headerComponentProps: HeaderProps = React.useMemo(() => {
     const baseProps = canGoBack
       ? {
+          ignoreSafeAreaMargin: alertProps !== undefined,
           title,
           backAccessibilityLabel:
             backAccessibilityLabel ?? I18n.t("global.buttons.back"),
           backTestID,
           goBack: goBack ?? navigation.goBack
         }
-      : { title };
+      : { title, ignoreSafeAreaMargin: alertProps !== undefined };
 
     if (supportRequest) {
       const helpAction = {
@@ -140,6 +143,7 @@ export const useHeaderSecondLevel = ({
       type: "base"
     };
   }, [
+    alertProps,
     canGoBack,
     title,
     backAccessibilityLabel,

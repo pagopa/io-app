@@ -69,7 +69,7 @@ export const sectionStatusSelector = (sectionStatusKey: SectionStatusKey) =>
     (backendStatus): SectionStatus | undefined =>
       pipe(
         backendStatus,
-        O.map(bs => bs.sections[sectionStatusKey]),
+        O.map(bs => (bs.sections ? bs.sections[sectionStatusKey] : undefined)),
         O.toUndefined
       )
   );
@@ -550,7 +550,9 @@ const sectionStatusUncachedSelector = (
 ) =>
   pipe(
     state.backendStatus.status,
-    O.chainNullableK(status => status.sections[sectionStatusKey])
+    O.chainNullableK(status =>
+      status.sections ? status.sections[sectionStatusKey] : undefined
+    )
   );
 
 const statusMessagesSelector = createSelector(

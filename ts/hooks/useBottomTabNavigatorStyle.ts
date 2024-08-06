@@ -31,7 +31,7 @@ export const useBottomTabNavigatorStyle = () => {
           width: variables.footerShadowOffsetWidth,
           height: variables.footerShadowOffsetHeight
         },
-        zIndex: 999,
+        zIndex: 1,
         shadowOpacity: variables.footerShadowOpacity,
         shadowRadius: variables.footerShadowRadius,
         // Android shadow
