@@ -129,7 +129,7 @@ const modulePaymentNoticeFromPaymentStatus = (
         payablePayment.importoSingoloVersamento,
         centsToAmount,
         formatNumberAmount,
-        formattedAmount => `${formattedAmount} €`
+        formattedAmountNumber => `${formattedAmountNumber} €`
       );
       return (
         <ModulePaymentNotice
