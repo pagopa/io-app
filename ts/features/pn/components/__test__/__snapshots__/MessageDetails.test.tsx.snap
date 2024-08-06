@@ -898,17 +898,11 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               </View>
                             </View>
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
                               snapPoints={
@@ -1104,17 +1098,11 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               </View>
                             </View>
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
                               snapPoints={

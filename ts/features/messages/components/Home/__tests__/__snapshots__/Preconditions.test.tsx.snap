@@ -332,17 +332,11 @@ exports[`Preconditions should match snapshot with mocked components 1`] = `
                       }
                     >
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         onDismiss={[Function]}

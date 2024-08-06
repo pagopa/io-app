@@ -1112,17 +1112,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
                               snapPoints={
@@ -2700,17 +2694,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
                               snapPoints={
@@ -4289,17 +4277,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
                               snapPoints={
@@ -5878,17 +5860,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
                               snapPoints={
@@ -7759,17 +7735,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
                               snapPoints={
