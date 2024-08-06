@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -54,15 +53,6 @@ export const thirdPartyFromIdSelector = (
   ioMessageId: UIMessageId
 ) => state.entities.messages.thirdPartyById[ioMessageId] ?? pot.none;
 
-export const isThirdPartyMessageSelector = (
-  state: GlobalState,
-  ioMessageId: UIMessageId
-) =>
-  pipe(
-    state.entities.messages.thirdPartyById[ioMessageId],
-    thirdPartyMessageOrUndefined => !!thirdPartyMessageOrUndefined
-  );
-
 export const messageTitleSelector = (
   state: GlobalState,
   ioMessageId: UIMessageId
@@ -102,25 +92,6 @@ export const thirdPartyMessageAttachments = (
     ),
     O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => RA.empty)
   );
-
-export const thirdPartyMessageAttachment =
-  (state: GlobalState) =>
-  (ioMessageId: UIMessageId) =>
-  (thirdPartyMessageAttachmentId: string): O.Option<ThirdPartyAttachment> =>
-    pipe(
-      thirdPartyFromIdSelector(state, ioMessageId),
-      pot.toOption,
-      O.chainNullableK(
-        thirdPartyMessage => thirdPartyMessage.third_party_message.attachments
-      ),
-      O.chainNullableK(thirdPartyMessageAttachments =>
-        thirdPartyMessageAttachments.find(
-          thirdPartyMessageAttachment =>
-            thirdPartyMessageAttachment.id ===
-            (thirdPartyMessageAttachmentId as string as NonEmptyString)
-        )
-      )
-    );
 
 const messageContentSelector = <T>(
   state: GlobalState,

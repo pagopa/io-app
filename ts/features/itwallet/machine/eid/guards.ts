@@ -7,6 +7,7 @@ import * as O from "fp-ts/lib/Option";
 import { extractFiscalCode } from "../../common/utils/itwClaimsUtils";
 import { useIOStore } from "../../../../store/hooks";
 import { profileFiscalCodeSelector } from "../../../../store/reducers/profile";
+import { ItwSessionExpiredError } from "../../api/client";
 import { EidIssuanceEvents } from "./events";
 import { Context } from "./context";
 
@@ -65,6 +66,9 @@ export const createEidIssuanceGuardsImplementation = (
 
     return authenticatedUserFiscalCode === eidFiscalCode;
   },
+
+  isSessionExpired: ({ event }: { event: EidIssuanceEvents }) =>
+    "error" in event && event.error instanceof ItwSessionExpiredError,
 
   isOperationAborted: ({ event }: { event: EidIssuanceEvents }) =>
     // @ts-expect-error update io-react-native-wallet

@@ -14,7 +14,7 @@ import {
   getNotificationStatusInfo,
   notificationStatusToTimelineStatus
 } from "../utils";
-import { trackPNTimelineExternal } from "../analytics";
+import { trackPNShowTimeline, trackPNTimelineExternal } from "../analytics";
 import { handleItemOnPress } from "../../../utils/url";
 import { useIOSelector } from "../../../store/hooks";
 import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus";
@@ -81,7 +81,10 @@ export const TimelineListItem = ({ history }: TimelineListItemProps) => {
         accessibilityLabel={I18n.t("features.pn.details.timeline.menuTitle")}
         icon="history"
         label={I18n.t("features.pn.details.timeline.menuTitle")}
-        onPress={present}
+        onPress={() => {
+          trackPNShowTimeline();
+          present();
+        }}
         variant="primary"
       />
       {bottomSheet}
