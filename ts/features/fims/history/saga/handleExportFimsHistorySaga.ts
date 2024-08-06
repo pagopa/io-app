@@ -29,9 +29,9 @@ export function* handleExportFimsHistorySaga(
     yield* pipe(
       exportHistoryResult,
       E.foldW(
-        _failure => {
+        failure => {
           IOToast.error(I18n.t("FIMS.history.exportData.errorToast"));
-          return put(fimsHistoryExport.failure("FAIL"));
+          return put(fimsHistoryExport.failure(JSON.stringify(failure)));
         },
         success => {
           switch (success.status) {
