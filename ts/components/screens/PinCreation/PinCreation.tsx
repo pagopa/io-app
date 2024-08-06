@@ -225,9 +225,9 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
       <View style={[IOStyles.flex, IOStyles.centerJustified]}>
         <VSpacer size={8} />
         {/*
-          if the device height is > 780 and the OS isn't
-          Android, then the pictogram will be visible,
-          otherwise it will not be visible
+          If the device height is less than MIN_HEIGHT_TO_SHOW_FULL_RENDER and the OS is
+          Android, then the pictogram will not be visible.
+          Otherwise, the pictogram will be visible.
           */}
         {!(
           Dimensions.get("screen").height < MIN_HEIGHT_TO_SHOW_FULL_RENDER &&
