@@ -153,6 +153,7 @@ import {
 } from "./startup/watchCheckSessionSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
+import { checkItWalletIdentitySaga } from "./startup/checkItWalletIdentitySaga";
 import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
@@ -514,6 +515,13 @@ export function* initializeApplicationSaga(
   // Start the notification installation update as early as
   // possible to begin receiving push notifications
   yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
+
+  // Only call this saga if the user was logged out.
+  // This saga is called before getting authenticated to avoid flashing the home screen
+  // when the user is taken to the alert screen in case of identities that don't match.
+  if (!previousSessionToken) {
+    yield* call(checkItWalletIdentitySaga);
+  }
 
   yield* put(startupLoadSuccess(StartupStatusEnum.AUTHENTICATED));
   //
