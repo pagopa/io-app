@@ -262,7 +262,6 @@ startup:
   profileEnabled: "Benutzerprofil aktiviert"
   userDeletePendingAlert:
     title: "Profil wird gelöscht"
-    message: "Wenn du deine Meinung geändert hast, kannst du deinen Antrag im Abschnitt Datenschutz deines Profils zurückziehen."
     cta_2: "Ignorieren"
   contextualHelp:
     title: "Initialisierungsprobleme?"
