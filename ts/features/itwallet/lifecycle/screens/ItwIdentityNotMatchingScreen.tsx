@@ -20,7 +20,7 @@ export const ItwIdentityNotMatchingScreen = () => {
   };
 
   const handleCancel = () => {
-    dispatch(logoutRequest({ withApiCall: false }));
+    dispatch(logoutRequest({ withApiCall: true }));
   };
 
   return (
