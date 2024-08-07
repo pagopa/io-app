@@ -1,5 +1,6 @@
 import {
   ActionProp,
+  ButtonLinkProps,
   ButtonSolidProps,
   GradientBottomActions,
   IOSpacer,
@@ -35,7 +36,8 @@ type BaseProps = {
   title?: string;
   headerAction?: ActionProp;
   children?: React.ReactNode;
-  footerCta?: Omit<ButtonSolidProps, "fullWidth">;
+  footerCtaPrimary?: Omit<ButtonSolidProps, "fullWidth">;
+  footerCtaSecondary?: ButtonLinkProps;
 };
 
 export type BonusScreenComponentProps = BaseProps &
@@ -54,7 +56,8 @@ const BonusCardScreenComponent = ({
   title,
   headerAction,
   children,
-  footerCta,
+  footerCtaPrimary,
+  footerCtaSecondary,
   faqCategories,
   contextualHelpMarkdown,
   contextualHelp,
@@ -107,9 +110,10 @@ const BonusCardScreenComponent = ({
     })
   }));
 
-  const footerComponent = footerCta && (
+  const footerComponent = (footerCtaPrimary || footerCtaSecondary) && (
     <GradientBottomActions
-      primaryActionProps={footerCta}
+      primaryActionProps={footerCtaPrimary}
+      secondaryActionProps={footerCtaSecondary}
       transitionAnimStyle={footerGradientOpacityTransition}
       dimensions={{
         bottomMargin,

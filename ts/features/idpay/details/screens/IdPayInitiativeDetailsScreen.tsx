@@ -1,8 +1,10 @@
 import {
   ButtonSolid,
   ButtonSolidProps,
+  Chip,
   ContentWrapper,
   Pictogram,
+  Tag,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -49,6 +51,7 @@ import {
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import { BonusStatus } from "../../../../components/BonusCard/type";
+import { format } from "../../../../utils/dates";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -115,24 +118,6 @@ const IdPayInitiativeDetailsScreen = () => {
       </BonusCardScreenComponent>
     );
   }
-
-  const getInitiativeStatus = (initiative: InitiativeDTO): BonusStatus => {
-    if (initiative.status === StatusEnum.UNSUBSCRIBED) {
-      return "REMOVED";
-    }
-
-    const now = new Date();
-    if (now > initiative.endDate) {
-      return "EXPIRED";
-    }
-
-    const next7Days = new Date(new Date().setDate(new Date().getDate() + 7));
-    if (next7Days > initiative.endDate) {
-      return "EXPIRING";
-    }
-
-    return "ACTIVE";
-  };
 
   const getInitiativeCounters = (
     initiative: InitiativeDTO
@@ -303,7 +288,6 @@ const IdPayInitiativeDetailsScreen = () => {
   const {
     initiativeName,
     organizationName,
-    endDate,
     lastCounterUpdate,
     initiativeRewardType,
     logoURL
@@ -316,14 +300,13 @@ const IdPayInitiativeDetailsScreen = () => {
         onPress: navigateToBeneficiaryDetails,
         accessibilityLabel: "info"
       }}
-      logoUri={{ uri: logoURL }}
+      logoUris={[{ uri: logoURL }]}
       name={initiativeName || ""}
       organizationName={organizationName || ""}
-      endDate={endDate}
-      status={getInitiativeStatus(initiative)}
+      status={<IdPayCardStatus now={new Date()} initiative={initiative} />}
       contextualHelp={emptyContextualHelp}
       counters={getInitiativeCounters(initiative)}
-      footerCta={getInitiativeFooterProps(initiativeRewardType)}
+      footerCtaPrimary={getInitiativeFooterProps(initiativeRewardType)}
     >
       <IdPayInitiativeLastUpdateCounter lastUpdateDate={lastCounterUpdate} />
       {getInitiativeDetailsContent(initiative)}
@@ -343,3 +326,61 @@ const styles = StyleSheet.create({
 });
 
 export { IdPayInitiativeDetailsScreen };
+
+export function IdPayCardStatus({
+  now,
+  initiative
+}: {
+  now: Date;
+  initiative: InitiativeDTO;
+}) {
+  const getInitiativeStatus = (): BonusStatus => {
+    if (initiative.status === StatusEnum.UNSUBSCRIBED) {
+      return "REMOVED";
+    }
+
+    if (now > initiative.endDate) {
+      return "EXPIRED";
+    }
+
+    const next7Days = new Date(new Date(now).setDate(now.getDate() + 7));
+    if (next7Days > initiative.endDate) {
+      return "EXPIRING";
+    }
+
+    return "ACTIVE";
+  };
+
+  switch (getInitiativeStatus()) {
+    case "ACTIVE":
+      return (
+        <Chip color="grey-650">
+          {I18n.t("bonusCard.validUntil", {
+            endDate: format(initiative.endDate, "DD/MM/YY")
+          })}
+        </Chip>
+      );
+    case "EXPIRING":
+      return (
+        <Tag
+          variant="warning"
+          text={I18n.t("bonusCard.expiring", {
+            endDate: format(initiative.endDate, "DD/MM/YY")
+          })}
+        />
+      );
+    case "EXPIRED":
+      return (
+        <Tag
+          variant="error"
+          text={I18n.t("bonusCard.expired", {
+            endDate: format(initiative.endDate, "DD/MM/YY")
+          })}
+        />
+      );
+    case "PAUSED":
+      return <Tag variant="info" text={I18n.t("bonusCard.paused")} />;
+    case "REMOVED":
+      return <Tag variant="error" text={I18n.t("bonusCard.removed")} />;
+  }
+}

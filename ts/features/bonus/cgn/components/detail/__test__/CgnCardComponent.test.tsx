@@ -10,10 +10,10 @@ import {
   CardRevoked,
   StatusEnum as CgnRevokedStatusEnum
 } from "../../../../../../../definitions/cgn/CardRevoked";
-import CgnCardComponent from "../CgnCardComponent";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { CgnCardStatus } from "../../../screens/CgnDetailScreen";
 
 const cgnStatusActivated: Card = {
   status: CgnActivatedStatusEnum.ACTIVATED,
@@ -44,8 +44,6 @@ describe("CgnCardComponent", () => {
     const component = getComponent(cgnStatusActivated);
 
     expect(component).not.toBeNull();
-    const webView = component.queryByTestId("background-webview");
-    expect(webView).not.toBeNull();
 
     const validityDate = component.queryByTestId("card-bottom-content");
     expect(validityDate).not.toBeNull();
@@ -61,8 +59,6 @@ describe("CgnCardComponent", () => {
     const component = getComponent(cgnStatusRevoked);
 
     expect(component).not.toBeNull();
-    const webView = component.queryByTestId("background-webview");
-    expect(webView).not.toBeNull();
 
     const validityDate = component.queryByTestId("card-bottom-content");
     expect(validityDate).toBeNull();
@@ -78,8 +74,6 @@ describe("CgnCardComponent", () => {
     const component = getComponent(cgnStatusExpired);
 
     expect(component).not.toBeNull();
-    const webView = component.queryByTestId("background-webview");
-    expect(webView).not.toBeNull();
 
     const validityDate = component.queryByTestId("card-bottom-content");
     expect(validityDate).toBeNull();
@@ -95,8 +89,6 @@ describe("CgnCardComponent", () => {
     const component = getComponent(cgnStatusPending);
 
     expect(component).not.toBeNull();
-    const webView = component.queryByTestId("background-webview");
-    expect(webView).not.toBeNull();
 
     const validityDate = component.queryByTestId("card-bottom-content");
     expect(validityDate).toBeNull();
@@ -110,14 +102,13 @@ describe("CgnCardComponent", () => {
 });
 
 const getComponent = (card: Card) => {
-  const onLoadEnd = jest.fn();
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore<GlobalState>();
 
   const store = mockStore(globalState);
   return render(
     <Provider store={store}>
-      <CgnCardComponent cgnDetails={card} onCardLoadEnd={onLoadEnd} />
+      <CgnCardStatus card={card} />
     </Provider>
   );
 };

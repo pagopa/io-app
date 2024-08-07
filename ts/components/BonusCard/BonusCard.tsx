@@ -10,12 +10,15 @@ import React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Placeholder from "rn-placeholder";
+import {
+  heightPercentageToDP,
+  widthPercentageToDP
+} from "react-native-responsive-screen";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { useIOSelector } from "../../store/hooks";
 import { BonusCardCounter } from "./BonusCardCounter";
 import { BonusCardShape } from "./BonusCardShape";
 import { BonusCardStatus } from "./BonusCardStatus";
-import { BonusStatus } from "./type";
 
 type BaseProps = {
   // For devices with small screens you may need to hide the logo to get more space
@@ -23,12 +26,13 @@ type BaseProps = {
 };
 
 type ContentProps = {
-  logoUri?: ImageURISource;
+  logoUris?: Array<ImageURISource | number>;
   name: string;
   organizationName: string;
-  endDate: Date;
-  status: BonusStatus;
+  status: React.ReactNode;
   counters: ReadonlyArray<BonusCardCounter>;
+  cardFooter?: React.ReactNode;
+  cardBackground?: React.ReactNode;
 };
 
 type LoadingStateProps =
@@ -44,19 +48,23 @@ const BonusCardContent = (props: BonusCard) => {
 
   const {
     hideLogo,
-    logoUri,
+    logoUris,
     name,
     organizationName,
-    endDate,
     status,
-    counters
+    counters,
+    cardFooter
   } = props;
 
   return (
     <View style={styles.content} testID="BonusCardContentTestID">
       {!hideLogo && (
         <>
-          <Avatar size="medium" logoUri={logoUri} />
+          <View style={styles.logos}>
+            {logoUris?.map((logoUri, index) => (
+              <Avatar key={index} size="medium" logoUri={logoUri} />
+            ))}
+          </View>
           <VSpacer size={16} />
         </>
       )}
@@ -64,11 +72,15 @@ const BonusCardContent = (props: BonusCard) => {
         {name}
       </H2>
       <VSpacer size={4} />
-      <Label weight="Regular" fontSize="small" style={{ textAlign: "center" }}>
+      <Label
+        weight="Regular"
+        fontSize="small"
+        style={{ textAlign: "center", marginHorizontal: 16 }}
+      >
         {organizationName}
       </Label>
       <VSpacer size={16} />
-      <BonusCardStatus endDate={endDate} status={status} />
+      <BonusCardStatus>{status}</BonusCardStatus>
       <VSpacer size={16} />
       <View style={styles.counters}>
         {counters.map((counter, index) => {
@@ -81,6 +93,7 @@ const BonusCardContent = (props: BonusCard) => {
           );
         })}
       </View>
+      {cardFooter}
     </View>
   );
 };
@@ -103,7 +116,14 @@ export const BonusCard = (props: BonusCard) => {
 
   return (
     <View style={[styles.container, { paddingTop }]}>
-      <BonusCardShape key={shapeKey} />
+      {!props.isLoading && props.cardBackground ? (
+        <>
+          <View style={styles.cardBackground}>{props.cardBackground}</View>
+          <BonusCardShape key={shapeKey} mode="draw-on-top" />
+        </>
+      ) : (
+        <BonusCardShape key={shapeKey} mode="mask" />
+      )}
       <BonusCardContent {...props} />
     </View>
   );
@@ -160,7 +180,8 @@ const BonusCardSkeleton = (props: BaseProps) => {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 8,
-    paddingBottom: 24
+    paddingBottom: 24,
+    overflow: "hidden"
   },
   content: {
     alignItems: "center"
@@ -168,5 +189,14 @@ const styles = StyleSheet.create({
   counters: {
     flexDirection: "row",
     justifyContent: "space-around"
+  },
+  logos: {
+    flexDirection: "row",
+    columnGap: 8
+  },
+  cardBackground: {
+    position: "absolute",
+    width: widthPercentageToDP(100) - 16,
+    height: heightPercentageToDP(100)
   }
 });

@@ -1,12 +1,9 @@
-import { Chip, IOColors, Tag } from "@pagopa/io-app-design-system";
+import { IOColors } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import I18n from "../../i18n";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { format } from "../../utils/dates";
 import { useIOSelector } from "../../store/hooks";
-import { BonusStatus } from "./type";
 
 type LoadingProps = {
   isLoading: true;
@@ -14,8 +11,7 @@ type LoadingProps = {
 
 type BaseProps = {
   isLoading?: never;
-  endDate: Date;
-  status: BonusStatus;
+  children: React.ReactNode;
 };
 
 export type BonusCardStatus = LoadingProps | BaseProps;
@@ -27,48 +23,11 @@ export const BonusCardStatus = (props: BonusCardStatus) =>
     <BonusCardStatusContent {...props} />
   );
 
-export const BonusCardStatusContent = ({ status, endDate }: BaseProps) => {
-  const renderStatusContent = () => {
-    switch (status) {
-      case "ACTIVE":
-        return (
-          <Chip color="grey-650">
-            {I18n.t("bonusCard.validUntil", {
-              endDate: format(endDate, "DD/MM/YY")
-            })}
-          </Chip>
-        );
-      case "EXPIRING":
-        return (
-          <Tag
-            variant="warning"
-            text={I18n.t("bonusCard.expiring", {
-              endDate: format(endDate, "DD/MM/YY")
-            })}
-          />
-        );
-      case "EXPIRED":
-        return (
-          <Tag
-            variant="error"
-            text={I18n.t("bonusCard.expired", {
-              endDate: format(endDate, "DD/MM/YY")
-            })}
-          />
-        );
-      case "PAUSED":
-        return <Tag variant="info" text={I18n.t("bonusCard.paused")} />;
-      case "REMOVED":
-        return <Tag variant="error" text={I18n.t("bonusCard.removed")} />;
-    }
-  };
-
-  return (
-    <View style={styles.container} testID="BonusCardStatusTestID">
-      {renderStatusContent()}
-    </View>
-  );
-};
+export const BonusCardStatusContent = ({ children }: BaseProps) => (
+  <View style={styles.container} testID="BonusCardStatusTestID">
+    {children}
+  </View>
+);
 
 const BonusCardStatusSkeleton = () => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
