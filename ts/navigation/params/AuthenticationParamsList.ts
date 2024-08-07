@@ -1,8 +1,8 @@
-import { ChosenIdentifier } from "../../screens/authentication/NewOptInScreen";
 import { AuthErrorScreenProps } from "../../screens/authentication/AuthErrorScreen";
 import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
 import { CieConsentDataUsageScreenNavigationParams } from "../../screens/authentication/cie/CieConsentDataUsageScreen";
 import { CieWrongCiePinScreenNavigationParams } from "../../screens/authentication/cie/CieWrongCiePinScreen";
+import { ChosenIdentifier } from "../../screens/authentication/OptInScreen";
 import { UnlockAccessProps } from "../../screens/authentication/UnlockAccessComponent";
 import ROUTES from "../routes";
 
