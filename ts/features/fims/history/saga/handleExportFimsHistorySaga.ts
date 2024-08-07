@@ -1,10 +1,7 @@
-import { IOToast } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
-import { constNull, pipe } from "fp-ts/lib/function";
-import { Alert } from "react-native";
+import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import I18n from "../../../../i18n";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { FimsHistoryClient } from "../api/client";
@@ -26,34 +23,25 @@ export function* handleExportFimsHistorySaga(
       action
     )) as SagaCallReturnType<typeof exportHistory>;
 
-    yield* pipe(
+    const resultAction = pipe(
       exportHistoryResult,
       E.foldW(
-        failure => {
-          IOToast.error(I18n.t("FIMS.history.exportData.errorToast"));
-          return put(fimsHistoryExport.failure(JSON.stringify(failure)));
-        },
+        _failure => fimsHistoryExport.failure(),
         success => {
           switch (success.status) {
             case 202:
-              IOToast.success(I18n.t("FIMS.history.exportData.successToast"));
-              break;
+              return fimsHistoryExport.success("SUCCESS");
             case 409:
-              Alert.alert(
-                I18n.t("FIMS.history.exportData.alerts.alreadyExporting.title"),
-                I18n.t("FIMS.history.exportData.alerts.alreadyExporting.body"),
-                [{ text: I18n.t("global.buttons.ok"), onPress: constNull }]
-              );
-              break;
+              return fimsHistoryExport.success("ALREADY_EXPORTING");
             default:
-              IOToast.error(I18n.t("FIMS.history.exportData.errorToast"));
-              break;
+              return fimsHistoryExport.failure();
           }
-          return put(fimsHistoryExport.success());
         }
       )
     );
+
+    yield* put(resultAction);
   } catch (e: any) {
-    yield* put(fimsHistoryExport.failure(e.toString()));
+    yield* put(fimsHistoryExport.failure());
   }
 }

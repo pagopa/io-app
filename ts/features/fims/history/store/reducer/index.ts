@@ -1,16 +1,25 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { ConsentsResponseDTO } from "../../../../../../definitions/fims/ConsentsResponseDTO";
+import {
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../../../../common/model/RemoteValue";
 import { Action } from "../../../../../store/actions/types";
 import { fimsHistoryExport, fimsHistoryGet } from "../actions";
 
+export type FimsExportSuccessStates = "SUCCESS" | "ALREADY_EXPORTING";
+
 export type FimsHistoryState = {
-  isExportingHistory: boolean;
+  historyExportState: RemoteValue<FimsExportSuccessStates, null>;
   consentsList: pot.Pot<ConsentsResponseDTO, string>;
 };
 
 const INITIAL_STATE: FimsHistoryState = {
-  isExportingHistory: false,
+  historyExportState: remoteUndefined,
   consentsList: pot.none
 };
 
@@ -47,13 +56,17 @@ const reducer = (
     case getType(fimsHistoryExport.request):
       return {
         ...state,
-        isExportingHistory: true
+        historyExportState: remoteLoading
       };
     case getType(fimsHistoryExport.success):
+      return {
+        ...state,
+        historyExportState: remoteReady(action.payload)
+      };
     case getType(fimsHistoryExport.failure):
       return {
         ...state,
-        isExportingHistory: false
+        historyExportState: remoteError(null)
       };
   }
   return state;

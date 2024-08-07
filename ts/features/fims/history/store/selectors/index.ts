@@ -23,5 +23,5 @@ export const fimsIsHistoryEnabledSelector = (state: GlobalState) =>
     O.getOrElse(() => false)
   );
 
-export const fimsIsExportingHistorySelector = (state: GlobalState) =>
-  state.features.fims.history.isExportingHistory;
+export const fimsHistoryExportStateSelector = (state: GlobalState) =>
+  state.features.fims.history.historyExportState;

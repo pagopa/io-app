@@ -1,5 +1,6 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { ConsentsResponseDTO } from "../../../../../../definitions/fims/ConsentsResponseDTO";
+import { FimsExportSuccessStates } from "../reducer";
 
 export type FimsHistoryGetPayloadType = {
   shouldReloadFromScratch?: boolean;
@@ -16,7 +17,7 @@ export const fimsHistoryExport = createAsyncAction(
   "FIMS_HISTORY_EXPORT_REQUEST",
   "FIMS_HISTORY_EXPORT_SUCCESS",
   "FIMS_HISTORY_EXPORT_FAILURE"
-)<undefined, undefined, string>();
+)<void, FimsExportSuccessStates, void>();
 
 export type FimsHistoryActions =
   | ActionType<typeof fimsHistoryGet>
