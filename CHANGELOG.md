@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.69.0-rc.0](https://github.com/pagopa/io-app/compare/2.68.0-rc.0...2.69.0-rc.0) (2024-08-07)
+
+
+### Bug Fixes
+
+* [[IABT-1545](https://pagopa.atlassian.net/browse/IABT-1545)] Hide Pictogram on Onboarding Pin Screen on small device ([#6088](https://github.com/pagopa/io-app/issues/6088)) ([c802d1a](https://github.com/pagopa/io-app/commit/c802d1a123f43a6e874f93953518699e0fa7a302))
+* [[IOBP-797](https://pagopa.atlassian.net/browse/IOBP-797)] Hide total amount label if total amount not present ([#6070](https://github.com/pagopa/io-app/issues/6070)) ([e30f8f5](https://github.com/pagopa/io-app/commit/e30f8f56ceb3d180a634d9c4999e5766546fb1bf))
+* [[IOBP-811](https://pagopa.atlassian.net/browse/IOBP-811)] Payment manual input a11y focus crash on android ([#6093](https://github.com/pagopa/io-app/issues/6093)) ([06b4833](https://github.com/pagopa/io-app/commit/06b483361445c4bc8db9be75fc6ebd0bbf7b3e77))
+
+
+### Chores
+
+* [[IOPID-2007](https://pagopa.atlassian.net/browse/IOPID-2007)] Edit latest copy referred to profile ([#6092](https://github.com/pagopa/io-app/issues/6092)) ([a0e3658](https://github.com/pagopa/io-app/commit/a0e365828da4bd6b8b55e76e2b51fb10451c22fe))
+* **Cross:** update `codiceIPA` from `PCM` to `5N2TR557` ([#6090](https://github.com/pagopa/io-app/issues/6090)) ([f9f801a](https://github.com/pagopa/io-app/commit/f9f801a904ffd6621100c4d40e783061f09ed10d))
+* [[IOPID-2067](https://pagopa.atlassian.net/browse/IOPID-2067),[IOPID-2068](https://pagopa.atlassian.net/browse/IOPID-2068)] Cie Accessibility fix ([#6089](https://github.com/pagopa/io-app/issues/6089)) ([082448c](https://github.com/pagopa/io-app/commit/082448c23734ab0932e806538b7d115aa31f5be0))
+* **Cross:** [[IOAPPX-358](https://pagopa.atlassian.net/browse/IOAPPX-358)] Updates `io-app-design-system` for accessibility improvements ([#6064](https://github.com/pagopa/io-app/issues/6064)) ([8d7271d](https://github.com/pagopa/io-app/commit/8d7271d58d746c741054fbf33d3fc17cc19fdf6b))
+* **IT Wallet:** [[SIW-1350](https://pagopa.atlassian.net/browse/SIW-1350)] Handle refresh token during API calls to `io-backend` ([#6077](https://github.com/pagopa/io-app/issues/6077)) ([f8cf998](https://github.com/pagopa/io-app/commit/f8cf998e26060deaed7617a6b0625d885d053580))
+* **IT Wallet:** [[SIW-1427](https://pagopa.atlassian.net/browse/SIW-1427)] Filter empty claims when displaying a credential ([#6071](https://github.com/pagopa/io-app/issues/6071)) ([137acee](https://github.com/pagopa/io-app/commit/137aceead3b1b0e8f1ffbe177d7d3da233507b2a))
+* [[IOCOM-1629](https://pagopa.atlassian.net/browse/IOCOM-1629)] Remove legacy messages code ([#6052](https://github.com/pagopa/io-app/issues/6052)) ([899266b](https://github.com/pagopa/io-app/commit/899266b5d26e6b98b92c145dcee85f9afd8d4442))
+* [[IOPID-2051](https://pagopa.atlassian.net/browse/IOPID-2051)] Add logic to refresh session after 2 minutes of background ([#6082](https://github.com/pagopa/io-app/issues/6082)) ([49d1d9e](https://github.com/pagopa/io-app/commit/49d1d9e5652e34eca826a38d9bb7061fce5e1fd4)), closes [/github.com/pagopa/io-app/blob/01481f800f15c6322d8b9ec8ccddb471bedf6615/ts/sagas/startup/watchApplicationActivitySaga.ts#L21](https://github.com/pagopa//github.com/pagopa/io-app/blob/01481f800f15c6322d8b9ec8ccddb471bedf6615/ts/sagas/startup/watchApplicationActivitySaga.ts/issues/L21)
+
 ## [2.68.0-rc.0](https://github.com/pagopa/io-app/compare/2.67.0-rc.3...2.68.0-rc.0) (2024-08-01)
 
 
