@@ -260,4 +260,108 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(loadProfile, undefined);
   });
+
+  it("should dispatch handleApplicationStartupTransientError if session information is none", () => {
+    testSaga(initializeApplicationSaga)
+      .next()
+      .call(checkAppHistoryVersionSaga)
+      .next()
+      .call(initMixpanel)
+      .next()
+      .call(testWaitForNavigatorServiceInitialization!)
+      .next()
+      .call(cancellAllLocalNotifications)
+      .next()
+      .call(previousInstallationDataDeleteSaga)
+      .next()
+      .put(previousInstallationDataDeleteSuccess())
+      .next()
+      .next()
+      .next()
+      .select(profileSelector)
+      .next(pot.some(profile))
+      .fork(watchProfileEmailValidationChangedSaga, O.none)
+      .next(pot.some(profile))
+      .put(resetProfileState())
+      .next()
+      .next(generateLollipopKeySaga)
+      .next(false) // unsupported device
+      .select(backendStatusSelector)
+      .next(O.some({}))
+      .select(sessionTokenSelector)
+      .next(aSessionToken)
+      .next(getKeyInfo)
+      .fork(watchSessionExpiredSaga)
+      .next()
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .next()
+      .spawn(watchLogoutSaga, undefined)
+      .next()
+      .next(200) // check session
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      .select(sessionInfoSelector)
+      .next(O.none)
+      .next(O.none)
+      .call(handleApplicationStartupTransientError, "GET_SESSION_DOWN");
+  });
+
+  it("should dispatch handleApplicationStartupTransientError if session information is some but walletToken and bpdToken are missing", () => {
+    testSaga(initializeApplicationSaga)
+      .next()
+      .call(checkAppHistoryVersionSaga)
+      .next()
+      .call(initMixpanel)
+      .next()
+      .call(testWaitForNavigatorServiceInitialization!)
+      .next()
+      .call(cancellAllLocalNotifications)
+      .next()
+      .call(previousInstallationDataDeleteSaga)
+      .next()
+      .put(previousInstallationDataDeleteSuccess())
+      .next()
+      .next()
+      .next()
+      .select(profileSelector)
+      .next(pot.some(profile))
+      .fork(watchProfileEmailValidationChangedSaga, O.none)
+      .next(pot.some(profile))
+      .put(resetProfileState())
+      .next()
+      .next(generateLollipopKeySaga)
+      .next(false) // unsupported device
+      .select(backendStatusSelector)
+      .next(O.some({}))
+      .select(sessionTokenSelector)
+      .next(aSessionToken)
+      .next(getKeyInfo)
+      .fork(watchSessionExpiredSaga)
+      .next()
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .next()
+      .spawn(watchLogoutSaga, undefined)
+      .next()
+      .next(200) // check session
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      .select(sessionInfoSelector)
+      .next(
+        O.some({
+          spidLevel: "https://www.spid.gov.it/SpidL2"
+        })
+      )
+      .next(
+        O.some({
+          spidLevel: "https://www.spid.gov.it/SpidL2"
+        })
+      )
+      .call(handleApplicationStartupTransientError, "GET_SESSION_DOWN");
+  });
 });
