@@ -1,5 +1,4 @@
 import { Body, Divider, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
-import { constVoid } from "fp-ts/lib/function";
 import * as React from "react";
 import { Alert, FlatList, SafeAreaView, View } from "react-native";
 import * as RemoteValue from "../../../../common/model/RemoteValue";
@@ -18,11 +17,7 @@ import {
   fimsHistoryToUndefinedSelector,
   isFimsHistoryLoadingSelector
 } from "../store/selectors";
-import {
-  showFimsAlreadyExportingAlert,
-  showFimsExportError,
-  showFimsExportSuccess
-} from "../utils";
+import { useFimsHistoryResultToasts } from "../utils/useFimsHistoryResultToasts";
 
 export const FimsHistoryScreen = () => {
   const dispatch = useIODispatch();
@@ -55,18 +50,7 @@ export const FimsHistoryScreen = () => {
     }
   }, [dispatch, requiresAppUpdate]);
 
-  React.useEffect(() => {
-    RemoteValue.fold(
-      historyExportState,
-      constVoid,
-      constVoid,
-      value =>
-        value === "SUCCESS"
-          ? showFimsExportSuccess()
-          : showFimsAlreadyExportingAlert(),
-      showFimsExportError
-    );
-  }, [historyExportState]);
+  useFimsHistoryResultToasts();
 
   // ---------- APP UPDATE
 

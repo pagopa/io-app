@@ -9,7 +9,11 @@ import {
   RemoteValue
 } from "../../../../../common/model/RemoteValue";
 import { Action } from "../../../../../store/actions/types";
-import { fimsHistoryExport, fimsHistoryGet } from "../actions";
+import {
+  fimsHistoryExport,
+  fimsHistoryGet,
+  resetFimsHistoryExportState
+} from "../actions";
 
 export type FimsExportSuccessStates = "SUCCESS" | "ALREADY_EXPORTING";
 
@@ -67,6 +71,11 @@ const reducer = (
       return {
         ...state,
         historyExportState: remoteError(null)
+      };
+    case getType(resetFimsHistoryExportState):
+      return {
+        ...state,
+        historyExportState: remoteUndefined
       };
   }
   return state;
