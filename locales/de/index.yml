@@ -1988,7 +1988,11 @@ bonus:
       online: "Online"
       places: "Orte"
       navigationTitle: "Rabatte und Ermäßigungen"
-      screenTitle: "Wähle einen Anbieter und entdecke Rabatte und Ermäßigungen"
+      screenTitle: Scopri le opportunità
+      merchantsAll: Tutti i partner
+      tabs:
+        perInitiative: Per categoria
+        perMerchant: Per partner
       cta:
         filter: "Filtern"
       categoriesList:
@@ -2033,7 +2037,6 @@ bonus:
         discountUrl: "Nutze die Ermäßigung"
         website: Vai al sito del partner
       categories:
-        all: "Alle Anbieter"
         counting: "und weitere {{count}}"
         cultureAndEntertainment: "Kultur und Freizeit"
         health: "Gesundheit und Wohlbefinden"
