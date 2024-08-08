@@ -3138,10 +3138,10 @@ features:
         failure: FALLITA
         success: ""
       receipt:
-        title: Ricevuta PagoPA
+        title: Ricevuta pagoPA
         shareButton: Salva o condividi
-        error: Impossibile scaricare la ricevuta, riprova più tardi.
-        download: Scarica ricevuta
+        error: Non è stato possibile recuperare la ricevuta.
+        download: Ottieni ricevuta
       details:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
         totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
