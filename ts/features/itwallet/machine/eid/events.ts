@@ -27,10 +27,6 @@ export type AddNewCredential = {
   type: "add-new-credential";
 };
 
-export type RequestAssistance = {
-  type: "request-assistance";
-};
-
 export type SelectIdentificationMode = {
   type: "select-identification-mode";
   mode: IdentificationMode;
