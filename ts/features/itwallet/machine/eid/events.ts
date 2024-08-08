@@ -75,7 +75,6 @@ export type EidIssuanceEvents =
   | AddToWallet
   | GoToWallet
   | AddNewCredential
-  | RequestAssistance
   | Retry
   | Back
   | Close
