@@ -36,3 +36,6 @@ export const fimsIsHistoryEnabledSelector = (state: GlobalState) =>
 
 export const fimsHistoryExportStateSelector = (state: GlobalState) =>
   state.features.fims.history.historyExportState;
+
+export const isFimsHistoryExportingSelector = (state: GlobalState) =>
+  state.features.fims.history.historyExportState.kind === "loading";

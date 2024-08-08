@@ -32,11 +32,6 @@ const reducer = (
   action: Action
 ): FimsHistoryState => {
   switch (action.type) {
-    case getType(resetFimsHistoryExportState):
-      return {
-        ...state,
-        historyExportState: remoteUndefined
-      };
     case getType(fimsHistoryGet.request):
       return action.payload.shouldReloadFromScratch
         ? {
@@ -76,6 +71,11 @@ const reducer = (
       return {
         ...state,
         historyExportState: remoteError(null)
+      };
+    case getType(resetFimsHistoryExportState):
+      return {
+        ...state,
+        historyExportState: remoteUndefined
       };
   }
   return state;

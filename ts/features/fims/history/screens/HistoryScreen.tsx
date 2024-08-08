@@ -5,7 +5,6 @@ import {
   IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { constVoid } from "fp-ts/lib/function";
 import * as React from "react";
 import { Alert, FlatList, SafeAreaView, View } from "react-native";
 import * as RemoteValue from "../../../../common/model/RemoteValue";
@@ -18,22 +17,14 @@ import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backen
 import { openAppStoreUrl } from "../../../../utils/url";
 import { FimsHistoryListItem } from "../components/FimsHistoryListItem";
 import { LoadingFimsHistoryItemsFooter } from "../components/FimsHistoryLoaders";
-import {
-  fimsHistoryExport,
-  fimsHistoryGet,
-  resetFimsHistoryExportState
-} from "../store/actions";
+import { fimsHistoryExport, fimsHistoryGet } from "../store/actions";
 import {
   fimsHistoryErrorSelector,
   fimsHistoryExportStateSelector,
   fimsHistoryToUndefinedSelector,
   isFimsHistoryLoadingSelector
 } from "../store/selectors";
-import {
-  showFimsAlreadyExportingAlert,
-  showFimsExportError,
-  showFimsExportSuccess
-} from "../utils";
+import { useFimsHistoryResultToasts } from "../utils/useFimsHistoryResultToasts";
 
 export const FimsHistoryScreen = () => {
   const dispatch = useIODispatch();
@@ -66,25 +57,7 @@ export const FimsHistoryScreen = () => {
     }
   }, [dispatch, requiresAppUpdate]);
 
-  React.useEffect(() => {
-    RemoteValue.fold(
-      historyExportState,
-      constVoid,
-      constVoid,
-      value => {
-        if (value === "SUCCESS") {
-          showFimsExportSuccess();
-        } else {
-          showFimsAlreadyExportingAlert();
-        }
-        dispatch(resetFimsHistoryExportState());
-      },
-      _ => {
-        showFimsExportError();
-        dispatch(resetFimsHistoryExportState());
-      }
-    );
-  }, [historyExportState, dispatch]);
+  useFimsHistoryResultToasts();
 
   // ---------- APP UPDATE
 
