@@ -7,6 +7,7 @@ import { selectFiscalCodeFromEid } from "../../features/itwallet/credentials/sto
 import { itwLifecycleIdentityCheckCompleted } from "../../features/itwallet/lifecycle/store/actions";
 import { watchItwLifecycleSaga } from "../../features/itwallet/lifecycle/saga";
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
+import { itwBypassIdentityMatch } from "../../config";
 
 /**
  * When IT Wallet is valid, this saga checks whether the stored eID was issued
@@ -24,7 +25,7 @@ export function* checkItWalletIdentitySaga() {
   const authenticatedUserFiscalCode = yield* select(profileFiscalCodeSelector);
   const eidFiscalCode = yield* select(selectFiscalCodeFromEid);
 
-  if (authenticatedUserFiscalCode === eidFiscalCode) {
+  if (itwBypassIdentityMatch || authenticatedUserFiscalCode === eidFiscalCode) {
     return;
   }
 
