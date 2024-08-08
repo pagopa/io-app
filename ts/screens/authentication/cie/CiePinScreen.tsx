@@ -241,6 +241,10 @@ const CiePinScreen = () => {
                 onValueChange={setPin}
                 length={CIE_PIN_LENGTH}
                 autoFocus={isFocused}
+                deleteButtonAccessibilityLabel={I18n.t(
+                  "authentication.cie.pin.accessibility.deleteLabel",
+                  { number: pin.slice(-1) }
+                )}
                 key={isFocused ? "focused" : "unfocused"}
               />
               <VSpacer size={24} />

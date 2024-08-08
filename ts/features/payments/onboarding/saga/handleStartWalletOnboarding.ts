@@ -20,7 +20,6 @@ export function* handleStartWalletOnboarding(
     const { paymentMethodId } = action.payload;
     const startOnboardingResult = yield* withPaymentsSessionToken(
       startOnboarding,
-      paymentsStartOnboardingAction.failure,
       action,
       {
         body: {

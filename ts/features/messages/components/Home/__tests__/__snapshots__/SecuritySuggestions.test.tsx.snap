@@ -467,6 +467,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       color="grey-700"
                                       defaultColor="bluegrey"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="body"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -474,6 +475,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           "lineHeight": 24,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -593,6 +595,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       color="grey-700"
                                       defaultColor="bluegrey"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="body"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -600,6 +603,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           "lineHeight": 24,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -627,11 +631,14 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       }
                                     />
                                     <Text
+                                      accessibilityElementsHidden={false}
                                       accessibilityRole="link"
+                                      accessible={true}
                                       allowFontScaling={false}
                                       color="blue"
                                       defaultColor="blue"
                                       defaultWeight="Semibold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -641,6 +648,8 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           "textDecorationLine": "underline",
                                         }
                                       }
+                                      importantForAccessibility="yes"
+                                      maxFontSizeMultiplier={1.25}
                                       onPress={[Function]}
                                       style={
                                         [
@@ -764,6 +773,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       color="grey-700"
                                       defaultColor="bluegrey"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="body"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -771,6 +781,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           "lineHeight": 24,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -798,11 +809,14 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       }
                                     />
                                     <Text
+                                      accessibilityElementsHidden={false}
                                       accessibilityRole="link"
+                                      accessible={true}
                                       allowFontScaling={false}
                                       color="blue"
                                       defaultColor="blue"
                                       defaultWeight="Semibold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -812,6 +826,8 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           "textDecorationLine": "underline",
                                         }
                                       }
+                                      importantForAccessibility="yes"
+                                      maxFontSizeMultiplier={1.25}
                                       onPress={[Function]}
                                       style={
                                         [
@@ -932,6 +948,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       color="grey-700"
                                       defaultColor="bluegrey"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="body"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -939,6 +956,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           "lineHeight": 24,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {

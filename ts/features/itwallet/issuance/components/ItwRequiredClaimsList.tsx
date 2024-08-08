@@ -1,36 +1,54 @@
 import {
   Divider,
   H6,
-  IOColors,
   Icon,
+  IOColors,
   LabelSmall
 } from "@pagopa/io-app-design-system";
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import * as E from "fp-ts/Either";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import * as O from "fp-ts/Option";
 import I18n from "../../../../i18n";
+import { localeDateFormat } from "../../../../utils/locale";
+import {
+  ClaimDisplayFormat,
+  ClaimValue,
+  DateClaim,
+  DrivingPrivilegesClaim,
+  EmptyStringClaim,
+  EvidenceClaim,
+  extractFiscalCode,
+  FiscalCodeClaim,
+  ImageClaim,
+  PlaceOfBirthClaim,
+  StringClaim
+} from "../../common/utils/itwClaimsUtils";
+import { isStringNullyOrEmpty } from "../../../../utils/strings";
 
 export type RequiredClaim = {
-  name: string;
+  claim: ClaimDisplayFormat;
   source: string;
 };
 
-type Props = {
-  claims: ReadonlyArray<RequiredClaim>;
+type ItwRequiredClaimsListProps = {
+  items: ReadonlyArray<RequiredClaim>;
 };
 
-const ItwRequiredClaimsList = ({ claims }: Props) => (
+const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => (
   <View style={styles.container}>
     {pipe(
-      claims,
-      RA.mapWithIndex((index, { name, source }) => (
-        <View key={`${index}-${name}-${source}`}>
+      items,
+      RA.map(a => a),
+      RA.mapWithIndex((index, { claim, source }) => (
+        <View key={`${index}-${claim.label}-${source}`}>
           {/* Add a separator view between sections */}
           {index !== 0 && <Divider />}
           <View style={styles.dataItem}>
             <View>
-              <H6>{name}</H6>
+              <ClaimText claim={claim} />
               <LabelSmall weight="Regular" color="grey-700">
                 {I18n.t("features.itWallet.generic.dataSource.single", {
                   credentialSource: source
@@ -44,6 +62,62 @@ const ItwRequiredClaimsList = ({ claims }: Props) => (
     )}
   </View>
 );
+
+/**
+ * Component which renders the claim value or multiple values in case of an array.
+ * If the claim is an empty string or null, it will not render it.
+ * @param claim The claim to render
+ * @returns An {@link H6} element with the claim value or multiple {@link H6} elements in case of an array
+ */
+const ClaimText = ({ claim }: { claim: ClaimDisplayFormat }) => {
+  const displayValue = getClaimDisplayValue(claim);
+  return Array.isArray(displayValue) ? (
+    displayValue.map((value, index) => (
+      <H6 key={`${index}_${value}`}>{value}</H6>
+    ))
+  ) : isStringNullyOrEmpty(displayValue) ? null : ( // We want to exclude empty strings and null values
+    <H6>{displayValue}</H6>
+  );
+};
+
+export const getClaimDisplayValue = (
+  claim: ClaimDisplayFormat
+): string | Array<string> =>
+  pipe(
+    claim.value,
+    ClaimValue.decode,
+    E.fold(
+      () => I18n.t("features.itWallet.generic.placeholders.claimNotAvailable"),
+      decoded => {
+        if (PlaceOfBirthClaim.is(decoded)) {
+          return `${decoded.locality} (${decoded.country})`;
+        } else if (DateClaim.is(decoded)) {
+          return localeDateFormat(
+            decoded,
+            I18n.t("global.dateFormats.shortFormat")
+          );
+        } else if (EvidenceClaim.is(decoded)) {
+          return decoded[0].record.source.organization_name;
+        } else if (ImageClaim.is(decoded)) {
+          return decoded;
+        } else if (DrivingPrivilegesClaim.is(decoded)) {
+          return decoded.map(e => e.driving_privilege);
+        } else if (FiscalCodeClaim.is(decoded)) {
+          return pipe(
+            decoded,
+            extractFiscalCode,
+            O.getOrElseW(() => decoded)
+          );
+        } else if (StringClaim.is(decoded) || EmptyStringClaim.is(decoded)) {
+          return decoded; // must be the last one to be checked due to overlap with IPatternStringTag
+        }
+
+        return I18n.t(
+          "features.itWallet.generic.placeholders.claimNotAvailable"
+        );
+      }
+    )
+  );
 
 const styles = StyleSheet.create({
   container: {

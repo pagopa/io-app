@@ -8,6 +8,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import Config from "react-native-config";
+import { TrialId } from "../definitions/trial_system/TrialId";
 
 // default repository for fetching app content (e.g. services metadata)
 const DEFAULT_CONTENT_REPO_URL =
@@ -42,6 +43,10 @@ const DEFAULT_PAGE_SIZE = 12;
 
 // Default mixpanel EU url
 const DEFAULT_MIXPANEL_URL = "https://api-eu.mixpanel.com";
+// Default sentry dsn url
+// This can be public as per docs https://docs.sentry.io/concepts/key-terms/dsn-explainer/#dsn-utilization
+const DEFAULT_SENTRY_DSN =
+  "https://43b87dcfc91f9cfdfaf71b254eb8f58e@o4507197393469440.ingest.de.sentry.io/4507221483585616";
 
 export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
@@ -53,6 +58,11 @@ export const mixpanelUrl = pipe(
   E.getOrElse(() => DEFAULT_MIXPANEL_URL)
 );
 export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
+export const sentryDsn: string = pipe(
+  Config.SENTRY_DSN,
+  NonEmptyString.decode,
+  E.getOrElse(() => DEFAULT_SENTRY_DSN)
+);
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 
@@ -227,9 +237,6 @@ export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
 export const idPayTestToken =
   Config.IDPAY_API_TEST_TOKEN !== "" ? Config.IDPAY_API_TEST_TOKEN : undefined;
 
-export const showBarcodeScanSection =
-  Config.SHOW_BARCODE_SCAN_SECTION === "YES";
-
 export const idPayApiUatBaseUrl = Config.IDPAY_API_UAT_BASEURL;
 
 export const idPayApiBaseUrl = Config.IDPAY_API_BASEURL;
@@ -239,3 +246,17 @@ export const walletApiUatBaseUrl = Config.WALLET_API_UAT_BASEURL;
 
 // Default pin for dev mode
 export const defaultPin = "162534";
+
+// IT Wallet
+export const itwTrialId = Config.ITW_TRIAL_ID as TrialId;
+export const itwWalletProviderBaseUrl = Config.ITW_WALLET_PROVIDER_BASE_URL;
+export const itwGoogleCloudProjectNumber =
+  Config.ITW_GOOGLE_CLOUD_PROJECT_NUMBER;
+export const itWalletIssuanceRedirectUri = Config.ITW_ISSUANCE_REDIRECT_URI;
+export const itWalletIssuanceRedirectUriCie =
+  Config.ITW_ISSUANCE_REDIRECT_URI_CIE;
+export const itwPidProviderBaseUrl = Config.ITW_PID_PROVIDER_BASE_URL;
+export const itwEaaProviderBaseUrl = Config.ITW_EAA_PROVIDER_BASE_URL;
+export const itwBypassIdentityMatch =
+  Config.ITW_BYPASS_IDENTITY_MATCH === "YES";
+export const itwIdpHintTest = Config.ITW_IDP_HINT_TEST === "YES";

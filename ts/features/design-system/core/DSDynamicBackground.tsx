@@ -26,7 +26,7 @@ import {
   vec
 } from "@shopify/react-native-skia";
 import { useCallback, useMemo, useState } from "react";
-import { Dimensions, Platform, View } from "react-native";
+import { Dimensions, Platform, View, StatusBar } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LinearGradient from "react-native-linear-gradient";
@@ -100,6 +100,11 @@ export const DSDynamicBackground = () => {
 
   return (
     <>
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle="dark-content"
+      />
       <Canvas
         style={{
           width: screenSize,
@@ -156,7 +161,7 @@ export const DSDynamicBackground = () => {
               size="medium"
               logoUri={{ uri: entityData?.imageSource }}
             />
-            <View style={{ alignSelf: "center" }}>
+            <View style={{ alignSelf: "center", flexShrink: 1 }}>
               <H3 color={theme["textBody-secondary"]}>{entityData?.name}</H3>
               <LabelSmall
                 fontSize="regular"

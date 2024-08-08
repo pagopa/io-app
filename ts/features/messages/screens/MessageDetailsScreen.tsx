@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ContentWrapper, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -17,6 +17,7 @@ import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
   cancelPreviousAttachmentDownload,
   cancelQueuedPaymentUpdates,
+  resetGetMessageDataAction,
   updatePaymentForMessage
 } from "../store/actions";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
@@ -48,6 +49,7 @@ import {
   trackPNOptInMessageOpened
 } from "../../pn/analytics";
 import { RemoteContentBanner } from "../components/MessageDetail/RemoteContentBanner";
+import { setAccessibilityFocus } from "../../../utils/accessibility";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -72,8 +74,8 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   const { messageId, serviceId } = props.route.params;
 
   const navigation = useIONavigation();
-
   const dispatch = useIODispatch();
+  const scrollViewRef = useRef<ScrollView>(null);
 
   const message = pipe(
     useIOSelector(state => getPaginatedMessageById(state, messageId)),
@@ -99,6 +101,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
     dispatch(cancelPreviousAttachmentDownload());
     dispatch(cancelQueuedPaymentUpdates());
     dispatch(cancelPaymentStatusTracking());
+    dispatch(resetGetMessageDataAction());
     navigation.goBack();
   }, [dispatch, navigation]);
 
@@ -170,10 +173,14 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   }
   return (
     <>
-      <ScrollView contentContainerStyle={styles.scrollContentContainer}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContentContainer}
+        ref={scrollViewRef}
+      >
         <View style={styles.container}>
           <ContentWrapper>
             <MessageDetailsHeader
+              messageId={messageId}
               serviceId={serviceId}
               subject={subject}
               createdAt={message.createdAt}
@@ -197,7 +204,15 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
               messageId={messageId}
               title={subject}
             />
-            <MessageMarkdown>{markdownWithNoCTA}</MessageMarkdown>
+            <MessageMarkdown
+              onLoadEnd={() => {
+                setTimeout(() => {
+                  setAccessibilityFocus(scrollViewRef);
+                }, 100);
+              }}
+            >
+              {markdownWithNoCTA}
+            </MessageMarkdown>
             <MessageDetailsPayment messageId={messageId} />
             <VSpacer size={16} />
             <MessageDetailsAttachments messageId={messageId} />

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import {
   useIODispatch,
   useIOSelector,
@@ -25,7 +25,10 @@ import {
   isArchivingDisabledSelector,
   isArchivingInProcessingModeSelector
 } from "../../store/reducers/archiving";
-import { accessibilityLabelForMessageItem } from "./homeUtils";
+import {
+  accessibilityLabelForMessageItem,
+  minDelayBetweenNavigationMilliseconds
+} from "./homeUtils";
 import { MessageListItem } from "./DS/MessageListItem";
 
 type WrappedMessageListItemProps = {
@@ -42,6 +45,7 @@ export const WrappedMessageListItem = ({
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const store = useIOStore();
+  const lastNavigationDate = useRef<Date>(new Date(0));
 
   const serviceId = message.serviceId;
   const organizationFiscalCode = message.organizationFiscalCode;
@@ -82,8 +86,8 @@ export const WrappedMessageListItem = ({
       ? "success"
       : undefined;
   const accessibilityLabel = useMemo(
-    () => accessibilityLabelForMessageItem(message),
-    [message]
+    () => accessibilityLabelForMessageItem(message, isSelected),
+    [isSelected, message]
   );
 
   const toggleScheduledMessageArchivingCallback = useCallback(() => {
@@ -119,6 +123,18 @@ export const WrappedMessageListItem = ({
           )
         );
       } else {
+        const now = new Date();
+        if (
+          lastNavigationDate.current.getTime() +
+            minDelayBetweenNavigationMilliseconds >=
+          now.getTime()
+        ) {
+          // This prevents an unwanted double tap that triggers
+          // a dobule navigation towards the message details
+          return;
+        }
+        // eslint-disable-next-line functional/immutable-data
+        lastNavigationDate.current = now;
         navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
           screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
           params: {

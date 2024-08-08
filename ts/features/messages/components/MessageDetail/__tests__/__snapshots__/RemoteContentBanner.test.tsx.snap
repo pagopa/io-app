@@ -413,6 +413,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               color="grey-700"
                               defaultColor="blue"
                               defaultWeight="Bold"
+                              dynamicTypeRamp="footnote"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -420,6 +421,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   "lineHeight": 21,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -446,6 +448,8 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               }
                             />
                             <View
+                              accessibilityElementsHidden={true}
+                              importantForAccessibility="no-hide-descendants"
                               pointerEvents="none"
                             >
                               <View
@@ -794,6 +798,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                 color="bluegrey"
                                 defaultColor="bluegrey"
                                 defaultWeight="Regular"
+                                dynamicTypeRamp="body"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -801,6 +806,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                     "lineHeight": 24,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -825,6 +831,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   color="bluegrey"
                                   defaultColor="bluegrey"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="body"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -832,6 +839,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                       "lineHeight": 24,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -855,6 +863,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   color="bluegrey"
                                   defaultColor="bluegrey"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="body"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -862,6 +871,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                       "lineHeight": 24,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -885,6 +895,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   color="bluegrey"
                                   defaultColor="bluegrey"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="body"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -892,6 +903,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                       "lineHeight": 24,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -917,6 +929,7 @@ The sender can edit the information in a dynamic message only
                                   color="bluegrey"
                                   defaultColor="bluegrey"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="body"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -924,6 +937,7 @@ The sender can edit the information in a dynamic message only
                                       "lineHeight": 24,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
@@ -947,6 +961,7 @@ The sender can edit the information in a dynamic message only
                                   color="bluegrey"
                                   defaultColor="bluegrey"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="body"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -954,6 +969,7 @@ The sender can edit the information in a dynamic message only
                                       "lineHeight": 24,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
