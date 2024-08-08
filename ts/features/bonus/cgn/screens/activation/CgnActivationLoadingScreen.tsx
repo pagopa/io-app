@@ -9,10 +9,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { isCgnActivationLoading } from "../../store/reducers/activation";
-import {
-  cgnActivationCancel,
-  cgnRequestActivation
-} from "../../store/actions/activation";
+import { cgnActivationCancel } from "../../store/actions/activation";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { LoadingIndicator } from "../../../../../components/ui/LoadingIndicator";
@@ -57,7 +54,6 @@ const LoadingComponent = () => (
 const ErrorComponent = () => {
   const dispatch = useIODispatch();
 
-  const onRetry = () => dispatch(cgnRequestActivation());
   const onCancel = () => dispatch(cgnActivationCancel());
 
   return (
@@ -66,13 +62,8 @@ const ErrorComponent = () => {
       title={I18n.t("bonus.cgn.activation.error.title")}
       subtitle={I18n.t("bonus.cgn.activation.error.body")}
       action={{
-        accessibilityLabel: I18n.t("global.buttons.retry"),
-        label: I18n.t("global.buttons.retry"),
-        onPress: onRetry
-      }}
-      secondaryAction={{
-        accessibilityLabel: I18n.t("global.buttons.cancel"),
-        label: I18n.t("global.buttons.cancel"),
+        accessibilityLabel: I18n.t("global.buttons.close"),
+        label: I18n.t("global.buttons.close"),
         onPress: onCancel
       }}
     />
