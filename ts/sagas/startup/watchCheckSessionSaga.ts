@@ -4,7 +4,7 @@ import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
-import { GetSessionStateT } from "../../../definitions/backend/requestTypes";
+import { GetSessionStateT } from "../../../definitions/session_manager/requestTypes";
 import { BackendClient } from "../../api/backend";
 import {
   checkCurrentSession,

@@ -60,11 +60,19 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
 
   const navigation = useIONavigation();
 
-  if (O.isNone(sessionInfo)) {
+  if (
+    O.isNone(sessionInfo) ||
+    (O.isSome(sessionInfo) &&
+      (sessionInfo.value.walletToken === undefined ||
+        sessionInfo.value.bpdToken === undefined))
+  ) {
     throw new Error("Session info is undefined");
   }
 
-  const { bpdToken, walletToken } = sessionInfo.value;
+  // Here we are sure that walletToken is defined
+  const walletToken = sessionInfo.value.walletToken as string;
+  // Here we are sure that bpdToken is defined
+  const bpdToken = sessionInfo.value.bpdToken as string;
 
   const idPayToken = idPayTestToken !== undefined ? idPayTestToken : bpdToken;
 

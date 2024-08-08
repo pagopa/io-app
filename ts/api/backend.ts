@@ -31,8 +31,6 @@ import {
   getServicePreferencesDefaultDecoder,
   GetServicePreferencesT,
   GetServiceT,
-  getSessionStateDefaultDecoder,
-  GetSessionStateT,
   getSupportTokenDefaultDecoder,
   GetSupportTokenT,
   getUserDataProcessingDefaultDecoder,
@@ -67,6 +65,10 @@ import {
 } from "../utils/api";
 import { KeyInfo } from "../features/lollipop/utils/crypto";
 import { lollipopFetch } from "../features/lollipop/utils/fetch";
+import {
+  getSessionStateDefaultDecoder,
+  GetSessionStateT
+} from "../../definitions/session_manager/requestTypes";
 
 /**
  * We will retry for as many times when polling for a payment ID.
