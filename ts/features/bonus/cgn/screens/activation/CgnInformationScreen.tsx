@@ -32,6 +32,7 @@ const CgnInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
         <BonusInformationComponent
           onBack={props.onBack}
           primaryCtaText={I18n.t("bonus.cgn.cta.activeBonus")}
+          secondaryAction={{ type: "back", text: I18n.t("bonus.cgn.cta.back") }}
           bonus={props.bonus}
           onConfirm={onConfirm}
           onCancel={props.onCancel}
