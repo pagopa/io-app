@@ -11,7 +11,7 @@ import { isError, isReady } from "../../../../../common/model/RemoteValue";
 import { cgnDetails } from "../../store/actions/details";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 
-const CgnUnsubscribe = () => {
+export function useCgnUnsubscribe() {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const unsubscriptionStatus = useIOSelector(cgnUnsubscribeSelector);
@@ -48,6 +48,11 @@ const CgnUnsubscribe = () => {
     isFirstRender.current = false;
   }, [unsubscriptionStatus, navigation, dispatch]);
 
+  return { requestUnsubscription };
+}
+
+const CgnUnsubscribe = () => {
+  const { requestUnsubscription } = useCgnUnsubscribe();
   return (
     <ListItemAction
       accessibilityLabel={I18n.t("bonus.cgn.cta.deactivateBonus")}

@@ -46,7 +46,9 @@ import { isLoading } from "../../../../common/model/RemoteValue";
 import CgnCardComponent from "../components/detail/CgnCardComponent";
 import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
-import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
+import CgnUnsubscribe, {
+  useCgnUnsubscribe
+} from "../components/detail/CgnUnsubscribe";
 import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
 import { navigateToCgnMerchantsTabs } from "../navigation/actions";
 import { CgnDetailsParamsList } from "../navigation/params";
@@ -179,6 +181,8 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     }
   };
 
+  const { requestUnsubscription } = useCgnUnsubscribe();
+
   return (
     <LoadingSpinnerOverlay
       isLoading={
@@ -262,6 +266,23 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             </View>
           </Animated.ScrollView>
           <SectionStatusComponent sectionKey={"cgn"} />
+          {CardExpired.is(props.cgnDetails) && (
+            <GradientBottomActions
+              primaryActionProps={{
+                color: "danger",
+                label: I18n.t("bonus.cgn.activation.deactivate.expired"),
+                onPress: requestUnsubscription
+              }}
+              transitionAnimStyle={footerGradientOpacityTransition}
+              dimensions={{
+                bottomMargin,
+                extraBottomMargin: 0,
+                gradientAreaHeight,
+                spaceBetweenActions,
+                safeBackgroundHeight: bottomMargin
+              }}
+            />
+          )}
           {props.isCgnEnabled &&
             props.cgnDetails?.status === StatusEnum.ACTIVATED && (
               <GradientBottomActions
