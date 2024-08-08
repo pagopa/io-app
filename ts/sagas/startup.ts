@@ -80,7 +80,8 @@ import {
 } from "../store/reducers/authentication";
 import {
   backendStatusSelector,
-  isPnEnabledSelector
+  isPnEnabledSelector,
+  isSettingsVisibleAndHideProfileSelector
 } from "../store/reducers/backendStatus";
 import { IdentificationResult } from "../store/reducers/identification";
 import {
@@ -603,13 +604,20 @@ export function* initializeApplicationSaga(
         );
         type leftOrRight = "left" | "right";
         const alertChoiceChannel = channel<leftOrRight>();
+        const isSettingsVisibleAndHideProfile = yield* select(
+          isSettingsVisibleAndHideProfileSelector
+        );
         if (O.isSome(maybeDeletePending)) {
           Alert.alert(
             I18n.t("startup.userDeletePendingAlert.title"),
-            I18n.t("startup.userDeletePendingAlert.message"),
+            isSettingsVisibleAndHideProfile
+              ? I18n.t("startup.userDeletePendingAlert.message")
+              : I18n.t("startup.userDeletePendingAlert.messageLegacy"),
             [
               {
-                text: I18n.t("startup.userDeletePendingAlert.cta_1"),
+                text: isSettingsVisibleAndHideProfile
+                  ? I18n.t("startup.userDeletePendingAlert.cta_1")
+                  : I18n.t("startup.userDeletePendingAlert.cta_1_legacy"),
                 style: "cancel",
                 onPress: () => {
                   alertChoiceChannel.put("left");

@@ -33,13 +33,13 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "authentication.opt_in.contextualHelpContent"
 };
 
-export const MIN_HEIGHT_TO_SHOW_FULL_RENDER = 820;
-
 export type ChosenIdentifier = {
   identifier: "SPID" | "CIE";
 };
 
-const NewOptInScreen = () => {
+export const MIN_HEIGHT_TO_SHOW_FULL_RENDER = 820;
+
+const OptInScreen = () => {
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
@@ -150,4 +150,4 @@ const NewOptInScreen = () => {
   );
 };
 
-export default NewOptInScreen;
+export default OptInScreen;
