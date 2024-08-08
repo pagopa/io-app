@@ -516,8 +516,8 @@ export function* initializeApplicationSaga(
   // possible to begin receiving push notifications
   yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
-  // This saga is called before getting authenticated to avoid flashing the home screen
-  // when the user is taken to the alert screen in case of identities that don't match.
+  // This saga is called before the startup status is set to authenticated to avoid flashing
+  // the home screen when the user is taken to the alert screen in case of identities that don't match.
   yield* call(checkItWalletIdentitySaga);
 
   yield* put(startupLoadSuccess(StartupStatusEnum.AUTHENTICATED));
