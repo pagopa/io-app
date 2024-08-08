@@ -30,6 +30,7 @@ import { DSButtons } from "../core/DSButtons";
 import { DSCards } from "../core/DSCards";
 import { DSColors } from "../core/DSColors";
 import { DSDynamicBackground } from "../core/DSDynamicBackground";
+import { DSDynamicCardRotation } from "../core/DSDynamicCardRotation";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
 import { DSFooterActions } from "../core/DSFooterActions";
 import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
@@ -392,6 +393,17 @@ export const DesignSystemNavigator = () => {
             headerShown: false,
             headerTitle:
               DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_BACKGROUND.title
+          }}
+        />
+
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_CARD_ROTATION.route
+          }
+          component={DSDynamicCardRotation}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_CARD_ROTATION.title
           }}
         />
 
