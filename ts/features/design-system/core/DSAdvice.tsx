@@ -62,8 +62,11 @@ const renderFeatureInfo = () => (
         />
         <FeatureInfo
           iconName="security"
-          actionLabel="Si applicano i Termini e condizioni d’uso e l’Informativa Privacy di Paytipper"
-          actionOnPress={onLinkPress}
+          action={{
+            label:
+              "Si applicano i Termini e condizioni d’uso e l’Informativa Privacy di Paytipper",
+            onPress: onLinkPress
+          }}
         />
       </VStack>
     </DSComponentViewerBox>
@@ -86,8 +89,10 @@ const renderFeatureInfo = () => (
           body={
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
           }
-          actionLabel="Scopri di più"
-          actionOnPress={onLinkPress}
+          action={{
+            label: "Scopri di più",
+            onPress: onLinkPress
+          }}
         />
       </VStack>
     </DSComponentViewerBox>

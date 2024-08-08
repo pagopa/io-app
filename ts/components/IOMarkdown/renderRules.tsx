@@ -1,39 +1,39 @@
 import {
-  IOToast,
-  LabelLink,
-  IOStyles,
-  HSpacer,
-  VSpacer,
+  Banner,
   Body,
+  Divider,
   H1,
   H2,
   H3,
   H4,
   H5,
   H6,
-  Banner,
+  HSpacer,
   IOPictogramsBleed,
-  Divider,
-  Nullable
+  IOStyles,
+  IOToast,
+  Label,
+  Nullable,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import {
-  TxtHeaderNode,
-  TxtListNode,
-  TxtListItemNode,
-  TxtParagraphNode,
-  TxtStrNode,
-  TxtStrongNode,
-  TxtEmphasisNode,
-  TxtLinkNode,
-  TxtImageNode,
+  AnyTxtNode,
   TxtBlockQuoteNode,
-  TxtParentNode,
+  TxtBreakNode,
   TxtCodeBlockNode,
   TxtCodeNode,
-  TxtHtmlNode,
+  TxtEmphasisNode,
+  TxtHeaderNode,
   TxtHorizontalRuleNode,
-  TxtBreakNode,
-  AnyTxtNode
+  TxtHtmlNode,
+  TxtImageNode,
+  TxtLinkNode,
+  TxtListItemNode,
+  TxtListNode,
+  TxtParagraphNode,
+  TxtParentNode,
+  TxtStrNode,
+  TxtStrongNode
 } from "@textlint/ast-node-types";
 import React, { Fragment } from "react";
 import { Image, Text, View } from "react-native";
@@ -166,9 +166,9 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     };
 
     return (
-      <LabelLink key={getTxtNodeKey(link)} onPress={handleOpenLink}>
+      <Label asLink key={getTxtNodeKey(link)} onPress={handleOpenLink}>
         {link.children.map(render)}
-      </LabelLink>
+      </Label>
     );
   },
   /**

@@ -1,16 +1,16 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
 import {
-  IOColors,
-  Icon,
+  H6,
   HSpacer,
+  IOColors,
   IOSpacingScale,
-  Label,
   IOStyles,
-  H6
+  Icon,
+  LabelSmall
 } from "@pagopa/io-app-design-system";
-import I18n from "../../../i18n";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import { TranslationKeys } from "../../../../locales/locales";
+import I18n from "../../../i18n";
 
 const notificationMarginVertical: IOSpacingScale = 4;
 const notificationPaddingVertical: IOSpacingScale = 8;
@@ -77,10 +77,8 @@ export const NotificationPreviewSample = ({
       <Icon color="blueIO-450" name="productIOApp" />
       <HSpacer />
       <View style={IOStyles.flex}>
-        <H6 weight="Semibold">{I18n.t(titleKey)}</H6>
-        <Label fontSize="small" weight="Regular">
-          {I18n.t(messageKey)}
-        </Label>
+        <H6>{I18n.t(titleKey)}</H6>
+        <LabelSmall weight="Regular">{I18n.t(messageKey)}</LabelSmall>
       </View>
     </View>
   );

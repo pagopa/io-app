@@ -36,7 +36,7 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
         {I18n.t("authentication.unlockmodal.description1_4")}{" "}
       </Body>
       <VSpacer size={24} />
-      <H6 weight="Semibold">{I18n.t("authentication.unlockmodal.title2")}</H6>
+      <H6>{I18n.t("authentication.unlockmodal.title2")}</H6>
       <VSpacer size={24} />
       <FeatureInfo
         iconName="security"
@@ -46,8 +46,10 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
       <FeatureInfo
         iconName="login"
         body={I18n.t("authentication.unlockmodal.listitem2_1")}
-        actionLabel={I18n.t("authentication.unlockmodal.listitem2_2")}
-        actionOnPress={() => openWebUrl("https://ioapp.it/")}
+        action={{
+          label: I18n.t("authentication.unlockmodal.listitem2_2"),
+          onPress: () => openWebUrl("https://ioapp.it/")
+        }}
       />
       <VSpacer size={16} />
       <FeatureInfo

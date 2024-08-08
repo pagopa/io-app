@@ -58,7 +58,7 @@ export const WalletTransactionHeadingSection = ({
       return (
         <Body>
           {I18n.t("transaction.details.totalFee")}{" "}
-          <Body weight="Medium">{formattedFee}</Body>{" "}
+          <Body weight="Semibold">{formattedFee}</Body>{" "}
           {psp?.businessName
             ? // we want to make sure no empty string is passed either
               I18n.t("transaction.details.totalFeePsp", {

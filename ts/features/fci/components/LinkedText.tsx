@@ -1,6 +1,6 @@
-import * as React from "react";
+import { H4, H6, Label, WithTestID } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
-import { H4, H6, LabelLink, WithTestID } from "@pagopa/io-app-design-system";
+import * as React from "react";
 
 type Props = WithTestID<{
   text: string;
@@ -63,14 +63,15 @@ const LinkedText = (props: Props) => {
       const textToBeLinked = splitted[1];
       const url = splitted[2];
       return (
-        <LabelLink
+        <Label
+          asLink
           key={index}
           onPress={() =>
             onPress(getOrReplaceTagWithLink(url, props.replacementUrl))
           }
         >
           {textToBeLinked}
-        </LabelLink>
+        </Label>
       );
     };
 
@@ -89,13 +90,11 @@ const LinkedText = (props: Props) => {
       {textWithSeparator.split("$@").map((text, index) =>
         O.isSome(O.fromNullable(arrayOfLinkedText[index])) ? (
           <React.Fragment key={index}>
-            <H6 weight={"Regular"} color={"bluegreyDark"}>
-              {text}
-            </H6>
+            <H6 color={"bluegreyDark"}>{text}</H6>
             {arrayOfLinkedText[index]}
           </React.Fragment>
         ) : (
-          <H6 key={index} weight={"Regular"} color={"bluegreyDark"}>
+          <H6 key={index} color={"bluegreyDark"}>
             {text}
           </H6>
         )

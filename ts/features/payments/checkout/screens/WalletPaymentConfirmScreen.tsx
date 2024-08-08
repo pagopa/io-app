@@ -1,18 +1,19 @@
 import {
   Body,
-  LabelLink,
+  Label,
   ListItemHeader,
   ModuleCheckout,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useFocusEffect } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useFocusEffect } from "@react-navigation/native";
 import { default as React } from "react";
 import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -23,6 +24,8 @@ import {
   WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL,
   getPaymentLogoFromWalletDetails
 } from "../../common/utils";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import * as analytics from "../analytics";
 import { WalletPaymentTotalAmount } from "../components/WalletPaymentTotalAmount";
 import { useWalletPaymentAuthorizationModal } from "../hooks/useWalletPaymentAuthorizationModal";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
@@ -48,9 +51,6 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
-import { IOScrollView } from "../../../../components/ui/IOScrollView";
-import * as analytics from "../analytics";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 const WalletPaymentConfirmScreen = () => {
   const navigation = useIONavigation();
@@ -220,7 +220,8 @@ const WalletPaymentConfirmScreen = () => {
       <VSpacer size={16} />
       <Body>
         {I18n.t("payment.confirm.termsAndConditions")}{" "}
-        <LabelLink
+        <Label
+          asLink
           onPress={() =>
             openAuthenticationSession(
               WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL,
@@ -229,7 +230,7 @@ const WalletPaymentConfirmScreen = () => {
           }
         >
           {I18n.t("payment.confirm.termsAndConditionsLink")}
-        </LabelLink>
+        </Label>
       </Body>
     </IOScrollView>
   );
