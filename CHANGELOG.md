@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.69.0-rc.2](https://github.com/pagopa/io-app/compare/2.69.0-rc.1...2.69.0-rc.2) (2024-08-08)
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-343](https://pagopa.atlassian.net/browse/IOAPPX-343),[IOAPPX-311](https://pagopa.atlassian.net/browse/IOAPPX-311)] Add `react-native-skia` library + Dynamic header background (under the new Experimental Lab category)" ([#6103](https://github.com/pagopa/io-app/issues/6103)) ([20ced80](https://github.com/pagopa/io-app/commit/20ced80a3293fecc31aa8cc811df526ece2a3026)), closes [pagopa/io-app#5954](https://github.com/pagopa/io-app/issues/5954)
+
 ## [2.69.0-rc.1](https://github.com/pagopa/io-app/compare/2.69.0-rc.0...2.69.0-rc.1) (2024-08-08)
 
 
