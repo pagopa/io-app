@@ -265,8 +265,10 @@ startup:
   profileEnabled: User profile activated
   userDeletePendingAlert:
     title: Profile deletion in progress
-    message: If you have changed your mind, you can cancel the deletion request within the Privacy section of your Profile.
-    cta_1: Go to Profile
+    messageLegacy: If you have changed your mind, you can cancel the deletion request within the Privacy section of your Profile.
+    message: If you have changed your mind, you can cancel the deletion request within the Privacy section in Settings.
+    cta_1_legacy: Go to Profile
+    cta_1: Go to Settings
     cta_2: Discard
   contextualHelp:
     title: Startup problems?
@@ -3798,7 +3800,7 @@ idpay:
         content: L’Ente potrà conservarli secondo i termini indicati nell’Informativa Privacy
       4:
         title: Metodi di pagamento e IBAN rimangono in app per eventuali altre iniziative
-        content: Puoi rimuovere in ogni momento l’IBAN e i tuoi metodi di pagamento visitando le sezioni Profilo e Portafoglio.
+        content: Puoi rimuovere in ogni momento l’IBAN e i tuoi metodi di pagamento visitando le sezioni Impostazioni e Portafoglio.
     button:
       continue: Rimuovi
     modal:

@@ -13,29 +13,28 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import {
-  AccessibilityInfo,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
-  View,
-  findNodeHandle
+  View
 } from "react-native";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import themeVariables from "../../../../theme/variables";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   decodePaymentNoticeNumber,
   validatePaymentNoticeNumber
 } from "../../common/utils/validation";
-import { PaymentsCheckoutRoutes } from "../navigation/routes";
-import I18n from "../../../../i18n";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import * as analytics from "../analytics";
+import { PaymentsCheckoutRoutes } from "../navigation/routes";
 
 type InputState = {
   noticeNumberText: string;
@@ -68,9 +67,8 @@ const WalletPaymentInputNoticeNumberScreen = () => {
     );
 
   const focusTextInput = () => {
-    const textInputA11yWrapper = findNodeHandle(textInputWrappperRef.current);
-    if (textInputA11yWrapper && O.isNone(inputState.noticeNumber)) {
-      AccessibilityInfo.setAccessibilityFocus(textInputA11yWrapper);
+    if (O.isNone(inputState.noticeNumber)) {
+      setAccessibilityFocus(textInputWrappperRef);
     }
   };
 
@@ -89,7 +87,7 @@ const WalletPaymentInputNoticeNumberScreen = () => {
             <VSpacer size={16} />
             <Body>{I18n.t("wallet.payment.manual.noticeNumber.subtitle")}</Body>
             <VSpacer size={16} />
-            <View ref={textInputWrappperRef}>
+            <View accessible ref={textInputWrappperRef}>
               <TextInputValidation
                 placeholder={I18n.t(
                   "wallet.payment.manual.noticeNumber.placeholder"
