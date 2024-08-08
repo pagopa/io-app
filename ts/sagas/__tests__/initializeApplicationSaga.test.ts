@@ -248,7 +248,8 @@ describe("initializeApplicationSaga", () => {
       .next(
         O.some({
           spidLevel: "https://www.spid.gov.it/SpidL2",
-          walletToken: "wallet_token"
+          walletToken: "wallet_token",
+          bpdToken: "bpd_token"
         })
       )
       .next(lollipopPublicKeySelector)
