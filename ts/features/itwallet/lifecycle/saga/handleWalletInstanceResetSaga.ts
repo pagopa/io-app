@@ -16,7 +16,7 @@ const getKeyTag = (credential: O.Option<StoredCredential>) =>
     O.map(x => x.keyTag)
   );
 
-export function* handleWalletInstanceReset() {
+export function* handleWalletInstanceResetSaga() {
   const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
   const { eid, credentials } = yield* select(itwCredentialsSelector);
 

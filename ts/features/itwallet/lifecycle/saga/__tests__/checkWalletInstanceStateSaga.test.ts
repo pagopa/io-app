@@ -14,7 +14,7 @@ import { getAttestation } from "../../../common/utils/itwAttestationUtils";
 import { ensureIntegrityServiceIsReady } from "../../../common/utils/itwIntegrityUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { sessionTokenSelector } from "../../../../../store/reducers/authentication";
-import { handleWalletInstanceReset } from "../handleWalletInstanceResetSaga";
+import { handleWalletInstanceResetSaga } from "../handleWalletInstanceResetSaga";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({
   deleteKey: jest.fn
@@ -62,7 +62,7 @@ describe("checkWalletInstanceStateSaga", () => {
         ]
       ])
       .call.fn(getAttestationOrResetWalletInstance)
-      .not.call.fn(handleWalletInstanceReset)
+      .not.call.fn(handleWalletInstanceResetSaga)
       .run();
   });
 
@@ -92,7 +92,7 @@ describe("checkWalletInstanceStateSaga", () => {
         ]
       ])
       .call.fn(getAttestationOrResetWalletInstance)
-      .call.fn(handleWalletInstanceReset)
+      .call.fn(handleWalletInstanceResetSaga)
       .run();
   });
 
@@ -120,7 +120,7 @@ describe("checkWalletInstanceStateSaga", () => {
         ]
       ])
       .call.fn(getAttestationOrResetWalletInstance)
-      .not.call.fn(handleWalletInstanceReset)
+      .not.call.fn(handleWalletInstanceResetSaga)
       .run();
   });
 
@@ -150,7 +150,7 @@ describe("checkWalletInstanceStateSaga", () => {
         ]
       ])
       .call.fn(getAttestationOrResetWalletInstance)
-      .call.fn(handleWalletInstanceReset)
+      .call.fn(handleWalletInstanceResetSaga)
       .run();
   });
 });

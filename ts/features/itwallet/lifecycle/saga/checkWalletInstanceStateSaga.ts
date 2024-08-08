@@ -8,7 +8,7 @@ import { ReduxSagaEffect } from "../../../../types/utils";
 import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
 import { assert } from "../../../../utils/assert";
-import { handleWalletInstanceReset } from "./handleWalletInstanceResetSaga";
+import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 
 export function* getAttestationOrResetWalletInstance(integrityKeyTag: string) {
   const sessionToken = yield* select(sessionTokenSelector);
@@ -23,7 +23,7 @@ export function* getAttestationOrResetWalletInstance(integrityKeyTag: string) {
       err instanceof Errors.WalletInstanceRevokedError ||
       err instanceof Errors.WalletInstanceNotFoundError
     ) {
-      yield* call(handleWalletInstanceReset);
+      yield* call(handleWalletInstanceResetSaga);
     }
   }
 }
