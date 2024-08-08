@@ -9,7 +9,11 @@ import {
   RemoteValue
 } from "../../../../../common/model/RemoteValue";
 import { Action } from "../../../../../store/actions/types";
-import { fimsHistoryExport, fimsHistoryGet } from "../actions";
+import {
+  fimsHistoryExport,
+  fimsHistoryGet,
+  resetFimsHistoryExportState
+} from "../actions";
 
 export type FimsExportSuccessStates = "SUCCESS" | "ALREADY_EXPORTING";
 
@@ -28,6 +32,11 @@ const reducer = (
   action: Action
 ): FimsHistoryState => {
   switch (action.type) {
+    case getType(resetFimsHistoryExportState):
+      return {
+        ...state,
+        historyExportState: remoteUndefined
+      };
     case getType(fimsHistoryGet.request):
       return action.payload.shouldReloadFromScratch
         ? {

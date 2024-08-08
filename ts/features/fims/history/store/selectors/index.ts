@@ -1,8 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/Option";
-import { pipe } from "fp-ts/lib/function";
+import { constUndefined, pipe } from "fp-ts/lib/function";
 import { backendStatusSelector } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { potFoldWithDefault } from "../../../../../utils/pot";
 
 export const fimsHistoryPotSelector = (state: GlobalState) =>
   state.features.fims.history.consentsList;
@@ -12,6 +13,16 @@ export const isFimsHistoryLoadingSelector = (state: GlobalState) =>
 
 export const fimsHistoryToUndefinedSelector = (state: GlobalState) =>
   pot.toUndefined(state.features.fims.history.consentsList);
+
+export type FimsHistoryErrorState = "FULL_KO" | "ALERT_ONLY";
+export const fimsHistoryErrorSelector = (
+  state: GlobalState
+): FimsHistoryErrorState | undefined =>
+  potFoldWithDefault(state.features.fims.history.consentsList, {
+    default: constUndefined,
+    noneError: _ => "FULL_KO",
+    someError: (_some, _error) => "ALERT_ONLY"
+  });
 
 // the flag should be treated as enabled when either true or undefined,
 // and is defined as an optional bool

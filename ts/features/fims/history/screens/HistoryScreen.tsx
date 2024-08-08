@@ -1,4 +1,10 @@
-import { Body, Divider, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  Divider,
+  IOStyles,
+  IOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { constVoid } from "fp-ts/lib/function";
 import * as React from "react";
 import { Alert, FlatList, SafeAreaView, View } from "react-native";
@@ -12,8 +18,13 @@ import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backen
 import { openAppStoreUrl } from "../../../../utils/url";
 import { FimsHistoryListItem } from "../components/FimsHistoryListItem";
 import { LoadingFimsHistoryItemsFooter } from "../components/FimsHistoryLoaders";
-import { fimsHistoryExport, fimsHistoryGet } from "../store/actions";
 import {
+  fimsHistoryExport,
+  fimsHistoryGet,
+  resetFimsHistoryExportState
+} from "../store/actions";
+import {
+  fimsHistoryErrorSelector,
   fimsHistoryExportStateSelector,
   fimsHistoryToUndefinedSelector,
   isFimsHistoryLoadingSelector
@@ -31,18 +42,18 @@ export const FimsHistoryScreen = () => {
   const isHistoryLoading = useIOSelector(isFimsHistoryLoadingSelector);
   const consents = useIOSelector(fimsHistoryToUndefinedSelector);
   const historyExportState = useIOSelector(fimsHistoryExportStateSelector);
-
+  const historyErrorState = useIOSelector(fimsHistoryErrorSelector);
   // ---------- HOOKS
 
   const fetchMore = React.useCallback(() => {
-    if (consents?.continuationToken) {
+    if (consents?.continuationToken && historyErrorState === undefined) {
       dispatch(
         fimsHistoryGet.request({
           continuationToken: consents.continuationToken
         })
       );
     }
-  }, [consents?.continuationToken, dispatch]);
+  }, [consents?.continuationToken, historyErrorState, dispatch]);
 
   useHeaderSecondLevel({
     title: I18n.t("FIMS.history.historyScreen.header"),
@@ -60,13 +71,20 @@ export const FimsHistoryScreen = () => {
       historyExportState,
       constVoid,
       constVoid,
-      value =>
-        value === "SUCCESS"
-          ? showFimsExportSuccess()
-          : showFimsAlreadyExportingAlert(),
-      showFimsExportError
+      value => {
+        if (value === "SUCCESS") {
+          showFimsExportSuccess();
+        } else {
+          showFimsAlreadyExportingAlert();
+        }
+        dispatch(resetFimsHistoryExportState());
+      },
+      _ => {
+        showFimsExportError();
+        dispatch(resetFimsHistoryExportState());
+      }
     );
-  }, [historyExportState]);
+  }, [historyExportState, dispatch]);
 
   // ---------- APP UPDATE
 
@@ -82,6 +100,14 @@ export const FimsHistoryScreen = () => {
         }}
       />
     );
+  }
+  // ---------- HISTORY ERROR STATES
+
+  if (historyErrorState) {
+    if (historyErrorState === "FULL_KO") {
+      return <OperationResultScreenContent title="ERROR ERORRO" />;
+    }
+    IOToast.error("ERROR ERROR");
   }
 
   // ---------- EXPORT LOGIC
