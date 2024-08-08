@@ -69,7 +69,10 @@ import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { navigateToPrivacyScreen } from "../store/actions/navigation";
 import { clearOnboarding } from "../store/actions/onboarding";
 import { clearCache, resetProfileState } from "../store/actions/profile";
-import { startupLoadSuccess } from "../store/actions/startup";
+import {
+  startupLoadSuccess,
+  startupTransientError
+} from "../store/actions/startup";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
   sessionInfoSelector,
@@ -77,7 +80,8 @@ import {
 } from "../store/reducers/authentication";
 import {
   backendStatusSelector,
-  isPnEnabledSelector
+  isPnEnabledSelector,
+  isSettingsVisibleAndHideProfileSelector
 } from "../store/reducers/backendStatus";
 import { IdentificationResult } from "../store/reducers/identification";
 import {
@@ -88,7 +92,10 @@ import {
   isProfileFirstOnBoarding,
   profileSelector
 } from "../store/reducers/profile";
-import { StartupStatusEnum } from "../store/reducers/startup";
+import {
+  StartupStatusEnum,
+  startupTransientErrorInitialState
+} from "../store/reducers/startup";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
@@ -107,6 +114,7 @@ import {
 } from "../features/pushNotifications/sagas/notifications";
 import { checkNotificationsPreferencesSaga } from "../features/pushNotifications/sagas/checkNotificationsPreferencesSaga";
 import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
+import { handleApplicationStartupTransientError } from "../features/startup/sagas";
 import {
   clearKeychainError,
   keychainError
@@ -149,7 +157,7 @@ import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
-const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
+export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
 const warningWaitNavigatorTime = 2000 as Millisecond;
 
@@ -158,13 +166,13 @@ const warningWaitNavigatorTime = 2000 as Millisecond;
  */
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
 export function* initializeApplicationSaga(
-  action?: ActionType<typeof startApplicationInitialization>
+  startupAction?: ActionType<typeof startApplicationInitialization>
 ): Generator<ReduxSagaEffect, void, any> {
   const handleSessionExpiration = !!(
-    action?.payload && action.payload.handleSessionExpiration
+    startupAction?.payload && startupAction.payload.handleSessionExpiration
   );
   const showIdentificationModal =
-    action?.payload?.showIdentificationModalAtStartup ?? true;
+    startupAction?.payload?.showIdentificationModalAtStartup ?? true;
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
@@ -325,7 +333,14 @@ export function* initializeApplicationSaga(
   // eslint-disable-next-line functional/no-let
   let maybeSessionInformation: ReturnType<typeof sessionInfoSelector> =
     yield* select(sessionInfoSelector);
-  if (isSessionRefreshed || O.isNone(maybeSessionInformation)) {
+  // In the check below we had also isSessionRefreshed, but it is not needed
+  // since the actual checkSession made above is enough to ensure that the
+  // session tokens are retrieved correctly.
+  // Only in the scenario when we get here and session tokens are not available,
+  // we have to load the session information from the backend.
+  // In a future refactoring where the checkSession won't get the session tokens
+  // anymore, we will need to rethink about this check.
+  if (O.isNone(maybeSessionInformation)) {
     // let's try to load the session information from the backend.
 
     maybeSessionInformation = yield* call(
@@ -334,11 +349,7 @@ export function* initializeApplicationSaga(
     );
 
     if (O.isNone(maybeSessionInformation)) {
-      // we can't go further without session info, let's restart
-      // the initialization process
-      yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
-      yield* put(startApplicationInitialization());
-
+      yield* call(handleApplicationStartupTransientError, "GET_SESSION_DOWN");
       return;
     }
   }
@@ -374,12 +385,10 @@ export function* initializeApplicationSaga(
   );
 
   if (O.isNone(maybeUserProfile)) {
-    // Start again if we can't load the profile but wait a while
-    yield* delay(WAIT_INITIALIZE_SAGA);
-    yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
-    yield* put(startApplicationInitialization());
+    yield* call(handleApplicationStartupTransientError, "GET_PROFILE_DOWN");
     return;
   }
+  yield* put(startupTransientError(startupTransientErrorInitialState));
 
   // eslint-disable-next-line functional/no-let
   let userProfile = maybeUserProfile.value;
@@ -434,6 +443,10 @@ export function* initializeApplicationSaga(
       // If we are here the user had chosen to reset the unlock code
       yield* put(startApplicationInitialization());
       return;
+    }
+
+    if (!handleSessionExpiration) {
+      yield* call(setLanguageFromProfileIfExists);
     }
 
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
@@ -591,13 +604,20 @@ export function* initializeApplicationSaga(
         );
         type leftOrRight = "left" | "right";
         const alertChoiceChannel = channel<leftOrRight>();
+        const isSettingsVisibleAndHideProfile = yield* select(
+          isSettingsVisibleAndHideProfileSelector
+        );
         if (O.isSome(maybeDeletePending)) {
           Alert.alert(
             I18n.t("startup.userDeletePendingAlert.title"),
-            I18n.t("startup.userDeletePendingAlert.message"),
+            isSettingsVisibleAndHideProfile
+              ? I18n.t("startup.userDeletePendingAlert.message")
+              : I18n.t("startup.userDeletePendingAlert.messageLegacy"),
             [
               {
-                text: I18n.t("startup.userDeletePendingAlert.cta_1"),
+                text: isSettingsVisibleAndHideProfile
+                  ? I18n.t("startup.userDeletePendingAlert.cta_1")
+                  : I18n.t("startup.userDeletePendingAlert.cta_1_legacy"),
                 style: "cancel",
                 onPress: () => {
                   alertChoiceChannel.put("left");

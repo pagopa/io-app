@@ -1,9 +1,12 @@
 import { IOIcons } from "@pagopa/io-app-design-system";
 import dc from "../../__mocks__/dc.json";
 import eid from "../../__mocks__/eid.json";
+import mdlCredential from "../../__mocks__/mdl";
 import mdl from "../../__mocks__/mdl.json";
 import ts from "../../__mocks__/ts.json";
-import { StoredCredential } from "./itwTypesUtils";
+import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
+
+export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
 
 export const ISSUER_URL = "https://www.interno.gov.it/pid/";
 
@@ -32,7 +35,7 @@ export const CREDENTIAL_ISSUER = "eFarma";
 export enum CredentialType {
   EUROPEAN_HEALTH_INSURANCE_CARD = "EuropeanHealthInsuranceCard",
   EUROPEAN_DISABILITY_CARD = "EuropeanDisabilityCard",
-  DRIVING_LICENSE = "mDL",
+  DRIVING_LICENSE = "MDL",
   PID = "PersonIdentificationData"
 }
 
@@ -84,9 +87,19 @@ export const mockedmDLResponse = Buffer.from(
   "hex"
 );
 
-export const ItwCredentialsMocks = {
+export const ItwParsedCredentialsMocks = {
+  eid: (eid as unknown as StoredCredential).parsedCredential,
+  dc: (dc as unknown as StoredCredential).parsedCredential,
+  mdl: mdl as unknown as ParsedCredential,
+  ts: (ts as unknown as StoredCredential).parsedCredential
+};
+
+export const ItwStoredCredentialsMocks = {
   eid: eid as unknown as StoredCredential,
   dc: dc as unknown as StoredCredential,
-  mdl: mdl as unknown as StoredCredential,
   ts: ts as unknown as StoredCredential
+};
+
+export const ItwRawCredentialsMocks = {
+  mdl: mdlCredential
 };

@@ -227,6 +227,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -234,6 +235,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -272,6 +274,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -279,6 +282,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -502,6 +506,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -509,6 +514,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -532,6 +538,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -539,6 +546,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -621,6 +629,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -629,6 +638,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -673,9 +683,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -711,6 +722,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -718,6 +730,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -749,6 +762,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -758,6 +772,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -841,6 +856,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -849,6 +865,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -893,9 +910,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -931,6 +949,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -938,6 +957,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -1007,6 +1027,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -1014,6 +1035,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -1642,6 +1664,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -1649,6 +1672,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -1687,6 +1711,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -1694,6 +1719,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -1917,6 +1943,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -1924,6 +1951,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -1947,6 +1975,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -1954,6 +1983,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -2036,6 +2066,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -2044,6 +2075,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -2088,9 +2120,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -2126,6 +2159,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -2133,6 +2167,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -2164,6 +2199,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -2173,6 +2209,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -2256,6 +2293,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -2264,6 +2302,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -2308,9 +2347,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -2346,6 +2386,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -2353,6 +2394,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -2422,6 +2464,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -2429,6 +2472,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -3057,6 +3101,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -3064,6 +3109,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -3102,6 +3148,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -3109,6 +3156,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -3332,6 +3380,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -3339,6 +3388,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -3362,6 +3412,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -3369,6 +3420,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -3451,6 +3503,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -3459,6 +3512,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -3503,9 +3557,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -3541,6 +3596,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -3548,6 +3604,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -3579,6 +3636,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -3588,6 +3646,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -3671,6 +3730,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -3679,6 +3739,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -3723,9 +3784,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -3761,6 +3823,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -3768,6 +3831,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -3837,6 +3901,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -3844,6 +3909,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -4472,6 +4538,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -4479,6 +4546,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -4517,6 +4585,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -4524,6 +4593,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -4747,6 +4817,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -4754,6 +4825,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -4777,6 +4849,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -4784,6 +4857,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -4866,6 +4940,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -4874,6 +4949,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -4918,9 +4994,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -4956,6 +5033,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -4963,6 +5041,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -4994,6 +5073,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -5003,6 +5083,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -5086,6 +5167,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -5094,6 +5176,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -5138,9 +5221,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": true,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -5176,6 +5260,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -5183,6 +5268,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -5252,6 +5338,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -5259,6 +5346,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -5887,6 +5975,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -5894,6 +5983,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -5932,6 +6022,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -5939,6 +6030,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -6162,6 +6254,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -6169,6 +6262,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -6192,6 +6286,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -6199,6 +6294,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -6281,6 +6377,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -6289,6 +6386,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -6333,9 +6431,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -6371,6 +6470,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -6378,6 +6478,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -6409,6 +6510,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -6418,6 +6520,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -6501,6 +6604,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -6509,6 +6613,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -6553,9 +6658,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -6591,6 +6697,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -6598,6 +6705,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -6667,6 +6775,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -6674,6 +6783,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -7302,6 +7412,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -7309,6 +7420,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -7347,6 +7459,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -7354,6 +7467,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -7577,6 +7691,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -7584,6 +7699,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -7607,6 +7723,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -7614,6 +7731,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -7696,6 +7814,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -7704,6 +7823,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -7748,9 +7868,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -7786,6 +7907,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -7793,6 +7915,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -7824,6 +7947,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -7833,6 +7957,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -7916,6 +8041,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -7924,6 +8050,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -7968,9 +8095,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -8006,6 +8134,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -8013,6 +8142,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -8082,6 +8212,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -8089,6 +8220,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -8717,6 +8849,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -8724,6 +8857,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -8762,6 +8896,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -8769,6 +8904,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -8992,6 +9128,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -8999,6 +9136,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -9022,6 +9160,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -9029,6 +9168,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -9111,6 +9251,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -9119,6 +9260,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -9163,9 +9305,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -9201,6 +9344,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -9208,6 +9352,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -9239,6 +9384,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -9248,6 +9394,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -9331,6 +9478,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -9339,6 +9487,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -9383,9 +9532,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -9421,6 +9571,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -9428,6 +9579,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -9497,6 +9649,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -9504,6 +9657,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -10132,6 +10286,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -10139,6 +10294,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -10177,6 +10333,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -10184,6 +10341,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -10407,6 +10565,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -10414,6 +10573,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -10437,6 +10597,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -10444,6 +10605,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -10526,6 +10688,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -10534,6 +10697,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -10578,9 +10742,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": true,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -10616,6 +10781,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -10623,6 +10789,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -10654,6 +10821,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -10663,6 +10831,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -10746,6 +10915,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -10754,6 +10924,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -10798,9 +10969,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -10836,6 +11008,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -10843,6 +11016,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -10912,6 +11086,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -10919,6 +11094,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -11547,6 +11723,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -11554,6 +11731,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -11592,6 +11770,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -11599,6 +11778,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -11822,6 +12002,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -11829,6 +12010,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -11852,6 +12034,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -11859,6 +12042,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -11941,6 +12125,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -11949,6 +12134,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -11993,9 +12179,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -12031,6 +12218,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -12038,6 +12226,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -12069,6 +12258,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -12078,6 +12268,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -12161,6 +12352,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -12169,6 +12361,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -12213,9 +12406,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -12251,6 +12445,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -12258,6 +12453,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -12327,6 +12523,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -12334,6 +12531,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -12962,6 +13160,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -12969,6 +13168,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -13007,6 +13207,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -13014,6 +13215,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -13237,6 +13439,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -13244,6 +13447,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -13267,6 +13471,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -13274,6 +13479,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -13356,6 +13562,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -13364,6 +13571,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -13408,9 +13616,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": true,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -13446,6 +13655,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -13453,6 +13663,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -13484,6 +13695,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -13493,6 +13705,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -13576,6 +13789,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -13584,6 +13798,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -13628,9 +13843,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": true,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -13666,6 +13882,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -13673,6 +13890,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -13742,6 +13960,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -13749,6 +13968,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -14377,6 +14597,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -14384,6 +14605,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -14422,6 +14644,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -14429,6 +14652,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -14652,6 +14876,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -14659,6 +14884,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -14682,6 +14908,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -14689,6 +14916,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -14771,6 +14999,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -14779,6 +15008,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -14823,9 +15053,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -14861,6 +15092,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -14868,6 +15100,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -14899,6 +15132,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -14908,6 +15142,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -14991,6 +15226,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -14999,6 +15235,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -15043,9 +15280,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -15081,6 +15319,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -15088,6 +15327,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -15157,6 +15397,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -15164,6 +15405,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -15792,6 +16034,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -15799,6 +16042,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -15837,6 +16081,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -15844,6 +16089,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -16067,6 +16313,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -16074,6 +16321,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -16097,6 +16345,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -16104,6 +16353,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -16186,6 +16436,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -16194,6 +16445,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -16238,9 +16490,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": true,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -16276,6 +16529,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -16283,6 +16537,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -16314,6 +16569,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -16323,6 +16579,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -16406,6 +16663,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -16414,6 +16672,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -16458,9 +16717,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -16496,6 +16756,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -16503,6 +16764,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -16572,6 +16834,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -16579,6 +16842,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -17207,6 +17471,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -17214,6 +17479,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -17252,6 +17518,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -17259,6 +17526,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -17482,6 +17750,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -17489,6 +17758,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -17512,6 +17782,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -17519,6 +17790,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -17601,6 +17873,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -17609,6 +17882,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -17653,9 +17927,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -17691,6 +17966,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -17698,6 +17974,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -17729,6 +18006,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -17738,6 +18016,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -17821,6 +18100,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -17829,6 +18109,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -17873,9 +18154,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -17911,6 +18193,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -17918,6 +18201,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -17987,6 +18271,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -17994,6 +18279,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -18622,6 +18908,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -18629,6 +18916,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -18667,6 +18955,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -18674,6 +18963,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -18897,6 +19187,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -18904,6 +19195,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -18927,6 +19219,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -18934,6 +19227,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -19016,6 +19310,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -19024,6 +19319,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -19068,9 +19364,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -19106,6 +19403,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -19113,6 +19411,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -19144,6 +19443,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -19153,6 +19453,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -19236,6 +19537,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -19244,6 +19546,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -19288,9 +19591,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -19326,6 +19630,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -19333,6 +19638,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -19402,6 +19708,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -19409,6 +19716,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -20037,6 +20345,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -20044,6 +20353,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -20082,6 +20392,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -20089,6 +20400,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -20312,6 +20624,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -20319,6 +20632,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -20342,6 +20656,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -20349,6 +20664,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -20431,6 +20747,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -20439,6 +20756,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -20483,9 +20801,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -20521,6 +20840,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -20528,6 +20848,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -20559,6 +20880,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -20568,6 +20890,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -20651,6 +20974,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -20659,6 +20983,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -20703,9 +21028,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -20741,6 +21067,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -20748,6 +21075,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -20817,6 +21145,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -20824,6 +21153,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -21452,6 +21782,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -21459,6 +21790,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -21497,6 +21829,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -21504,6 +21837,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -21727,6 +22061,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -21734,6 +22069,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -21757,6 +22093,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -21764,6 +22101,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -21846,6 +22184,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -21854,6 +22193,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -21898,9 +22238,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -21936,6 +22277,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -21943,6 +22285,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -21974,6 +22317,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -21983,6 +22327,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -22066,6 +22411,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -22074,6 +22420,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -22118,9 +22465,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": true,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -22156,6 +22504,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -22163,6 +22512,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -22232,6 +22582,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -22239,6 +22590,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -22867,6 +23219,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -22874,6 +23227,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -22912,6 +23266,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -22919,6 +23274,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -23142,6 +23498,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -23149,6 +23506,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -23172,6 +23530,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -23179,6 +23538,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -23261,6 +23621,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -23269,6 +23630,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -23313,9 +23675,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -23351,6 +23714,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -23358,6 +23722,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -23389,6 +23754,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -23398,6 +23764,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -23481,6 +23848,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -23489,6 +23857,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -23533,9 +23902,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": true,
                                       }
                                     }
+                                    disabled={true}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -23571,6 +23941,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -23578,6 +23949,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -23647,6 +24019,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -23654,6 +24027,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -24282,6 +24656,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title1"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -24289,6 +24664,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   "lineHeight": 40,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -24327,6 +24703,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               color="grey-700"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -24334,6 +24711,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -24557,6 +24935,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -24564,6 +24943,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -24587,6 +24967,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -24594,6 +24975,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -24676,6 +25058,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -24684,6 +25067,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -24728,9 +25112,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -24766,6 +25151,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -24773,6 +25159,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -24804,6 +25191,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -24813,6 +25201,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "textDecorationLine": "underline",
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -24896,6 +25285,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -24904,6 +25294,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                     }
                                     importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {
@@ -24948,9 +25339,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -24986,6 +25378,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -24993,6 +25386,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -25062,6 +25456,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -25069,6 +25464,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
                                         {

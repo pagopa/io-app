@@ -12,15 +12,13 @@ import React, {
   useMemo,
   useState
 } from "react";
-import {
-  Alert,
-  AlertButton,
-  ListRenderItemInfo,
-  SectionList
-} from "react-native";
+import { Alert, AlertButton, FlatList, ListRenderItemInfo } from "react-native";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
+import { FIMS_ROUTES } from "../../features/fims/common/navigation";
+import { fimsIsHistoryEnabledSelector } from "../../features/fims/history/store/selectors";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
@@ -33,9 +31,6 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
-import { fimsIsHistoryEnabledSelector } from "../../features/fims/history/store/selectors";
-import { FIMS_ROUTES } from "../../features/fims/common/navigation";
-import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 
 type Props = {
   navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_PRIVACY_MAIN">;
@@ -192,9 +187,8 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
   const spreadableMaybeFimsHistoryListItem = isFimsHistoryEnabled
     ? [
         {
-          // TODO: add correct I18n keys
-          value: "FIMS_HISTORY",
-          description: "HISTORY_DESC",
+          value: I18n.t("FIMS.history.profileCTA.title"),
+          description: I18n.t("FIMS.history.profileCTA.subTitle"),
           onPress: () =>
             navigation.navigate(FIMS_ROUTES.MAIN, {
               screen: FIMS_ROUTES.HISTORY
@@ -319,12 +313,9 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         loadingOpacity={0.9}
         loadingCaption={I18n.t("profile.main.privacy.loading")}
       >
-        <SectionList
-          sections={[
-            {
-              data: privacyNavListItems
-            }
-          ]}
+        <FlatList
+          scrollEnabled={false}
+          data={privacyNavListItems}
           keyExtractor={extractKey}
           renderItem={renderPrivacyNavItem}
           ItemSeparatorComponent={Divider}

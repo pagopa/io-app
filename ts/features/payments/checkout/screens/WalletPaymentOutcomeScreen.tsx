@@ -35,6 +35,8 @@ import {
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getPaymentPhaseFromStep } from "../utils";
 import { paymentCompletedSuccess } from "../store/actions/orchestration";
+import { walletPaymentSelectedPspSelector } from "../store/selectors/psps";
+import { PaymentsCheckoutRoutes } from "../navigation/routes";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -59,6 +61,7 @@ const WalletPaymentOutcomeScreen = () => {
   const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
+  const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
 
   const supportModal = usePaymentFailureSupportModal({
     outcome
@@ -76,14 +79,29 @@ const WalletPaymentOutcomeScreen = () => {
     };
   }, [navigation]);
 
+  const taxFeeAmount = pipe(
+    selectedPspOption,
+    O.chainNullableK(psp => psp.taxPayerFee),
+    O.getOrElse(() => 0)
+  );
+
   const paymentAmount = pipe(
     paymentDetailsPot,
     pot.toOption,
-    O.map(({ amount }) => formatNumberCentsToAmount(amount, true, "right")),
+    O.map(({ amount }) =>
+      formatNumberCentsToAmount(Number(amount) + taxFeeAmount, true, "right")
+    ),
     O.getOrElse(() => "-")
   );
 
   const handleContactSupport = () => {
+    analytics.trackPaymentErrorHelp({
+      error: outcome,
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
+    });
     supportModal.present();
   };
 
@@ -124,8 +142,12 @@ const WalletPaymentOutcomeScreen = () => {
 
   const onboardPaymentMethodCloseAction: OperationResultScreenContentProps["action"] =
     {
-      label: I18n.t("global.buttons.close"),
-      accessibilityLabel: I18n.t("global.buttons.close"),
+      label: I18n.t(
+        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.secondaryAction"
+      ),
+      accessibilityLabel: I18n.t(
+        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.secondaryAction"
+      ),
       onPress: () => {
         analytics.trackPaymentMethodErrorExit({
           organization_name: paymentAnalyticsData?.verifiedData?.paName,
@@ -133,7 +155,9 @@ const WalletPaymentOutcomeScreen = () => {
           first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
           expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
         });
-        handleClose();
+        navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+          screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
+        });
       }
     };
 
@@ -149,7 +173,7 @@ const WalletPaymentOutcomeScreen = () => {
         analytics.trackPaymentMethodErrorContinue({
           organization_name: paymentAnalyticsData?.verifiedData?.paName,
           service_name: paymentAnalyticsData?.serviceName,
-          first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
+          first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
           expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
         });
         navigation.replace(
@@ -180,7 +204,7 @@ const WalletPaymentOutcomeScreen = () => {
   const trackOutcomeScreen = () => {
     if (outcome === WalletPaymentOutcomeEnum.SUCCESS) {
       analytics.trackPaymentOutcomeSuccess({
-        attempt: paymentAnalyticsData?.attempt,
+        attempt: paymentOngoingHistory?.attempt,
         organization_name: paymentAnalyticsData?.verifiedData?.paName,
         service_name: paymentAnalyticsData?.serviceName,
         amount: paymentAnalyticsData?.formattedAmount,
@@ -193,9 +217,11 @@ const WalletPaymentOutcomeScreen = () => {
       return;
     }
     analytics.trackPaymentOutcomeFailure(outcome, {
+      data_entry: paymentAnalyticsData?.startOrigin,
+      first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
       service_name: paymentAnalyticsData?.serviceName,
-      attempt: paymentAnalyticsData?.attempt,
+      attempt: paymentOngoingHistory?.attempt,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
       payment_phase:
         outcome === WalletPaymentOutcomeEnum.GENERIC_ERROR
@@ -212,6 +238,7 @@ const WalletPaymentOutcomeScreen = () => {
           title: I18n.t("wallet.payment.outcome.SUCCESS.title", {
             amount: paymentAmount
           }),
+          subtitle: I18n.t("wallet.payment.outcome.SUCCESS.subtitle"),
           action: closeSuccessAction
         };
       case WalletPaymentOutcomeEnum.GENERIC_ERROR:

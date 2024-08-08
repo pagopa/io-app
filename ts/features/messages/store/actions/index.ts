@@ -8,15 +8,12 @@ import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { UIMessage, UIMessageDetails, UIMessageId } from "../../types";
 import { MessageGetStatusFailurePhaseType } from "../reducers/messageGetStatus";
-import { MessagesStatus } from "../reducers/messagesStatus";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { MessageListCategory } from "../../types/messageListCategory";
 import {
-  clearLegacyMessagePrecondition,
   errorPreconditionStatusAction,
-  getLegacyMessagePrecondition,
   idlePreconditionStatusAction,
   loadingContentPreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
@@ -191,32 +188,6 @@ export const upsertMessageStatusAttributes = createAsyncAction(
   { error: Error; payload: UpsertMessageStatusAttributesPayload }
 >();
 
-export const removeMessages =
-  createStandardAction("MESSAGES_REMOVE")<ReadonlyArray<string>>();
-
-type MigrationFailure = {
-  error: unknown;
-  messageId: string;
-};
-
-export type MigrationResult = {
-  failed: Array<MigrationFailure>;
-  succeeded: Array<string>;
-};
-
-export const migrateToPaginatedMessages = createAsyncAction(
-  "MESSAGES_MIGRATE_TO_PAGINATED_REQUEST",
-  "MESSAGES_MIGRATE_TO_PAGINATED_SUCCESS",
-  "MESSAGES_MIGRATE_TO_PAGINATED_FAILURE"
-)<MessagesStatus, number, MigrationResult>();
-
-/**
- * Used to mark the end of a migration and reset it to a pristine state.
- */
-export const resetMigrationStatus = createAction(
-  "MESSAGES_MIGRATE_TO_PAGINATED_DONE"
-);
-
 export type DownloadAttachmentRequest = {
   attachment: ThirdPartyAttachment;
   messageId: UIMessageId;
@@ -315,14 +286,15 @@ export const setShownMessageCategoryAction = createStandardAction(
   "SET_SHOWN_MESSAGE_CATEGORY"
 )<MessageListCategory>();
 
+export const requestAutomaticMessagesRefresh = createStandardAction(
+  "REQUEST_AUOMATIC_MESSAGE_REFRESH"
+)<MessageListCategory>();
+
 export type MessagesActions = ActionType<
   | typeof reloadAllMessages
   | typeof loadNextPageMessages
   | typeof loadPreviousPageMessages
   | typeof loadMessageDetails
-  | typeof migrateToPaginatedMessages
-  | typeof resetMigrationStatus
-  | typeof removeMessages
   | typeof upsertMessageStatusAttributes
   | typeof loadMessageById
   | typeof loadThirdPartyMessage
@@ -337,8 +309,6 @@ export type MessagesActions = ActionType<
   | typeof scheduledPreconditionStatusAction
   | typeof shownPreconditionStatusAction
   | typeof updateRequiredPreconditionStatusAction
-  | typeof getLegacyMessagePrecondition
-  | typeof clearLegacyMessagePrecondition
   | typeof getMessageDataAction
   | typeof cancelGetMessageDataAction
   | typeof resetGetMessageDataAction
@@ -351,4 +321,5 @@ export type MessagesActions = ActionType<
   | typeof startProcessingMessageArchivingAction
   | typeof removeScheduledMessageArchivingAction
   | typeof interruptMessageArchivingProcessingAction
+  | typeof requestAutomaticMessagesRefresh
 >;

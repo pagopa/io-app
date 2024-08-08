@@ -10,11 +10,10 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useLinkTo } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18n-js";
 import React, { useCallback } from "react";
 import { ScrollView, StyleSheet, TextInput, View } from "react-native";
+import I18n from "../../../i18n";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
-import { ExtractedCtaButton } from "../../../components/cta/ExtractedCtaButton";
 import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import { CTA } from "../../../features/messages/types/MessageCTA";
 import {
@@ -184,9 +183,9 @@ const MarkdownPlayground = () => {
 
         {O.isSome(maybeCTA) && (
           <View style={styles.row}>
-            <ExtractedCtaButton
-              cta={maybeCTA.value.cta_1}
-              onCTAPress={handleCtaPress}
+            <ButtonOutline
+              label={maybeCTA.value.cta_1.text}
+              onPress={() => handleCtaPress(maybeCTA.value.cta_1)}
             />
           </View>
         )}
@@ -194,9 +193,13 @@ const MarkdownPlayground = () => {
           <>
             <VSpacer size={16} />
             <View style={styles.row}>
-              <ExtractedCtaButton
-                cta={maybeCTA.value.cta_2}
-                onCTAPress={handleCtaPress}
+              <ButtonOutline
+                label={maybeCTA.value.cta_2.text}
+                onPress={() =>
+                  maybeCTA.value.cta_2
+                    ? handleCtaPress(maybeCTA.value.cta_2)
+                    : undefined
+                }
               />
             </View>
           </>

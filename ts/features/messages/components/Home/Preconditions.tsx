@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from "react";
+import { Keyboard } from "react-native";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
   useIODispatch,
@@ -11,7 +12,6 @@ import {
   shouldPresentPreconditionsBottomSheetSelector
 } from "../../store/reducers/messagePrecondition";
 import {
-  clearLegacyMessagePrecondition,
   idlePreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
   toIdlePayload,
@@ -32,7 +32,6 @@ export const Preconditions = () => {
   const dispatch = useIODispatch();
   const store = useIOStore();
   const onDismissCallback = useCallback(() => {
-    dispatch(clearLegacyMessagePrecondition());
     dispatch(idlePreconditionStatusAction(toIdlePayload()));
   }, [dispatch]);
   const onNavigationCallback = useCallback(
@@ -70,6 +69,8 @@ export const Preconditions = () => {
       if (categoryTag) {
         trackDisclaimerOpened(categoryTag);
       }
+      // Preconditions shown while searching messages should dismiss the keyboard
+      Keyboard.dismiss();
       modal.present();
 
       const requiresAppUpdate = preconditionsRequireAppUpdateSelector(state);
