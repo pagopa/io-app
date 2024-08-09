@@ -21,7 +21,6 @@ export const ItwIssuanceEidPreviewScreen = () => {
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
 
-  // useItwHandleCieIdExternalApp();
   useItwDisbleGestureNavigation();
   useAvoidHardwareBackButton();
 
