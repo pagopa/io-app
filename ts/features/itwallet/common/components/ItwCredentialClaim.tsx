@@ -1,11 +1,17 @@
-import React, { useMemo } from "react";
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
+import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import * as E from "fp-ts/Either";
 import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
+import React, { useMemo } from "react";
 import { Image } from "react-native";
-import { DateFromString } from "@pagopa/ts-commons/lib/dates";
+import I18n from "../../../../i18n";
+import { getExpireStatus } from "../../../../utils/dates";
+import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { localeDateFormat } from "../../../../utils/locale";
+import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import {
+  BoolClaim,
   ClaimDisplayFormat,
   ClaimValue,
   DateClaimConfig,
@@ -22,11 +28,6 @@ import {
   extractFiscalCode,
   previewDateClaimsConfig
 } from "../utils/itwClaimsUtils";
-import I18n from "../../../../i18n";
-import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
-import { localeDateFormat } from "../../../../utils/locale";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import { getExpireStatus } from "../../../../utils/dates";
 
 const HIDDEN_CLAIM = "******";
 
@@ -47,6 +48,23 @@ const PlaceOfBirthClaimItem = ({
     <ListItemInfo label={label} value={value} accessibilityLabel={value} />
   );
 };
+
+/**
+ * Component which renders a yes/no claim.
+ * @param label - the label of the claim
+ * @param claim - the claim value
+ */
+const BoolClaimItem = ({ label, claim }: { label: string; claim: boolean }) => (
+  <ListItemInfo
+    label={label}
+    value={I18n.t(
+      `features.itWallet.presentation.credentialDetails.boolClaim.${claim}`
+    )}
+    accessibilityLabel={I18n.t(
+      `features.itWallet.presentation.credentialDetails.boolClaim.${claim}`
+    )}
+  />
+);
 
 /**
  * Component which renders a generic text type claim.
@@ -344,6 +362,8 @@ export const ItwCredentialClaim = ({
             O.getOrElseW(() => decoded)
           );
           return <PlainTextClaimItem label={claim.label} claim={fiscalCode} />;
+        } else if (BoolClaim.is(decoded)) {
+          return <BoolClaimItem label={claim.label} claim={decoded} />; // m
         } else if (EmptyStringClaim.is(decoded)) {
           return null; // We want to hide the claim if it's empty
         }

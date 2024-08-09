@@ -3321,6 +3321,9 @@ features:
         personalDataTitle: "Personal data"
         documentDataTitle: "Document data"
         lastUpdated: "Last updated on {{lastUpdateTime}}"
+        boolClaim:
+          true: Si
+          false: No
         hiddenClaim: "Hidden"
         status:
           valid: Valid

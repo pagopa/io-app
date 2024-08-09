@@ -4,7 +4,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 /**
  * This hook disables gesture navigation and reenables it when the screen is unmounted
  */
-export const useItwDisbleGestureNavigation = () => {
+export const useItwDisableGestureNavigation = () => {
   const navigation = useIONavigation();
   React.useEffect(() => {
     // Disable swipe

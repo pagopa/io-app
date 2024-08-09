@@ -5,7 +5,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { sequenceS } from "fp-ts/lib/Apply";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
@@ -17,8 +17,10 @@ import { identificationRequest } from "../../../../store/actions/identification"
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
-import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
+import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
+import { getHumanReadableParsedCredential } from "../../common/utils/debug";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
@@ -39,7 +41,7 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
 
-  useItwDisbleGestureNavigation();
+  useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
   if (isLoading) {
@@ -57,7 +59,10 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
       credentialType: credentialTypeOption,
       credential: credentialOption
     }),
-    O.fold(constNull, props => <ContentView {...props} />)
+    O.fold(
+      () => <ItwGenericErrorContent />,
+      props => <ContentView {...props} />
+    )
   );
 };
 
@@ -100,7 +105,9 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   });
 
   useDebugInfo({
-    parsedCredential: credential.parsedCredential
+    parsedCredential: getHumanReadableParsedCredential(
+      credential.parsedCredential
+    )
   });
 
   return (

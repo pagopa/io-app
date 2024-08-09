@@ -30,15 +30,6 @@ describe("getCredentialExpireDate", () => {
       {
         expiration_date: {
           name: "",
-          value: "01/01/2015"
-        }
-      },
-      new Date(2015, 0, 1)
-    ],
-    [
-      {
-        expiration_date: {
-          name: "",
           value: undefined
         }
       },

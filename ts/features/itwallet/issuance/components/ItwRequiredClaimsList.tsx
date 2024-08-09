@@ -23,6 +23,7 @@ import {
   extractFiscalCode,
   FiscalCodeClaim,
   ImageClaim,
+  BoolClaim,
   PlaceOfBirthClaim,
   StringClaim
 } from "../../common/utils/itwClaimsUtils";
@@ -107,6 +108,10 @@ export const getClaimDisplayValue = (
             decoded,
             extractFiscalCode,
             O.getOrElseW(() => decoded)
+          );
+        } else if (BoolClaim.is(decoded)) {
+          return I18n.t(
+            `features.itWallet.presentation.credentialDetails.boolClaim.${decoded}`
           );
         } else if (StringClaim.is(decoded) || EmptyStringClaim.is(decoded)) {
           return decoded; // must be the last one to be checked due to overlap with IPatternStringTag
