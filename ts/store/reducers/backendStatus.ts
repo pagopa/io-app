@@ -36,6 +36,7 @@ import {
   isNewScanSectionLocallyEnabledSelector
 } from "./persistedPreferences";
 import { GlobalState } from "./types";
+import { isPropertyWithMinAppVersionEnabled } from "./featureFlagWithMinAppVersionStatus";
 
 export type SectionStatusKey = keyof Sections;
 /** note that this state is not persisted so Option type is accepted
@@ -250,6 +251,18 @@ export const isCGNEnabledSelector = createSelector(
       O.toUndefined
     ) ?? false
 );
+
+export const fimsRequiresAppUpdateSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    backendStatusSelector,
+    backendStatus =>
+      !isPropertyWithMinAppVersionEnabled({
+        backendStatus,
+        mainLocalFlag: true,
+        configPropertyName: "fims"
+      })
+  );
 
 export const fimsDomainSelector = createSelector(
   backendStatusSelector,
