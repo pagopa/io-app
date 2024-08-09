@@ -151,5 +151,11 @@ export const createEidIssuanceActionsImplementation = (
   disposeWalletAttestation,
 
   handleSessionExpired: () =>
-    dispatch(checkCurrentSession.success({ isSessionValid: false }))
+    dispatch(checkCurrentSession.success({ isSessionValid: false })),
+
+  abortIdentification: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    context.identification?.abortController?.abort();
+  }
 });
