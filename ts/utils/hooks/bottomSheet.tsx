@@ -181,11 +181,6 @@ export const useIOBottomSheetModal = ({
       backdropComponent={BackdropElement}
       enableDismissOnClose={true}
       accessible={false}
-      // set this attribute to an empty string to avoid the default announcement from the library
-      accessibilityPositionChangeAnnouncement={""}
-      handleComponentAccessibility={{
-        accessible: false
-      }}
       importantForAccessibility={"yes"}
       onDismiss={onDismiss}
     >

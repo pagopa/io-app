@@ -332,17 +332,11 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                       }
                     >
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         snapPoints={

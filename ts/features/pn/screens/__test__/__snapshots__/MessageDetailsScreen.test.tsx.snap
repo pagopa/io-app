@@ -1507,17 +1507,11 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               </View>
                             </View>
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
                               snapPoints={
@@ -1713,17 +1707,11 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               </View>
                             </View>
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
                               snapPoints={
