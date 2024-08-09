@@ -21,6 +21,7 @@ import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
 import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
 import { itwTrialId } from "../../../../../config";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 type RenderOptions = {
   isIdPayEnabled?: boolean;
@@ -43,7 +44,12 @@ describe("WalletCardOnboardingScreen", () => {
   it("it should render the IT Wallet modules", () => {
     const { queryByTestId } = renderComponent({});
 
-    expect(queryByTestId("itwDrivingLicenseModuleTestID")).toBeTruthy();
+    expect(
+      queryByTestId(`${CredentialType.DRIVING_LICENSE}ModuleTestID`)
+    ).toBeTruthy();
+    expect(
+      queryByTestId(`${CredentialType.EUROPEAN_DISABILITY_CARD}ModuleTestID`)
+    ).toBeTruthy();
   });
 
   test.each([
@@ -58,18 +64,6 @@ describe("WalletCardOnboardingScreen", () => {
       expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
     }
   );
-
-  it("it should not render the ID Pay module if ID Pay is not active", () => {
-    const { queryByTestId } = renderComponent({ isIdPayEnabled: false });
-
-    expect(queryByTestId("idPayModuleTestID")).toBeFalsy();
-  });
-
-  it("it should render the ID Pay module if ID Pay is active", () => {
-    const { queryByTestId } = renderComponent({ isIdPayEnabled: true });
-
-    expect(queryByTestId("idPayModuleTestID")).toBeTruthy();
-  });
 });
 
 const renderComponent = ({
