@@ -54,6 +54,7 @@ export const h5DefaultWeight: AllowedWeight = "Semibold";
  * default values(if not defined) are weight: `Semibold`, color: `bluegreyDark`
  * @param props
  * @constructor
+ * @deprecated Don't use local `H5`. Import it from `io-app-design-system` instead.
  */
 export const H5: React.FunctionComponent<OwnProps> = props =>
   useTypographyFactory<AllowedWeight, AllowedColors>({

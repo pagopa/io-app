@@ -102,6 +102,7 @@ export const allUsedFonts = [
  * @param weight
  * @param isItalic
  * @param font
+ * @deprecated Don't use local `makeFontStyleObject`. Import it from `io-app-design-system` instead.
  */
 export const makeFontStyleObject = (
   weight: IOFontWeight | undefined = undefined,

@@ -19,6 +19,7 @@ const fontSize = 16;
  * default values(if not defined) are weight: `Regular`, color: `bluegrey`
  * @param props`
  * @constructor
+ * @deprecated Don't use local `Monospace`. Import `BodyMonospace` from `io-app-design-system` instead.
  */
 export const Monospace: React.FunctionComponent<OwnProps> = props =>
   useTypographyFactory<AllowedWeight, AllowedColors>({
