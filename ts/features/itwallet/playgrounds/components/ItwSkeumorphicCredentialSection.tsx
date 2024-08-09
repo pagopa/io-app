@@ -1,25 +1,21 @@
 import { ButtonSolid, H3, VStack } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
-import {
-  CredentialCardSide,
-  ItwSkeumorphicCredentialCard
-} from "../../presentation/components/ItwSkeumorphicCredentialCard";
+import { ItwSkeumorphicCredentialCard } from "../../presentation/components/ItwSkeumorphicCredentialCard";
 
 export const ItwSkeumorphicCredentialSection = () => {
-  const [side, setSide] = React.useState<CredentialCardSide>("front");
+  const [isFlipped, setFlipped] = React.useState(false);
+
   return (
     <VStack space={16}>
       <H3>{"Skeumorphic credential card"}</H3>
       <ItwSkeumorphicCredentialCard
         credential={ItwStoredCredentialsMocks.mdl}
-        side={side}
+        isFlipped={isFlipped}
       />
       <ButtonSolid
-        label={side === "front" ? "Show rear" : "Show front"}
-        onPress={() =>
-          setSide(current => (current === "front" ? "rear" : "front"))
-        }
+        label={isFlipped ? "Show front" : "Show rear"}
+        onPress={() => setFlipped(_ => !_)}
         fullWidth={true}
       />
     </VStack>
