@@ -5,7 +5,6 @@ import {
 import React from "react";
 import { Platform } from "react-native";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
-import { fimsEnabled } from "../config";
 import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
 import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
@@ -17,7 +16,6 @@ import {
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { FciStackNavigator } from "../features/fci/navigation/FciStackNavigator";
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
-import { FimsLegacyNavigator } from "../features/fimsLegacy/navigation/navigator";
 import { IdPayBarcodeNavigator } from "../features/idpay/barcode/navigation/navigator";
 import { IdPayBarcodeRoutes } from "../features/idpay/barcode/navigation/routes";
 import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
@@ -70,13 +68,11 @@ import {
   isCdcEnabledSelector,
   isCGNEnabledSelector,
   isFciEnabledSelector,
-  isFIMSEnabledSelector,
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isGestureEnabled } from "../utils/navigation";
 import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
-import FIMS_LEGACY_ROUTES from "../features/fimsLegacy/navigation/routes";
 import { SearchScreen } from "../features/services/search/screens/SearchScreen";
 import { FIMS_ROUTES, FimsNavigator } from "../features/fims/common/navigation";
 import { MessagesSearchScreen } from "../features/messages/screens/MessagesSearchScreen";
@@ -96,7 +92,6 @@ const hideHeaderOptions = {
 
 const AuthenticatedStackNavigator = () => {
   const cdcEnabled = useIOSelector(isCdcEnabledSelector);
-  const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
@@ -248,14 +243,6 @@ const AuthenticatedStackNavigator = () => {
         options={hideHeaderOptions}
         component={UAWebViewScreen}
       />
-
-      {isFimsEnabled && (
-        <Stack.Screen
-          name={FIMS_LEGACY_ROUTES.MAIN}
-          options={hideHeaderOptions}
-          component={FimsLegacyNavigator}
-        />
-      )}
       <Stack.Screen
         name={FIMS_ROUTES.MAIN}
         options={hideHeaderOptions}

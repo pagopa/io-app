@@ -84,9 +84,6 @@ export const cgnMerchantsV2Enabled = Config.CGN_MERCHANTS_V2_ENABLED === "YES";
 // Ukraine donation
 export const uaDonationsEnabled = Config.UA_DONATIONS_ENABLED === "YES";
 
-// FIMS (Federated Identity Management System) Feature Flag
-export const fimsEnabled = Config.FIMS_ENABLED === "YES";
-
 // CdC (Carta della cultura) Feature Flag
 export const cdcEnabled = Config.CDC_ENABLED === "YES";
 
