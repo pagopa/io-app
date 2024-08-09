@@ -1,3 +1,4 @@
+/* eslint-disable functional/immutable-data */
 import { IOToast } from "@pagopa/io-app-design-system";
 import { constVoid } from "fp-ts/lib/function";
 import * as React from "react";
@@ -27,7 +28,7 @@ const showFimsAlreadyExportingAlert = (onPress: () => void) =>
 export const useFimsHistoryExport = () => {
   const historyExportState = useIOSelector(fimsHistoryExportStateSelector);
   const dispatch = useIODispatch();
-  const [isLoading, setIsLoading] = React.useState(false);
+  const isProcessing = React.useRef<boolean>(false);
 
   React.useEffect(() => {
     RemoteValue.fold(
@@ -37,14 +38,14 @@ export const useFimsHistoryExport = () => {
       value => {
         if (value === "SUCCESS") {
           showFimsExportSuccess();
-          setIsLoading(false);
+          isProcessing.current = false;
         } else {
-          showFimsAlreadyExportingAlert(() => setIsLoading(false));
+          showFimsAlreadyExportingAlert(() => (isProcessing.current = false));
         }
       },
       () => {
         showFimsExportError();
-        setIsLoading(false);
+        isProcessing.current = false;
       }
     );
   }, [historyExportState, dispatch]);
@@ -57,24 +58,25 @@ export const useFimsHistoryExport = () => {
     [dispatch]
   );
 
-  const handleExportOnPress = () =>
-    Alert.alert(
-      I18n.t("FIMS.history.exportData.alerts.areYouSure"),
-      undefined,
-      [
-        { text: I18n.t("global.buttons.cancel"), style: "cancel" },
-        {
-          text: I18n.t("global.buttons.confirm"),
-          isPreferred: true,
-          onPress: () => {
-            if (!isLoading) {
-              setIsLoading(true);
+  const handleExportOnPress = () => {
+    if (!isProcessing.current) {
+      Alert.alert(
+        I18n.t("FIMS.history.exportData.alerts.areYouSure"),
+        undefined,
+        [
+          { text: I18n.t("global.buttons.cancel"), style: "cancel" },
+          {
+            text: I18n.t("global.buttons.confirm"),
+            isPreferred: true,
+            onPress: () => {
+              isProcessing.current = true;
               dispatch(fimsHistoryExport.request());
             }
           }
-        }
-      ]
-    );
+        ]
+      );
+    }
+  };
 
   return {
     handleExportOnPress

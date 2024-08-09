@@ -16,7 +16,7 @@ import {
   fimsHistoryToUndefinedSelector,
   isFimsHistoryLoadingSelector
 } from "../store/selectors";
-import { useFimsHistoryExport } from "../utils/useFimsHistoryResultToasts";
+import { useFimsHistoryExport } from "../hooks/useFimsHistoryResultToasts";
 import * as RemoteValue from "../../../../common/model/RemoteValue";
 
 export const FimsHistoryScreen = () => {
