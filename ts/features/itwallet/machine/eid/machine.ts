@@ -43,7 +43,6 @@ export const itwEidIssuanceMachine = setup({
       notImplemented(),
     storeEidCredential: notImplemented,
     closeIssuance: notImplemented,
-    requestAssistance: notImplemented,
     setWalletInstanceToOperational: notImplemented,
     setWalletInstanceToValid: notImplemented,
     disposeWalletAttestation: notImplemented,
@@ -392,9 +391,6 @@ export const itwEidIssuanceMachine = setup({
       on: {
         close: {
           actions: ["closeIssuance", "disposeWalletAttestation"]
-        },
-        "request-assistance": {
-          actions: "requestAssistance"
         },
         reset: {
           target: "Idle"
