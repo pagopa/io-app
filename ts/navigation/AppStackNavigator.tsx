@@ -37,6 +37,7 @@ import {
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
+import { routingInstrumentation } from "../App";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
@@ -162,6 +163,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
       fallback={<LoadingSpinnerOverlay isLoading={true} />}
       onReady={() => {
         NavigationService.setNavigationReady();
+        routingInstrumentation.registerNavigationContainer(navigationRef);
         routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
       }}
       onStateChange={async state => {
