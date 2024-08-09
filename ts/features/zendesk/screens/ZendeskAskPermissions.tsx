@@ -229,6 +229,8 @@ const ZendeskAskPermissions = () => {
   const zendeskSelectedSubcategory = useIOSelector(
     zendeskSelectedSubcategorySelector
   );
+  // TODO: beware while doing this task IOPID-2055 because
+  // now the zendeskToken could be undefined also if you are logged in!
   const zendeskToken = useIOSelector(zendeskTokenSelector);
 
   useEffect(() => {

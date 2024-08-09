@@ -16,7 +16,7 @@ import {
   testLoginCleanUp,
   testLoginRequest
 } from "../../../store/actions/authentication";
-import { PasswordLogin } from "../../../../definitions/backend/PasswordLogin";
+import { PasswordLogin } from "../../../../definitions/session_manager/PasswordLogin";
 import { SessionToken } from "../../../types/SessionToken";
 
 const timeoutError = getTimeoutError();

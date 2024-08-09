@@ -6,8 +6,8 @@ import { BasicResponseType } from "@pagopa/ts-commons/lib/requests";
 import { call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { AccessToken } from "../../definitions/backend/AccessToken";
-import { PasswordLogin } from "../../definitions/backend/PasswordLogin";
+import { AccessToken } from "../../definitions/session_manager/AccessToken";
+import { PasswordLogin } from "../../definitions/session_manager/PasswordLogin";
 import { BackendPublicClient } from "../api/backendPublic";
 import { apiUrlPrefix } from "../config";
 import {

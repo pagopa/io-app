@@ -60,11 +60,15 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
       >
     >();
 
-  if (O.isNone(sessionInfo)) {
+  if (
+    O.isNone(sessionInfo) ||
+    (O.isSome(sessionInfo) && sessionInfo.value.bpdToken === undefined)
+  ) {
     throw new Error("Session info is undefined");
   }
 
-  const { bpdToken } = sessionInfo.value;
+  // Here we are sure that sessionInfo.bpdToken is defined
+  const bpdToken = sessionInfo.value.bpdToken as string;
 
   const token = idPayTestToken !== undefined ? idPayTestToken : bpdToken;
 

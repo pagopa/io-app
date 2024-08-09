@@ -7,11 +7,11 @@ import {
   IPostApiRequestType
 } from "@pagopa/ts-commons/lib/requests";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { AccessToken } from "../../definitions/backend/AccessToken";
-import { PasswordLogin } from "../../definitions/backend/PasswordLogin";
 import { BackendStatus } from "../../definitions/content/BackendStatus";
 import { defaultRetryingFetch } from "../utils/fetch";
 import { getLollipopLoginHeaders } from "../features/lollipop";
+import { AccessToken } from "../../definitions/session_manager/AccessToken";
+import { PasswordLogin } from "../../definitions/session_manager/PasswordLogin";
 
 type PostTestLoginT = IPostApiRequestType<
   PasswordLogin,

@@ -7,7 +7,7 @@ import {
 } from "redux-saga-test-plan/providers";
 import * as O from "fp-ts/lib/Option";
 import { AssertionRef } from "../../../../definitions/backend/AssertionRef";
-import { PublicSession } from "../../../../definitions/backend/PublicSession";
+import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import { checkLollipopSessionAssertionAndInvalidateIfNeeded } from "../saga";
 import { restartCleanApplication } from "../../../sagas/commons";
 import { sessionInvalid } from "../../../store/actions/authentication";

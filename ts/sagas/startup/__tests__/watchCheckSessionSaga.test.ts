@@ -1,7 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { testSaga } from "redux-saga-test-plan";
-import { PublicSession } from "../../../../definitions/backend/PublicSession";
+import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import {
   checkCurrentSession,
   sessionExpired,
