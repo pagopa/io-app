@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.69.0-rc.0",
+  "version": "2.69.0-rc.2",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.39/definitions.yml",
@@ -125,7 +125,6 @@
     "@react-navigation/native": "6.1.9",
     "@react-navigation/stack": "6.3.20",
     "@redux-saga/testing-utils": "^1.1.3",
-    "@shopify/react-native-skia": "^1.3.9",
     "@sentry/react-native": "^5.22.2",
     "@textlint/markdown-to-ast": "^14.0.4",
     "@shopify/flash-list": "~1.7.0",
