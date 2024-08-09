@@ -1,12 +1,6 @@
-import {
-  Body,
-  Divider,
-  IOStyles,
-  IOToast,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Body, Divider, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Alert, FlatList, SafeAreaView, View } from "react-native";
+import { FlatList, SafeAreaView, View } from "react-native";
 import * as RemoteValue from "../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { FooterActions } from "../../../../components/ui/FooterActions";
@@ -17,14 +11,14 @@ import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backen
 import { openAppStoreUrl } from "../../../../utils/url";
 import { FimsHistoryListItem } from "../components/FimsHistoryListItem";
 import { LoadingFimsHistoryItemsFooter } from "../components/FimsHistoryLoaders";
-import { fimsHistoryExport, fimsHistoryGet } from "../store/actions";
+import { useFimsHistoryExport } from "../hooks/useFimsHistoryResultToasts";
+import { fimsHistoryGet } from "../store/actions";
 import {
   fimsHistoryErrorSelector,
   fimsHistoryExportStateSelector,
   fimsHistoryToUndefinedSelector,
   isFimsHistoryLoadingSelector
 } from "../store/selectors";
-import { useFimsHistoryResultToasts } from "../utils/useFimsHistoryResultToasts";
 
 export const FimsHistoryScreen = () => {
   const dispatch = useIODispatch();
@@ -34,6 +28,7 @@ export const FimsHistoryScreen = () => {
   const consents = useIOSelector(fimsHistoryToUndefinedSelector);
   const historyExportState = useIOSelector(fimsHistoryExportStateSelector);
   const historyErrorState = useIOSelector(fimsHistoryErrorSelector);
+  const isHistoryExporting = RemoteValue.isLoading(historyExportState);
   // ---------- HOOKS
 
   const fetchMore = React.useCallback(() => {
@@ -57,7 +52,7 @@ export const FimsHistoryScreen = () => {
     }
   }, [dispatch, requiresAppUpdate]);
 
-  useFimsHistoryResultToasts();
+  const { handleExportOnPress } = useFimsHistoryExport();
 
   // ---------- APP UPDATE
 
@@ -74,34 +69,6 @@ export const FimsHistoryScreen = () => {
       />
     );
   }
-  // ---------- HISTORY ERROR STATES
-
-  if (historyErrorState) {
-    if (historyErrorState === "FULL_KO") {
-      return <OperationResultScreenContent title="ERROR ERORRO" />;
-    }
-    IOToast.error("ERROR ERROR");
-  }
-
-  // ---------- EXPORT LOGIC
-
-  const isHistoryExporting = RemoteValue.isLoading(historyExportState);
-
-  const handleExportOnPress = () =>
-    Alert.alert(
-      I18n.t("FIMS.history.exportData.alerts.areYouSure"),
-      undefined,
-      [
-        { text: I18n.t("global.buttons.cancel"), style: "cancel" },
-        {
-          text: I18n.t("global.buttons.confirm"),
-          isPreferred: true,
-          onPress: () => {
-            dispatch(fimsHistoryExport.request());
-          }
-        }
-      ]
-    );
 
   // ---------- RENDER
 
