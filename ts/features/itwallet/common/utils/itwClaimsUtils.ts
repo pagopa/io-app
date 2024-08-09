@@ -25,7 +25,7 @@ import { ParsedCredential } from "./itwTypesUtils";
  */
 
 /**
- * We strongly discurage direct claim manipulation, but some spacial cased must be addressed with direct access
+ * We strongly discourage direct claim manipulation, but some spacial cased must be addressed with direct access
  */
 export enum WellKnownClaim {
   /**
@@ -38,7 +38,7 @@ export enum WellKnownClaim {
    */
   expiry_date = "expiry_date",
   /**
-   * Claim used to display a QR Code for the Disability Card. It must be exlcuded from the common claims list
+   * Claim used to display a QR Code for the Disability Card. It must be excluded from the common claims list
    * and rendered using a {@see QRCodeImage}
    */
   link_qr_code = "link_qr_code"
