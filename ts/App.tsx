@@ -16,6 +16,7 @@ import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
 import { sentryDsn } from "./config";
 import { isDevEnv } from "./utils/environment";
+import { StatusMessages } from "./components/StatusMessages";
 
 const removeUserFromEvent = (event: ErrorEvent | TransactionEvent) => {
   // console.log(JSON.stringify(event));
@@ -59,7 +60,9 @@ export const App = (): JSX.Element => (
               <PersistGate loading={undefined} persistor={persistor}>
                 <BottomSheetModalProvider>
                   <LightModalProvider>
-                    <RootContainer />
+                    <StatusMessages>
+                      <RootContainer />
+                    </StatusMessages>
                   </LightModalProvider>
                 </BottomSheetModalProvider>
               </PersistGate>

@@ -283,22 +283,34 @@ const AuthenticatedStackNavigator = () => {
           <Stack.Screen
             name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
             component={IDPayOnboardingNavigator}
-            options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+            options={{
+              gestureEnabled: isGestureEnabled,
+              ...hideHeaderOptions
+            }}
           />
           <Stack.Screen
             name={IDPayDetailsRoutes.IDPAY_DETAILS_MAIN}
             component={IDpayDetailsNavigator}
-            options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+            options={{
+              gestureEnabled: isGestureEnabled,
+              ...hideHeaderOptions
+            }}
           />
           <Stack.Screen
             name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
             component={IDPayConfigurationNavigator}
-            options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+            options={{
+              gestureEnabled: isGestureEnabled,
+              ...hideHeaderOptions
+            }}
           />
           <Stack.Screen
             name={IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
             component={IDPayUnsubscriptionNavigator}
-            options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+            options={{
+              gestureEnabled: isGestureEnabled,
+              ...hideHeaderOptions
+            }}
           />
           {/*
             This screen is outside the IDPayPaymentNavigator to enable the slide from bottom animation.
