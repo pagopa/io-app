@@ -25,7 +25,7 @@ import { ParsedCredential } from "./itwTypesUtils";
  */
 
 /**
- * We strongly discourage direct claim manipulation, but some spacial cased must be addressed with direct access
+ * We strongly discourage direct claim manipulation, but some special cases must be addressed with direct access
  */
 export enum WellKnownClaim {
   /**
