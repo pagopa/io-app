@@ -1,6 +1,7 @@
 import {
   ContentWrapper,
   Divider,
+  IOSpacingScale,
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -37,6 +38,7 @@ import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlertsSection";
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
+import { ItwSkeumorphicCredentialCard } from "../components/ItwSkeumorphicCredentialCard";
 
 // TODO: use the real credential update time
 const today = new Date();
@@ -141,10 +143,12 @@ const ErrorView = ({ error: _ }: { error?: ItWalletError }) => {
   return <OperationResultScreenContent {...mappedError} />;
 };
 
+const cardPaddingHorizontal: IOSpacingScale = 16;
+
 const styles = StyleSheet.create({
   cardContainer: {
     position: "relative",
-    paddingHorizontal: IOVisualCostants.appMarginDefault
+    paddingHorizontal: cardPaddingHorizontal
   },
   cardBackdrop: {
     height: "200%", // Twice the card in order to avoid the white background when the scrollview bounces

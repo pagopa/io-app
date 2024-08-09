@@ -1,13 +1,11 @@
 import React from "react";
-import { StyleSheet } from "react-native";
-import { SvgProps } from "react-native-svg";
-import MdlFrontSvg from "../../../../../img/features/itWallet/credential/mdl_front.svg";
-import MdlRearSvg from "../../../../../img/features/itWallet/credential/mdl_rear.svg";
+import { ImageSourcePropType, StyleSheet } from "react-native";
+import { AnimatedImage } from "../../../../components/AnimatedImage";
 import { ItwFlippableCard } from "../../common/components/ItwFlippableCard";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
-export type CredentialCardAssets = [React.FC<SvgProps>, React.FC<SvgProps>];
+export type CredentialCardAssets = [ImageSourcePropType, ImageSourcePropType];
 
 export type ItwSkeumorphicCredentialCardProps = {
   credential: StoredCredential;
@@ -25,24 +23,33 @@ export const ItwSkeumorphicCredentialCard = ({
     return null;
   }
 
-  const [CardFrontSvg, CardRearSvg] = cardAssets;
-
   return (
     <ItwFlippableCard
       containerStyle={styles.cardContainer}
-      FrontComponent={<CardFrontSvg />}
-      RearComponent={<CardRearSvg />}
+      FrontComponent={
+        <AnimatedImage source={cardAssets[0]} style={styles.card} />
+      }
+      RearComponent={
+        <AnimatedImage source={cardAssets[1]} style={styles.card} />
+      }
       isFlipped={isFlipped}
     />
   );
 };
 
 const assetsMap: Partial<Record<string, CredentialCardAssets>> = {
-  [CredentialType.DRIVING_LICENSE]: [MdlFrontSvg, MdlRearSvg]
+  [CredentialType.DRIVING_LICENSE]: [
+    require("../../../../../img/features/itWallet/credential/mdl_front.png"),
+    require("../../../../../img/features/itWallet/credential/mdl_rear.png")
+  ]
 };
 
 const styles = StyleSheet.create({
   cardContainer: {
     aspectRatio: 16 / 10
+  },
+  card: {
+    width: "100%",
+    height: "100%"
   }
 });
