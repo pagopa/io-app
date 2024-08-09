@@ -4,7 +4,7 @@ import { Action } from "../../../../../store/actions/types";
 import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { itwLifecycleWalletReset } from "../../../lifecycle/store/actions";
+import { itwLifecycleReducersReset } from "../../../lifecycle/store/actions";
 
 export type ItwCredentialsState = {
   eid: O.Option<StoredCredential>;
@@ -52,7 +52,7 @@ const reducer = (
       };
     }
 
-    case getType(itwLifecycleWalletReset):
+    case getType(itwLifecycleReducersReset):
       return { ...itwCredentialsInitialState };
 
     default:

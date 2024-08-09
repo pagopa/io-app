@@ -410,3 +410,18 @@ const FISCAL_CODE_REGEX =
  */
 export const extractFiscalCode = (s: string) =>
   pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));
+
+const EID_FISCAL_CODE_KEY = "tax_id_code";
+
+export const getFiscalCodeFromCredential = (
+  credential: StoredCredential | undefined
+) =>
+  pipe(
+    credential?.parsedCredential,
+    O.fromNullable,
+    O.chain(x => O.fromNullable(x[EID_FISCAL_CODE_KEY]?.value)),
+    O.map(t.string.decode),
+    O.chain(O.fromEither),
+    O.chain(extractFiscalCode),
+    O.getOrElse(() => "")
+  );

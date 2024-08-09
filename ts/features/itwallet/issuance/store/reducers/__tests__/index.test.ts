@@ -4,7 +4,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { itwLifecycleWalletReset } from "../../../../lifecycle/store/actions";
+import { itwLifecycleReducersReset } from "../../../../lifecycle/store/actions";
 import {
   itwRemoveIntegrityKeyTag,
   itwStoreIntegrityKeyTag
@@ -51,7 +51,7 @@ describe("ITW issuance reducer", () => {
       curriedAppReducer(
         itwStoreIntegrityKeyTag("7408c9b7-5f23-4ca6-8960-58305cff5b7e")
       ),
-      curriedAppReducer(itwLifecycleWalletReset())
+      curriedAppReducer(itwLifecycleReducersReset())
     );
 
     expect(targetSate.features.itWallet.issuance.integrityKeyTag).toEqual(

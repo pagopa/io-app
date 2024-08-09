@@ -3251,6 +3251,10 @@ features:
           3: Attiva la funzionalità
         primaryAction: Apri impostazioni
         secondaryAction: Continua
+      notMatchingIdentityScreen:
+        title: "Tutti i documenti saranno rimossi da IO"
+        subtitle: "Se accedi con una nuova identità, i documenti già presenti nel Portafoglio saranno rimossi e IT Wallet disattivato."
+        action: "Continua con la nuova identità"
     issuance:
       credentialAuth:
         title: "{{credentialName}}: dati necessari"

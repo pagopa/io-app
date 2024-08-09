@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { itwStoreIntegrityKeyTag, itwRemoveIntegrityKeyTag } from "../actions";
-import { itwLifecycleWalletReset } from "../../../lifecycle/store/actions";
+import { itwLifecycleReducersReset } from "../../../lifecycle/store/actions";
 
 export type ItwIssuanceState = {
   integrityKeyTag: O.Option<string>;
@@ -22,7 +22,7 @@ const reducer = (
         integrityKeyTag: O.some(action.payload)
       };
     case getType(itwRemoveIntegrityKeyTag):
-    case getType(itwLifecycleWalletReset):
+    case getType(itwLifecycleReducersReset):
       return {
         integrityKeyTag: O.none
       };

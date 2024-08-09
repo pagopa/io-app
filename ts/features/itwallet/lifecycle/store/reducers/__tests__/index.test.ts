@@ -4,7 +4,7 @@ import { appReducer } from "../../../../../../store/reducers";
 import { itwLifecycleStateUpdated } from "../../actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { itwLifecycleWalletReset } from "../../../../lifecycle/store/actions";
+import { itwLifecycleReducersReset } from "../../../../lifecycle/store/actions";
 import { ItwLifecycleState } from "..";
 
 const curriedAppReducer =
@@ -30,7 +30,7 @@ describe("ITW lifecycle reducer", () => {
     const targetSate = pipe(
       undefined,
       curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(itwLifecycleWalletReset())
+      curriedAppReducer(itwLifecycleReducersReset())
     );
 
     expect(targetSate.features.itWallet.lifecycle).toEqual(

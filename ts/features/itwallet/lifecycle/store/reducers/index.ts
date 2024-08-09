@@ -1,6 +1,9 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { itwLifecycleStateUpdated, itwLifecycleWalletReset } from "../actions";
+import {
+  itwLifecycleStateUpdated,
+  itwLifecycleReducersReset
+} from "../actions";
 
 export enum ItwLifecycleState {
   /**
@@ -37,7 +40,7 @@ const reducer = (
   switch (action.type) {
     case getType(itwLifecycleStateUpdated):
       return action.payload;
-    case getType(itwLifecycleWalletReset):
+    case getType(itwLifecycleReducersReset):
       return ItwLifecycleState.ITW_LIFECYCLE_INSTALLED;
     default:
       return state;

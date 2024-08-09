@@ -30,4 +30,5 @@ export type ItwParamsList = {
     .CREDENTIAL_DETAIL]: ItwPresentationCredentialDetailNavigationParams;
   // PLAYGROUNDS
   [ITW_ROUTES.PLAYGROUNDS]: undefined;
+  [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
 };

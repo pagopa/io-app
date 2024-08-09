@@ -43,10 +43,6 @@ import {
 } from "../store/reducers/installation";
 import { NotificationsState } from "../features/pushNotifications/store/reducers";
 import { getInitialState as getInstallationInitialState } from "../features/pushNotifications/store/reducers/installation";
-import {
-  itwCredentialsPersistConfig,
-  itwPersistConfig
-} from "../features/itwallet/common/store/reducers";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { walletsPersistConfig } from "../store/reducers/wallet";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
@@ -468,9 +464,7 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
     rootPersistConfig,
     authenticationPersistConfig,
     walletsPersistConfig,
-    entitiesPersistConfig,
-    itwPersistConfig,
-    itwCredentialsPersistConfig
+    entitiesPersistConfig
   ])
 );
 

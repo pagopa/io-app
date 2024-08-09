@@ -9,11 +9,28 @@ export const itwLifecycleStateUpdated = createStandardAction(
 )<ItwLifecycleState>();
 
 /**
+ * @internal To fully reset the Wallet Instance, dispatch `itwLifecycleWalletReset`.
+ *
+ * Action used to reset IT Wallet reducers only.
+ */
+export const itwLifecycleReducersReset = createStandardAction(
+  "ITW_LIFECYCLE_REDUCERS_RESET"
+)<void>();
+
+/**
  * Action used to trigger a reset of the wallet instance.
- * Different reducers handle it to reset their slice.
+ *
+ * The reset operation is orchestrated by a separate saga.
  */
 export const itwLifecycleWalletReset = createStandardAction(
   "ITW_LIFECYCLE_WALLET_RESET"
+)<void>();
+
+/**
+ * Action used to resume the startup saga after the authenticated user's identity check.
+ */
+export const itwLifecycleIdentityCheckCompleted = createStandardAction(
+  "ITW_LIFECYCLE_IDENTITY_CHECK_COMPLETED"
 )<void>();
 
 /**
@@ -21,4 +38,6 @@ export const itwLifecycleWalletReset = createStandardAction(
  */
 export type ItwLifecycleActions =
   | ActionType<typeof itwLifecycleStateUpdated>
-  | ActionType<typeof itwLifecycleWalletReset>;
+  | ActionType<typeof itwLifecycleReducersReset>
+  | ActionType<typeof itwLifecycleWalletReset>
+  | ActionType<typeof itwLifecycleIdentityCheckCompleted>;
