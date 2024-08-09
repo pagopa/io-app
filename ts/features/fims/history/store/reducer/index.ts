@@ -48,7 +48,7 @@ const reducer = (
       return {
         ...state,
         consentsList: pot.some({
-          ...action.payload,
+          continuationToken: action.payload.continuationToken,
           items: [...currentHistoryItems, ...action.payload.items]
         })
       };

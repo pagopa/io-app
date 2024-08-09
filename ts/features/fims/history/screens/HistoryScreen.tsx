@@ -1,4 +1,11 @@
-import { Body, Divider, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+/* eslint-disable functional/immutable-data */
+import {
+  Body,
+  Divider,
+  IOStyles,
+  IOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { FlatList, SafeAreaView, View } from "react-native";
 import * as RemoteValue from "../../../../common/model/RemoteValue";
@@ -9,6 +16,7 @@ import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
 import { openAppStoreUrl } from "../../../../utils/url";
+import { FimsHistoryKoScreen } from "../components/FimsHistoryKoScreen";
 import { FimsHistoryListItem } from "../components/FimsHistoryListItem";
 import { LoadingFimsHistoryItemsFooter } from "../components/FimsHistoryLoaders";
 import { useFimsHistoryExport } from "../hooks/useFimsHistoryResultToasts";
@@ -29,17 +37,24 @@ export const FimsHistoryScreen = () => {
   const historyExportState = useIOSelector(fimsHistoryExportStateSelector);
   const historyErrorState = useIOSelector(fimsHistoryErrorSelector);
   const isHistoryExporting = RemoteValue.isLoading(historyExportState);
+
+  const lastErrorToastDate = React.useRef<number | null>(null);
+
   // ---------- HOOKS
 
   const fetchMore = React.useCallback(() => {
-    if (consents?.continuationToken && historyErrorState === undefined) {
+    const hasErrorTimeoutExpired = lastErrorToastDate.current
+      ? Date.now() - lastErrorToastDate.current >= 500
+      : true;
+
+    if (hasErrorTimeoutExpired && consents?.continuationToken) {
       dispatch(
         fimsHistoryGet.request({
           continuationToken: consents.continuationToken
         })
       );
     }
-  }, [consents?.continuationToken, historyErrorState, dispatch]);
+  }, [consents, dispatch]);
 
   useHeaderSecondLevel({
     title: I18n.t("FIMS.history.historyScreen.header"),
@@ -54,7 +69,7 @@ export const FimsHistoryScreen = () => {
 
   const { handleExportOnPress } = useFimsHistoryExport();
 
-  // ---------- APP UPDATE
+  // ---------- FAILURE CASES
 
   if (requiresAppUpdate) {
     return (
@@ -70,7 +85,15 @@ export const FimsHistoryScreen = () => {
     );
   }
 
-  // ---------- RENDER
+  switch (historyErrorState) {
+    case "FULL_KO":
+      return <FimsHistoryKoScreen />;
+    case "ALERT_ONLY":
+      IOToast.error(I18n.t("FIMS.history.errorStates.toast"));
+      lastErrorToastDate.current = Date.now();
+  }
+
+  // ---------- SUCCESS
 
   const renderLoadingFooter = () =>
     isHistoryLoading ? (

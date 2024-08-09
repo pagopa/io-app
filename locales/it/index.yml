@@ -3973,6 +3973,12 @@ permissionRequest:
     cta: Apri Impostazioni
 FIMS:
   history:
+    errorStates:
+      ko:
+        title: "C’è un problema temporaneo"
+        body: "Il caricamento della lista degli accessi non è riuscito"
+      toast: C’è un problema nel caricamento della lista. Riprova
+    emptyBody: "Non hai ancora effettuato alcun accesso a servizi di terze parti"
     exportData:
       alerts:
         areYouSure: "Vuoi davvero esportare una copia di tutti gli accessi?"
