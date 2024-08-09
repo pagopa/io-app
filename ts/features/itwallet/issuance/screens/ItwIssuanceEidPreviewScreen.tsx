@@ -2,7 +2,6 @@ import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import React from "react";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
@@ -16,20 +15,18 @@ import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog"
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { selectEidOption, selectIsLoading } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { useItwHandleCieIdExternalApp } from "../../common/hooks/useItwHandleCieIdExternalApp";
+import { ItwIssuanceLoadingScreen } from "../components/ItwIssuanceLoadingScreen";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
 
-  useItwHandleCieIdExternalApp();
+  // useItwHandleCieIdExternalApp();
   useItwDisbleGestureNavigation();
   useAvoidHardwareBackButton();
 
   if (isLoading) {
-    return (
-      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
-    );
+    return <ItwIssuanceLoadingScreen />;
   }
 
   return pipe(

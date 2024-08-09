@@ -5,6 +5,7 @@ import { appStateSelector } from "../../../../store/reducers/appState";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { selectIdentification } from "../../machine/eid/selectors";
 
+// TODO: abort the CieID flow automatically with this hook or use ItwIssuanceLoadingScreen?
 export function useItwHandleCieIdExternalApp() {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const identificationCtx =
