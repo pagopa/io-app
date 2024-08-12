@@ -12,7 +12,8 @@ export const isPaymentsSectionLoadingSelector = createSelector(
   paymentsWalletUserMethodsSelector,
   walletLatestTransactionsBizEventsListPotSelector,
   (methodsPot, latestTransactionsPot) =>
-    pot.isLoading(methodsPot) || pot.isLoading(latestTransactionsPot)
+    (!pot.isSome(methodsPot) && pot.isLoading(methodsPot)) ||
+    (!pot.isSome(latestTransactionsPot) && pot.isLoading(latestTransactionsPot))
 );
 
 export const isPaymentsMethodsEmptySelector = createSelector(

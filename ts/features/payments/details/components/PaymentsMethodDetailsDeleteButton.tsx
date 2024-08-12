@@ -6,6 +6,7 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { paymentsDeleteMethodAction } from "../store/actions";
+import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
 
 type PaymentsDetailsDeleteMethodButtonProps = {
   paymentMethod?: WalletInfo;
@@ -23,6 +24,7 @@ const PaymentsMethodDetailsDeleteButton = ({
         walletId,
         onSuccess: () => {
           IOToast.success(I18n.t("wallet.delete.successful"));
+          dispatch(getPaymentsWalletUserMethods.request());
         },
         onFailure: () => {
           IOToast.error(I18n.t("wallet.delete.failed"));

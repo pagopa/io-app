@@ -22,7 +22,7 @@ const paymentsWalletReducer = (
     case getType(getPaymentsWalletUserMethods.request):
       return {
         ...state,
-        userMethods: pot.toLoading(pot.none)
+        userMethods: pot.toLoading(state.userMethods)
       };
     case getType(getPaymentsWalletUserMethods.success):
       return {
