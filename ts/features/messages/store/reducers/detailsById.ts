@@ -73,37 +73,6 @@ export const messageDetailsByIdSelector = (
 ): pot.Pot<UIMessageDetails, string> =>
   state.entities.messages.detailsById[id] ?? pot.none;
 
-export const detailedMessageHasThirdPartyDataSelector = (
-  state: GlobalState,
-  id: string
-) =>
-  pipe(
-    messageDetailsByIdSelector(state, id),
-    pot.toOption,
-    O.fold(
-      () => false,
-      messageDetails => messageDetails.hasThirdPartyData
-    )
-  );
-
-export const messageDetailsExpiringInfoSelector = (
-  state: GlobalState,
-  id: string,
-  referenceDateMilliseconds: number
-) =>
-  pipe(
-    messageDetailsByIdSelector(state, id),
-    pot.toOption,
-    O.filter(messageDetails => !!messageDetails.paymentData),
-    O.chainNullableK(messageDetails => messageDetails.dueDate),
-    O.map(dueDate => {
-      const remainingMilliseconds =
-        dueDate.getTime() - referenceDateMilliseconds;
-      return remainingMilliseconds > 0 ? "expiring" : "expired";
-    }),
-    O.getOrElseW(() => "does_not_expire" as const)
-  );
-
 export const messagePaymentDataSelector = (state: GlobalState, id: string) =>
   pipe(
     messageDetailsByIdSelector(state, id),

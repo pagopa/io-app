@@ -52,7 +52,7 @@ describe("MessageDetailsReminder", () => {
   });
 });
 
-const renderScreen = (dueDate?: Date) => {
+const renderScreen = (dueDateOrUndefined?: Date) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const designSystemState = appReducer(
     initialState,
@@ -63,7 +63,7 @@ const renderScreen = (dueDate?: Date) => {
   return renderScreenWithNavigationStoreContext(
     () => (
       <MessageDetailsReminder
-        dueDate={dueDate}
+        dueDate={dueDateOrUndefined}
         messageId={"01HSG6H6M4KK36CV6QWP2VJW3S" as UIMessageId}
         title="The title"
       />
