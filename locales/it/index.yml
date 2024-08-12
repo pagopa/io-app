@@ -3171,7 +3171,8 @@ features:
           title: Cosa fare se il pagamento non va a buon fine?
           payNotice:
             title: Paga l’avviso
-            content: Ricorda di pagare l’avviso entro le scadenze previste dall’ente. Se non riesci tramite IO, scopri gli altri canali abilitati a pagoPA.
+            content: Ricorda di pagare l’avviso entro le scadenze previste dall’ente. Se non riesci tramite IO,
+            contentLink: scopri gli altri canali abilitati a pagoPA.
           waitRefund:
             title: Attendi il rimborso
             content: Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il trasferimento di denaro sul tuo conto o carta potrebbe richiedere più tempo.

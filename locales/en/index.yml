@@ -3172,6 +3172,7 @@ features:
           payNotice:
             title: Paga l’avviso
             content: Ricorda di pagare l’avviso entro le scadenze previste dall’ente. Se non riesci tramite IO, scopri gli altri canali abilitati a pagoPA.
+            contentLink: scopri gli altri canali abilitati a pagoPA.
           waitRefund:
             title: Attendi il rimborso
             content: Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il trasferimento di denaro sul tuo conto o carta potrebbe richiedere più tempo.
