@@ -265,8 +265,10 @@ startup:
   profileEnabled: Profilo utente abilitato
   userDeletePendingAlert:
     title: Eliminazione profilo in corso
-    message: Se hai cambiato idea, puoi annullare la richiesta nella sezione Privacy del tuo Profilo.
-    cta_1: Vai al Profilo
+    messageLegacy: Se hai cambiato idea, puoi annullare la richiesta nella sezione Privacy del tuo Profilo.
+    message: Se hai cambiato idea, puoi annullare la richiesta dalla sezione Privacy all'interno delle Impostazioni.
+    cta_1_legacy: Vai al Profilo
+    cta_1: Vai alle Impostazioni
     cta_2: Ignora
   contextualHelp:
     title: Problemi di inizializzazione?
@@ -3762,7 +3764,7 @@ idpay:
         modal:
           title: Cosa significa?
           legacyContent: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPer farlo, visita la sezione Profilo."
-          content: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPuoi farlo dalle impostazioni dell'app"
+          content: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPuoi farlo dalle impostazioni dell'app."
           button: Ok, ho capito
       onboarding:
         header: Qual è il tuo IBAN?
@@ -3795,7 +3797,7 @@ idpay:
         content: L’Ente potrà conservarli secondo i termini indicati nell’Informativa Privacy
       4:
         title: Metodi di pagamento e IBAN rimangono in app per eventuali altre iniziative
-        content: Puoi rimuovere in ogni momento l’IBAN e i tuoi metodi di pagamento visitando le sezioni Profilo e Portafoglio.
+        content: Puoi rimuovere in ogni momento l’IBAN e i tuoi metodi di pagamento visitando le sezioni Impostazioni e Portafoglio.
     button:
       continue: Rimuovi
     modal:
@@ -3972,7 +3974,14 @@ permissionRequest:
 FIMS:
   history:
     exportData:
+      alerts:
+        areYouSure: "Vuoi davvero esportare una copia di tutti gli accessi?"
+        alreadyExporting:
+          title: "Abbiamo già preso in carico una richiesta di esportazione."
+          body: "Al termine dell’elaborazione, riceverai una email con tutte le informazioni dello storico accessi."
       CTA: "Richiedi una copia via email"
+      successToast: "Fatto! Controlla la tua casella di posta."
+      errorToast: "C’è stato un problema nell’invio della richiesta. Riprova"
     profileCTA:
       title: Accessi a servizi di terze parti
       subTitle: Rivedi gli accessi effettuati a servizi di terze parti tramite IO

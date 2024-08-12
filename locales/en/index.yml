@@ -265,8 +265,10 @@ startup:
   profileEnabled: User profile activated
   userDeletePendingAlert:
     title: Profile deletion in progress
-    message: If you have changed your mind, you can cancel the deletion request within the Privacy section of your Profile.
-    cta_1: Go to Profile
+    messageLegacy: If you have changed your mind, you can cancel the deletion request within the Privacy section of your Profile.
+    message: If you have changed your mind, you can cancel the deletion request within the Privacy section in Settings.
+    cta_1_legacy: Go to Profile
+    cta_1: Go to Settings
     cta_2: Discard
   contextualHelp:
     title: Startup problems?
@@ -3795,7 +3797,7 @@ idpay:
         content: L’Ente potrà conservarli secondo i termini indicati nell’Informativa Privacy
       4:
         title: Metodi di pagamento e IBAN rimangono in app per eventuali altre iniziative
-        content: Puoi rimuovere in ogni momento l’IBAN e i tuoi metodi di pagamento visitando le sezioni Profilo e Portafoglio.
+        content: Puoi rimuovere in ogni momento l’IBAN e i tuoi metodi di pagamento visitando le sezioni Impostazioni e Portafoglio.
     button:
       continue: Rimuovi
     modal:
@@ -3972,7 +3974,14 @@ permissionRequest:
 FIMS:
   history:
     exportData:
+      alerts:
+        areYouSure: "Vuoi davvero esportare una copia di tutti gli accessi?"
+        alreadyExporting:
+          title: "Abbiamo già preso in carico una richiesta di esportazione."
+          body: "Al termine dell’elaborazione, riceverai una email con tutte le informazioni dello storico accessi."
       CTA: "Richiedi una copia via email"
+      successToast: "Fatto! Controlla la tua casella di posta."
+      errorToast: "C’è stato un problema nell’invio della richiesta. Riprova"
     profileCTA:
       title: Accessi a servizi di terze parti
       subTitle: Rivedi gli accessi effettuati a servizi di terze parti tramite IO
