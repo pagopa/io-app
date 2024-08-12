@@ -1,11 +1,9 @@
-import { hexToRgba, IOColors } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
-  withSequence,
   withTiming
 } from "react-native-reanimated";
 
@@ -25,9 +23,8 @@ export const ItwFlippableCard = ({
   containerStyle,
   ...props
 }: ItwFlippableCardProps) => {
-  const duration = 500;
+  const duration = 1000;
   const isFlipped = useSharedValue(props.isFlipped);
-  const shadowColor = hexToRgba(IOColors.black, 0.15);
 
   React.useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
@@ -37,34 +34,18 @@ export const ItwFlippableCard = ({
   const regularCardAnimatedStyle = useAnimatedStyle(() => {
     const spinValue = interpolate(Number(isFlipped.value), [0, 1], [0, 180]);
     const rotateValue = withTiming(`${spinValue}deg`, { duration });
-    const scaleValue = withSequence(
-      withTiming(1.05, { duration: duration / 2 }),
-      withTiming(1, { duration: duration / 2 })
-    );
-    const shadowOpacityValue = withSequence(
-      withTiming(0.8, { duration: duration / 2 }),
-      withTiming(0, { duration: duration / 2 })
-    );
 
     return {
-      transform: [{ rotateY: rotateValue }, { scale: scaleValue }],
-      // Shadow styles must be applied only to one card face in order to avoid a "double" shadow
-      shadowColor,
-      shadowOpacity: shadowOpacityValue,
-      shadowRadius: 8
+      transform: [{ rotateY: rotateValue }]
     };
   });
 
   const flippedCardAnimatedStyle = useAnimatedStyle(() => {
     const spinValue = interpolate(Number(isFlipped.value), [0, 1], [180, 360]);
     const rotateValue = withTiming(`${spinValue}deg`, { duration });
-    const scaleValue = withSequence(
-      withTiming(1.05, { duration: 250 }),
-      withTiming(1, { duration: 250 })
-    );
 
     return {
-      transform: [{ rotateY: rotateValue }, { scale: scaleValue }]
+      transform: [{ rotateY: rotateValue }]
     };
   });
 
