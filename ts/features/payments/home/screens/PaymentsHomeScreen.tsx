@@ -4,7 +4,7 @@ import Animated, { Layout } from "react-native-reanimated";
 import { ScrollView } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PaymentsBarcodeRoutes } from "../../barcode/navigation/routes";
 import { PaymentsHomeEmptyScreenContent } from "../components/PaymentsHomeEmptyScreenContent";
 import { PaymentsHomeTransactionsList } from "../components/PaymentsHomeTransactionsList";
@@ -12,14 +12,19 @@ import { PaymentsHomeUserMethodsList } from "../components/PaymentsHomeUserMetho
 import {
   isPaymentsLatestTransactionsEmptySelector,
   isPaymentsSectionEmptySelector,
-  isPaymentsSectionLoadingSelector
+  isPaymentsSectionLoadingSelector,
+  isPaymentsSectionRefreshingSelector
 } from "../store/selectors";
 import { PaymentsAlertStatus } from "../components/PaymentsAlertStatus";
+import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
+import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
 
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
 
   const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
+  const isRefreshing = useIOSelector(isPaymentsSectionRefreshingSelector);
   const isTransactionsEmpty = useIOSelector(
     isPaymentsLatestTransactionsEmptySelector
   );
@@ -28,6 +33,11 @@ const PaymentsHomeScreen = () => {
     navigation.navigate(PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR, {
       screen: PaymentsBarcodeRoutes.PAYMENT_BARCODE_SCAN
     });
+  };
+
+  const handleRefreshPaymentsHome = () => {
+    dispatch(getPaymentsWalletUserMethods.request());
+    dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
   };
 
   const AnimatedPaymentsHomeScreenContent = React.useCallback(
@@ -55,6 +65,10 @@ const PaymentsHomeScreen = () => {
 
   return (
     <GradientScrollView
+      refreshControl={{
+        refreshing: isRefreshing,
+        onRefresh: handleRefreshPaymentsHome
+      }}
       primaryActionProps={
         isLoading
           ? undefined
