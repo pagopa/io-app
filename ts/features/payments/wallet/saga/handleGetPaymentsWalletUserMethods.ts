@@ -40,7 +40,7 @@ export function* handleGetPaymentsWalletUserMethods(
             yield* put(getPaymentsWalletUserMethods.success(res.value));
           } else if (res.status === 404) {
             yield* put(getPaymentsWalletUserMethods.success({ wallets: [] }));
-          } else {
+          } else if (res.status !== 401) {
             // The 401 is handled by the withPaymentsSessionToken
             yield* put(
               getPaymentsWalletUserMethods.failure({
