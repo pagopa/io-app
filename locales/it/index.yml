@@ -1899,6 +1899,14 @@ wallet:
         subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
         primaryAction: Aggiungi carta
         secondaryAction: Usa altri metodi
+      PAYMENT_REVERSED:
+        title: Il pagamento non è andato a buon fine
+        subtitle: L’importo autorizzato è stato rimborsato sul tuo metodo di pagamento. Il trasferimento di denaro potrebbe richiedere del tempo.
+        primaryAction: Scopri di più
+        secondaryAction: Chiudi
+      PAYPAL_REMOVED_ERROR:
+        title: Autorizzazione negata
+        subtitle: Potresti avere rimosso pagoPA dai pagamenti automatici di PayPal. Elimina il conto PayPal dal tuo Portafoglio, aggiungilo di nuovo e riprova ad effettuare il pagamento.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -3157,6 +3165,19 @@ features:
         explainationContent: "Quando hai salvato questo metodo, hai autorizzato {{pspBusinessName}} a gestire le transazioni eseguite tramite “PayPal pagamento veloce”.\n\nSe vuoi usare un altro gestore, aggiungi nuovamente il metodo al tuo Portafoglio.\n\nPer revocare l’autorizzazione, rimuovi il metodo dal Portafoglio.\n\nUsa l’app PayPal per modificare la carta o conto bancario su cui addebitare le spese."
     errors:
       transactionCreationError: C’è un problema con i sistemi di pagamento.
+    checkout:
+      bottomSheet:
+        PAYMENT_REVERSED:
+          title: Cosa fare se il pagamento non va a buon fine?
+          payNotice:
+            title: Paga l’avviso
+            content: Ricorda di pagare l’avviso entro le scadenze previste dall’ente. Se non riesci tramite IO, scopri gli altri canali abilitati a pagoPA.
+          waitRefund:
+            title: Attendi il rimborso
+            content: Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il trasferimento di denaro sul tuo conto o carta potrebbe richiedere più tempo.
+          contactSupport:
+            title: Contatta l’assistenza
+            content: Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’assistenza.
   itWallet:
     credentialName:
       eid: Identità Digitale
