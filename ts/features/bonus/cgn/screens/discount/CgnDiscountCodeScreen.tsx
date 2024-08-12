@@ -73,7 +73,7 @@ const CgnDiscountCodeScreen = () => {
         <IOScrollView
           headerConfig={{
             title: I18n.t(`bonus.cgn.merchantDetail.discount.title`),
-            isModal: true,
+            ignoreSafeAreaMargin: true,
             type: "singleAction",
             firstAction: {
               icon: "closeLarge",
