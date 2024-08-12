@@ -67,7 +67,7 @@ const FciSignatureScreen = (
         <ErrorComponent
           title={I18n.t("features.fci.errors.generic.wrongUser.title")}
           subTitle={I18n.t("features.fci.errors.generic.wrongUser.subTitle")}
-          pictogram="question"
+          pictogram="accessDenied"
           onPress={() => dispatch(fciEndRequest())}
           testID="WrongUserErrorComponentTestID"
         />
