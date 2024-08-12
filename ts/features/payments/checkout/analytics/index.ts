@@ -298,22 +298,22 @@ export const trackPaymentErrorHelp = (
   );
 };
 
-export const trackPaymentMethodErrorContinue = (
+export const trackPaymentNoSavedMethodContinue = (
   props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
-    "PAYMENT_METHOD_ERROR_CONTINUE",
+    "PAYMENT_NO_SAVED_METHOD_CONTINUE",
     buildEventProperties("UX", "action", {
       ...props
     })
   );
 };
 
-export const trackPaymentMethodErrorExit = (
+export const trackPaymentNoSavedMethodExit = (
   props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
-    "PAYMENT_METHOD_ERROR_EXIT",
+    "PAYMENT_NO_SAVED_METHOD_EXIT",
     buildEventProperties("UX", "action", {
       ...props
     })

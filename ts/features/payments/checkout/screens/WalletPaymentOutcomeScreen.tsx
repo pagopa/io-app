@@ -37,6 +37,7 @@ import { getPaymentPhaseFromStep } from "../utils";
 import { paymentCompletedSuccess } from "../store/actions/orchestration";
 import { walletPaymentSelectedPspSelector } from "../store/selectors/psps";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -67,17 +68,29 @@ const WalletPaymentOutcomeScreen = () => {
     outcome
   });
 
+  const shouldShowHeader = [
+    WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE
+  ].includes(outcome);
+
   // TODO: This is a workaround to disable swipe back gesture on this screen
   // .. it should be removed as soon as the migration to react-navigation v6 is completed (https://pagopa.atlassian.net/browse/IOBP-522)
   React.useEffect(() => {
-    // Disable swipe
+    // Disable swipe if not in the payment methods not available outcome
+    if (outcome === WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE) {
+      return;
+    }
     navigation.setOptions({ gestureEnabled: false });
     navigation.getParent()?.setOptions({ gestureEnabled: false });
     // Re-enable swipe after going back
     return () => {
       navigation.getParent()?.setOptions({ gestureEnabled: true });
     };
-  }, [navigation]);
+  }, [navigation, outcome]);
+
+  useHeaderSecondLevel({
+    title: "",
+    canGoBack: shouldShowHeader
+  });
 
   const taxFeeAmount = pipe(
     selectedPspOption,
@@ -149,7 +162,7 @@ const WalletPaymentOutcomeScreen = () => {
         "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.secondaryAction"
       ),
       onPress: () => {
-        analytics.trackPaymentMethodErrorExit({
+        analytics.trackPaymentNoSavedMethodExit({
           organization_name: paymentAnalyticsData?.verifiedData?.paName,
           service_name: paymentAnalyticsData?.serviceName,
           first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
@@ -170,7 +183,7 @@ const WalletPaymentOutcomeScreen = () => {
         "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.primaryAction"
       ),
       onPress: () => {
-        analytics.trackPaymentMethodErrorContinue({
+        analytics.trackPaymentNoSavedMethodContinue({
           organization_name: paymentAnalyticsData?.verifiedData?.paName,
           service_name: paymentAnalyticsData?.serviceName,
           first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
@@ -353,7 +366,8 @@ const WalletPaymentOutcomeScreen = () => {
             "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.subtitle"
           ),
           action: onboardPaymentMethodAction,
-          secondaryAction: onboardPaymentMethodCloseAction
+          secondaryAction: onboardPaymentMethodCloseAction,
+          isHeaderVisible: true
         };
     }
   };
