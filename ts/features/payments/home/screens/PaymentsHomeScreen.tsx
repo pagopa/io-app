@@ -12,8 +12,8 @@ import { PaymentsHomeUserMethodsList } from "../components/PaymentsHomeUserMetho
 import {
   isPaymentsLatestTransactionsEmptySelector,
   isPaymentsSectionEmptySelector,
-  isPaymentsSectionLoadingSelector,
-  isPaymentsSectionRefreshingSelector
+  isPaymentsSectionLoadingFirstTimeSelector,
+  isPaymentsSectionLoadingSelector
 } from "../store/selectors";
 import { PaymentsAlertStatus } from "../components/PaymentsAlertStatus";
 import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
@@ -24,10 +24,14 @@ const PaymentsHomeScreen = () => {
   const dispatch = useIODispatch();
 
   const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
-  const isRefreshing = useIOSelector(isPaymentsSectionRefreshingSelector);
+  const isLoadingFirstTime = useIOSelector(
+    isPaymentsSectionLoadingFirstTimeSelector
+  );
   const isTransactionsEmpty = useIOSelector(
     isPaymentsLatestTransactionsEmptySelector
   );
+
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
 
   const handleOnPayNoticedPress = () => {
     navigation.navigate(PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR, {
@@ -35,7 +39,14 @@ const PaymentsHomeScreen = () => {
     });
   };
 
+  React.useEffect(() => {
+    if (!isLoading) {
+      setIsRefreshing(false);
+    }
+  }, [isLoading]);
+
   const handleRefreshPaymentsHome = () => {
+    setIsRefreshing(true);
     dispatch(getPaymentsWalletUserMethods.request());
     dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
   };
@@ -70,7 +81,7 @@ const PaymentsHomeScreen = () => {
         onRefresh: handleRefreshPaymentsHome
       }}
       primaryActionProps={
-        isLoading
+        isLoadingFirstTime
           ? undefined
           : {
               accessibilityLabel: I18n.t("features.payments.cta"),
@@ -90,7 +101,9 @@ const PaymentsHomeScreen = () => {
 };
 
 const PaymentsHomeScreenContent = () => {
-  const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
+  const isLoadingFirstTime = useIOSelector(
+    isPaymentsSectionLoadingFirstTimeSelector
+  );
   const isEmpty = useIOSelector(isPaymentsSectionEmptySelector);
 
   if (isEmpty) {
@@ -99,8 +112,8 @@ const PaymentsHomeScreenContent = () => {
 
   return (
     <>
-      <PaymentsHomeUserMethodsList enforcedLoadingState={isLoading} />
-      <PaymentsHomeTransactionsList enforcedLoadingState={isLoading} />
+      <PaymentsHomeUserMethodsList enforcedLoadingState={isLoadingFirstTime} />
+      <PaymentsHomeTransactionsList enforcedLoadingState={isLoadingFirstTime} />
     </>
   );
 };

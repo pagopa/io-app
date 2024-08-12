@@ -8,7 +8,7 @@ import {
   walletTransactionBizEventsListPotSelector
 } from "../../../bizEventsTransaction/store/selectors";
 
-export const isPaymentsSectionLoadingSelector = createSelector(
+export const isPaymentsSectionLoadingFirstTimeSelector = createSelector(
   paymentsWalletUserMethodsSelector,
   walletLatestTransactionsBizEventsListPotSelector,
   (methodsPot, latestTransactionsPot) =>
@@ -16,12 +16,11 @@ export const isPaymentsSectionLoadingSelector = createSelector(
     (!pot.isSome(latestTransactionsPot) && pot.isLoading(latestTransactionsPot))
 );
 
-export const isPaymentsSectionRefreshingSelector = createSelector(
+export const isPaymentsSectionLoadingSelector = createSelector(
   paymentsWalletUserMethodsSelector,
   walletLatestTransactionsBizEventsListPotSelector,
   (methodsPot, latestTransactionsPot) =>
-    (pot.isSome(methodsPot) && pot.isLoading(methodsPot)) ||
-    (pot.isSome(latestTransactionsPot) && pot.isLoading(latestTransactionsPot))
+    pot.isLoading(methodsPot) || pot.isLoading(latestTransactionsPot)
 );
 
 export const isPaymentsMethodsEmptySelector = createSelector(
