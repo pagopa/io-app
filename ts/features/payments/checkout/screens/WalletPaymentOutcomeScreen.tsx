@@ -380,7 +380,7 @@ const WalletPaymentOutcomeScreen = () => {
         };
       case WalletPaymentOutcomeEnum.PAYPAL_REMOVED_ERROR:
         return {
-          pictogram: "attention",
+          pictogram: "accessDenied",
           title: I18n.t("wallet.payment.outcome.PAYPAL_REMOVED_ERROR.title"),
           subtitle: I18n.t(
             "wallet.payment.outcome.PAYPAL_REMOVED_ERROR.subtitle"
