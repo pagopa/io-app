@@ -262,7 +262,6 @@ startup:
   profileEnabled: "Benutzerprofil aktiviert"
   userDeletePendingAlert:
     title: "Profil wird gelöscht"
-    message: "Wenn du deine Meinung geändert hast, kannst du deinen Antrag im Abschnitt Datenschutz deines Profils zurückziehen."
     cta_2: "Ignorieren"
   contextualHelp:
     title: "Initialisierungsprobleme?"
@@ -327,7 +326,6 @@ profile:
       description: "Deine Rechte und Pflichten bei der Nutzung der IO-App"
       loading: "Warte ein paar Sekunden, wir überprüfen dein Profil..."
       removeAccount:
-        title: "Dein Konto löschen"
         error: "Bei der Anfrage zur Kontolöschung ist ein Fehler aufgetreten. Bitte versuche es erneut."
         alert:
           cta:

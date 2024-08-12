@@ -19,13 +19,11 @@ import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
 import React from "react";
 import {
-  AccessibilityInfo,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
-  View,
-  findNodeHandle
+  View
 } from "react-native";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -37,15 +35,16 @@ import ROUTES from "../../../../navigation/routes";
 import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
 import { useIODispatch } from "../../../../store/hooks";
 import themeVariables from "../../../../theme/variables";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   decodeOrganizationFiscalCode,
   validateOrganizationFiscalCode
 } from "../../common/utils/validation";
+import * as analytics from "../analytics";
 import { usePagoPaPayment } from "../hooks/usePagoPaPayment";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import * as analytics from "../analytics";
 
 export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
@@ -76,10 +75,7 @@ const WalletPaymentInputFiscalCodeScreen = () => {
 
   const textInputWrappperRef = React.useRef<View>(null);
   const focusTextInput = () => {
-    const textInputA11yWrapper = findNodeHandle(textInputWrappperRef.current);
-    if (textInputA11yWrapper) {
-      AccessibilityInfo.setAccessibilityFocus(textInputA11yWrapper);
-    }
+    setAccessibilityFocus(textInputWrappperRef);
   };
 
   const navigateToTransactionSummary = () => {
@@ -137,13 +133,16 @@ const WalletPaymentInputFiscalCodeScreen = () => {
             <VSpacer size={16} />
             <Body>{I18n.t("wallet.payment.manual.fiscalCode.subtitle")}</Body>
             <VSpacer size={16} />
-            <View ref={textInputWrappperRef}>
+            <View accessible ref={textInputWrappperRef}>
               <TextInputValidation
                 placeholder={I18n.t(
                   "wallet.payment.manual.fiscalCode.placeholder"
                 )}
                 accessibilityLabel={I18n.t(
                   "wallet.payment.manual.fiscalCode.placeholder"
+                )}
+                errorMessage={I18n.t(
+                  "wallet.payment.manual.fiscalCode.validationError"
                 )}
                 value={inputState.fiscalCodeText}
                 icon="fiscalCodeIndividual"
