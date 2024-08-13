@@ -60,6 +60,8 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
       return "PAYMENT_GENERIC_ERROR";
     case WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE:
       return "PAYMENT_NO_METHOD_SAVED_ERROR";
+    case WalletPaymentOutcomeEnum.WAITING_CONFIRMATION_EMAIL:
+      return "PAYMENT_WAITING_CONFIRMATION_EMAIL_ERROR";
     default:
       return outcome;
   }
