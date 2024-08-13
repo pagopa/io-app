@@ -37,11 +37,11 @@ type TabOption = {
 const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
   [CgnMerchantsHomeTabRoutes.CGN_CATEGORIES]: {
     icon: "initiatives",
-    title: "Per categoria"
+    title: I18n.t("bonus.cgn.merchantsList.tabs.perInitiative")
   },
   [CgnMerchantsHomeTabRoutes.CGN_MERCHANTS_ALL]: {
     icon: "merchant",
-    title: "Per operatore"
+    title: I18n.t("bonus.cgn.merchantsList.tabs.perMerchant")
   }
 };
 
