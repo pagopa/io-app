@@ -2636,8 +2636,11 @@ bonus:
       online: Online
       places: Places
       navigationTitle: Benefits
-      screenTitle: Select an operator and discover benefits and opportunities
-      merchantsAll: All the operators
+      screenTitle: Discover opportunities
+      merchantsAll: All partners
+      tabs:
+        perInitiative: By category
+        perMerchant: By partner
       cta:
         filter: Filter
       categoriesList:
@@ -2686,7 +2689,6 @@ bonus:
         discountUrl: Go to the benefit
         website: Go to partner's website
       categories:
-        all: All the operators
         counting: and other {{count}}
         cultureAndEntertainment: Culture and Entertainment
         health: Health and Wellness

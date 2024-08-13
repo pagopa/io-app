@@ -2636,8 +2636,11 @@ bonus:
       online: Online
       places: Luoghi
       navigationTitle: Agevolazioni
-      screenTitle: Seleziona un operatore e scopri agevolazioni e opportunità
-      merchantsAll: Tutti gli operatori
+      screenTitle: Scopri le opportunità
+      merchantsAll: Tutti i partner
+      tabs:
+        perInitiative: Per categoria
+        perMerchant: Per partner
       cta:
         filter: Filtra
       categoriesList:
@@ -2686,7 +2689,6 @@ bonus:
         discountUrl: Vai all'opportunità
         website: Vai al sito del partner
       categories:
-        all: Tutti gli operatori
         counting: e altre {{count}}
         cultureAndEntertainment: Cultura e Tempo Libero
         health: Salute e Benessere
