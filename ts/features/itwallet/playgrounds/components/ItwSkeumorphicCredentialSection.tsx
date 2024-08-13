@@ -1,7 +1,7 @@
 import { ButtonSolid, H3, VStack } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
-import { ItwSkeumorphicCredentialCard } from "../../presentation/components/ItwSkeumorphicCredentialCard";
+import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 
 export const ItwSkeumorphicCredentialSection = () => {
   const [isFlipped, setFlipped] = React.useState(false);
@@ -9,7 +9,7 @@ export const ItwSkeumorphicCredentialSection = () => {
   return (
     <VStack space={16}>
       <H3>{"Skeumorphic credential card"}</H3>
-      <ItwSkeumorphicCredentialCard
+      <ItwSkeumorphicCard
         credential={ItwStoredCredentialsMocks.mdl}
         isFlipped={isFlipped}
       />

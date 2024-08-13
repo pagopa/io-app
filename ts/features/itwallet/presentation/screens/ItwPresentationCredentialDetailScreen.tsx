@@ -2,7 +2,6 @@ import {
   ContentWrapper,
   Divider,
   IOSpacingScale,
-  IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/Option";
@@ -11,6 +10,7 @@ import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import I18n from "../../../../i18n";
@@ -37,8 +37,6 @@ import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlertsSection";
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
-import { useDebugInfo } from "../../../../hooks/useDebugInfo";
-import { ItwSkeumorphicCredentialCard } from "../components/ItwSkeumorphicCredentialCard";
 
 // TODO: use the real credential update time
 const today = new Date();

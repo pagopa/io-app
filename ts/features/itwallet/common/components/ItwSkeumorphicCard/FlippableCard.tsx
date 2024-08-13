@@ -7,9 +7,12 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 
-export type ItwFlippableCardProps = {
+const DEFAULT_DURATION = 500;
+
+export type FlippableCardProps = {
   FrontComponent: React.ReactElement;
-  RearComponent: React.ReactElement;
+  BackComponent: React.ReactElement;
+  duration?: number;
   isFlipped?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
 };
@@ -17,13 +20,13 @@ export type ItwFlippableCardProps = {
 /**
  * Renders a component which can be flipped with an animation to show both of its sides.
  */
-export const ItwFlippableCard = ({
+const FlippableCard = ({
   FrontComponent,
-  RearComponent,
+  BackComponent,
   containerStyle,
+  duration = DEFAULT_DURATION,
   ...props
-}: ItwFlippableCardProps) => {
-  const duration = 1000;
+}: FlippableCardProps) => {
   const isFlipped = useSharedValue(props.isFlipped);
 
   React.useEffect(() => {
@@ -52,14 +55,14 @@ export const ItwFlippableCard = ({
   return (
     <View style={containerStyle}>
       <Animated.View
-        style={[styles.card, styles.regularCard, regularCardAnimatedStyle]}
+        style={[styles.card, styles.front, regularCardAnimatedStyle]}
       >
         {FrontComponent}
       </Animated.View>
       <Animated.View
-        style={[styles.card, styles.flippedCard, flippedCardAnimatedStyle]}
+        style={[styles.card, styles.back, flippedCardAnimatedStyle]}
       >
-        {RearComponent}
+        {BackComponent}
       </Animated.View>
     </View>
   );
@@ -73,11 +76,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0
   },
-  regularCard: {
+  front: {
     zIndex: 1
   },
-  flippedCard: {
+  back: {
     backfaceVisibility: "hidden",
     zIndex: 2
   }
 });
+
+export default React.memo(FlippableCard);
