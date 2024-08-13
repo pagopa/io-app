@@ -2051,7 +2051,7 @@ bonus:
     cta:
       activeBonus: "Die Karte beantragen"
       deactivateBonus: "Die Karte deaktivieren"
-      goToDetail: "Die Karte anzeigen"
+      goToDetail: Usa la Carta
     detail:
       cta:
         buyers: Scopri le opportunità CGN
@@ -2100,16 +2100,16 @@ bonus:
         subCaption: "Bitte warte etwas."
       error:
         title: "Der Dienst Nationale Jugendkarte ist derzeit nicht verfügbar."
-        body: "Wir entschuldigen uns für die Unannehmlichkeiten.\nBitte versuche es später noch einmal."
+        body: "Ci dispiace, riprova più tardi."
       ineligible:
         title: "Leider erfüllst du nicht die Voraussetzungen für die Nationale Jugendkarte."
         body: "Die Nationale Jugendkarte ist nur für italienische und europäische Staatsbürger mit Wohnsitz in Italien im Alter von 18 bis 35 Jahren erhältlich."
       timeout:
-        title: "Wir bearbeiten deine Anfrage."
+        title: "Stiamo lavorando la tua richiesta."
         body: "Wir werden dir eine Nachricht in der App schicken, wenn deine Jugendkarte aktiv ist."
       alreadyActive:
         title: "Deine Nationale Jugendkarte ist bereits aktiv!"
-        body: "Du kannst die Details im Abschnitt Konto einsehen."
+        body: "Puoi trovare la tua Carta nella sezione Portafoglio."
       pending:
         title: "Deine Nationale Jugendkarte wird gerade aktiviert."
         body: "Du erhältst eine Nachricht, wenn sie aktiviert ist."
