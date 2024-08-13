@@ -12,6 +12,7 @@ import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuan
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
+import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -96,5 +97,8 @@ export default (
 
   closeIssuance: () => {
     navigation.popToTop();
-  }
+  },
+
+  handleSessionExpired: () =>
+    dispatch(checkCurrentSession.success({ isSessionValid: false }))
 });

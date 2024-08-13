@@ -1376,6 +1376,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               onTouchEnd={[Function]}
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
                                   [
@@ -1581,6 +1582,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               testID="show-more-data-action"
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
                                   [
@@ -1855,6 +1857,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       onStartShouldSetResponder={[Function]}
                                     >
                                       <View
+                                        accessibilityElementsHidden={true}
                                         importantForAccessibility="no-hide-descendants"
                                         style={
                                           [
@@ -2203,6 +2206,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       onStartShouldSetResponder={[Function]}
                                     >
                                       <View
+                                        accessibilityElementsHidden={true}
                                         importantForAccessibility="no-hide-descendants"
                                         style={
                                           [

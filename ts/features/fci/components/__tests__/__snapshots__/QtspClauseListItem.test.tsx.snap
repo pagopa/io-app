@@ -540,6 +540,8 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                             }
                           >
                             <View
+                              accessibilityElementsHidden={true}
+                              importantForAccessibility="no-hide-descendants"
                               pointerEvents="none"
                               style={
                                 {
