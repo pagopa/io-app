@@ -2698,7 +2698,7 @@ bonus:
     cta:
       activeBonus: Request your Card
       deactivateBonus: Deactivate Carta Giovani Nazionale
-      goToDetail: View your Carta Giovani
+      goToDetail: Use Carta Giovani
     detail:
       cta:
         buyers: Discover CGN opportunities.
@@ -2749,7 +2749,7 @@ bonus:
         subCaption: "Please wait."
       error:
         title: "The Carta Giovani Nazionale service is not available at the moment."
-        body: "We apologize for the issue.\nWe invite you to retry again later."
+        body: "Sorry, please try again later."
       ineligible:
         title: "We are sorry. You do not have the required characteristics to activate the Carta Giovani Nazionale."
         body: "The Carta Giovani Nazionale is available only to Italian and European citizens residing in Italy, aged 18 to 35."
@@ -2758,7 +2758,7 @@ bonus:
         body: "We will send you an in-app message when your Carta Giovani will be activated."
       alreadyActive:
         title: "Your Carta Giovani Nazionale is already active!"
-        body: "You can find more details inside the Wallet section."
+        body: "You can find Carta Giovani in the Wallet section."
       pending:
         title: "Your Carta Giovani Nazionale's activation is in progress."
         body: "You will receive a message when it has been activated."
