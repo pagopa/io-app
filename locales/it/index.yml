@@ -2698,7 +2698,7 @@ bonus:
     cta:
       activeBonus: Richiedi la Carta
       deactivateBonus: Disattiva Carta Giovani Nazionale
-      goToDetail: Visualizza la Carta
+      goToDetail: Usa la Carta
     detail:
       cta:
         buyers: Scopri le opportunità CGN
@@ -2749,16 +2749,16 @@ bonus:
         subCaption: "Ti preghiamo di attendere."
       error:
         title: "Il servizio Carta Giovani Nazionale in questo momento non è disponibile."
-        body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+        body: "Ci dispiace, riprova più tardi."
       ineligible:
         title: "Purtroppo non hai i requisiti per attivare la Carta Giovani Nazionale."
         body: "La Carta Giovani Nazionali è disponibile solo per i cittadini italiani ed europei residenti in Italia, dai 18 ai 35 anni di età."
       timeout:
-        title: "Stiamo processando la tua richiesta."
+        title: "Stiamo lavorando alla tua richiesta."
         body: "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
       alreadyActive:
         title: "La tua Carta Giovani Nazionale è già attiva!"
-        body: "Puoi visualizzarne i dettagli nella sezione Portafoglio."
+        body: "Puoi trovare la tua Carta nella sezione Portafoglio."
       pending:
         title: "La tua Carta Giovani Nazionale è in fase di attivazione."
         body: "Riceverai un messaggio quando sarà attivata."
