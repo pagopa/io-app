@@ -2,6 +2,7 @@ import { ActionProp, HeaderFirstLevel } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { ComponentProps, useCallback, useMemo } from "react";
+import { useServicesHomeBottomSheet } from "../../features/services/home/hooks/useServicesHomeBottomSheet";
 import { useWalletHomeHeaderBottomSheet } from "../../components/wallet/WalletHomeHeader";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 import {
@@ -91,6 +92,11 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     isSettingsVisibleAndHideProfileSelector
   );
 
+  const {
+    bottomSheet: ServicesHomeBottomSheet,
+    present: presentServicesHomeBottomSheet
+  } = useServicesHomeBottomSheet();
+
   const canNavigateIfIsArchivingCallback = useCallback(() => {
     const state = store.getState();
     // If the system is busy archiving or restoring messages,
@@ -118,6 +124,26 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     }
   }, [canNavigateIfIsArchivingCallback, navigation]);
 
+  const handleSearchInstituion = useCallback(() => {
+    analytics.trackSearchStart({ source: "header_icon" });
+    navigation.navigate(SERVICES_ROUTES.SEARCH);
+  }, [navigation]);
+
+  const navigateToSettingsOrServicesPreferences = useCallback(() => {
+    if (isSettingsVisibleAndHideProfile) {
+      presentServicesHomeBottomSheet();
+      return;
+    }
+
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.PROFILE_PREFERENCES_SERVICES
+    });
+  }, [
+    isSettingsVisibleAndHideProfile,
+    navigation,
+    presentServicesHomeBottomSheet
+  ]);
+
   const navigateToSettingMainScreen = useCallback(() => {
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
       screen: ROUTES.SETTINGS_MAIN
@@ -129,12 +155,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
       navigateToSettingMainScreen();
     }
   }, [canNavigateIfIsArchivingCallback, navigateToSettingMainScreen]);
-
-  const navigateToProfilePrefercesScreen = useCallback(() => {
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_SERVICES
-    });
-  }, [navigation]);
 
   const settingsAction: ActionProp = useMemo(
     () => ({
@@ -152,6 +172,15 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
       onPress: navigateToSettingMainScreenFromMessageSection
     }),
     [navigateToSettingMainScreenFromMessageSection]
+  );
+
+  const settingsActionInServicesSection: ActionProp = useMemo(
+    () => ({
+      icon: "coggle",
+      accessibilityLabel: I18n.t("global.buttons.settings"),
+      onPress: navigateToSettingsOrServicesPreferences
+    }),
+    [navigateToSettingsOrServicesPreferences]
   );
 
   const requestParams = useMemo(
@@ -199,6 +228,15 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     [messageSearchCallback]
   );
 
+  const searchInstitutionAction: ActionProp = useMemo(
+    () => ({
+      icon: "search",
+      accessibilityLabel: I18n.t("global.accessibility.search"),
+      onPress: handleSearchInstituion
+    }),
+    [handleSearchInstituion]
+  );
+
   const headerProps: HeaderFirstLevelProps = useMemo(() => {
     switch (currentRouteName) {
       case SERVICES_ROUTES.SERVICES_HOME:
@@ -206,19 +244,8 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           title: I18n.t("services.title"),
           type: "threeActions",
           firstAction: helpAction,
-          secondAction: {
-            icon: "coggle",
-            accessibilityLabel: I18n.t("global.buttons.edit"),
-            onPress: navigateToProfilePrefercesScreen
-          },
-          thirdAction: {
-            icon: "search",
-            accessibilityLabel: I18n.t("global.accessibility.search"),
-            onPress: () => {
-              analytics.trackSearchStart({ source: "header_icon" });
-              navigation.navigate(SERVICES_ROUTES.SEARCH);
-            }
-          }
+          secondAction: settingsActionInServicesSection,
+          thirdAction: searchInstitutionAction
         };
       // TODO: delete this route when the showBarcodeScanSection
       // and isSettingsVisibleAndHideProfileSelector FF will be deleted
@@ -290,19 +317,20 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   }, [
     currentRouteName,
     helpAction,
-    navigateToProfilePrefercesScreen,
     isNewWalletSectionEnabled,
     isSettingsVisibleAndHideProfile,
     settingsAction,
     walletAction,
-    settingsActionInMessageSection,
     searchMessageAction,
-    navigation
+    searchInstitutionAction,
+    settingsActionInMessageSection,
+    settingsActionInServicesSection
   ]);
 
   return (
     <>
       <HeaderFirstLevel {...headerProps} />
+      {ServicesHomeBottomSheet}
       {WalletHomeHeaderBottomSheet}
     </>
   );

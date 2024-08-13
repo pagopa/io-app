@@ -31,7 +31,6 @@ export const itwEidIssuanceMachine = setup({
     navigateToTosScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
     navigateToIdpSelectionScreen: notImplemented,
-    navigateToEidRequestScreen: notImplemented,
     navigateToEidPreviewScreen: notImplemented,
     navigateToSuccessScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
@@ -47,7 +46,8 @@ export const itwEidIssuanceMachine = setup({
     requestAssistance: notImplemented,
     setWalletInstanceToOperational: notImplemented,
     setWalletInstanceToValid: notImplemented,
-    disposeWalletAttestation: notImplemented
+    disposeWalletAttestation: notImplemented,
+    handleSessionExpired: notImplemented
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
@@ -64,10 +64,10 @@ export const itwEidIssuanceMachine = setup({
   },
   guards: {
     isNativeAuthSessionClosed: notImplemented,
-    issuedEidMatchesAuthenticatedUser: notImplemented
+    issuedEidMatchesAuthenticatedUser: notImplemented,
+    isSessionExpired: notImplemented
   }
 }).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEsAuB3AosiBJWsArgIYB2AxmALLHkAWypYAdLhADZgDEsqxATqgDaABgC6iUAAcA9rDTIZpSSAAeiABwAmADQgAnogDMARi0nmANhMBODRoAslyyMcB2AL4e9aLDnxEZJQ09IwsACpyAILklFJ8FNy0cagAtKhyohJIILLyqIrKOeoIAKy6BohaGmbM1ZalTm6ONk6lXj4Y2HgEJIkhDEzMkbAxKUFJsWDx6Zkm2dJyCkoqJZYVhghGRm4OzCa2GjbH5eYa7d4gvt0BfcG0gxHRU-ETXMnTaRmwQloLuUsCitiogHEYtEZmCIbEYNEYbOYRKVwXpNloHG4tMxmg11q5jpYNB0rl1-L0JgMwswAOrEdicVC4Ui8CYAYX4YGIQNIXAgShYjAAbjIANYC0k9QL9B5U2n0sCM5kJSjsznchBCmTkLmFLJZFR5ZZFUAlZE2KEiS1GK02EylRyoxAmXbMUrNExGM12BxaGzE65kqX3UJDOUMpksxKqnVKLhgfj8GT8ZhSdhcgBmSYAtswA5K7tQZaG6eGlWyOTHSBrSMLtdy9eIDYDCqtEGaLVabXaHZUEDVXZaRB6NG4bCItOOjP6JbcKUWWGGFRHlWAoqhUHA+NyAPIAIz4jCzYFIqF5-NzNdF4r8+bnIYXJaXZcSa43LJ3++Ih+PqGrtcrDb-Ia3KtmULqDiI1qQba9oOI6CDoiIljYhoDQ1NYdqWG4niXHms7SveNKPoqkaUK+m6VnuB6kEeJ5xgmSYpmmqCZvwOZ4eSBGPER8okSu5HvoUVFfjRP5-lqAHiPqOTAS2IJgXsEFQfC3Zwb2EIetirhOJaY67BcnQ3vhwbcQAqrA8ZsD+yDpsgdaFGeQzvteNycSZVLmZZEDWbZ9lKNJiz5HJJqIJi8FaJYrSukYuI2G4noNLC05GW5haEZ5-BWSeNl2ZWzBUDI3kAMpgJw5DcjwpVgOVqQ4D5uXcqkWaFWAAUAkFwIhVsGnMNoNRxZYnraCY4UmJF+xaKUJjjjY9pDslrlBmlZkWZl3nZb5eUFcVVXlQ5FllWkdUbQ1hRNS1QjzE2HXGmoxg9X1thuIN9rmOFSEaBNpQiJiOzlFhC2BgWlJDBlWUFJt3L5S1JWHftu1HetEOnUo53eb8QHNp1d3daYvXVE9L3DeFWjPcwDiweUFMmPYBkkilS0gywYNIzlfmkNDO1w7Gu60CKbWydjJRghCUIwnCCLTciGxOoNWKNJFiEYj9WiA7eXEeat4Ns3lRVSDglWHaksD6xAtUQFIAtY7dJTwjFX1IiYDgU24T2jeCzC2jC4smGrxnLZrXn1ezzB6wbvPkPzjYydboGetCdQ1NszRjsrMsIQcn3rN9I7OM4SW4TOqVM8wLPB3lrLIGAAAKjBcOQVepPrpCpD+8aQFbN1x2CFhGGC8XjqUDRTW48G2OYrpON7GiWmYlgOH7xfzqXWus5DhTMJXNd1xHUeY138nx+aBPJ0cIhp+9zpWJNSJuK4sKzQvhcM8Dy9lydIdFXwgiMFAW9RIQVAdAABi7AZDoEcgKS8YpcxF0Zm-Ve5coZfwEAUUgf8q4AKAaA8B4l2aAWukaUC6I4pQkwnFTENQDhjzcI0bENhFazV2BCSCi94HpUQR-XW380EYNXIAkBYCIHxkTMmVMGZsywJfneFaQcuHIJ4b-f+AicHoDwZJMQnciHyRFpCaEsJ4SImlmPGK5paHNFKEPBw0JdhP0MotV+HC5HIxDgAJU5BAJRVdWQCAgPXRux0XGVlSOQGQWZUwKg7tHQK2iurgjxo9AaQ03q9mdMiOoDCYRjQROYthjjZFrSQRvdxxBPHoK3j4-gfjyBgIslokCh8HoEySa9EaqSpoWFHJFMa1jhxujyTIwOhT5HFI8V4sAlS-G73qcFHG8SLCJOesktpmwaauyhFPdEOdaF0w4uw7i-tmDuIAI6EE3L-bokCLzChgXs-JVJDknLObwC5OB1H1iktE9qsS5nojIUPPuSFLERXgnFLEloU4AtmjCHC9igaDKGI8sApzznoMuSIxi4iWKSLuQilgSKUUvLRW8zU+DPn7x+SUMabpmCelaEcc4JxGgkztFpRwLhppglmlOZ+Di8WsFSkc5FzzeHooYmI5irF2JwPuYiwVTzUVQG6O83UUkroxwPl1albhaWlHpXYPVs1mWpLMJCcxqF0TnGROcAZGs5VLSFYS0V4c+YzKFrLDEur9WMqNWpNEEVIQTkcM7UcMK7H0z5Xa-FgrWR0GqiKX+2tUD6BoKgegXA3U20QMcEQUJs4OEcI4AmKzs3NHJoNQaSIGjVCJLy+FUaBUOtjfGxNrNk2pvTZdClDStXzx1XSgtBqmV+qdJBLEzo4qwnZTTW0tr3L2oLMwAAIsgE2aZ9C-2rhyQUVcIGlLNhkVI6BiKZtAj0-terB0+ssSOvsDgLAYnhM9S9z0KZzoDguiYy7V3iI3egrdYAd1gAgTUuQrUvmCyzQgYckJyjxy0IhGoDgbDwVQjqs45w75TVMLCiN9b50sCKoQKYBB3gQDNkwdAISOSszpKexpBbybBr1daOw6JLDwVoeaM+g0ab2jdJYd9JciMkdgFwKAMhZhHpPRB2OjS4QWlHG6Y4MUwq9nzr1MwU0XYFqQn6Ot6sCOh2I5QUjHILLCFk5qnG5gh4diRJaaoVaOO9iOMhBhudMSwTWUJ5ewCvzsEIByeutTwPdtmcLOEuaU52lhK4V98FnafT1Xaf6CJvoYl84RfzyBAvBY5E61IxACCrpXPRrqBaDiulQpBQ4EJSbwU9PLD0YJGjxc9Lh3FDact5e4OZhU5Wca6eS+LZ2P0abWHgvxqwkVrBFsaI0VWxJSAtXgDkLrBHCE9pxqkFzmxUilE9scNj9pwTPSwoJgz-sS5sE4FtiLoIxyfX7o0ZDWHSju1pU0bCOxbSuyy9xEYYxPgTHu+6rY2xyY7Apn3HuXLGsHB1TiIeE4lnOlrXCwzH6Hy8WXOWNUszIOgR9GPZwVhZq+ntNk7YS3MfXeXouPiEwBJbiEp+b8J4wdQewuFWE4LaGDR9PPFwDCAdDO1uvbGRP5ITj1VpcEhJhyoRQ6kmKubfSEnsPem+fcxeg04UEqG20wCw2qtt6XXVqjfX2CjmnP0YqDXeiObE4IEM7LV8iPXzMDc62QabLncd1g6ognq1HZgVdog9FiO+7hQ3z3KLsmV-L36G43lvWut0LdzKD-Z0P43fRj2O-sWhSE872FaIn6RDaU++43ign+5TMEqKEQHmX00kdjsV1OyKND4S9TV2Oscvo31XaXk44ZqelBCtKeMyZrfLd324wTLCeq87VBoaTarertBu9JhCL3K9nG16n6yMJESNwQHn0Ng45onC01oTsUmH31L1CO-pRzruEQH-9lf00EfQoeyuz2Dwi0y2g-Tf7yrCqKrdC-6jqjy9gnCexTyr4dJggQFNpxqRytrWTtpcj0CwEIDIafRISTQ0zOxTRu6grWD0KRQpZjQHDOjoGLorprrEB-pQAAZAboAEEei1AFrOxvYQjOD-4IAeYZKRS7DbA5x6oH4iamZrYxLbZUojgWAsbsoMp2A7CoYuCeyEi7C2g+iw76Z05j7cQ9ZBZgAEEw6HYkHzxQRDi2hTbIYzYMKRQDSkw7BeBeBAA */
   id: "itwEidIssuanceMachine",
   context: InitialContext,
   initial: "Idle",
@@ -120,10 +120,16 @@ export const itwEidIssuanceMachine = setup({
           ],
           target: "WalletInstanceAttestationObtainment"
         },
-        onError: {
-          actions: assign(setFailure(IssuanceFailureType.GENERIC)), // TODO: [SIW-1390] Use unsupported device from io-rn-wallet
-          target: "#itwEidIssuanceMachine.Failure"
-        }
+        onError: [
+          {
+            guard: "isSessionExpired",
+            target: "SessionExpired"
+          },
+          {
+            actions: assign(setFailure(IssuanceFailureType.GENERIC)), // TODO: [SIW-1390] Use unsupported device from io-rn-wallet
+            target: "#itwEidIssuanceMachine.Failure"
+          }
+        ]
       }
     },
     WalletInstanceAttestationObtainment: {
@@ -139,10 +145,16 @@ export const itwEidIssuanceMachine = setup({
           })),
           target: "UserIdentification"
         },
-        onError: {
-          actions: assign(setFailure(IssuanceFailureType.GENERIC)),
-          target: "#itwEidIssuanceMachine.Failure"
-        }
+        onError: [
+          {
+            guard: "isSessionExpired",
+            target: "SessionExpired"
+          },
+          {
+            actions: assign(setFailure(IssuanceFailureType.GENERIC)),
+            target: "#itwEidIssuanceMachine.Failure"
+          }
+        ]
       }
     },
     UserIdentification: {
@@ -299,13 +311,10 @@ export const itwEidIssuanceMachine = setup({
       }
     },
     Issuance: {
-      entry: "navigateToEidRequestScreen",
+      entry: "navigateToEidPreviewScreen",
       initial: "RequestingEid",
       states: {
         RequestingEid: {
-          on: {
-            back: { target: "#itwEidIssuanceMachine.UserIdentification" }
-          },
           tags: [ItwTags.Loading],
           invoke: {
             src: "requestEid",
@@ -331,6 +340,7 @@ export const itwEidIssuanceMachine = setup({
           }
         },
         CheckingIdentityMatch: {
+          tags: [ItwTags.Loading],
           description:
             "Checking whether the issued eID matches the identity of the currently logged-in user.",
           always: [
@@ -347,7 +357,6 @@ export const itwEidIssuanceMachine = setup({
           ]
         },
         DisplayingPreview: {
-          entry: "navigateToEidPreviewScreen",
           on: {
             "add-to-wallet": {
               actions: [
@@ -391,6 +400,11 @@ export const itwEidIssuanceMachine = setup({
           target: "Idle"
         }
       }
+    },
+    SessionExpired: {
+      entry: ["handleSessionExpired"],
+      // Since the refresh token request does not change the current screen, restart the machine
+      always: { target: "TosAcceptance" }
     }
   }
 });

@@ -265,8 +265,10 @@ startup:
   profileEnabled: Profilo utente abilitato
   userDeletePendingAlert:
     title: Eliminazione profilo in corso
-    message: Se hai cambiato idea, puoi annullare la richiesta nella sezione Privacy del tuo Profilo.
-    cta_1: Vai al Profilo
+    messageLegacy: Se hai cambiato idea, puoi annullare la richiesta nella sezione Privacy del tuo Profilo.
+    message: Se hai cambiato idea, puoi annullare la richiesta dalla sezione Privacy all'interno delle Impostazioni.
+    cta_1_legacy: Vai al Profilo
+    cta_1: Vai alle Impostazioni
     cta_2: Ignora
   contextualHelp:
     title: Problemi di inizializzazione?
@@ -341,7 +343,7 @@ profile:
       subtitle: Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei dati personali.
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo...
       removeAccount:
-        title: Elimina il tuo account
+        title: Elimina il tuo profilo
         description: Elimina il tuo profilo e i tuoi dati personali
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
         alert:
@@ -705,6 +707,7 @@ authentication:
         placeholderLabel: PIN della Carta di identità elettronica
         label: Campo di inserimento per pin della Carta di Identità elettronica
         hint: Inserire in questo campo il pin a 8 cifre della propria Carta di Identità Elettronica
+        deleteLabel: Hai eliminato {{number}}
       pinCardTitle: Inserisci il PIN della CIE
       pinCardHeader: Entra con CIE
       pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
@@ -1526,7 +1529,7 @@ wallet:
     idTransaction: Codice identificativo della transazione
     amountInfo:
       title: Vedi un importo diverso?
-      message: pagoPA aggiorna l'importo in tempo reale, per permetterti di pagare evitando more o interessi aggiuntivi. Può succedere, per esempio, quando l'ente applica dei costi di notifica (se ti ha inviato una comunicazione a valore legale) o se sei in ritardo con il pagamento. 
+      message: pagoPA aggiorna l'importo in tempo reale, per permetterti di pagare evitando more o interessi aggiuntivi. Può succedere, per esempio, quando l'ente applica dei costi di notifica (se ti ha inviato una comunicazione a valore legale) o se sei in ritardo con il pagamento.
       cta: Ok, va bene
     contextualHelpTitle: Riepilogo della transazione
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
@@ -1788,10 +1791,12 @@ wallet:
       noticeNumber:
         title: Inserisci il codice avviso
         subtitle: Ha 18 cifre, lo trovi vicino al codice QR.
+        validationError: Ha 18 cifre, inizia con 0, 1 o 3.
         placeholder: Codice avviso
       fiscalCode:
         title: Inserisci il codice fiscale dell’Ente Creditore
         subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
+        validationError: Inserisci 11 cifre.
         placeholder: Codice fiscale Ente Creditore
     abortDialog:
       title: Vuoi interrompere l'operazione?
@@ -2171,6 +2176,14 @@ services:
   contextualHelpContent: !include services/services_home.md
   new: Nuovo
   home:
+    bottomSheet:
+      content:
+        servicesPreferences:
+          value: Chi può scriverti?
+          description: Scegli chi può contattarti
+        settings: 
+          value: Tutte le impostazioni
+          description: Gestisci i tuoi dati e le preferenze d'uso
     featured:
       services:
         title: In primo piano
@@ -2615,8 +2628,11 @@ bonus:
       online: Online
       places: Luoghi
       navigationTitle: Agevolazioni
-      screenTitle: Seleziona un operatore e scopri agevolazioni e opportunità
-      merchantsAll: Tutti gli operatori
+      screenTitle: Scopri le opportunità
+      merchantsAll: Tutti i partner
+      tabs:
+        perInitiative: Per categoria
+        perMerchant: Per partner
       cta:
         filter: Filtra
       categoriesList:
@@ -2665,7 +2681,6 @@ bonus:
         discountUrl: Vai all'opportunità
         website: Vai al sito del partner
       categories:
-        all: Tutti gli operatori
         counting: e altre {{count}}
         cultureAndEntertainment: Cultura e Tempo Libero
         health: Salute e Benessere
@@ -2683,7 +2698,7 @@ bonus:
     cta:
       activeBonus: Richiedi la Carta
       deactivateBonus: Disattiva Carta Giovani Nazionale
-      goToDetail: Visualizza la Carta
+      goToDetail: Usa la Carta
     detail:
       cta:
         buyers: Scopri le opportunità CGN
@@ -2734,16 +2749,16 @@ bonus:
         subCaption: "Ti preghiamo di attendere."
       error:
         title: "Il servizio Carta Giovani Nazionale in questo momento non è disponibile."
-        body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+        body: "Ci dispiace, riprova più tardi."
       ineligible:
         title: "Purtroppo non hai i requisiti per attivare la Carta Giovani Nazionale."
         body: "La Carta Giovani Nazionali è disponibile solo per i cittadini italiani ed europei residenti in Italia, dai 18 ai 35 anni di età."
       timeout:
-        title: "Stiamo processando la tua richiesta."
+        title: "Stiamo lavorando alla tua richiesta."
         body: "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
       alreadyActive:
         title: "La tua Carta Giovani Nazionale è già attiva!"
-        body: "Puoi visualizzarne i dettagli nella sezione Portafoglio."
+        body: "Puoi trovare la tua Carta nella sezione Portafoglio."
       pending:
         title: "La tua Carta Giovani Nazionale è in fase di attivazione."
         body: "Riceverai un messaggio quando sarà attivata."
@@ -3253,6 +3268,7 @@ features:
           primary: Continua
           secondary: Annulla
       credentialPreview:
+        loading: Attendi ancora qualche secondo, senza uscire dall’app
         title: "{{credential}}: ecco l'anteprima dei tuoi dati"
         bottomSheet:
           about:
@@ -3750,7 +3766,7 @@ idpay:
         modal:
           title: Cosa significa?
           legacyContent: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPer farlo, visita la sezione Profilo."
-          content: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPuoi farlo dalle impostazioni dell'app"
+          content: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPuoi farlo dalle impostazioni dell'app."
           button: Ok, ho capito
       onboarding:
         header: Qual è il tuo IBAN?
@@ -3783,7 +3799,7 @@ idpay:
         content: L’Ente potrà conservarli secondo i termini indicati nell’Informativa Privacy
       4:
         title: Metodi di pagamento e IBAN rimangono in app per eventuali altre iniziative
-        content: Puoi rimuovere in ogni momento l’IBAN e i tuoi metodi di pagamento visitando le sezioni Profilo e Portafoglio.
+        content: Puoi rimuovere in ogni momento l’IBAN e i tuoi metodi di pagamento visitando le sezioni Impostazioni e Portafoglio.
     button:
       continue: Rimuovi
     modal:
@@ -3960,9 +3976,16 @@ permissionRequest:
 FIMS:
   history:
     exportData:
+      alerts:
+        areYouSure: "Vuoi davvero esportare una copia di tutti gli accessi?"
+        alreadyExporting:
+          title: "Abbiamo già preso in carico una richiesta di esportazione."
+          body: "Al termine dell’elaborazione, riceverai una email con tutte le informazioni dello storico accessi."
       CTA: "Richiedi una copia via email"
+      successToast: "Fatto! Controlla la tua casella di posta."
+      errorToast: "C’è stato un problema nell’invio della richiesta. Riprova"
     profileCTA:
-      title: Accessi a servizi di terze parti 
+      title: Accessi a servizi di terze parti
       subTitle: Rivedi gli accessi effettuati a servizi di terze parti tramite IO
     historyScreen:
       header: Accessi a servizi di terze parti
@@ -3972,7 +3995,11 @@ FIMS:
       title: "Operazione annullata"
     consents:
       title: "Attendi qualche secondo"
-    in-app-browser:
+    idle:
+      title: "Attendi qualche secondo"
+    fastLogin_forced_restart:
+      title: "Attendi qualche secondo"
+    in-app-browser-loading:
       title: "Ti stiamo indirizzando al servizio"
       subtitle: "Attendi qualche secondo"
   consentsScreen:

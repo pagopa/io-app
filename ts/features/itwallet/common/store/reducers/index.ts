@@ -28,29 +28,32 @@ export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
 const CURRENT_REDUX_ITW_STORE_VERSION = -1;
 const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = -1;
 
-const persistConfig: PersistConfig = {
+export const itwPersistConfig: PersistConfig = {
   key: "itWallet",
   storage: AsyncStorage,
   whitelist: ["issuance", "lifecycle"] satisfies Array<keyof ItWalletState>,
   version: CURRENT_REDUX_ITW_STORE_VERSION
 };
 
-const credentialsPersistConfig: PersistConfig = {
+export const itwCredentialsPersistConfig: PersistConfig = {
   key: "itWalletCredentials",
   storage: itwCreateCredentialsStorage(),
   version: CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION
 };
 
-const reducer = combineReducers({
+const itwReducer = combineReducers({
   identification: identificationReducer,
   issuance: issuanceReducer,
   lifecycle: lifecycleReducer,
-  credentials: persistReducer(credentialsPersistConfig, itwCredentialsReducer)
+  credentials: persistReducer(
+    itwCredentialsPersistConfig,
+    itwCredentialsReducer
+  )
 });
 
 export const persistedReducer = persistReducer<ItWalletState, Action>(
-  persistConfig,
-  reducer
+  itwPersistConfig,
+  itwReducer
 );
 
 export default persistedReducer;

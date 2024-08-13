@@ -16,6 +16,7 @@ import {
   Tag,
   WithTestID
 } from "@pagopa/io-app-design-system";
+import I18n from "../../../../../i18n";
 import { CustomPressableListItemBase } from "./CustomPressableListItemBase";
 import { DoubleAvatar } from "./DoubleAvatar";
 
@@ -168,7 +169,12 @@ export const MessageListItem = ({
             {badgeVariant === "legalMessage" && (
               <>
                 <HSpacer size={8} />
-                <Tag variant="attachment" />
+                <Tag
+                  variant="attachment"
+                  iconAccessibilityLabel={I18n.t(
+                    "features.pn.details.attachmentsSection.title"
+                  )}
+                />
               </>
             )}
           </View>
