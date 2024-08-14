@@ -10,7 +10,7 @@ import {
   Alert,
   Tag,
   Chip,
-  H2
+  H4
 } from "@pagopa/io-app-design-system";
 import WebView from "react-native-webview";
 import {
@@ -153,7 +153,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
         props.cgnDetails ? <CgnCardStatus card={props.cgnDetails} /> : undefined
       }
       cardFooter={
-        <H2
+        <H4
           style={{
             textAlign: "center",
             marginHorizontal: 16,
@@ -163,7 +163,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
           {pot.isSome(currentProfile)
             ? `${currentProfile.value.name} ${currentProfile.value.family_name}`
             : ""}
-        </H2>
+        </H4>
       }
       footerCtaPrimary={
         showDiscoverCta
