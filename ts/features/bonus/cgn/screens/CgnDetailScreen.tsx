@@ -46,9 +46,8 @@ import { isLoading } from "../../../../common/model/RemoteValue";
 import CgnCardComponent from "../components/detail/CgnCardComponent";
 import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
-import CgnUnsubscribe, {
-  useCgnUnsubscribe
-} from "../components/detail/CgnUnsubscribe";
+import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
+import { useCgnUnsubscribe } from "../hooks/useCgnUnsubscribe";
 import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
 import { navigateToCgnMerchantsTabs } from "../navigation/actions";
 import { CgnDetailsParamsList } from "../navigation/params";
