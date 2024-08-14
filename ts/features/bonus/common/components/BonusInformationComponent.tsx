@@ -43,8 +43,10 @@ type OwnProps = {
   onConfirm?: () => void;
   onCancel?: () => void;
   primaryCtaText: string;
-  secondaryAction?: { type: "back"; text: string };
+  secondaryAction?: SecondaryAction;
 };
+
+type SecondaryAction = { type: "back"; text: string };
 
 type Props = OwnProps &
   Pick<
