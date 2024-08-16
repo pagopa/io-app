@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  LayoutChangeEvent,
-  LayoutRectangle,
-  StyleSheet,
-  View
-} from "react-native";
+import { StyleSheet } from "react-native";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { StoredCredential } from "../../utils/itwTypesUtils";
 import CardBackground from "./CardBackground";

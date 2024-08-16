@@ -36,20 +36,23 @@ type DataComponentProps = WithTestID<{
 
 const MdlFrontData = ({ claims, testID }: DataComponentProps) => (
   <View testID={testID} style={styles.container}>
-    <CardClaim claim={claims["portrait"]} position={{ y: 70, x: 16 }} />
-    <CardClaim claim={claims["given_name"]} position={{ y: 34, x: 133 }} />
-    <CardClaim claim={claims["family_name"]} position={{ y: 53, x: 133 }} />
-    <CardClaim claim={claims["birth_date"]} position={{ y: 72, x: 133 }} />
-    <CardClaim claim={claims["place_of_birth"]} position={{ y: 72, x: 228 }} />
-    <CardClaim claim={claims["issue_date"]} position={{ y: 91, x: 133 }} />
-    <CardClaim claim={claims["expiry_date"]} position={{ y: 109, x: 133 }} />
+    <CardClaim claim={claims["portrait"]} position={{ y: 0.28, x: 0.044 }} />
+    <CardClaim claim={claims["given_name"]} position={{ y: 0.1, x: 0.35 }} />
+    <CardClaim claim={claims["family_name"]} position={{ y: 0.16, x: 0.35 }} />
+    <CardClaim claim={claims["birth_date"]} position={{ y: 0.22, x: 0.35 }} />
+    <CardClaim
+      claim={claims["place_of_birth"]}
+      position={{ y: 0.22, x: 0.55 }}
+    />
+    <CardClaim claim={claims["issue_date"]} position={{ y: 0.28, x: 0.35 }} />
+    <CardClaim claim={claims["expiry_date"]} position={{ y: 0.34, x: 0.35 }} />
     <CardClaim
       claim={claims["document_number"]}
-      position={{ y: 127, x: 133 }}
+      position={{ y: 0.4, x: 0.35 }}
     />
     <CardClaim
       claim={claims["driving_privileges_details"]}
-      position={{ y: 190, x: 35 }}
+      position={{ y: 0.78, x: 0.1 }}
     />
   </View>
 );
