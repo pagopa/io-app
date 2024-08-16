@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import {
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewProps,
+  ViewStyle
+} from "react-native";
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -15,10 +21,11 @@ export type FlippableCardProps = {
   duration?: number;
   isFlipped?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
+  onLayout?: ViewProps["onLayout"];
 };
 
 /**
- * Renders a component which can be flipped with an animation to show both of its sides.
+ * Renders a component which can be flipped to show both of its sides with an animation.
  */
 const FlippableCard = ({
   FrontComponent,
@@ -53,7 +60,7 @@ const FlippableCard = ({
   });
 
   return (
-    <View style={containerStyle}>
+    <View style={containerStyle} onLayout={props.onLayout}>
       <Animated.View
         style={[styles.card, styles.front, regularCardAnimatedStyle]}
       >

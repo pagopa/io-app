@@ -1,9 +1,14 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import {
+  LayoutChangeEvent,
+  LayoutRectangle,
+  StyleSheet,
+  View
+} from "react-native";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { StoredCredential } from "../../utils/itwTypesUtils";
 import CardBackground from "./CardBackground";
-import CardDataLayer from "./CardDataLayer";
+import CardData from "./CardData";
 import FlippableCard from "./FlippableCard";
 
 export type ItwSkeumorphicCardProps = {
@@ -18,16 +23,16 @@ const ItwSkeumorphicCard = ({
   useDebugInfo({ data: credential.parsedCredential });
 
   const FrontComponent = (
-    <View>
+    <>
       <CardBackground credentialType={credential.credentialType} side="front" />
-      <CardDataLayer credential={credential} side="front" />
-    </View>
+      <CardData credential={credential} side="front" />
+    </>
   );
 
   const BackComponent = (
-    <View>
+    <>
       <CardBackground credentialType={credential.credentialType} side="back" />
-    </View>
+    </>
   );
 
   return (
