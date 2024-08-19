@@ -65,7 +65,7 @@ const CardClaim = ({ claim, position }: CardClaimProps) => {
               <Image
                 source={{ uri: decoded }}
                 style={{
-                  width: 90,
+                  width: "24.5%",
                   aspectRatio: 3 / 4
                 }}
                 resizeMode="contain"
