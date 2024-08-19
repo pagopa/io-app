@@ -17,14 +17,14 @@ const ItwSkeumorphicCard = ({
 }: ItwSkeumorphicCardProps) => {
   useDebugInfo({ data: credential.parsedCredential });
 
-  const FrontComponent = (
+  const FrontSide = (
     <>
       <CardBackground credentialType={credential.credentialType} side="front" />
       <CardData credential={credential} side="front" />
     </>
   );
 
-  const BackComponent = (
+  const BackSide = (
     <>
       <CardBackground credentialType={credential.credentialType} side="back" />
       <CardData credential={credential} side="back" />
@@ -34,8 +34,8 @@ const ItwSkeumorphicCard = ({
   return (
     <FlippableCard
       containerStyle={styles.card}
-      FrontComponent={FrontComponent}
-      BackComponent={BackComponent}
+      FrontComponent={FrontSide}
+      BackComponent={BackSide}
       isFlipped={isFlipped}
     />
   );
