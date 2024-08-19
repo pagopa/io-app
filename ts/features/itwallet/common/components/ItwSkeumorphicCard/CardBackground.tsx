@@ -10,7 +10,7 @@ type CardBackgroundProps = {
 };
 
 /**
- * Renderes the background of the card based on the credential type and the side
+ * Renders the background of a card based on its type and side
  */
 const CardBackground = ({ credentialType, side }: CardBackgroundProps) => {
   const cardAssets = assetsMap[credentialType];
@@ -25,7 +25,7 @@ const CardBackground = ({ credentialType, side }: CardBackgroundProps) => {
 type CardAssets = Record<CardSide, ImageSourcePropType>;
 
 /**
- * Map which defines which assets to use for each credential type
+ * Map that defines which assets to use for each credential type
  */
 const assetsMap: Record<string, CardAssets> = {
   MDL: {
@@ -41,4 +41,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export default React.memo(CardBackground);
+const MemoizedCardBackground = React.memo(CardBackground);
+
+export { MemoizedCardBackground as CardBackground };
