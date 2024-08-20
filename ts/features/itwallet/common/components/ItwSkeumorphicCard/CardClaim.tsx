@@ -16,8 +16,7 @@ import {
   DrivingPrivilegesClaim,
   EvidenceClaim,
   ImageClaim,
-  PlaceOfBirthClaim,
-  StringClaim
+  PlaceOfBirthClaim
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential } from "../../utils/itwTypesUtils";
 import { ClaimLabel } from "./ClaimLabel";
@@ -27,7 +26,7 @@ export type AbsoluteClaimPosition = Record<"x" | "y", number>;
 /**
  * Transforms relative position values in paddings
  * @param layout the layout rectangle which contains the dimensions of the container
- * @param relativePosition claim position expressed in percentile
+ * @param relativePosition claim position expressed in percentile values
  * @returns a style that describes the position of the claim within the card
  */
 const getClaimPosition = (
@@ -75,10 +74,8 @@ const CardClaim = ({ claim, position }: CardClaimProps) => {
           } else if (DrivingPrivilegesClaim.is(decoded)) {
             const privileges = decoded.map(p => p.driving_privilege).join(",");
             return <ClaimLabel>{privileges}</ClaimLabel>;
-          } else if (StringClaim.is(decoded)) {
-            return <ClaimLabel>{decoded}</ClaimLabel>; // must be the last one to be checked due to overlap with IPatternStringTag
           } else if (PlaceOfBirthClaim.is(decoded)) {
-            return <ClaimLabel>{decoded.locality}</ClaimLabel>; // must be the last one to be checked due to overlap with IPatternStringTag
+            return <ClaimLabel>{decoded.locality}</ClaimLabel>;
           } else {
             return <ClaimLabel>{decoded}</ClaimLabel>;
           }
@@ -115,6 +112,8 @@ type CardClaimContainer = {
 
 /**
  * Component that allows to position a claim using "x" and "y" absolute values
+ * This components takes all the available space inside the parent component, then
+ * the "x" and "y" values are transformed in a relative position using the "padding".
  */
 const CardClaimContainer = ({
   position,
