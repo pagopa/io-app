@@ -2628,8 +2628,11 @@ bonus:
       online: Online
       places: Places
       navigationTitle: Benefits
-      screenTitle: Select an operator and discover benefits and opportunities
-      merchantsAll: All the operators
+      screenTitle: Discover opportunities
+      merchantsAll: All partners
+      tabs:
+        perInitiative: By category
+        perMerchant: By partner
       cta:
         filter: Filter
       categoriesList:
@@ -2678,7 +2681,6 @@ bonus:
         discountUrl: Go to the benefit
         website: Go to partner's website
       categories:
-        all: All the operators
         counting: and other {{count}}
         cultureAndEntertainment: Culture and Entertainment
         health: Health and Wellness
@@ -2696,7 +2698,7 @@ bonus:
     cta:
       activeBonus: Request your Card
       deactivateBonus: Deactivate Carta Giovani Nazionale
-      goToDetail: View your Carta Giovani
+      goToDetail: Use Carta Giovani
     detail:
       cta:
         buyers: Discover CGN opportunities.
@@ -2747,7 +2749,7 @@ bonus:
         subCaption: "Please wait."
       error:
         title: "The Carta Giovani Nazionale service is not available at the moment."
-        body: "We apologize for the issue.\nWe invite you to retry again later."
+        body: "Sorry, please try again later."
       ineligible:
         title: "We are sorry. You do not have the required characteristics to activate the Carta Giovani Nazionale."
         body: "The Carta Giovani Nazionale is available only to Italian and European citizens residing in Italy, aged 18 to 35."
@@ -2756,7 +2758,7 @@ bonus:
         body: "We will send you an in-app message when your Carta Giovani will be activated."
       alreadyActive:
         title: "Your Carta Giovani Nazionale is already active!"
-        body: "You can find more details inside the Wallet section."
+        body: "You can find Carta Giovani in the Wallet section."
       pending:
         title: "Your Carta Giovani Nazionale's activation is in progress."
         body: "You will receive a message when it has been activated."
@@ -3974,7 +3976,14 @@ permissionRequest:
 FIMS:
   history:
     exportData:
+      alerts:
+        areYouSure: "Vuoi davvero esportare una copia di tutti gli accessi?"
+        alreadyExporting:
+          title: "Abbiamo già preso in carico una richiesta di esportazione."
+          body: "Al termine dell’elaborazione, riceverai una email con tutte le informazioni dello storico accessi."
       CTA: "Richiedi una copia via email"
+      successToast: "Fatto! Controlla la tua casella di posta."
+      errorToast: "C’è stato un problema nell’invio della richiesta. Riprova"
     profileCTA:
       title: Accessi a servizi di terze parti
       subTitle: Rivedi gli accessi effettuati a servizi di terze parti tramite IO
