@@ -3,8 +3,8 @@ import { StyleSheet } from "react-native";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { StoredCredential } from "../../utils/itwTypesUtils";
 import { CardBackground } from "./CardBackground";
-import CardData from "./CardData";
-import FlippableCard from "./FlippableCard";
+import { CardData } from "./CardData";
+import { FlippableCard } from "./FlippableCard";
 
 export type ItwSkeumorphicCardProps = {
   credential: StoredCredential;

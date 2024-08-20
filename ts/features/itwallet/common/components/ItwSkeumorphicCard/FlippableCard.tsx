@@ -92,4 +92,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export default React.memo(FlippableCard);
+const MemoizedFlippableCard = React.memo(FlippableCard);
+
+export { MemoizedFlippableCard as FlippableCard };
