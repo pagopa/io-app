@@ -22,7 +22,7 @@ export const ClaimLabel: React.FunctionComponent<ClaimLabelProps> = props => {
     defaultWeight: "Semibold",
     defaultColor: "black",
     font: "TitilliumSansPro",
-    fontStyle: { fontSize: 12 * fontScale },
+    fontStyle: { fontSize: 13 * fontScale },
     lineBreakMode: "head",
     numberOfLines: 1
   });

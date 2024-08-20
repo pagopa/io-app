@@ -51,7 +51,7 @@ const CardClaim = ({ claim, position }: CardClaimProps) => {
               />
             );
           } else if (DrivingPrivilegesClaim.is(decoded)) {
-            const privileges = decoded.map(p => p.driving_privilege).join(",");
+            const privileges = decoded.map(p => p.driving_privilege).join(", ");
             return <ClaimLabel>{privileges}</ClaimLabel>;
           } else if (PlaceOfBirthClaim.is(decoded)) {
             return <ClaimLabel>{decoded.locality}</ClaimLabel>;
@@ -71,7 +71,7 @@ const CardClaim = ({ claim, position }: CardClaimProps) => {
 export type CardClaimRendererProps<T> = {
   claim: ParsedCredential[number];
   decoder: t.Type<T, string>;
-  component: (decoded: T) => React.ReactElement;
+  component: (decoded: T) => React.ReactElement | Iterable<React.ReactElement>;
 };
 
 /**
