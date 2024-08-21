@@ -1,3 +1,4 @@
+import { WithTestID } from "@pagopa/io-app-design-system";
 import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import * as E from "fp-ts/lib/Either";
 import { constNull, pipe } from "fp-ts/lib/function";
@@ -17,16 +18,16 @@ import { ClaimLabel } from "./ClaimLabel";
 
 export type AbsoluteClaimPosition = Record<"x" | "y", `${number}%`>;
 
-export type CardClaimProps = {
+export type CardClaimProps = WithTestID<{
   claim: ParsedCredential[number];
-  position: AbsoluteClaimPosition;
-};
+  position?: AbsoluteClaimPosition;
+}>;
 
 /**
  * Default claim component, it decoded the provided value and renders the corresponging component
  * @returns The corresponding component if a value is correctly decoded, otherwise null
  */
-const CardClaim = ({ claim, position }: CardClaimProps) => {
+const CardClaim = ({ claim, position, testID }: CardClaimProps) => {
   const claimContent = React.useMemo(
     () =>
       pipe(
@@ -63,8 +64,14 @@ const CardClaim = ({ claim, position }: CardClaimProps) => {
     [claim]
   );
 
+  if (!claimContent) {
+    return null;
+  }
+
   return (
-    <CardClaimContainer position={position}>{claimContent}</CardClaimContainer>
+    <CardClaimContainer testID={testID} position={position}>
+      {claimContent}
+    </CardClaimContainer>
   );
 };
 
@@ -85,6 +92,11 @@ const CardClaimRenderer = <T,>({
 }: CardClaimRendererProps<T>) =>
   pipe(claim.value, decoder.decode, E.fold(constNull, component));
 
+export type CardClaimContainerProps = WithTestID<{
+  position?: AbsoluteClaimPosition;
+  children?: React.ReactNode;
+}>;
+
 /**
  * Component that allows to position a claim using "x" and "y" absolute values
  * This components takes all the available space inside the parent component, then
@@ -92,16 +104,16 @@ const CardClaimRenderer = <T,>({
  */
 const CardClaimContainer = ({
   position,
-  children
-}: React.PropsWithChildren<{
-  position: AbsoluteClaimPosition;
-}>) => (
+  children,
+  testID
+}: CardClaimContainerProps) => (
   <View
+    testID={testID}
     style={[
       styles.container,
       {
-        left: position.x,
-        top: position.y
+        left: position?.x,
+        top: position?.y
       }
     ]}
   >

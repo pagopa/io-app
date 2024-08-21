@@ -4,7 +4,7 @@ import { parse } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Fragment, default as React } from "react";
-import { LayoutRectangle, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { DrivingPrivilegesClaim } from "../../utils/itwClaimsUtils";
 import { ParsedCredential, StoredCredential } from "../../utils/itwTypesUtils";
@@ -136,7 +136,6 @@ const dataComponentMap: Record<
 type CardDataProps = {
   credential: StoredCredential;
   side: CardSide;
-  layout?: LayoutRectangle;
 };
 
 const CardData = ({ credential, side }: CardDataProps) =>
