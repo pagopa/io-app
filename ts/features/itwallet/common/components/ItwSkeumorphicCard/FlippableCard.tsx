@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewProps,
-  ViewStyle
-} from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -21,7 +15,6 @@ export type FlippableCardProps = {
   duration?: number;
   isFlipped?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
-  onLayout?: ViewProps["onLayout"];
 };
 
 /**
@@ -60,7 +53,7 @@ const FlippableCard = ({
   });
 
   return (
-    <View style={containerStyle} onLayout={props.onLayout}>
+    <View style={containerStyle}>
       <Animated.View
         style={[styles.card, styles.front, regularCardAnimatedStyle]}
       >
