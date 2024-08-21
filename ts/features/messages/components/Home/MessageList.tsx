@@ -22,7 +22,8 @@ import {
   generateMessageListLayoutInfo,
   getLoadNextPageMessagesActionIfAllowed,
   getReloadAllMessagesActionForRefreshIfAllowed,
-  LayoutInfo
+  LayoutInfo,
+  trackMessageListEndReachedIfAllowed
 } from "./homeUtils";
 import { WrappedMessageListItem } from "./WrappedMessageListItem";
 import {
@@ -98,6 +99,11 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         state,
         category,
         new Date()
+      );
+      trackMessageListEndReachedIfAllowed(
+        category,
+        !!loadNextPageMessages,
+        state
       );
       if (loadNextPageMessages) {
         dispatch(loadNextPageMessages);

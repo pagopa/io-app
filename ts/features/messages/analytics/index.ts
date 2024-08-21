@@ -388,3 +388,15 @@ export const trackArchivedRestoredMessages = (
   // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };
+
+export const trackMessageListEndReached = (
+  category: MessageListCategory,
+  willLoadNextMessagePage: boolean
+) => {
+  const eventName = `MESSAGES_${category === "ARCHIVE" ? "ARCHIVE" : "INBOX"}_${
+    willLoadNextMessagePage ? "SCROLL" : "ENDLIST"
+  }`;
+  const props = buildEventProperties("UX", "action");
+  // console.log(`${eventName} ${JSON.stringify(props)}`);
+  void mixpanelTrack(eventName, props);
+};

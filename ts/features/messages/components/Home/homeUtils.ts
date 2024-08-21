@@ -29,7 +29,7 @@ import {
 import { isArchivingInProcessingModeSelector } from "../../store/reducers/archiving";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import NavigationService from "../../../../navigation/NavigationService";
-import { trackMessagesPage } from "../../analytics";
+import { trackMessageListEndReached, trackMessagesPage } from "../../analytics";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { EnhancedHeight, StandardHeight } from "./DS/MessageListItem";
 import { SkeletonHeight } from "./DS/MessageListItemSkeleton";
@@ -282,5 +282,16 @@ export const trackMessagePageOnFocusEventIfAllowed = (state: GlobalState) => {
     const selectedShownCategory = shownMessageCategorySelector(state);
     const messageCount = messagePagePot.value.page.length;
     trackMessagesPage(selectedShownCategory, messageCount, pageSize, true);
+  }
+};
+
+export const trackMessageListEndReachedIfAllowed = (
+  category: MessageListCategory,
+  willLoadNextPageMessages: boolean,
+  state: GlobalState
+) => {
+  const messagePagePot = messagePagePotFromCategorySelector(category)(state);
+  if (isSomeOrSomeError(messagePagePot)) {
+    trackMessageListEndReached(category, willLoadNextPageMessages);
   }
 };
