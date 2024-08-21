@@ -16,7 +16,6 @@ import {
 import { SessionToken } from "../../../../types/SessionToken";
 import { createItWalletFetch } from "../../api/client";
 import { getIntegrityContext } from "./itwIntegrityUtils";
-import { CredentialType } from "./itwMocksUtils";
 import {
   IssuerConfiguration,
   RequestObject,
@@ -60,7 +59,7 @@ export const initializeWallet = async ({
 };
 
 export type RequestCredentialParams = {
-  credentialType: CredentialType;
+  credentialType: string;
   walletInstanceAttestation: string;
   wiaCryptoContext: CryptoContext;
 };
@@ -106,7 +105,7 @@ export const requestCredential = async ({
 };
 
 export type ObtainCredentialParams = {
-  credentialType: CredentialType;
+  credentialType: string;
   walletInstanceAttestation: string;
   wiaCryptoContext: CryptoContext;
   requestedCredential: RequestObject;

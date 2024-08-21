@@ -1,7 +1,6 @@
 import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import { AuthorizationDetail } from "@pagopa/io-react-native-wallet";
 import { RequestObject } from "@pagopa/io-react-native-wallet/lib/typescript/credential/presentation/types";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
   IssuerConfiguration,
   StoredCredential
@@ -9,7 +8,7 @@ import {
 import { CredentialIssuanceFailure } from "./failure";
 
 export type Context = {
-  credentialType: CredentialType | undefined;
+  credentialType: string | undefined;
   wiaCryptoContext: CryptoContext | undefined;
   walletInstanceAttestation: string | undefined;
   issuerConf: IssuerConfiguration | undefined;

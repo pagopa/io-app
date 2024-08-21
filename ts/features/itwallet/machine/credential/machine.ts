@@ -47,8 +47,7 @@ export const itwCredentialIssuanceMachine = setup({
     obtainCredential: fromPromise<
       ObtainCredentialActorOutput,
       ObtainCredentialActorInput
-    >(notImplemented),
-    disposeWallet: fromPromise(notImplemented)
+    >(notImplemented)
   },
   guards: {
     isSessionExpired: ({ event }: { event: CredentialIssuanceEvents }) =>
@@ -168,7 +167,7 @@ export const itwCredentialIssuanceMachine = setup({
           actions: ["storeCredential", "navigateToWallet", "disposeWallet"]
         },
         close: {
-          actions: "closeIssuance"
+          actions: ["closeIssuance", "disposeWallet"]
         }
       }
     },
