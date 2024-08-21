@@ -376,3 +376,15 @@ export const trackMessagesPage = (
   // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };
+
+export const trackArchivedRestoredMessages = (
+  archived: boolean,
+  messageCount: number
+) => {
+  const eventName = `MESSAGES_${archived ? "ARCHIVED" : "RESTORED"}`;
+  const props = buildEventProperties("UX", "action", {
+    [`count_messages_${archived ? "archived" : "restored"}`]: messageCount
+  });
+  // console.log(`${eventName} ${JSON.stringify(props)}`);
+  void mixpanelTrack(eventName, props);
+};
