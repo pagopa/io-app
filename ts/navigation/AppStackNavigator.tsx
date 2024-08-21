@@ -162,8 +162,8 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
       linking={linking}
       fallback={<LoadingSpinnerOverlay isLoading={true} />}
       onReady={() => {
-        NavigationService.setNavigationReady();
         routingInstrumentation.registerNavigationContainer(navigationRef);
+        NavigationService.setNavigationReady();
         routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
       }}
       onStateChange={async state => {

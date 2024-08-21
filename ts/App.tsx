@@ -48,6 +48,7 @@ Sentry.init({
     new Sentry.ReactNativeTracing({ routingInstrumentation })
   ],
   enabled: !isDevEnv,
+  tracesSampleRate: 0.3,
   sampleRate: 0.3
 });
 
@@ -59,7 +60,7 @@ export type AppDispatch = typeof store.dispatch;
  * Main component of the application
  * @constructor
  */
-const RootComponent = (): JSX.Element => (
+const App = (): JSX.Element => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <SafeAreaProvider>
       <IODSExperimentalContextProvider>
@@ -85,4 +86,4 @@ const RootComponent = (): JSX.Element => (
  * We wrap the main app component with the sentry utility function to handle
  * the Performance monitoring
  */
-export const App = Sentry.wrap(RootComponent);
+export default Sentry.wrap(App);
