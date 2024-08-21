@@ -28,6 +28,9 @@ import {
 } from "../../../../utils/pot";
 import { isArchivingInProcessingModeSelector } from "../../store/reducers/archiving";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
+import NavigationService from "../../../../navigation/NavigationService";
+import { trackMessagesPage } from "../../analytics";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { EnhancedHeight, StandardHeight } from "./DS/MessageListItem";
 import { SkeletonHeight } from "./DS/MessageListItemSkeleton";
 
@@ -55,7 +58,7 @@ export const getInitialReloadAllMessagesActionIfNeeded = (
             messagePagePotFromCategorySelector(category),
             isStrictNone,
             B.fold(constUndefined, () =>
-              initialReloadAllMessagesFromCategory(category)
+              initialReloadAllMessagesFromCategory(category, false)
             )
           ),
         constUndefined
@@ -142,7 +145,8 @@ export const getLoadNextPageMessagesActionIfAllowed = (
   return loadNextPageMessages.request({
     pageSize,
     cursor: nextMessagePageStartingId,
-    filter: { getArchived: category === "ARCHIVE" }
+    filter: { getArchived: category === "ARCHIVE" },
+    fromUserAction: true
   });
 };
 
@@ -154,7 +158,7 @@ export const getReloadAllMessagesActionForRefreshIfAllowed = (
     state,
     isDoingAnAsyncOperationOnMessages,
     B.fold(
-      () => pipe(category, initialReloadAllMessagesFromCategory),
+      () => initialReloadAllMessagesFromCategory(category, true),
       constUndefined
     )
   );
@@ -188,7 +192,8 @@ export const getLoadPreviousPageMessagesActionIfAllowed = (
                         cursor: previousPageMessageId,
                         filter: {
                           getArchived: allPaginated.shownCategory === "ARCHIVE"
-                        }
+                        },
+                        fromUserAction: false
                       }),
                     constUndefined
                   )
@@ -200,10 +205,14 @@ export const getLoadPreviousPageMessagesActionIfAllowed = (
     )
   );
 
-const initialReloadAllMessagesFromCategory = (category: MessageListCategory) =>
+const initialReloadAllMessagesFromCategory = (
+  category: MessageListCategory,
+  fromUserAction: boolean
+) =>
   reloadAllMessages.request({
     pageSize,
-    filter: { getArchived: category === "ARCHIVE" }
+    filter: { getArchived: category === "ARCHIVE" },
+    fromUserAction
   });
 
 const isDoingAnAsyncOperationOnMessages = (state: GlobalState) =>
@@ -256,5 +265,22 @@ export const generateMessageListLayoutInfo = (
       length: SkeletonHeight,
       offset: index * SkeletonHeight
     }));
+  }
+};
+
+export const trackMessagePageOnFocusEventIfAllowed = (state: GlobalState) => {
+  const routeName = NavigationService.getCurrentRouteName();
+  if (routeName !== MESSAGES_ROUTES.MESSAGES_HOME) {
+    return;
+  }
+
+  const shownMessageCategory = shownMessageCategorySelector(state);
+  const messagePagePot =
+    messagePagePotFromCategorySelector(shownMessageCategory)(state);
+  if (isSomeOrSomeError(messagePagePot)) {
+    // Track message category change
+    const selectedShownCategory = shownMessageCategorySelector(state);
+    const messageCount = messagePagePot.value.page.length;
+    trackMessagesPage(selectedShownCategory, messageCount, pageSize, true);
   }
 };

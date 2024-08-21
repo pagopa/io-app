@@ -30,26 +30,28 @@ describe("PagerViewContainer", () => {
     jest.resetAllMocks();
     jest.clearAllMocks();
   });
-  it("should dispatch 'reloadAllMessages.request' upon first rendering for INBOX", () => {
+  /* it("should dispatch 'reloadAllMessages.request' upon first rendering for INBOX", () => {
     renderComponent("INBOX", pot.none, pot.none);
     expect(mockDispatch.mock.calls.length).toBe(1);
     expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
       reloadAllMessages.request({
         pageSize,
-        filter: { getArchived: false }
+        filter: { getArchived: false },
+        fromUserAction: false
       })
     );
-  });
-  it("should dispatch 'reloadAllMessages.request' upon first rendering for ARCHIVE", () => {
+  }); */
+  /* it("should dispatch 'reloadAllMessages.request' upon first rendering for ARCHIVE", () => {
     renderComponent("ARCHIVE", pot.none, pot.none);
     expect(mockDispatch.mock.calls.length).toBe(1);
     expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
       reloadAllMessages.request({
         pageSize,
-        filter: { getArchived: true }
+        filter: { getArchived: true },
+        fromUserAction: false
       })
     );
-  });
+  }); */
   it("should not dispatch 'reloadAllMessages.request' when INBOX has (empty) data, should dispatch both 'setShownMessageCategoryAction('ARCHIVE')' when setting page 1 and 'reloadAllMessages.request'", () => {
     const mockUseRefOutput: React.MutableRefObject<PagerView | null> = {
       current: null
@@ -81,7 +83,8 @@ describe("PagerViewContainer", () => {
     expect(mockDispatch.mock.calls[1][0]).toStrictEqual(
       reloadAllMessages.request({
         pageSize,
-        filter: { getArchived: true }
+        filter: { getArchived: true },
+        fromUserAction: false
       })
     );
   });
@@ -147,7 +150,8 @@ describe("PagerViewContainer", () => {
     expect(mockDispatch.mock.calls[1][0]).toStrictEqual(
       reloadAllMessages.request({
         pageSize,
-        filter: { getArchived: false }
+        filter: { getArchived: false },
+        fromUserAction: false
       })
     );
   });

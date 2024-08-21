@@ -103,6 +103,7 @@ import {
   updateNotificationsInstallationToken
 } from "../../features/pushNotifications/store/actions/notifications";
 import { trackServicesAction } from "../../features/services/common/analytics";
+import { trackMessagesActionsPostDispatch } from "../../features/messages/analytics";
 import { trackContentAction } from "./contentAnalytics";
 
 const trackAction =
@@ -355,8 +356,11 @@ export const actionTracking =
   (next: Dispatch) =>
   (action: Action): Action => {
     if (mixpanel !== undefined) {
-      // call mixpanel tracking only after we have initialized mixpanel with the
-      // API token
+      // Call mixpanel tracking only after we have
+      // initialized mixpanel with the API token
+
+      // Be aware that, at this point, tracking is called before
+      // the action has been dispatched to the redux store
       void trackAction(mixpanel)(action);
       void trackBPayAction(mixpanel)(action);
       void trackCoBadgeAction(mixpanel)(action);
@@ -371,5 +375,15 @@ export const actionTracking =
       const fciEnvironment = fciEnvironmentSelector(middleware.getState());
       void trackFciAction(mixpanel, fciEnvironment)(action);
     }
-    return next(action);
+    // This dispatches the action towards the redux store
+    const result = next(action);
+    if (mixpanel !== undefined) {
+      // Call mixpanel tracking only after we have
+      // initialized mixpanel with the API token
+
+      // Be aware that, at this point, tracking is called after
+      // the action has been dispatched to the redux store
+      trackMessagesActionsPostDispatch(action, middleware.getState());
+    }
+    return result;
   };

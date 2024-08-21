@@ -52,7 +52,8 @@ describe("allPaginated reducer", () => {
       const filter = { getArchived: true };
       const actionRequest = reloadAllMessages.request({
         ...defaultRequestPayload,
-        filter
+        filter,
+        fromUserAction: false
       });
       it("should reset only the Archive state to loading", () => {
         expect(
@@ -101,7 +102,8 @@ describe("allPaginated reducer", () => {
       const filter = { getArchived: false };
       const actionRequest = reloadAllMessages.request({
         ...defaultRequestPayload,
-        filter
+        filter,
+        fromUserAction: false
       });
       it("should reset only the Inbox state to loading", () => {
         expect(
@@ -153,7 +155,8 @@ describe("allPaginated reducer", () => {
       const filter = { getArchived: true };
       const actionRequest = loadNextPageMessages.request({
         ...defaultRequestPayload,
-        filter
+        filter,
+        fromUserAction: false
       });
 
       // eslint-disable-next-line sonarjs/no-identical-functions
@@ -215,7 +218,8 @@ describe("allPaginated reducer", () => {
       const filter = { getArchived: false };
       const actionRequest = loadNextPageMessages.request({
         ...defaultRequestPayload,
-        filter
+        filter,
+        fromUserAction: false
       });
 
       // eslint-disable-next-line sonarjs/no-identical-functions
@@ -280,7 +284,8 @@ describe("allPaginated reducer", () => {
       const filter = { getArchived: true };
       const actionRequest = loadPreviousPageMessages.request({
         ...defaultRequestPayload,
-        filter
+        filter,
+        fromUserAction: false
       });
 
       // eslint-disable-next-line sonarjs/no-identical-functions
@@ -335,7 +340,8 @@ describe("allPaginated reducer", () => {
           const actionWithEmptyPagination = loadPreviousPageMessages.success({
             messages: [],
             pagination: {},
-            filter
+            filter,
+            fromUserAction: false
           });
 
           it("should preserve the `previous` Archive cursor", () => {
@@ -370,7 +376,8 @@ describe("allPaginated reducer", () => {
       const filter = { getArchived: false };
       const actionRequest = loadPreviousPageMessages.request({
         ...defaultRequestPayload,
-        filter
+        filter,
+        fromUserAction: false
       });
 
       // eslint-disable-next-line sonarjs/no-identical-functions
@@ -426,7 +433,8 @@ describe("allPaginated reducer", () => {
           const actionWithEmptyPagination = loadPreviousPageMessages.success({
             messages: [],
             pagination: {},
-            filter
+            filter,
+            fromUserAction: false
           });
 
           it("should preserve the `previous` Inbox cursor", () => {
@@ -562,7 +570,11 @@ describe("allPaginated reducer", () => {
     it("should keep its `showCategory` value (reloadAllMessages.request)", () => {
       const allPaginatedFinalState = reducer(
         allPaginatedInitialStateGenerator(),
-        reloadAllMessages.request({ pageSize, filter: { getArchived: true } })
+        reloadAllMessages.request({
+          pageSize,
+          filter: { getArchived: true },
+          fromUserAction: false
+        })
       );
       expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
     });
@@ -572,7 +584,8 @@ describe("allPaginated reducer", () => {
         reloadAllMessages.success({
           messages: [],
           filter: { getArchived: true },
-          pagination: {}
+          pagination: {},
+          fromUserAction: false
         })
       );
       expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
@@ -593,7 +606,8 @@ describe("allPaginated reducer", () => {
         allPaginatedInitialStateGenerator(),
         loadNextPageMessages.request({
           pageSize,
-          filter: { getArchived: true }
+          filter: { getArchived: true },
+          fromUserAction: false
         })
       );
       expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
@@ -604,7 +618,8 @@ describe("allPaginated reducer", () => {
         loadNextPageMessages.success({
           messages: [],
           filter: { getArchived: true },
-          pagination: {}
+          pagination: {},
+          fromUserAction: false
         })
       );
       expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
@@ -625,7 +640,8 @@ describe("allPaginated reducer", () => {
         allPaginatedInitialStateGenerator(),
         loadPreviousPageMessages.request({
           pageSize,
-          filter: { getArchived: true }
+          filter: { getArchived: true },
+          fromUserAction: false
         })
       );
       expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
@@ -636,7 +652,8 @@ describe("allPaginated reducer", () => {
         loadPreviousPageMessages.success({
           messages: [],
           filter: { getArchived: true },
-          pagination: {}
+          pagination: {},
+          fromUserAction: false
         })
       );
       expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
@@ -749,12 +766,14 @@ describe("allPaginated reducer", () => {
     [
       reloadAllMessages.request({
         pageSize,
-        filter: { getArchived: archived }
+        filter: { getArchived: archived },
+        fromUserAction: false
       }),
       reloadAllMessages.success({
         filter: { getArchived: archived },
         messages: [],
-        pagination: {}
+        pagination: {},
+        fromUserAction: false
       }),
       reloadAllMessages.failure({
         error: new Error(""),
@@ -762,12 +781,14 @@ describe("allPaginated reducer", () => {
       }),
       loadPreviousPageMessages.request({
         filter: { getArchived: archived },
-        pageSize
+        pageSize,
+        fromUserAction: false
       }),
       loadPreviousPageMessages.success({
         filter: { getArchived: archived },
         messages: [],
-        pagination: {}
+        pagination: {},
+        fromUserAction: false
       }),
       loadPreviousPageMessages.failure({
         error: new Error(""),
@@ -775,12 +796,14 @@ describe("allPaginated reducer", () => {
       }),
       loadNextPageMessages.request({
         filter: { getArchived: archived },
-        pageSize
+        pageSize,
+        fromUserAction: false
       }),
       loadNextPageMessages.success({
         filter: { getArchived: archived },
         messages: [],
-        pagination: {}
+        pagination: {},
+        fromUserAction: false
       }),
       loadNextPageMessages.failure({
         error: new Error(""),

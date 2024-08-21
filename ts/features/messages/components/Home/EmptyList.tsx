@@ -46,7 +46,8 @@ export const EmptyList = ({ category }: EmptyListProps) => {
             pipe(
               {
                 pageSize,
-                filter: { getArchived: category === "ARCHIVE" }
+                filter: { getArchived: category === "ARCHIVE" },
+                fromUserAction: true
               },
               reloadAllMessages.request,
               dispatch

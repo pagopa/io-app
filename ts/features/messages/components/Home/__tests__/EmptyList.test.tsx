@@ -190,7 +190,8 @@ describe("EmptyList", () => {
     expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
       reloadAllMessages.request({
         pageSize,
-        filter: { getArchived: false }
+        filter: { getArchived: false },
+        fromUserAction: true
       })
     );
   });
@@ -205,7 +206,8 @@ describe("EmptyList", () => {
     expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
       reloadAllMessages.request({
         pageSize,
-        filter: { getArchived: true }
+        filter: { getArchived: true },
+        fromUserAction: true
       })
     );
   });

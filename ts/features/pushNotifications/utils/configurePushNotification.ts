@@ -65,7 +65,9 @@ function handleForegroundMessageReload() {
     getArchiveAndInboxNextAndPreviousPageIndexes(state);
   if (pot.isNone(inboxIndexes)) {
     // nothing in the collection, refresh
-    store.dispatch(reloadAllMessages.request({ pageSize, filter: {} }));
+    store.dispatch(
+      reloadAllMessages.request({ pageSize, filter: {}, fromUserAction: false })
+    );
   } else if (pot.isSome(inboxIndexes)) {
     // something in the collection, get the maximum amount of new ones only,
     // assuming that the message will be there
@@ -73,7 +75,8 @@ function handleForegroundMessageReload() {
       loadPreviousPageMessages.request({
         cursor: inboxIndexes.value.previous,
         pageSize: maximumItemsFromAPI,
-        filter: {}
+        filter: {},
+        fromUserAction: false
       })
     );
   }

@@ -15,7 +15,7 @@ export function* handleLoadPreviousPageMessages(
   getMessages: BackendClient["getMessages"],
   action: ActionType<typeof loadPreviousPageMessagesAction.request>
 ) {
-  const { filter, cursor, pageSize } = action.payload;
+  const { filter, cursor, pageSize, fromUserAction } = action.payload;
 
   try {
     const response = (yield* call(
@@ -34,7 +34,8 @@ export function* handleLoadPreviousPageMessages(
         loadPreviousPageMessagesAction.success({
           messages: items.map(toUIMessage),
           pagination: { previous: prev },
-          filter
+          filter,
+          fromUserAction
         }),
       error => {
         const reason = errorToReason(error);

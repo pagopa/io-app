@@ -32,7 +32,8 @@ describe("MessageList", () => {
     const expectedAction = loadNextPageMessages.request({
       pageSize,
       cursor: "01J0B4PFPP24MBX6K8ZYQXXBDW",
-      filter: { getArchived: false }
+      filter: { getArchived: false },
+      fromUserAction: false
     });
     jest
       .spyOn(homeUtils, "getLoadNextPageMessagesActionIfAllowed")
@@ -54,7 +55,8 @@ describe("MessageList", () => {
     const unexpectedAction = loadNextPageMessages.request({
       pageSize,
       cursor: "01J0B4PFPP24MBX6K8ZYQXXBDW",
-      filter: { getArchived: true }
+      filter: { getArchived: true },
+      fromUserAction: false
     });
     jest
       .spyOn(homeUtils, "getLoadNextPageMessagesActionIfAllowed")
@@ -74,7 +76,8 @@ describe("MessageList", () => {
     const expectedCategory: MessageListCategory = "INBOX";
     const expectedAction = reloadAllMessages.request({
       pageSize,
-      filter: { getArchived: false }
+      filter: { getArchived: false },
+      fromUserAction: false
     });
     jest
       .spyOn(homeUtils, "getReloadAllMessagesActionForRefreshIfAllowed")
@@ -101,7 +104,8 @@ describe("MessageList", () => {
     const expectedCategory: MessageListCategory = "ARCHIVE";
     const expectedAction = reloadAllMessages.request({
       pageSize,
-      filter: { getArchived: true }
+      filter: { getArchived: true },
+      fromUserAction: false
     });
     jest
       .spyOn(homeUtils, "getReloadAllMessagesActionForRefreshIfAllowed")
@@ -128,7 +132,8 @@ describe("MessageList", () => {
     const expectedCategory: MessageListCategory = "INBOX";
     const expectedAction = reloadAllMessages.request({
       pageSize,
-      filter: { getArchived: false }
+      filter: { getArchived: false },
+      fromUserAction: false
     });
     jest
       .spyOn(homeUtils, "getReloadAllMessagesActionForRefreshIfAllowed")

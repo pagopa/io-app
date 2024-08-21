@@ -375,7 +375,11 @@ describe("Messages payments reducer's tests", () => {
     expect(startingHasPaymentToCheck).toBe(true);
     const endingPaymentsState = paymentsReducer(
       startingPaymentsState,
-      reloadAllMessages.request({ pageSize: 12, filter: {} })
+      reloadAllMessages.request({
+        pageSize: 12,
+        filter: {},
+        fromUserAction: false
+      })
     );
     const endingUserSelectedPayments = endingPaymentsState.userSelectedPayments;
     const endingPaymentsToCheckSize = endingUserSelectedPayments.size;
