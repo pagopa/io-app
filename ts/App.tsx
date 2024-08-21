@@ -47,7 +47,8 @@ Sentry.init({
     ...integrations,
     new Sentry.ReactNativeTracing({ routingInstrumentation })
   ],
-  sampleRate: 1.0
+  enabled: !isDevEnv,
+  sampleRate: 0.3
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself export
