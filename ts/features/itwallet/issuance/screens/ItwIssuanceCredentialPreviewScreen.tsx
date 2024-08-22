@@ -20,7 +20,6 @@ import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialCl
 import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   selectCredentialOption,
@@ -62,7 +61,7 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
 };
 
 type ContentViewProps = {
-  credentialType: CredentialType;
+  credentialType: string;
   credential: StoredCredential;
 };
 
