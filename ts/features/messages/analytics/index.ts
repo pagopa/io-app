@@ -419,7 +419,7 @@ export const trackAutoRefresh = (category: MessageListCategory) => {
   void mixpanelTrack(eventName, props);
 };
 
-export const trackMessagesSearchPage = () => {
+export const trackMessageSearchPage = () => {
   const eventName = `MESSAGES_SEARCH_PAGE`;
   const props = buildEventProperties("UX", "screen_view");
   // console.log(`${eventName} ${JSON.stringify(props)}`);

@@ -30,7 +30,7 @@ import { UIMessage } from "../types";
 import { WrappedMessageListItem } from "../components/Home/WrappedMessageListItem";
 import {
   trackMessageSearchClosing,
-  trackMessagesSearchPage
+  trackMessageSearchPage
 } from "../analytics";
 import { getMessageSearchResult } from "./searchUtils";
 
@@ -86,7 +86,7 @@ export const MessagesSearchScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      trackMessagesSearchPage();
+      trackMessageSearchPage();
       searchInputRef.current?.focus();
     }, [])
   );
