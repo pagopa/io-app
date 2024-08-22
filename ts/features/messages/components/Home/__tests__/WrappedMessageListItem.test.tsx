@@ -170,13 +170,7 @@ const renderComponent = (
   } as GlobalState;
   const store = createStore(appReducer, stateWithPayment as any);
   return renderScreenWithNavigationStoreContext(
-    () => (
-      <WrappedMessageListItem
-        index={0}
-        archiveRestoreSourceCategory="INBOX"
-        message={message}
-      />
-    ),
+    () => <WrappedMessageListItem index={0} message={message} source="INBOX" />,
     MESSAGES_ROUTES.MESSAGES_HOME,
     {},
     store

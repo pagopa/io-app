@@ -26,9 +26,13 @@ import I18n from "../../../i18n";
 import { EmptyList } from "../components/Search/EmptyList";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../store/hooks";
-import { searchMessagesUncachedSelector } from "../store/reducers/allPaginated";
 import { UIMessage } from "../types";
 import { WrappedMessageListItem } from "../components/Home/WrappedMessageListItem";
+import {
+  trackMessageSearchClosing,
+  trackMessagesSearchPage
+} from "../analytics";
+import { getMessageSearchResult } from "./searchUtils";
 
 const INPUT_PADDING: IOSpacingScale = 16;
 const MIN_QUERY_LENGTH: number = 3;
@@ -54,7 +58,11 @@ export const MessagesSearchScreen = () => {
 
   const renderItemCallback = useCallback(
     (itemInfo: ListRenderItemInfo<UIMessage>) => (
-      <WrappedMessageListItem index={itemInfo.index} message={itemInfo.item} />
+      <WrappedMessageListItem
+        index={itemInfo.index}
+        message={itemInfo.item}
+        source="SEARCH"
+      />
     ),
     []
   );
@@ -71,10 +79,14 @@ export const MessagesSearchScreen = () => {
     return <VSpacer size={16} />;
   };
 
-  const handleCancel = useCallback(() => navigation.goBack(), [navigation]);
+  const handleCancel = useCallback(() => {
+    trackMessageSearchClosing();
+    navigation.goBack();
+  }, [navigation]);
 
   useFocusEffect(
     useCallback(() => {
+      trackMessagesSearchPage();
       searchInputRef.current?.focus();
     }, [])
   );
@@ -82,10 +94,10 @@ export const MessagesSearchScreen = () => {
   useEffect(() => {
     const timeoutHandleId = setTimeout(() => {
       const state = store.getState();
-      const searchResult = searchMessagesUncachedSelector(
-        state,
+      const searchResult = getMessageSearchResult(
         query,
-        MIN_QUERY_LENGTH
+        MIN_QUERY_LENGTH,
+        state
       );
       setFilteredMessages(searchResult);
     }, 350);

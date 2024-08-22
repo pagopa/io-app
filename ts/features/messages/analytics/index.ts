@@ -418,3 +418,33 @@ export const trackAutoRefresh = (category: MessageListCategory) => {
   // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };
+
+export const trackMessagesSearchPage = () => {
+  const eventName = `MESSAGES_SEARCH_PAGE`;
+  const props = buildEventProperties("UX", "screen_view");
+  // console.log(`${eventName} ${JSON.stringify(props)}`);
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackMessageSearchResult = (resultCount: number) => {
+  const eventName = `MESSAGES_SEARCH_RESULT_PAGE`;
+  const props = buildEventProperties("UX", "screen_view", {
+    count_result_returned: resultCount
+  });
+  // console.log(`${eventName} ${JSON.stringify(props)}`);
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackMessageSearchSelection = () => {
+  const eventName = `MESSAGES_SEARCH_RESULT_SELECTED`;
+  const props = buildEventProperties("UX", "action");
+  // console.log(`${eventName} ${JSON.stringify(props)}`);
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackMessageSearchClosing = () => {
+  const eventName = `MESSAGES_SEARCH_CLOSE`;
+  const props = buildEventProperties("UX", "action");
+  // console.log(`${eventName} ${JSON.stringify(props)}`);
+  void mixpanelTrack(eventName, props);
+};

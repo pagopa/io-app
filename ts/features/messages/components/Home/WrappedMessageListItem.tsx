@@ -25,6 +25,7 @@ import {
   isArchivingDisabledSelector,
   isArchivingInProcessingModeSelector
 } from "../../store/reducers/archiving";
+import { trackMessageSearchSelection } from "../../analytics";
 import {
   accessibilityLabelForMessageItem,
   minDelayBetweenNavigationMilliseconds
@@ -32,15 +33,15 @@ import {
 import { MessageListItem } from "./DS/MessageListItem";
 
 type WrappedMessageListItemProps = {
-  archiveRestoreSourceCategory?: MessageListCategory;
   index: number;
   message: UIMessage;
+  source: MessageListCategory | "SEARCH";
 };
 
 export const WrappedMessageListItem = ({
-  archiveRestoreSourceCategory,
   index,
-  message
+  message,
+  source
 }: WrappedMessageListItemProps) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
@@ -93,29 +94,26 @@ export const WrappedMessageListItem = ({
   const toggleScheduledMessageArchivingCallback = useCallback(() => {
     const state = store.getState();
     if (
-      archiveRestoreSourceCategory &&
+      isInboxOrArchiveSource(source) &&
       !isArchivingInProcessingModeSelector(state)
     ) {
       dispatch(
         toggleScheduledMessageArchivingAction({
           messageId: message.id,
-          fromInboxToArchive: archiveRestoreSourceCategory === "INBOX"
+          fromInboxToArchive: isInboxSource(source)
         })
       );
     }
-  }, [archiveRestoreSourceCategory, dispatch, message, store]);
+  }, [dispatch, message, source, store]);
 
   const onPressCallback = useCallback(() => {
     const state = store.getState();
     if (
-      archiveRestoreSourceCategory &&
+      isInboxOrArchiveSource(source) &&
       isArchivingInSchedulingModeSelector(state)
     ) {
       toggleScheduledMessageArchivingCallback();
-    } else if (
-      !archiveRestoreSourceCategory ||
-      isArchivingDisabledSelector(state)
-    ) {
+    } else if (isSearchSource(source) || isArchivingDisabledSelector(state)) {
       if (message.hasPrecondition) {
         dispatch(
           scheduledPreconditionStatusAction(
@@ -135,6 +133,11 @@ export const WrappedMessageListItem = ({
         }
         // eslint-disable-next-line functional/immutable-data
         lastNavigationDate.current = now;
+
+        if (isSearchSource(source)) {
+          trackMessageSearchSelection();
+        }
+
         navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
           screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
           params: {
@@ -145,10 +148,10 @@ export const WrappedMessageListItem = ({
       }
     }
   }, [
-    archiveRestoreSourceCategory,
     dispatch,
     message,
     navigation,
+    source,
     store,
     toggleScheduledMessageArchivingCallback
   ]);
@@ -172,3 +175,11 @@ export const WrappedMessageListItem = ({
     />
   );
 };
+
+export const isInboxOrArchiveSource = (
+  source: WrappedMessageListItemProps["source"]
+) => source === "ARCHIVE" || isInboxSource(source);
+export const isInboxSource = (source: WrappedMessageListItemProps["source"]) =>
+  source === "INBOX";
+export const isSearchSource = (source: WrappedMessageListItemProps["source"]) =>
+  source === "SEARCH";
