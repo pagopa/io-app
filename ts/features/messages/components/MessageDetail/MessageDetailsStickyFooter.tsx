@@ -12,7 +12,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { PaymentData, UIMessageId } from "../../types";
 import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import {
   canNavigateToPaymentFromMessageSelector,
   paymentsButtonStateSelector
@@ -20,7 +20,9 @@ import {
 import { trackPNOptInMessageAccepted } from "../../../pn/analytics";
 import { handleCtaAction } from "../../utils/messages";
 import { CTA, CTAS } from "../../types/MessageCTA";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { MessageDetailsPaymentButton } from "./MessageDetailsPaymentButton";
+import { computeAndTrackCTAPressAnalytics } from "./detailsUtils";
 
 const styles = StyleSheet.create({
   container: {
@@ -41,6 +43,7 @@ type MessageDetailsPaymentButtonProps = {
   firstCTAIsPNOptInMessage: boolean;
   messageId: UIMessageId;
   secondCTAIsPNOptInMessage: boolean;
+  serviceId: ServiceId;
 };
 
 type FooterPaymentWithDoubleCTA = {
@@ -160,7 +163,7 @@ const renderPaymentWithDoubleCTA = (
   cta1IsPNOptInMessage: boolean,
   cta2: CTA,
   cta2IsPNOptInMessage: boolean,
-  onCTAPress: (cta: CTA, isPNOptInMessage: boolean) => void
+  onCTAPress: (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => void
 ) => (
   <>
     <MessageDetailsPaymentButton
@@ -174,14 +177,14 @@ const renderPaymentWithDoubleCTA = (
       accessibilityLabel={cta1.text}
       fullWidth
       label={cta1.text}
-      onPress={() => onCTAPress(cta1, cta1IsPNOptInMessage)}
+      onPress={() => onCTAPress(true, cta1, cta1IsPNOptInMessage)}
     />
     <VSpacer size={8} />
     <View style={styles.buttonLinkInFooter}>
       <ButtonLink
         accessibilityLabel={cta2.text}
         label={cta2.text}
-        onPress={() => onCTAPress(cta2, cta2IsPNOptInMessage)}
+        onPress={() => onCTAPress(false, cta2, cta2IsPNOptInMessage)}
       />
     </View>
   </>
@@ -193,7 +196,7 @@ const renderPaymentWithCTA = (
   isLoadingPayment: boolean,
   cta1: CTA,
   cta1IsPNOptInMessage: boolean,
-  onCTAPress: (cta: CTA, isPNOptInMessage: boolean) => void
+  onCTAPress: (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => void
 ) => (
   <>
     <MessageDetailsPaymentButton
@@ -207,7 +210,7 @@ const renderPaymentWithCTA = (
       <ButtonLink
         accessibilityLabel={cta1.text}
         label={cta1.text}
-        onPress={() => onCTAPress(cta1, cta1IsPNOptInMessage)}
+        onPress={() => onCTAPress(true, cta1, cta1IsPNOptInMessage)}
       />
     </View>
   </>
@@ -217,21 +220,21 @@ const renderDoubleCTA = (
   cta1IsPNOptInMessage: boolean,
   cta2: CTA,
   cta2IsPNOptInMessage: boolean,
-  onCTAPress: (cta: CTA, isPNOptInMessage: boolean) => void
+  onCTAPress: (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => void
 ) => (
   <>
     <ButtonSolid
       accessibilityLabel={cta1.text}
       fullWidth
       label={cta1.text}
-      onPress={() => onCTAPress(cta1, cta1IsPNOptInMessage)}
+      onPress={() => onCTAPress(true, cta1, cta1IsPNOptInMessage)}
     />
     <VSpacer size={8} />
     <View style={styles.buttonLinkInFooter}>
       <ButtonLink
         accessibilityLabel={cta2.text}
         label={cta2.text}
-        onPress={() => onCTAPress(cta2, cta2IsPNOptInMessage)}
+        onPress={() => onCTAPress(false, cta2, cta2IsPNOptInMessage)}
       />
     </View>
   </>
@@ -252,13 +255,13 @@ const renderPayment = (
 const renderCTA = (
   cta: CTA,
   isPNOptInMessage: boolean,
-  onCTAPress: (cta: CTA, isPNOptInMessage: boolean) => void
+  onCTAPress: (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => void
 ) => (
   <ButtonSolid
     accessibilityLabel={cta.text}
     fullWidth
     label={cta.text}
-    onPress={() => onCTAPress(cta, isPNOptInMessage)}
+    onPress={() => onCTAPress(true, cta, isPNOptInMessage)}
   />
 );
 
@@ -266,9 +269,11 @@ export const MessageDetailsStickyFooter = ({
   ctas,
   firstCTAIsPNOptInMessage,
   messageId,
-  secondCTAIsPNOptInMessage
+  secondCTAIsPNOptInMessage,
+  serviceId
 }: MessageDetailsPaymentButtonProps) => {
   const safeAreaInsets = useSafeAreaInsets();
+  const store = useIOStore();
   const paymentData = useIOSelector(state =>
     messagePaymentDataSelector(state, messageId)
   );
@@ -280,14 +285,16 @@ export const MessageDetailsStickyFooter = ({
   );
 
   const linkTo = useLinkTo();
-  const handleOnPress = React.useCallback(
-    (cta: CTA, isPNOptInMessage: boolean) => {
+  const onCTAPressedCallback = React.useCallback(
+    (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => {
+      const state = store.getState();
+      computeAndTrackCTAPressAnalytics(isFirstCTA, cta, serviceId, state);
       if (isPNOptInMessage) {
         trackPNOptInMessageAccepted();
       }
       handleCtaAction(cta, linkTo);
     },
-    [linkTo]
+    [linkTo, serviceId, store]
   );
 
   const footerData = computeFooterData(paymentData, paymentButtonStatus, ctas);
@@ -316,7 +323,7 @@ export const MessageDetailsStickyFooter = ({
             firstCTAIsPNOptInMessage,
             paymentWithDoubleCTA.cta2,
             secondCTAIsPNOptInMessage,
-            handleOnPress
+            onCTAPressedCallback
           ),
         paymentWithCTA =>
           renderPaymentWithCTA(
@@ -326,7 +333,7 @@ export const MessageDetailsStickyFooter = ({
             isPaymentLoading,
             paymentWithCTA.cta1,
             firstCTAIsPNOptInMessage,
-            handleOnPress
+            onCTAPressedCallback
           ),
         doubleCTA =>
           renderDoubleCTA(
@@ -334,7 +341,7 @@ export const MessageDetailsStickyFooter = ({
             firstCTAIsPNOptInMessage,
             doubleCTA.cta2,
             secondCTAIsPNOptInMessage,
-            handleOnPress
+            onCTAPressedCallback
           ),
         payment =>
           renderPayment(
@@ -343,7 +350,8 @@ export const MessageDetailsStickyFooter = ({
             canNavigateToPayment,
             isPaymentLoading
           ),
-        cta => renderCTA(cta.cta1, firstCTAIsPNOptInMessage, handleOnPress),
+        cta =>
+          renderCTA(cta.cta1, firstCTAIsPNOptInMessage, onCTAPressedCallback),
         () => null
       )}
     </View>

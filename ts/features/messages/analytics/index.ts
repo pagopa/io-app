@@ -465,3 +465,24 @@ export const trackPaymentStart = () => {
   // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };
+
+export const trackCTAPressed = (
+  serviceId: ServiceId,
+  serviceName: string | undefined,
+  organizationName: string | undefined,
+  organizationFiscalCode: string | undefined,
+  isFirstCTA: boolean,
+  ctaText: string
+) => {
+  const eventName = `MESSAGE_CTA_TAPPED`;
+  const props = buildEventProperties("UX", "action", {
+    service_id: serviceId,
+    service_name: serviceName,
+    organization_name: organizationName,
+    organization_fiscal_code: organizationFiscalCode,
+    cta_category: isFirstCTA ? "custom_1" : "custom_2",
+    cta_id: ctaText
+  });
+  // console.log(`${eventName} ${JSON.stringify(props)}`);
+  void mixpanelTrack(eventName, props);
+};
