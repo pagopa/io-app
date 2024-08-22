@@ -37,6 +37,7 @@ import {
   trackRemoteContentMessageDecodingWarning
 } from "../analytics";
 import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
+import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
 
 export function* handleLoadMessageData(
   action: ActionType<typeof getMessageDataAction.request>
@@ -47,6 +48,7 @@ export function* handleLoadMessageData(
   });
 }
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function* loadMessageData({
   messageId,
   fromPushNotification
@@ -72,23 +74,26 @@ function* loadMessageData({
   // Make sure that we have the basic message details
   const paginatedMessage = yield* call(getPaginatedMessage, messageId);
   if (!paginatedMessage) {
-    const phase = "paginatedMessage";
-    trackMessageDataLoadFailure(fromPushNotification, phase);
-    yield* put(getMessageDataAction.failure({ phase }));
+    yield* call(
+      commonFailureHandling,
+      "paginatedMessage",
+      fromPushNotification
+    );
     return;
   }
 
-  // Load the service details asynchronously if we do not have them
-  // (this is a not blocking call)
+  // Make sure that we have the service details
   const serviceId = paginatedMessage.serviceId;
-  yield* call(getService, serviceId);
+  const serviceDetails = yield* call(getServiceDetails, serviceId);
+  if (!serviceDetails) {
+    yield* call(commonFailureHandling, "serviceDetails", fromPushNotification);
+    return;
+  }
 
   // Make sure that we have the message details
   const messageDetails = yield* call(getMessageDetails, messageId);
   if (!messageDetails) {
-    const phase = "messageDetails";
-    trackMessageDataLoadFailure(fromPushNotification, phase);
-    yield* put(getMessageDataAction.failure({ phase }));
+    yield* call(commonFailureHandling, "messageDetails", fromPushNotification);
     return;
   }
 
@@ -102,16 +107,14 @@ function* loadMessageData({
     fromPushNotification &&
     (isPNMessage || paginatedMessage.hasPrecondition)
   ) {
-    const phase = "preconditions";
-    trackMessageDataLoadFailure(fromPushNotification, phase);
     if (isPNMessage) {
       trackPNPushOpened();
     }
-    yield* put(
-      getMessageDataAction.failure({
-        blockedFromPushNotificationOpt: true,
-        phase
-      })
+    yield* call(
+      commonFailureHandling,
+      "preconditions",
+      fromPushNotification,
+      true
     );
     return;
   }
@@ -130,9 +133,11 @@ function* loadMessageData({
       paginatedMessage.category.tag
     );
     if (!thirdPartyMessageDetails) {
-      const phase = "thirdPartyMessageDetails";
-      trackMessageDataLoadFailure(fromPushNotification, phase);
-      yield* put(getMessageDataAction.failure({ phase }));
+      yield* call(
+        commonFailureHandling,
+        "thirdPartyMessageDetails",
+        fromPushNotification
+      );
       return;
     }
   }
@@ -142,9 +147,11 @@ function* loadMessageData({
     paginatedMessage
   );
   if (!messageReadCheckSucceded) {
-    const phase = "readStatusUpdate";
-    trackMessageDataLoadFailure(fromPushNotification, phase);
-    yield* put(getMessageDataAction.failure({ phase }));
+    yield* call(
+      commonFailureHandling,
+      "readStatusUpdate",
+      fromPushNotification
+    );
     return;
   }
 
@@ -172,11 +179,24 @@ function* getPaginatedMessage(messageId: UIMessageId) {
   return pot.toUndefined(initialMessagePot);
 }
 
-function* getService(serviceId: ServiceId) {
-  const servicePot = yield* select(serviceByIdPotSelector, serviceId);
-  if (!pot.isSome(servicePot) || pot.isError(servicePot)) {
+function* getServiceDetails(serviceId: ServiceId) {
+  const initialServicePot = yield* select(serviceByIdPotSelector, serviceId);
+  if (!pot.isSome(initialServicePot) || pot.isError(initialServicePot)) {
     yield* put(loadServiceDetail.request(serviceId));
+
+    const outputAction = yield* take([
+      loadServiceDetail.success,
+      loadServiceDetail.failure
+    ]);
+    if (isActionOf(loadServiceDetail.failure, outputAction)) {
+      return undefined;
+    }
+
+    const finalServicePot = yield* select(serviceByIdPotSelector, serviceId);
+    return pot.toUndefined(finalServicePot);
   }
+
+  return pot.toUndefined(initialServicePot);
 }
 
 function* getMessageDetails(messageId: UIMessageId) {
@@ -301,6 +321,21 @@ function* dispatchSuccessAction(
   );
 }
 
+function* commonFailureHandling(
+  phase: MessageGetStatusFailurePhaseType,
+  loadingStartedFromPushNotification: boolean,
+  blockedFromPushNotificationOpt: boolean | undefined = undefined
+) {
+  yield* call(
+    trackMessageDataLoadFailure,
+    loadingStartedFromPushNotification,
+    phase
+  );
+  yield* put(
+    getMessageDataAction.failure({ blockedFromPushNotificationOpt, phase })
+  );
+}
+
 const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
   isPNMessage: boolean,
   thirdPartyMessageOrUndefined: ThirdPartyMessageWithContent | undefined,
@@ -329,12 +364,13 @@ const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
 
 export const testable = isTestEnv
   ? {
+      commonFailureHandling,
       loadMessageData,
       decodeAndTrackThirdPartyMessageDetailsIfNeeded,
       dispatchSuccessAction,
       setMessageReadIfNeeded,
       getPaginatedMessage,
-      getService,
+      getServiceDetails,
       getMessageDetails,
       getThirdPartyDataMessage
     }
