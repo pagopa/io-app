@@ -373,7 +373,6 @@ export const trackMessagesPage = (
     count_messages: messageCount,
     fromUserAction
   });
-  // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };
 
@@ -385,7 +384,6 @@ export const trackArchivedRestoredMessages = (
   const props = buildEventProperties("UX", "action", {
     [`count_messages_${archived ? "archived" : "restored"}`]: messageCount
   });
-  // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };
 
@@ -397,7 +395,6 @@ export const trackMessageListEndReached = (
     willLoadNextMessagePage ? "SCROLL" : "ENDLIST"
   }`;
   const props = buildEventProperties("UX", "action");
-  // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };
 
@@ -406,7 +403,6 @@ export const trackPullToRefresh = (category: MessageListCategory) => {
     category === "ARCHIVE" ? "ARCHIVE" : "INBOX"
   }_REFRESH`;
   const props = buildEventProperties("UX", "action");
-  // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };
 
@@ -415,14 +411,12 @@ export const trackAutoRefresh = (category: MessageListCategory) => {
     category === "ARCHIVE" ? "ARCHIVE" : "INBOX"
   }_AUTO_REFRESH`;
   const props = buildEventProperties("TECH", undefined);
-  // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };
 
 export const trackMessageSearchPage = () => {
   const eventName = `MESSAGES_SEARCH_PAGE`;
   const props = buildEventProperties("UX", "screen_view");
-  // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };
 
@@ -431,20 +425,17 @@ export const trackMessageSearchResult = (resultCount: number) => {
   const props = buildEventProperties("UX", "screen_view", {
     count_result_returned: resultCount
   });
-  // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };
 
 export const trackMessageSearchSelection = () => {
   const eventName = `MESSAGES_SEARCH_RESULT_SELECTED`;
   const props = buildEventProperties("UX", "action");
-  // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };
 
 export const trackMessageSearchClosing = () => {
   const eventName = `MESSAGES_SEARCH_CLOSE`;
   const props = buildEventProperties("UX", "action");
-  // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };
