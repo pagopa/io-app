@@ -23,6 +23,8 @@ import { isLoadingOrUpdatingInbox } from "../../store/reducers/allPaginated";
 import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { trackMessageDataLoadFailure } from "../../analytics";
+import { MessageGetStatusFailurePhaseType } from "../../store/reducers/messageGetStatus";
 
 jest.mock("../../../../config.ts", () => ({
   ...jest.requireActual("../../../../config.ts"),
@@ -971,4 +973,46 @@ describe("loadMessageData", () => {
       .next()
       .isDone();
   });
+});
+
+describe("commonFailureHandling", () => {
+  (
+    [
+      "none",
+      "paginatedMessage",
+      "serviceDetails",
+      "messageDetails",
+      "preconditions",
+      "thirdPartyMessageDetails",
+      "readStatusUpdate"
+    ] as ReadonlyArray<MessageGetStatusFailurePhaseType>
+  ).forEach(phase =>
+    [false, true].forEach(startedFromPushNotification =>
+      [undefined, false, true].forEach(blockedFromPushNotificationOpt => {
+        it(`should track analytics and dispatch 'getMessageDataAction.failure', phase '${phase}' (from push notification '${startedFromPushNotification}', blocked on push notification '${!!blockedFromPushNotificationOpt}')`, () => {
+          testSaga(
+            testable!.commonFailureHandling,
+            phase,
+            startedFromPushNotification,
+            blockedFromPushNotificationOpt
+          )
+            .next()
+            .call(
+              trackMessageDataLoadFailure,
+              startedFromPushNotification,
+              phase
+            )
+            .next()
+            .put(
+              getMessageDataAction.failure({
+                blockedFromPushNotificationOpt,
+                phase
+              })
+            )
+            .next()
+            .isDone();
+        });
+      })
+    )
+  );
 });
