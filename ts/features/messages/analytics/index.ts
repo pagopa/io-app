@@ -439,3 +439,22 @@ export const trackMessageSearchClosing = () => {
   const props = buildEventProperties("UX", "action");
   void mixpanelTrack(eventName, props);
 };
+
+export const trackPaymentStatus = (
+  serviceId: ServiceId | undefined,
+  serviceName: string | undefined,
+  organizationName: string | undefined,
+  organizationFiscalCode: string | undefined,
+  paymentStatus: string
+) => {
+  const eventName = `MESSAGE_PAYMENT_STATUS`;
+  const props = buildEventProperties("TECH", undefined, {
+    service_id: serviceId,
+    service_name: serviceName,
+    organization_fiscal_code: organizationFiscalCode,
+    organization_name: organizationName,
+    payment_status: paymentStatus
+  });
+  // console.log(`${eventName} ${JSON.stringify(props)}`);
+  void mixpanelTrack(eventName, props);
+};

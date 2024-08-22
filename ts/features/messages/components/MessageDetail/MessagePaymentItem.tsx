@@ -42,6 +42,7 @@ import { initializeAndNavigateToWalletForPayment } from "../../utils";
 import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
 import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
 import { isNewPaymentSectionEnabledSelector } from "../../../../store/reducers/backendStatus";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 type MessagePaymentItemProps = {
   hideExpirationDate?: boolean;
@@ -52,6 +53,7 @@ type MessagePaymentItemProps = {
   noticeNumber: string;
   paymentAmount?: PaymentAmount;
   rptId: string;
+  serviceId: ServiceId;
   willNavigateToPayment?: () => void;
 };
 
@@ -167,6 +169,7 @@ export const MessagePaymentItem = ({
   noticeNumber,
   paymentAmount = undefined,
   rptId,
+  serviceId,
   willNavigateToPayment = undefined
 }: MessagePaymentItemProps) => {
   const dispatch = useIODispatch();
@@ -221,11 +224,12 @@ export const MessagePaymentItem = ({
     if (shouldUpdatePayment) {
       const updateAction = updatePaymentForMessage.request({
         messageId,
-        paymentId: rptId
+        paymentId: rptId,
+        serviceId
       });
       dispatch(updateAction);
     }
-  }, [dispatch, messageId, rptId, shouldUpdatePayment]);
+  }, [dispatch, messageId, isPNPayment, rptId, serviceId, shouldUpdatePayment]);
   return (
     <View>
       {!noSpaceOnTop && <VSpacer size={index > 0 ? 8 : 24} />}

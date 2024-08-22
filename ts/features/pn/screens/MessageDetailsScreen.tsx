@@ -26,8 +26,8 @@ import { trackPNUxSuccess } from "../analytics";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
 import {
-  cancelPaymentStatusTracking,
-  startPaymentStatusTracking
+  cancelPNPaymentStatusTracking,
+  startPNPaymentStatusTracking
 } from "../store/actions";
 import {
   pnMessageFromIdSelector,
@@ -66,7 +66,7 @@ export const MessageDetailsScreen = () => {
   const goBack = useCallback(() => {
     dispatch(cancelPreviousAttachmentDownload());
     dispatch(cancelQueuedPaymentUpdates());
-    dispatch(cancelPaymentStatusTracking());
+    dispatch(cancelPNPaymentStatusTracking());
     navigation.goBack();
   }, [dispatch, navigation]);
 
@@ -77,7 +77,7 @@ export const MessageDetailsScreen = () => {
   });
 
   useOnFirstRender(() => {
-    dispatch(startPaymentStatusTracking(messageId));
+    dispatch(startPNPaymentStatusTracking(messageId));
 
     if (isStrictSome(messagePot)) {
       const paymentCount = payments?.length ?? 0;
@@ -105,11 +105,12 @@ export const MessageDetailsScreen = () => {
         dispatch(
           updatePaymentForMessage.request({
             messageId,
-            paymentId: paymentToCheckRptId
+            paymentId: paymentToCheckRptId,
+            serviceId
           })
         );
       }
-    }, [dispatch, messageId, messagePot, store])
+    }, [dispatch, messageId, messagePot, serviceId, store])
   );
 
   return (
