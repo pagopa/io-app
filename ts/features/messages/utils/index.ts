@@ -17,6 +17,7 @@ import { trackPNPaymentStart } from "../../pn/analytics";
 import { addUserSelectedPaymentRptId } from "../store/actions";
 import { Action } from "../../../store/actions/types";
 import { startPaymentFlowWithRptIdWorkaround } from "../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
+import { trackPaymentStart } from "../analytics";
 
 export const gapBetweenItemsInAGrid = 8;
 
@@ -66,6 +67,8 @@ export const initializeAndNavigateToWalletForPayment = (
 
   if (isPNPayment) {
     trackPNPaymentStart();
+  } else {
+    trackPaymentStart();
   }
 
   if (!isPaidOrHasAnError) {

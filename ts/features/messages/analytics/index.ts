@@ -458,3 +458,10 @@ export const trackPaymentStatus = (
   // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };
+
+export const trackPaymentStart = () => {
+  const eventName = `MESSAGE_PAYMENT_START`;
+  const props = buildEventProperties("UX", "action");
+  // console.log(`${eventName} ${JSON.stringify(props)}`);
+  void mixpanelTrack(eventName, props);
+};
