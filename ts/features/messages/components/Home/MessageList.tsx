@@ -18,6 +18,7 @@ import {
 } from "../../store/reducers/allPaginated";
 import { UIMessage } from "../../types";
 import { ItwDiscoveryBanner } from "../../../itwallet/common/components/ItwDiscoveryBanner";
+import { trackPullToRefresh } from "../../analytics";
 import {
   generateMessageListLayoutInfo,
   getLoadNextPageMessagesActionIfAllowed,
@@ -86,6 +87,7 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
     );
 
     const onRefreshCallback = useCallback(() => {
+      trackPullToRefresh(category);
       const state = store.getState();
       const reloadAllMessagesAction =
         getReloadAllMessagesActionForRefreshIfAllowed(state, category);

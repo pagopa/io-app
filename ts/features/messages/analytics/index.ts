@@ -400,3 +400,12 @@ export const trackMessageListEndReached = (
   // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };
+
+export const trackPullToRefresh = (category: MessageListCategory) => {
+  const eventName = `MESSAGES_${
+    category === "ARCHIVE" ? "ARCHIVE" : "INBOX"
+  }_REFRESH`;
+  const props = buildEventProperties("UX", "action");
+  // console.log(`${eventName} ${JSON.stringify(props)}`);
+  void mixpanelTrack(eventName, props);
+};
