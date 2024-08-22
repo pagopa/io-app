@@ -409,3 +409,12 @@ export const trackPullToRefresh = (category: MessageListCategory) => {
   // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };
+
+export const trackAutoRefresh = (category: MessageListCategory) => {
+  const eventName = `MESSAGES_${
+    category === "ARCHIVE" ? "ARCHIVE" : "INBOX"
+  }_AUTO_REFRESH`;
+  const props = buildEventProperties("TECH", undefined);
+  // console.log(`${eventName} ${JSON.stringify(props)}`);
+  void mixpanelTrack(eventName, props);
+};

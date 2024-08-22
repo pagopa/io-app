@@ -15,7 +15,7 @@ import {
 } from "../../store/reducers/allPaginated";
 import { foldK as foldMessageListCategory } from "../../types/messageListCategory";
 import SectionStatusComponent from "../../../../components/SectionStatus";
-import { trackMessagesPage } from "../../analytics";
+import { trackAutoRefresh, trackMessagesPage } from "../../analytics";
 import { pageSize } from "../../../../config";
 import { MessageList } from "./MessageList";
 import {
@@ -56,6 +56,8 @@ export const PagerViewContainer = React.forwardRef<PagerView>((_, ref) => {
     const loadPreviousPageAction =
       getLoadPreviousPageMessagesActionIfAllowed(state);
     if (loadPreviousPageAction) {
+      const shownCategory = shownMessageCategorySelector(state);
+      trackAutoRefresh(shownCategory);
       dispatch(loadPreviousPageAction);
     }
   }, [dispatch, store]);
