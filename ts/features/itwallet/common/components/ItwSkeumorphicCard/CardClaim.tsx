@@ -1,8 +1,8 @@
 import { WithTestID } from "@pagopa/io-app-design-system";
 import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
-import * as t from "io-ts";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { localeDateFormat } from "../../../../../utils/locale";
@@ -19,7 +19,9 @@ import { ClaimLabel } from "./ClaimLabel";
 export type AbsoluteClaimPosition = Record<"x" | "y", `${number}%`>;
 
 export type CardClaimProps = WithTestID<{
+  // A claim that will be used to render its component
   claim: ParsedCredential[number];
+  // Absolute position expressed in percentages from top-left corner
   position?: AbsoluteClaimPosition;
 }>;
 
@@ -76,8 +78,11 @@ const CardClaim = ({ claim, position, testID }: CardClaimProps) => {
 };
 
 export type CardClaimRendererProps<T> = {
+  // A claim that will be used to render a component
   claim: ParsedCredential[number];
-  decoder: t.Type<T, string>;
+  // Function that check that the proviced claim is of the correct type
+  is: (value: unknown) => value is T;
+  // Function that renders a component with the decoded provided claim
   component: (decoded: T) => React.ReactElement | Iterable<React.ReactElement>;
 };
 
@@ -87,10 +92,10 @@ export type CardClaimRendererProps<T> = {
  */
 const CardClaimRenderer = <T,>({
   claim,
-  decoder,
+  is,
   component
 }: CardClaimRendererProps<T>) =>
-  pipe(claim.value, decoder.decode, E.fold(constNull, component));
+  pipe(O.fromNullable(claim.value), O.filter(is), O.fold(constNull, component));
 
 export type CardClaimContainerProps = WithTestID<{
   position?: AbsoluteClaimPosition;

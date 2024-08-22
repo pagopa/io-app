@@ -93,7 +93,7 @@ const MdlBackData = ({ claims }: DataComponentProps) => {
     <View testID="mdlBackDataTestID" style={styles.container}>
       <CardClaimRenderer
         claim={claims["driving_privileges_details"]}
-        decoder={DrivingPrivilegesClaim}
+        is={DrivingPrivilegesClaim.is}
         component={privileges =>
           privileges.map(p => (
             <Fragment key={`driving_privilege_${p.driving_privilege}`}>
