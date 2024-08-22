@@ -35,8 +35,8 @@ import {
   TxtBreakNode,
   AnyTxtNode
 } from "@textlint/ast-node-types";
-import React, { Fragment } from "react";
-import { Image, Text, View } from "react-native";
+import React, { Fragment, useLayoutEffect, useState } from "react";
+import { Dimensions, Image, Text, View } from "react-native";
 import I18n from "../../i18n";
 import { openWebUrl } from "../../utils/url";
 import { IOMarkdownRenderRules, Renderer } from "./types";
@@ -176,12 +176,33 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns The rendered component.
    */
   Image(image: TxtImageNode) {
+    const [imageSize, setImageSize] = useState({
+      width: 0,
+      aspectRatio: 1
+    });
+    const screenWidth =
+      Dimensions.get("screen").width -
+      IOStyles.horizontalContentPadding.paddingHorizontal * 2;
+
+    useLayoutEffect(() => {
+      Image.getSize(image.url, (width, height) => {
+        const aspectRatio = width / height;
+        const maxScreenWidth = width > screenWidth ? screenWidth : width;
+
+        setImageSize({ width: maxScreenWidth, aspectRatio });
+      });
+    }, [screenWidth, image.url]);
+
     return (
       <Image
         key={getTxtNodeKey(image)}
         accessibilityIgnoresInvertColors
+        style={imageSize}
+        resizeMode="contain"
         accessibilityLabel={image.alt ?? ""}
-        source={{ uri: image.url }}
+        source={{
+          uri: image.url
+        }}
       />
     );
   },
