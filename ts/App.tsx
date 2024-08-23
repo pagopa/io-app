@@ -70,7 +70,9 @@ const App = (): JSX.Element => (
               <PersistGate loading={undefined} persistor={persistor}>
                 <BottomSheetModalProvider>
                   <LightModalProvider>
-                    <RootContainer />
+                    <RootContainer
+                      routingInstumentation={routingInstrumentation}
+                    />
                   </LightModalProvider>
                 </BottomSheetModalProvider>
               </PersistGate>

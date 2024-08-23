@@ -7,6 +7,7 @@ import {
 } from "@react-navigation/native";
 import React, { useRef } from "react";
 import { View } from "react-native";
+import { ReactNavigationInstrumentation } from "@sentry/react-native";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { fimsEnabled } from "../config";
@@ -37,7 +38,6 @@ import {
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import { routingInstrumentation } from "../App";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
@@ -82,7 +82,11 @@ export const AppStackNavigator = (): React.ReactElement => {
   return <AuthenticatedStackNavigator />;
 };
 
-const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
+type InnerNavigationContainerProps = React.PropsWithChildren<{
+  routingInstrumentation?: ReactNavigationInstrumentation;
+}>;
+
+const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   const routeNameRef = useRef<string>();
   const dispatch = useIODispatch();
   const store = useIOStore();
@@ -162,7 +166,11 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
       linking={linking}
       fallback={<LoadingSpinnerOverlay isLoading={true} />}
       onReady={() => {
-        routingInstrumentation.registerNavigationContainer(navigationRef);
+        if (props.routingInstrumentation) {
+          props.routingInstrumentation.registerNavigationContainer(
+            navigationRef
+          );
+        }
         NavigationService.setNavigationReady();
         routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
       }}
@@ -188,8 +196,12 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
  * Wraps the NavigationContainer with the AppStackNavigator (Root navigator of the app)
  * @constructor
  */
-export const IONavigationContainer = () => (
-  <InnerNavigationContainer>
+export const IONavigationContainer = ({
+  routingInstrumentation
+}: {
+  routingInstrumentation: ReactNavigationInstrumentation;
+}) => (
+  <InnerNavigationContainer routingInstrumentation={routingInstrumentation}>
     <AppStackNavigator />
   </InnerNavigationContainer>
 );
