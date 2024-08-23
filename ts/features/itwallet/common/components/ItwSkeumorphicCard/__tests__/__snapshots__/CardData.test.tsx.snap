@@ -21,7 +21,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         },
         {
           "left": "37%",
-          "top": "7.75%",
+          "top": "7.74%",
         },
       ]
     }
@@ -67,7 +67,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         },
         {
           "left": "53%",
-          "top": "7.75%",
+          "top": "7.74%",
         },
       ]
     }
@@ -113,7 +113,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         },
         {
           "left": "37%",
-          "top": "33.6%",
+          "top": "33.690000000000005%",
         },
       ]
     }
@@ -159,7 +159,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         },
         {
           "left": "53%",
-          "top": "33.6%",
+          "top": "33.690000000000005%",
         },
       ]
     }
