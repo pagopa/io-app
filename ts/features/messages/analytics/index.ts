@@ -26,8 +26,10 @@ import {
 import { pageSize } from "../../../config";
 
 export function trackOpenMessage(
-  organizationName: string,
+  serviceId: ServiceId,
   serviceName: string,
+  organizationName: string,
+  organizationFiscalCode: string,
   firstTimeOpening: boolean,
   containsPayment: boolean | undefined,
   hasRemoteContent: boolean,
@@ -37,8 +39,10 @@ export function trackOpenMessage(
   void mixpanelTrack(
     "OPEN_MESSAGE",
     buildEventProperties("UX", "screen_view", {
-      organization_name: organizationName,
+      service_id: serviceId,
       service_name: serviceName,
+      organization_name: organizationName,
+      organization_fiscal_code: organizationFiscalCode,
       contains_payment: pipe(
         containsPayment,
         O.fromNullable,
@@ -90,7 +94,7 @@ export function trackThirdPartyMessageAttachmentUnavailable(
     "THIRD_PARTY_MESSAGE_ATTACHMENT_UNAVAILABLE",
     buildEventProperties("KO", undefined, {
       messageId,
-      serviceId: serviceId ?? ""
+      service_id: serviceId
     })
   );
 }
@@ -103,7 +107,7 @@ export function trackThirdPartyMessageAttachmentDownloadFailed(
     "THIRD_PARTY_MESSAGE_ATTACHMENT_DOWNLOAD_FAILED",
     buildEventProperties("KO", undefined, {
       messageId,
-      serviceId: serviceId ?? ""
+      service_id: serviceId
     })
   );
 }
@@ -116,7 +120,7 @@ export function trackThirdPartyMessageAttachmentBadFormat(
     "THIRD_PARTY_MESSAGE_ATTACHMENT_BAD_FORMAT",
     buildEventProperties("KO", undefined, {
       messageId,
-      serviceId: serviceId ?? ""
+      service_id: serviceId
     })
   );
 }
@@ -129,7 +133,7 @@ export function trackThirdPartyMessageAttachmentCorruptedFile(
     "THIRD_PARTY_MESSAGE_ATTACHMENT_CORRUPTED_FILE",
     buildEventProperties("KO", undefined, {
       messageId,
-      serviceId: serviceId ?? ""
+      service_id: serviceId
     })
   );
 }
@@ -149,7 +153,7 @@ export function trackThirdPartyMessageAttachmentShowPreview() {
 }
 
 export function trackThirdPartyMessageAttachmentUserAction(
-  userAction: "download" | "open" | "share"
+  userAction: "download" | "share"
 ) {
   void mixpanelTrack(
     "THIRD_PARTY_MESSAGE_ATTACHMENT_USER_ACTION",
@@ -241,26 +245,49 @@ export function trackUpsertMessageStatusAttributesFailure(reason: string) {
   );
 }
 
-export function trackRemoteContentLoadRequest(tag: string) {
+export function trackRemoteContentLoadRequest(
+  serviceId: ServiceId,
+  serviceName: string | undefined,
+  organizationName: string | undefined,
+  organizationFiscalCode: string | undefined,
+  tag: string
+) {
   void mixpanelTrack(
     "REMOTE_CONTENT_LOAD_REQUEST",
     buildEventProperties("TECH", undefined, {
-      message_category_tag: tag
+      message_category_tag: tag,
+      service_id: serviceId,
+      service_name: serviceName,
+      organization_name: organizationName,
+      organization_fiscal_code: organizationFiscalCode
     })
   );
 }
 
-export function trackRemoteContentLoadSuccess(tag: string) {
+export function trackRemoteContentLoadSuccess(
+  serviceId: ServiceId | undefined,
+  serviceName: string | undefined,
+  organizationName: string | undefined,
+  organizationFiscalCode: string | undefined,
+  tag: string
+) {
   void mixpanelTrack(
     "REMOTE_CONTENT_LOAD_SUCCESS",
     buildEventProperties("TECH", undefined, {
-      message_category_tag: tag
+      message_category_tag: tag,
+      service_id: serviceId,
+      service_name: serviceName,
+      organization_name: organizationName,
+      organization_fiscal_code: organizationFiscalCode
     })
   );
 }
 
 export function trackRemoteContentLoadFailure(
-  serviceId: ServiceId,
+  serviceId: ServiceId | undefined,
+  serviceName: string | undefined,
+  organizationName: string | undefined,
+  organizationFiscalCode: string | undefined,
   tag: string,
   reason: string
 ) {
@@ -268,8 +295,11 @@ export function trackRemoteContentLoadFailure(
     "REMOTE_CONTENT_LOAD_FAILURE",
     buildEventProperties("TECH", undefined, {
       reason,
+      message_category_tag: tag,
       serviceId,
-      message_category_tag: tag
+      service_name: serviceName,
+      organization_name: organizationName,
+      organization_fiscal_code: organizationFiscalCode
     })
   );
 }
@@ -315,16 +345,22 @@ export function trackMessageDataLoadSuccess(fromPushNotification: boolean) {
 }
 
 export function trackRemoteContentMessageDecodingWarning(
-  reason: string,
   serviceId: ServiceId,
-  tag: string
+  serviceName: string | undefined,
+  organizationName: string | undefined,
+  organizationFiscalCode: string | undefined,
+  tag: string,
+  reason: string
 ) {
   void mixpanelTrack(
     "REMOTE_CONTENT_DETAILS_DECODING_WARNING",
     buildEventProperties("TECH", undefined, {
       reason,
       serviceId,
-      message_category_tag: tag
+      message_category_tag: tag,
+      service_name: serviceName,
+      organization_name: organizationName,
+      organization_fiscal_code: organizationFiscalCode
     })
   );
 }
@@ -459,9 +495,19 @@ export const trackPaymentStatus = (
   void mixpanelTrack(eventName, props);
 };
 
-export const trackPaymentStart = () => {
+export const trackPaymentStart = (
+  serviceId: ServiceId,
+  serviceName: string | undefined,
+  organizationName: string | undefined,
+  organizationFiscalCode: string | undefined
+) => {
   const eventName = `MESSAGE_PAYMENT_START`;
-  const props = buildEventProperties("UX", "action");
+  const props = buildEventProperties("UX", "action", {
+    service_id: serviceId,
+    service_name: serviceName,
+    organization_name: organizationName,
+    organization_fiscal_code: organizationFiscalCode
+  });
   // console.log(`${eventName} ${JSON.stringify(props)}`);
   void mixpanelTrack(eventName, props);
 };

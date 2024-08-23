@@ -156,6 +156,7 @@ const computeFooterData = (
 
 const renderPaymentWithDoubleCTA = (
   messageId: UIMessageId,
+  serviceId: ServiceId,
   paymentData: PaymentData,
   canNavigateToPayment: boolean,
   isLoadingPayment: boolean,
@@ -168,6 +169,7 @@ const renderPaymentWithDoubleCTA = (
   <>
     <MessageDetailsPaymentButton
       messageId={messageId}
+      serviceId={serviceId}
       paymentData={paymentData}
       canNavigateToPayment={canNavigateToPayment}
       isLoading={isLoadingPayment}
@@ -191,6 +193,7 @@ const renderPaymentWithDoubleCTA = (
 );
 const renderPaymentWithCTA = (
   messageId: UIMessageId,
+  serviceId: ServiceId,
   paymentData: PaymentData,
   canNavigateToPayment: boolean,
   isLoadingPayment: boolean,
@@ -201,6 +204,7 @@ const renderPaymentWithCTA = (
   <>
     <MessageDetailsPaymentButton
       messageId={messageId}
+      serviceId={serviceId}
       paymentData={paymentData}
       canNavigateToPayment={canNavigateToPayment}
       isLoading={isLoadingPayment}
@@ -241,12 +245,14 @@ const renderDoubleCTA = (
 );
 const renderPayment = (
   messageId: UIMessageId,
+  serviceId: ServiceId,
   paymentData: PaymentData,
   canNavigateToPayment: boolean,
   isLoadingPayment: boolean
 ) => (
   <MessageDetailsPaymentButton
     messageId={messageId}
+    serviceId={serviceId}
     paymentData={paymentData}
     canNavigateToPayment={canNavigateToPayment}
     isLoading={isLoadingPayment}
@@ -316,6 +322,7 @@ export const MessageDetailsStickyFooter = ({
         paymentWithDoubleCTA =>
           renderPaymentWithDoubleCTA(
             messageId,
+            serviceId,
             paymentWithDoubleCTA.paymentData,
             canNavigateToPayment,
             isPaymentLoading,
@@ -328,6 +335,7 @@ export const MessageDetailsStickyFooter = ({
         paymentWithCTA =>
           renderPaymentWithCTA(
             messageId,
+            serviceId,
             paymentWithCTA.paymentData,
             canNavigateToPayment,
             isPaymentLoading,
@@ -346,6 +354,7 @@ export const MessageDetailsStickyFooter = ({
         payment =>
           renderPayment(
             messageId,
+            serviceId,
             payment.paymentData,
             canNavigateToPayment,
             isPaymentLoading

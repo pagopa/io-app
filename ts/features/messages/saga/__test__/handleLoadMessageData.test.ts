@@ -243,21 +243,26 @@ describe("getMessageDetails", () => {
 describe("getThirdPartyDataMessage", () => {
   it("should dispatch a loadThirdPartyMessage.request and return the third party message when the related saga succeeds ", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    const service = {
+      service_id: "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId,
+      service_name: "The name",
+      organization_name: "Org name",
+      organization_fiscal_code: "OrgFisCod"
+    } as ServicePublic;
     const messageCategoryTag = "GENERIC";
     const thirdPartyMessage = { id: "1" } as ThirdPartyMessageWithContent;
     testSaga(
       testable!.getThirdPartyDataMessage,
       messageId,
       false,
-      serviceId,
+      service,
       messageCategoryTag
     )
       .next()
       .put(
         loadThirdPartyMessage.request({
           id: messageId,
-          serviceId,
+          serviceId: service.service_id,
           tag: messageCategoryTag
         })
       )
@@ -275,7 +280,7 @@ describe("getThirdPartyDataMessage", () => {
         testable!.decodeAndTrackThirdPartyMessageDetailsIfNeeded,
         false,
         thirdPartyMessage,
-        serviceId,
+        service,
         messageCategoryTag
       )
       .next(O.none)
@@ -283,20 +288,25 @@ describe("getThirdPartyDataMessage", () => {
   });
   it("should dispatch a loadThirdPartyMessage.request and return undefined when the related saga fails ", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    const service = {
+      service_id: "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId,
+      service_name: "The name",
+      organization_name: "Org name",
+      organization_fiscal_code: "OrgFisCod"
+    } as ServicePublic;
     const messageCategoryTag = "GENERIC";
     testSaga(
       testable!.getThirdPartyDataMessage,
       messageId,
       false,
-      serviceId,
+      service,
       messageCategoryTag
     )
       .next()
       .put(
         loadThirdPartyMessage.request({
           id: messageId,
-          serviceId,
+          serviceId: service.service_id,
           tag: messageCategoryTag
         })
       )
@@ -373,11 +383,13 @@ describe("dispatchSuccessAction", () => {
     const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const serviceName = "serName";
     const organizationName = "orgName";
+    const organizationFiscalCode = "orgFisCod";
     const isRead = true;
     const paginatedMessage = {
       id: messageId,
       serviceId,
       organizationName,
+      organizationFiscalCode,
       serviceName,
       isRead,
       category: { tag: TagEnum.PN }
@@ -397,6 +409,7 @@ describe("dispatchSuccessAction", () => {
       isPNMessage: true,
       messageId,
       organizationName,
+      organizationFiscalCode,
       serviceId,
       serviceName
     };
@@ -418,11 +431,13 @@ describe("dispatchSuccessAction", () => {
     const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const serviceName = "serName";
     const organizationName = "orgName";
+    const organizationFiscalCode = "orgFisCod";
     const isRead = true;
     const paginatedMessage = {
       id: messageId,
       serviceId,
       organizationName,
+      organizationFiscalCode,
       serviceName,
       isRead,
       category: { tag: "GENERIC" }
@@ -442,6 +457,7 @@ describe("dispatchSuccessAction", () => {
       isPNMessage: false,
       messageId,
       organizationName,
+      organizationFiscalCode,
       serviceId,
       serviceName
     };
@@ -463,11 +479,13 @@ describe("dispatchSuccessAction", () => {
     const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const serviceName = "serName";
     const organizationName = "orgName";
+    const organizationFiscalCode = "orgFisCod";
     const isRead = true;
     const paginatedMessage = {
       id: messageId,
       serviceId,
       organizationName,
+      organizationFiscalCode,
       serviceName,
       isRead,
       category: { tag: "GENERIC" }
@@ -485,6 +503,7 @@ describe("dispatchSuccessAction", () => {
       isPNMessage: false,
       messageId,
       organizationName,
+      organizationFiscalCode,
       serviceId,
       serviceName
     };
@@ -506,11 +525,13 @@ describe("dispatchSuccessAction", () => {
     const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const serviceName = "serName";
     const organizationName = "orgName";
+    const organizationFiscalCode = "orgFisCod";
     const isRead = true;
     const paginatedMessage = {
       id: messageId,
       serviceId,
       organizationName,
+      organizationFiscalCode,
       serviceName,
       isRead,
       category: { tag: "GENERIC" }
@@ -525,10 +546,16 @@ describe("dispatchSuccessAction", () => {
       isPNMessage: false,
       messageId,
       organizationName,
+      organizationFiscalCode,
       serviceId,
       serviceName
     };
-    testSaga(testable!.dispatchSuccessAction, paginatedMessage, messageDetails)
+    testSaga(
+      testable!.dispatchSuccessAction,
+      paginatedMessage,
+      messageDetails,
+      undefined
+    )
       .next()
       .select(isPnEnabledSelector)
       .next(false)
@@ -541,11 +568,13 @@ describe("dispatchSuccessAction", () => {
     const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const serviceName = "serName";
     const organizationName = "orgName";
+    const organizationFiscalCode = "orgFisCod";
     const isRead = true;
     const paginatedMessage = {
       id: messageId,
       serviceId,
       organizationName,
+      organizationFiscalCode,
       serviceName,
       isRead,
       category: { tag: "GENERIC" }
@@ -560,10 +589,16 @@ describe("dispatchSuccessAction", () => {
       isPNMessage: false,
       messageId,
       organizationName,
+      organizationFiscalCode,
       serviceId,
       serviceName
     };
-    testSaga(testable!.dispatchSuccessAction, paginatedMessage, messageDetails)
+    testSaga(
+      testable!.dispatchSuccessAction,
+      paginatedMessage,
+      messageDetails,
+      undefined
+    )
       .next()
       .select(isPnEnabledSelector)
       .next(false)
@@ -576,12 +611,14 @@ describe("dispatchSuccessAction", () => {
     const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const serviceName = "serName";
     const organizationName = "orgName";
+    const organizationFiscalCode = "orgFisCod";
     const isRead = true;
     const authCode = "authCode";
     const paginatedMessage = {
       id: messageId,
       serviceId,
       organizationName,
+      organizationFiscalCode,
       serviceName,
       isRead,
       category: { tag: "GENERIC" }
@@ -598,10 +635,16 @@ describe("dispatchSuccessAction", () => {
       isPNMessage: false,
       messageId,
       organizationName,
+      organizationFiscalCode,
       serviceId,
       serviceName
     };
-    testSaga(testable!.dispatchSuccessAction, paginatedMessage, messageDetails)
+    testSaga(
+      testable!.dispatchSuccessAction,
+      paginatedMessage,
+      messageDetails,
+      undefined
+    )
       .next()
       .select(isPnEnabledSelector)
       .next(false)
@@ -761,7 +804,7 @@ describe("loadMessageData", () => {
         testable!.getThirdPartyDataMessage,
         messageId,
         false,
-        serviceId,
+        serviceDetails,
         tag
       )
       .next(undefined)
@@ -805,7 +848,7 @@ describe("loadMessageData", () => {
         testable!.getThirdPartyDataMessage,
         messageId,
         false,
-        serviceId,
+        serviceDetails,
         tag
       )
       .next(thirdPartyMessage)
@@ -887,13 +930,18 @@ describe("loadMessageData", () => {
         testable!.getThirdPartyDataMessage,
         messageId,
         false,
-        serviceId,
+        serviceDetails,
         tag
       )
       .next(thirdPartyMessage)
       .call(testable!.setMessageReadIfNeeded, paginatedMessage)
       .next(true)
-      .call(testable!.dispatchSuccessAction, paginatedMessage, messageDetails)
+      .call(
+        testable!.dispatchSuccessAction,
+        paginatedMessage,
+        messageDetails,
+        thirdPartyMessage
+      )
       .next()
       .isDone();
   });
@@ -929,11 +977,22 @@ describe("loadMessageData", () => {
       .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
-      .call(testable!.getThirdPartyDataMessage, messageId, true, serviceId, tag)
+      .call(
+        testable!.getThirdPartyDataMessage,
+        messageId,
+        true,
+        serviceDetails,
+        tag
+      )
       .next(thirdPartyMessage)
       .call(testable!.setMessageReadIfNeeded, paginatedMessage)
       .next(true)
-      .call(testable!.dispatchSuccessAction, paginatedMessage, messageDetails)
+      .call(
+        testable!.dispatchSuccessAction,
+        paginatedMessage,
+        messageDetails,
+        thirdPartyMessage
+      )
       .next()
       .isDone();
   });
@@ -969,7 +1028,12 @@ describe("loadMessageData", () => {
       .next(messageDetails)
       .call(testable!.setMessageReadIfNeeded, paginatedMessage)
       .next(true)
-      .call(testable!.dispatchSuccessAction, paginatedMessage, messageDetails)
+      .call(
+        testable!.dispatchSuccessAction,
+        paginatedMessage,
+        messageDetails,
+        undefined
+      )
       .next()
       .isDone();
   });

@@ -140,6 +140,7 @@ export const MessageDetails = ({
       </ScrollView>
       <MessageFooter
         messageId={messageId}
+        serviceId={serviceId}
         payments={payments}
         maxVisiblePaymentCount={maxVisiblePaymentCount}
         isCancelled={isCancelled}

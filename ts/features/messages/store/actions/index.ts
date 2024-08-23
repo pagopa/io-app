@@ -44,6 +44,7 @@ export type SuccessGetMessageDataActionType = {
   hasRemoteContent: boolean;
   isPNMessage: boolean;
   messageId: UIMessageId;
+  organizationFiscalCode: string;
   organizationName: string;
   serviceId: ServiceId;
   serviceName: string;

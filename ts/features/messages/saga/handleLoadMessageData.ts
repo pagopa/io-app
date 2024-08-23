@@ -38,6 +38,7 @@ import {
 } from "../analytics";
 import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
 import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
+import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 
 export function* handleLoadMessageData(
   action: ActionType<typeof getMessageDataAction.request>
@@ -124,22 +125,22 @@ function* loadMessageData({
   // download it regardless of what is in messageDetails)
   const shouldDownloadThirdPartyData =
     messageDetails.hasThirdPartyData || isPNMessage;
-  if (shouldDownloadThirdPartyData) {
-    const thirdPartyMessageDetails = yield* call(
-      getThirdPartyDataMessage,
-      messageId,
-      isPNMessage,
-      serviceId,
-      paginatedMessage.category.tag
+  const thirdPartyMessageDetails = shouldDownloadThirdPartyData
+    ? yield* call(
+        getThirdPartyDataMessage,
+        messageId,
+        isPNMessage,
+        serviceDetails,
+        paginatedMessage.category.tag
+      )
+    : undefined;
+  if (shouldDownloadThirdPartyData && !thirdPartyMessageDetails) {
+    yield* call(
+      commonFailureHandling,
+      "thirdPartyMessageDetails",
+      fromPushNotification
     );
-    if (!thirdPartyMessageDetails) {
-      yield* call(
-        commonFailureHandling,
-        "thirdPartyMessageDetails",
-        fromPushNotification
-      );
-      return;
-    }
+    return;
   }
 
   const messageReadCheckSucceded = yield* call(
@@ -156,7 +157,12 @@ function* loadMessageData({
   }
 
   trackMessageDataLoadSuccess(fromPushNotification);
-  yield* call(dispatchSuccessAction, paginatedMessage, messageDetails);
+  yield* call(
+    dispatchSuccessAction,
+    paginatedMessage,
+    messageDetails,
+    thirdPartyMessageDetails
+  );
 }
 
 function* getPaginatedMessage(messageId: UIMessageId) {
@@ -231,12 +237,18 @@ function* getMessageDetails(messageId: UIMessageId) {
 function* getThirdPartyDataMessage(
   messageId: UIMessageId,
   isPNMessage: boolean,
-  serviceId: ServiceId,
+  service: ServicePublic,
   tag: string
 ) {
   // Third party data may change anytime, so we must retrieve them on every request
 
-  yield* put(loadThirdPartyMessage.request({ id: messageId, serviceId, tag }));
+  yield* put(
+    loadThirdPartyMessage.request({
+      id: messageId,
+      serviceId: service.service_id,
+      tag
+    })
+  );
 
   const outputAction = yield* take([
     loadThirdPartyMessage.success,
@@ -256,7 +268,7 @@ function* getThirdPartyDataMessage(
     decodeAndTrackThirdPartyMessageDetailsIfNeeded,
     isPNMessage,
     thirdPartyMessageOrUndefined,
-    serviceId,
+    service,
     tag
   );
 
@@ -288,7 +300,7 @@ function* setMessageReadIfNeeded(paginatedMessage: UIMessage) {
 function* dispatchSuccessAction(
   paginatedMessage: UIMessage,
   messageDetails: UIMessageDetails,
-  thirdPartyMessage?: ThirdPartyMessageWithContent
+  thirdPartyMessage: ThirdPartyMessageWithContent | undefined
 ) {
   const isPNMessageCategory = paginatedMessage.category.tag === TagEnum.PN;
   const containsPayment = pipe(
@@ -314,6 +326,7 @@ function* dispatchSuccessAction(
       hasRemoteContent: !!thirdPartyMessage,
       isPNMessage: isPnEnabled && isPNMessageCategory,
       messageId: paginatedMessage.id,
+      organizationFiscalCode: paginatedMessage.organizationFiscalCode,
       organizationName: paginatedMessage.organizationName,
       serviceId: paginatedMessage.serviceId,
       serviceName: paginatedMessage.serviceName
@@ -339,7 +352,7 @@ function* commonFailureHandling(
 const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
   isPNMessage: boolean,
   thirdPartyMessageOrUndefined: ThirdPartyMessageWithContent | undefined,
-  serviceId: ServiceId,
+  service: ServicePublic,
   tag: string
 ) =>
   pipe(
@@ -355,7 +368,14 @@ const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
         RemoteContentDetails.decode,
         E.mapLeft(errors =>
           pipe(errors, readableReport, reason =>
-            trackRemoteContentMessageDecodingWarning(reason, serviceId, tag)
+            trackRemoteContentMessageDecodingWarning(
+              service.service_id,
+              service.service_name,
+              service.organization_name,
+              service.organization_fiscal_code,
+              tag,
+              reason
+            )
           )
         )
       )
