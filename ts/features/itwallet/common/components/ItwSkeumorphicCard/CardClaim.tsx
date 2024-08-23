@@ -87,7 +87,7 @@ export type CardClaimRendererProps<T> = {
 };
 
 /**
- * Allows to render a claim if it satisfies the provided decoder
+ * Allows to render a claim if it satisfies the provided `is` function
  * @returns The component from the props if value if correctly decoded, otherwise it returns null
  */
 const CardClaimRenderer = <T,>({
@@ -95,7 +95,15 @@ const CardClaimRenderer = <T,>({
   is,
   component
 }: CardClaimRendererProps<T>) =>
-  pipe(O.fromNullable(claim.value), O.filter(is), O.fold(constNull, component));
+  pipe(
+    claim.value,
+    ClaimValue.decode,
+    O.fromEither,
+    O.filter(is),
+    O.fold(constNull, component)
+  );
+
+// O.filter(is), O.fold(constNull, component)
 
 export type CardClaimContainerProps = WithTestID<{
   position?: AbsoluteClaimPosition;

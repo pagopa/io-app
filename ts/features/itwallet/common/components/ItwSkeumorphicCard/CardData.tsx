@@ -68,26 +68,38 @@ const MdlFrontData = ({ claims }: DataComponentProps) => {
 };
 
 const MdlBackData = ({ claims }: DataComponentProps) => {
-  const row = 7.9;
-  const rowStep = 5.2;
+  // Driving privilges list with the same order as on the Driving License physical card
+  const drivingPrivileges = [
+    "AM",
+    "A1",
+    "A2",
+    "A",
+    "B1",
+    "B",
+    "C1",
+    "C",
+    "D1",
+    "D",
+    "BE",
+    "C1E",
+    "CE",
+    "D1E",
+    "DE"
+  ] as const;
 
-  const privilegeRows: Record<string, AbsoluteClaimPosition["y"]> = {
-    ["AM"]: `${row + rowStep * 0}%`,
-    ["A1"]: `${row + rowStep * 1}%`,
-    ["A2"]: `${row + rowStep * 2}%`,
-    ["A"]: `${row + rowStep * 3}%`,
-    ["B1"]: `${row + rowStep * 4}%`,
-    ["B"]: `${row + rowStep * 5}%`,
-    ["C1"]: `${row + rowStep * 6}%`,
-    ["C"]: `${row + rowStep * 7}%`,
-    ["D1"]: `${row + rowStep * 8}%`,
-    ["D"]: `${row + rowStep * 9}%`,
-    ["BE"]: `${row + rowStep * 10}%`,
-    ["C1E"]: `${row + rowStep * 11}%`,
-    ["CE"]: `${row + rowStep * 12}%`,
-    ["D1E"]: `${row + rowStep * 13}%`,
-    ["DE"]: `${row + rowStep * 14}%`
-  };
+  // This object definies the rows of the driving privileges table, specifing the "y" coordinate for each item
+  const privilegesTableRows: Record<string, AbsoluteClaimPosition["y"]> =
+    drivingPrivileges.reduce(
+      (acc, privilege, index) => ({
+        ...acc,
+        [privilege]: `${
+          7.9 + // Row padding, defines the first row position
+          5.2 * // Row step, defines the space between each row
+            index
+        }%`
+      }),
+      {} as Record<string, AbsoluteClaimPosition["y"]>
+    );
 
   return (
     <View testID="mdlBackDataTestID" style={styles.container}>
@@ -95,27 +107,27 @@ const MdlBackData = ({ claims }: DataComponentProps) => {
         claim={claims["driving_privileges_details"]}
         is={DrivingPrivilegesClaim.is}
         component={privileges =>
-          privileges.map(p => (
-            <Fragment key={`driving_privilege_${p.driving_privilege}`}>
+          privileges.map(({ driving_privilege, issue_date, expiry_date }) => (
+            <Fragment key={`driving_privilege_row_${driving_privilege}`}>
               <CardClaimContainer
                 position={{
                   x: `37%`,
-                  y: privilegeRows[p.driving_privilege] || `${row}%`
+                  y: privilegesTableRows[driving_privilege] || `0%`
                 }}
               >
                 <ClaimLabel>
-                  {localeDateFormat(parse(p.issue_date), "%d/%m/%y")}
+                  {localeDateFormat(parse(issue_date), "%d/%m/%y")}
                 </ClaimLabel>
               </CardClaimContainer>
               <CardClaimContainer
-                key={`driving_privilege_${p.driving_privilege}`}
+                key={`driving_privilege_${driving_privilege}`}
                 position={{
                   x: `53%`,
-                  y: privilegeRows[p.driving_privilege] || `${row}%`
+                  y: privilegesTableRows[driving_privilege] || `0%`
                 }}
               >
                 <ClaimLabel>
-                  {localeDateFormat(parse(p.expiry_date), "%d/%m/%y")}
+                  {localeDateFormat(parse(expiry_date), "%d/%m/%y")}
                 </ClaimLabel>
               </CardClaimContainer>
             </Fragment>
