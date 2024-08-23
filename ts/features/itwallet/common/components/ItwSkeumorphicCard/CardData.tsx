@@ -22,14 +22,14 @@ type DataComponentProps = {
 };
 
 const MdlFrontData = ({ claims }: DataComponentProps) => {
-  const row = 15;
-  const rowStep = 7.3;
+  const row = 14.4; // Row padding, defines the first row position
+  const rowStep = 7.3; // Row step, defines the space between each row
 
   return (
     <View testID="mdlFrontDataTestID" style={styles.container}>
       <CardClaim
         claim={claims["portrait"]}
-        position={{ x: "4.2%", y: "29%" }}
+        position={{ x: "4.35%", y: "29%" }}
       />
       <CardClaim
         claim={claims["given_name"]}
@@ -61,7 +61,7 @@ const MdlFrontData = ({ claims }: DataComponentProps) => {
       />
       <CardClaim
         claim={claims["driving_privileges_details"]}
-        position={{ x: "8.85%", y: "78.5%" }}
+        position={{ x: "8.85%", y: "77.8%" }}
       />
     </View>
   );
