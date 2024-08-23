@@ -93,8 +93,8 @@ const MdlBackData = ({ claims }: DataComponentProps) => {
       (acc, privilege, index) => ({
         ...acc,
         [privilege]: `${
-          7.9 + // Row padding, defines the first row position
-          5.2 * // Row step, defines the space between each row
+          7.75 + // Row padding, defines the first row position
+          5.17 * // Row step, defines the space between each row
             index
         }%`
       }),
