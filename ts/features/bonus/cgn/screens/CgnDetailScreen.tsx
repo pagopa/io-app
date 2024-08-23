@@ -47,6 +47,7 @@ import CgnCardComponent from "../components/detail/CgnCardComponent";
 import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
+import { useCgnUnsubscribe } from "../hooks/useCgnUnsubscribe";
 import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
 import { navigateToCgnMerchantsTabs } from "../navigation/actions";
 import { CgnDetailsParamsList } from "../navigation/params";
@@ -79,11 +80,6 @@ const gradientSafeArea: IOSpacingScale = 80;
 const contentEndMargin: IOSpacingScale = 32;
 const spaceBetweenActions: IOSpacer = 24;
 
-const getPrimaryactionLabel = (isEycaEnabled: boolean) =>
-  isEycaEnabled
-    ? I18n.t("bonus.cgn.detail.cta.buyers")
-    : I18n.t("bonus.cgn.detail.cta.discover");
-
 /**
  * Screen to display all the information about the active CGN
  */
@@ -115,22 +111,6 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     canEycaCardBeShown(props.eycaDetails) &&
     props.isCgnEnabled &&
     CardActivated.is(props.cgnDetails);
-
-  const gradientAreaHeight: number = React.useMemo(
-    () =>
-      bottomMargin +
-      buttonSolidHeight +
-      gradientSafeArea +
-      (canDisplayEycaDetails ? buttonSolidHeight : 0),
-    [bottomMargin, canDisplayEycaDetails]
-  );
-
-  const footerGradientOpacityTransition = useAnimatedStyle(() => ({
-    opacity: withTiming(gradientOpacity.value, {
-      duration: 200,
-      easing: Easing.ease
-    })
-  }));
 
   const scrollHandler = useAnimatedScrollHandler(
     ({ contentOffset, layoutMeasurement, contentSize }) => {
@@ -170,14 +150,6 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     navigation.goBack();
     return true;
   });
-
-  const onPressShowCgnDiscounts = () => {
-    if (props.isMerchantV2Enabled) {
-      props.navigateToMerchantsTabs();
-    } else {
-      navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES);
-    }
-  };
 
   return (
     <LoadingSpinnerOverlay
@@ -262,39 +234,12 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             </View>
           </Animated.ScrollView>
           <SectionStatusComponent sectionKey={"cgn"} />
-          {props.isCgnEnabled &&
-            props.cgnDetails?.status === StatusEnum.ACTIVATED && (
-              <GradientBottomActions
-                primaryActionProps={{
-                  label: getPrimaryactionLabel(canDisplayEycaDetails),
-                  onPress: onPressShowCgnDiscounts
-                }}
-                secondaryActionProps={
-                  canDisplayEycaDetails
-                    ? {
-                        label: I18n.t(
-                          "bonus.cgn.detail.cta.eyca.showEycaDiscounts"
-                        ),
-                        accessibilityLabel: I18n.t(
-                          "bonus.cgn.detail.cta.eyca.showEycaDiscounts"
-                        ),
-                        onPress: () =>
-                          openWebUrl(EYCA_WEBSITE_DISCOUNTS_PAGE_URL, () =>
-                            IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
-                          )
-                      }
-                    : undefined
-                }
-                transitionAnimStyle={footerGradientOpacityTransition}
-                dimensions={{
-                  bottomMargin,
-                  extraBottomMargin: 0,
-                  gradientAreaHeight,
-                  spaceBetweenActions,
-                  safeBackgroundHeight: bottomMargin
-                }}
-              />
-            )}
+          <FooterActions
+            {...props}
+            canDisplayEycaDetails={canDisplayEycaDetails}
+            bottomMargin={bottomMargin}
+            gradientOpacity={gradientOpacity}
+          />
         </>
       )}
     </LoadingSpinnerOverlay>
@@ -320,3 +265,97 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);
+
+type FooterActionsProps = Props & {
+  canDisplayEycaDetails: boolean;
+  bottomMargin: number;
+  gradientOpacity: Animated.SharedValue<number>;
+};
+
+function FooterActions({
+  canDisplayEycaDetails,
+  bottomMargin,
+  gradientOpacity,
+  ...props
+}: FooterActionsProps) {
+  const navigation =
+    useNavigation<IOStackNavigationProp<CgnDetailsParamsList, "CGN_DETAILS">>();
+
+  const onPressShowCgnDiscounts = () => {
+    if (props.isMerchantV2Enabled) {
+      props.navigateToMerchantsTabs();
+    } else {
+      navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES);
+    }
+  };
+
+  const { requestUnsubscription } = useCgnUnsubscribe();
+
+  const footerGradientOpacityTransition = useAnimatedStyle(() => ({
+    opacity: withTiming(gradientOpacity.value, {
+      duration: 200,
+      easing: Easing.ease
+    })
+  }));
+
+  const gradientAreaHeight: number = React.useMemo(
+    () =>
+      bottomMargin +
+      buttonSolidHeight +
+      gradientSafeArea +
+      (canDisplayEycaDetails ? buttonSolidHeight : 0),
+    [bottomMargin, canDisplayEycaDetails]
+  );
+
+  return props.isCgnEnabled &&
+    props.cgnDetails?.status === StatusEnum.ACTIVATED ? (
+    <GradientBottomActions
+      primaryActionProps={{
+        label: canDisplayEycaDetails
+          ? I18n.t("bonus.cgn.detail.cta.buyers")
+          : I18n.t("bonus.cgn.detail.cta.discover"),
+        onPress: onPressShowCgnDiscounts
+      }}
+      secondaryActionProps={
+        canDisplayEycaDetails
+          ? {
+              label: I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts"),
+              accessibilityLabel: I18n.t(
+                "bonus.cgn.detail.cta.eyca.showEycaDiscounts"
+              ),
+              onPress: () =>
+                openWebUrl(EYCA_WEBSITE_DISCOUNTS_PAGE_URL, () =>
+                  IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
+                )
+            }
+          : undefined
+      }
+      transitionAnimStyle={footerGradientOpacityTransition}
+      dimensions={{
+        bottomMargin,
+        extraBottomMargin: 0,
+        gradientAreaHeight,
+        spaceBetweenActions,
+        safeBackgroundHeight: bottomMargin
+      }}
+    />
+  ) : (
+    CardExpired.is(props.cgnDetails) && (
+      <GradientBottomActions
+        primaryActionProps={{
+          color: "danger",
+          label: I18n.t("bonus.cgn.activation.deactivate.expired"),
+          onPress: requestUnsubscription
+        }}
+        transitionAnimStyle={footerGradientOpacityTransition}
+        dimensions={{
+          bottomMargin,
+          extraBottomMargin: 0,
+          gradientAreaHeight,
+          spaceBetweenActions,
+          safeBackgroundHeight: bottomMargin
+        }}
+      />
+    )
+  );
+}
