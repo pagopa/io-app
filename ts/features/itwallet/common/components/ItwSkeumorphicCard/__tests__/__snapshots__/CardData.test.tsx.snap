@@ -21,7 +21,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         },
         {
           "left": "37%",
-          "top": "7.9%",
+          "top": "7.75%",
         },
       ]
     }
@@ -67,7 +67,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         },
         {
           "left": "53%",
-          "top": "7.9%",
+          "top": "7.75%",
         },
       ]
     }
@@ -113,7 +113,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         },
         {
           "left": "37%",
-          "top": "33.9%",
+          "top": "33.6%",
         },
       ]
     }
@@ -159,7 +159,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         },
         {
           "left": "53%",
-          "top": "33.9%",
+          "top": "33.6%",
         },
       ]
     }
@@ -218,7 +218,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           "width": "100%",
         },
         {
-          "left": "4.2%",
+          "left": "4.35%",
           "top": "29%",
         },
       ]
@@ -235,7 +235,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       style={
         {
           "aspectRatio": 0.75,
-          "width": "23.6%",
+          "width": "23.45%",
         }
       }
     />
@@ -250,7 +250,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         },
         {
           "left": "34.75%",
-          "top": "15%",
+          "top": "14.4%",
         },
       ]
     }
@@ -296,7 +296,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         },
         {
           "left": "34.75%",
-          "top": "22.3%",
+          "top": "21.7%",
         },
       ]
     }
@@ -342,7 +342,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         },
         {
           "left": "34.75%",
-          "top": "29.6%",
+          "top": "29%",
         },
       ]
     }
@@ -388,7 +388,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         },
         {
           "left": "57%",
-          "top": "29.6%",
+          "top": "29%",
         },
       ]
     }
@@ -434,7 +434,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         },
         {
           "left": "34.75%",
-          "top": "36.9%",
+          "top": "36.3%",
         },
       ]
     }
@@ -480,7 +480,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         },
         {
           "left": "34.75%",
-          "top": "44.2%",
+          "top": "43.6%",
         },
       ]
     }
@@ -526,7 +526,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         },
         {
           "left": "34.75%",
-          "top": "51.5%",
+          "top": "50.9%",
         },
       ]
     }
@@ -572,7 +572,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         },
         {
           "left": "8.85%",
-          "top": "78.5%",
+          "top": "77.8%",
         },
       ]
     }
