@@ -2273,7 +2273,7 @@ features:
         all: "Alle"
         bonus: "Initiativen für das Gemeinwohl"
         cgn: "Nationale Jugendkarte"
-        itw: "IT Wallet"
+        itw: Documenti
         payment: "Zahlungsmethoden"
     onboarding:
       title: "Was möchtest du deinem Konto hinzufügen?"
@@ -2303,7 +2303,7 @@ features:
         success: ""
   itWallet:
     discovery:
-      content: "# Attiva IT Wallet \n ###### Cos'è e come funziona? \n IT Wallet è la nuova funzionalità di IO che ti permette di aggiungere al Portafoglio la tua **Identità Digitale** e di portare sempre con te **la versione digitale dei documenti fisici** che già possiedi, come la Tessera Sanitaria e presto molti altri. \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
+      content: "# La versione digitale dei tuoi documenti, su IO \n ###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti personali**, come la Patente di guida, la Tessera Sanitaria e presto molti altri. \n Attiva la funzionalità *Documenti su IO* per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
       tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()
 support:
   ticketList:
