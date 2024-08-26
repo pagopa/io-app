@@ -1,34 +1,34 @@
 import { Body, Divider, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
 import * as React from "react";
 import { FlatList, SafeAreaView, View } from "react-native";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
+import { openAppStoreUrl } from "../../../../utils/url";
 import { FimsHistoryListItem } from "../components/FimsHistoryListItem";
 import { LoadingFimsHistoryItemsFooter } from "../components/FimsHistoryLoaders";
 import { fimsHistoryGet } from "../store/actions";
 import {
+  fimsHistoryExportStateSelector,
   fimsHistoryToUndefinedSelector,
   isFimsHistoryLoadingSelector
 } from "../store/selectors";
-import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { openAppStoreUrl } from "../../../../utils/url";
+import { useFimsHistoryExport } from "../hooks/useFimsHistoryResultToasts";
+import * as RemoteValue from "../../../../common/model/RemoteValue";
 
 export const FimsHistoryScreen = () => {
   const dispatch = useIODispatch();
 
   const requiresAppUpdate = useIOSelector(fimsRequiresAppUpdateSelector);
-  const isLoading = useIOSelector(isFimsHistoryLoadingSelector);
+  const isHistoryLoading = useIOSelector(isFimsHistoryLoadingSelector);
   const consents = useIOSelector(fimsHistoryToUndefinedSelector);
+  const historyExportState = useIOSelector(fimsHistoryExportStateSelector);
+  const isHistoryExporting = RemoteValue.isLoading(historyExportState);
 
-  React.useEffect(() => {
-    if (!requiresAppUpdate) {
-      dispatch(fimsHistoryGet.request({ shouldReloadFromScratch: true }));
-    }
-  }, [dispatch, requiresAppUpdate]);
+  // ---------- HOOKS
 
   const fetchMore = React.useCallback(() => {
     if (consents?.continuationToken) {
@@ -40,16 +40,21 @@ export const FimsHistoryScreen = () => {
     }
   }, [consents?.continuationToken, dispatch]);
 
-  const renderLoadingFooter = () =>
-    isLoading ? (
-      <LoadingFimsHistoryItemsFooter
-        showFirstDivider={(consents?.items.length ?? 0) > 0}
-      />
-    ) : null;
   useHeaderSecondLevel({
     title: I18n.t("FIMS.history.historyScreen.header"),
     supportRequest: true
   });
+
+  React.useEffect(() => {
+    if (!requiresAppUpdate) {
+      dispatch(fimsHistoryGet.request({ shouldReloadFromScratch: true }));
+    }
+  }, [dispatch, requiresAppUpdate]);
+
+  const { handleExportOnPress } = useFimsHistoryExport();
+
+  // ---------- APP UPDATE
+
   if (requiresAppUpdate) {
     return (
       <OperationResultScreenContent
@@ -63,6 +68,16 @@ export const FimsHistoryScreen = () => {
       />
     );
   }
+
+  // ---------- RENDER
+
+  const renderLoadingFooter = () =>
+    isHistoryLoading ? (
+      <LoadingFimsHistoryItemsFooter
+        showFirstDivider={(consents?.items.length ?? 0) > 0}
+      />
+    ) : null;
+
   return (
     <>
       <SafeAreaView>
@@ -86,8 +101,9 @@ export const FimsHistoryScreen = () => {
         actions={{
           type: "SingleButton",
           primary: {
+            loading: isHistoryExporting,
             label: I18n.t("FIMS.history.exportData.CTA"),
-            onPress: constNull // full export functionality coming soon
+            onPress: handleExportOnPress
           }
         }}
       />
