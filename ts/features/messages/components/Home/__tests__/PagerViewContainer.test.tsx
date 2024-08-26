@@ -30,28 +30,14 @@ describe("PagerViewContainer", () => {
     jest.resetAllMocks();
     jest.clearAllMocks();
   });
-  /* it("should dispatch 'reloadAllMessages.request' upon first rendering for INBOX", () => {
+  it("should not dispatch 'reloadAllMessages.request' upon first rendering for INBOX with useEffect (since it is dispatched by the PagerView's pageSelected callback)", () => {
     renderComponent("INBOX", pot.none, pot.none);
-    expect(mockDispatch.mock.calls.length).toBe(1);
-    expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
-      reloadAllMessages.request({
-        pageSize,
-        filter: { getArchived: false },
-        fromUserAction: false
-      })
-    );
-  }); */
-  /* it("should dispatch 'reloadAllMessages.request' upon first rendering for ARCHIVE", () => {
+    expect(mockDispatch.mock.calls.length).toBe(0);
+  });
+  it("should not dispatch 'reloadAllMessages.request' upon first rendering for ARCHIVE with useEffect (since it is dispatched by the PagerView's pageSelected callback)", () => {
     renderComponent("ARCHIVE", pot.none, pot.none);
-    expect(mockDispatch.mock.calls.length).toBe(1);
-    expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
-      reloadAllMessages.request({
-        pageSize,
-        filter: { getArchived: true },
-        fromUserAction: false
-      })
-    );
-  }); */
+    expect(mockDispatch.mock.calls.length).toBe(0);
+  });
   it("should not dispatch 'reloadAllMessages.request' when INBOX has (empty) data, should dispatch both 'setShownMessageCategoryAction('ARCHIVE')' when setting page 1 and 'reloadAllMessages.request'", () => {
     const mockUseRefOutput: React.MutableRefObject<PagerView | null> = {
       current: null
