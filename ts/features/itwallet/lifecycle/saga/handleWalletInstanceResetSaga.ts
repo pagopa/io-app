@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { deleteKey } from "@pagopa/io-react-native-crypto";
 import { itwCredentialsSelector } from "../../credentials/store/selectors";
-import { itwLifecycleReducersReset } from "../store/actions";
+import { itwLifecycleStoresReset } from "../store/actions";
 import { walletRemoveCardsByType } from "../../../newWallet/store/actions/cards";
 import { isIos } from "../../../../utils/platform";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
@@ -20,7 +20,7 @@ export function* handleWalletInstanceResetSaga() {
   const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
   const { eid, credentials } = yield* select(itwCredentialsSelector);
 
-  yield* put(itwLifecycleReducersReset());
+  yield* put(itwLifecycleStoresReset());
   yield* put(walletRemoveCardsByType("itw"));
 
   // Remove all keys within the wallet.

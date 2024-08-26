@@ -11,10 +11,10 @@ export const itwLifecycleStateUpdated = createStandardAction(
 /**
  * @internal To fully reset the Wallet Instance, dispatch `itwLifecycleWalletReset`.
  *
- * Action used to reset IT Wallet reducers only.
+ * Action used to only reset IT Wallet's Redux store slices.
  */
-export const itwLifecycleReducersReset = createStandardAction(
-  "ITW_LIFECYCLE_REDUCERS_RESET"
+export const itwLifecycleStoresReset = createStandardAction(
+  "ITW_LIFECYCLE_STORES_RESET"
 )<void>();
 
 /**
@@ -38,6 +38,6 @@ export const itwLifecycleIdentityCheckCompleted = createStandardAction(
  */
 export type ItwLifecycleActions =
   | ActionType<typeof itwLifecycleStateUpdated>
-  | ActionType<typeof itwLifecycleReducersReset>
+  | ActionType<typeof itwLifecycleStoresReset>
   | ActionType<typeof itwLifecycleWalletReset>
   | ActionType<typeof itwLifecycleIdentityCheckCompleted>;
