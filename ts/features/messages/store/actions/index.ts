@@ -115,11 +115,13 @@ export type LoadMessagesRequestPayload = {
   pageSize: number;
   cursor?: string;
   filter: Filter;
+  fromUserAction: boolean;
 };
 
 type PaginatedMessagesSuccessPayload = {
   messages: ReadonlyArray<UIMessage>;
   filter: Filter;
+  fromUserAction: boolean;
 };
 
 // The data is appended to the state
@@ -165,7 +167,7 @@ export const reloadAllMessages = createAsyncAction(
   "MESSAGES_RELOAD_SUCCESS",
   "MESSAGES_RELOAD_FAILURE"
 )<
-  Pick<LoadMessagesRequestPayload, "pageSize" | "filter">,
+  Pick<LoadMessagesRequestPayload, "pageSize" | "filter" | "fromUserAction">,
   ReloadMessagesPayload,
   MessagesFailurePayload
 >();
