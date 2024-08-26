@@ -219,6 +219,9 @@ export const idpSelector = ({
 }: GlobalState): O.Option<SpidIdp> =>
   matchWithIdp(authentication, O.none, ({ idp }) => O.some(idp));
 
+export const loggedInAuthSelector = ({ authentication }: GlobalState) =>
+  isLoggedIn(authentication) ? authentication : undefined;
+
 // eslint-disable-next-line complexity
 const reducer = (
   state: AuthenticationState = INITIAL_STATE,

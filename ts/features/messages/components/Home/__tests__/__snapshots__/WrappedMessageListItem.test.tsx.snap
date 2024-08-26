@@ -962,15 +962,15 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                       }
                                     >
                                       <RNSVGSvgView
-                                        accessibilityElementsHidden={true}
-                                        accessibilityLabel=""
-                                        accessible={false}
+                                        accessibilityElementsHidden={false}
+                                        accessibilityLabel="Allegati"
+                                        accessible={true}
                                         align="xMidYMid"
                                         bbHeight={16}
                                         bbWidth={16}
                                         focusable={false}
                                         height={16}
-                                        importantForAccessibility="no-hide-descendants"
+                                        importantForAccessibility="auto"
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
@@ -2056,15 +2056,15 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                       }
                                     >
                                       <RNSVGSvgView
-                                        accessibilityElementsHidden={true}
-                                        accessibilityLabel=""
-                                        accessible={false}
+                                        accessibilityElementsHidden={false}
+                                        accessibilityLabel="Allegati"
+                                        accessible={true}
                                         align="xMidYMid"
                                         bbHeight={16}
                                         bbWidth={16}
                                         focusable={false}
                                         height={16}
-                                        importantForAccessibility="no-hide-descendants"
+                                        importantForAccessibility="auto"
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}

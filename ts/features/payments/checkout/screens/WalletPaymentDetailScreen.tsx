@@ -318,13 +318,19 @@ const WalletPaymentDetailContent = ({
         endElement={amountEndElement}
       />
       <Divider />
-      <ListItemInfo
-        icon="calendar"
-        label={I18n.t("wallet.firstTransactionSummary.dueDate")}
-        accessibilityLabel={I18n.t("wallet.firstTransactionSummary.dueDate")}
-        value={dueDate}
-      />
-      <Divider />
+      {dueDate && (
+        <>
+          <ListItemInfo
+            icon="calendar"
+            label={I18n.t("wallet.firstTransactionSummary.dueDate")}
+            accessibilityLabel={I18n.t(
+              "wallet.firstTransactionSummary.dueDate"
+            )}
+            value={dueDate}
+          />
+          <Divider />
+        </>
+      )}
       <ListItemInfoCopy
         icon="docPaymentCode"
         label={I18n.t("payment.noticeCode")}

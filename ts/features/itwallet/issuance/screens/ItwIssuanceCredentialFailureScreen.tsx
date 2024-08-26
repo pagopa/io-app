@@ -14,10 +14,15 @@ import {
 } from "../../machine/credential/failure";
 import { selectFailureOption } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
     ItwCredentialIssuanceMachineContext.useSelector(selectFailureOption);
+
+  useItwDisbleGestureNavigation();
+  useAvoidHardwareBackButton();
 
   return pipe(
     failureOption,

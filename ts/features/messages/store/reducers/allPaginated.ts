@@ -5,7 +5,6 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
-import { createSelector } from "reselect";
 import {
   MessageListCategory,
   foldK as messageListCategoryFoldK
@@ -13,11 +12,8 @@ import {
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
-  migrateToPaginatedMessages,
-  MigrationResult,
   reloadAllMessages,
   requestAutomaticMessagesRefresh,
-  resetMigrationStatus,
   setShownMessageCategoryAction,
   upsertMessageStatusAttributes
 } from "../actions";
@@ -55,12 +51,6 @@ type Collection = {
   lastUpdateTime: Date;
 };
 
-export type MigrationStatus = O.Option<
-  | { _tag: "started"; total: number }
-  | { _tag: "succeeded"; total: number }
-  | ({ _tag: "failed" } & MigrationResult)
->;
-
 export type MessageOperation = "archive" | "restore";
 export type MessageOperationFailure = {
   error: Error;
@@ -74,14 +64,12 @@ export type AllPaginated = {
   archive: Collection;
   inbox: Collection;
   latestMessageOperation?: E.Either<MessageOperationFailure, MessageOperation>;
-  migration: MigrationStatus;
   shownCategory: MessageListCategory;
 };
 
 const INITIAL_STATE: AllPaginated = {
   archive: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
   inbox: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
-  migration: O.none,
   shownCategory: "INBOX"
 };
 
@@ -120,34 +108,6 @@ const reducer = (
 
     case getType(requestAutomaticMessagesRefresh):
       return reduceAutomaticMessageRefreshRequest(state, action);
-
-    /* BEGIN Migration-related block */
-    case getType(migrateToPaginatedMessages.request):
-      return {
-        ...state,
-        migration: O.some({
-          _tag: "started",
-          total: Object.keys(action.payload).length
-        })
-      };
-
-    case getType(migrateToPaginatedMessages.success):
-      return {
-        ...state,
-        migration: O.some({ _tag: "succeeded", total: action.payload })
-      };
-    case getType(migrateToPaginatedMessages.failure):
-      return {
-        ...state,
-        migration: O.some({ _tag: "failed", ...action.payload })
-      };
-
-    case getType(resetMigrationStatus):
-      return {
-        ...state,
-        migration: O.none
-      };
-    /* END Migration-related block */
 
     case getType(clearCache):
       return {
@@ -635,179 +595,15 @@ const reduceUpsertMessageStatusAttributes = (
 // Selectors
 
 /**
- * Return the whole state for this reducer.
- * @param state
- */
-export const allPaginatedSelector = (state: GlobalState): AllPaginated =>
-  state.entities.messages.allPaginated;
-
-/**
- * Return the inbox in the Inbox
- * @param state
- */
-export const allInboxSelector = (
-  state: GlobalState
-): AllPaginated["inbox"]["data"] =>
-  state.entities.messages.allPaginated.inbox.data;
-
-/**
- * Return the inbox in the Inbox
- * @param state
- */
-export const allArchiveSelector = (
-  state: GlobalState
-): AllPaginated["archive"]["data"] =>
-  state.entities.messages.allPaginated.archive.data;
-
-// We can't use createSelector in this case because
-// the category input changes every time based on the route.
-// The selector is shared across multiple component instances so
-// a possible solution could be to create a selector with a cache
-// size greater than one: in this way it is possible to cache more
-// than one value.
-export const messagesByCategorySelector = (
-  state: GlobalState,
-  category: MessageListCategory
-) => pipe(state, messagePagePotFromCategorySelector(category));
-
-/**
- * Return the list of Inbox messages currently available.
- * @param state
- */
-export const allInboxMessagesSelector = createSelector(
-  allInboxSelector,
-  allPaginated =>
-    pot.getOrElse(
-      pot.map(allPaginated, _ => _.page),
-      []
-    )
-);
-
-/**
- * Return the list of Archive messages currently available.
- * @param state
- */
-export const allArchiveMessagesSelector = createSelector(
-  allArchiveSelector,
-  // eslint-disable-next-line sonarjs/no-identical-functions
-  allPaginated =>
-    pot.getOrElse(
-      pot.map(allPaginated, _ => _.page),
-      []
-    )
-);
-
-export const allInboxAndArchivedMessagesSelector = createSelector(
-  [allInboxMessagesSelector, allArchiveMessagesSelector],
-  (inbox, archive) => inbox.concat(archive)
-);
-
-/**
- * True if the inbox state is loading and the last request is for a next page.
- * @param state
- */
-export const isLoadingInboxNextPage = createSelector(
-  allPaginatedSelector,
-  ({ inbox }) =>
-    pipe(
-      inbox.lastRequest,
-      O.map(_ => _ === "next" && pot.isLoading(inbox.data)),
-      O.getOrElse(constFalse)
-    )
-);
-
-/**
- * True if the inbox state is loading and the last request is for a previous page.
- * @param state
- */
-export const isLoadingInboxPreviousPage = createSelector(
-  allPaginatedSelector,
-  ({ inbox }) =>
-    pipe(
-      inbox.lastRequest,
-      O.map(_ => _ === "previous" && pot.isLoading(inbox.data)),
-      O.getOrElse(constFalse)
-    )
-);
-
-/**
- * True if the inbox state is loading and the last request is for all the messages
- * resulting in a complete reset.
- * @param state
- */
-export const isReloadingInbox = createSelector(
-  allPaginatedSelector,
-  ({ inbox }) =>
-    pipe(
-      inbox.lastRequest,
-      O.map(_ => _ === "all" && pot.isLoading(inbox.data)),
-      O.getOrElse(constFalse)
-    )
-);
-
-/**
  * True if the inbox state is loading or updating, regardless of the request
  * that triggered the load/update.
  * @param state
  */
-export const isLoadingOrUpdatingInbox = createSelector(
-  allInboxSelector,
-  inboxPot => pot.isLoading(inboxPot) || pot.isUpdating(inboxPot)
-);
-
-/**
- * True if the archive state is loading and the last request is for all the messages
- * resulting in a complete reset.
- * @param state
- */
-export const isReloadingArchive = createSelector(
-  allPaginatedSelector,
-  ({ archive }) =>
-    pipe(
-      archive.lastRequest,
-      O.map(_ => _ === "all" && pot.isLoading(archive.data)),
-      O.getOrElse(constFalse)
-    )
-);
-
-/**
- * True if the archive state is loading and the last request is for a next page.
- * @param state
- */
-export const isLoadingArchiveNextPage = createSelector(
-  allPaginatedSelector,
-  ({ archive }) =>
-    pipe(
-      archive.lastRequest,
-      O.map(_ => _ === "next" && pot.isLoading(archive.data)),
-      O.getOrElse(constFalse)
-    )
-);
-
-/**
- * True if the archive state is loading and the last request is for a previous page.
- * @param state
- */
-export const isLoadingArchivePreviousPage = createSelector(
-  allPaginatedSelector,
-  ({ archive }) =>
-    pipe(
-      archive.lastRequest,
-      O.map(_ => _ === "previous" && pot.isLoading(archive.data)),
-      O.getOrElse(constFalse)
-    )
-);
-
-export const getCursors = createSelector(
-  allPaginatedSelector,
-  ({ archive, inbox }) => ({
-    archive: pot.map(archive.data, ({ previous, next }) => ({
-      previous,
-      next
-    })),
-    inbox: pot.map(inbox.data, ({ previous, next }) => ({ previous, next }))
-  })
-);
+export const isLoadingOrUpdatingInbox = (state: GlobalState) =>
+  pipe(
+    state.entities.messages.allPaginated.inbox.data,
+    inboxPot => pot.isLoading(inboxPot) || pot.isUpdating(inboxPot)
+  );
 
 export const shownMessageCategorySelector = (state: GlobalState) =>
   state.entities.messages.allPaginated.shownCategory;

@@ -14,14 +14,16 @@ import {
   fimsCancelOrAbortAction,
   fimsGetConsentsListAction
 } from "../store/actions/";
+import { FimsFlowSuccessBody } from "../components/FimsSuccessBody";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
+import { FimsParamsList } from "../../common/navigation";
 import {
   fimsConsentsDataSelector,
   fimsErrorStateSelector,
   fimsLoadingStateSelector
-} from "../store/reducers";
-import { FimsFlowSuccessBody } from "../components/FimsSuccessBody";
-import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
-import { FimsParamsList } from "../../common/navigation";
+} from "../store/selectors";
+import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
+import { openAppStoreUrl } from "../../../../utils/url";
 
 export type FimsFlowHandlerScreenRouteParams = { ctaUrl: string };
 
@@ -36,6 +38,7 @@ export const FimsFlowHandlerScreen = (
   const { ctaUrl } = props.route.params;
   const dispatch = useIODispatch();
 
+  const requiresAppUpdate = useIOSelector(fimsRequiresAppUpdateSelector);
   const loadingState = useIOSelector(fimsLoadingStateSelector);
   const consentsPot = useIOSelector(fimsConsentsDataSelector);
   const errorState = useIOSelector(fimsErrorStateSelector);
@@ -58,20 +61,34 @@ export const FimsFlowHandlerScreen = (
   });
 
   React.useEffect(() => {
-    if (ctaUrl) {
+    if (ctaUrl && !requiresAppUpdate) {
       dispatch(fimsGetConsentsListAction.request({ ctaUrl }));
     }
-  }, [ctaUrl, dispatch]);
+  }, [ctaUrl, dispatch, requiresAppUpdate]);
+
+  if (requiresAppUpdate) {
+    return (
+      <OperationResultScreenContent
+        isHeaderVisible
+        title={I18n.t("titleUpdateAppAlert")}
+        pictogram="umbrellaNew"
+        action={{
+          label: I18n.t("btnUpdateApp"),
+          onPress: () => openAppStoreUrl()
+        }}
+      />
+    );
+  }
 
   if (errorState !== undefined) {
     return <FimsErrorBody title={errorState} />;
   }
   if (loadingState !== undefined) {
     const subtitle =
-      loadingState === "in-app-browser" || loadingState === "abort" ? (
+      loadingState === "in-app-browser-loading" || loadingState === "abort" ? (
         <View style={IOStyles.alignCenter}>
           <LabelSmall color="grey-650" weight="Regular">
-            {I18n.t("FIMS.loadingScreen.in-app-browser.subtitle")}
+            {I18n.t("FIMS.loadingScreen.in-app-browser-loading.subtitle")}
           </LabelSmall>
         </View>
       ) : (

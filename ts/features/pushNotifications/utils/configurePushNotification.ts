@@ -17,7 +17,6 @@ import {
   loadPreviousPageMessages,
   reloadAllMessages
 } from "../../messages/store/actions";
-import { getCursors } from "../../messages/store/reducers/allPaginated";
 import { isDevEnv } from "../../../utils/environment";
 import {
   trackMessageNotificationParsingFailure,
@@ -30,6 +29,7 @@ import {
 } from "../store/actions/notifications";
 import { isLoadingOrUpdating } from "../../../utils/pot";
 import { isArchivingInProcessingModeSelector } from "../../messages/store/reducers/archiving";
+import { GlobalState } from "../../../store/reducers/types";
 
 /**
  * Helper type used to validate the notification payload.
@@ -61,16 +61,17 @@ function handleForegroundMessageReload() {
     return;
   }
 
-  const { inbox: cursors } = getCursors(state);
-  if (pot.isNone(cursors)) {
+  const { inbox: inboxIndexes } =
+    getArchiveAndInboxNextAndPreviousPageIndexes(state);
+  if (pot.isNone(inboxIndexes)) {
     // nothing in the collection, refresh
     store.dispatch(reloadAllMessages.request({ pageSize, filter: {} }));
-  } else if (pot.isSome(cursors)) {
+  } else if (pot.isSome(inboxIndexes)) {
     // something in the collection, get the maximum amount of new ones only,
     // assuming that the message will be there
     store.dispatch(
       loadPreviousPageMessages.request({
-        cursor: cursors.value.previous,
+        cursor: inboxIndexes.value.previous,
         pageSize: maximumItemsFromAPI,
         filter: {}
       })
@@ -167,5 +168,14 @@ function configurePushNotifications() {
     requestPermissions: Platform.OS !== "ios"
   });
 }
+
+const getArchiveAndInboxNextAndPreviousPageIndexes = (state: GlobalState) =>
+  pipe(state.entities.messages.allPaginated, ({ archive, inbox }) => ({
+    archive: pot.map(archive.data, ({ previous, next }) => ({
+      previous,
+      next
+    })),
+    inbox: pot.map(inbox.data, ({ previous, next }) => ({ previous, next }))
+  }));
 
 export default configurePushNotifications;

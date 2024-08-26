@@ -13,11 +13,16 @@ import {
 } from "../../machine/eid/failure";
 import { selectFailureOption } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
 
 export const ItwIssuanceEidFailureScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const failureOption =
     ItwEidIssuanceMachineContext.useSelector(selectFailureOption);
+
+  useItwDisbleGestureNavigation();
+  useAvoidHardwareBackButton();
 
   const closeIssuance = () => machineRef.send({ type: "close" });
 

@@ -28,7 +28,9 @@ public class MainActivity extends ReactActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SplashScreen.show(this, R.style.SplashScreenTheme);
-        super.onCreate(savedInstanceState);
+        // This is needed for react-native-screens to solve the issue described here:
+        // https://github.com/software-mansion/react-native-screens/issues/17#issuecomment-424704633
+        super.onCreate(null);
         // Fix the problem described here:
         // https://stackoverflow.com/questions/48072438/java-lang-illegalstateexception-only-fullscreen-opaque-activities-can-request-o
         if (android.os.Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {

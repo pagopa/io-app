@@ -12,7 +12,6 @@ import {
   shouldPresentPreconditionsBottomSheetSelector
 } from "../../store/reducers/messagePrecondition";
 import {
-  clearLegacyMessagePrecondition,
   idlePreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
   toIdlePayload,
@@ -33,7 +32,6 @@ export const Preconditions = () => {
   const dispatch = useIODispatch();
   const store = useIOStore();
   const onDismissCallback = useCallback(() => {
-    dispatch(clearLegacyMessagePrecondition());
     dispatch(idlePreconditionStatusAction(toIdlePayload()));
   }, [dispatch]);
   const onNavigationCallback = useCallback(

@@ -3,7 +3,6 @@ import { FiscalCode } from "../../../../definitions/backend/FiscalCode";
 import { PaymentDataWithRequiredPayee } from "../../../../definitions/backend/PaymentDataWithRequiredPayee";
 import { UIMessageDetails } from "../types";
 import { toUIMessageDetails } from "../store/reducers/transformers";
-
 import { service_1 } from "./messages";
 
 export const messageId_1 = "FAT00001";
@@ -38,7 +37,7 @@ export const messageWithValidPayment: CreatedMessageWithContentAndAttachments =
     }
   };
 
-export const messageWithExpairedPayment: CreatedMessageWithContentAndAttachments =
+export const messageWithExpiredPayment: CreatedMessageWithContentAndAttachments =
   {
     ...message_1,
     created_at: new Date("2024-01-01T14:16:41Z"),

@@ -9,10 +9,6 @@ import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/
 import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
 import trackFciAction from "../../features/fci/analytics";
 import { fciEnvironmentSelector } from "../../features/fci/store/reducers/fciEnvironment";
-import {
-  migrateToPaginatedMessages,
-  removeMessages
-} from "../../features/messages/store/actions";
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
 import trackPaypalOnboarding from "../../features/wallet/onboarding/paypal/analytics/index";
@@ -113,7 +109,6 @@ const trackAction =
   (mp: NonNullable<typeof mixpanel>) =>
   // eslint-disable-next-line complexity
   (action: Action): void | ReadonlyArray<null> => {
-    // eslint-disable-next-line sonarjs/max-switch-cases
     switch (action.type) {
       //
       // Application state actions
@@ -220,28 +215,6 @@ const trackAction =
           reason: getNetworkErrorMessage(action.payload)
         });
 
-      // Messages actions with properties
-      case getType(removeMessages): {
-        return mp.track(action.type, {
-          messagesIdsToRemoveFromCache: action.payload
-        });
-      }
-      case getType(migrateToPaginatedMessages.request): {
-        return mp.track("MESSAGES_MIGRATION_START", {
-          total: Object.keys(action.payload).length
-        });
-      }
-      case getType(migrateToPaginatedMessages.success): {
-        return mp.track("MESSAGES_MIGRATION_SUCCESS", {
-          total: action.payload
-        });
-      }
-      case getType(migrateToPaginatedMessages.failure): {
-        return mp.track("MESSAGES_MIGRATION_FAILURE", {
-          failed: action.payload.failed.length,
-          succeeded: action.payload.succeeded.length
-        });
-      }
       // logout / load message / delete wallets / failure
       case getType(deleteAllPaymentMethodsByFunction.failure):
       case getType(upsertUserDataProcessing.failure):

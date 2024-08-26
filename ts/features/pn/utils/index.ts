@@ -45,12 +45,12 @@ export type PNOptInMessageInfo = {
 };
 
 export const isPNOptInMessage = (
-  ctas: CTAS | undefined,
-  serviceId: ServiceId | undefined,
+  ctasOpt: CTAS | undefined,
+  serviceIdOpt: ServiceId | undefined,
   state: GlobalState
 ) =>
   pipe(
-    serviceId,
+    serviceIdOpt,
     O.fromNullable,
     O.chain(serviceId =>
       pipe(
@@ -63,7 +63,7 @@ export const isPNOptInMessage = (
     O.filter(identity),
     O.chain(() =>
       pipe(
-        ctas,
+        ctasOpt,
         O.fromNullable,
         O.map(ctas => ({
           cta1LinksToPNService: isServiceDetailNavigationLink(
@@ -89,10 +89,10 @@ export const isPNOptInMessage = (
 
 export const paymentsFromPNMessagePot = (
   userFiscalCode: string | undefined,
-  message: pot.Pot<O.Option<PNMessage>, Error>
+  messagePot: pot.Pot<O.Option<PNMessage>, Error>
 ) =>
   pipe(
-    message,
+    messagePot,
     pot.toOption,
     O.flatten,
     O.map(message =>

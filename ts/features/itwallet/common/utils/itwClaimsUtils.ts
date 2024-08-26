@@ -3,7 +3,7 @@
  */
 
 import { patternDateFromString } from "@pagopa/ts-commons/lib/dates";
-import { PatternString } from "@pagopa/ts-commons/lib/strings";
+import { NonEmptyString, PatternString } from "@pagopa/ts-commons/lib/strings";
 import { differenceInCalendarDays, isValid } from "date-fns";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -227,9 +227,22 @@ export type DrivingPrivilegesClaimType = t.TypeOf<
 export const FiscalCodeClaim = PatternString(FISCAL_CODE_WITH_PREFIX);
 
 /**
- * Alias for the string fallback of the claim field of the credential.
+ * Empty string fallback of the claim field of the credential.
  */
-export const PlainTextClaim = t.string;
+export const EmptyStringClaim = new t.Type<string, string, unknown>(
+  "EmptyString",
+  (input: unknown): input is string => input === "", // Type guard
+  (input, context) =>
+    typeof input === "string" && input === ""
+      ? t.success(input)
+      : t.failure(input, context, "Expected an empty string"),
+  t.identity
+);
+
+/**
+ * Alias for the string claim field of the credential.
+ */
+export const StringClaim = NonEmptyString;
 
 export const ImageClaim = PatternString(PICTURE_URL_REGEX);
 
@@ -253,7 +266,9 @@ export const ClaimValue = t.union([
   // Otherwise parse a fiscal code
   FiscalCodeClaim,
   // Otherwise fallback to string
-  PlainTextClaim
+  StringClaim,
+  // Otherwise fallback to empty string
+  EmptyStringClaim
 ]);
 
 type ClaimSection =

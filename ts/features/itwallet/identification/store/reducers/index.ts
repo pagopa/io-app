@@ -9,13 +9,13 @@ export type ItwIdentificationState = {
   isCieSupported: pot.Pot<boolean, Error>;
 };
 
-const INITIAL_STATE: ItwIdentificationState = {
+export const itwIdentificationInitialState: ItwIdentificationState = {
   isNfcEnabled: pot.none,
   isCieSupported: pot.none
 };
 
 const reducer = (
-  state: ItwIdentificationState = INITIAL_STATE,
+  state: ItwIdentificationState = itwIdentificationInitialState,
   action: Action
 ): ItwIdentificationState => {
   switch (action.type) {

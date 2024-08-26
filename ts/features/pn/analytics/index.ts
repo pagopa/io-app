@@ -48,18 +48,6 @@ export const trackPNServiceActivated = () =>
     buildEventProperties("UX", "screen_view")
   );
 
-export const trackPNServiceStartDeactivation = () =>
-  void mixpanelTrack(
-    "PN_SERVICE_START_DEACTIVATION",
-    buildEventProperties("UX", "action")
-  );
-
-export const trackPNServiceStartActivation = () =>
-  void mixpanelTrack(
-    "PN_SERVICE_START_ACTIVATION",
-    buildEventProperties("UX", "action")
-  );
-
 export const trackPNPushSettings = (enabled: boolean) =>
   void mixpanelTrack(
     "PN_PUSH_SETTINGS",
@@ -120,15 +108,6 @@ export function trackPNAttachmentShare(category?: string) {
 export function trackPNAttachmentSaveShare(category?: string) {
   void mixpanelTrack(
     "PN_ATTACHMENT_SAVE_SHARE",
-    buildEventProperties("UX", "action", {
-      category
-    })
-  );
-}
-
-export function trackPNAttachmentOpen(category?: string) {
-  void mixpanelTrack(
-    "PN_ATTACHMENT_OPEN",
     buildEventProperties("UX", "action", {
       category
     })

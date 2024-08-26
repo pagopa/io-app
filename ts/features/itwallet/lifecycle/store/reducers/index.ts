@@ -24,14 +24,14 @@ export enum ItwLifecycleState {
   "ITW_LIFECYCLE_DEACTIVATED"
 }
 
-const initialState: ItwLifecycleState =
+export const itwLifecycleInitialState: ItwLifecycleState =
   ItwLifecycleState.ITW_LIFECYCLE_INSTALLED;
 
 /**
  * This reducer handles the wallet lifecycle state.
  */
 const reducer = (
-  state: ItwLifecycleState = initialState,
+  state: ItwLifecycleState = itwLifecycleInitialState,
   action: Action
 ): ItwLifecycleState => {
   switch (action.type) {
