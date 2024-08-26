@@ -3,6 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
 import { pipe } from "fp-ts/lib/function";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import { mixpanelTrack } from "../../../mixpanel";
@@ -10,6 +11,19 @@ import { readablePrivacyReport } from "../../../utils/reporters";
 import { UIMessageId } from "../types";
 import { booleanToYesNo, buildEventProperties } from "../../../utils/analytics";
 import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
+import { MessageListCategory } from "../types/messageListCategory";
+import { Action } from "../../../store/actions/types";
+import { GlobalState } from "../../../store/reducers/types";
+import {
+  loadNextPageMessages,
+  loadPreviousPageMessages,
+  reloadAllMessages
+} from "../store/actions";
+import {
+  messageCountForCategorySelector,
+  shownMessageCategorySelector
+} from "../store/reducers/allPaginated";
+import { pageSize } from "../../../config";
 
 export function trackOpenMessage(
   organizationName: string,
@@ -321,3 +335,107 @@ export function trackRemoteContentInfo() {
     buildEventProperties("UX", "action")
   );
 }
+
+export const trackMessagesActionsPostDispatch = (
+  action: Action,
+  state: GlobalState
+) => {
+  switch (action.type) {
+    case getType(reloadAllMessages.success):
+    case getType(loadPreviousPageMessages.success):
+    case getType(loadNextPageMessages.success):
+      const shownCategory = shownMessageCategorySelector(state);
+      const messageCount = messageCountForCategorySelector(
+        state,
+        shownCategory
+      );
+      trackMessagesPage(
+        shownCategory,
+        messageCount,
+        pageSize,
+        action.payload.fromUserAction
+      );
+      break;
+  }
+};
+
+export const trackMessagesPage = (
+  category: MessageListCategory,
+  messageCount: number,
+  inputPageSize: number,
+  fromUserAction: boolean
+) => {
+  const eventName = `MESSAGES_${
+    category === "ARCHIVE" ? "ARCHIVE" : "INBOX"
+  }_PAGE`;
+  const props = buildEventProperties("UX", "screen_view", {
+    page: Math.max(1, Math.ceil(messageCount / inputPageSize)),
+    count_messages: messageCount,
+    fromUserAction
+  });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackArchivedRestoredMessages = (
+  archived: boolean,
+  messageCount: number
+) => {
+  const eventName = `MESSAGES_${archived ? "ARCHIVED" : "RESTORED"}`;
+  const props = buildEventProperties("UX", "action", {
+    [`count_messages_${archived ? "archived" : "restored"}`]: messageCount
+  });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackMessageListEndReached = (
+  category: MessageListCategory,
+  willLoadNextMessagePage: boolean
+) => {
+  const eventName = `MESSAGES_${category === "ARCHIVE" ? "ARCHIVE" : "INBOX"}_${
+    willLoadNextMessagePage ? "SCROLL" : "ENDLIST"
+  }`;
+  const props = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackPullToRefresh = (category: MessageListCategory) => {
+  const eventName = `MESSAGES_${
+    category === "ARCHIVE" ? "ARCHIVE" : "INBOX"
+  }_REFRESH`;
+  const props = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackAutoRefresh = (category: MessageListCategory) => {
+  const eventName = `MESSAGES_${
+    category === "ARCHIVE" ? "ARCHIVE" : "INBOX"
+  }_AUTO_REFRESH`;
+  const props = buildEventProperties("TECH", undefined);
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackMessageSearchPage = () => {
+  const eventName = `MESSAGES_SEARCH_PAGE`;
+  const props = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackMessageSearchResult = (resultCount: number) => {
+  const eventName = `MESSAGES_SEARCH_RESULT_PAGE`;
+  const props = buildEventProperties("UX", "screen_view", {
+    count_result_returned: resultCount
+  });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackMessageSearchSelection = () => {
+  const eventName = `MESSAGES_SEARCH_RESULT_SELECTED`;
+  const props = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackMessageSearchClosing = () => {
+  const eventName = `MESSAGES_SEARCH_CLOSE`;
+  const props = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, props);
+};

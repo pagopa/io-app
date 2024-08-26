@@ -434,7 +434,8 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
       ? loadNextPageMessages.request({
           pageSize,
           cursor: selectedCollectionNextValue,
-          filter: { getArchived: category === "ARCHIVE" }
+          filter: { getArchived: category === "ARCHIVE" },
+          fromUserAction: true
         })
       : undefined;
   };
@@ -542,7 +543,8 @@ describe("getReloadAllMessagesActionForRefreshIfAllowed", () => {
           !isLoadingOrUpdating(inboxPot) && !isLoadingOrUpdating(archivePot)
             ? reloadAllMessages.request({
                 pageSize,
-                filter: { getArchived: category === "ARCHIVE" }
+                filter: { getArchived: category === "ARCHIVE" },
+                fromUserAction: true
               })
             : undefined;
         it(`should return '${
@@ -619,7 +621,8 @@ describe("getLoadNextPreviousPageMessagesActionIfAllowed", () => {
       cursor: previousPageMessageId,
       filter: {
         getArchived: shownCategory === "ARCHIVE"
-      }
+      },
+      fromUserAction: false
     });
   };
   // eslint-disable-next-line sonarjs/cognitive-complexity
