@@ -399,7 +399,9 @@ const IdentificationModal = () => {
               )}
               <View accessible ref={headerRef} style={IOStyles.alignCenter}>
                 <VSpacer size={8} />
-                <H2 color={"white"}>{titleLabel}</H2>
+                <H2 color={"white"} style={{ textAlign: "center" }}>
+                  {titleLabel}
+                </H2>
                 <VSpacer size={8} />
                 <IdentificationInstructionsComponent
                   biometricType={biometricType}

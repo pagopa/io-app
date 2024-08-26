@@ -22,6 +22,8 @@ import {
   fimsErrorStateSelector,
   fimsLoadingStateSelector
 } from "../store/selectors";
+import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
+import { openAppStoreUrl } from "../../../../utils/url";
 
 export type FimsFlowHandlerScreenRouteParams = { ctaUrl: string };
 
@@ -36,6 +38,7 @@ export const FimsFlowHandlerScreen = (
   const { ctaUrl } = props.route.params;
   const dispatch = useIODispatch();
 
+  const requiresAppUpdate = useIOSelector(fimsRequiresAppUpdateSelector);
   const loadingState = useIOSelector(fimsLoadingStateSelector);
   const consentsPot = useIOSelector(fimsConsentsDataSelector);
   const errorState = useIOSelector(fimsErrorStateSelector);
@@ -58,10 +61,24 @@ export const FimsFlowHandlerScreen = (
   });
 
   React.useEffect(() => {
-    if (ctaUrl) {
+    if (ctaUrl && !requiresAppUpdate) {
       dispatch(fimsGetConsentsListAction.request({ ctaUrl }));
     }
-  }, [ctaUrl, dispatch]);
+  }, [ctaUrl, dispatch, requiresAppUpdate]);
+
+  if (requiresAppUpdate) {
+    return (
+      <OperationResultScreenContent
+        isHeaderVisible
+        title={I18n.t("titleUpdateAppAlert")}
+        pictogram="umbrellaNew"
+        action={{
+          label: I18n.t("btnUpdateApp"),
+          onPress: () => openAppStoreUrl()
+        }}
+      />
+    );
+  }
 
   if (errorState !== undefined) {
     return <FimsErrorBody title={errorState} />;

@@ -5,9 +5,9 @@ import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import I18n from "../../../i18n";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
-import NewOptInScreen from "../NewOptInScreen";
+import OptInScreen from "../OptInScreen";
 
-describe("NewOptInScreen", () => {
+describe("OptInScreen", () => {
   it("the components into the page should be render correctly", () => {
     const component = renderComponent();
     expect(component).toBeDefined();
@@ -36,7 +36,7 @@ const renderComponent = () => {
   const store = createStore(appReducer, globalState as any);
 
   return renderScreenWithNavigationStoreContext(
-    NewOptInScreen,
+    OptInScreen,
     ROUTES.AUTHENTICATION_OPT_IN,
     {},
     store
