@@ -118,7 +118,11 @@ describe("messageGetStatusReducer", () => {
     expect(failureState).not.toStrictEqual(INITIAL_STATE);
     const resetState = messageGetStatusReducer(
       failureState,
-      reloadAllMessages.request({ filter: {}, pageSize: 20 })
+      reloadAllMessages.request({
+        filter: {},
+        pageSize: 20,
+        fromUserAction: false
+      })
     );
     expect(resetState).toStrictEqual(INITIAL_STATE);
   });
