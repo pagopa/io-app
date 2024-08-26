@@ -45,6 +45,7 @@ export const selectFiscalCodeFromEid = createSelector(
   credentials =>
     pipe(
       credentials.eid,
-      O.fold(() => "", getFiscalCodeFromCredential)
+      O.map(getFiscalCodeFromCredential),
+      O.getOrElse(() => "")
     )
 );
