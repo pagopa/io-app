@@ -1,4 +1,5 @@
 import {
+  ActionProp,
   ButtonLink,
   Divider,
   IOStyles,
@@ -9,7 +10,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useCallback, useEffect, useLayoutEffect } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo } from "react";
 import { ListRenderItemInfo, StyleSheet, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { Institution } from "../../../../../definitions/services/Institution";
@@ -20,7 +21,8 @@ import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPre
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import * as analytics from "../../common/analytics";
 import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
@@ -30,6 +32,7 @@ import { getLogoForInstitution } from "../../common/utils";
 import { FeaturedInstitutionList } from "../components/FeaturedInstitutionList";
 import { FeaturedServiceList } from "../components/FeaturedServiceList";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
+import { useServicesHomeBottomSheet } from "../hooks/useServicesHomeBottomSheet";
 import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
 
 const styles = StyleSheet.create({
@@ -211,14 +214,48 @@ export const ServicesHomeScreen = () => {
     false
   );
 
-  const navigateToProfilePreferencesScreen = useCallback(() => {
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
+
+  const { bottomSheet, present } = useServicesHomeBottomSheet();
+
+  const handleSearch = useCallback(() => {
+    analytics.trackSearchStart({ source: "header_icon" });
+    navigation.navigate(SERVICES_ROUTES.SEARCH);
+  }, [navigation]);
+
+  const handleSettings = useCallback(() => {
+    if (isSettingsVisibleAndHideProfile) {
+      present();
+      return;
+    }
+
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
       screen: ROUTES.PROFILE_PREFERENCES_SERVICES
     });
-  }, [navigation]);
+  }, [isSettingsVisibleAndHideProfile, navigation, present]);
 
   const helpAction = useHeaderFirstLevelActionPropHelp(
     SERVICES_ROUTES.SERVICES_HOME
+  );
+
+  const settingsAction: ActionProp = useMemo(
+    () => ({
+      icon: "coggle",
+      accessibilityLabel: I18n.t("global.buttons.settings"),
+      onPress: handleSettings
+    }),
+    [handleSettings]
+  );
+
+  const searchAction: ActionProp = useMemo(
+    () => ({
+      icon: "search",
+      accessibilityLabel: I18n.t("global.accessibility.search"),
+      onPress: handleSearch
+    }),
+    [handleSearch]
   );
 
   useLayoutEffect(() => {
@@ -227,19 +264,8 @@ export const ServicesHomeScreen = () => {
       type: "threeActions",
       animatedFlatListRef: scrollViewContentRef,
       firstAction: helpAction,
-      secondAction: {
-        icon: "coggle",
-        accessibilityLabel: I18n.t("global.buttons.edit"),
-        onPress: navigateToProfilePreferencesScreen
-      },
-      thirdAction: {
-        icon: "search",
-        accessibilityLabel: I18n.t("global.accessibility.search"),
-        onPress: () => {
-          analytics.trackSearchStart({ source: "header_icon" });
-          navigation.navigate(SERVICES_ROUTES.SEARCH);
-        }
-      }
+      secondAction: settingsAction,
+      thirdAction: searchAction
     };
 
     navigation.setOptions({
@@ -248,9 +274,10 @@ export const ServicesHomeScreen = () => {
   }, [
     SearchInputComponent,
     helpAction,
-    navigateToProfilePreferencesScreen,
     navigation,
-    scrollViewContentRef
+    scrollViewContentRef,
+    searchAction,
+    settingsAction
   ]);
 
   return (
@@ -274,6 +301,7 @@ export const ServicesHomeScreen = () => {
         renderItem={renderInstitutionItem}
       />
       <SectionStatusComponent sectionKey={"services"} />
+      {bottomSheet}
     </>
   );
 };
