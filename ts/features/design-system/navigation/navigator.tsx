@@ -29,7 +29,6 @@ import { DSBottomSheet } from "../core/DSBottomSheet";
 import { DSButtons } from "../core/DSButtons";
 import { DSCards } from "../core/DSCards";
 import { DSColors } from "../core/DSColors";
-import { DSDynamicBackground } from "../core/DSDynamicBackground";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
 import { DSFooterActions } from "../core/DSFooterActions";
 import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
@@ -380,18 +379,6 @@ export const DesignSystemNavigator = () => {
           component={DSIOMarkdown}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.IO_MARKDOWN.title
-          }}
-        />
-
-        {/* EXPERIMENTAL LAB */}
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_BACKGROUND.route}
-          component={DSDynamicBackground}
-          options={{
-            headerShown: false,
-            headerTitle:
-              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_BACKGROUND.title
           }}
         />
 
