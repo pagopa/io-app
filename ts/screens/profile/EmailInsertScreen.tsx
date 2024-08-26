@@ -111,7 +111,12 @@ const EmailInsertScreen = () => {
   // caused by the polling stop in the email validation screen.
   const canShowLoadingSpinner = useRef(true);
 
-  useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
+  useFocusEffect(
+    useCallback(
+      () => setAccessibilityFocus(accessibilityFirstFocuseViewRef),
+      []
+    )
+  );
 
   useOnFirstRender(() => {
     if (isProfileEmailAlreadyTaken) {
