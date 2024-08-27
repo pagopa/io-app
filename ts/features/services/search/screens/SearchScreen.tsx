@@ -15,7 +15,8 @@ import {
   IOStyles,
   IOToast,
   SearchInput,
-  SearchInputRef
+  SearchInputRef,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
@@ -141,7 +142,7 @@ export const SearchScreen = () => {
       return <InstitutionListSkeleton />;
     }
 
-    return null;
+    return <VSpacer size={16} />;
   }, [isUpdating]);
 
   const renderListEmptyComponent = useCallback(() => {
