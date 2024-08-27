@@ -30,6 +30,7 @@ import { EmptyState } from "../../common/components/EmptyState";
 import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
 import { ListItemSearchInstitution } from "../../common/components/ListItemSearchInstitution";
 import * as analytics from "../../common/analytics";
+import { EndOfList } from "../components/EndOfList";
 
 const INPUT_PADDING: IOSpacingScale = 16;
 const LIST_ITEM_HEIGHT: number = 70;
@@ -58,6 +59,7 @@ export const SearchScreen = () => {
     fetchNextPage,
     fetchPage,
     isError,
+    isLastPage,
     isLoading,
     isUpdating
   } = useInstitutionsFetcher();
@@ -139,11 +141,24 @@ export const SearchScreen = () => {
 
   const renderListFooterComponent = useCallback(() => {
     if (isUpdating) {
-      return <InstitutionListSkeleton />;
+      return (
+        <>
+          <InstitutionListSkeleton />
+          <VSpacer size={16} />
+        </>
+      );
+    }
+
+    if (isLastPage && !!data && data?.institutions.length > 0) {
+      return (
+        <EndOfList
+          description={I18n.t("services.search.endOfList.description")}
+        />
+      );
     }
 
     return <VSpacer size={16} />;
-  }, [isUpdating]);
+  }, [data, isLastPage, isUpdating]);
 
   const renderListEmptyComponent = useCallback(() => {
     if (query.length < MIN_QUERY_LENGTH) {

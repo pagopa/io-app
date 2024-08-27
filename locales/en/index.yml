@@ -2213,6 +2213,8 @@ services:
       noResults:
         title: "No results found"
         subtitle: "Enter the name of an existing national or local institution."
+    endOfList:
+      description: "Hai ragiunto la fine della lista. \nSe non hai trovato quello di cui avevi bisogno, avvia una nuova ricerca."
   details:
     failure:
       title: "There is a temporary problem. Please try again"

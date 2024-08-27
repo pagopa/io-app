@@ -2213,6 +2213,8 @@ services:
       noResults:
         title: "Nessun risultato trovato"
         subtitle: "Inserisci il nome di un ente nazionale o locale esistente."
+    endOfList:
+      description: "Hai ragiunto la fine della lista. \nSe non hai trovato quello di cui avevi bisogno, avvia una nuova ricerca."
   details:
     failure:
       title: "C'è un problema temporaneo, riprova"
