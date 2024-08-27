@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import {
   canShowMorePaymentsLink,
-  isPNOptInMessage,
+  extractPNOptInMessageInfoIfAvailable,
   notificationStatusToTimelineStatus,
   shouldUseBottomSheetForPayments
 } from "..";
@@ -258,7 +258,7 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
 describe("isPNOptInMessage", () => {
   isPNOptInMessageTestInput.forEach(testData => {
     it(testData.testDescription, () => {
-      const isPNOptInMessageInfo = isPNOptInMessage(
+      const isPNOptInMessageInfo = extractPNOptInMessageInfoIfAvailable(
         testData.input.CTAs,
         testData.input.serviceId,
         testData.input.state

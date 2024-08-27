@@ -64,8 +64,11 @@ function* paymentUpdateRequestWorker(
 ) {
   while (true) {
     const paymentStatusRequest = yield* take(paymentStatusChannel);
+
     const messageId = paymentStatusRequest.payload.messageId;
     const paymentId = paymentStatusRequest.payload.paymentId;
+    const serviceId = paymentStatusRequest.payload.serviceId;
+
     const pagoPARptIdEither = RptIdFromString.decode(paymentId);
     if (E.isRight(pagoPARptIdEither)) {
       const pagoPARptId = pagoPARptIdEither.right;
@@ -77,13 +80,15 @@ function* paymentUpdateRequestWorker(
           updatePaymentForMessage.success({
             messageId,
             paymentId,
-            paymentData
+            paymentData,
+            serviceId
           }),
         details =>
           updatePaymentForMessage.failure({
             messageId,
             paymentId,
-            details
+            details,
+            serviceId
           })
       );
     } else {
@@ -91,7 +96,8 @@ function* paymentUpdateRequestWorker(
         updatePaymentForMessage.failure({
           messageId,
           paymentId,
-          details: Detail_v2Enum.GENERIC_ERROR
+          details: Detail_v2Enum.GENERIC_ERROR,
+          serviceId
         })
       );
     }
