@@ -83,6 +83,7 @@ export const ItwPresentationDetailFooter = ({ credential }: Props) => {
       />
       {credential.credentialType !== CredentialType.PID ? (
         <ListItemAction
+          testID="removeCredentialActionTestID"
           variant="danger"
           icon="trashcan"
           label={I18n.t(
