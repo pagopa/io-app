@@ -1,5 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Platform, View } from "react-native";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
+import { Platform, View, ViewStyle } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
@@ -9,8 +15,7 @@ import {
   IOStyles,
   IOToast,
   SearchInput,
-  SearchInputRef,
-  VSpacer
+  SearchInputRef
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
@@ -23,7 +28,6 @@ import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { EmptyState } from "../../common/components/EmptyState";
 import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
 import { ListItemSearchInstitution } from "../../common/components/ListItemSearchInstitution";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import * as analytics from "../../common/analytics";
 
 const INPUT_PADDING: IOSpacingScale = 16;
@@ -38,6 +42,15 @@ export const SearchScreen = () => {
   const searchInputRef = useRef<SearchInputRef>(null);
   const [query, setQuery] = useState<string>("");
 
+  const containerStyle: ViewStyle = useMemo(
+    () => ({
+      ...IOStyles.horizontalContentPadding,
+      marginTop: insets.top,
+      paddingVertical: INPUT_PADDING
+    }),
+    [insets.top]
+  );
+
   const {
     currentPage,
     data,
@@ -48,10 +61,9 @@ export const SearchScreen = () => {
     isUpdating
   } = useInstitutionsFetcher();
 
-  useOnFirstRender(() => analytics.trackSearchPage());
-
   useFocusEffect(
     useCallback(() => {
+      analytics.trackSearchPage();
       searchInputRef.current?.focus();
     }, [])
   );
@@ -126,14 +138,10 @@ export const SearchScreen = () => {
 
   const renderListFooterComponent = useCallback(() => {
     if (isUpdating) {
-      return (
-        <>
-          <InstitutionListSkeleton />
-          <VSpacer size={16} />
-        </>
-      );
+      return <InstitutionListSkeleton />;
     }
-    return <VSpacer size={16} />;
+
+    return null;
   }, [isUpdating]);
 
   const renderListEmptyComponent = useCallback(() => {
@@ -141,7 +149,17 @@ export const SearchScreen = () => {
       return (
         <EmptyState
           pictogram="searchLens"
-          title={I18n.t("services.search.emptyState.title")}
+          title={I18n.t("services.search.emptyState.invalidQuery.title")}
+        />
+      );
+    }
+
+    if (data?.institutions.length === 0) {
+      return (
+        <EmptyState
+          pictogram="umbrellaNew"
+          title={I18n.t("services.search.emptyState.noResults.title")}
+          subtitle={I18n.t("services.search.emptyState.noResults.subtitle")}
         />
       );
     }
@@ -150,20 +168,12 @@ export const SearchScreen = () => {
       return <InstitutionListSkeleton />;
     }
 
-    return <VSpacer size={16} />;
-  }, [isLoading, query]);
+    return null;
+  }, [isLoading, query, data?.institutions]);
 
   return (
     <>
-      <View
-        style={[
-          {
-            marginTop: insets.top,
-            paddingVertical: INPUT_PADDING
-          },
-          IOStyles.horizontalContentPadding
-        ]}
-      >
+      <View style={containerStyle}>
         <SearchInput
           accessibilityLabel={I18n.t("services.search.input.placeholderShort")}
           autoFocus={true}
@@ -179,20 +189,20 @@ export const SearchScreen = () => {
       </View>
       <FlashList
         ItemSeparatorComponent={() => <Divider />}
+        ListEmptyComponent={renderListEmptyComponent}
+        ListFooterComponent={renderListFooterComponent}
         contentContainerStyle={IOStyles.horizontalContentPadding}
         data={data?.institutions || []}
         estimatedItemSize={LIST_ITEM_HEIGHT}
-        keyExtractor={(item, index) => `institution-${item.id}-${index}`}
-        renderItem={renderItem}
-        onEndReached={handleEndReached}
-        onEndReachedThreshold={0.1}
-        ListEmptyComponent={renderListEmptyComponent}
-        ListFooterComponent={renderListFooterComponent}
         keyboardDismissMode={Platform.select({
           ios: "interactive",
           default: "on-drag"
         })}
         keyboardShouldPersistTaps="handled"
+        keyExtractor={(item, index) => `institution-${item.id}-${index}`}
+        onEndReached={handleEndReached}
+        onEndReachedThreshold={0.1}
+        renderItem={renderItem}
       />
     </>
   );
