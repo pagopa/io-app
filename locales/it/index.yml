@@ -2181,7 +2181,7 @@ services:
         servicesPreferences:
           value: Chi può scriverti?
           description: Scegli chi può contattarti
-        settings: 
+        settings:
           value: Tutte le impostazioni
           description: Gestisci i tuoi dati e le preferenze d'uso
     featured:
@@ -3333,6 +3333,13 @@ features:
           requestAssistance: "Qualcosa non torna? Contatta {{authSource}}"
           showClaimValues: "Mostra gli attributi del documento"
           hideClaimValues: "Nascondi gli attributi del documento"
+        dialogs:
+          remove:
+            title: Vuoi rimuovere il documento dal Portafoglio?
+            content: Se cambi idea, potrai riaggiungerlo in seguito.
+            confirm: Sì, rimuovi
+        toast:
+          removed: Fatto! Hai rimosso {{credentialName}}
   trialSystem:
     toast:
       subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione

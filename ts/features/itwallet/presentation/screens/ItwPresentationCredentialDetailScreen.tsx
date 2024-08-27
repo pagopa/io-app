@@ -38,9 +38,6 @@ import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlert
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 
-// TODO: use the real credential update time
-const today = new Date();
-
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
 };
@@ -65,10 +62,12 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   );
 };
 
+type ContentProps = { credential: StoredCredential };
+
 /**
  * This component renders the entire credential detail.
  */
-const ContentView = ({ credential }: { credential: StoredCredential }) => {
+const ContentView = ({ credential }: ContentProps) => {
   const { screenEndMargin } = useScreenEndMargin();
   const themeColor = getThemeColorByCredentialType(
     credential.credentialType as CredentialType
@@ -121,10 +120,7 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
           <Divider />
           <ItwReleaserName credential={credential} />
           <VSpacer size={24} />
-          <ItwPresentationDetailFooter
-            lastUpdateTime={today}
-            issuerConf={credential.issuerConf}
-          />
+          <ItwPresentationDetailFooter credential={credential} />
         </ContentWrapper>
       </ScrollView>
     </>
