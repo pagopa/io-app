@@ -238,7 +238,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
             [
               {},
               {
-                "color": "#0E0F13",
+                "color": "#2B2E38",
                 "fontFamily": "Titillium Sans Pro",
                 "fontSize": 22,
                 "fontStyle": "normal",
@@ -658,7 +658,7 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
             [
               {},
               {
-                "color": "#0E0F13",
+                "color": "#2B2E38",
                 "fontFamily": "Titillium Sans Pro",
                 "fontSize": 22,
                 "fontStyle": "normal",
