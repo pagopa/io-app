@@ -414,18 +414,18 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                               allowFontScaling={false}
                               ellipsizeMode="tail"
                               importantForAccessibility="no-hide-descendants"
-                              maxFontSizeMultiplier={1.3}
+                              maxFontSizeMultiplier={1.25}
                               numberOfLines={1}
                               style={
                                 [
+                                  {},
                                   {
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "700",
-                                  },
-                                  {
-                                    "color": "#0073E6",
+                                    "lineHeight": undefined,
                                   },
                                   {
                                     "color": undefined,
@@ -552,34 +552,22 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         0
                                       </Text>
@@ -615,20 +603,20 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#555C70",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#555C70",
                                               },
                                             ]
                                           }
@@ -787,34 +775,22 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         1
                                       </Text>
@@ -850,20 +826,20 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#555C70",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#555C70",
                                               },
                                             ]
                                           }
@@ -1022,34 +998,22 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         2
                                       </Text>
@@ -1085,20 +1049,20 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#555C70",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#555C70",
                                               },
                                             ]
                                           }
@@ -1257,34 +1221,22 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         3
                                       </Text>
@@ -1320,20 +1272,20 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#555C70",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#555C70",
                                               },
                                             ]
                                           }
@@ -1492,34 +1444,22 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         4
                                       </Text>
@@ -1555,20 +1495,20 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#555C70",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#555C70",
                                               },
                                             ]
                                           }
@@ -1727,34 +1667,22 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         5
                                       </Text>
@@ -1790,20 +1718,20 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#555C70",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#555C70",
                                               },
                                             ]
                                           }
@@ -1962,34 +1890,22 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         6
                                       </Text>
@@ -2025,20 +1941,20 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#555C70",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#555C70",
                                               },
                                             ]
                                           }
@@ -2197,34 +2113,22 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         7
                                       </Text>
@@ -2260,20 +2164,20 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#555C70",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#555C70",
                                               },
                                             ]
                                           }
@@ -2432,34 +2336,22 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         8
                                       </Text>
@@ -2495,20 +2387,20 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#555C70",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#555C70",
                                               },
                                             ]
                                           }
@@ -2667,34 +2559,22 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         9
                                       </Text>
@@ -2730,20 +2610,20 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#555C70",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#555C70",
                                               },
                                             ]
                                           }
@@ -3254,18 +3134,18 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
                               allowFontScaling={false}
                               ellipsizeMode="tail"
                               importantForAccessibility="no-hide-descendants"
-                              maxFontSizeMultiplier={1.3}
+                              maxFontSizeMultiplier={1.25}
                               numberOfLines={1}
                               style={
                                 [
+                                  {},
                                   {
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "700",
-                                  },
-                                  {
-                                    "color": "#0073E6",
+                                    "lineHeight": undefined,
                                   },
                                   {
                                     "color": undefined,
@@ -3750,18 +3630,18 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                               allowFontScaling={false}
                               ellipsizeMode="tail"
                               importantForAccessibility="no-hide-descendants"
-                              maxFontSizeMultiplier={1.3}
+                              maxFontSizeMultiplier={1.25}
                               numberOfLines={1}
                               style={
                                 [
+                                  {},
                                   {
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "700",
-                                  },
-                                  {
-                                    "color": "#0073E6",
+                                    "lineHeight": undefined,
                                   },
                                   {
                                     "color": undefined,
@@ -3888,34 +3768,22 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         0
                                       </Text>
@@ -3951,20 +3819,20 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#555C70",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#555C70",
                                               },
                                             ]
                                           }
