@@ -67,7 +67,9 @@ export function* checkCredentialsStatus() {
   );
 
   const updatedCredentials = yield* all(
-    credentialsToCheck.map(updateCredentialStatusAttestationSaga)
+    credentialsToCheck.map(credential =>
+      call(updateCredentialStatusAttestationSaga, credential)
+    )
   );
 
   yield* put(itwCredentialsMultipleUpdate(updatedCredentials));
