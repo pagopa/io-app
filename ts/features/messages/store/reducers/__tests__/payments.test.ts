@@ -36,6 +36,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import * as versionInfo from "../../../../../common/versionInfo/store/reducers/versionInfo";
 import * as profile from "../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 describe("Messages payments reducer's tests", () => {
   it("Should match initial state upon initialization", () => {
@@ -45,7 +46,8 @@ describe("Messages payments reducer's tests", () => {
   it("Should have undefined value for an undefined Message Id", () => {
     const requestAction = updatePaymentForMessage.request({
       messageId: "m1" as UIMessageId,
-      paymentId: "p1"
+      paymentId: "p1",
+      serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const paymentsState = paymentsReducer(undefined, requestAction);
     const unknownMessageId = "m2" as UIMessageId;
@@ -56,7 +58,8 @@ describe("Messages payments reducer's tests", () => {
     const messageId = "m1" as UIMessageId;
     const requestAction = updatePaymentForMessage.request({
       messageId,
-      paymentId: "p1"
+      paymentId: "p1",
+      serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const paymentsState = paymentsReducer(undefined, requestAction);
     const messageState = paymentsState[messageId];
@@ -70,7 +73,8 @@ describe("Messages payments reducer's tests", () => {
     const paymentId = "p1";
     const requestAction = updatePaymentForMessage.request({
       messageId,
-      paymentId
+      paymentId,
+      serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const paymentsState = paymentsReducer(undefined, requestAction);
     const messageState = paymentsState[messageId];
@@ -81,9 +85,11 @@ describe("Messages payments reducer's tests", () => {
   it("Should have remoteReady value for a updatePaymentForMessage.success", () => {
     const messageId = "m1" as UIMessageId;
     const paymentId = "p1";
+    const serviceId = "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId;
     const requestAction = updatePaymentForMessage.request({
       messageId,
-      paymentId
+      paymentId,
+      serviceId
     });
     const paymentsState = paymentsReducer(undefined, requestAction);
     const paymentData = {
@@ -93,7 +99,8 @@ describe("Messages payments reducer's tests", () => {
     const successAction = updatePaymentForMessage.success({
       messageId,
       paymentId,
-      paymentData
+      paymentData,
+      serviceId
     });
     const updatedPaymentsState = paymentsReducer(paymentsState, successAction);
     const messageState = updatedPaymentsState[messageId];
@@ -105,16 +112,19 @@ describe("Messages payments reducer's tests", () => {
   it("Should have remoteError value for a updatePaymentForMessage.failure", () => {
     const messageId = "m1" as UIMessageId;
     const paymentId = "p1";
+    const serviceId = "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId;
     const requestAction = updatePaymentForMessage.request({
       messageId,
-      paymentId
+      paymentId,
+      serviceId
     });
     const paymentsState = paymentsReducer(undefined, requestAction);
     const details = Detail_v2Enum.CANALE_BUSTA_ERRATA;
     const failureAction = updatePaymentForMessage.failure({
       messageId,
       paymentId,
-      details
+      details,
+      serviceId
     });
     const updatedPaymentsState = paymentsReducer(paymentsState, failureAction);
     const messageState = updatedPaymentsState[messageId];
@@ -126,9 +136,11 @@ describe("Messages payments reducer's tests", () => {
   it("Should handle multiple payments for a single message", () => {
     const messageId = "m1" as UIMessageId;
     const paymentId1 = "p1";
+    const serviceId = "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId;
     const requestAction = updatePaymentForMessage.request({
       messageId,
-      paymentId: paymentId1
+      paymentId: paymentId1,
+      serviceId
     });
     const firstStateGeneration = paymentsReducer(undefined, requestAction);
     const paymentId2 = "p2";
@@ -139,7 +151,8 @@ describe("Messages payments reducer's tests", () => {
     const successAction = updatePaymentForMessage.success({
       messageId,
       paymentId: paymentId2,
-      paymentData: secondPaymentData
+      paymentData: secondPaymentData,
+      serviceId
     });
     const secondStateGeneration = paymentsReducer(
       firstStateGeneration,
@@ -150,7 +163,8 @@ describe("Messages payments reducer's tests", () => {
     const failureAction = updatePaymentForMessage.failure({
       messageId,
       paymentId: paymentId3,
-      details: thirdPaymentDetails
+      details: thirdPaymentDetails,
+      serviceId
     });
     const finalStateGeneration = paymentsReducer(
       secondStateGeneration,
@@ -168,9 +182,11 @@ describe("Messages payments reducer's tests", () => {
   it("Should handle multiple payments for multiple messages", () => {
     const messageId1 = "m1" as UIMessageId;
     const paymentId1 = "p1";
+    const serviceId = "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId;
     const requestAction = updatePaymentForMessage.request({
       messageId: messageId1,
-      paymentId: paymentId1
+      paymentId: paymentId1,
+      serviceId
     });
     const firstStateGeneration = paymentsReducer(undefined, requestAction);
     const messageId2 = "m2" as UIMessageId;
@@ -181,7 +197,8 @@ describe("Messages payments reducer's tests", () => {
     const successAction = updatePaymentForMessage.success({
       messageId: messageId2,
       paymentId: paymentId1,
-      paymentData: successfulPaymentData
+      paymentData: successfulPaymentData,
+      serviceId
     });
     const secondStateGeneration = paymentsReducer(
       firstStateGeneration,
@@ -192,7 +209,8 @@ describe("Messages payments reducer's tests", () => {
     const failureAction = updatePaymentForMessage.failure({
       messageId: messageId3,
       paymentId: paymentId1,
-      details: failedPaymentDetails
+      details: failedPaymentDetails,
+      serviceId
     });
     const finalStateGeneration = paymentsReducer(
       secondStateGeneration,
@@ -216,15 +234,18 @@ describe("Messages payments reducer's tests", () => {
   it("Should remove payment statuses on updatePaymentForMessage.cancel", () => {
     const messageId1 = "m1" as UIMessageId;
     const paymentId1 = "p1";
+    const serviceId = "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId;
     const requestAction1 = updatePaymentForMessage.request({
       messageId: messageId1,
-      paymentId: paymentId1
+      paymentId: paymentId1,
+      serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const firstStateGeneration = paymentsReducer(undefined, requestAction1);
     const messageId2 = "m2" as UIMessageId;
     const requestAction2 = updatePaymentForMessage.request({
       messageId: messageId2,
-      paymentId: paymentId1
+      paymentId: paymentId1,
+      serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const secondStateGeneration = paymentsReducer(
       firstStateGeneration,
@@ -233,7 +254,8 @@ describe("Messages payments reducer's tests", () => {
     const paymentId2 = "p2";
     const requestAction3 = updatePaymentForMessage.request({
       messageId: messageId2,
-      paymentId: paymentId2
+      paymentId: paymentId2,
+      serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const thirdStateGeneration = paymentsReducer(
       secondStateGeneration,
@@ -242,7 +264,8 @@ describe("Messages payments reducer's tests", () => {
     const messageId3 = "m3" as UIMessageId;
     const requestAction4 = updatePaymentForMessage.request({
       messageId: messageId3,
-      paymentId: paymentId1
+      paymentId: paymentId1,
+      serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const fourthStateGeneration = paymentsReducer(
       thirdStateGeneration,
@@ -250,7 +273,8 @@ describe("Messages payments reducer's tests", () => {
     );
     const requestAction5 = updatePaymentForMessage.request({
       messageId: messageId3,
-      paymentId: paymentId2
+      paymentId: paymentId2,
+      serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const fifthStateGeneration = paymentsReducer(
       fourthStateGeneration,
@@ -259,7 +283,8 @@ describe("Messages payments reducer's tests", () => {
     const paymentId3 = "p3";
     const requestAction6 = updatePaymentForMessage.request({
       messageId: messageId3,
-      paymentId: paymentId3
+      paymentId: paymentId3,
+      serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const sixthStateGeneration = paymentsReducer(
       fifthStateGeneration,
@@ -290,19 +315,23 @@ describe("Messages payments reducer's tests", () => {
     const cancelPaymentAction = updatePaymentForMessage.cancel([
       {
         messageId: messageId1,
-        paymentId: paymentId1
+        paymentId: paymentId1,
+        serviceId
       },
       {
         messageId: messageId2,
-        paymentId: paymentId2
+        paymentId: paymentId2,
+        serviceId
       },
       {
         messageId: messageId3,
-        paymentId: paymentId2
+        paymentId: paymentId2,
+        serviceId
       },
       {
         messageId: messageId3,
-        paymentId: paymentId3
+        paymentId: paymentId3,
+        serviceId
       }
     ]);
     const finalStateGeneration = paymentsReducer(
@@ -353,7 +382,8 @@ describe("Messages payments reducer's tests", () => {
       startingPaymentsState,
       updatePaymentForMessage.request({
         messageId: "01HR9GY9GHGH5BQEJAKPWXEKV3" as UIMessageId,
-        paymentId
+        paymentId,
+        serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       })
     );
     const endingUserSelectedPayments = endingPaymentsState.userSelectedPayments;
@@ -392,7 +422,8 @@ describe("PN Payments selectors' tests", () => {
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.request({
       messageId: "m1" as UIMessageId,
-      paymentId: "p1"
+      paymentId: "p1",
+      serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
     const shouldUpdatePayment = shouldUpdatePaymentSelector(
@@ -406,7 +437,8 @@ describe("PN Payments selectors' tests", () => {
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.request({
       messageId: "m1" as UIMessageId,
-      paymentId: "p1"
+      paymentId: "p1",
+      serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
     const shouldUpdatePayment = shouldUpdatePaymentSelector(
@@ -420,7 +452,8 @@ describe("PN Payments selectors' tests", () => {
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.request({
       messageId: "m1" as UIMessageId,
-      paymentId: "p1"
+      paymentId: "p1",
+      serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
     const shouldUpdatePayment = shouldUpdatePaymentSelector(
@@ -434,7 +467,8 @@ describe("PN Payments selectors' tests", () => {
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.request({
       messageId: "m1" as UIMessageId,
-      paymentId: "p1"
+      paymentId: "p1",
+      serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
     const paymentStatus = paymentStatusForUISelector(
@@ -448,7 +482,8 @@ describe("PN Payments selectors' tests", () => {
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.request({
       messageId: "m1" as UIMessageId,
-      paymentId: "p1"
+      paymentId: "p1",
+      serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
     const paymentStatus = paymentStatusForUISelector(
@@ -462,7 +497,8 @@ describe("PN Payments selectors' tests", () => {
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.request({
       messageId: "m1" as UIMessageId,
-      paymentId: "p1"
+      paymentId: "p1",
+      serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
     const paymentStatusOnStore =
@@ -481,7 +517,8 @@ describe("PN Payments selectors' tests", () => {
     const updatePaymentForMessageAction = updatePaymentForMessage.success({
       messageId: "m1" as UIMessageId,
       paymentId: "p1",
-      paymentData
+      paymentData,
+      serviceId: "01J5X5EM6RPT04PC8SFZREDDBP" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
     const paymentStatus = paymentStatusForUISelector(
@@ -497,7 +534,8 @@ describe("PN Payments selectors' tests", () => {
     const updatePaymentForMessageAction = updatePaymentForMessage.failure({
       messageId: "m1" as UIMessageId,
       paymentId: "p1",
-      details
+      details,
+      serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
     const paymentStatus = paymentStatusForUISelector(
@@ -527,7 +565,8 @@ describe("PN Payments selectors' tests", () => {
       finalAppState,
       updatePaymentForMessage.request({
         messageId: "" as UIMessageId,
-        paymentId: paymentId1
+        paymentId: paymentId1,
+        serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       })
     );
     const userSelectedPayments2 =
@@ -539,7 +578,8 @@ describe("PN Payments selectors' tests", () => {
       firstRemovedAppState,
       updatePaymentForMessage.request({
         messageId: "" as UIMessageId,
-        paymentId: paymentId2
+        paymentId: paymentId2,
+        serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       })
     );
     const userSelectedPayments3 =
@@ -551,7 +591,8 @@ describe("PN Payments selectors' tests", () => {
       secondRemovedAppState,
       updatePaymentForMessage.request({
         messageId: "" as UIMessageId,
-        paymentId: paymentId3
+        paymentId: paymentId3,
+        serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       })
     );
     const userSelectedPayments4 =
