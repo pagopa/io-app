@@ -45,38 +45,26 @@ exports[`IdPayCard should match the snapshot 1`] = `
       >
         <Text
           allowFontScaling={false}
-          color="blueItalia-850"
-          defaultColor="black"
-          defaultWeight="Semibold"
           dynamicTypeRamp="headline"
           ellipsizeMode="tail"
-          font="TitilliumSansPro"
-          fontStyle={
-            {
-              "fontSize": 18,
-              "lineHeight": 25,
-            }
-          }
           maxFontSizeMultiplier={1.25}
           numberOfLines={1}
           style={
             [
-              {
-                "width": "80%",
-              },
-              {
-                "fontSize": 18,
-                "lineHeight": 25,
-              },
+              {},
               {
                 "color": "#001F3D",
                 "fontFamily": "Titillium Sans Pro",
+                "fontSize": 18,
                 "fontStyle": "normal",
                 "fontWeight": "600",
+                "lineHeight": 25,
+              },
+              {
+                "width": "80%",
               },
             ]
           }
-          weight="Semibold"
         >
           18 app
         </Text>
@@ -142,98 +130,62 @@ exports[`IdPayCard should match the snapshot 1`] = `
       />
       <Text
         allowFontScaling={false}
-        color="black"
-        defaultColor="black"
-        defaultWeight="Semibold"
         dynamicTypeRamp="footnote"
-        font="TitilliumSansPro"
-        fontStyle={
-          {
-            "fontSize": 16,
-            "lineHeight": 21,
-          }
-        }
         maxFontSizeMultiplier={1.25}
         style={
           [
-            {
-              "fontSize": 16,
-              "lineHeight": 21,
-            },
+            {},
             {
               "color": "#0E0F13",
               "fontFamily": "Titillium Sans Pro",
+              "fontSize": 16,
               "fontStyle": "normal",
               "fontWeight": "600",
+              "lineHeight": 21,
             },
           ]
         }
-        weight="Semibold"
       >
         Disponibile
       </Text>
       <Text
         allowFontScaling={false}
-        color="blueItalia-500"
-        defaultColor="bluegreyDark"
-        defaultWeight="Semibold"
         dynamicTypeRamp="title2"
-        font="TitilliumSansPro"
-        fontStyle={
-          {
-            "fontSize": 22,
-            "lineHeight": 33,
-          }
-        }
         maxFontSizeMultiplier={1.25}
         style={
           [
-            {
-              "fontSize": 22,
-              "lineHeight": 33,
-            },
+            {},
             {
               "color": "#0066CC",
               "fontFamily": "Titillium Sans Pro",
+              "fontSize": 22,
               "fontStyle": "normal",
               "fontWeight": "600",
+              "lineHeight": 33,
             },
           ]
         }
-        weight="Semibold"
       >
         9,999.00 €
       </Text>
     </View>
     <Text
       allowFontScaling={false}
-      color="blueItalia-850"
-      defaultColor="black"
-      defaultWeight="Semibold"
       dynamicTypeRamp="footnote"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 16,
-          "lineHeight": 21,
-        }
-      }
       maxFontSizeMultiplier={1.25}
       style={
         [
-          {
-            "fontSize": 16,
-            "lineHeight": 21,
-          },
+          {},
           {
             "color": "#001F3D",
             "fontFamily": "Titillium Sans Pro",
+            "fontSize": 16,
             "fontStyle": "normal",
             "fontWeight": "600",
+            "lineHeight": 21,
           },
         ]
       }
-      weight="Semibold"
     >
       Valida fino al 12/23
     </Text>

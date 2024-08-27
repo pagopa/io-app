@@ -161,6 +161,11 @@ jest.mock("react-native-vision-camera", () => ({
 }));
 
 /* Force the useBoldTextEnabled to return false to resolve tests */
+jest.mock("@pagopa/io-app-design-system", () => ({
+  ...jest.requireActual("@pagopa/io-app-design-system"),
+  useBoldTextEnabled: jest.fn(() => false)
+}));
+
 jest
   .spyOn(AccessibilityInfo, "isBoldTextEnabled")
   .mockImplementation(() => Promise.resolve(false));
