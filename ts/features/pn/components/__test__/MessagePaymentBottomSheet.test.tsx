@@ -11,6 +11,7 @@ import { UIMessageId } from "../../../messages/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 describe("MessagePaymentBottomSheet", () => {
   it("should match snapshot, no payments", () => {
@@ -102,6 +103,7 @@ const renderComponent = (
         messageId={messageId}
         payments={payments}
         presentPaymentsBottomSheetRef={mockPresentPaymentsBottomSheetRef}
+        serviceId={"01J5X3CYV736B41KSZS8DYR75Q" as ServiceId}
       />
     ),
     PN_ROUTES.MESSAGE_DETAILS,

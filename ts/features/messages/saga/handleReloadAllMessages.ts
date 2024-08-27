@@ -18,7 +18,7 @@ export function* handleReloadAllMessages(
   getMessages: BackendClient["getMessages"],
   action: ActionType<typeof reloadAllMessages.request>
 ) {
-  const { filter, pageSize } = action.payload;
+  const { filter, pageSize, fromUserAction } = action.payload;
 
   try {
     const response: SagaCallReturnType<typeof getMessages> = (yield* call(
@@ -36,7 +36,8 @@ export function* handleReloadAllMessages(
         reloadAllMessagesAction.success({
           messages: items.map(toUIMessage),
           pagination: { previous: prev, next },
-          filter
+          filter,
+          fromUserAction
         }),
       error => {
         const reason = errorToReason(error);

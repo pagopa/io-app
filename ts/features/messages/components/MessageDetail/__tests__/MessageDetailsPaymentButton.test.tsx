@@ -6,6 +6,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { MessageDetailsPaymentButton } from "../MessageDetailsPaymentButton";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { PaymentData, UIMessageId } from "../../../types";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 describe("MessageDetailsPaymentButton", () => {
   it("should match snapshot when not loading", () => {
@@ -30,6 +31,7 @@ const renderScreen = (isLoading: boolean) => {
     () => (
       <MessageDetailsPaymentButton
         messageId={"" as UIMessageId}
+        serviceId={"01J5ZQEMZ92CJN7NKZD4NE0RAH" as ServiceId}
         canNavigateToPayment={true}
         isLoading={isLoading}
         paymentData={

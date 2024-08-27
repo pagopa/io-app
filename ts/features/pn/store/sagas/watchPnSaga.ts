@@ -11,7 +11,7 @@ import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPre
 import { SessionToken } from "../../../../types/SessionToken";
 import { getError } from "../../../../utils/errors";
 import { PnClient, createPnClient } from "../../api/client";
-import { pnActivationUpsert, startPaymentStatusTracking } from "../actions";
+import { pnActivationUpsert, startPNPaymentStatusTracking } from "../actions";
 import {
   trackPNServiceStatusChangeError,
   trackPNServiceStatusChangeSuccess
@@ -88,7 +88,7 @@ export function* watchPnSaga(bearerToken: SessionToken): SagaIterator {
   );
 
   yield* takeLatest(
-    startPaymentStatusTracking,
+    startPNPaymentStatusTracking,
     watchPaymentStatusForMixpanelTracking
   );
 }
