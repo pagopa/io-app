@@ -23,6 +23,7 @@ import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
 import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
 import { getRptIdStringFromPayment } from "../utils/rptId";
 import { canShowMorePaymentsLink } from "../utils";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
 const styles = StyleSheet.create({
   morePaymentsSkeletonContainer: {
@@ -41,6 +42,7 @@ type MessagePaymentsProps = {
   completedPaymentNoticeCodes: ReadonlyArray<string> | undefined;
   maxVisiblePaymentCount: number;
   presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
+  serviceId: ServiceId;
 };
 
 const readonlyArrayHasNoData = <T,>(maybeArray: ReadonlyArray<T> | undefined) =>
@@ -95,7 +97,8 @@ export const MessagePayments = ({
   payments,
   completedPaymentNoticeCodes,
   maxVisiblePaymentCount,
-  presentPaymentsBottomSheetRef
+  presentPaymentsBottomSheetRef,
+  serviceId
 }: MessagePaymentsProps) => {
   const navigation = useNavigation();
   const paymentsButtonStatus = useIOSelector(state =>
@@ -175,6 +178,7 @@ export const MessagePayments = ({
                 messageId={messageId}
                 rptId={rptId}
                 noticeNumber={payment.noticeCode}
+                serviceId={serviceId}
               />
             );
           })}
