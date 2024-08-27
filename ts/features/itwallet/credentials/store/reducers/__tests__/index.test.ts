@@ -3,8 +3,15 @@ import { pipe } from "fp-ts/lib/function";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
-import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
-import { itwCredentialsRemove, itwCredentialsStore } from "../../actions";
+import {
+  ParsedStatusAttestation,
+  StoredCredential
+} from "../../../../common/utils/itwTypesUtils";
+import {
+  itwCredentialsMultipleUpdate,
+  itwCredentialsRemove,
+  itwCredentialsStore
+} from "../../actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { itwLifecycleWalletReset } from "../../../../lifecycle/store/actions";
@@ -28,6 +35,15 @@ const mockedCredential: StoredCredential = {
   parsedCredential: {},
   format: "vc+sd-jwt",
   keyTag: "d191ad52-2674-46f3-9610-6eb7bd9146a3",
+  issuerConf: {} as StoredCredential["issuerConf"]
+};
+
+const mockedCredential2: StoredCredential = {
+  credential: "",
+  credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
+  parsedCredential: {},
+  format: "vc+sd-jwt",
+  keyTag: "07ccc69a-d1b5-4c3c-9955-6a436d0c3710",
   issuerConf: {} as StoredCredential["issuerConf"]
 };
 
@@ -105,5 +121,42 @@ describe("ITW credentials reducer", () => {
       eid: O.none,
       credentials: []
     });
+  });
+
+  it("should update selected credentials", () => {
+    const credentialUpdate = {
+      credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
+      statusAttestation: {
+        credentialStatus: "valid",
+        parsedStatusAttestation: { exp: 1000 } as ParsedStatusAttestation
+      }
+    };
+
+    const updatedCredential: StoredCredential = {
+      credential: "",
+      credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
+      parsedCredential: {},
+      format: "vc+sd-jwt",
+      keyTag: "07ccc69a-d1b5-4c3c-9955-6a436d0c3710",
+      issuerConf: {} as StoredCredential["issuerConf"],
+      statusAttestation: {
+        credentialStatus: "valid",
+        parsedStatusAttestation: { exp: 1000 } as ParsedStatusAttestation
+      }
+    };
+
+    const targetSate = pipe(
+      undefined,
+      curriedAppReducer(applicationChangeState("active")),
+      curriedAppReducer(itwCredentialsStore(mockedEid)),
+      curriedAppReducer(itwCredentialsStore(mockedCredential)),
+      curriedAppReducer(itwCredentialsStore(mockedCredential2)),
+      curriedAppReducer(itwCredentialsMultipleUpdate([credentialUpdate]))
+    );
+
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual([
+      O.some(mockedCredential),
+      O.some(updatedCredential)
+    ]);
   });
 });
