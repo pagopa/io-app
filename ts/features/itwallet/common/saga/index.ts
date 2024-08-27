@@ -6,9 +6,11 @@ import { checkWalletInstanceStateSaga } from "../../lifecycle/saga/checkWalletIn
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
 import { itwTrialId } from "../../../../config";
 import { itwCieIsSupported } from "../../identification/store/actions";
+import { checkCredentialsStatus } from "../../credentials/saga/checkCredentialsStatus";
 
 export function* watchItwSaga(): SagaIterator {
   yield* fork(checkWalletInstanceStateSaga);
+  yield* fork(checkCredentialsStatus);
   yield* fork(handleWalletCredentialsRehydration);
   yield* fork(watchItwIdentificationSaga);
 
