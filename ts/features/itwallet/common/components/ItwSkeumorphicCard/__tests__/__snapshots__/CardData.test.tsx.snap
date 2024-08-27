@@ -15,14 +15,13 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     style={
       [
         {
-          "height": "100%",
           "position": "absolute",
-          "width": "100%",
         },
         {
           "left": "37%",
           "top": "7.74%",
         },
+        undefined,
       ]
     }
   >
@@ -61,14 +60,13 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     style={
       [
         {
-          "height": "100%",
           "position": "absolute",
-          "width": "100%",
         },
         {
           "left": "53%",
           "top": "7.74%",
         },
+        undefined,
       ]
     }
   >
@@ -107,14 +105,13 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     style={
       [
         {
-          "height": "100%",
           "position": "absolute",
-          "width": "100%",
         },
         {
           "left": "37%",
           "top": "33.690000000000005%",
         },
+        undefined,
       ]
     }
   >
@@ -153,14 +150,13 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     style={
       [
         {
-          "height": "100%",
           "position": "absolute",
-          "width": "100%",
         },
         {
           "left": "53%",
           "top": "33.690000000000005%",
         },
+        undefined,
       ]
     }
   >
@@ -213,13 +209,15 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     style={
       [
         {
-          "height": "100%",
           "position": "absolute",
-          "width": "100%",
         },
         {
           "left": "4.35%",
-          "top": "29%",
+          "top": "30.5%",
+        },
+        {
+          "aspectRatio": 0.8279569892473119,
+          "width": "23.5%",
         },
       ]
     }
@@ -234,8 +232,8 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       }
       style={
         {
-          "aspectRatio": 0.75,
-          "width": "23.45%",
+          "height": "100%",
+          "width": "100%",
         }
       }
     />
@@ -244,14 +242,13 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     style={
       [
         {
-          "height": "100%",
           "position": "absolute",
-          "width": "100%",
         },
         {
           "left": "34.75%",
           "top": "14.4%",
         },
+        undefined,
       ]
     }
   >
@@ -290,14 +287,13 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     style={
       [
         {
-          "height": "100%",
           "position": "absolute",
-          "width": "100%",
         },
         {
           "left": "34.75%",
           "top": "21.7%",
         },
+        undefined,
       ]
     }
   >
@@ -336,14 +332,13 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     style={
       [
         {
-          "height": "100%",
           "position": "absolute",
-          "width": "100%",
         },
         {
           "left": "34.75%",
           "top": "29%",
         },
+        undefined,
       ]
     }
   >
@@ -382,14 +377,13 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     style={
       [
         {
-          "height": "100%",
           "position": "absolute",
-          "width": "100%",
         },
         {
           "left": "57%",
           "top": "29%",
         },
+        undefined,
       ]
     }
   >
@@ -428,14 +422,13 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     style={
       [
         {
-          "height": "100%",
           "position": "absolute",
-          "width": "100%",
         },
         {
           "left": "34.75%",
           "top": "36.3%",
         },
+        undefined,
       ]
     }
   >
@@ -474,14 +467,13 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     style={
       [
         {
-          "height": "100%",
           "position": "absolute",
-          "width": "100%",
         },
         {
           "left": "34.75%",
           "top": "43.6%",
         },
+        undefined,
       ]
     }
   >
@@ -520,14 +512,13 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     style={
       [
         {
-          "height": "100%",
           "position": "absolute",
-          "width": "100%",
         },
         {
           "left": "34.75%",
           "top": "50.9%",
         },
+        undefined,
       ]
     }
   >
@@ -566,14 +557,13 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     style={
       [
         {
-          "height": "100%",
           "position": "absolute",
-          "width": "100%",
         },
         {
           "left": "8.85%",
           "top": "77.8%",
         },
+        undefined,
       ]
     }
   >

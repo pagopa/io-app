@@ -4,7 +4,8 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View, ViewStyle } from "react-native";
+import { Either, Prettify } from "../../../../../types/helpers";
 import { localeDateFormat } from "../../../../../utils/locale";
 import {
   ClaimValue,
@@ -16,20 +17,41 @@ import {
 import { ParsedCredential } from "../../utils/itwTypesUtils";
 import { ClaimLabel } from "./ClaimLabel";
 
-export type AbsoluteClaimPosition = Record<"x" | "y", `${number}%`>;
+type PercentPosition = `${number}%`;
+
+// Defines the claim horizontal position using the left OR the right absolute position value
+type HorizontalClaimPosition = Either<
+  { left: PercentPosition },
+  { right: PercentPosition }
+>;
+
+// Defines the claim vertical position using the top OR the bottom absolute position value
+type VerticalClaimPosition = Either<
+  { top: PercentPosition },
+  { bottom: PercentPosition }
+>;
+
+export type ClaimPosition = HorizontalClaimPosition & VerticalClaimPosition;
+
+export type ClaimDimensions = Prettify<
+  Partial<Record<"width" | "height", PercentPosition>> &
+    Pick<ViewStyle, "aspectRatio">
+>;
 
 export type CardClaimProps = WithTestID<{
   // A claim that will be used to render its component
   claim: ParsedCredential[number];
   // Absolute position expressed in percentages from top-left corner
-  position?: AbsoluteClaimPosition;
+  position?: ClaimPosition;
+  // Claim dimensions
+  dimensions?: ClaimDimensions;
 }>;
 
 /**
  * Default claim component, it decoded the provided value and renders the corresponging component
  * @returns The corresponding component if a value is correctly decoded, otherwise null
  */
-const CardClaim = ({ claim, position, testID }: CardClaimProps) => {
+const CardClaim = ({ claim, position, dimensions, testID }: CardClaimProps) => {
   const claimContent = React.useMemo(
     () =>
       pipe(
@@ -45,11 +67,11 @@ const CardClaim = ({ claim, position, testID }: CardClaimProps) => {
             return (
               <Image
                 source={{ uri: decoded }}
-                style={{
-                  width: "23.45%",
-                  aspectRatio: 3 / 4
-                }}
                 resizeMode="contain"
+                style={{
+                  width: "100%",
+                  height: "100%"
+                }}
                 accessibilityIgnoresInvertColors
               />
             );
@@ -71,7 +93,11 @@ const CardClaim = ({ claim, position, testID }: CardClaimProps) => {
   }
 
   return (
-    <CardClaimContainer testID={testID} position={position}>
+    <CardClaimContainer
+      testID={testID}
+      position={position}
+      dimensions={dimensions}
+    >
       {claimContent}
     </CardClaimContainer>
   );
@@ -106,39 +132,28 @@ const CardClaimRenderer = <T,>({
 // O.filter(is), O.fold(constNull, component)
 
 export type CardClaimContainerProps = WithTestID<{
-  position?: AbsoluteClaimPosition;
+  position?: ClaimPosition;
+  dimensions?: ClaimDimensions;
   children?: React.ReactNode;
 }>;
 
 /**
- * Component that allows to position a claim using "x" and "y" absolute values
- * This components takes all the available space inside the parent component, then
- * the "x" and "y" values are transformed in a relative position using the "padding".
+ * Component that allows to position a claim using "left" and "top" absolute values
  */
 const CardClaimContainer = ({
   position,
+  dimensions,
   children,
   testID
 }: CardClaimContainerProps) => (
-  <View
-    testID={testID}
-    style={[
-      styles.container,
-      {
-        left: position?.x,
-        top: position?.y
-      }
-    ]}
-  >
+  <View testID={testID} style={[styles.container, position, dimensions]}>
     {children}
   </View>
 );
 
 const styles = StyleSheet.create({
   container: {
-    position: "absolute",
-    width: "100%",
-    height: "100%"
+    position: "absolute"
   }
 });
 
