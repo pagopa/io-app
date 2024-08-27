@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ContentWrapper, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -15,9 +15,11 @@ import {
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
+  cancelPaymentStatusTracking,
   cancelPreviousAttachmentDownload,
   cancelQueuedPaymentUpdates,
   resetGetMessageDataAction,
+  startPaymentStatusTracking,
   updatePaymentForMessage
 } from "../store/actions";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
@@ -37,13 +39,11 @@ import { cleanMarkdownFromCTAs, getMessageCTA } from "../utils/messages";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
 import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetailsPayment";
-import { cancelPaymentStatusTracking } from "../../pn/store/actions";
 import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
 import { MessageDetailsStickyFooter } from "../components/MessageDetail/MessageDetailsStickyFooter";
 import { MessageDetailsScrollViewAdditionalSpace } from "../components/MessageDetail/MessageDetailsScrollViewAdditionalSpace";
 import { serviceMetadataByIdSelector } from "../../services/details/store/reducers";
-import { isPNOptInMessage } from "../../pn/utils";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { extractPNOptInMessageInfoIfAvailable } from "../../pn/utils";
 import {
   trackPNOptInMessageCTADisplaySuccess,
   trackPNOptInMessageOpened
@@ -128,7 +128,12 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   // minute. We do not want to cause a re-rendering or recompute the value
   const store = useIOStore();
   const state = store.getState();
-  const pnOptInMessageInfo = isPNOptInMessage(maybeCTAs, serviceId, state);
+  const pnOptInMessageInfo = extractPNOptInMessageInfoIfAvailable(
+    maybeCTAs,
+    serviceId,
+    state
+  );
+  const isPNOptInMessage = pnOptInMessageInfo.isPNOptInMessage;
 
   useHeaderSecondLevel({
     title: "",
@@ -136,13 +141,13 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
     supportRequest: true
   });
 
-  useOnFirstRender(
-    () => {
+  useEffect(() => {
+    dispatch(startPaymentStatusTracking());
+    if (isPNOptInMessage) {
       trackPNOptInMessageOpened();
       trackPNOptInMessageCTADisplaySuccess();
-    },
-    () => pnOptInMessageInfo.isPNOptInMessage
-  );
+    }
+  }, [dispatch, isPNOptInMessage]);
 
   useFocusEffect(
     useCallback(() => {
@@ -155,11 +160,12 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
         dispatch(
           updatePaymentForMessage.request({
             messageId,
-            paymentId: paymentToCheckRptId
+            paymentId: paymentToCheckRptId,
+            serviceId
           })
         );
       }
-    }, [dispatch, messageId, messageDetails, store])
+    }, [dispatch, messageId, messageDetails, serviceId, store])
   );
 
   if (message === undefined || messageDetails === undefined) {
@@ -213,7 +219,10 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
             >
               {markdownWithNoCTA}
             </MessageMarkdown>
-            <MessageDetailsPayment messageId={messageId} />
+            <MessageDetailsPayment
+              messageId={messageId}
+              serviceId={serviceId}
+            />
             <VSpacer size={16} />
             <MessageDetailsAttachments messageId={messageId} />
             {hasRemoteContent && <RemoteContentBanner />}
@@ -237,6 +246,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
         messageId={messageId}
         ctas={maybeCTAs}
         secondCTAIsPNOptInMessage={pnOptInMessageInfo.cta2LinksToPNService}
+        serviceId={serviceId}
       />
     </>
   );
