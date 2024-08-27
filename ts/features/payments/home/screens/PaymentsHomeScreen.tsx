@@ -1,4 +1,4 @@
-import { GradientScrollView, IOStyles } from "@pagopa/io-app-design-system";
+import { IOStyles } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import Animated, { Layout } from "react-native-reanimated";
 import { ScrollView } from "react-native";
@@ -18,6 +18,10 @@ import {
 import { PaymentsAlertStatus } from "../components/PaymentsAlertStatus";
 import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
 import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
+import {
+  IOScrollView,
+  IOScrollViewActions
+} from "../../../../components/ui/IOScrollView";
 
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
@@ -74,29 +78,33 @@ const PaymentsHomeScreen = () => {
     );
   }
 
+  const primaryActionProps: IOScrollViewActions["primary"] = {
+    label: I18n.t("features.payments.cta"),
+    onPress: handleOnPayNoticedPress,
+    icon: "qrCode",
+    iconPosition: "end",
+    testID: "PaymentsHomeScreenTestID-cta"
+  };
+
   return (
-    <GradientScrollView
+    <IOScrollView
       refreshControl={{
         refreshing: isRefreshing,
         onRefresh: handleRefreshPaymentsHome
       }}
-      primaryActionProps={
+      actions={
         isLoadingFirstTime
-          ? undefined
-          : {
-              accessibilityLabel: I18n.t("features.payments.cta"),
-              label: I18n.t("features.payments.cta"),
-              onPress: handleOnPayNoticedPress,
-              icon: "qrCode",
-              iconPosition: "end",
-              testID: "PaymentsHomeScreenTestID-cta"
+          ? {
+              type: "SingleButton",
+              primary: primaryActionProps
             }
+          : undefined
       }
       excludeSafeAreaMargins={true}
     >
       <PaymentsAlertStatus />
       <AnimatedPaymentsHomeScreenContent />
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 
