@@ -118,6 +118,7 @@ export const MessageDetails = ({
             completedPaymentNoticeCodes={completedPaymentNoticeCodes}
             maxVisiblePaymentCount={maxVisiblePaymentCount}
             presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
+            serviceId={serviceId}
           />
           <VSpacer size={16} />
           <F24Section
@@ -139,6 +140,7 @@ export const MessageDetails = ({
       </ScrollView>
       <MessageFooter
         messageId={messageId}
+        serviceId={serviceId}
         payments={payments}
         maxVisiblePaymentCount={maxVisiblePaymentCount}
         isCancelled={isCancelled}
@@ -149,6 +151,7 @@ export const MessageDetails = ({
           messageId={messageId}
           payments={payments}
           presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
+          serviceId={serviceId}
         />
       )}
     </>
