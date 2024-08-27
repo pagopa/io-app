@@ -15,6 +15,7 @@ import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 import {
+  AccessibilityInfo,
   Dimensions,
   LayoutChangeEvent,
   Modal,
@@ -27,7 +28,6 @@ import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeade
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
 import { TestID } from "../../types/WithTestID";
-import { isScreenReaderEnabled } from "../accessibility";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -162,9 +162,11 @@ export const useIOBottomSheetModal = ({
   );
 
   useEffect(() => {
-    isScreenReaderEnabled()
-      .then(sre => setIsScreenReaderEnabled(sre))
-      .catch(_ => setIsScreenReaderEnabled(false));
+    const event = AccessibilityInfo.addEventListener(
+      "screenReaderChanged",
+      setIsScreenReaderEnabled
+    );
+    return () => event.remove();
   }, []);
 
   const footerComponent = footer ? (
