@@ -18,7 +18,7 @@ describe("ItwPresentationAlertsSection", () => {
     CredentialType.EUROPEAN_DISABILITY_CARD,
     CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
   ])(
-    "should render remove credential button if credential type is %p",
+    "should render the remove credential action if credential type is %p",
     credentialType => {
       const { queryByTestId } = renderComponent(credentialType);
 
