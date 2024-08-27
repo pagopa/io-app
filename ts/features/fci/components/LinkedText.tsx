@@ -90,13 +90,11 @@ const LinkedText = (props: Props) => {
       {textWithSeparator.split("$@").map((text, index) =>
         O.isSome(O.fromNullable(arrayOfLinkedText[index])) ? (
           <React.Fragment key={index}>
-            <H6 color={"bluegreyDark"}>{text}</H6>
+            <H6>{text}</H6>
             {arrayOfLinkedText[index]}
           </React.Fragment>
         ) : (
-          <H6 key={index} color={"bluegreyDark"}>
-            {text}
-          </H6>
+          <H6 key={index}>{text}</H6>
         )
       )}
     </H4>

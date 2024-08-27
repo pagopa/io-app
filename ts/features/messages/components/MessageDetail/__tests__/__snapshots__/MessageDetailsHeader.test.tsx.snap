@@ -351,34 +351,22 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                       />
                       <Text
                         allowFontScaling={false}
-                        color="bluegreyDark"
-                        defaultColor="bluegreyDark"
-                        defaultWeight="Semibold"
                         dynamicTypeRamp="title2"
-                        font="TitilliumSansPro"
-                        fontStyle={
-                          {
-                            "fontSize": 22,
-                            "lineHeight": 33,
-                          }
-                        }
                         maxFontSizeMultiplier={1.25}
                         style={
                           [
+                            {},
                             {
-                              "fontSize": 22,
-                              "lineHeight": 33,
-                            },
-                            {
-                              "color": "#17324D",
+                              "color": "#0E0F13",
                               "fontFamily": "Titillium Sans Pro",
+                              "fontSize": 22,
                               "fontStyle": "normal",
                               "fontWeight": "600",
+                              "lineHeight": 33,
                             },
                           ]
                         }
                         testID="message-header-subject"
-                        weight="Semibold"
                       >
                         #### Subject ####
                       </Text>
@@ -391,33 +379,21 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                       />
                       <Text
                         allowFontScaling={false}
-                        color="grey-700"
-                        defaultColor="blue"
-                        defaultWeight="Bold"
                         dynamicTypeRamp="footnote"
-                        font="TitilliumSansPro"
-                        fontStyle={
-                          {
-                            "fontSize": 14,
-                            "lineHeight": 21,
-                          }
-                        }
                         maxFontSizeMultiplier={1.25}
                         style={
                           [
-                            {
-                              "fontSize": 14,
-                              "lineHeight": 21,
-                            },
+                            {},
                             {
                               "color": "#555C70",
                               "fontFamily": "Titillium Sans Pro",
+                              "fontSize": 14,
                               "fontStyle": "normal",
                               "fontWeight": "400",
+                              "lineHeight": 21,
                             },
                           ]
                         }
-                        weight="Regular"
                       >
                         18 Oct 2021, 16:00
                       </Text>
@@ -455,66 +431,42 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="footnote"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 16,
-                                "lineHeight": 21,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 21,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 21,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             Ċentru tas-Saħħa
                           </Text>
                           <Text
                             allowFontScaling={false}
-                            color="blueIO-500"
-                            defaultColor="blue"
-                            defaultWeight="Bold"
                             dynamicTypeRamp="footnote"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 14,
-                                "lineHeight": 21,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             onPress={[Function]}
                             style={
                               [
-                                {
-                                  "fontSize": 14,
-                                  "lineHeight": 21,
-                                },
+                                {},
                                 {
                                   "color": "#0B3EE3",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 14,
                                   "fontStyle": "normal",
-                                  "fontWeight": "700",
+                                  "fontWeight": "600",
+                                  "lineHeight": 21,
                                 },
                               ]
                             }
-                            weight="Bold"
                           >
                             health
                           </Text>
