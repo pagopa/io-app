@@ -480,35 +480,23 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="blueIO-850"
-                                defaultColor="bluegreyDark"
-                                defaultWeight="Semibold"
                                 dynamicTypeRamp="title3"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 20,
-                                    "lineHeight": 24,
-                                  }
-                                }
                                 lineBreakMode="head"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={3}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 20,
-                                      "lineHeight": 24,
-                                    },
+                                    {},
                                     {
                                       "color": "#031344",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 20,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }
-                                weight="Semibold"
                               >
                                 ### Service ###
                               </Text>
@@ -1026,20 +1014,20 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                   numberOfLines={1}
                                   style={
                                     [
+                                      {},
+                                      {
+                                        "color": "#1A0744",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 16,
+                                      },
                                       {
                                         "alignSelf": "center",
                                         "flexShrink": 1,
-                                        "fontSize": 12,
-                                        "lineHeight": 16,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                      },
-                                      {
-                                        "color": "#1A0744",
                                       },
                                     ]
                                   }
@@ -1058,35 +1046,23 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="hanPurple-850"
-                                defaultColor="bluegreyDark"
-                                defaultWeight="Semibold"
                                 dynamicTypeRamp="title3"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 20,
-                                    "lineHeight": 24,
-                                  }
-                                }
                                 lineBreakMode="head"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={3}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 20,
-                                      "lineHeight": 24,
-                                    },
+                                    {},
                                     {
                                       "color": "#1A0744",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 20,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }
-                                weight="Semibold"
                               >
                                 ### Service ###
                               </Text>

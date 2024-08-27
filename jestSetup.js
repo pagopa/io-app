@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-// eslint-disable-next-line no-redeclare
+
 /* globals jest, NativeModules, require, global */
 /**
  * Set up of the testing environment
@@ -8,10 +8,11 @@
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
 import nodeFetch from "node-fetch";
-import { NativeModules } from "react-native";
+import { NativeModules, AccessibilityInfo } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
 import mockRNCameraRoll from "@react-native-camera-roll/camera-roll/src/__mocks__/nativeInterface";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
+
 import "react-native-get-random-values";
 
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
@@ -27,7 +28,6 @@ jest.mock("@react-native-camera-roll/camera-roll", () => mockRNCameraRoll);
  * https://docs.swmansion.com/react-native-reanimated/docs/1.x.x/getting_started/#testing
  */
 jest.mock("react-native-reanimated", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const Reanimated = require("react-native-reanimated/mock");
 
   // The mock misses the `addWhitelistedUIProps` implementation
@@ -53,11 +53,10 @@ NativeModules.PlatformConstants = NativeModules.PlatformConstants || {
 
 const {
   AbortController
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
 } = require("abortcontroller-polyfill/dist/cjs-ponyfill");
-// eslint-disable-next-line @typescript-eslint/no-explicit-any,functional/immutable-data
+// eslint-disable-next-line functional/immutable-data
 global.fetch = nodeFetch;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any,functional/immutable-data
+// eslint-disable-next-line functional/immutable-data
 global.AbortController = AbortController;
 
 jest.mock("remark-directive", () => jest.fn());
@@ -73,7 +72,6 @@ jest.mock("react-native-device-info", () => mockRNDeviceInfo);
 global.__reanimatedWorkletInit = () => jest.fn();
 
 jest.mock("@gorhom/bottom-sheet", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const rn = require("react-native");
 
   return {
@@ -161,3 +159,8 @@ jest.mock("react-native-vision-camera", () => ({
     onCodeScanned: jest.fn()
   }))
 }));
+
+/* Force the useBoldTextEnabled to return false to resolve tests */
+jest
+  .spyOn(AccessibilityInfo, "isBoldTextEnabled")
+  .mockImplementation(() => Promise.resolve(false));

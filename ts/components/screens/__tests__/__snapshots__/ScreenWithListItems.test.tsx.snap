@@ -354,33 +354,21 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                         <View>
                           <Text
                             allowFontScaling={false}
-                            color="black"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="title1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 28,
-                                "lineHeight": 40,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 28,
-                                  "lineHeight": 40,
-                                },
+                                {},
                                 {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 28,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 40,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             Test Title
                           </Text>
@@ -393,33 +381,21 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                           />
                           <Text
                             allowFontScaling={false}
-                            color="bluegrey"
-                            defaultColor="bluegrey"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="body"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 16,
-                                "lineHeight": 24,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
+                                {},
                                 {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                },
-                                {
-                                  "color": "#475A6D",
+                                  "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             Test Subtitle
                           </Text>
@@ -465,34 +441,22 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="grey-700"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     role="heading"
                                     style={
                                       [
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     List Header
                                   </Text>
@@ -537,66 +501,42 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         Item 1
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="black"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0E0F13",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 25,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         Value 1
                                       </Text>
@@ -649,66 +589,42 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         Item 2
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="black"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0E0F13",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 25,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         Value 2
                                       </Text>
@@ -939,36 +855,26 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={false}
-                                  color="white"
-                                  defaultColor="white"
-                                  defaultWeight="Bold"
                                   ellipsizeMode="tail"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 16,
-                                    }
-                                  }
                                   importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     [
-                                      {
-                                        "alignSelf": "center",
-                                      },
-                                      {
-                                        "fontSize": 16,
-                                      },
+                                      {},
                                       {
                                         "color": "#FFFFFF",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "700",
+                                        "lineHeight": 20,
+                                      },
+                                      {
+                                        "alignSelf": "center",
                                       },
                                     ]
                                   }
-                                  weight="Bold"
                                 >
                                   Press me
                                 </Text>
@@ -1344,33 +1250,21 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                         <View>
                           <Text
                             allowFontScaling={false}
-                            color="black"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="title1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 28,
-                                "lineHeight": 40,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 28,
-                                  "lineHeight": 40,
-                                },
+                                {},
                                 {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 28,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 40,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           />
                           <View />
                         </View>
@@ -1594,36 +1488,26 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={false}
-                                  color="white"
-                                  defaultColor="white"
-                                  defaultWeight="Bold"
                                   ellipsizeMode="tail"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 16,
-                                    }
-                                  }
                                   importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     [
-                                      {
-                                        "alignSelf": "center",
-                                      },
-                                      {
-                                        "fontSize": 16,
-                                      },
+                                      {},
                                       {
                                         "color": "#FFFFFF",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "700",
+                                        "lineHeight": 20,
+                                      },
+                                      {
+                                        "alignSelf": "center",
                                       },
                                     ]
                                   }
-                                  weight="Bold"
                                 >
                                   Press me
                                 </Text>
@@ -1999,33 +1883,21 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                         <View>
                           <Text
                             allowFontScaling={false}
-                            color="black"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="title1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 28,
-                                "lineHeight": 40,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 28,
-                                  "lineHeight": 40,
-                                },
+                                {},
                                 {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 28,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 40,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             Test Title
                           </Text>
@@ -2038,104 +1910,68 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                           />
                           <Text
                             allowFontScaling={false}
-                            color="bluegrey"
-                            defaultColor="bluegrey"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="body"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 16,
-                                "lineHeight": 24,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
+                                {},
+                                {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 16,
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                  "lineHeight": 24,
+                                },
                                 {
                                   "textAlign": "center",
                                 },
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                },
-                                {
-                                  "color": "#475A6D",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                },
                               ]
                             }
-                            weight="Regular"
                           >
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
                                     "lineHeight": 24,
                                   },
                                   {
-                                    "color": "#475A6D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Subtitle Part 1
                             </Text>
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 24,
                                   },
                                   {
-                                    "color": "#475A6D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Subtitle Part 2 Bold
                             </Text>
@@ -2182,34 +2018,22 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="grey-700"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     role="heading"
                                     style={
                                       [
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     List Header
                                   </Text>
@@ -2254,66 +2078,42 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         Item 1
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="black"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0E0F13",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 25,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         Value 1
                                       </Text>
@@ -2366,66 +2166,42 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         Item 2
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="black"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0E0F13",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 25,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         Value 2
                                       </Text>
@@ -2656,36 +2432,26 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={false}
-                                  color="white"
-                                  defaultColor="white"
-                                  defaultWeight="Bold"
                                   ellipsizeMode="tail"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 16,
-                                    }
-                                  }
                                   importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     [
-                                      {
-                                        "alignSelf": "center",
-                                      },
-                                      {
-                                        "fontSize": 16,
-                                      },
+                                      {},
                                       {
                                         "color": "#FFFFFF",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "700",
+                                        "lineHeight": 20,
+                                      },
+                                      {
+                                        "alignSelf": "center",
                                       },
                                     ]
                                   }
-                                  weight="Bold"
                                 >
                                   Press me
                                 </Text>
