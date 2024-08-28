@@ -206,7 +206,6 @@ const startAndCompleteFullAuthFlow = async ({
       idpHint,
       redirectUri,
       authorizationContext,
-      // @ts-expect-error update io-react-native-wallet
       identification.abortController?.signal
     );
 

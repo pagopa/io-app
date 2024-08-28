@@ -71,6 +71,5 @@ export const createEidIssuanceGuardsImplementation = (
     "error" in event && event.error instanceof ItwSessionExpiredError,
 
   isOperationAborted: ({ event }: { event: EidIssuanceEvents }) =>
-    // @ts-expect-error update io-react-native-wallet
     "error" in event && event.error instanceof Errors.OperationAbortedError
 });
