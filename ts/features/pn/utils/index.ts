@@ -44,7 +44,7 @@ export type PNOptInMessageInfo = {
   cta2LinksToPNService: boolean;
 };
 
-export const isPNOptInMessage = (
+export const extractPNOptInMessageInfoIfAvailable = (
   ctasOpt: CTAS | undefined,
   serviceIdOpt: ServiceId | undefined,
   state: GlobalState

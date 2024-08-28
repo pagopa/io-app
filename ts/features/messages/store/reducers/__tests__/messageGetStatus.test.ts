@@ -55,6 +55,7 @@ describe("messageGetStatusReducer", () => {
       firstTimeOpening: true,
       isPNMessage: false,
       organizationName: "orgName",
+      organizationFiscalCode: "orgFisCod",
       containsAttachments: false,
       hasRemoteContent: false
     };
@@ -118,7 +119,11 @@ describe("messageGetStatusReducer", () => {
     expect(failureState).not.toStrictEqual(INITIAL_STATE);
     const resetState = messageGetStatusReducer(
       failureState,
-      reloadAllMessages.request({ filter: {}, pageSize: 20 })
+      reloadAllMessages.request({
+        filter: {},
+        pageSize: 20,
+        fromUserAction: false
+      })
     );
     expect(resetState).toStrictEqual(INITIAL_STATE);
   });
@@ -161,6 +166,7 @@ describe("showSpinnerFromMessageGetStatusSelector", () => {
         firstTimeOpening: true,
         isPNMessage: false,
         organizationName: "orgName",
+        organizationFiscalCode: "orgFisCod",
         containsAttachments: false,
         hasRemoteContent: false
       })
@@ -220,6 +226,7 @@ describe("messageSuccessDataSelector", () => {
       serviceName: "name",
       firstTimeOpening: true,
       isPNMessage: false,
+      organizationFiscalCode: "orgFisCod",
       organizationName: "orgName",
       containsAttachments: false,
       hasRemoteContent: false
@@ -259,6 +266,7 @@ describe("blockedFromPushNotificationSelector", () => {
         firstTimeOpening: true,
         isPNMessage: false,
         organizationName: "orgName",
+        organizationFiscalCode: "orgFisCod",
         containsAttachments: false,
         hasRemoteContent: false
       })

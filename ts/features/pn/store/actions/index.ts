@@ -13,15 +13,15 @@ export const pnActivationUpsert = createAsyncAction(
   "PN_ACTIVATION_UPSERT_FAILURE"
 )<TogglePnActivationPayload, boolean, Error>();
 
-export const startPaymentStatusTracking = createAction(
-  "MESSAGES_START_TRACKING_PAYMENT_STATUS",
+export const startPNPaymentStatusTracking = createAction(
+  "PN_START_TRACKING_PAYMENT_STATUS",
   resolve => (messageId: UIMessageId) => resolve({ messageId })
 );
-export const cancelPaymentStatusTracking = createAction(
-  "MESSAGES_CANCEL_PAYMENT_STATUS_TRACKING"
+export const cancelPNPaymentStatusTracking = createAction(
+  "PN_CANCEL_PAYMENT_STATUS_TRACKING"
 );
 
 export type PnActions =
   | ActionType<typeof pnActivationUpsert>
-  | ActionType<typeof startPaymentStatusTracking>
-  | ActionType<typeof cancelPaymentStatusTracking>;
+  | ActionType<typeof startPNPaymentStatusTracking>
+  | ActionType<typeof cancelPNPaymentStatusTracking>;
