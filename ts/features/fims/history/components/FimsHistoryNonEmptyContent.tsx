@@ -34,16 +34,11 @@ export const FimsHistoryNonEmptyContent = ({
 
   const renderLoadingFooter = () => (
     <>
-      {
-        isHistoryLoading && (
-          <LoadingFimsHistoryItemsFooter
-            showFirstDivider={(consents?.items.length ?? 0) > 0}
-          />
-        )
-        // the upcoming spacer is here to make
-        // sure the list does not "underflow", thus making
-        // the last listItem not visible
-      }
+      {isHistoryLoading && (
+        <LoadingFimsHistoryItemsFooter
+          showFirstDivider={(consents?.items.length ?? 0) > 0}
+        />
+      )}
     </>
   );
   const shouldHideFooter =
