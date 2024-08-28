@@ -13,11 +13,12 @@ import { useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../messages/types";
 import { canNavigateToPaymentFromMessageSelector } from "../../messages/store/reducers/payments";
 import { getRptIdStringFromPayment } from "../utils/rptId";
-import { trackPNShowAllPayments } from "../analytics";
+import { trackPNPaymentStart, trackPNShowAllPayments } from "../analytics";
 import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { shouldUseBottomSheetForPayments } from "../utils";
 import { isNewPaymentSectionEnabledSelector } from "../../../store/reducers/backendStatus";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
 type MessageFooterProps = {
   messageId: UIMessageId;
@@ -25,6 +26,7 @@ type MessageFooterProps = {
   maxVisiblePaymentCount: number;
   isCancelled: boolean;
   presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
+  serviceId: ServiceId;
 };
 
 export const MessageFooter = ({
@@ -35,6 +37,8 @@ export const MessageFooter = ({
   presentPaymentsBottomSheetRef
 }: MessageFooterProps) => {
   const safeAreaInsets = useSafeAreaInsets();
+  const dispatch = useDispatch();
+  const toast = useIOToast();
   const buttonState = useIOSelector(state =>
     paymentsButtonStateSelector(
       state,
@@ -43,8 +47,6 @@ export const MessageFooter = ({
       maxVisiblePaymentCount
     )
   );
-  const dispatch = useDispatch();
-  const toast = useIOToast();
   const canNavigateToPayment = useIOSelector(state =>
     canNavigateToPaymentFromMessageSelector(state)
   );
@@ -67,7 +69,7 @@ export const MessageFooter = ({
         undefined,
         canNavigateToPayment,
         dispatch,
-        true,
+        () => trackPNPaymentStart(),
         () => toast.error(I18n.t("genericError"))
       );
     }

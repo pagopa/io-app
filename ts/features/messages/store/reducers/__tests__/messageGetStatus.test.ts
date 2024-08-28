@@ -55,6 +55,7 @@ describe("messageGetStatusReducer", () => {
       firstTimeOpening: true,
       isPNMessage: false,
       organizationName: "orgName",
+      organizationFiscalCode: "orgFisCod",
       containsAttachments: false,
       hasRemoteContent: false
     };
@@ -165,6 +166,7 @@ describe("showSpinnerFromMessageGetStatusSelector", () => {
         firstTimeOpening: true,
         isPNMessage: false,
         organizationName: "orgName",
+        organizationFiscalCode: "orgFisCod",
         containsAttachments: false,
         hasRemoteContent: false
       })
@@ -224,6 +226,7 @@ describe("messageSuccessDataSelector", () => {
       serviceName: "name",
       firstTimeOpening: true,
       isPNMessage: false,
+      organizationFiscalCode: "orgFisCod",
       organizationName: "orgName",
       containsAttachments: false,
       hasRemoteContent: false
@@ -263,6 +266,7 @@ describe("blockedFromPushNotificationSelector", () => {
         firstTimeOpening: true,
         isPNMessage: false,
         organizationName: "orgName",
+        organizationFiscalCode: "orgFisCod",
         containsAttachments: false,
         hasRemoteContent: false
       })
