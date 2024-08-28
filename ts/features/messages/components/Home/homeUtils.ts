@@ -50,7 +50,7 @@ export const getInitialReloadAllMessagesActionIfNeeded = (
   pipe(state, shownMessageCategorySelector, category =>
     pipe(
       state,
-      isArchivingInProcessingModeSelector,
+      isDoingAnAsyncOperationOnMessages,
       B.fold(
         () =>
           pipe(
