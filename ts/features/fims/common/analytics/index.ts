@@ -77,7 +77,7 @@ export const trackInAppBrowserOpening = (
 };
 
 export const trackAuthenticationError = (
-  serviceId: ServiceId,
+  serviceId: ServiceId | undefined,
   serviceName: string | undefined,
   organizationName: string | undefined,
   organizationFiscalCode: string | undefined,

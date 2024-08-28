@@ -34,11 +34,11 @@ import {
 } from "./handleFimsResourcesDeallocation";
 import {
   buildAbsoluteUrl,
+  computeAndTrackAuthenticationError,
   formatHttpClientResponseForMixPanel,
   isFastLoginFailure,
   isRedirect,
-  isValidRedirectResponse,
-  logToMixPanel
+  isValidRedirectResponse
 } from "./sagaUtils";
 
 // note: IAB => InAppBrowser
@@ -49,7 +49,7 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
   const oidcProviderDomain = yield* select(fimsDomainSelector);
   if (!oidcProviderDomain) {
     const debugMessage = `missing FIMS, domain is ${oidcProviderDomain}`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         standardMessage: "missing FIMS domain",
@@ -63,7 +63,7 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
   const acceptUrl = buildAbsoluteUrl(maybeAcceptUrl ?? "", oidcProviderDomain);
   if (!acceptUrl) {
     const debugMessage = `unable to accept grants, could not buld url. obtained URL: ${maybeAcceptUrl}`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         standardMessage: "unable to accept grants: invalid URL",
@@ -91,7 +91,7 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     const debugMessage = `could not get RelyingParty redirect URL, ${formatHttpClientResponseForMixPanel(
       rpRedirectResponse
     )}`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         standardMessage: "could not get RelyingParty redirect URL",
@@ -127,7 +127,7 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
           `${inAppBrowserUrlResponse.code}, message: ${inAppBrowserUrlResponse.message}`
         : inAppBrowserUrlResponse.status
     }`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         standardMessage: "IAB url call failed or without a valid redirect",
@@ -229,7 +229,7 @@ function* postToRelyingPartyWithImplicitCodeFlow(
   if (E.isLeft(formPostDataEither)) {
     const errorMessage = formPostDataEither.left;
     const debugMessage = `Form extraction from HTML page failed, implicit code flow: ${errorMessage}`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         standardMessage:
@@ -253,7 +253,7 @@ function* postToRelyingPartyWithImplicitCodeFlow(
   if (E.isLeft(lollipopSignatureEither)) {
     const errorMessage = lollipopSignatureEither.left;
     const debugMessage = `Could not sign request with LolliPoP, Implicit code flow: ${errorMessage}`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         standardMessage:
@@ -291,7 +291,7 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
   const relyingPartyRedirectUrl = rpRedirectResponse.headers.location;
   if (!relyingPartyRedirectUrl || relyingPartyRedirectUrl.trim().length === 0) {
     const debugMessage = `could not find valid Location header for Relying Party redirect url, authorization code flow: ${!!relyingPartyRedirectUrl}`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         standardMessage:
@@ -308,7 +308,7 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
   const state = lollipopParamsMap?.get("state");
   if (!lollipopParamsMap || !state) {
     const debugMessage = `could not extract lollipop params or state from RelyingParty URL, params: ${!!lollipopParamsMap}, state: ${!!state}`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         standardMessage: "could not extract data from RelyingParty URL",
@@ -327,7 +327,7 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
   if (E.isLeft(lollipopSignatureEither)) {
     const errorMessage = lollipopSignatureEither.left;
     const debugMessage = `Could not sign request with LolliPoP, Authorization code flow: ${errorMessage}`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         standardMessage:

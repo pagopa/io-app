@@ -32,7 +32,7 @@ export const fimsGetRedirectUrlAndOpenIABAction = createAsyncAction(
 
 export const fimsCancelOrAbortAction = createStandardAction(
   "FIMS_CANCEL_OR_ABORT"
-)();
+)<void>();
 
 export type FimsSSOActions =
   | ActionType<typeof fimsGetConsentsListAction>

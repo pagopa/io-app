@@ -1,11 +1,13 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { FimsHistoryClient } from "../api/client";
 import { fimsHistoryGet } from "../store/actions";
+import { trackHistoryFailure } from "../../common/analytics";
 
 export function* handleGetFimsHistorySaga(
   getFimsHistory: FimsHistoryClient["getConsents"],
@@ -28,9 +30,12 @@ export function* handleGetFimsHistorySaga(
       extractFimsHistoryResponseAction,
       getHistoryResult
     );
+    trackFailureIfNeeded(resultAction);
     yield* put(resultAction);
   } catch (e) {
-    yield* put(fimsHistoryGet.failure((e as Error).toString()));
+    const reason = `${e}`;
+    trackHistoryFailure(reason);
+    yield* put(fimsHistoryGet.failure(reason));
   }
 }
 
@@ -40,10 +45,21 @@ const extractFimsHistoryResponseAction = (
   pipe(
     historyResult,
     E.fold(
-      error => fimsHistoryGet.failure(error.toString()),
+      error => fimsHistoryGet.failure(readableReport(error)),
       response =>
         response.status === 200
           ? fimsHistoryGet.success(response.value)
-          : fimsHistoryGet.failure("GENERIC_NON_200")
+          : fimsHistoryGet.failure(`GENERIC_NON_200: ${response.status}`)
     )
   );
+
+const trackFailureIfNeeded = (
+  action: ActionType<
+    typeof fimsHistoryGet.success | typeof fimsHistoryGet.failure
+  >
+) => {
+  if (isActionOf(fimsHistoryGet.failure, action)) {
+    const reason = action.payload;
+    trackHistoryFailure(reason);
+  }
+};

@@ -18,6 +18,7 @@ import {
 } from "../store/selectors";
 import { useFimsHistoryExport } from "../hooks/useFimsHistoryResultToasts";
 import * as RemoteValue from "../../../../common/model/RemoteValue";
+import { trackHistoryScreen } from "../../common/analytics";
 
 export const FimsHistoryScreen = () => {
   const dispatch = useIODispatch();
@@ -50,6 +51,9 @@ export const FimsHistoryScreen = () => {
       dispatch(fimsHistoryGet.request({ shouldReloadFromScratch: true }));
     }
   }, [dispatch, requiresAppUpdate]);
+  React.useEffect(() => {
+    trackHistoryScreen();
+  }, []);
 
   const { handleExportOnPress } = useFimsHistoryExport();
 
