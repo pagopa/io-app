@@ -166,7 +166,7 @@ export const useIOBottomSheetModal = ({
       "screenReaderChanged",
       setIsScreenReaderEnabled
     );
-    return screenReaderChangedSubscription.remove;
+    return () => screenReaderChangedSubscription.remove();
   }, []);
 
   const footerComponent = footer ? (
