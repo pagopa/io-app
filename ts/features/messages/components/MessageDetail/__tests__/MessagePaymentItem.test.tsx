@@ -9,6 +9,7 @@ import { NotificationPaymentInfo } from "../../../../../../definitions/pn/Notifi
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
 import { updatePaymentForMessage } from "../../../store/actions";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 describe("MessagePaymentItem component", () => {
   it("Should match the snapshot for a loading item", () => {
@@ -67,7 +68,8 @@ const renderComponent = (
               importoSingoloVersamento: 99,
               causaleVersamento: "Causale",
               dueDate: new Date(2023, 10, 23, 10, 30)
-            } as PaymentRequestsGetResponse
+            } as PaymentRequestsGetResponse,
+            serviceId: "01J5X5NP84QE3T3P604MWP9TKC" as ServiceId
           })
         )
       : paymentStatus === "processed"
@@ -76,7 +78,8 @@ const renderComponent = (
           updatePaymentForMessage.failure({
             messageId,
             paymentId: rptId,
-            details: Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+            details: Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO,
+            serviceId: "01J5X5NP84QE3T3P604MWP9TKC" as ServiceId
           })
         )
       : globalState;
@@ -89,6 +92,7 @@ const renderComponent = (
         messageId={messageId}
         rptId={rptId}
         noticeNumber={payment.noticeCode}
+        serviceId={"01J5X34VA7H1726CQNTG14GNDH" as ServiceId}
       />
     ),
     "DUMMY",
