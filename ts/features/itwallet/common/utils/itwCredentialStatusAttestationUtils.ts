@@ -12,19 +12,16 @@ export const getCredentialStatusAttestation = async (
 ) => {
   const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
 
-  // @ts-expect-error update io-react-native-wallet
   const { issuerConf } = await Credential.Status.evaluateIssuerTrust(
     itwEaaProviderBaseUrl
   );
 
-  // @ts-expect-error update io-react-native-wallet
   const rawStatusAttestation = await Credential.Status.statusAttestation(
     issuerConf,
     credential,
     credentialCryptoContext
   );
 
-  // @ts-expect-error update io-react-native-wallet
   return Credential.Status.verifyAndParseStatusAttestation(
     issuerConf,
     rawStatusAttestation,

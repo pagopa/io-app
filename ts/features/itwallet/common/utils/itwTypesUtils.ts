@@ -40,7 +40,6 @@ export type ParsedCredential = Awaited<
  * Alias for the ParsedStatusAttestation type
  */
 export type ParsedStatusAttestation = Awaited<
-  // @ts-expect-error update io-react-native-wallet
   ReturnType<typeof Credential.Status.verifyAndParseStatusAttestation>
 >["parsedStatusAttestation"]["payload"];
 

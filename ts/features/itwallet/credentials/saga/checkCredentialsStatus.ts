@@ -40,7 +40,6 @@ function* updateCredentialStatusAttestationSaga(
       credentialType: credential.credentialType,
       statusAttestation: {
         credentialStatus:
-          // @ts-expect-error update io-react-native-wallet
           error instanceof Errors.StatusAttestationInvalid
             ? "invalid" // The credential was revoked
             : "unknown", // We do not have enough information on the status, the error was unexpected
