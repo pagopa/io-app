@@ -42,6 +42,9 @@ import { initializeAndNavigateToWalletForPayment } from "../../utils";
 import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
 import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
 import { isNewPaymentSectionEnabledSelector } from "../../../../store/reducers/backendStatus";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { trackPNPaymentStart } from "../../../pn/analytics";
+import { computeAndTrackPaymentStart } from "./detailsUtils";
 
 type MessagePaymentItemProps = {
   hideExpirationDate?: boolean;
@@ -52,6 +55,7 @@ type MessagePaymentItemProps = {
   noticeNumber: string;
   paymentAmount?: PaymentAmount;
   rptId: string;
+  serviceId: ServiceId;
   willNavigateToPayment?: () => void;
 };
 
@@ -167,16 +171,15 @@ export const MessagePaymentItem = ({
   noticeNumber,
   paymentAmount = undefined,
   rptId,
+  serviceId,
   willNavigateToPayment = undefined
 }: MessagePaymentItemProps) => {
   const dispatch = useIODispatch();
   const store = useIOStore();
   const toast = useIOToast();
 
-  const globalState = store.getState();
-
   const shouldUpdatePayment = shouldUpdatePaymentSelector(
-    globalState,
+    store.getState(),
     messageId,
     rptId
   );
@@ -201,7 +204,13 @@ export const MessagePaymentItem = ({
       paymentAmount,
       canNavigateToPayment,
       dispatch,
-      isPNPayment,
+      () => {
+        if (isPNPayment) {
+          trackPNPaymentStart();
+        } else {
+          computeAndTrackPaymentStart(serviceId, store.getState());
+        }
+      },
       () => toast.error(I18n.t("genericError")),
       () => willNavigateToPayment?.()
     );
@@ -214,6 +223,8 @@ export const MessagePaymentItem = ({
     paymentAmount,
     paymentStatusForUI,
     rptId,
+    serviceId,
+    store,
     toast,
     willNavigateToPayment
   ]);
@@ -221,11 +232,12 @@ export const MessagePaymentItem = ({
     if (shouldUpdatePayment) {
       const updateAction = updatePaymentForMessage.request({
         messageId,
-        paymentId: rptId
+        paymentId: rptId,
+        serviceId
       });
       dispatch(updateAction);
     }
-  }, [dispatch, messageId, rptId, shouldUpdatePayment]);
+  }, [dispatch, messageId, isPNPayment, rptId, serviceId, shouldUpdatePayment]);
   return (
     <View>
       {!noSpaceOnTop && <VSpacer size={index > 0 ? 8 : 24} />}

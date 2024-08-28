@@ -12,9 +12,9 @@ import { ItwLifecycleState } from "../../lifecycle/store/reducers";
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { disposeWalletAttestation } from "../../common/utils/itwAttestationUtils";
 import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { assert } from "../../../../utils/assert";
+import { disposeWallet } from "../../common/utils/itwIssuanceUtils";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -148,7 +148,7 @@ export const createEidIssuanceActionsImplementation = (
 
   requestAssistance: () => {},
 
-  disposeWalletAttestation,
+  disposeWallet,
 
   handleSessionExpired: () =>
     dispatch(checkCurrentSession.success({ isSessionValid: false })),
