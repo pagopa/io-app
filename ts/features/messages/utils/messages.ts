@@ -51,6 +51,7 @@ export const handleCtaAction = (
     NavigationService.navigate(FIMS_ROUTES.MAIN, {
       screen: FIMS_ROUTES.CONSENTS,
       params: {
+        ctaText: cta.text,
         ctaUrl: url
       }
     });

@@ -26,12 +26,14 @@ export type FimsErrorStateType = {
 };
 
 export type FimsSSOState = {
+  ctaText?: string;
   currentFlowState: FimsFlowStateTags;
   consentsData: pot.Pot<ConsentData, FimsErrorStateType>;
   relyingPartyUrl?: string;
 };
 
 const INITIAL_STATE: FimsSSOState = {
+  ctaText: undefined,
   currentFlowState: "idle",
   relyingPartyUrl: undefined,
   consentsData: pot.none
@@ -53,6 +55,7 @@ const reducer = (
 
     case getType(fimsGetConsentsListAction.request):
       return {
+        ctaText: action.payload.ctaText,
         currentFlowState: "consents",
         consentsData: pot.noneLoading,
         relyingPartyUrl: action.payload.ctaUrl

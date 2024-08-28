@@ -27,7 +27,7 @@ export const trackDataShare = (
   serviceName: string | undefined,
   organizationName: string | undefined,
   organizationFiscalCode: string | undefined,
-  ctaLabel: string
+  ctaLabel: string | undefined
 ) => {
   const eventName = `FIMS_DATA_SHARE`;
   const props = buildEventProperties("UX", "screen_view", {
@@ -45,7 +45,7 @@ export const trackDataShareAccepted = (
   serviceName: string | undefined,
   organizationName: string | undefined,
   organizationFiscalCode: string | undefined,
-  ctaLabel: string
+  ctaLabel: string | undefined
 ) => {
   const eventName = `FIMS_DATA_SHARE_ACCEPTED`;
   const props = buildEventProperties("UX", "action", {
@@ -63,7 +63,7 @@ export const trackInAppBrowserOpening = (
   serviceName: string | undefined,
   organizationName: string | undefined,
   organizationFiscalCode: string | undefined,
-  ctaLabel: string
+  ctaLabel: string | undefined
 ) => {
   const eventName = `FIMS_CALLBACK_RP`;
   const props = buildEventProperties("TECH", undefined, {

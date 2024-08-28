@@ -25,6 +25,9 @@ import {
 } from "../../../lollipop/store/reducers/lollipop";
 import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
 import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
+import { serviceByIdSelector } from "../../../services/details/store/reducers";
+import { fimsCtaTextSelector } from "../store/selectors";
+import { trackInAppBrowserOpening } from "../../common/analytics";
 import {
   deallocateFimsAndRenewFastLoginSession,
   deallocateFimsResourcesAndNavigateBack
@@ -138,6 +141,8 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
 
   yield* put(fimsGetRedirectUrlAndOpenIABAction.success());
   yield* call(deallocateFimsResourcesAndNavigateBack);
+  yield* call(computeAndTrackInAppBrowserOpening, action);
+
   return openAuthenticationSession(inAppBrowserRedirectUrl, "", true);
 }
 
@@ -464,3 +469,19 @@ const validateAndProcessExtractedFormData = (
     url: relyingPartyRedirectUrl
   });
 };
+
+function* computeAndTrackInAppBrowserOpening(
+  action: ActionType<typeof fimsGetRedirectUrlAndOpenIABAction.request>
+) {
+  const serviceId = action.payload.serviceId;
+  const service = yield* select(serviceByIdSelector, serviceId);
+  const ctaText = yield* select(fimsCtaTextSelector);
+  yield* call(
+    trackInAppBrowserOpening,
+    serviceId,
+    service?.service_name,
+    service?.organization_name,
+    service?.organization_fiscal_code,
+    ctaText
+  );
+}

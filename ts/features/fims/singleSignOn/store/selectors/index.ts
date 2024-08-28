@@ -22,6 +22,8 @@ export const fimsRelyingPartyDomainSelector = (state: GlobalState) =>
   );
 export const fimsRelyingPartyUrlSelector = (state: GlobalState) =>
   state.features.fims.sso.relyingPartyUrl;
+export const fimsCtaTextSelector = (state: GlobalState) =>
+  state.features.fims.sso.ctaText;
 
 export const fimsPartialAbortUrl = (state: GlobalState) =>
   pipe(state, fimsConsentsDataSelector, abortUrlFromConsentsPot, O.toUndefined);
