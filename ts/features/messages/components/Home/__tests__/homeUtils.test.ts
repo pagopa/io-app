@@ -28,15 +28,20 @@ import { format } from "../../../../../utils/dates";
 import {
   isLoadingOrUpdating,
   isSomeOrSomeError,
+  isStrictNone,
   isStrictSome,
   isStrictSomeError
 } from "../../../../../utils/pot";
-import { INITIAL_STATE } from "../../../store/reducers/archiving";
+import {
+  ArchivingStatus,
+  INITIAL_STATE
+} from "../../../store/reducers/archiving";
 
 const createGlobalState = (
   archiveData: allPaginated.MessagePagePot,
   inboxData: allPaginated.MessagePagePot,
-  shownCategory: MessageListCategory
+  shownCategory: MessageListCategory,
+  archivingStatus: ArchivingStatus = "disabled"
 ) =>
   ({
     entities: {
@@ -50,7 +55,10 @@ const createGlobalState = (
           },
           shownCategory
         },
-        archiving: INITIAL_STATE
+        archiving: {
+          ...INITIAL_STATE,
+          status: archivingStatus
+        }
       }
     }
   } as GlobalState);
@@ -68,179 +76,88 @@ const checkReturnedAction = (action?: Action, getArchived: boolean = false) => {
 };
 
 describe("getInitialReloadAllMessagesActionIfNeeded", () => {
-  it("should return reloadAllMessages.request when showing inbox with pot.none inbox", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.none,
-      "INBOX"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    checkReturnedAction(reloadAllMessagesRequest);
-  });
-  it("should return undefined when showing inbox with pot.noneLoading inbox", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.noneLoading,
-      "INBOX"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing inbox with pot.noneUpdating inbox", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.noneUpdating({} as allPaginated.MessagePage),
-      "INBOX"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing inbox with pot.noneError inbox", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.noneError({ reason: "", time: new Date() }),
-      "INBOX"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing inbox with pot.some inbox", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.some({} as allPaginated.MessagePage),
-      "INBOX"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing inbox with pot.someLoading inbox", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.someLoading({} as allPaginated.MessagePage),
-      "INBOX"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing inbox with pot.someUpdating inbox", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.someUpdating(
-        {} as allPaginated.MessagePage,
-        {} as allPaginated.MessagePage
-      ),
-      "INBOX"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing inbox with pot.someError inbox", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.someError({} as allPaginated.MessagePage, {
-        reason: "",
-        time: new Date()
-      }),
-      "INBOX"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
+  const shownCategories: ReadonlyArray<MessageListCategory> = [
+    "ARCHIVE",
+    "INBOX"
+  ];
+  const archiveStatuses: ReadonlyArray<ArchivingStatus> = [
+    "disabled",
+    "enabled",
+    "processing"
+  ];
+  const messagePage = {} as allPaginated.MessagePage;
+  const anError = { reason: "", time: new Date() } as allPaginated.MessageError;
+  const potValues = [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating(messagePage),
+    pot.noneError(anError),
+    pot.some(messagePage),
+    pot.someLoading(messagePage),
+    pot.someUpdating(messagePage, messagePage),
+    pot.someError(messagePage, anError)
+  ];
+  const outputActionShouldBeUndefined = (
+    archivingStatus: ArchivingStatus,
+    currentCategoryPot: pot.Pot<
+      allPaginated.MessagePage,
+      allPaginated.MessageError
+    >,
+    oppositeCategoryPot: pot.Pot<
+      allPaginated.MessagePage,
+      allPaginated.MessageError
+    >
+  ) =>
+    archivingStatus === "processing" ||
+    isLoadingOrUpdating(oppositeCategoryPot) ||
+    !isStrictNone(currentCategoryPot);
 
-  it("should return reloadAllMessages.request when showing archive with pot.none archive", () => {
-    const globalState = createGlobalState(
-      pot.none,
-      pot.some({} as allPaginated.MessagePage),
-      "ARCHIVE"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    checkReturnedAction(reloadAllMessagesRequest, true);
-  });
-  it("should return undefined when showing archive with pot.noneLoading archive", () => {
-    const globalState = createGlobalState(
-      pot.noneLoading,
-      pot.some({} as allPaginated.MessagePage),
-      "ARCHIVE"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing archive with pot.noneUpdating archive", () => {
-    const globalState = createGlobalState(
-      pot.noneUpdating({} as allPaginated.MessagePage),
-      pot.some({} as allPaginated.MessagePage),
-      "ARCHIVE"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing archive with pot.noneError archive", () => {
-    const globalState = createGlobalState(
-      pot.noneError({ reason: "", time: new Date() }),
-      pot.some({} as allPaginated.MessagePage),
-      "ARCHIVE"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing archive with pot.some archive", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.some({} as allPaginated.MessagePage),
-      "ARCHIVE"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing archive with pot.someLoading archive", () => {
-    const globalState = createGlobalState(
-      pot.someLoading({} as allPaginated.MessagePage),
-      pot.some({} as allPaginated.MessagePage),
-      "ARCHIVE"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing archive with pot.someUpdating archive", () => {
-    const globalState = createGlobalState(
-      pot.someUpdating(
-        {} as allPaginated.MessagePage,
-        {} as allPaginated.MessagePage
-      ),
-      pot.some({} as allPaginated.MessagePage),
-      "ARCHIVE"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing archive with pot.someError archive", () => {
-    const globalState = createGlobalState(
-      pot.someError({} as allPaginated.MessagePage, {
-        reason: "",
-        time: new Date()
-      }),
-      pot.some({} as allPaginated.MessagePage),
-      "ARCHIVE"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
+  // eslint-disable-next-line sonarjs/cognitive-complexity
+  shownCategories.forEach(shownCategory =>
+    archiveStatuses.forEach(archiveStatus =>
+      potValues.forEach(inboxPot =>
+        potValues.forEach(archivePot => {
+          const currentCategoryPot =
+            shownCategory === "ARCHIVE" ? archivePot : inboxPot;
+          const oppositeCategoryPot =
+            shownCategory === "INBOX" ? archivePot : inboxPot;
+          const reloadAllMessagesActionShouldBeDefined =
+            !outputActionShouldBeUndefined(
+              archiveStatus,
+              currentCategoryPot,
+              oppositeCategoryPot
+            );
+          it(`Should return ${
+            reloadAllMessagesActionShouldBeDefined
+              ? "reloadAllMessages.request"
+              : "undefined"
+          } when showing ${shownCategory}, inbox status is ${
+            inboxPot.kind
+          }, archive status is ${
+            archivePot.kind
+          }, archiving mode is ${archiveStatus}`, () => {
+            const globalState = createGlobalState(
+              archivePot,
+              inboxPot,
+              shownCategory,
+              archiveStatus
+            );
+            const reloadAllMessagesRequest =
+              getInitialReloadAllMessagesActionIfNeeded(globalState);
+
+            if (reloadAllMessagesActionShouldBeDefined) {
+              checkReturnedAction(
+                reloadAllMessagesRequest,
+                shownCategory === "ARCHIVE"
+              );
+            } else {
+              expect(reloadAllMessagesRequest).toBeUndefined();
+            }
+          });
+        })
+      )
+    )
+  );
 });
 
 describe("getMessagesViewPagerInitialPageIndex", () => {
