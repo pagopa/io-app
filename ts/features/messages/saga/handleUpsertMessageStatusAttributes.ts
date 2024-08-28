@@ -20,7 +20,10 @@ import { SagaCallReturnType } from "../../../types/utils";
 import { getError } from "../../../utils/errors";
 import { withRefreshApiCall } from "../../fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";
-import { trackUpsertMessageStatusAttributesFailure } from "../analytics";
+import {
+  trackArchivedRestoredMessages,
+  trackUpsertMessageStatusAttributesFailure
+} from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
 import {
   resetMessageArchivingAction,
@@ -100,11 +103,13 @@ function validatePayload(
 export function* handleMessageArchivingRestoring(
   _: ActionType<typeof startProcessingMessageArchivingAction>
 ) {
+  const analyticsData = generateArchiveRestoreAnalyticsData();
   do {
     const currentEntryToProcess = yield* select(
       nextQueuedMessageDataUncachedSelector
     );
     if (!currentEntryToProcess) {
+      trackAnalyticsData(analyticsData);
       const userFeedback = I18n.t("messages.operations.generic.success");
       yield* put(
         resetMessageArchivingAction({ type: "success", reason: userFeedback })
@@ -147,6 +152,7 @@ export function* handleMessageArchivingRestoring(
     ]);
 
     if (isActionOf(upsertMessageStatusAttributes.success, outputAction)) {
+      updateAnalyticsData(analyticsData, currentEntryToProcess.archiving);
       yield* put(
         removeScheduledMessageArchivingAction({
           fromInboxToArchive: currentEntryToProcess.archiving,
@@ -228,3 +234,37 @@ export function* handleUpsertMessageStatusAttributes(
     }
   }
 }
+
+const analyticsDataKeyArchived = "archived";
+const analyticsDataKeyRestored = "restored";
+
+const generateArchiveRestoreAnalyticsData = () => {
+  const analyticsData = new Map<string, number>();
+  analyticsData.set(analyticsDataKeyArchived, 0);
+  analyticsData.set(analyticsDataKeyRestored, 0);
+  return analyticsData;
+};
+
+const updateAnalyticsData = (
+  analyticsData: Map<string, number>,
+  archiving: boolean
+) => {
+  const analyticsDataKey = archiving
+    ? analyticsDataKeyArchived
+    : analyticsDataKeyRestored;
+  analyticsData.set(
+    analyticsDataKey,
+    1 + (analyticsData.get(analyticsDataKey) ?? 0)
+  );
+};
+
+const trackAnalyticsData = (analyticsData: Map<string, number>) => {
+  const archivedMessageCount = analyticsData.get(analyticsDataKeyArchived) ?? 0;
+  if (archivedMessageCount > 0) {
+    trackArchivedRestoredMessages(true, archivedMessageCount);
+  }
+  const restoredMessageCount = analyticsData.get(analyticsDataKeyRestored) ?? 0;
+  if (restoredMessageCount > 0) {
+    trackArchivedRestoredMessages(false, restoredMessageCount);
+  }
+};

@@ -19,6 +19,7 @@ import {
   loadThirdPartyMessage,
   reloadAllMessages,
   removeCachedAttachment,
+  startPaymentStatusTracking,
   upsertMessageStatusAttributes
 } from "../store/actions";
 import { retryDataAfterFastLoginSessionExpirationSelector } from "../store/reducers/messageGetStatus";
@@ -43,6 +44,7 @@ import {
 import { handleMessagePrecondition } from "./handleMessagePrecondition";
 import { handleThirdPartyMessage } from "./handleThirdPartyMessage";
 import { handlePaymentUpdateRequests } from "./handlePaymentUpdateRequests";
+import { handlePaymentStatusForAnalyticsTracking } from "./handlePaymentStatusForAnalyticsTracking";
 
 /**
  * Handle messages requests
@@ -125,6 +127,12 @@ export function* watchMessagesSaga(
 
   // clear cache when user explicitly logs out
   yield* takeEvery(logoutSuccess, handleClearAllAttachments);
+
+  // Message Payments analytics
+  yield* takeLatest(
+    startPaymentStatusTracking,
+    handlePaymentStatusForAnalyticsTracking
+  );
 
   // handle message details data loading composition
   yield* takeLatest(getMessageDataAction.request, handleLoadMessageData);
