@@ -162,11 +162,11 @@ export const useIOBottomSheetModal = ({
   );
 
   useEffect(() => {
-    const event = AccessibilityInfo.addEventListener(
+    const screenReaderChangedSubscription = AccessibilityInfo.addEventListener(
       "screenReaderChanged",
       setIsScreenReaderEnabled
     );
-    return () => event.remove();
+    return screenReaderChangedSubscription.remove;
   }, []);
 
   const footerComponent = footer ? (
