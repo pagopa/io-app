@@ -93,7 +93,7 @@ const PaymentsHomeScreen = () => {
         onRefresh: handleRefreshPaymentsHome
       }}
       actions={
-        isLoadingFirstTime
+        !isLoadingFirstTime
           ? {
               type: "SingleButton",
               primary: primaryActionProps
