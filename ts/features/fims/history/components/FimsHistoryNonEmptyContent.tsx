@@ -1,9 +1,10 @@
-import { Divider, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import { Divider, IOStyles } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { FlatList } from "react-native";
 import { ConsentsResponseDTO } from "../../../../../definitions/fims/ConsentsResponseDTO";
 import * as RemoteValue from "../../../../common/model/RemoteValue";
 import { FooterActions } from "../../../../components/ui/FooterActions";
+import { useFooterActionsMeasurements } from "../../../../hooks/useFooterActionsMeasurements";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { FimsHistoryListItem } from "../components/FimsHistoryListItem";
@@ -13,6 +14,7 @@ import {
   fimsHistoryExportStateSelector,
   isFimsHistoryLoadingSelector
 } from "../store/selectors";
+import { FimsHistoryHeaderComponent } from "./FimsHistoryHeaderComponent";
 
 export const FimsHistoryNonEmptyContent = ({
   consents,
@@ -27,6 +29,9 @@ export const FimsHistoryNonEmptyContent = ({
 
   const { handleExportOnPress } = useFimsHistoryExport();
 
+  const { footerActionsMeasurements, handleFooterActionsMeasurements } =
+    useFooterActionsMeasurements();
+
   const renderLoadingFooter = () => (
     <>
       {
@@ -39,7 +44,6 @@ export const FimsHistoryNonEmptyContent = ({
         // sure the list does not "underflow", thus making
         // the last listItem not visible
       }
-      <VSpacer size={48} />
     </>
   );
   const shouldHideFooter =
@@ -48,8 +52,14 @@ export const FimsHistoryNonEmptyContent = ({
   return (
     <>
       <FlatList
+        ListHeaderComponent={FimsHistoryHeaderComponent}
         data={consents?.items}
-        contentContainerStyle={IOStyles.horizontalContentPadding}
+        contentContainerStyle={[
+          IOStyles.horizontalContentPadding,
+          {
+            paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
+          }
+        ]}
         ItemSeparatorComponent={Divider}
         keyExtractor={item => item.id}
         renderItem={item => <FimsHistoryListItem item={item.item} />}
@@ -58,6 +68,7 @@ export const FimsHistoryNonEmptyContent = ({
       />
       {!shouldHideFooter && (
         <FooterActions
+          onMeasure={handleFooterActionsMeasurements}
           actions={{
             type: "SingleButton",
             primary: {

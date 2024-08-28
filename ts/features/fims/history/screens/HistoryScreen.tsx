@@ -1,7 +1,6 @@
 /* eslint-disable functional/immutable-data */
-import { Body, IOStyles, IOToast, VSpacer } from "@pagopa/io-app-design-system";
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -84,20 +83,12 @@ export const FimsHistoryScreen = () => {
   const shouldShowEmptyContent =
     !isHistoryLoading && (consents?.items ?? []).length === 0;
 
-  return (
-    <>
-      <View style={IOStyles.horizontalContentPadding}>
-        <Body>{I18n.t("FIMS.history.historyScreen.body")}</Body>
-      </View>
-      <VSpacer size={16} />
-      {shouldShowEmptyContent ? (
-        <FimsHistoryEmptyContent />
-      ) : (
-        <FimsHistoryNonEmptyContent
-          consents={consents}
-          fetchMore={fetchMoreHistoryItems}
-        />
-      )}
-    </>
+  return shouldShowEmptyContent ? (
+    <FimsHistoryEmptyContent />
+  ) : (
+    <FimsHistoryNonEmptyContent
+      consents={consents}
+      fetchMore={fetchMoreHistoryItems}
+    />
   );
 };
