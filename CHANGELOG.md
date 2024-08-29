@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.69.0-rc.3](https://github.com/pagopa/io-app/compare/2.69.0-rc.2...2.69.0-rc.3) (2024-08-28)
+
+
+### Features
+
+* [[IOCOM-1110](https://pagopa.atlassian.net/browse/IOCOM-1110)] Home messages analytics events ([#6115](https://github.com/pagopa/io-app/issues/6115)) ([ec09215](https://github.com/pagopa/io-app/commit/ec092153a9a48d981141d8170fa8e8b5d903d7ba))
+* [[IOCOM-1169](https://pagopa.atlassian.net/browse/IOCOM-1169),[IOCOM-1601](https://pagopa.atlassian.net/browse/IOCOM-1601)] Message details analytics events ([#6116](https://github.com/pagopa/io-app/issues/6116)) ([56e5979](https://github.com/pagopa/io-app/commit/56e5979437e8502d46a29b0615cee2f2e633c8b0))
+* [[PE-616](https://pagopa.atlassian.net/browse/PE-616)] Change labels in CGN Partner list screen ([#5973](https://github.com/pagopa/io-app/issues/5973)) ([6f33502](https://github.com/pagopa/io-app/commit/6f33502956cbd74d36cbcaaedd1959294255b3c5))
+* [[PE-622](https://pagopa.atlassian.net/browse/PE-622)] Change labels in CGN KO pages ([#5991](https://github.com/pagopa/io-app/issues/5991)) ([b6fb623](https://github.com/pagopa/io-app/commit/b6fb62361be522139e59bcff98cfc369896e6be3))
+* [[PE-628](https://pagopa.atlassian.net/browse/PE-628)] CGN - deactivate button on expired card detail screen ([#5992](https://github.com/pagopa/io-app/issues/5992)) ([10738b2](https://github.com/pagopa/io-app/commit/10738b21d8d3521046f445e1d17424149d0ff3ec))
+
+
+### Bug Fixes
+
+* [[IOBP-810](https://pagopa.atlassian.net/browse/IOBP-810)] Map event tracking payment outcome unhandled ([#6109](https://github.com/pagopa/io-app/issues/6109)) ([96af0e2](https://github.com/pagopa/io-app/commit/96af0e21cbc2a35916c830981604ecb7c568c794))
+* [[IOCOM-1687](https://pagopa.atlassian.net/browse/IOCOM-1687)] Fix a race condition on message details loading ([#6121](https://github.com/pagopa/io-app/issues/6121)) ([d66e918](https://github.com/pagopa/io-app/commit/d66e91859488adcb2a5f9a34c7abb01b3639411f))
+* [[IOPID-2132](https://pagopa.atlassian.net/browse/IOPID-2132)] Centring the name of the user in the identification modal ([#6098](https://github.com/pagopa/io-app/issues/6098)) ([3665c93](https://github.com/pagopa/io-app/commit/3665c93c0cbc035d7b5007e7d766f05c2d545e4b)), closes [/github.com/pagopa/io-app/blob/906c5efc713bfab0230de676739a2b66d10dbb44/ts/screens/modal/IdentificationModal.tsx#L232](https://github.com/pagopa//github.com/pagopa/io-app/blob/906c5efc713bfab0230de676739a2b66d10dbb44/ts/screens/modal/IdentificationModal.tsx/issues/L232)
+* [[IOPID-2151](https://pagopa.atlassian.net/browse/IOPID-2151)] Fix session refresh  ([#6124](https://github.com/pagopa/io-app/issues/6124)) ([542916d](https://github.com/pagopa/io-app/commit/542916dbb36d954f361cdc517975c083e67fce44))
+
+
+### Chores
+
+* [[IOBP-795](https://pagopa.atlassian.net/browse/IOBP-795)] Add payment method onboarding contextual help ([#6056](https://github.com/pagopa/io-app/issues/6056)) ([3e05999](https://github.com/pagopa/io-app/commit/3e05999ae88e4f9d2cd5b250b08553118ae94aea))
+* [[IOBP-800](https://pagopa.atlassian.net/browse/IOBP-800)] Replace from ultra wide camera to wide camera in barcode screen ([#6057](https://github.com/pagopa/io-app/issues/6057)) ([6f9ea7d](https://github.com/pagopa/io-app/commit/6f9ea7db10edb184857bf8adf6afeb04ad440595))
+* [[IOBP-828](https://pagopa.atlassian.net/browse/IOBP-828)] Receipts Micro-copy improvements ([#6100](https://github.com/pagopa/io-app/issues/6100)) ([31080d9](https://github.com/pagopa/io-app/commit/31080d9fc7ad9dc40b042ff76e1eb6ba77b31d89))
+* **IT Wallet:** [[SIW-1341](https://pagopa.atlassian.net/browse/SIW-1341)] Add eID issuance machine unit tests ([#6104](https://github.com/pagopa/io-app/issues/6104)) ([f9549f4](https://github.com/pagopa/io-app/commit/f9549f459c2807d0b1b05d356b8481b5f6dcbd3d))
+* **IT Wallet:** [[SIW-1465](https://pagopa.atlassian.net/browse/SIW-1465)] Fix header in eID preview screen ([#6085](https://github.com/pagopa/io-app/issues/6085)) ([ea4c74b](https://github.com/pagopa/io-app/commit/ea4c74b8ccc081ff1d9a7eba455dcb74fafbbd17))
+
+## [2.69.0-rc.2](https://github.com/pagopa/io-app/compare/2.69.0-rc.1...2.69.0-rc.2) (2024-08-08)
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-343](https://pagopa.atlassian.net/browse/IOAPPX-343),[IOAPPX-311](https://pagopa.atlassian.net/browse/IOAPPX-311)] Add `react-native-skia` library + Dynamic header background (under the new Experimental Lab category)" ([#6103](https://github.com/pagopa/io-app/issues/6103)) ([20ced80](https://github.com/pagopa/io-app/commit/20ced80a3293fecc31aa8cc811df526ece2a3026)), closes [pagopa/io-app#5954](https://github.com/pagopa/io-app/issues/5954)
+
+## [2.69.0-rc.1](https://github.com/pagopa/io-app/compare/2.69.0-rc.0...2.69.0-rc.1) (2024-08-08)
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-343](https://pagopa.atlassian.net/browse/IOAPPX-343),[IOAPPX-311](https://pagopa.atlassian.net/browse/IOAPPX-311)] Add `react-native-skia` library + Dynamic header background (under the new Experimental Lab category) ([#5954](https://github.com/pagopa/io-app/issues/5954)) ([9170ebb](https://github.com/pagopa/io-app/commit/9170ebbb598f5ad4d8f06c639d33208d82f5ff6f))
+
 ## [2.69.0-rc.0](https://github.com/pagopa/io-app/compare/2.68.0-rc.0...2.69.0-rc.0) (2024-08-07)
 
 
