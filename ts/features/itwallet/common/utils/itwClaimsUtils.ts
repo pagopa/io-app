@@ -9,6 +9,7 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
+import { truncate } from "lodash";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
 import { ItwCredentialStatus } from "../components/ItwCredentialCard";
@@ -410,3 +411,8 @@ const FISCAL_CODE_REGEX =
  */
 export const extractFiscalCode = (s: string) =>
   pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));
+
+/**
+ * Truncate long strings to avoid performance issues when rendering claims.
+ */
+export const getSafeText = (text: string) => truncate(text, { length: 128 });

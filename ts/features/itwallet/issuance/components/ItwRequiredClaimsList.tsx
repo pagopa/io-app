@@ -22,6 +22,7 @@ import {
   EvidenceClaim,
   extractFiscalCode,
   FiscalCodeClaim,
+  getSafeText,
   ImageClaim,
   PlaceOfBirthClaim,
   StringClaim
@@ -72,11 +73,12 @@ const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => (
 const ClaimText = ({ claim }: { claim: ClaimDisplayFormat }) => {
   const displayValue = getClaimDisplayValue(claim);
   return Array.isArray(displayValue) ? (
-    displayValue.map((value, index) => (
-      <H6 key={`${index}_${value}`}>{value}</H6>
-    ))
+    displayValue.map((value, index) => {
+      const safeValue = getSafeText(value);
+      return <H6 key={`${index}_${safeValue}`}>{safeValue}</H6>;
+    })
   ) : isStringNullyOrEmpty(displayValue) ? null : ( // We want to exclude empty strings and null values
-    <H6>{displayValue}</H6>
+    <H6>{getSafeText(displayValue)}</H6>
   );
 };
 
