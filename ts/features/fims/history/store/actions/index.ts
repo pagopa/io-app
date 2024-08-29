@@ -23,10 +23,15 @@ export const fimsHistoryExport = createAsyncAction(
   "FIMS_HISTORY_EXPORT_FAILURE"
 )<void, FimsExportSuccessStates, void>();
 
+export const resetFimsHistoryState = createStandardAction(
+  "RESET_FIMS_HISTORY_STATE"
+)<void>();
+
 export const resetFimsHistoryExportState =
   createStandardAction("RESET_FIMS_HISTORY")<void>();
 
 export type FimsHistoryActions =
   | ActionType<typeof fimsHistoryGet>
   | ActionType<typeof fimsHistoryExport>
-  | ActionType<typeof resetFimsHistoryExportState>;
+  | ActionType<typeof resetFimsHistoryExportState>
+  | ActionType<typeof resetFimsHistoryState>;
