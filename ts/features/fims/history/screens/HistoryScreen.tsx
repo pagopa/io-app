@@ -27,7 +27,16 @@ export const FimsHistoryScreen = () => {
 
   const lastErrorToastDate = React.useRef<number | null>(null);
 
+  const shouldShowErrorToast = historyErrorState === "ALERT_ONLY";
   // ---------- HOOKS
+
+  React.useEffect(() => {
+    if (shouldShowErrorToast) {
+      // needed to avoid multiple state changes simultaneously
+      lastErrorToastDate.current = Date.now();
+      IOToast.error(I18n.t("FIMS.history.errorStates.toast"));
+    }
+  }, [shouldShowErrorToast]);
 
   useHeaderSecondLevel({
     title: I18n.t("FIMS.history.historyScreen.header"),
@@ -70,12 +79,8 @@ export const FimsHistoryScreen = () => {
     );
   }
 
-  switch (historyErrorState) {
-    case "FULL_KO":
-      return <FimsHistoryKoScreen />;
-    case "ALERT_ONLY":
-      IOToast.error(I18n.t("FIMS.history.errorStates.toast"));
-      lastErrorToastDate.current = Date.now();
+  if (historyErrorState === "FULL_KO") {
+    return <FimsHistoryKoScreen />;
   }
 
   // ---------- SUCCESS
