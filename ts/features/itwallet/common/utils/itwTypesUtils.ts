@@ -43,6 +43,13 @@ export type ParsedStatusAttestation = Awaited<
   ReturnType<typeof Credential.Status.verifyAndParseStatusAttestation>
 >["parsedStatusAttestation"]["payload"];
 
+export type StatusAttestation =
+  | {
+      credentialStatus: "valid";
+      parsedStatusAttestation: ParsedStatusAttestation;
+    }
+  | { credentialStatus: "invalid" | "unknown" };
+
 /**
  * Type for a stored credential.
  */
@@ -53,8 +60,5 @@ export type StoredCredential = {
   parsedCredential: ParsedCredential;
   credentialType: string;
   issuerConf: IssuerConfiguration;
-  statusAttestation?: {
-    credentialStatus: string;
-    parsedStatusAttestation: ParsedStatusAttestation | null;
-  };
+  statusAttestation?: StatusAttestation;
 };

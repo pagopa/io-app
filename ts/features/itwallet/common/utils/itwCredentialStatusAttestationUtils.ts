@@ -2,7 +2,7 @@ import {
   createCryptoContextFor,
   Credential
 } from "@pagopa/io-react-native-wallet";
-import { addHours, isAfter } from "date-fns";
+import { isAfter } from "date-fns";
 import { itwEaaProviderBaseUrl } from "../../../../config";
 import { StoredCredential } from "./itwTypesUtils";
 
@@ -29,17 +29,27 @@ export const getCredentialStatusAttestation = async (
   );
 };
 
-export const isStatusAttestationMissingOrExpired = ({
+export const shouldRequestStatusAttestation = ({
   statusAttestation
 }: StoredCredential) => {
-  if (
-    !statusAttestation ||
-    statusAttestation.parsedStatusAttestation === null
-  ) {
+  if (!statusAttestation) {
     return true;
   }
-  return isAfter(
-    new Date(),
-    addHours(new Date(statusAttestation.parsedStatusAttestation.exp * 1000), 24)
-  );
+
+  switch (statusAttestation.credentialStatus) {
+    // We could not determine the status, try to request another attestation
+    case "unknown":
+      return true;
+    // The credential is invalid, no need to request another attestation
+    case "invalid":
+      return false;
+    // The status attestation is expired, request a new one
+    case "valid":
+      return isAfter(
+        new Date(),
+        new Date(statusAttestation.parsedStatusAttestation.exp * 1000)
+      );
+    default:
+      throw new Error("Unexpected credential status");
+  }
 };

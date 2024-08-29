@@ -1,5 +1,5 @@
-import { isStatusAttestationMissingOrExpired } from "../itwCredentialStatusAttestationUtils";
-import { CredentialType } from "../itwMocksUtils";
+import { shouldRequestStatusAttestation } from "../itwCredentialStatusAttestationUtils";
+import { CredentialType, ItwStatusAttestationMocks } from "../itwMocksUtils";
 import { StoredCredential } from "../itwTypesUtils";
 
 describe("isStatusAttestationMissingOrExpired", () => {
@@ -13,20 +13,17 @@ describe("isStatusAttestationMissingOrExpired", () => {
   };
 
   it("return true when the status attestation is missing", () => {
-    expect(isStatusAttestationMissingOrExpired(baseMockCredential)).toEqual(
-      true
-    );
+    expect(shouldRequestStatusAttestation(baseMockCredential)).toEqual(true);
   });
 
   it("return true when the parsed status attestation is null", () => {
     const mockCredential: StoredCredential = {
       ...baseMockCredential,
       statusAttestation: {
-        credentialStatus: "unknown",
-        parsedStatusAttestation: null
+        credentialStatus: "unknown"
       }
     };
-    expect(isStatusAttestationMissingOrExpired(mockCredential)).toEqual(true);
+    expect(shouldRequestStatusAttestation(mockCredential)).toEqual(true);
   });
 
   it("return true when the status attestation is expired", () => {
@@ -37,11 +34,12 @@ describe("isStatusAttestationMissingOrExpired", () => {
       statusAttestation: {
         credentialStatus: "valid",
         parsedStatusAttestation: {
-          exp: 1724664600 // 2024-08-26T09:30:00+00:00
+          ...ItwStatusAttestationMocks.mdl,
+          exp: 1724752800 // 2024-08-27T10:00:00+00:00
         }
       }
     };
-    expect(isStatusAttestationMissingOrExpired(mockCredential)).toEqual(true);
+    expect(shouldRequestStatusAttestation(mockCredential)).toEqual(true);
   });
 
   it("return false when the status attestation is still valid", () => {
@@ -52,10 +50,35 @@ describe("isStatusAttestationMissingOrExpired", () => {
       statusAttestation: {
         credentialStatus: "valid",
         parsedStatusAttestation: {
-          exp: 1724682600 // 2024-08-26T14:00:00+00:00
+          ...ItwStatusAttestationMocks.mdl,
+          exp: 1724781600 // 2024-08-27T18:00:00+00:00,
         }
       }
     };
-    expect(isStatusAttestationMissingOrExpired(mockCredential)).toEqual(false);
+    expect(shouldRequestStatusAttestation(mockCredential)).toEqual(false);
+  });
+
+  it("return false when the credential status is invalid", () => {
+    jest.useFakeTimers().setSystemTime(new Date("2024-08-27T10:30:00+00:00"));
+
+    const mockCredential: StoredCredential = {
+      ...baseMockCredential,
+      statusAttestation: {
+        credentialStatus: "invalid"
+      }
+    };
+    expect(shouldRequestStatusAttestation(mockCredential)).toEqual(false);
+  });
+
+  it("return true when the credential status is unknown", () => {
+    jest.useFakeTimers().setSystemTime(new Date("2024-08-27T10:30:00+00:00"));
+
+    const mockCredential: StoredCredential = {
+      ...baseMockCredential,
+      statusAttestation: {
+        credentialStatus: "unknown"
+      }
+    };
+    expect(shouldRequestStatusAttestation(mockCredential)).toEqual(true);
   });
 });

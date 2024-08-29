@@ -7,21 +7,23 @@ import { itwCredentialsSelector } from "../store/selectors";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
-  isStatusAttestationMissingOrExpired,
+  shouldRequestStatusAttestation,
   getCredentialStatusAttestation
 } from "../../common/utils/itwCredentialStatusAttestationUtils";
 import { itwCredentialsMultipleUpdate } from "../store/actions";
 import { ReduxSagaEffect } from "../../../../types/utils";
+
+type PartialUpdatedCredential = Pick<
+  StoredCredential,
+  "credentialType" | "statusAttestation"
+>;
 
 const canGetStatusAttestation = (credential: StoredCredential) =>
   credential.credentialType === CredentialType.DRIVING_LICENSE;
 
 function* updateCredentialStatusAttestationSaga(
   credential: StoredCredential
-): Generator<
-  ReduxSagaEffect,
-  Pick<StoredCredential, "credentialType" | "statusAttestation">
-> {
+): Generator<ReduxSagaEffect, PartialUpdatedCredential> {
   try {
     const { parsedStatusAttestation } = yield* call(
       getCredentialStatusAttestation,
@@ -42,8 +44,7 @@ function* updateCredentialStatusAttestationSaga(
         credentialStatus:
           error instanceof Errors.StatusAttestationInvalid
             ? "invalid" // The credential was revoked
-            : "unknown", // We do not have enough information on the status, the error was unexpected
-        parsedStatusAttestation: null
+            : "unknown" // We do not have enough information on the status, the error was unexpected
       }
     };
   }
@@ -59,8 +60,7 @@ export function* checkCredentialsStatus() {
     credentials,
     RA.filterMap(
       O.filter(
-        x =>
-          canGetStatusAttestation(x) && isStatusAttestationMissingOrExpired(x)
+        x => canGetStatusAttestation(x) && shouldRequestStatusAttestation(x)
       )
     )
   );
