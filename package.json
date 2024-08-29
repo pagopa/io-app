@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.69.0-rc.2",
+  "version": "2.69.0-rc.4",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.39/definitions.yml",
@@ -164,7 +164,7 @@
     "react-native-document-picker": "^9.1.1",
     "react-native-easing-gradient": "^1.1.1",
     "react-native-exception-handler": "^2.10.8",
-    "react-native-fingerprint-scanner": "^6.0.0",
+    "react-native-fingerprint-scanner": "git+https://github.com/hieuvp/react-native-fingerprint-scanner.git#9cecc0db326471c571553ea85f7c016fee2f803d",
     "react-native-flag-secure-android": "^1.0.3",
     "react-native-flipper": "^0.154.0",
     "react-native-fs": "^2.18.0",
