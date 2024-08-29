@@ -83,9 +83,9 @@ jobs:
         with:
           name: app-release.aab
           path: android/app/build/outputs/bundle/release/app-release.aab
-      - id: upload-aab-release
+      - id: upload-android-assets-release
         continue-on-error: true
-        run: gh release upload ${{ github.ref_name }} android/app/build/outputs/bundle/release/app-release.aab#android-app-release.aab
+        run: gh release upload ${{ github.ref_name }} android/app/build/outputs/bundle/release/app-release.aab#android-app-release.aab android/io-app-universal.apk#io-app-universal.apk
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
