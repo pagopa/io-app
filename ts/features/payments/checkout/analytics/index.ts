@@ -62,6 +62,8 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
       return "PAYMENT_NO_METHOD_SAVED_ERROR";
     case WalletPaymentOutcomeEnum.WAITING_CONFIRMATION_EMAIL:
       return "PAYMENT_UNKNOWN_OUTCOME_ERROR";
+    case WalletPaymentOutcomeEnum.PAYMENT_REVERSED:
+      return "PAYMENT_REVERSAL_ERROR";
     default:
       return outcome;
   }
