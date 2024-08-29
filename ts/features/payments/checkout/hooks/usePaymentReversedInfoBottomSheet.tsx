@@ -1,53 +1,31 @@
 import React from "react";
-import { Body, LabelLink, VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import I18n from "../../../../i18n";
-import { ParagraphWithTitle } from "../../common/components/ParagraphWithTitle";
-import { openWebUrl } from "../../../../utils/url";
 import { WALLET_PAYMENT_SHOW_OTHER_CHANNELS_URL } from "../utils";
+import IOMarkdown from "../../../../components/IOMarkdown";
 
 export const usePaymentReversedInfoBottomSheet = () => {
-  const handleOnPressLink = () => {
-    openWebUrl(WALLET_PAYMENT_SHOW_OTHER_CHANNELS_URL);
-  };
-
   const getModalContent = () => (
     <>
-      <ParagraphWithTitle
-        title={I18n.t(
-          "features.payments.checkout.bottomSheet.PAYMENT_REVERSED.payNotice.title"
-        )}
-        body={
-          <>
-            <Body>
-              {I18n.t(
-                "features.payments.checkout.bottomSheet.PAYMENT_REVERSED.payNotice.content"
-              )}
-            </Body>{" "}
-            <LabelLink onPress={handleOnPressLink}>
-              {I18n.t(
-                "features.payments.checkout.bottomSheet.PAYMENT_REVERSED.payNotice.contentLink"
-              )}
-            </LabelLink>
-          </>
-        }
-      />
-      <VSpacer size={24} />
-      <ParagraphWithTitle
-        title={I18n.t(
-          "features.payments.checkout.bottomSheet.PAYMENT_REVERSED.waitRefund.title"
-        )}
-        body={I18n.t(
-          "features.payments.checkout.bottomSheet.PAYMENT_REVERSED.waitRefund.content"
+      <IOMarkdown
+        content={I18n.t(
+          "features.payments.checkout.bottomSheet.PAYMENT_REVERSED.payNotice",
+          {
+            url: WALLET_PAYMENT_SHOW_OTHER_CHANNELS_URL
+          }
         )}
       />
       <VSpacer size={24} />
-      <ParagraphWithTitle
-        title={I18n.t(
-          "features.payments.checkout.bottomSheet.PAYMENT_REVERSED.contactSupport.title"
+      <IOMarkdown
+        content={I18n.t(
+          "features.payments.checkout.bottomSheet.PAYMENT_REVERSED.waitRefund"
         )}
-        body={I18n.t(
-          "features.payments.checkout.bottomSheet.PAYMENT_REVERSED.contactSupport.content"
+      />
+      <VSpacer size={24} />
+      <IOMarkdown
+        content={I18n.t(
+          "features.payments.checkout.bottomSheet.PAYMENT_REVERSED.contactSupport"
         )}
       />
       <VSpacer size={24} />
