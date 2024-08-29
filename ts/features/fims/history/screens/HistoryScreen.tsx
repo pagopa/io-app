@@ -10,7 +10,7 @@ import { openAppStoreUrl } from "../../../../utils/url";
 import { FimsHistoryEmptyContent } from "../components/FimsHistoryEmptyContent";
 import { FimsHistoryKoScreen } from "../components/FimsHistoryKoScreen";
 import { FimsHistoryNonEmptyContent } from "../components/FimsHistoryNonEmptyContent";
-import { fimsHistoryGet } from "../store/actions";
+import { fimsHistoryGet, resetFimsHistoryState } from "../store/actions";
 import {
   fimsHistoryErrorSelector,
   fimsHistoryToUndefinedSelector,
@@ -30,14 +30,6 @@ export const FimsHistoryScreen = () => {
   const shouldShowErrorToast = historyErrorState === "ALERT_ONLY";
   // ---------- HOOKS
 
-  React.useEffect(() => {
-    if (shouldShowErrorToast) {
-      // needed to avoid multiple state changes simultaneously
-      lastErrorToastDate.current = Date.now();
-      IOToast.error(I18n.t("FIMS.history.errorStates.toast"));
-    }
-  }, [shouldShowErrorToast]);
-
   useHeaderSecondLevel({
     title: I18n.t("FIMS.history.historyScreen.header"),
     supportRequest: true
@@ -47,7 +39,19 @@ export const FimsHistoryScreen = () => {
     if (!requiresAppUpdate) {
       dispatch(fimsHistoryGet.request({ shouldReloadFromScratch: true }));
     }
+    return () => {
+      // full reset in order to avoid wonky error toast behaviour
+      dispatch(resetFimsHistoryState());
+    };
   }, [dispatch, requiresAppUpdate]);
+
+  React.useEffect(() => {
+    if (shouldShowErrorToast) {
+      // needed to avoid multiple state changes simultaneously
+      lastErrorToastDate.current = Date.now();
+      IOToast.error(I18n.t("FIMS.history.errorStates.toast"));
+    }
+  }, [shouldShowErrorToast]);
 
   const fetchMoreHistoryItems = React.useCallback(() => {
     const hasErrorTimeoutExpired = lastErrorToastDate.current
