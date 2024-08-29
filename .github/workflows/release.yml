@@ -85,7 +85,7 @@ jobs:
           path: android/app/build/outputs/bundle/release/app-release.aab
       - id: upload-aab-release
         continue-on-error: true
-        run: gh release ${{ github.ref_name }} android/app/build/outputs/bundle/release/app-release.aab#android-app-release.aab
+        run: gh release upload ${{ github.ref_name }} android/app/build/outputs/bundle/release/app-release.aab#android-app-release.aab
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
@@ -155,7 +155,7 @@ jobs:
           path: ios/IO.ipa
       - id: upload-ipa-release
         continue-on-error: true
-        run: gh release ${{ github.ref_name }} ios/IO.ipa#IO-iOS.ipa
+        run: gh release upload ${{ github.ref_name }} ios/IO.ipa#IO-iOS.ipa
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   notify-new-version:
