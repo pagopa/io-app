@@ -152,3 +152,11 @@ Created on **16/01/2023**
 #### Reason:
 
 - Patch to fix a crash on android due to wrong file definition, to be removed in a future update
+
+### react-native-fingerprint-scanner+6.0.0.patch
+
+Created on **29/08/2024**
+
+#### Reason:
+
+- Patch to fix an error occurring during Android gradle build (see https://github.com/hieuvp/react-native-fingerprint-scanner/issues/192)

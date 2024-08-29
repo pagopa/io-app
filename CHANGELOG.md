@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.69.0-rc.4](https://github.com/pagopa/io-app/compare/2.69.0-rc.3...2.69.0-rc.4) (2024-08-29)
+
+
+### Features
+
+* [[IOPLT-380](https://pagopa.atlassian.net/browse/IOPLT-380)] Create release from tag and upload artifacts ([#6127](https://github.com/pagopa/io-app/issues/6127)) ([e9d62d7](https://github.com/pagopa/io-app/commit/e9d62d7e13e79c718cc06bea4ecbdfe8aa23e8f5))
+
+
+### Bug Fixes
+
+* [[IOBP-798](https://pagopa.atlassian.net/browse/IOBP-798),[IOBP-824](https://pagopa.atlassian.net/browse/IOBP-824)] Show back button and rename tracking events for no payments method available screen ([#6106](https://github.com/pagopa/io-app/issues/6106)) ([0218076](https://github.com/pagopa/io-app/commit/02180767b36b41499b156761cfeacbd7a6e26ac5))
+
+
+### Chores
+
+* Fix for failing Android build on react-native-fingerprint-scanner dependency ([#6131](https://github.com/pagopa/io-app/issues/6131)) ([1ff3b91](https://github.com/pagopa/io-app/commit/1ff3b9152845dacee0fbc186a7547e215a491d39))
+
 ## [2.69.0-rc.3](https://github.com/pagopa/io-app/compare/2.69.0-rc.2...2.69.0-rc.3) (2024-08-28)
 
 
