@@ -1920,7 +1920,6 @@ messages:
     unarchive: Unarchive
     selectAll: All
     deselectAll: None
-    payment: {}
     pay: Pay € {{amount}}
     onlyPay: Pay
     paid: Paid
@@ -1963,7 +1962,6 @@ messages:
     emptyMessage:
       title: Your message list is empty.
       subtitle: Refresh to check for any new messages.
-  pagination: {}
   operations:
     archive:
       success: "Successfully archived!"
@@ -3272,7 +3270,6 @@ features:
   trialSystem:
     toast:
       subscribed: Done! You will receive a message when the trial period will begin.
-webView: {}
 support:
   ticketList:
     noTicket:

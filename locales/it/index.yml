@@ -1920,7 +1920,6 @@ messages:
     unarchive: Ripristina
     selectAll: Tutti
     deselectAll: Nessuno
-    payment: {}
     pay: Paga € {{amount}}
     onlyPay: Paga
     paid: Pagato
@@ -1963,7 +1962,6 @@ messages:
     emptyMessage:
       title: Non hai ancora ricevuto alcun messaggio
       subtitle: "Quando un ente ti invierà una comunicazione la visualizzerai qui."
-  pagination: {}
   operations:
     archive:
       success: "Archiviazione riuscita!"
@@ -3272,7 +3270,6 @@ features:
   trialSystem:
     toast:
       subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione
-webView: {}
 support:
   ticketList:
     noTicket:
