@@ -82,8 +82,10 @@ export const MessageRouterScreen = (
   const navigateForwardCallback = useCallback(
     (data: SuccessGetMessageDataActionType) => {
       trackOpenMessage(
-        data.organizationName,
+        data.serviceId,
         data.serviceName,
+        data.organizationName,
+        data.organizationFiscalCode,
         data.firstTimeOpening,
         data.containsPayment,
         data.hasRemoteContent,
