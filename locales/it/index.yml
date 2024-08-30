@@ -2208,7 +2208,11 @@ services:
       cancel: "Annulla"
       clear: "Cancella"
     emptyState:
-      title: "Inserisci il nome di un ente,\nnazionale o locale"
+      invalidQuery:
+        title: "Inserisci il nome di un ente,\nnazionale o locale"
+      noResults:
+        title: "Nessun risultato trovato"
+        subtitle: "Inserisci il nome di un ente nazionale o locale esistente."
   details:
     failure:
       title: "C'è un problema temporaneo, riprova"
@@ -3141,10 +3145,10 @@ features:
         failure: FALLITA
         success: ""
       receipt:
-        title: Ricevuta PagoPA
+        title: Ricevuta pagoPA
         shareButton: Salva o condividi
-        error: Impossibile scaricare la ricevuta, riprova più tardi.
-        download: Scarica ricevuta
+        error: Non è stato possibile recuperare la ricevuta.
+        download: Ottieni ricevuta
       details:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
         totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
@@ -3254,6 +3258,10 @@ features:
           3: Attiva la funzionalità
         primaryAction: Apri impostazioni
         secondaryAction: Continua
+      notMatchingIdentityScreen:
+        title: "Tutti i documenti saranno rimossi da IO"
+        subtitle: "Se accedi con una nuova identità, i documenti già presenti nel Portafoglio saranno rimossi e IT Wallet disattivato."
+        action: "Continua con la nuova identità"
     issuance:
       credentialAuth:
         title: "{{credentialName}}: dati necessari"
@@ -3976,6 +3984,12 @@ permissionRequest:
     cta: Apri Impostazioni
 FIMS:
   history:
+    errorStates:
+      ko:
+        title: "C’è un problema temporaneo"
+        body: "Il caricamento della lista degli accessi non è riuscito"
+      toast: C’è un problema nel caricamento della lista. Riprova
+    emptyBody: "Non hai ancora effettuato alcun accesso a servizi di terze parti"
     exportData:
       alerts:
         areYouSure: "Vuoi davvero esportare una copia di tutti gli accessi?"

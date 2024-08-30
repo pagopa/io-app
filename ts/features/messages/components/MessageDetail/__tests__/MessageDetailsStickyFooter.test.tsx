@@ -11,6 +11,7 @@ import * as payments from "../../../store/reducers/payments";
 import { PaymentAmount } from "../../../../../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../../../../../definitions/backend/PaymentNoticeNumber";
 import { OrganizationFiscalCode } from "../../../../../../definitions/backend/OrganizationFiscalCode";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 const cta1: CTA = {
   text: "CTA 1",
@@ -128,6 +129,7 @@ const renderComponent = (ctas?: CTAS) => {
         ctas={ctas}
         firstCTAIsPNOptInMessage={false}
         secondCTAIsPNOptInMessage={false}
+        serviceId={"01J5XCQMBNF0484AJV2TST03FE" as ServiceId}
       />
     ),
     "DUMMY",
