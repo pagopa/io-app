@@ -1,8 +1,8 @@
+import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { FimsHistoryClient } from "../api/client";
@@ -45,7 +45,7 @@ const extractFimsHistoryResponseAction = (
   pipe(
     historyResult,
     E.fold(
-      error => fimsHistoryGet.failure(readableReport(error)),
+      error => fimsHistoryGet.failure(readableReportSimplified(error)),
       response =>
         response.status === 200
           ? fimsHistoryGet.success(response.value)
