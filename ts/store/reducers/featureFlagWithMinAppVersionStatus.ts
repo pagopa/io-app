@@ -46,7 +46,7 @@ type CheckPropertyWithMinAppVersionParameters<
     }
 );
 
-/** 
+/**
 * This function checks that a feature flag is enabled by checking the local option and the minimum
 * version of the feature set remotely.
 * It is possible to specify an optional configuration that corresponds to a feature flag nested into the main one.
@@ -57,8 +57,8 @@ type CheckPropertyWithMinAppVersionParameters<
 * @property {Option\<BackendStatus\>} backendStatus - Our backendStatus object
 * @property {boolean} mainLocalFlag - The local config that represents the feature
 * @property {KeysWithMinAppVersion\<Config\>} configPropertyName - A property that extends ObjectWithMinAppVersion in the Config object (from backendStatus)
-* 
-* @example 
+*
+* @example
 * isPropertyWithMinAppVersionEnabled({
         backendStatus: store,
         mainLocalFlag: fastLoginConfig,
@@ -69,8 +69,8 @@ type CheckPropertyWithMinAppVersionParameters<
 *  If you want the feature flag state of an inner configuration, you can specify two more properties
 * @property {boolean} optionalLocalFlag - The local config that represents the nested feature
 * @property {ExtractSecondLevelKeyWithMinAppVersion\<Config, KeysWithMinAppVersion\<Config\>\>} optionalLocalFlag - A property nested in Config (from backendStatus) that extends ObjectWithMinAppVersion
-* 
-* @example 
+*
+* @example
 * isPropertyWithMinAppVersionEnabled({
         backendStatus: store,
         mainLocalFlag: fastLoginConfig,

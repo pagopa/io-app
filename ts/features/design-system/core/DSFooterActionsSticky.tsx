@@ -31,12 +31,12 @@ export const DSFooterActionsSticky = () => {
 
   const scrollY = useSharedValue<number>(0);
 
-  /* We can't just use `screenHeight` from `Dimensions` because
+  /* We can't just use `windowHeight` from `Dimensions` because
   it doesn't count the fixed block used by `react-navigation`
   for the header */
-  const { height: screenHeight } = Dimensions.get("screen");
+  const { height: windowHeight } = Dimensions.get("window");
   const headerHeight = useHeaderHeight();
-  const activeScreenHeight = screenHeight - headerHeight;
+  const activeScreenHeight = windowHeight - headerHeight;
 
   /* Disambiguation:
   actionBlock:            Block element fixed at the bottom of the screen
@@ -70,7 +70,7 @@ export const DSFooterActionsSticky = () => {
   );
 
   const actionBlockAnimatedStyle = useAnimatedStyle(() => ({
-    /* 
+    /*
     We only start translating the action block
     when it reaches the top of the placeholder
        0 = Translate is blocked

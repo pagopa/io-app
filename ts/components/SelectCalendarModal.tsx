@@ -17,8 +17,6 @@ import {
 import I18n from "../i18n";
 import { GlobalState } from "../store/reducers/types";
 import CalendarsListContainer from "./CalendarsListContainer";
-import { Body } from "./core/typography/Body";
-import ItemSeparatorComponent from "./ItemSeparatorComponent";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
 import { ScreenContentHeader } from "./screens/ScreenContentHeader";
 
@@ -70,14 +68,6 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
             <CalendarsListContainer
               onCalendarSelected={this.props.onCalendarSelected}
               onCalendarsLoaded={this.onCalendarsLoaded}
-              lastListItem={
-                this.props.defaultCalendar === undefined && (
-                  <View>
-                    <ItemSeparatorComponent />
-                    <Body>{I18n.t("messages.cta.helper")}</Body>
-                  </View>
-                )
-              }
             />
           </ScrollView>
           {!isLoading && (

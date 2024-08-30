@@ -119,16 +119,6 @@ export const navigateToServicesPreferenceModeSelectionScreen = (
 /**
  * @deprecated
  */
-export const navigateToServiceHomeScreen = () =>
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
-      screen: SERVICES_ROUTES.SERVICES_HOME
-    })
-  );
-
-/**
- * @deprecated
- */
 export const navigateToServiceDetailsScreen = (
   params: ServiceDetailsScreenRouteParams
 ) =>
@@ -150,16 +140,6 @@ export const navigateToEmailForwardingPreferenceScreen = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
       screen: ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
-    })
-  );
-
-/**
- * @deprecated
- */
-export const navigateToServicePreferenceScreen = () =>
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_SERVICES
     })
   );
 

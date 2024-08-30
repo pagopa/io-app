@@ -57,7 +57,7 @@ const installYqIfNeeded = async () => {
 };
 
 /**
-* since some locales are accessed with a notation like 
+* since some locales are accessed with a notation like
 * `key.key.key.${myVal}`,
 * so we check for all possible combinations of the locale.
 *

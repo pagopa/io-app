@@ -102,6 +102,13 @@ const renderComponent = (
               cgn: {
                 enabled: false
               },
+              newPaymentSection: {
+                enabled: false,
+                min_app_version: {
+                  android: "0.0.0.0",
+                  ios: "0.0.0.0"
+                }
+              },
               fims: {
                 enabled: false
               },

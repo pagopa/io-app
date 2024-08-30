@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 /**
  * A saga that manages the Wallet.
  */
@@ -174,6 +172,7 @@ const successScreenDelay = 2000 as Millisecond;
  * potential state of the flow substates (see GlobalState.wallet.wallets).
  *
  */
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function* startOrResumeAddCreditCardSaga(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof runStartOrResumeAddCreditCardSaga>
@@ -393,7 +392,8 @@ function* abortRunningPaymentSaga() {
 }
 
 // this is a shared DeferredPromise used to stop polling when user aborts a running payment
-// eslint-disable-next-line
+
+// eslint-disable-next-line functional/no-let
 let shouldAbortPaymentIdPollingRequest = DeferredPromise<boolean>();
 /**
  * Main wallet saga.
@@ -405,7 +405,7 @@ let shouldAbortPaymentIdPollingRequest = DeferredPromise<boolean>();
  * and a new PagopaToken gets received from the backend. Infact, the
  * pagoPaClient passed as paramenter to this saga, embeds the PagopaToken.
  */
-// eslint-disable-next-line
+
 export function* watchWalletSaga(
   sessionToken: SessionToken,
   walletToken: string,

@@ -3,14 +3,14 @@
 exports[`IdPayCard should match the snapshot 1`] = `
 <View
   style={
-    Object {
+    {
       "aspectRatio": 1.6,
     }
   }
 >
   <View
     style={
-      Object {
+      {
         "bottom": 0,
         "left": 0,
         "position": "absolute",
@@ -23,7 +23,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "justifyContent": "space-between",
         "paddingBottom": 16,
@@ -36,7 +36,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
     <View>
       <View
         style={
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -48,25 +48,27 @@ exports[`IdPayCard should match the snapshot 1`] = `
           color="blueItalia-850"
           defaultColor="black"
           defaultWeight="Semibold"
+          dynamicTypeRamp="headline"
           ellipsizeMode="tail"
           font="TitilliumSansPro"
           fontStyle={
-            Object {
+            {
               "fontSize": 18,
               "lineHeight": 25,
             }
           }
+          maxFontSizeMultiplier={1.25}
           numberOfLines={1}
           style={
-            Array [
-              Object {
+            [
+              {
                 "width": "80%",
               },
-              Object {
+              {
                 "fontSize": 18,
                 "lineHeight": 25,
               },
-              Object {
+              {
                 "color": "#001F3D",
                 "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
@@ -81,14 +83,14 @@ exports[`IdPayCard should match the snapshot 1`] = `
         <View
           accessibilityIgnoresInvertColors={true}
           style={
-            Array [
-              Object {
+            [
+              {
                 "borderColor": "rgba(14,15,19,0.1)",
                 "borderCurve": "continuous",
                 "borderWidth": 1,
                 "overflow": "hidden",
               },
-              Object {
+              {
                 "backgroundColor": "#FFFFFF",
                 "borderRadius": 8,
                 "height": 44,
@@ -100,13 +102,13 @@ exports[`IdPayCard should match the snapshot 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderCurve": "continuous",
                   "overflow": "hidden",
                 },
-                Object {
+                {
                   "borderRadius": 2,
                 },
               ]
@@ -116,12 +118,12 @@ exports[`IdPayCard should match the snapshot 1`] = `
               accessibilityIgnoresInvertColors={true}
               onError={[Function]}
               source={
-                Object {
+                {
                   "uri": "https://vtlogo.com/wp-content/uploads/2021/08/18app-vector-logo.png",
                 }
               }
               style={
-                Object {
+                {
                   "height": "100%",
                   "resizeMode": "contain",
                   "width": "100%",
@@ -133,7 +135,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "height": 16,
           }
         }
@@ -143,20 +145,22 @@ exports[`IdPayCard should match the snapshot 1`] = `
         color="black"
         defaultColor="black"
         defaultWeight="Semibold"
+        dynamicTypeRamp="footnote"
         font="TitilliumSansPro"
         fontStyle={
-          Object {
+          {
             "fontSize": 16,
             "lineHeight": 21,
           }
         }
+        maxFontSizeMultiplier={1.25}
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
               "lineHeight": 21,
             },
-            Object {
+            {
               "color": "#0E0F13",
               "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
@@ -173,20 +177,22 @@ exports[`IdPayCard should match the snapshot 1`] = `
         color="blueItalia-500"
         defaultColor="bluegreyDark"
         defaultWeight="Semibold"
+        dynamicTypeRamp="title2"
         font="TitilliumSansPro"
         fontStyle={
-          Object {
-            "fontSize": 24,
-            "lineHeight": 34,
+          {
+            "fontSize": 22,
+            "lineHeight": 33,
           }
         }
+        maxFontSizeMultiplier={1.25}
         style={
-          Array [
-            Object {
-              "fontSize": 24,
-              "lineHeight": 34,
+          [
+            {
+              "fontSize": 22,
+              "lineHeight": 33,
             },
-            Object {
+            {
               "color": "#0066CC",
               "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
@@ -204,20 +210,22 @@ exports[`IdPayCard should match the snapshot 1`] = `
       color="blueItalia-850"
       defaultColor="black"
       defaultWeight="Semibold"
+      dynamicTypeRamp="footnote"
       font="TitilliumSansPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 16,
           "lineHeight": 21,
         }
       }
+      maxFontSizeMultiplier={1.25}
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 16,
             "lineHeight": 21,
           },
-          Object {
+          {
             "color": "#001F3D",
             "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",

@@ -53,7 +53,9 @@ const EycaDetailComponent = (props: Props) => {
     />
   );
 
-  const renderComponentEycaStatus = (eyca: EycaCard): React.ReactNode => {
+  const renderComponentEycaStatus = (
+    eyca: EycaCard
+  ): React.JSX.Element | null => {
     switch (eyca.status) {
       case "ACTIVATED":
       case "REVOKED":

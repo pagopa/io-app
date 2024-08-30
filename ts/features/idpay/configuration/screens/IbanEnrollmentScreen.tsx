@@ -17,6 +17,8 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isUpseringSelector } from "../../../../xstate/selectors";
@@ -42,14 +44,23 @@ type RouteProps = RouteProp<
 export const IbanEnrollmentScreen = () => {
   const { params } = useRoute<RouteProps>();
   const { initiativeId } = params;
-  const { useActorRef, useSelector } = IdPayConfigurationMachineContext;
-  const machine = useActorRef();
+  const machine = IdPayConfigurationMachineContext.useActorRef();
 
-  const isLoading = useSelector(isLoadingSelector);
-  const ibanList = useSelector(ibanListSelector);
-  const isIbanOnly = useSelector(selectIsIbanOnlyMode);
-  const isUpsertingIban = useSelector(isUpseringSelector);
-  const enrolledIban = useSelector(selectEnrolledIban);
+  const isLoading =
+    IdPayConfigurationMachineContext.useSelector(isLoadingSelector);
+  const ibanList =
+    IdPayConfigurationMachineContext.useSelector(ibanListSelector);
+  const isIbanOnly =
+    IdPayConfigurationMachineContext.useSelector(selectIsIbanOnlyMode);
+  const isUpsertingIban =
+    IdPayConfigurationMachineContext.useSelector(isUpseringSelector);
+  const enrolledIban =
+    IdPayConfigurationMachineContext.useSelector(selectEnrolledIban);
+
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
+
   const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>();
 
   useFocusEffect(
@@ -189,7 +200,9 @@ export const IbanEnrollmentScreen = () => {
               weight="Regular"
               style={IOStyles.flex} // required for correct wrapping
             >
-              {I18n.t("idpay.configuration.iban.enrollment.footer")}
+              {isSettingsVisibleAndHideProfile
+                ? I18n.t("idpay.configuration.iban.enrollment.footer")
+                : I18n.t("idpay.configuration.iban.enrollment.legacyFooter")}
             </LabelSmall>
           </View>
           {/* TODO:: end AdviceComponent  */}

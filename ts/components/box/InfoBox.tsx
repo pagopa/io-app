@@ -39,7 +39,7 @@ const ICON_SIZE: IOIconSizeScale = 32;
  * @param props
  * @constructor
  */
-export const InfoBox: React.FunctionComponent<Props> = props => {
+export const InfoBox = (props: React.PropsWithChildren<Props>) => {
   const iconName = props.iconName ?? "notice";
   const iconColor = props.iconColor ?? "blue";
   const iconSize = props.iconSize ?? ICON_SIZE;

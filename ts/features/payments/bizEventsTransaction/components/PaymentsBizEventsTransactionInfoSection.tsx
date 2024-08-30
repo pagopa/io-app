@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { capitalize } from "lodash";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";

@@ -1,43 +1,39 @@
-import React from "react";
-import { Alert, View } from "react-native";
 import {
-  ListItemAction,
-  VSpacer,
   Chip,
-  IOStyles
+  IOStyles,
+  ListItemAction,
+  VSpacer
 } from "@pagopa/io-app-design-system";
-import { format } from "../../../../utils/dates";
+import React from "react";
+import { Linking, View } from "react-native";
 import I18n from "../../../../i18n";
+import { format } from "../../../../utils/dates";
+import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
 
 type Props = {
   lastUpdateTime: Date;
+  issuerConf: IssuerConfiguration;
 };
 
-export const ItwPresentationDetailFooter = ({ lastUpdateTime }: Props) => (
+export const ItwPresentationDetailFooter = ({
+  lastUpdateTime,
+  issuerConf
+}: Props) => (
   <View>
     <ListItemAction
       variant="primary"
       icon="message"
       label={I18n.t(
         "features.itWallet.presentation.credentialDetails.actions.requestAssistance",
-        { authSource: "AuthSource" }
+        { authSource: issuerConf.federation_entity.organization_name }
       )}
       accessibilityLabel={I18n.t(
         "features.itWallet.presentation.credentialDetails.actions.requestAssistance",
-        { authSource: "AuthSource" }
+        { authSource: issuerConf.federation_entity.organization_name }
       )}
-      onPress={() => Alert.alert("Assistance")}
-    />
-    <ListItemAction
-      variant="danger"
-      icon="trashcan"
-      label={I18n.t(
-        "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
-      )}
-      accessibilityLabel={I18n.t(
-        "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
-      )}
-      onPress={() => Alert.alert("Remove")}
+      onPress={() =>
+        Linking.openURL(`mailto:${issuerConf.federation_entity.contacts?.[0]}`)
+      }
     />
     <VSpacer size={24} />
     <Chip color="grey-650" style={IOStyles.selfCenter}>

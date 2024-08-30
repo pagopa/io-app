@@ -35,6 +35,10 @@ const DESIGN_SYSTEM_ROUTES = {
     WALLET: {
       route: "DESIGN_SYSTEM_WALLET",
       title: "Wallet"
+    },
+    IO_MARKDOWN: {
+      route: "IO_MARKDOWN",
+      title: "IOMarkdown"
     }
   },
   HEADERS: {
@@ -111,6 +115,10 @@ const DESIGN_SYSTEM_ROUTES = {
     }
   },
   LEGACY: {
+    TYPOGRAPHY: {
+      route: "DESIGN_SYSTEM_LEGACY_TYPOGRAPHY",
+      title: "Typography"
+    },
     PICTOGRAMS: {
       route: "DESIGN_SYSTEM_LEGACY_PICTOGRAMS",
       title: "Pictograms"

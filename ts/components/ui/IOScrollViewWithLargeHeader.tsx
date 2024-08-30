@@ -4,7 +4,8 @@ import {
   H2,
   HeaderSecondLevel,
   IOStyles,
-  VSpacer
+  VSpacer,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React, { ComponentProps, forwardRef, useState } from "react";
@@ -64,6 +65,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
     const [titleHeight, setTitleHeight] = useState(0);
 
     const navigation = useNavigation();
+    const theme = useIOTheme();
 
     const getTitleHeight = (event: LayoutChangeEvent) => {
       const { height } = event.nativeEvent.layout;
@@ -104,6 +106,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
           onLayout={getTitleHeight}
         >
           <H2
+            color={theme["textHeading-default"]}
             testID={title.testID}
             accessibilityLabel={title.accessibilityLabel ?? title.label}
             accessibilityRole="header"
@@ -116,7 +119,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
           <ContentWrapper>
             <VSpacer size={4} />
             {typeof description === "string" ? (
-              <Body color="grey-700">{description}</Body>
+              <Body color={theme["textBody-tertiary"]}>{description}</Body>
             ) : (
               <ComposedBodyFromArray body={description} textAlign="left" />
             )}

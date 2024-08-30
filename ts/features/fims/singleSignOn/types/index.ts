@@ -1,12 +1,12 @@
 import * as t from "io-ts";
 
-const confirmType = t.type({
+const singleLinkType = t.type({
   href: t.string
 });
 
 const linksType = t.type({
-  abort: confirmType,
-  confirm: confirmType
+  abort: singleLinkType,
+  consent: singleLinkType
 });
 
 const claimType = t.partial({

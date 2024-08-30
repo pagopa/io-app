@@ -1,5 +1,4 @@
 import React from "react";
-import { View } from "react-native";
 import { Alert, VSpacer } from "@pagopa/io-app-design-system";
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { StatusEnum as InitiativeStatusEnum } from "../../../../../definitions/idpay/InitiativeDTO";
@@ -58,7 +57,6 @@ const MissingConfigurationAlert = (props: Props) => {
   return (
     <>
       <Alert
-        viewRef={viewRef}
         content={I18n.t(
           `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.content`
         )}

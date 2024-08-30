@@ -1,10 +1,10 @@
-import I18n from "i18n-js";
 import * as React from "react";
 import {
   ButtonOutline,
   ButtonSolid,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import I18n from "../../i18n";
 import { Idp } from "../../../definitions/content/Idp";
 import { handleItemOnPress } from "../../utils/url";
 import LegacyMarkdown from "../ui/Markdown/LegacyMarkdown";
@@ -16,7 +16,7 @@ type Props = Readonly<{
 
 const IdpCustomContextualHelpContent = (idpTextData: Idp) => ({
   title: I18n.t("authentication.idp_login.contextualHelpTitle2"),
-  body: () => <IdpCustomContextualHelpBody idpTextData={idpTextData} />
+  body: <IdpCustomContextualHelpBody idpTextData={idpTextData} />
 });
 
 const IdpCustomContextualHelpBody: React.FunctionComponent<Props> = props => {

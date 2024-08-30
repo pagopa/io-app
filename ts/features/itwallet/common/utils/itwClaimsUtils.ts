@@ -2,16 +2,19 @@
  * Utility functions for working with credential claims.
  */
 
-import * as t from "io-ts";
-import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { patternDateFromString } from "@pagopa/ts-commons/lib/dates";
+import { NonEmptyString, PatternString } from "@pagopa/ts-commons/lib/strings";
+import { differenceInCalendarDays, isValid } from "date-fns";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
+import * as t from "io-ts";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
-import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
+import { ItwCredentialStatus } from "../components/ItwCredentialCard";
+import { JsonFromString } from "./ItwCodecUtils";
 import { CredentialCatalogDisplay } from "./itwMocksUtils";
+import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
 /**
  *
@@ -35,9 +38,9 @@ export const getEvidenceOrganizationName = (credential: ParsedCredential) =>
     O.fromNullable,
     O.fold(
       () => I18n.t("features.itWallet.generic.placeholders.organizationName"),
-      some =>
+      evidence =>
         pipe(
-          some.value,
+          evidence.value,
           EvidenceClaim.decode,
           E.fold(
             () =>
@@ -66,20 +69,25 @@ export type ClaimDisplayFormat = {
  * If there's no locale that matches the current locale then we take the attribute key as the name.
  * The value is taken from the attribute value.
  * @param parsedCredential - the parsed credential.
- * @param schema - the issuance credentialConfigurationSchema of parsedCredential.
+ * @param options.exclude - an array of keys to exclude from the claims. TODO [SIW-1383]: remove this dirty hack
  * @returns the array of {@link ClaimDisplayFormat} of the credential contained in its configuration schema.
  */
 export const parseClaims = (
-  parsedCredential: ParsedCredential
-): Array<ClaimDisplayFormat> =>
-  Object.entries(parsedCredential).map(([key, attribute]) => {
-    const attributeName =
-      typeof attribute.name === "string"
-        ? attribute.name
-        : attribute.name[getClaimsFullLocale()] || key;
+  parsedCredential: ParsedCredential,
+  options: { exclude?: Array<string> } = {}
+): Array<ClaimDisplayFormat> => {
+  const { exclude = [] } = options;
+  return Object.entries(parsedCredential)
+    .filter(([key]) => !exclude.includes(key))
+    .map(([key, attribute]) => {
+      const attributeName =
+        typeof attribute.name === "string"
+          ? attribute.name
+          : attribute.name?.[getClaimsFullLocale()] || key;
 
-    return { label: attributeName, value: attribute.value, id: key };
-  });
+      return { label: attributeName, value: attribute.value, id: key };
+    });
+};
 
 /**
  * Sorts the parsedCredential according to the order of the displayData.
@@ -154,7 +162,10 @@ const DATE_FORMAT_REGEX = "^\\d{4}-\\d{2}-\\d{2}$";
 /**
  * Regex for the picture URL format which is used to validate the image claim as a base64 encoded png image.
  */
-const PICTURE_URL_REGEX = "^data:image\\/png;base64,";
+const PICTURE_URL_REGEX = "^data:image\\/(png|jpg|jpeg|bmp);base64,";
+
+const FISCAL_CODE_WITH_PREFIX =
+  "(TINIT-[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])";
 
 /**
  * io-ts decoder for the date claim field of the credential.
@@ -193,19 +204,45 @@ export type PlaceOfBirthClaimType = t.TypeOf<typeof PlaceOfBirthClaim>;
 /**
  * io-ts decoder for the mDL driving privileges
  */
-export const DrivingPrivilegesClaim = t.type({
+const DrivingPrivilegeClaim = t.type({
+  driving_privilege: t.string,
   issue_date: t.string,
-  vehicle_category_code: t.string,
-  expiry_date: t.string
+  expiry_date: t.string,
+  restrictions_conditions: t.union([t.string, t.null])
 });
+
+export type DrivingPrivilegeClaimType = t.TypeOf<typeof DrivingPrivilegeClaim>;
+
+export const DrivingPrivilegesClaim = t.string
+  .pipe(JsonFromString)
+  .pipe(t.array(DrivingPrivilegeClaim));
+
 export type DrivingPrivilegesClaimType = t.TypeOf<
   typeof DrivingPrivilegesClaim
 >;
 
 /**
- * Alias for the string fallback of the claim field of the credential.
+ * Decoder for the fiscal code. This is needed since we have to remove the INIT prefix when rendering it.
  */
-export const PlainTextClaim = t.string;
+export const FiscalCodeClaim = PatternString(FISCAL_CODE_WITH_PREFIX);
+
+/**
+ * Empty string fallback of the claim field of the credential.
+ */
+export const EmptyStringClaim = new t.Type<string, string, unknown>(
+  "EmptyString",
+  (input: unknown): input is string => input === "", // Type guard
+  (input, context) =>
+    typeof input === "string" && input === ""
+      ? t.success(input)
+      : t.failure(input, context, "Expected an empty string"),
+  t.identity
+);
+
+/**
+ * Alias for the string claim field of the credential.
+ */
+export const StringClaim = NonEmptyString;
 
 export const ImageClaim = PatternString(PICTURE_URL_REGEX);
 
@@ -226,8 +263,12 @@ export const ClaimValue = t.union([
   DateClaim,
   // Otherwise parse an image
   ImageClaim,
+  // Otherwise parse a fiscal code
+  FiscalCodeClaim,
   // Otherwise fallback to string
-  PlainTextClaim
+  StringClaim,
+  // Otherwise fallback to empty string
+  EmptyStringClaim
 ]);
 
 type ClaimSection =
@@ -286,9 +327,9 @@ export const previewDateClaimsConfig: DateClaimConfig = {
  * @returns
  */
 export const groupCredentialClaims = (credential: StoredCredential) => {
-  const claims = parseClaims(
-    sortClaims(credential.displayData.order, credential.parsedCredential)
-  );
+  const claims = parseClaims(credential.parsedCredential, {
+    exclude: ["unique_id"]
+  });
 
   return claims.reduce((acc, claim) => {
     const section = sectionsByClaim[claim.id] || "noSection";
@@ -298,3 +339,74 @@ export const groupCredentialClaims = (credential: StoredCredential) => {
     };
   }, {} as Record<ClaimSection, ReadonlyArray<ClaimDisplayFormat>>);
 };
+
+/**
+ * Returns the expiration date from a {@see ParsedCredential}, if present
+ * @param credential the parsed credential claims
+ * @returns a Date if found, undefined if not
+ */
+export const getCredentialExpireDate = (
+  credential: ParsedCredential
+): Date | undefined => {
+  // A credential could contain its expiration date in `expiry_date` or `expiration_date` claims
+  const expireDate: ParsedCredential[keyof ParsedCredential] | undefined =
+    credential.expiry_date || credential.expiration_date;
+
+  if (!expireDate?.value) {
+    return undefined;
+  }
+
+  const date = new Date(expireDate.value as string);
+  return isValid(date) ? date : undefined;
+};
+
+/**
+ * Returns the remaining days until the expiration a {@see ParsedCredential}
+ * @param credential the parsed credential claims
+ * @returns the number of days until the expiration date, undefined if no expire date is found
+ */
+export const getCredentialExpireDays = (
+  credential: ParsedCredential
+): number | undefined => {
+  const expireDate = getCredentialExpireDate(credential);
+
+  if (expireDate === undefined) {
+    return undefined;
+  }
+
+  return differenceInCalendarDays(expireDate, Date.now());
+};
+
+/**
+ * Returns the expire status of a {@see ParsedCredential}
+ * @param credential the parsed credential claims
+ * @param expiringDays the number of days required to mark a credential as "EXPIRING"
+ * @returns "VALID" if the credential is valid, "EXPIRING" if there are less than {expiringDays} days left until the expiry day, "EXPIRED" if the expiry date has passed
+ */
+export const getCredentialExpireStatus = (
+  credential: ParsedCredential,
+  expiringDays: number = 14
+): ItwCredentialStatus | undefined => {
+  const expireDays = getCredentialExpireDays(credential);
+
+  if (expireDays === undefined) {
+    return undefined;
+  }
+
+  return expireDays > expiringDays
+    ? "valid"
+    : expireDays > 0
+    ? "expiring"
+    : "expired";
+};
+
+const FISCAL_CODE_REGEX =
+  /([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])/g;
+
+/**
+ * Extract a fiscal code from any string.
+ * @param s - the input string
+ * @returns An option with the extracted fiscal code
+ */
+export const extractFiscalCode = (s: string) =>
+  pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));

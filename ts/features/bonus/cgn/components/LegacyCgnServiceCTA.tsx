@@ -10,7 +10,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { servicePreferenceSelector } from "../../../services/details/store/reducers/servicePreference";
+import { servicePreferencePotSelector } from "../../../services/details/store/reducers";
 import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { cgnActivationStart } from "../store/actions/activation";
@@ -27,10 +27,10 @@ type Props = {
 const LegacyCgnServiceCTA = (props: Props) => {
   const isFirstRender = useRef<boolean>(true);
   const dispatch = useIODispatch();
-  const servicePreference = useIOSelector(servicePreferenceSelector);
+  const servicePreferencePot = useIOSelector(servicePreferencePotSelector);
   const unsubscriptionStatus = useIOSelector(cgnUnsubscribeSelector);
 
-  const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
+  const servicePreferenceValue = pot.getOrElse(servicePreferencePot, undefined);
 
   useEffect(() => {
     if (!isFirstRender.current) {

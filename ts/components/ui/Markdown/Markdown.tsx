@@ -12,6 +12,7 @@ import {
   ViewStyle
 } from "react-native";
 import WebView from "react-native-webview";
+import { filterXSS } from "xss";
 import { closeInjectedScript } from "../../../utils/webview";
 import { remarkProcessor } from "../../../utils/markdown";
 import { MarkdownWebviewComponent } from "./MarkdownWebviewComponent";
@@ -108,7 +109,7 @@ export const Markdown = (props: MarkdownProps) => {
             // 'true' value but the underlying MarkdownWebviewComponent does not
             // reload its content (the html is recompiled but it does not change),
             // thus, not calling the `handleLoadEnd` callback
-            const html = generateHtml(
+            const generatedHtml = generateHtml(
               String(file),
               cssStyle,
               useCustomSortedList,
@@ -118,8 +119,8 @@ export const Markdown = (props: MarkdownProps) => {
               ...currentInternalState,
               isLoading:
                 currentInternalState.isLoading &&
-                currentInternalState.html !== html,
-              html
+                currentInternalState.html !== generatedHtml,
+              html: generatedHtml
             }));
           }
         );

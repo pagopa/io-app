@@ -9,7 +9,6 @@ import I18n from "../../i18n";
 import {
   disableSearch,
   searchMessagesEnabled,
-  searchServicesEnabled,
   updateSearchText
 } from "../../store/actions/search";
 import { Dispatch } from "../../store/actions/types";
@@ -18,7 +17,7 @@ import { ICON_BUTTON_MARGIN } from "../screens/BaseHeader";
 
 export const MIN_CHARACTER_SEARCH_TEXT = 3;
 
-export type SearchType = "Messages" | "Services";
+export type SearchType = "Messages";
 
 interface OwnProps {
   color?: IOColors;
@@ -128,9 +127,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     switch (searchType) {
       case "Messages":
         dispatch(searchMessagesEnabled(isSearchEnabled));
-        break;
-      case "Services":
-        dispatch(searchServicesEnabled(isSearchEnabled));
         break;
     }
   }

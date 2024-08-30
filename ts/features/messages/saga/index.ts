@@ -12,19 +12,20 @@ import { logoutSuccess } from "../../../store/actions/authentication";
 import {
   downloadAttachment,
   getMessageDataAction,
-  getMessagePrecondition,
   loadMessageById,
   loadMessageDetails,
   loadNextPageMessages,
   loadPreviousPageMessages,
   loadThirdPartyMessage,
-  migrateToPaginatedMessages,
   reloadAllMessages,
   removeCachedAttachment,
+  startPaymentStatusTracking,
   upsertMessageStatusAttributes
 } from "../store/actions";
 import { retryDataAfterFastLoginSessionExpirationSelector } from "../store/reducers/messageGetStatus";
 import { BackendClient } from "../../../api/backend";
+import { retrievingDataPreconditionStatusAction } from "../store/actions/preconditions";
+import { startProcessingMessageArchivingAction } from "../store/actions/archiving";
 import { handleDownloadAttachment } from "./handleDownloadAttachment";
 import {
   handleClearAllAttachments,
@@ -36,11 +37,14 @@ import { handleLoadPreviousPageMessages } from "./handleLoadPreviousPageMessages
 import { handleReloadAllMessages } from "./handleReloadAllMessages";
 import { handleLoadMessageById } from "./handleLoadMessageById";
 import { handleLoadMessageDetails } from "./handleLoadMessageDetails";
-import { handleUpsertMessageStatusAttribues } from "./handleUpsertMessageStatusAttribues";
-import { handleMigrateToPagination } from "./handleMigrateToPagination";
+import {
+  handleMessageArchivingRestoring,
+  raceUpsertMessageStatusAttributes
+} from "./handleUpsertMessageStatusAttributes";
 import { handleMessagePrecondition } from "./handleMessagePrecondition";
 import { handleThirdPartyMessage } from "./handleThirdPartyMessage";
 import { handlePaymentUpdateRequests } from "./handlePaymentUpdateRequests";
+import { handlePaymentStatusForAnalyticsTracking } from "./handlePaymentStatusForAnalyticsTracking";
 
 /**
  * Handle messages requests
@@ -82,7 +86,7 @@ export function* watchMessagesSaga(
   );
 
   yield* takeLatest(
-    getMessagePrecondition.request,
+    retrievingDataPreconditionStatusAction,
     handleMessagePrecondition,
     backendClient.getThirdPartyMessagePrecondition
   );
@@ -93,18 +97,16 @@ export function* watchMessagesSaga(
     backendClient.getThirdPartyMessage
   );
 
+  // Be aware that this saga must use the takeEvery
+  // due to compatibility with the old messages home
   yield* takeEvery(
     upsertMessageStatusAttributes.request,
-    handleUpsertMessageStatusAttribues,
+    raceUpsertMessageStatusAttributes,
     backendClient.upsertMessageStatusAttributes
   );
-
-  yield* fork(watchLoadMessageData);
-
   yield* takeLatest(
-    migrateToPaginatedMessages.request,
-    handleMigrateToPagination,
-    backendClient.upsertMessageStatusAttributes
+    startProcessingMessageArchivingAction,
+    handleMessageArchivingRestoring
   );
 
   // handle the request for a new downloadAttachment
@@ -125,9 +127,14 @@ export function* watchMessagesSaga(
 
   // clear cache when user explicitly logs out
   yield* takeEvery(logoutSuccess, handleClearAllAttachments);
-}
 
-function* watchLoadMessageData() {
+  // Message Payments analytics
+  yield* takeLatest(
+    startPaymentStatusTracking,
+    handlePaymentStatusForAnalyticsTracking
+  );
+
+  // handle message details data loading composition
   yield* takeLatest(getMessageDataAction.request, handleLoadMessageData);
 
   const retryDataOrUndefined = yield* select(

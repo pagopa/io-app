@@ -12,20 +12,24 @@ import {
   upsertMessageStatusAttributes
 } from "../../store/actions";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { serviceByIdPotSelector } from "../../../services/details/store/reducers/servicesById";
+import { serviceByIdPotSelector } from "../../../services/details/store/reducers";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { messageDetailsByIdSelector } from "../../store/reducers/detailsById";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { thirdPartyFromIdSelector } from "../../store/reducers/thirdPartyById";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus";
-import * as config from "../../../../config";
 import { isLoadingOrUpdatingInbox } from "../../store/reducers/allPaginated";
 import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { trackMessageDataLoadFailure } from "../../analytics";
+import { MessageGetStatusFailurePhaseType } from "../../store/reducers/messageGetStatus";
 
-// eslint-disable-next-line functional/immutable-data
-Object.defineProperty(config, "euCovidCertificateEnabled", { value: true });
+jest.mock("../../../../config.ts", () => ({
+  ...jest.requireActual("../../../../config.ts"),
+  euCovidCertificateEnabled: true
+}));
 
 describe("getPaginatedMessage", () => {
   it("when no paginated message is in store, it should dispatch a loadMessageById.request and retrieve its result from the store if it succeeds", () => {
@@ -97,43 +101,73 @@ describe("getPaginatedMessage", () => {
 });
 
 describe("getService", () => {
-  it("when no service is in store, it should dispatch a loadServiceDetail.request and terminate", () => {
-    const serviceId = "s1" as ServiceId;
-    testSaga(testable!.getService, serviceId)
+  it("when no service is in store, it should dispatch a loadServiceDetail.request and retrieve its result from the store if it succeeds", () => {
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    const serviceDetails = { service_id: serviceId } as ServicePublic;
+    testSaga(testable!.getServiceDetails, serviceId)
       .next()
       .select(serviceByIdPotSelector, serviceId)
       .next(pot.none)
       .put(loadServiceDetail.request(serviceId))
       .next()
-      .isDone();
+      .take([loadServiceDetail.success, loadServiceDetail.failure])
+      .next(loadServiceDetail.success(serviceDetails))
+      .select(serviceByIdPotSelector, serviceId)
+      .next(pot.some(serviceDetails))
+      .returns(serviceDetails);
   });
-  it("when an error is in store, it should dispatch a loadServiceDetail.request and terminate", () => {
-    const serviceId = "s1" as ServiceId;
-    testSaga(testable!.getService, serviceId)
+  it("when an error is in store, it should dispatch a loadServiceDetail.request and retrieve its result from the store if it succeeds", () => {
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    const serviceDetails = { service_id: serviceId } as ServicePublic;
+    testSaga(testable!.getServiceDetails, serviceId)
       .next()
       .select(serviceByIdPotSelector, serviceId)
       .next(pot.noneError)
       .put(loadServiceDetail.request(serviceId))
       .next()
-      .isDone();
+      .take([loadServiceDetail.success, loadServiceDetail.failure])
+      .next(loadServiceDetail.success(serviceDetails))
+      .select(serviceByIdPotSelector, serviceId)
+      .next(pot.some(serviceDetails))
+      .returns(serviceDetails);
   });
-  it("when a service with error is in store, it should dispatch a loadServiceDetail.request and terminate", () => {
-    const serviceId = "s1" as ServiceId;
-    testSaga(testable!.getService, serviceId)
+  it("when a service with error is in store, it should dispatch a loadServiceDetail.request and retrieve its result from the store if it succeeds", () => {
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    const serviceDetails = { service_id: serviceId } as ServicePublic;
+    testSaga(testable!.getServiceDetails, serviceId)
       .next()
       .select(serviceByIdPotSelector, serviceId)
       .next(pot.someError({}, new Error()))
       .put(loadServiceDetail.request(serviceId))
       .next()
-      .isDone();
+      .take([loadServiceDetail.success, loadServiceDetail.failure])
+      .next(loadServiceDetail.success(serviceDetails))
+      .select(serviceByIdPotSelector, serviceId)
+      .next(pot.some(serviceDetails))
+      .returns(serviceDetails);
   });
-  it("when a service is in store, it should terminate", () => {
-    const serviceId = "s1" as ServiceId;
-    testSaga(testable!.getService, serviceId)
+  it("when a service is in store, it should return its details", () => {
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    const serviceDetails = { service_id: serviceId } as ServicePublic;
+    testSaga(testable!.getServiceDetails, serviceId)
       .next()
       .select(serviceByIdPotSelector, serviceId)
-      .next(pot.some({}))
-      .isDone();
+      .next(pot.some(serviceDetails))
+      .returns(serviceDetails);
+  });
+  it("when no service is in store, it should dispatch a loadServiceDetail.request but return undefined if the related saga fails", () => {
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    testSaga(testable!.getServiceDetails, serviceId)
+      .next()
+      .select(serviceByIdPotSelector, serviceId)
+      .next(pot.none)
+      .put(loadServiceDetail.request(serviceId))
+      .next()
+      .take([loadServiceDetail.success, loadServiceDetail.failure])
+      .next(
+        loadServiceDetail.failure({ service_id: serviceId, error: new Error() })
+      )
+      .returns(undefined);
   });
 });
 
@@ -209,21 +243,26 @@ describe("getMessageDetails", () => {
 describe("getThirdPartyDataMessage", () => {
   it("should dispatch a loadThirdPartyMessage.request and return the third party message when the related saga succeeds ", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const service = {
+      service_id: "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId,
+      service_name: "The name",
+      organization_name: "Org name",
+      organization_fiscal_code: "OrgFisCod"
+    } as ServicePublic;
     const messageCategoryTag = "GENERIC";
     const thirdPartyMessage = { id: "1" } as ThirdPartyMessageWithContent;
     testSaga(
       testable!.getThirdPartyDataMessage,
       messageId,
       false,
-      serviceId,
+      service,
       messageCategoryTag
     )
       .next()
       .put(
         loadThirdPartyMessage.request({
           id: messageId,
-          serviceId,
+          serviceId: service.service_id,
           tag: messageCategoryTag
         })
       )
@@ -241,7 +280,7 @@ describe("getThirdPartyDataMessage", () => {
         testable!.decodeAndTrackThirdPartyMessageDetailsIfNeeded,
         false,
         thirdPartyMessage,
-        serviceId,
+        service,
         messageCategoryTag
       )
       .next(O.none)
@@ -249,20 +288,25 @@ describe("getThirdPartyDataMessage", () => {
   });
   it("should dispatch a loadThirdPartyMessage.request and return undefined when the related saga fails ", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const service = {
+      service_id: "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId,
+      service_name: "The name",
+      organization_name: "Org name",
+      organization_fiscal_code: "OrgFisCod"
+    } as ServicePublic;
     const messageCategoryTag = "GENERIC";
     testSaga(
       testable!.getThirdPartyDataMessage,
       messageId,
       false,
-      serviceId,
+      service,
       messageCategoryTag
     )
       .next()
       .put(
         loadThirdPartyMessage.request({
           id: messageId,
-          serviceId,
+          serviceId: service.service_id,
           tag: messageCategoryTag
         })
       )
@@ -316,7 +360,10 @@ describe("setMessageReadIfNeeded", () => {
       ])
       .next(
         upsertMessageStatusAttributes.failure({
-          payload: { message: paginatedMessage, update: { tag: "reading" } },
+          payload: {
+            message: paginatedMessage,
+            update: { tag: "reading" }
+          },
           error: new Error()
         })
       )
@@ -333,14 +380,16 @@ describe("setMessageReadIfNeeded", () => {
 describe("dispatchSuccessAction", () => {
   it("should properly report a PN message", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const serviceName = "serName";
     const organizationName = "orgName";
+    const organizationFiscalCode = "orgFisCod";
     const isRead = true;
     const paginatedMessage = {
       id: messageId,
       serviceId,
       organizationName,
+      organizationFiscalCode,
       serviceName,
       isRead,
       category: { tag: TagEnum.PN }
@@ -360,6 +409,7 @@ describe("dispatchSuccessAction", () => {
       isPNMessage: true,
       messageId,
       organizationName,
+      organizationFiscalCode,
       serviceId,
       serviceName
     };
@@ -378,14 +428,16 @@ describe("dispatchSuccessAction", () => {
   });
   it("should properly report a Third Party message with attachments", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const serviceName = "serName";
     const organizationName = "orgName";
+    const organizationFiscalCode = "orgFisCod";
     const isRead = true;
     const paginatedMessage = {
       id: messageId,
       serviceId,
       organizationName,
+      organizationFiscalCode,
       serviceName,
       isRead,
       category: { tag: "GENERIC" }
@@ -405,6 +457,7 @@ describe("dispatchSuccessAction", () => {
       isPNMessage: false,
       messageId,
       organizationName,
+      organizationFiscalCode,
       serviceId,
       serviceName
     };
@@ -423,14 +476,16 @@ describe("dispatchSuccessAction", () => {
   });
   it("should properly report a Third Party message with no attachments", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const serviceName = "serName";
     const organizationName = "orgName";
+    const organizationFiscalCode = "orgFisCod";
     const isRead = true;
     const paginatedMessage = {
       id: messageId,
       serviceId,
       organizationName,
+      organizationFiscalCode,
       serviceName,
       isRead,
       category: { tag: "GENERIC" }
@@ -448,6 +503,7 @@ describe("dispatchSuccessAction", () => {
       isPNMessage: false,
       messageId,
       organizationName,
+      organizationFiscalCode,
       serviceId,
       serviceName
     };
@@ -466,14 +522,16 @@ describe("dispatchSuccessAction", () => {
   });
   it("should properly report a message without Payment", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const serviceName = "serName";
     const organizationName = "orgName";
+    const organizationFiscalCode = "orgFisCod";
     const isRead = true;
     const paginatedMessage = {
       id: messageId,
       serviceId,
       organizationName,
+      organizationFiscalCode,
       serviceName,
       isRead,
       category: { tag: "GENERIC" }
@@ -488,10 +546,16 @@ describe("dispatchSuccessAction", () => {
       isPNMessage: false,
       messageId,
       organizationName,
+      organizationFiscalCode,
       serviceId,
       serviceName
     };
-    testSaga(testable!.dispatchSuccessAction, paginatedMessage, messageDetails)
+    testSaga(
+      testable!.dispatchSuccessAction,
+      paginatedMessage,
+      messageDetails,
+      undefined
+    )
       .next()
       .select(isPnEnabledSelector)
       .next(false)
@@ -501,14 +565,16 @@ describe("dispatchSuccessAction", () => {
   });
   it("should properly report a message with Payment", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const serviceName = "serName";
     const organizationName = "orgName";
+    const organizationFiscalCode = "orgFisCod";
     const isRead = true;
     const paginatedMessage = {
       id: messageId,
       serviceId,
       organizationName,
+      organizationFiscalCode,
       serviceName,
       isRead,
       category: { tag: "GENERIC" }
@@ -523,10 +589,16 @@ describe("dispatchSuccessAction", () => {
       isPNMessage: false,
       messageId,
       organizationName,
+      organizationFiscalCode,
       serviceId,
       serviceName
     };
-    testSaga(testable!.dispatchSuccessAction, paginatedMessage, messageDetails)
+    testSaga(
+      testable!.dispatchSuccessAction,
+      paginatedMessage,
+      messageDetails,
+      undefined
+    )
       .next()
       .select(isPnEnabledSelector)
       .next(false)
@@ -536,15 +608,17 @@ describe("dispatchSuccessAction", () => {
   });
   it("should properly report a EU Covid message", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const serviceName = "serName";
     const organizationName = "orgName";
+    const organizationFiscalCode = "orgFisCod";
     const isRead = true;
     const authCode = "authCode";
     const paginatedMessage = {
       id: messageId,
       serviceId,
       organizationName,
+      organizationFiscalCode,
       serviceName,
       isRead,
       category: { tag: "GENERIC" }
@@ -561,10 +635,16 @@ describe("dispatchSuccessAction", () => {
       isPNMessage: false,
       messageId,
       organizationName,
+      organizationFiscalCode,
       serviceId,
       serviceName
     };
-    testSaga(testable!.dispatchSuccessAction, paginatedMessage, messageDetails)
+    testSaga(
+      testable!.dispatchSuccessAction,
+      paginatedMessage,
+      messageDetails,
+      undefined
+    )
       .next()
       .select(isPnEnabledSelector)
       .next(false)
@@ -590,13 +670,16 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(undefined)
-      .put(getMessageDataAction.failure({ phase: "paginatedMessage" }))
+      .call(testable!.commonFailureHandling, "paginatedMessage", false)
       .next()
       .isDone();
   });
   it("should dispatch a getMessageDataAction.failure if getMessageDetails returns a failure", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    const serviceDetails = {
+      service_id: serviceId
+    } as ServicePublic;
     const paginatedMessage = { id: messageId, serviceId } as UIMessage;
     testSaga(testable!.loadMessageData, {
       messageId,
@@ -611,22 +694,25 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getService, serviceId)
-      .next()
+      .call(testable!.getServiceDetails, serviceId)
+      .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(undefined)
-      .put(getMessageDataAction.failure({ phase: "messageDetails" }))
+      .call(testable!.commonFailureHandling, "messageDetails", false)
       .next()
       .isDone();
   });
   it("should dispatch a getMessageDataAction.failure if the action started from a Push Notification for a PN message", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const paginatedMessage = {
       id: messageId,
       serviceId,
       category: { tag: TagEnum.PN }
     } as UIMessage;
+    const serviceDetails = {
+      service_id: serviceId
+    } as ServicePublic;
     const messageDetails = {} as UIMessageDetails;
     testSaga(testable!.loadMessageData, {
       messageId,
@@ -641,28 +727,26 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getService, serviceId)
-      .next()
+      .call(testable!.getServiceDetails, serviceId)
+      .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
-      .put(
-        getMessageDataAction.failure({
-          blockedFromPushNotificationOpt: true,
-          phase: "preconditions"
-        })
-      )
+      .call(testable!.commonFailureHandling, "preconditions", true, true)
       .next()
       .isDone();
   });
   it("should dispatch a getMessageDataAction.failure if the action started from a Push Notification for a message with preconditions", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const paginatedMessage = {
       id: messageId,
       serviceId,
       category: { tag: "GENERIC" },
       hasPrecondition: true
     } as UIMessage;
+    const serviceDetails = {
+      service_id: serviceId
+    } as ServicePublic;
     const messageDetails = {} as UIMessageDetails;
     testSaga(testable!.loadMessageData, {
       messageId,
@@ -677,22 +761,17 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getService, serviceId)
-      .next()
+      .call(testable!.getServiceDetails, serviceId)
+      .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
-      .put(
-        getMessageDataAction.failure({
-          blockedFromPushNotificationOpt: true,
-          phase: "preconditions"
-        })
-      )
+      .call(testable!.commonFailureHandling, "preconditions", true, true)
       .next()
       .isDone();
   });
   it("should dispatch a getMessageDataAction.failure if thirdPartyMessageDetails returns a failure", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const tag = "GENERIC";
     const paginatedMessage = {
       id: messageId,
@@ -700,6 +779,9 @@ describe("loadMessageData", () => {
       category: { tag },
       hasPrecondition: false
     } as UIMessage;
+    const serviceDetails = {
+      service_id: serviceId
+    } as ServicePublic;
     const messageDetails = { hasThirdPartyData: true } as UIMessageDetails;
     testSaga(testable!.loadMessageData, {
       messageId,
@@ -714,25 +796,25 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getService, serviceId)
-      .next()
+      .call(testable!.getServiceDetails, serviceId)
+      .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
       .call(
         testable!.getThirdPartyDataMessage,
         messageId,
         false,
-        serviceId,
+        serviceDetails,
         tag
       )
       .next(undefined)
-      .put(getMessageDataAction.failure({ phase: "thirdPartyMessageDetails" }))
+      .call(testable!.commonFailureHandling, "thirdPartyMessageDetails", false)
       .next()
       .isDone();
   });
   it("should dispatch a getMessageDataAction.failure if setMessageReadIfNeeded returns a failure (having retrieved third party data successfully)", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const tag = "GENERIC";
     const paginatedMessage = {
       id: messageId,
@@ -740,6 +822,9 @@ describe("loadMessageData", () => {
       category: { tag },
       hasPrecondition: false
     } as UIMessage;
+    const serviceDetails = {
+      service_id: serviceId
+    } as ServicePublic;
     const messageDetails = { hasThirdPartyData: true } as UIMessageDetails;
     const thirdPartyMessage = {} as ThirdPartyMessageWithContent;
     testSaga(testable!.loadMessageData, {
@@ -755,33 +840,36 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getService, serviceId)
-      .next()
+      .call(testable!.getServiceDetails, serviceId)
+      .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
       .call(
         testable!.getThirdPartyDataMessage,
         messageId,
         false,
-        serviceId,
+        serviceDetails,
         tag
       )
       .next(thirdPartyMessage)
       .call(testable!.setMessageReadIfNeeded, paginatedMessage)
       .next(undefined)
-      .put(getMessageDataAction.failure({ phase: "readStatusUpdate" }))
+      .call(testable!.commonFailureHandling, "readStatusUpdate", false)
       .next()
       .isDone();
   });
   it("should dispatch a getMessageDataAction.failure if setMessageReadIfNeeded returns a failure (with no third party data)", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const paginatedMessage = {
       id: messageId,
       serviceId,
       category: { tag: "GENERIC" },
       hasPrecondition: false
     } as UIMessage;
+    const serviceDetails = {
+      service_id: serviceId
+    } as ServicePublic;
     const messageDetails = { hasThirdPartyData: false } as UIMessageDetails;
     testSaga(testable!.loadMessageData, {
       messageId,
@@ -796,19 +884,19 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getService, serviceId)
-      .next()
+      .call(testable!.getServiceDetails, serviceId)
+      .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
       .call(testable!.setMessageReadIfNeeded, paginatedMessage)
       .next(undefined)
-      .put(getMessageDataAction.failure({ phase: "readStatusUpdate" }))
+      .call(testable!.commonFailureHandling, "readStatusUpdate", false)
       .next()
       .isDone();
   });
   it("should call dispatchSuccessAction when it succeed (having retrieved third party data successfully for a remoted content message)", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const tag = "GENERIC";
     const paginatedMessage = {
       id: messageId,
@@ -816,6 +904,9 @@ describe("loadMessageData", () => {
       category: { tag },
       hasPrecondition: false
     } as UIMessage;
+    const serviceDetails = {
+      service_id: serviceId
+    } as ServicePublic;
     const messageDetails = { hasThirdPartyData: true } as UIMessageDetails;
     const thirdPartyMessage = {} as ThirdPartyMessageWithContent;
     testSaga(testable!.loadMessageData, {
@@ -831,27 +922,32 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getService, serviceId)
-      .next()
+      .call(testable!.getServiceDetails, serviceId)
+      .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
       .call(
         testable!.getThirdPartyDataMessage,
         messageId,
         false,
-        serviceId,
+        serviceDetails,
         tag
       )
       .next(thirdPartyMessage)
       .call(testable!.setMessageReadIfNeeded, paginatedMessage)
       .next(true)
-      .call(testable!.dispatchSuccessAction, paginatedMessage, messageDetails)
+      .call(
+        testable!.dispatchSuccessAction,
+        paginatedMessage,
+        messageDetails,
+        thirdPartyMessage
+      )
       .next()
       .isDone();
   });
   it("should call dispatchSuccessAction when it succeed (having retrieved third party data successfully for a PN message)", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const tag = "PN";
     const paginatedMessage = {
       id: messageId,
@@ -859,6 +955,9 @@ describe("loadMessageData", () => {
       category: { tag },
       hasPrecondition: true
     } as UIMessage;
+    const serviceDetails = {
+      service_id: serviceId
+    } as ServicePublic;
     const messageDetails = {} as UIMessageDetails;
     const thirdPartyMessage = {} as ThirdPartyMessageWithContent;
     testSaga(testable!.loadMessageData, {
@@ -874,27 +973,41 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getService, serviceId)
-      .next()
+      .call(testable!.getServiceDetails, serviceId)
+      .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
-      .call(testable!.getThirdPartyDataMessage, messageId, true, serviceId, tag)
+      .call(
+        testable!.getThirdPartyDataMessage,
+        messageId,
+        true,
+        serviceDetails,
+        tag
+      )
       .next(thirdPartyMessage)
       .call(testable!.setMessageReadIfNeeded, paginatedMessage)
       .next(true)
-      .call(testable!.dispatchSuccessAction, paginatedMessage, messageDetails)
+      .call(
+        testable!.dispatchSuccessAction,
+        paginatedMessage,
+        messageDetails,
+        thirdPartyMessage
+      )
       .next()
       .isDone();
   });
   it("should call dispatchSuccessAction when it succeed (with no third party data)", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const paginatedMessage = {
       id: messageId,
       serviceId,
       category: { tag: "GENERIC" },
       hasPrecondition: false
     } as UIMessage;
+    const serviceDetails = {
+      service_id: serviceId
+    } as ServicePublic;
     const messageDetails = { hasThirdPartyData: false } as UIMessageDetails;
     testSaga(testable!.loadMessageData, {
       messageId,
@@ -909,14 +1022,61 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getService, serviceId)
-      .next()
+      .call(testable!.getServiceDetails, serviceId)
+      .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
       .call(testable!.setMessageReadIfNeeded, paginatedMessage)
       .next(true)
-      .call(testable!.dispatchSuccessAction, paginatedMessage, messageDetails)
+      .call(
+        testable!.dispatchSuccessAction,
+        paginatedMessage,
+        messageDetails,
+        undefined
+      )
       .next()
       .isDone();
   });
+});
+
+describe("commonFailureHandling", () => {
+  (
+    [
+      "none",
+      "paginatedMessage",
+      "serviceDetails",
+      "messageDetails",
+      "preconditions",
+      "thirdPartyMessageDetails",
+      "readStatusUpdate"
+    ] as ReadonlyArray<MessageGetStatusFailurePhaseType>
+  ).forEach(phase =>
+    [false, true].forEach(startedFromPushNotification =>
+      [undefined, false, true].forEach(blockedFromPushNotificationOpt => {
+        it(`should track analytics and dispatch 'getMessageDataAction.failure', phase '${phase}' (from push notification '${startedFromPushNotification}', blocked on push notification '${!!blockedFromPushNotificationOpt}')`, () => {
+          testSaga(
+            testable!.commonFailureHandling,
+            phase,
+            startedFromPushNotification,
+            blockedFromPushNotificationOpt
+          )
+            .next()
+            .call(
+              trackMessageDataLoadFailure,
+              startedFromPushNotification,
+              phase
+            )
+            .next()
+            .put(
+              getMessageDataAction.failure({
+                blockedFromPushNotificationOpt,
+                phase
+              })
+            )
+            .next()
+            .isDone();
+        });
+      })
+    )
+  );
 });

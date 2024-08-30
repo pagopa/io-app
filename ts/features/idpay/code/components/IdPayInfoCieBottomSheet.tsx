@@ -6,12 +6,17 @@ import {
   useIOBottomSheetAutoresizableModal
 } from "../../../../utils/hooks/bottomSheet";
 import I18n from "../../../../i18n";
+import useContentWithFF from "../../../../screens/profile/useContentWithFF";
 
 /**
  * This custom hook, useIdPayInfoCieBottomSheet, is designed to display a bottom sheet
  * containing detailed information about how the CIE (Carta d'Identità Elettronica) payment authorization works.
  */
 const useIdPayInfoCieBottomSheet = (): IOBottomSheetModal => {
+  const content = useContentWithFF(
+    "idpay.initiative.cie.bottomSheet.featureThree"
+  );
+
   const getModalContent = () => (
     <View>
       <FeatureInfo
@@ -24,10 +29,7 @@ const useIdPayInfoCieBottomSheet = (): IOBottomSheetModal => {
         body={I18n.t("idpay.initiative.cie.bottomSheet.featureTwo")}
       />
       <VSpacer size={24} />
-      <FeatureInfo
-        iconName="change"
-        body={I18n.t("idpay.initiative.cie.bottomSheet.featureThree")}
-      />
+      <FeatureInfo iconName="change" body={content} />
       <VSpacer size={24} />
     </View>
   );

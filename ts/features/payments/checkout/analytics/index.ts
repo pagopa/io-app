@@ -1,5 +1,6 @@
-import { mixpanelTrack } from "../../../../mixpanel";
+import { mixpanelTrack, mixpanel } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
+import { PaymentsTrackingConfiguration } from "../../common/analytics";
 import {
   PaymentAnalyticsEditingType,
   PaymentAnalyticsPhase,
@@ -57,8 +58,12 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
       return "PAYMENT_TURNED_OFF_METHOD_ERROR";
     case WalletPaymentOutcomeEnum.GENERIC_ERROR:
       return "PAYMENT_GENERIC_ERROR";
-    default:
+    case WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE:
+      return "PAYMENT_NO_METHOD_SAVED_ERROR";
+    case WalletPaymentOutcomeEnum.WAITING_CONFIRMATION_EMAIL:
       return "PAYMENT_UNKNOWN_OUTCOME_ERROR";
+    default:
+      return outcome;
   }
 };
 
@@ -249,6 +254,9 @@ export const trackPaymentConversion = (
 export const trackPaymentOutcomeSuccess = (
   props: Partial<PaymentAnalyticsProps>
 ) => {
+  mixpanel
+    ?.getPeople()
+    .increment("paymentsCompleted" as keyof PaymentsTrackingConfiguration, 1);
   void mixpanelTrack(
     "PAYMENT_UX_SUCCESS",
     buildEventProperties("UX", "screen_view", {
@@ -292,22 +300,22 @@ export const trackPaymentErrorHelp = (
   );
 };
 
-export const trackPaymentMethodErrorContinue = (
+export const trackPaymentNoSavedMethodContinue = (
   props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
-    "PAYMENT_METHOD_ERROR_CONTINUE",
+    "PAYMENT_NO_SAVED_METHOD_CONTINUE",
     buildEventProperties("UX", "action", {
       ...props
     })
   );
 };
 
-export const trackPaymentMethodErrorExit = (
+export const trackPaymentNoSavedMethodExit = (
   props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
-    "PAYMENT_METHOD_ERROR_EXIT",
+    "PAYMENT_NO_SAVED_METHOD_EXIT",
     buildEventProperties("UX", "action", {
       ...props
     })
@@ -320,9 +328,21 @@ export const trackPaymentNoticeDataEntry = () => {
     buildEventProperties("UX", "screen_view")
   );
 };
+
 export const trackPaymentOrganizationDataEntry = () => {
   void mixpanelTrack(
     "PAYMENT_ORGANIZATION_DATA_ENTRY",
     buildEventProperties("UX", "screen_view")
+  );
+};
+
+export const trackPaymentStartFlow = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "PAYMENT_START_FLOW",
+    buildEventProperties("UX", "action", {
+      ...props
+    })
   );
 };

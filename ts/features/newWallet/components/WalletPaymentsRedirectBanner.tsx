@@ -34,6 +34,7 @@ const WalletPaymentsRedirectBanner = () => {
 
   return (
     <Animated.View layout={Layout.duration(200)}>
+      <VSpacer size={16} />
       <Banner
         testID="walletPaymentsRedirectBannerTestID"
         title={I18n.t("features.wallet.home.paymentsBanner.title")}

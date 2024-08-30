@@ -32,6 +32,10 @@ import { isDevEnv } from "../../utils/environment";
 import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
 import { notificationsReducer } from "../../features/pushNotifications/store/reducers";
 import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
+import { itwIssuanceInitialState } from "../../features/itwallet/issuance/store/reducers";
+import { itwCredentialsInitialState } from "../../features/itwallet/credentials/store/reducers";
+import { itwLifecycleInitialState } from "../../features/itwallet/lifecycle/store/reducers";
+import { itwIdentificationInitialState } from "../../features/itwallet/identification/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
@@ -45,7 +49,7 @@ import contentReducer, {
   initialContentState as contentInitialContentState
 } from "./content";
 import crossSessionsReducer from "./crossSessions";
-import { debugReducer } from "./debug";
+import { debugPersistor } from "./debug";
 import emailValidationReducer from "./emailValidation";
 import entitiesReducer, {
   entitiesPersistConfig,
@@ -69,7 +73,6 @@ import searchReducer from "./search";
 import startupReducer from "./startup";
 import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
-import userMetadataReducer from "./userMetadata";
 import walletReducer from "./wallet";
 import { WALLETS_INITIAL_STATE as walletsInitialState } from "./wallet/wallets";
 
@@ -155,12 +158,11 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   notifications: notificationsReducer,
   profile: profileReducer,
   userDataProcessing: userDataProcessingReducer,
-  userMetadata: userMetadataReducer,
   entities: persistReducer<EntitiesState, Action>(
     entitiesPersistConfig,
     entitiesReducer
   ),
-  debug: debugReducer,
+  debug: debugPersistor,
   persistedPreferences: persistedPreferencesReducer,
   installation: installationReducer,
   payments: paymentsReducer,
@@ -212,9 +214,7 @@ export function createRootReducer(
             crossSessions: state.crossSessions,
             // data should be kept across multiple sessions
             entities: {
-              services: state.entities.services,
               organizations: state.entities.organizations,
-              messagesStatus: state.entities.messagesStatus,
               paymentByRptId: state.entities.paymentByRptId,
               calendarEvents: state.entities.calendarEvents,
               // eslint-disable-next-line no-underscore-dangle
@@ -253,7 +253,19 @@ export function createRootReducer(
                 _persist: state.features.profileSettings._persist
               },
               // eslint-disable-next-line no-underscore-dangle
-              _persist: state.features._persist
+              _persist: state.features._persist,
+              itWallet: {
+                identification: itwIdentificationInitialState,
+                issuance: itwIssuanceInitialState,
+                lifecycle: itwLifecycleInitialState,
+                credentials: {
+                  ...itwCredentialsInitialState,
+                  // eslint-disable-next-line no-underscore-dangle
+                  _persist: state.features.itWallet.credentials._persist
+                },
+                // eslint-disable-next-line no-underscore-dangle
+                _persist: state.features.itWallet._persist
+              }
             },
             identification: {
               ...identificationInitialState,

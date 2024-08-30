@@ -8,10 +8,10 @@ import {
 import { UIMessageId } from "../../types";
 import { successReloadMessagesPayload } from "../../__mocks__/messages";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
-import { handleUpsertMessageStatusAttribues } from "../handleUpsertMessageStatusAttribues";
+import { handleUpsertMessageStatusAttributes } from "../handleUpsertMessageStatusAttributes";
 import { BackendClient } from "../../../../api/__mocks__/backend";
 
-describe("handleUpsertMessageStatusAttribues", () => {
+describe("handleUpsertMessageStatusAttributes", () => {
   const actionPayload: UpsertMessageStatusAttributesPayload = {
     message: {
       ...successReloadMessagesPayload.messages[0],
@@ -34,7 +34,7 @@ describe("handleUpsertMessageStatusAttribues", () => {
       action.success
     )} with the original payload`, () => {
       testSaga(
-        handleUpsertMessageStatusAttribues,
+        handleUpsertMessageStatusAttributes,
         BackendClient.upsertMessageStatusAttributes,
         action.request(actionPayload)
       )
@@ -47,6 +47,8 @@ describe("handleUpsertMessageStatusAttribues", () => {
         .next(E.right({ status: 200, value: {} }))
         .put(action.success(actionPayload))
         .next()
+        .cancelled()
+        .next(false)
         .isDone();
     });
   });
@@ -54,7 +56,7 @@ describe("handleUpsertMessageStatusAttribues", () => {
   describe("when the response is an Error", () => {
     it(`should put ${getType(action.failure)} with the error message`, () => {
       testSaga(
-        handleUpsertMessageStatusAttribues,
+        handleUpsertMessageStatusAttributes,
         BackendClient.upsertMessageStatusAttributes,
         action.request(actionPayload)
       )
@@ -77,6 +79,8 @@ describe("handleUpsertMessageStatusAttribues", () => {
           })
         )
         .next()
+        .cancelled()
+        .next(false)
         .isDone();
     });
   });
@@ -84,7 +88,7 @@ describe("handleUpsertMessageStatusAttribues", () => {
   describe("when the handler throws", () => {
     it(`should catch it and put ${getType(action.failure)}`, () => {
       testSaga(
-        handleUpsertMessageStatusAttribues,
+        handleUpsertMessageStatusAttributes,
         BackendClient.upsertMessageStatusAttributes,
         action.request(actionPayload)
       )
@@ -97,6 +101,8 @@ describe("handleUpsertMessageStatusAttribues", () => {
           })
         )
         .next()
+        .cancelled()
+        .next(false)
         .isDone();
     });
   });

@@ -12,6 +12,8 @@ import {
 import { idpSelector } from "../store/reducers/authentication";
 import { tosVersionSelector } from "../store/reducers/profile";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
+import { PaymentsTrackingConfiguration } from "../features/payments/common/analytics";
+import { getPaymentsAnalyticsConfiguration } from "../features/payments/common/store/selectors";
 import {
   MixpanelOptInTrackingType,
   Property,
@@ -31,6 +33,7 @@ type ProfileProperties = {
   NOTIFICATION_PERMISSION: NotificationPermissionType;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
   TRACKING: MixpanelOptInTrackingType;
+  PAYMENTS_CONFIGURATION: PaymentsTrackingConfiguration;
 };
 
 export const updateMixpanelProfileProperties = async (
@@ -48,6 +51,7 @@ export const updateMixpanelProfileProperties = async (
   const notificationsEnabled = await checkNotificationPermissions();
   const SERVICE_CONFIGURATION = serviceConfigHandler(state);
   const TRACKING = mixpanelOptInHandler(state);
+  const PAYMENTS_CONFIGURATION = getPaymentsAnalyticsConfiguration(state);
 
   const profilePropertiesObject: ProfileProperties = {
     LOGIN_SESSION,
@@ -58,7 +62,8 @@ export const updateMixpanelProfileProperties = async (
     NOTIFICATION_PERMISSION:
       getNotificationPermissionType(notificationsEnabled),
     SERVICE_CONFIGURATION,
-    TRACKING
+    TRACKING,
+    PAYMENTS_CONFIGURATION
   };
 
   if (forceUpdateFor) {

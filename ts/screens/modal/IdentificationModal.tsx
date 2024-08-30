@@ -25,8 +25,8 @@ import {
   View
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../i18n";
 import {
   identificationCancel,
@@ -54,6 +54,12 @@ import {
   IdentificationInstructionsComponent,
   getBiometryIconName
 } from "../../utils/identification";
+import {
+  hasTwoMinutesElapsedSinceLastActivitySelector,
+  isAutomaticSessionRefreshEnabledSelector
+} from "../../features/fastLogin/store/selectors";
+import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
+import { areTwoMinElapsedFromLastActivity } from "../../features/fastLogin/store/actions/sessionRefreshActions";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 import { IdentificationNumberPad } from "./components/IdentificationNumberPad";
 
@@ -76,6 +82,12 @@ const IdentificationModal = () => {
   const appState = useIOSelector(appCurrentStateSelector);
   const previousAppState = usePrevious(appState);
   const identificationProgressState = useIOSelector(progressSelector);
+  const hasTwoMinutesElapsedSinceLastActivity = useIOSelector(
+    hasTwoMinutesElapsedSinceLastActivitySelector
+  );
+  const isActiveSessionRefresh = useIOSelector(
+    isAutomaticSessionRefreshEnabledSelector
+  );
   const previousIdentificationProgressState = usePrevious(
     identificationProgressState
   );
@@ -126,6 +138,17 @@ const IdentificationModal = () => {
     dispatch(identificationFailure());
   }, [dispatch]);
 
+  const onSuccessDispatchTokenRefresh = useCallback(() => {
+    dispatch(
+      refreshSessionToken.request({
+        withUserInteraction: false,
+        showIdentificationModalAtStartup: false,
+        showLoader: true
+      })
+    );
+    dispatch(areTwoMinElapsedFromLastActivity({ hasTwoMinPassed: false }));
+  }, [dispatch]);
+
   const onIdentificationFailureHandler = useCallback(() => {
     const forceLogout = pipe(
       identificationFailState,
@@ -155,8 +178,23 @@ const IdentificationModal = () => {
         identificationSuccessData.onSuccess();
       }
       onIdentificationSuccess(isBiometric);
+      /**
+       * if the identification was successful, if at least two minutes
+       * have passed since the last time the app was placed in the
+       * background and returned to the foreground then the dispatch
+       * of the action that refreshes the session will be performed
+       */
+      if (hasTwoMinutesElapsedSinceLastActivity && isActiveSessionRefresh) {
+        onSuccessDispatchTokenRefresh();
+      }
     },
-    [identificationProgressState, onIdentificationSuccess]
+    [
+      identificationProgressState,
+      onIdentificationSuccess,
+      hasTwoMinutesElapsedSinceLastActivity,
+      isActiveSessionRefresh,
+      onSuccessDispatchTokenRefresh
+    ]
   );
 
   const onIdentificationCancelHandler = useCallback(() => {
@@ -256,6 +294,8 @@ const IdentificationModal = () => {
     />
   ));
 
+  const { top: topInset } = useSafeAreaInsets();
+
   const pictogramKey: IOPictograms = isValidatingTask ? "passcode" : "key";
 
   // Managing the countdown and the remaining attempts
@@ -284,7 +324,7 @@ const IdentificationModal = () => {
       // We need to show the lock modal with the countdown
       // updated with the remaining time to handle cases where
       // the app has been killed and restarted.
-      // eslint-disable-next-line functional/immutable-data
+
       countdownInMs = elapsedTimeInMs as Millisecond;
     }
   }
@@ -339,9 +379,12 @@ const IdentificationModal = () => {
       onRequestClose={onRequestCloseHandler}
     >
       {Platform.OS === "ios" && <StatusBar barStyle={"light-content"} />}
-      <SafeAreaView style={[styles.safeArea, { backgroundColor: blueColor }]}>
+      <View style={[styles.contentWrapper, { backgroundColor: blueColor }]}>
         {isValidatingTask && (
-          <View accessible style={styles.closeButton}>
+          <View
+            accessible
+            style={[styles.closeButton, { marginTop: topInset }]}
+          >
             <ContentWrapper>
               <VSpacer size={VERTICAL_PADDING} />
               <IconButton
@@ -394,7 +437,9 @@ const IdentificationModal = () => {
               )}
               <View accessible ref={headerRef} style={IOStyles.alignCenter}>
                 <VSpacer size={8} />
-                <H2 color={"white"}>{titleLabel}</H2>
+                <H2 color={"white"} style={{ textAlign: "center" }}>
+                  {titleLabel}
+                </H2>
                 <VSpacer size={8} />
                 <IdentificationInstructionsComponent
                   biometricType={biometricType}
@@ -418,13 +463,13 @@ const IdentificationModal = () => {
             </View>
           </ContentWrapper>
         </ScrollView>
-      </SafeAreaView>
+      </View>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: { flexGrow: 1 },
+  contentWrapper: { flexGrow: 1 },
   closeButton: {
     zIndex: 100,
     flexGrow: 1,

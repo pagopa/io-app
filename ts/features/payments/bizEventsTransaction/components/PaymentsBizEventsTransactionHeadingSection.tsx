@@ -51,23 +51,34 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
         </View>
       );
     }
+    const pspName = transactionInfo?.pspName;
     if (transactionInfo?.fee !== undefined) {
       const formattedFee = formatAmountText(transactionInfo.fee);
       return (
         <Body>
           {I18n.t("transaction.details.totalFee")}{" "}
           <Body weight="Medium">{formattedFee}</Body>{" "}
-          {transactionInfo?.pspName
+          {pspName
             ? // we want to make sure no empty string is passed either
               I18n.t("transaction.details.totalFeePsp", {
-                pspName: transactionInfo.pspName
+                pspName
               })
             : I18n.t("transaction.details.totalFeeNoPsp")}
         </Body>
       );
     }
-    return null;
+    return (
+      <Body>
+        {pspName
+          ? I18n.t("features.payments.transactions.details.totalFeeUnknown", {
+              pspName
+            })
+          : I18n.t("features.payments.transactions.details.totalFeeUnknownPsp")}
+      </Body>
+    );
   };
+
+  const totalAmount = calculateTotalAmount(transactionInfo);
 
   return (
     <View style={[IOStyles.horizontalContentPadding, IOStyles.bgWhite]}>
@@ -78,11 +89,15 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
         onPress={handlePressTransactionDetails}
       />
       <VSpacer size={8} />
-      <PaymentsBizEventsTransactionTotalAmount
-        loading={isLoading}
-        totalAmount={calculateTotalAmount(transactionInfo)}
-      />
-      <VSpacer size={8} />
+      {totalAmount && (
+        <>
+          <PaymentsBizEventsTransactionTotalAmount
+            loading={isLoading}
+            totalAmount={totalAmount}
+          />
+          <VSpacer size={8} />
+        </>
+      )}
       <FeeAmountSection />
       <VSpacer size={8} />
     </View>

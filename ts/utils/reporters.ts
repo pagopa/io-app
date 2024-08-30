@@ -18,7 +18,7 @@ function getContextPath(context: Context): string {
     ? context[context.length - 1].type
     : undefined;
 
-  if (lastType === undefined || "never" === lastType.name) {
+  if (lastType === undefined || lastType.name === "never") {
     return `${keysPath}] is not a known property`;
   }
 

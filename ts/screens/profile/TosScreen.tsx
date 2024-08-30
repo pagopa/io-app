@@ -8,11 +8,12 @@ import { View } from "react-native";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import TosWebviewComponent from "../../components/TosWebviewComponent";
-import { privacyUrl } from "../../config";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { getFlowType } from "../../utils/analytics";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import I18n from "../../i18n";
+import { useIOSelector } from "../../store/hooks";
+import { tosConfigSelector } from "../../features/tos/store/selectors";
 import { trackTosScreen } from "./analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -25,6 +26,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const TosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
+
+  const tosConfig = useIOSelector(tosConfigSelector);
+  const privacyUrl = tosConfig.tos_url;
 
   const flow = getFlowType(false, false);
 

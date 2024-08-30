@@ -3,8 +3,8 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { TrialId } from "../../../../../definitions/trial_systwem/TrialId";
-import { Subscription } from "../../../../../definitions/trial_systwem/Subscription";
+import { TrialId } from "../../../../../definitions/trial_system/TrialId";
+import { Subscription } from "../../../../../definitions/trial_system/Subscription";
 
 type ErrorPayload = {
   trialId: TrialId;

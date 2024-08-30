@@ -18,13 +18,14 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 import { isLoadingSelector } from "../machine/selectors";
 
 export const IbanOnboardingScreen = () => {
-  const { useActorRef, useSelector } = IdPayConfigurationMachineContext;
-  const machine = useActorRef();
+  const machine = IdPayConfigurationMachineContext.useActorRef();
 
   const customGoBack = () => machine.send({ type: "back" });
   const [iban, setIban] = React.useState<{
@@ -33,7 +34,11 @@ export const IbanOnboardingScreen = () => {
   }>({ text: "", value: O.none });
 
   const [ibanName, setIbanName] = React.useState<string>("");
-  const isLoading = useSelector(isLoadingSelector);
+  const isLoading =
+    IdPayConfigurationMachineContext.useSelector(isLoadingSelector);
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
 
   useNavigationSwipeBackListener(() => {
     machine.send({ type: "back", skipNavigation: true });
@@ -93,7 +98,9 @@ export const IbanOnboardingScreen = () => {
           <Icon name="profile" size={30} color="bluegrey" />
           <HSpacer size={16} />
           <LabelSmall color="bluegrey" weight="Regular">
-            {I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}
+            {isSettingsVisibleAndHideProfile
+              ? I18n.t("idpay.configuration.iban.onboarding.bottomLabel")
+              : I18n.t("idpay.configuration.iban.onboarding.legacyBottomLabel")}
           </LabelSmall>
         </View>
       </ScrollView>

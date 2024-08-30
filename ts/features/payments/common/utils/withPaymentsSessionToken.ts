@@ -6,9 +6,7 @@ import {
 } from "@pagopa/ts-commons/lib/requests";
 import { call, put } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
-import { ActionType } from "typesafe-actions";
 
-import { getGenericError } from "../../../../utils/errors";
 import { getOrFetchPagoPaPlatformSessionToken } from "../saga/handlePaymentsSessionToken";
 import { Action } from "../../../../store/actions/types";
 import { paymentsResetPagoPaPlatformSessionTokenAction } from "../store/actions";
@@ -28,25 +26,19 @@ type TokenKey = "pagoPAPlatformSessionToken" | "Authorization";
  * */
 export function* withPaymentsSessionToken<T>(
   apiFunction: TypeofApiCall<T>,
-  failureAction: (error: any) => ActionType<any>,
   action: Action,
   requestBody: Omit<TypeofApiParams<T>, TokenKey>,
   tokenKey?: keyof TypeofApiParams<T> & TokenKey
 ) {
   // Get the session token
-  const sessionToken = yield* getOrFetchPagoPaPlatformSessionToken();
+  const sessionToken = yield* getOrFetchPagoPaPlatformSessionToken(action);
 
   // eslint-disable-next-line functional/no-let
   let requestFunction: Promise<Validation<TypeofApiResponse<T>>>;
 
-  // If token is missing, dispatch failure action
+  // If the pagoPASessionToken is missing, return a 401 response to trigger a retry
   if (sessionToken === undefined) {
-    yield* put(
-      failureAction({
-        ...getGenericError(new Error(`Missing session token`))
-      })
-    );
-    throw new Error("Missing session token and failure action dispatched");
+    return E.right({ status: 401 }) as Validation<TypeofApiResponse<T>>;
   } else if (tokenKey === undefined) {
     // If the token key is missing, call the api function without the token
     requestFunction = apiFunction(requestBody as TypeofApiParams<T>);

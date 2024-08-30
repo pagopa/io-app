@@ -6,7 +6,10 @@ import { ActionType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import {
+  RefreshThirdPartyApiCallOptions,
+  withThirdPartyRefreshApiCall
+} from "../../../fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
 import { idPayGenerateCode } from "../store/actions";
 
@@ -22,9 +25,9 @@ export function* handleIdPayGenerateCode(
 
   try {
     const idPayGenerateCodeResult = (yield* call(
-      withRefreshApiCall,
+      withThirdPartyRefreshApiCall,
       idPayGenerateCodeRequest,
-      action
+      { action } as RefreshThirdPartyApiCallOptions
     )) as unknown as SagaCallReturnType<typeof generateCode>;
 
     yield pipe(

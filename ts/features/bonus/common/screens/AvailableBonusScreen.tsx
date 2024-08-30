@@ -16,7 +16,6 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
@@ -28,7 +27,6 @@ import {
   navigateBack,
   navigateToServiceDetailsScreen
 } from "../../../../store/actions/navigation";
-import { showServiceDetails } from "../../../../store/actions/services";
 import { Dispatch } from "../../../../store/actions/types";
 import {
   isCGNEnabledSelector,
@@ -113,12 +111,10 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
               // TODO: add mixpanel tracking and alert: https://pagopa.atlassian.net/browse/AP-14
               IOToast.show(I18n.t("bonus.cdc.serviceEntryPoint.notAvailable"));
             },
-            s => () => {
-              this.props.showServiceDetails(s);
+            s => () =>
               this.props.navigateToServiceDetailsScreen({
                 serviceId: s.service_id
-              });
-            }
+              })
           )
         );
       });
@@ -242,9 +238,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigateToServiceDetailsScreen(params),
   serviceDetailsLoad: (serviceId: ServiceId) => {
     dispatch(loadServiceDetail.request(serviceId));
-  },
-  showServiceDetails: (service: ServicePublic) =>
-    dispatch(showServiceDetails(service))
+  }
 });
 
 const AvailableBonusScreenFC: React.FunctionComponent<Props> = (

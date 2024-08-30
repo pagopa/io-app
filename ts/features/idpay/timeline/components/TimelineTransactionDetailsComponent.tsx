@@ -25,8 +25,6 @@ type Props = {
 const TimelineTransactionDetailsComponent = (props: Props) => {
   const { transaction } = props;
 
-  const alertViewRef = React.createRef<View>();
-
   const reversalAlertComponent = pipe(
     transaction.operationType,
     O.of,
@@ -34,7 +32,6 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
     O.map(() => (
       <>
         <Alert
-          viewRef={alertViewRef}
           variant="info"
           content={I18n.t(
             "idpay.initiative.operationDetails.transaction.reversalAdvice"

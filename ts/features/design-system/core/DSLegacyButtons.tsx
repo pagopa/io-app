@@ -1,53 +1,46 @@
 import {
   BlockButtons,
-  VSpacer,
+  H4,
+  VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-
 import { Alert } from "react-native";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { H2 } from "../../../components/core/typography/H2";
-import PaymentButton from "../../messages/components/MessageDetail/PaymentButton";
-import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
-import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
 };
+
+const componentInnerMargin = 16;
+const componentMargin = 24;
+const sectionTitleMargin = 16;
+const blockMargin = 40;
 
 export const DSLegacyButtons = () => {
   const theme = useIOTheme();
 
   return (
     <DesignSystemScreen title={"Legacy Buttons"}>
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16 }}
-      >
-        Block Buttons (not NativeBase)
-      </H2>
-      {renderBlockButtons()}
+      <VStack space={blockMargin}>
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Block Buttons</H4>
+          {renderBlockButtons()}
+        </VStack>
 
-      <VSpacer size={48} />
-
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"Semibold"}
-        style={{ marginBottom: 16 }}
-      >
-        Specific buttons
-      </H2>
-      {renderSpecificButtons()}
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Specific buttons</H4>
+          {renderSpecificButtons()}
+        </VStack>
+      </VStack>
     </DesignSystemScreen>
   );
 };
 
 const renderBlockButtons = () => (
-  <>
+  <VStack space={componentInnerMargin}>
     <BlockButtons
       type="SingleButton"
       primary={{
@@ -60,7 +53,6 @@ const renderBlockButtons = () => (
         }
       }}
     />
-    <VSpacer size={16} />
     <BlockButtons
       type="TwoButtonsInlineThird"
       primary={{
@@ -82,7 +74,6 @@ const renderBlockButtons = () => (
         }
       }}
     />
-    <VSpacer size={16} />
     <BlockButtons
       type="TwoButtonsInlineHalf"
       primary={{
@@ -104,7 +95,6 @@ const renderBlockButtons = () => (
         }
       }}
     />
-    <VSpacer size={16} />
     <BlockButtons
       type="TwoButtonsInlineThirdInverted"
       primary={{
@@ -126,21 +116,13 @@ const renderBlockButtons = () => (
         }
       }}
     />
-  </>
+  </VStack>
 );
 
 const renderSpecificButtons = () => (
-  <>
-    <DSComponentViewerBox name="PaymentButton">
-      <PaymentButton
-        amount={9999999999}
-        noticeNumber={"123112312312321321" as PaymentNoticeNumber}
-        organizationFiscalCode={"46545" as OrganizationFiscalCode}
-      />
-    </DSComponentViewerBox>
-
+  <VStack space={componentMargin}>
     <DSComponentViewerBox name="CopyButtonComponent">
       <CopyButtonComponent textToCopy={"Copied text by CopyButton"} />
     </DSComponentViewerBox>
-  </>
+  </VStack>
 );

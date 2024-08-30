@@ -8,7 +8,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { logosForService } from "../../../../utils/services";
+import { logosForService } from "../../common/utils";
 import { CTA, CTAS } from "../../../messages/types/MessageCTA";
 import {
   getServiceCTA,
@@ -39,7 +39,7 @@ import {
   serviceByIdSelector,
   serviceMetadataByIdSelector,
   serviceMetadataInfoSelector
-} from "../store/reducers/servicesById";
+} from "../store/reducers";
 import { ServiceMetadataInfo } from "../types/ServiceMetadataInfo";
 
 export type ServiceDetailsScreenRouteParams = {
@@ -101,14 +101,14 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
         bottom_cta_available: !!serviceMetadata?.cta,
         organization_fiscal_code: service?.organization_fiscal_code ?? "",
         organization_name: service?.organization_name ?? "",
-        service_category: serviceMetadataInfo?.isSpecialService
+        service_category: serviceMetadataInfo.isSpecialService
           ? "special"
           : "standard",
         service_id: serviceId,
         service_name: service?.service_name ?? ""
       });
     },
-    () => !!service && !!serviceMetadataInfo
+    () => !!service
   );
 
   useEffect(() => {
@@ -152,11 +152,11 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
   };
 
   const getActionsProps = (
-    ctas?: CTAS,
-    serviceMetadataInfo?: ServiceMetadataInfo
+    serviceMetadataInfo: ServiceMetadataInfo,
+    ctas?: CTAS
   ): ServiceActionsProps | undefined => {
     const customSpecialFlow = serviceMetadataInfo?.customSpecialFlow;
-    const isSpecialService = serviceMetadataInfo?.isSpecialService ?? false;
+    const isSpecialService = serviceMetadataInfo.isSpecialService;
 
     if (isSpecialService && ctas?.cta_1 && ctas.cta_2) {
       const { cta_1, cta_2 } = ctas;
@@ -253,10 +253,7 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
 
   return (
     <ServiceDetailsScreenComponent
-      actionsProps={getActionsProps(
-        serviceCtas,
-        serviceMetadataInfo as ServiceMetadataInfo
-      )}
+      actionsProps={getActionsProps(serviceMetadataInfo, serviceCtas)}
       title={service_name}
     >
       <ServicesHeaderSection

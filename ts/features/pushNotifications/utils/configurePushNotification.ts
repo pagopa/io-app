@@ -17,7 +17,6 @@ import {
   loadPreviousPageMessages,
   reloadAllMessages
 } from "../../messages/store/actions";
-import { getCursors } from "../../messages/store/reducers/allPaginated";
 import { isDevEnv } from "../../../utils/environment";
 import {
   trackMessageNotificationParsingFailure,
@@ -29,6 +28,8 @@ import {
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
 import { isLoadingOrUpdating } from "../../../utils/pot";
+import { isArchivingInProcessingModeSelector } from "../../messages/store/reducers/archiving";
+import { GlobalState } from "../../../store/reducers/types";
 
 /**
  * Helper type used to validate the notification payload.
@@ -47,27 +48,35 @@ const NotificationPayload = t.partial({
  */
 function handleForegroundMessageReload() {
   const state = store.getState();
-  // Make sure there are not progressing message loadings
+  // Make sure there are not progressing message loadings and
+  // that the system is not processing any message archiving/restoring
   const allPaginated = state.entities.messages.allPaginated;
+  const isProcessingArchivingOrRestoring =
+    isArchivingInProcessingModeSelector(state);
   if (
     isLoadingOrUpdating(allPaginated.archive.data) ||
-    isLoadingOrUpdating(allPaginated.inbox.data)
+    isLoadingOrUpdating(allPaginated.inbox.data) ||
+    isProcessingArchivingOrRestoring
   ) {
     return;
   }
 
-  const { inbox: cursors } = getCursors(state);
-  if (pot.isNone(cursors)) {
+  const { inbox: inboxIndexes } =
+    getArchiveAndInboxNextAndPreviousPageIndexes(state);
+  if (pot.isNone(inboxIndexes)) {
     // nothing in the collection, refresh
-    store.dispatch(reloadAllMessages.request({ pageSize, filter: {} }));
-  } else if (pot.isSome(cursors)) {
+    store.dispatch(
+      reloadAllMessages.request({ pageSize, filter: {}, fromUserAction: false })
+    );
+  } else if (pot.isSome(inboxIndexes)) {
     // something in the collection, get the maximum amount of new ones only,
     // assuming that the message will be there
     store.dispatch(
       loadPreviousPageMessages.request({
-        cursor: cursors.value.previous,
+        cursor: inboxIndexes.value.previous,
         pageSize: maximumItemsFromAPI,
-        filter: {}
+        filter: {},
+        fromUserAction: false
       })
     );
   }
@@ -75,7 +84,6 @@ function handleForegroundMessageReload() {
   // see https://pagopaspa.slack.com/archives/C013V764P9U/p1639558176007600
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 function configurePushNotifications() {
   // if isDevEnv is enabled and we are on Android, we need to disable the push notifications to avoid crash for missing firebase settings
   if (isDevEnv && Platform.OS === "android") {
@@ -163,5 +171,14 @@ function configurePushNotifications() {
     requestPermissions: Platform.OS !== "ios"
   });
 }
+
+const getArchiveAndInboxNextAndPreviousPageIndexes = (state: GlobalState) =>
+  pipe(state.entities.messages.allPaginated, ({ archive, inbox }) => ({
+    archive: pot.map(archive.data, ({ previous, next }) => ({
+      previous,
+      next
+    })),
+    inbox: pot.map(inbox.data, ({ previous, next }) => ({ previous, next }))
+  }));
 
 export default configurePushNotifications;

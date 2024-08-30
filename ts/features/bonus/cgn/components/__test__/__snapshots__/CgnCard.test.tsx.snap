@@ -3,21 +3,21 @@
 exports[`CgnCard should match the snapshot 1`] = `
 <View
   style={
-    Object {
+    {
       "aspectRatio": 1.6,
     }
   }
 >
   <View
     style={
-      Object {
+      {
         "bottom": 0,
         "left": 0,
         "position": "absolute",
         "right": 0,
         "top": 0,
-        "transform": Array [
-          Object {
+        "transform": [
+          {
             "rotateX": "180deg",
           },
         ],
@@ -28,7 +28,7 @@ exports[`CgnCard should match the snapshot 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "justifyContent": "space-between",
         "padding": 16,
@@ -38,7 +38,7 @@ exports[`CgnCard should match the snapshot 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "alignItems": "center",
           "flexDirection": "row",
           "height": 48,
@@ -51,20 +51,22 @@ exports[`CgnCard should match the snapshot 1`] = `
         color="black"
         defaultColor="black"
         defaultWeight="Semibold"
+        dynamicTypeRamp="headline"
         font="TitilliumSansPro"
         fontStyle={
-          Object {
+          {
             "fontSize": 18,
             "lineHeight": 25,
           }
         }
+        maxFontSizeMultiplier={1.25}
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 18,
               "lineHeight": 25,
             },
-            Object {
+            {
               "color": "#0E0F13",
               "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
@@ -82,23 +84,25 @@ exports[`CgnCard should match the snapshot 1`] = `
       color="black"
       defaultColor="black"
       defaultWeight="Semibold"
+      dynamicTypeRamp="footnote"
       font="TitilliumSansPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 16,
           "lineHeight": 21,
         }
       }
+      maxFontSizeMultiplier={1.25}
       style={
-        Array [
-          Object {
+        [
+          {
             "width": "70%",
           },
-          Object {
+          {
             "fontSize": 16,
             "lineHeight": 21,
           },
-          Object {
+          {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
@@ -115,20 +119,22 @@ exports[`CgnCard should match the snapshot 1`] = `
       color="blueItalia-850"
       defaultColor="black"
       defaultWeight="Semibold"
+      dynamicTypeRamp="footnote"
       font="TitilliumSansPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 16,
           "lineHeight": 21,
         }
       }
+      maxFontSizeMultiplier={1.25}
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 16,
             "lineHeight": 21,
           },
-          Object {
+          {
             "color": "#001F3D",
             "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
@@ -143,14 +149,14 @@ exports[`CgnCard should match the snapshot 1`] = `
   </View>
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "#FFFFFF",
           "borderRadius": 8,
           "padding": 5,
           "position": "absolute",
         },
-        Object {
+        {
           "right": 12,
           "top": 12,
         },
@@ -161,12 +167,12 @@ exports[`CgnCard should match the snapshot 1`] = `
     <Image
       accessibilityIgnoresInvertColors={true}
       source={
-        Object {
+        {
           "testUri": "../../../img/bonus/cgn/cgn_logo.png",
         }
       }
       style={
-        Object {
+        {
           "height": 30,
           "resizeMode": "contain",
           "width": 30,
@@ -176,14 +182,14 @@ exports[`CgnCard should match the snapshot 1`] = `
   </View>
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "#FFFFFF",
           "borderRadius": 8,
           "padding": 5,
           "position": "absolute",
         },
-        Object {
+        {
           "bottom": 12,
           "right": 12,
         },
@@ -194,12 +200,12 @@ exports[`CgnCard should match the snapshot 1`] = `
     <Image
       accessibilityIgnoresInvertColors={true}
       source={
-        Object {
+        {
           "testUri": "../../../img/bonus/cgn/eyca_logo.png",
         }
       }
       style={
-        Object {
+        {
           "height": 30,
           "resizeMode": "contain",
           "width": 30,

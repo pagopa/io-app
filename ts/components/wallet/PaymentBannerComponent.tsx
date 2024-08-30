@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
  * Used for the screens from the identification of the transaction to the end of the procedure.
  * Fee is shown only when a method screen is selected
  */
-const PaymentBannerComponent: React.SFC<Props> = props => {
+const PaymentBannerComponent = (props: Props) => {
   const totalAmount = pipe(
     props.fee,
     O.fromNullable,

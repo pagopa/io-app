@@ -1,12 +1,12 @@
 import * as React from "react";
 import { BackHandler, NativeEventSubscription, View } from "react-native";
-import I18n from "i18n-js";
 import {
   ContentWrapper,
   HeaderSecondLevel,
   IOColors,
   IOStyles
 } from "@pagopa/io-app-design-system";
+import I18n from "../i18n";
 import { H1 } from "./core/typography/H1";
 
 type Props = Readonly<{

@@ -1,16 +1,10 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
-import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { Zendesk } from "../../../../../definitions/content/Zendesk";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
-import {
-  idpSelected,
-  loginSuccess
-} from "../../../../store/actions/authentication";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { SessionToken } from "../../../../types/SessionToken";
 import { getNetworkError } from "../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import ZENDESK_ROUTES from "../../navigation/routes";
@@ -50,20 +44,6 @@ describe("the ZendeskSupportComponent", () => {
     store.dispatch(zendeskRequestTicketNumber.success(3));
     expect(component.getByTestId("contactSupportButton")).toBeDefined();
     expect(component.getByTestId("showTicketsButton")).toBeDefined();
-  });
-
-  describe("when the user is authenticated with session info", () => {
-    beforeEach(() => {
-      mockedNavigation.mockClear();
-    });
-    const store = createStore(appReducer, globalState as any);
-    store.dispatch(idpSelected({} as SpidIdp));
-    store.dispatch(
-      loginSuccess({
-        token: "abc1234" as SessionToken,
-        idp: "test"
-      })
-    );
   });
 
   describe("when the user press the zendesk open ticket button", () => {

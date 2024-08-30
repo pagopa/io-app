@@ -2,15 +2,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { WalletCardCategory } from "../../types";
-import {
-  walletSetCategoryFilter,
-  walletSetPaymentsRedirectBannerVisible
-} from "../actions/preferences";
+import { walletSetPaymentsRedirectBannerVisible } from "../actions/preferences";
 
 export type WalletPreferencesState = {
   shouldShowPaymentsRedirectBanner: boolean;
-  categoryFilter?: WalletCardCategory;
 };
 
 const INITIAL_STATE: WalletPreferencesState = {
@@ -26,11 +21,6 @@ const reducer = (
       return {
         ...state,
         shouldShowPaymentsRedirectBanner: action.payload
-      };
-    case getType(walletSetCategoryFilter):
-      return {
-        ...state,
-        categoryFilter: action.payload
       };
   }
   return state;

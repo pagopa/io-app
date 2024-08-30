@@ -1,43 +1,91 @@
-import { identity, pipe } from "fp-ts/lib/function";
-import * as E from "fp-ts/lib/Either";
-import { call, put, select } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
 import {
   isCancelledFailure,
   nativeRequest,
   setCookie
 } from "@pagopa/io-react-native-http-client";
-import { ConsentData } from "../types";
-import { fimsGetConsentsListAction } from "../store/actions";
+import * as E from "fp-ts/lib/Either";
+import { identity, pipe } from "fp-ts/lib/function";
+import { call, put, select } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
 import { fimsTokenSelector } from "../../../../store/reducers/authentication";
 import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
-import { logToMixPanel } from "./sagaUtils";
+import { fimsGetConsentsListAction } from "../store/actions";
+import { ConsentData } from "../types";
+import { deallocateFimsAndRenewFastLoginSession } from "./handleFimsResourcesDeallocation";
+import {
+  formatHttpClientResponseForMixPanel,
+  isFastLoginFailure,
+  isValidRedirectResponse,
+  logToMixPanel
+} from "./sagaUtils";
 
 export function* handleFimsGetConsentsList(
   action: ActionType<typeof fimsGetConsentsListAction.request>
 ) {
   const fimsToken = yield* select(fimsTokenSelector);
-  const oidcProviderUrl = yield* select(fimsDomainSelector);
+  const fimsProviderDomain = yield* select(fimsDomainSelector);
   const fimsCTAUrl = action.payload.ctaUrl;
 
-  if (!fimsToken || !oidcProviderUrl || !fimsCTAUrl) {
+  if (!fimsToken || !fimsProviderDomain || !fimsCTAUrl) {
     // TODO:: proper error handling
-    logToMixPanel(
-      `missing FIMS data: fimsToken: ${!!fimsToken}, oidcProviderUrl: ${!!oidcProviderUrl}, fimsCTAUrl: ${!!fimsCTAUrl}`
-    );
+    const debugMessage = `missing FIMS data: fimsToken: ${!!fimsToken}, oidcProviderUrl: ${!!fimsProviderDomain}, fimsCTAUrl: ${!!fimsCTAUrl}`;
+    logToMixPanel(debugMessage);
 
-    yield* put(fimsGetConsentsListAction.failure("missing FIMS data"));
+    yield* put(
+      fimsGetConsentsListAction.failure({
+        standardMessage: "missing FIMS data",
+        debugMessage
+      })
+    );
     return;
   }
 
-  yield* call(setCookie, oidcProviderUrl, "/", "_io_fims_token", fimsToken);
+  yield* call(setCookie, fimsProviderDomain, "/", "_io_fims_token", fimsToken);
 
   // TODO:: use with future BE lang implementation -- const lang = getLocalePrimaryWithFallback();
+
+  const fimsCTAUrlResponse = yield* call(nativeRequest, {
+    verb: "get",
+    followRedirects: false,
+    url: fimsCTAUrl
+  });
+
+  if (!isValidRedirectResponse(fimsCTAUrlResponse)) {
+    const debugMessage = `cta url has invalid redirect response: ${formatHttpClientResponseForMixPanel(
+      fimsCTAUrlResponse
+    )}`;
+    logToMixPanel(debugMessage);
+    yield* put(
+      fimsGetConsentsListAction.failure({
+        standardMessage: "cta url has invalid redirect response",
+        debugMessage
+      })
+    );
+    return;
+  }
+
+  const relyingPartyRedirectUrl = fimsCTAUrlResponse.headers.location;
+
+  const isRedirectTowardsFimsProvider = relyingPartyRedirectUrl
+    .toLowerCase()
+    .startsWith(fimsProviderDomain.toLowerCase());
+
+  if (!isRedirectTowardsFimsProvider) {
+    const debugMessage = `relying party did not redirect to provider, URL was: ${relyingPartyRedirectUrl}`;
+    logToMixPanel(debugMessage);
+    yield* put(
+      fimsGetConsentsListAction.failure({
+        standardMessage: "relying party did not redirect to provider",
+        debugMessage
+      })
+    );
+    return;
+  }
 
   const getConsentsResult = yield* call(nativeRequest, {
     verb: "get",
     followRedirects: true,
-    url: fimsCTAUrl,
+    url: relyingPartyRedirectUrl,
     headers: {
       "Accept-Language": "it-IT"
     }
@@ -47,10 +95,22 @@ export function* handleFimsGetConsentsList(
     if (isCancelledFailure(getConsentsResult)) {
       return;
     }
-    logToMixPanel(
-      `consent data fetch error: ${JSON.stringify(getConsentsResult)}`
+
+    if (isFastLoginFailure(getConsentsResult)) {
+      yield* call(deallocateFimsAndRenewFastLoginSession);
+      return;
+    }
+
+    const debugMessage = `consent data fetch error: ${formatHttpClientResponseForMixPanel(
+      getConsentsResult
+    )}`;
+    logToMixPanel(debugMessage);
+    yield* put(
+      fimsGetConsentsListAction.failure({
+        standardMessage: "consent data fetch error",
+        debugMessage
+      })
     );
-    yield* put(fimsGetConsentsListAction.failure("consent data fetch error"));
     return;
   }
   yield pipe(
@@ -60,8 +120,14 @@ export function* handleFimsGetConsentsList(
     E.flatten,
     E.foldW(
       () => {
-        logToMixPanel(`could not decode: ${getConsentsResult.body}`);
-        return put(fimsGetConsentsListAction.failure("could not decode"));
+        const debugMessage = `could not decode, body: ${getConsentsResult.body}`;
+        logToMixPanel(debugMessage);
+        return put(
+          fimsGetConsentsListAction.failure({
+            standardMessage: "could not decode",
+            debugMessage
+          })
+        );
       },
       decodedConsents => put(fimsGetConsentsListAction.success(decodedConsents))
     )

@@ -10,8 +10,10 @@ import {
 } from "../../store/actions";
 import { handleFindInstitutionServices } from "../handleFindInstitutionServices";
 
+const MOCK_INSTITUTION_ID = "I01";
+
 const DEFAULT_REQUEST_PAYLOAD: PaginatedServicesGetPayload = {
-  institutionId: "1",
+  institutionId: MOCK_INSTITUTION_ID,
   limit: 3,
   offset: 0
 };
@@ -87,6 +89,7 @@ describe("handleFindInstitutionServices", () => {
         )
         .put(
           paginatedServicesGet.failure({
+            id: MOCK_INSTITUTION_ID,
             kind: "generic",
             value: new Error(`response status code ${statusCode}`)
           })

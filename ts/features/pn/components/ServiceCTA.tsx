@@ -7,9 +7,9 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
-  servicePreferenceResponseSuccessSelector,
-  servicePreferenceSelector
-} from "../../services/details/store/reducers/servicePreference";
+  servicePreferencePotSelector,
+  servicePreferenceResponseSuccessSelector
+} from "../../services/details/store/reducers";
 import { pnActivationUpsert } from "../store/actions";
 import { isLoadingPnActivationSelector } from "../store/reducers/activation";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
@@ -32,7 +32,7 @@ export const PnServiceCta = ({ serviceId, activate }: PnServiceCtaProps) => {
     servicePreferenceResponseSuccessSelector
   );
 
-  const servicePreferencePot = useIOSelector(servicePreferenceSelector);
+  const servicePreferencePot = useIOSelector(servicePreferencePotSelector);
 
   const isLoadingPnActivation = useIOSelector(isLoadingPnActivationSelector);
 

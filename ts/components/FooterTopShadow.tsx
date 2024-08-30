@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
  * @param props
  * @constructor
  */
-export const FooterTopShadow: React.FunctionComponent = props => (
+export const FooterTopShadow = (props: React.PropsWithChildren) => (
   <View style={styles.container}>
     <View style={IOStyles.footer}>{props.children}</View>
   </View>

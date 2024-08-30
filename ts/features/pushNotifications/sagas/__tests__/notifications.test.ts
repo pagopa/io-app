@@ -28,9 +28,11 @@ import {
 import NavigationService from "../../../../navigation/NavigationService";
 import { isPaymentOngoingSelector } from "../../../../store/reducers/wallet/payment";
 import { navigateToMainNavigatorAction } from "../../../../store/actions/navigation";
-import { navigateToMessageRouterAction } from "../../../messages/store/actions/navigation";
+import { navigateToMessageRouterAction } from "../../utils/navigation";
 import { UIMessageId } from "../../../messages/types";
 import * as Analytics from "../../../messages/analytics";
+import { isArchivingDisabledSelector } from "../../../messages/store/reducers/archiving";
+import { resetMessageArchivingAction } from "../../../messages/store/actions/archiving";
 
 const installationId = "installationId";
 jest.mock("../../utils/index", () => ({
@@ -189,16 +191,19 @@ describe("updateInstallationSaga", () => {
 
     describe("and the session becomes invalid", () => {
       it("should send the push notification token", () => {
-        const pushNotificationToken = "newGoogleOrApplePushNotificationToken";
-        const globalState = updateState([
+        const anotherPushNotificationToken =
+          "newGoogleOrApplePushNotificationToken";
+        const anotherGlobalState = updateState([
           applicationChangeState("active"),
-          updateNotificationsInstallationToken(pushNotificationToken),
-          notificationsInstallationTokenRegistered(pushNotificationToken),
+          updateNotificationsInstallationToken(anotherPushNotificationToken),
+          notificationsInstallationTokenRegistered(
+            anotherPushNotificationToken
+          ),
           sessionInvalid()
         ]);
         const createOrUpdateInstallation = jest.fn();
         return expectSaga(updateInstallationSaga, createOrUpdateInstallation)
-          .withState(globalState)
+          .withState(anotherGlobalState)
           .provide([
             [
               matchers.call.fn(createOrUpdateInstallation),
@@ -209,10 +214,14 @@ describe("updateInstallationSaga", () => {
             installationID: installationId,
             body: {
               platform: notificationsPlatform,
-              pushChannel: pushNotificationToken
+              pushChannel: anotherPushNotificationToken
             }
           })
-          .put(notificationsInstallationTokenRegistered(pushNotificationToken))
+          .put(
+            notificationsInstallationTokenRegistered(
+              anotherPushNotificationToken
+            )
+          )
           .run();
       });
     });
@@ -242,6 +251,8 @@ describe("handlePendingMessageStateIfAllowedSaga", () => {
       .next(false)
       .put(clearNotificationPendingMessage())
       .next()
+      .select(isArchivingDisabledSelector)
+      .next(true)
       .call(
         NavigationService.dispatchNavigationAction,
         dispatchNavigationActionParameter
@@ -267,6 +278,36 @@ describe("handlePendingMessageStateIfAllowedSaga", () => {
       .put(clearNotificationPendingMessage())
       .next()
       .call(navigateToMainNavigatorAction)
+      .next()
+      .select(isArchivingDisabledSelector)
+      .next(true)
+      .call(
+        NavigationService.dispatchNavigationAction,
+        dispatchNavigationActionParameter
+      )
+      .next()
+      .isDone();
+  });
+
+  it("make the app navigate to the message detail when the user press on a notification, resetting the message archiving/restoring if such is disabled", () => {
+    const dispatchNavigationActionParameter = navigateToMessageRouterAction({
+      messageId: mockedPendingMessageState.id as UIMessageId,
+      fromNotification: true
+    });
+
+    testSaga(handlePendingMessageStateIfAllowedSaga, false)
+      .next()
+      .select(pendingMessageStateSelector)
+      .next(mockedPendingMessageState)
+      .call(trackMessageNotificationTapIfNeeded, mockedPendingMessageState)
+      .next()
+      .select(isPaymentOngoingSelector)
+      .next(false)
+      .put(clearNotificationPendingMessage())
+      .next()
+      .select(isArchivingDisabledSelector)
+      .next(false)
+      .put(resetMessageArchivingAction(undefined))
       .next()
       .call(
         NavigationService.dispatchNavigationAction,

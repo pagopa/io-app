@@ -16,7 +16,7 @@ import {
 } from "../../store/reducers/payments/history";
 import { useIOSelector } from "../../store/hooks";
 
-const ListEmptyComponent = () => (
+const ListEmptyComponent = (): React.JSX.Element => (
   <ContentWrapper>
     <H2 color={"bluegrey"}>{I18n.t("payment.details.list.empty.title")}</H2>
     <VSpacer size={16} />
@@ -42,7 +42,7 @@ const PaymentsHistoryScreen = () => {
       <PaymentHistoryList
         title={I18n.t("wallet.latestTransactions")}
         payments={AR.reverse([...historyPayments])}
-        ListEmptyComponent={ListEmptyComponent}
+        ListEmptyComponent={<ListEmptyComponent />}
         navigateToPaymentHistoryDetail={(payment: PaymentHistory) =>
           navigateToPaymentHistoryDetail({
             payment

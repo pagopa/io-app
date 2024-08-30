@@ -1,23 +1,26 @@
 import * as React from "react";
 import { ScrollView, StyleProp, ViewStyle } from "react-native";
 import { IOStyles } from "@pagopa/io-app-design-system";
-import { ComponentProps } from "../../types/react";
 import { ScreenContentHeader } from "./ScreenContentHeader";
 
 interface OwnProps {
   hideHeader?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
   bounces?: boolean;
-  contentRefreshControl?: ComponentProps<ScrollView>["refreshControl"];
+  contentRefreshControl?: React.ComponentProps<
+    typeof ScrollView
+  >["refreshControl"];
   referenceToContentScreen?: React.RefObject<ScrollView>;
 }
 
-type Props = OwnProps & ComponentProps<typeof ScreenContentHeader>;
+type Props = OwnProps & React.ComponentProps<typeof ScreenContentHeader>;
 
 /**
  * Wraps a BaseScreenComponent with a title and a subtitle
  */
-class ScreenContent extends React.PureComponent<Props> {
+class ScreenContent extends React.PureComponent<
+  React.PropsWithChildren<Props>
+> {
   public render() {
     const {
       title,

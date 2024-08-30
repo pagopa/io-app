@@ -134,7 +134,10 @@ export type AnimationLightModal =
 
 export const LightModalConsumer = LightModalContext.Consumer;
 
-export class LightModalProvider extends React.Component<Props, State> {
+export class LightModalProvider extends React.Component<
+  React.PropsWithChildren<Props>,
+  State
+> {
   public showAnimatedModal = async (
     childComponent: React.ReactNode,
     styledAnimation: AnimationLightModal = RightLeftAnimation
@@ -230,6 +233,6 @@ export class LightModalProvider extends React.Component<Props, State> {
   }
 }
 
-export const LightModalRoot: React.SFC = () => (
+export const LightModalRoot = () => (
   <LightModalConsumer>{({ component }) => component}</LightModalConsumer>
 );

@@ -71,7 +71,7 @@ function* waitIdentificationResult(): Generator<
       yield* put(sessionInvalid());
 
       // Delete the unlock code
-      // eslint-disable-next-line
+
       yield* call(deletePin);
 
       // Hide the identification screen

@@ -16,6 +16,7 @@ import { watchPaymentsTransactionSaga } from "../../transaction/saga";
 import { watchPaymentsWalletSaga } from "../../wallet/saga";
 import { watchPaymentsBizEventsTransactionSaga } from "../../bizEventsTransaction/saga";
 import { handlePaymentsSessionToken } from "./handlePaymentsSessionToken";
+import { handleResumePaymentsPendingActions } from "./handleResumePaymentsPendingActions";
 
 export function* watchPaymentsSaga(walletToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
@@ -33,6 +34,11 @@ export function* watchPaymentsSaga(walletToken: string): SagaIterator {
     paymentsGetPagoPaPlatformSessionTokenAction.request,
     handlePaymentsSessionToken,
     pagoPaPlatformClient.generateSessionWallet
+  );
+
+  yield* takeLatest(
+    paymentsGetPagoPaPlatformSessionTokenAction.success,
+    handleResumePaymentsPendingActions
   );
 
   yield* fork(watchPaymentsWalletSaga, walletClient);

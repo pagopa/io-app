@@ -50,8 +50,6 @@ const TimelineRefundDetailsComponent = (props: Props) => {
     );
   };
 
-  const alertViewRef = React.createRef<View>();
-
   const rejectedAlertComponent = pipe(
     refund.operationType,
     O.of,
@@ -59,7 +57,6 @@ const TimelineRefundDetailsComponent = (props: Props) => {
     O.map(() => (
       <>
         <Alert
-          viewRef={alertViewRef}
           content={I18n.t(
             "idpay.initiative.operationDetails.refund.rejectedAdvice.text"
           )}

@@ -8,3 +8,6 @@ echo $ENCODED_IOAPP_JSON_KEY_FILE | base64 --decode > /tmp/json-key.json
 
 # Recreate keystore from ENV variable
 echo $ENCODED_IO_APP_RELEASE_KEYSTORE | base64 --decode > /tmp/ioapp-release.keystore
+
+# Recreate sentry.properties from ENV variable
+echo $ENCODED_IO_APP_SENTRY_PROPERTIES | base64 --decode > ./android/sentry.properties

@@ -22,7 +22,6 @@ import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../components/SectionStatus";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import { privacyUrl } from "../../config";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
 import {
@@ -41,11 +40,11 @@ import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { isCieSupportedSelector } from "../../store/reducers/cie";
 import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
-import { ComponentProps } from "../../types/react";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../utils/url";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { setAccessibilityFocus } from "../../utils/accessibility";
+import { tosConfigSelector } from "../../features/tos/store/selectors";
 import {
   trackCieLoginSelected,
   trackMethodInfo,
@@ -71,6 +70,9 @@ const SPACE_AROUND_BUTTON_LINK = 16;
 export const LandingScreen = () => {
   const accessibilityFirstFocuseViewRef = React.useRef<View>(null);
   const insets = useSafeAreaInsets();
+
+  const tosConfig = useIOSelector(tosConfigSelector);
+  const privacyUrl = tosConfig.tos_url;
 
   const [isRootedOrJailbroken, setIsRootedOrJailbroken] = React.useState<
     O.Option<boolean>
@@ -111,8 +113,8 @@ export const LandingScreen = () => {
 
   useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
 
-  useOnFirstRender(async () => {
-    const isRootedOrJailbrokenFromJailMonkey = await JailMonkey.isJailBroken();
+  useOnFirstRender(() => {
+    const isRootedOrJailbrokenFromJailMonkey = JailMonkey.isJailBroken();
     setIsRootedOrJailbroken(O.some(isRootedOrJailbrokenFromJailMonkey));
     if (isSessionExpired) {
       // eslint-disable-next-line functional/immutable-data
@@ -186,7 +188,7 @@ export const LandingScreen = () => {
   const navigateToPrivacyUrl = React.useCallback(() => {
     trackMethodInfo();
     openWebUrl(privacyUrl);
-  }, []);
+  }, [privacyUrl]);
 
   const navigateToCieUatSelectionScreen = React.useCallback(() => {
     if (isCieSupported()) {
@@ -196,7 +198,7 @@ export const LandingScreen = () => {
     }
   }, [isCieSupported, navigation]);
 
-  const LandingScreen = () => {
+  const LandingScreenComponent = () => {
     useHeaderSecondLevel({
       title: "",
       supportRequest: true,
@@ -212,7 +214,7 @@ export const LandingScreen = () => {
     );
 
     const carouselCards: ReadonlyArray<
-      ComponentProps<typeof LandingCardComponent>
+      React.ComponentProps<typeof LandingCardComponent>
     > = React.useMemo(
       () => [
         {
@@ -378,6 +380,6 @@ export const LandingScreen = () => {
     if (DeviceInfo.isTablet()) {
       displayTabletAlert();
     }
-    return <LandingScreen />;
+    return <LandingScreenComponent />;
   }
 };

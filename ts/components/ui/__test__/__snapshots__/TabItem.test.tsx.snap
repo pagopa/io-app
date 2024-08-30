@@ -5,6 +5,23 @@ exports[`TabItem should match the snapshot with dark color 1`] = `
   accessibilityHint="Label tab"
   accessibilityLabel="Label tab"
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -20,8 +37,8 @@ exports[`TabItem should match the snapshot with dark color 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "alignItems": "center",
           "alignSelf": "flex-start",
           "borderRadius": 65,
@@ -30,10 +47,10 @@ exports[`TabItem should match the snapshot with dark color 1`] = `
           "paddingHorizontal": 16,
           "paddingVertical": 8,
         },
-        Object {
+        {
           "backgroundColor": undefined,
-          "transform": Array [
-            Object {
+          "transform": [
+            {
               "scale": undefined,
             },
           ],
@@ -56,15 +73,15 @@ exports[`TabItem should match the snapshot with dark color 1`] = `
       minX={0}
       minY={0}
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "borderWidth": 0,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
-          Object {
+          {
             "flex": 0,
             "height": 16,
             "width": 16,
@@ -78,7 +95,7 @@ exports[`TabItem should match the snapshot with dark color 1`] = `
     >
       <RNSVGGroup
         fill={
-          Object {
+          {
             "payload": 4278190080,
             "type": 0,
           }
@@ -88,13 +105,13 @@ exports[`TabItem should match the snapshot with dark color 1`] = `
           clipRule={0}
           d="M10.2605 2.03943c.7664-1.35075 2.7127-1.35075 3.4791 0l2.729 4.81004 5.4179 1.10907c1.5215.31145 2.1229 2.16256 1.0751 3.30876l-3.7313 4.0819.6194 5.4954c.174 1.5433-1.4006 2.6873-2.8146 2.045L12 20.6022l-5.03505 2.2874c-1.41396.6423-2.98857-.5017-2.81462-2.045l.61945-5.4954-3.73131-4.0819C-.00935 10.1211.59211 8.26998 2.11356 7.95854l5.41793-1.10907 2.72901-4.81004ZM12 3.02637 9.27102 7.83641a2.00003 2.00003 0 0 1-1.33844.97243L2.51465 9.91791l3.7313 4.08179c.38952.4262.57591.9998.51124 1.5735l-.61944 5.4955 5.03505-2.2874c.5257-.2387 1.1288-.2388 1.6544 0l5.0351 2.2874-.6194-5.4955a2.00015 2.00015 0 0 1 .5112-1.5735l3.7313-4.08179-5.4179-1.10907a1.99973 1.99973 0 0 1-1.3384-.97243L12 3.02637Z"
           fill={
-            Object {
+            {
               "type": 2,
             }
           }
           fillRule={0}
           propList={
-            Array [
+            [
               "fill",
               "fillRule",
             ]
@@ -104,7 +121,7 @@ exports[`TabItem should match the snapshot with dark color 1`] = `
     </RNSVGSvgView>
     <View
       style={
-        Object {
+        {
           "width": 4,
         }
       }
@@ -115,18 +132,18 @@ exports[`TabItem should match the snapshot with dark color 1`] = `
       defaultWeight="Regular"
       font="ReadexPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 14,
           "lineHeight": 18,
         }
       }
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 14,
             "lineHeight": 18,
           },
-          Object {
+          {
             "color": "#FFFFFF",
             "fontFamily": "Readex Pro",
             "fontStyle": "normal",
@@ -147,6 +164,23 @@ exports[`TabItem should match the snapshot with dark color and selected state 1`
   accessibilityHint="Label tab"
   accessibilityLabel="Label tab"
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -162,8 +196,8 @@ exports[`TabItem should match the snapshot with dark color and selected state 1`
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "alignItems": "center",
           "alignSelf": "flex-start",
           "borderRadius": 65,
@@ -172,10 +206,10 @@ exports[`TabItem should match the snapshot with dark color and selected state 1`
           "paddingHorizontal": 16,
           "paddingVertical": 8,
         },
-        Object {
+        {
           "backgroundColor": undefined,
-          "transform": Array [
-            Object {
+          "transform": [
+            {
               "scale": undefined,
             },
           ],
@@ -198,15 +232,15 @@ exports[`TabItem should match the snapshot with dark color and selected state 1`
       minX={0}
       minY={0}
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "borderWidth": 0,
           },
-          Object {
+          {
             "color": "#2B2E38",
           },
-          Object {
+          {
             "flex": 0,
             "height": 16,
             "width": 16,
@@ -220,7 +254,7 @@ exports[`TabItem should match the snapshot with dark color and selected state 1`
     >
       <RNSVGGroup
         fill={
-          Object {
+          {
             "payload": 4278190080,
             "type": 0,
           }
@@ -230,13 +264,13 @@ exports[`TabItem should match the snapshot with dark color and selected state 1`
           clipRule={0}
           d="M10.2576 2.04309c.7663-1.35075 2.7127-1.35075 3.479 0l2.7291 4.81004 5.4179 1.10907c1.5215.31145 2.1229 2.1625 1.0751 3.3088l-3.7313 4.0818.6194 5.4955c.174 1.5432-1.4006 2.6873-2.8146 2.0449l-5.0351-2.2873-5.03508 2.2873c-1.41396.6424-2.98857-.5017-2.81462-2.0449l.61945-5.4955-3.73131-4.0818C-.01228 10.1247.58918 8.27365 2.11063 7.9622l5.41793-1.10907 2.72904-4.81004Z"
           fill={
-            Object {
+            {
               "type": 2,
             }
           }
           fillRule={0}
           propList={
-            Array [
+            [
               "fill",
               "fillRule",
             ]
@@ -246,7 +280,7 @@ exports[`TabItem should match the snapshot with dark color and selected state 1`
     </RNSVGSvgView>
     <View
       style={
-        Object {
+        {
           "width": 4,
         }
       }
@@ -257,18 +291,18 @@ exports[`TabItem should match the snapshot with dark color and selected state 1`
       defaultWeight="Regular"
       font="ReadexPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 14,
           "lineHeight": 18,
         }
       }
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 14,
             "lineHeight": 18,
           },
-          Object {
+          {
             "color": "#2B2E38",
             "fontFamily": "Readex Pro",
             "fontStyle": "normal",
@@ -289,6 +323,23 @@ exports[`TabItem should match the snapshot with default props 1`] = `
   accessibilityHint="Label tab"
   accessibilityLabel="Label tab"
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -304,8 +355,8 @@ exports[`TabItem should match the snapshot with default props 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "alignItems": "center",
           "alignSelf": "flex-start",
           "borderRadius": 65,
@@ -314,10 +365,10 @@ exports[`TabItem should match the snapshot with default props 1`] = `
           "paddingHorizontal": 16,
           "paddingVertical": 8,
         },
-        Object {
+        {
           "backgroundColor": undefined,
-          "transform": Array [
-            Object {
+          "transform": [
+            {
               "scale": undefined,
             },
           ],
@@ -332,18 +383,18 @@ exports[`TabItem should match the snapshot with default props 1`] = `
       defaultWeight="Regular"
       font="ReadexPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 14,
           "lineHeight": 18,
         }
       }
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 14,
             "lineHeight": 18,
           },
-          Object {
+          {
             "color": "#636B82",
             "fontFamily": "Readex Pro",
             "fontStyle": "normal",
@@ -364,6 +415,23 @@ exports[`TabItem should match the snapshot with full width 1`] = `
   accessibilityHint="Label tab"
   accessibilityLabel="Label tab"
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -379,8 +447,8 @@ exports[`TabItem should match the snapshot with full width 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "alignItems": "center",
           "alignSelf": "flex-start",
           "borderRadius": 65,
@@ -389,15 +457,15 @@ exports[`TabItem should match the snapshot with full width 1`] = `
           "paddingHorizontal": 16,
           "paddingVertical": 8,
         },
-        Object {
+        {
           "backgroundColor": undefined,
-          "transform": Array [
-            Object {
+          "transform": [
+            {
               "scale": undefined,
             },
           ],
         },
-        Object {
+        {
           "alignSelf": "auto",
         },
       ]
@@ -417,15 +485,15 @@ exports[`TabItem should match the snapshot with full width 1`] = `
       minX={0}
       minY={0}
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "borderWidth": 0,
           },
-          Object {
+          {
             "color": "#2B2E38",
           },
-          Object {
+          {
             "flex": 0,
             "height": 16,
             "width": 16,
@@ -439,7 +507,7 @@ exports[`TabItem should match the snapshot with full width 1`] = `
     >
       <RNSVGGroup
         fill={
-          Object {
+          {
             "payload": 4278190080,
             "type": 0,
           }
@@ -449,13 +517,13 @@ exports[`TabItem should match the snapshot with full width 1`] = `
           clipRule={0}
           d="M10.2576 2.04309c.7663-1.35075 2.7127-1.35075 3.479 0l2.7291 4.81004 5.4179 1.10907c1.5215.31145 2.1229 2.1625 1.0751 3.3088l-3.7313 4.0818.6194 5.4955c.174 1.5432-1.4006 2.6873-2.8146 2.0449l-5.0351-2.2873-5.03508 2.2873c-1.41396.6424-2.98857-.5017-2.81462-2.0449l.61945-5.4955-3.73131-4.0818C-.01228 10.1247.58918 8.27365 2.11063 7.9622l5.41793-1.10907 2.72904-4.81004Z"
           fill={
-            Object {
+            {
               "type": 2,
             }
           }
           fillRule={0}
           propList={
-            Array [
+            [
               "fill",
               "fillRule",
             ]
@@ -465,7 +533,7 @@ exports[`TabItem should match the snapshot with full width 1`] = `
     </RNSVGSvgView>
     <View
       style={
-        Object {
+        {
           "width": 4,
         }
       }
@@ -476,18 +544,18 @@ exports[`TabItem should match the snapshot with full width 1`] = `
       defaultWeight="Regular"
       font="ReadexPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 14,
           "lineHeight": 18,
         }
       }
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 14,
             "lineHeight": 18,
           },
-          Object {
+          {
             "color": "#2B2E38",
             "fontFamily": "Readex Pro",
             "fontStyle": "normal",
@@ -508,6 +576,23 @@ exports[`TabItem should match the snapshot with icons 1`] = `
   accessibilityHint="Label tab"
   accessibilityLabel="Label tab"
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -523,8 +608,8 @@ exports[`TabItem should match the snapshot with icons 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "alignItems": "center",
           "alignSelf": "flex-start",
           "borderRadius": 65,
@@ -533,10 +618,10 @@ exports[`TabItem should match the snapshot with icons 1`] = `
           "paddingHorizontal": 16,
           "paddingVertical": 8,
         },
-        Object {
+        {
           "backgroundColor": undefined,
-          "transform": Array [
-            Object {
+          "transform": [
+            {
               "scale": undefined,
             },
           ],
@@ -559,15 +644,15 @@ exports[`TabItem should match the snapshot with icons 1`] = `
       minX={0}
       minY={0}
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "borderWidth": 0,
           },
-          Object {
+          {
             "color": "#636B82",
           },
-          Object {
+          {
             "flex": 0,
             "height": 16,
             "width": 16,
@@ -581,7 +666,7 @@ exports[`TabItem should match the snapshot with icons 1`] = `
     >
       <RNSVGGroup
         fill={
-          Object {
+          {
             "payload": 4278190080,
             "type": 0,
           }
@@ -591,13 +676,13 @@ exports[`TabItem should match the snapshot with icons 1`] = `
           clipRule={0}
           d="M10.2605 2.03943c.7664-1.35075 2.7127-1.35075 3.4791 0l2.729 4.81004 5.4179 1.10907c1.5215.31145 2.1229 2.16256 1.0751 3.30876l-3.7313 4.0819.6194 5.4954c.174 1.5433-1.4006 2.6873-2.8146 2.045L12 20.6022l-5.03505 2.2874c-1.41396.6423-2.98857-.5017-2.81462-2.045l.61945-5.4954-3.73131-4.0819C-.00935 10.1211.59211 8.26998 2.11356 7.95854l5.41793-1.10907 2.72901-4.81004ZM12 3.02637 9.27102 7.83641a2.00003 2.00003 0 0 1-1.33844.97243L2.51465 9.91791l3.7313 4.08179c.38952.4262.57591.9998.51124 1.5735l-.61944 5.4955 5.03505-2.2874c.5257-.2387 1.1288-.2388 1.6544 0l5.0351 2.2874-.6194-5.4955a2.00015 2.00015 0 0 1 .5112-1.5735l3.7313-4.08179-5.4179-1.10907a1.99973 1.99973 0 0 1-1.3384-.97243L12 3.02637Z"
           fill={
-            Object {
+            {
               "type": 2,
             }
           }
           fillRule={0}
           propList={
-            Array [
+            [
               "fill",
               "fillRule",
             ]
@@ -607,7 +692,7 @@ exports[`TabItem should match the snapshot with icons 1`] = `
     </RNSVGSvgView>
     <View
       style={
-        Object {
+        {
           "width": 4,
         }
       }
@@ -618,18 +703,18 @@ exports[`TabItem should match the snapshot with icons 1`] = `
       defaultWeight="Regular"
       font="ReadexPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 14,
           "lineHeight": 18,
         }
       }
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 14,
             "lineHeight": 18,
           },
-          Object {
+          {
             "color": "#636B82",
             "fontFamily": "Readex Pro",
             "fontStyle": "normal",

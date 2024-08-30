@@ -17,7 +17,7 @@ import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
 
 export type ContextualHelpProps = {
   title: string;
-  body: () => React.ReactNode;
+  body: React.ReactNode;
 };
 
 export type ContextualHelpPropsMarkdown = {

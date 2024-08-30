@@ -3,13 +3,18 @@ import { combineReducers } from "redux";
 import fimsSSOReducer, {
   FimsSSOState
 } from "../../singleSignOn/store/reducers/index";
+import fimsHistoryReducer, {
+  FimsHistoryState
+} from "../../history/store/reducer";
 
 export type FimsState = {
-  SSO: FimsSSOState;
+  sso: FimsSSOState;
+  history: FimsHistoryState;
 };
 
 const fimsReducer = combineReducers({
-  SSO: fimsSSOReducer
+  sso: fimsSSOReducer,
+  history: fimsHistoryReducer
 });
 
 export default fimsReducer;

@@ -443,7 +443,7 @@ const EmailInsertScreen = () => {
               textInputProps={{
                 autoCorrect: false,
                 autoCapitalize: "none",
-                inputMode: true
+                inputMode: "email"
               }}
               accessibilityLabel={I18n.t("email.newinsert.label")}
               placeholder={I18n.t("email.newinsert.label")}

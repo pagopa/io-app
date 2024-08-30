@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
-import { AsyncStorage } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
@@ -159,7 +159,7 @@ const reducer = (
         ...state,
         analyticsData: {
           ...state.analyticsData,
-          selectedPsp: action.payload,
+          selectedPsp: action.payload.pspBusinessName,
           selectedPspFlag: getPspFlagType(
             action.payload,
             state.analyticsData?.pspList
@@ -209,12 +209,14 @@ const updatePaymentHistory = (
 
   if (newAttempt) {
     return {
+      analyticsData: state.analyticsData,
       ongoingPayment: updatedOngoingPaymentHistory,
       archive: appendItemToArchive(state.archive, updatedOngoingPaymentHistory)
     };
   }
 
   return {
+    analyticsData: state.analyticsData,
     ongoingPayment: updatedOngoingPaymentHistory,
     archive: [..._.dropRight(state.archive), updatedOngoingPaymentHistory]
   };

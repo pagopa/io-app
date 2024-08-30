@@ -1,5 +1,5 @@
 const keyOfGroupBySeverity = ["major", "minor", "patch", "unknown"] as const;
-type KeyOfGroupBySeverity = typeof keyOfGroupBySeverity[number];
+type KeyOfGroupBySeverity = (typeof keyOfGroupBySeverity)[number];
 
 /**
  * Group the outdated library, grouped by severity

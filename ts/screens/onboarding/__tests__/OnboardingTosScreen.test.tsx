@@ -2,13 +2,12 @@ import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import configureMockStore from "redux-mock-store";
-import I18n from "i18n-js";
+import I18n from "../../../i18n";
 // import WebView from "react-native-webview";
 // import {
 //   WebViewErrorEvent,
 //   WebViewNavigationEvent
 // } from "react-native-webview/lib/WebViewTypes";
-import * as config from "../../../config";
 import { appReducer } from "../../../store/reducers";
 import { applicationChangeState } from "../../../store/actions/application";
 import { GlobalState } from "../../../store/reducers/types";
@@ -20,29 +19,16 @@ import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapp
 import OnboardingTosScreen from "../OnboardingTosScreen";
 import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 
-const CurrentTestZendeskEnabled = true;
 const CurrentTestToSVersion = 2.0;
-
-const zendeskEnabledDefaultValue = config.zendeskEnabled;
 
 // Restore defineProperty
 beforeAll(() => {
   jest.resetAllMocks();
   jest.mock("./../../../config");
-  // This can be replaced by jest.replaceProperty if we update jest to 29.4+
-  // eslint-disable-next-line functional/immutable-data
-  Object.defineProperty(config, "zendeskEnabled", {
-    value: CurrentTestZendeskEnabled
-  });
 });
 
 afterAll(() => {
   jest.resetAllMocks();
-  // This can be removed if we update jest to 29.4+ and switch to jest.replaceProperty
-  // eslint-disable-next-line functional/immutable-data
-  Object.defineProperty(config, "zendeskEnabled", {
-    value: zendeskEnabledDefaultValue
-  });
 });
 
 describe("TosScreen", () => {
@@ -336,6 +322,13 @@ const commonSetup = ({
           },
           cgn: {
             enabled: false
+          },
+          newPaymentSection: {
+            enabled: false,
+            min_app_version: {
+              android: "0.0.0.0",
+              ios: "0.0.0.0"
+            }
           },
           fims: {
             enabled: false

@@ -3,17 +3,21 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
+  clearPaymentsPendingActions,
   paymentsGetPagoPaPlatformSessionTokenAction,
-  paymentsResetPagoPaPlatformSessionTokenAction
+  paymentsResetPagoPaPlatformSessionTokenAction,
+  savePaymentsPendingAction
 } from "../actions";
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
 export type PaymentsPagoPaPlatformState = {
   sessionToken: pot.Pot<string, NetworkError>;
+  pendingActions: Array<Action>;
 };
 
 const INITIAL_STATE: PaymentsPagoPaPlatformState = {
-  sessionToken: pot.none
+  sessionToken: pot.none,
+  pendingActions: []
 };
 
 const reducer = (
@@ -40,6 +44,23 @@ const reducer = (
       return {
         ...state,
         sessionToken: pot.none
+      };
+    // ADD PENDING ACTION WHILE REFRESHING THE PAGOPA TOKEN
+    case getType(savePaymentsPendingAction):
+      const actionToSave = action as ReturnType<
+        typeof savePaymentsPendingAction
+      >;
+      return {
+        ...state,
+        pendingActions: [
+          ...state.pendingActions,
+          actionToSave.payload.pendingAction
+        ]
+      };
+    case getType(clearPaymentsPendingActions):
+      return {
+        ...state,
+        pendingActions: []
       };
   }
   return state;

@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
 import { put } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
 import { ActionType } from "typesafe-actions";
@@ -25,7 +24,6 @@ export function* handleDeleteWalletDetails(
   try {
     const deleteWalletResult = yield* withPaymentsSessionToken(
       deleteWalletById,
-      paymentsDeleteMethodAction.failure,
       action,
       {
         walletId: action.payload.walletId

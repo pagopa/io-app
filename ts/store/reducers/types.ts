@@ -14,7 +14,7 @@ import { BackoffErrorState } from "./backoffError";
 import { CieState } from "./cie";
 import { ContentState } from "./content";
 import { CrossSessionsState } from "./crossSessions";
-import { DebugState } from "./debug";
+import { PersistedDebugState } from "./debug";
 import { EmailValidationState } from "./emailValidation";
 import { PersistedEntitiesState } from "./entities";
 import { PersistedIdentificationState } from "./identification";
@@ -27,7 +27,6 @@ import { PreferencesState } from "./preferences";
 import { ProfileState } from "./profile";
 import { SearchState } from "./search";
 import { UserDataProcessingState } from "./userDataProcessing";
-import { UserMetadataState } from "./userMetadata";
 import { WalletState } from "./wallet";
 import { StartupState } from "./startup";
 
@@ -49,10 +48,9 @@ export type GlobalState = Readonly<{
   content: ContentState;
   identification: PersistedIdentificationState;
   installation: InstallationState;
-  debug: DebugState;
+  debug: PersistedDebugState;
   search: SearchState;
   payments: PaymentsState;
-  userMetadata: UserMetadataState;
   emailValidation: EmailValidationState;
   cie: CieState;
   bonus: BonusState;

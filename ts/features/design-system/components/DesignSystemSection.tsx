@@ -1,23 +1,20 @@
+import { H3, VStack, useIOTheme } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
-import { H1 } from "../../../components/core/typography/H1";
+import { View } from "react-native";
 
-const styles = StyleSheet.create({
-  content: {
-    marginBottom: 54
-  },
-  title: {
-    marginBottom: 16
-  }
-});
-
-type OwnProps = {
+type OwnProps = React.PropsWithChildren<{
   title: string;
-};
+}>;
 
-export const DesignSystemSection: React.FunctionComponent<OwnProps> = props => (
-  <View style={styles.content}>
-    <H1 style={styles.title}>{props.title}</H1>
-    {props.children}
-  </View>
-);
+const sectionTitleMargin = 24;
+
+export const DesignSystemSection = (props: OwnProps) => {
+  const theme = useIOTheme();
+
+  return (
+    <VStack space={sectionTitleMargin}>
+      <H3 color={theme["textHeading-default"]}>{props.title}</H3>
+      <View>{props.children}</View>
+    </VStack>
+  );
+};

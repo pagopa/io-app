@@ -3,14 +3,14 @@
 exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "alignItems": "center",
         "flex": 1,
         "height": 100,
         "justifyContent": "center",
       },
-      Object {
+      {
         "backgroundColor": "#FFFFFF",
       },
     ]
@@ -23,7 +23,7 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
     accessible={true}
     importantForAccessibility="no-hide-descendants"
     style={
-      Object {
+      {
         "height": 48,
         "width": 48,
       }
@@ -33,9 +33,9 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
     <View
       collapsable={false}
       style={
-        Object {
-          "transform": Array [
-            Object {
+        {
+          "transform": [
+            {
               "rotateZ": "0deg",
             },
           ],
@@ -54,12 +54,12 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
         minX={0}
         minY={0}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "borderWidth": 0,
             },
-            Object {
+            {
               "flex": 0,
               "height": 48,
               "width": 48,
@@ -73,7 +73,7 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
         <RNSVGGroup
           fill={null}
           propList={
-            Array [
+            [
               "fill",
             ]
           }
@@ -81,7 +81,7 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
           <RNSVGDefs>
             <RNSVGLinearGradient
               gradient={
-                Array [
+                [
                   0,
                   736995,
                   1,
@@ -98,7 +98,7 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
             />
             <RNSVGLinearGradient
               gradient={
-                Array [
+                [
                   0,
                   -16040221,
                   1,
@@ -116,13 +116,13 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
           </RNSVGDefs>
           <RNSVGGroup
             fill={
-              Object {
+              {
                 "payload": 4278190080,
                 "type": 0,
               }
             }
             propList={
-              Array [
+              [
                 "strokeWidth",
               ]
             }
@@ -131,18 +131,18 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
             <RNSVGPath
               d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
               fill={
-                Object {
+                {
                   "payload": 4278190080,
                   "type": 0,
                 }
               }
               propList={
-                Array [
+                [
                   "stroke",
                 ]
               }
               stroke={
-                Object {
+                {
                   "brushRef": "spinner-secondHalf",
                   "type": 1,
                 }
@@ -151,18 +151,18 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
             <RNSVGPath
               d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
               fill={
-                Object {
+                {
                   "payload": 4278190080,
                   "type": 0,
                 }
               }
               propList={
-                Array [
+                [
                   "stroke",
                 ]
               }
               stroke={
-                Object {
+                {
                   "brushRef": "spinner-firstHalf",
                   "type": 1,
                 }
@@ -171,19 +171,19 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
             <RNSVGPath
               d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
               fill={
-                Object {
+                {
                   "payload": 4278190080,
                   "type": 0,
                 }
               }
               propList={
-                Array [
+                [
                   "stroke",
                   "strokeLinecap",
                 ]
               }
               stroke={
-                Object {
+                {
                   "payload": 4278927075,
                   "type": 0,
                 }
@@ -207,8 +207,8 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
 exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "alignItems": "center",
         "flex": 1,
         "height": 100,
@@ -225,7 +225,7 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
     accessible={true}
     importantForAccessibility="no-hide-descendants"
     style={
-      Object {
+      {
         "height": 48,
         "width": 48,
       }
@@ -235,9 +235,9 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
     <View
       collapsable={false}
       style={
-        Object {
-          "transform": Array [
-            Object {
+        {
+          "transform": [
+            {
               "rotateZ": "0deg",
             },
           ],
@@ -256,12 +256,12 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
         minX={0}
         minY={0}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "borderWidth": 0,
             },
-            Object {
+            {
               "flex": 0,
               "height": 48,
               "width": 48,
@@ -275,7 +275,7 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
         <RNSVGGroup
           fill={null}
           propList={
-            Array [
+            [
               "fill",
             ]
           }
@@ -283,7 +283,7 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
           <RNSVGDefs>
             <RNSVGLinearGradient
               gradient={
-                Array [
+                [
                   0,
                   736995,
                   1,
@@ -300,7 +300,7 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
             />
             <RNSVGLinearGradient
               gradient={
-                Array [
+                [
                   0,
                   -16040221,
                   1,
@@ -318,13 +318,13 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
           </RNSVGDefs>
           <RNSVGGroup
             fill={
-              Object {
+              {
                 "payload": 4278190080,
                 "type": 0,
               }
             }
             propList={
-              Array [
+              [
                 "strokeWidth",
               ]
             }
@@ -333,18 +333,18 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
             <RNSVGPath
               d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
               fill={
-                Object {
+                {
                   "payload": 4278190080,
                   "type": 0,
                 }
               }
               propList={
-                Array [
+                [
                   "stroke",
                 ]
               }
               stroke={
-                Object {
+                {
                   "brushRef": "spinner-secondHalf",
                   "type": 1,
                 }
@@ -353,18 +353,18 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
             <RNSVGPath
               d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
               fill={
-                Object {
+                {
                   "payload": 4278190080,
                   "type": 0,
                 }
               }
               propList={
-                Array [
+                [
                   "stroke",
                 ]
               }
               stroke={
-                Object {
+                {
                   "brushRef": "spinner-firstHalf",
                   "type": 1,
                 }
@@ -373,19 +373,19 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
             <RNSVGPath
               d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
               fill={
-                Object {
+                {
                   "payload": 4278190080,
                   "type": 0,
                 }
               }
               propList={
-                Array [
+                [
                   "stroke",
                   "strokeLinecap",
                 ]
               }
               stroke={
-                Object {
+                {
                   "payload": 4278927075,
                   "type": 0,
                 }

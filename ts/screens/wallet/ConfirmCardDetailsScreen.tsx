@@ -258,7 +258,6 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
                 wallet={wallet}
                 type={"Full"}
                 extraSpace={true}
-                hideMenu={true}
                 hideFavoriteIcon={true}
               />
               <VSpacer size={16} />

@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
@@ -57,11 +56,8 @@ export const InitiativeDetailsScreen = () => {
     initiative,
     O.fold(
       () => null,
-      initiative => (
-        <OnboardingPrivacyAdvice
-          privacyUrl={initiative.privacyLink}
-          tosUrl={initiative.tcLink}
-        />
+      ({ privacyLink, tcLink }) => (
+        <OnboardingPrivacyAdvice privacyUrl={privacyLink} tosUrl={tcLink} />
       )
     )
   );

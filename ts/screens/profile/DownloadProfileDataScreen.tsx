@@ -1,26 +1,27 @@
 import {
-  BlockButtonProps,
+  Body,
   ContentWrapper,
-  IOToast,
-  FooterWithButtons
+  LabelLink,
+  VSpacer,
+  useIOToast
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
-import { Alert, SafeAreaView } from "react-native";
+import React, { ComponentProps, useCallback, useEffect, useMemo } from "react";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
-import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
-import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
-import {
-  resetUserDataProcessingRequest,
-  upsertUserDataProcessing
-} from "../../store/actions/userDataProcessing";
+import { upsertUserDataProcessing } from "../../store/actions/userDataProcessing";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { usePrevious } from "../../utils/hooks/usePrevious";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
+import { BulletList, BulletListItem } from "../../components/BulletList";
+import {
+  BodyProps,
+  ComposedBodyFromArray
+} from "../../components/core/typography/ComposedBodyFromArray";
+import { IOScrollViewActions } from "../../components/ui/IOScrollView";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
+import ROUTES from "../../navigation/routes";
 
 /**
  * A screen to explain how profile data export works.
@@ -28,10 +29,11 @@ import { usePrevious } from "../../utils/hooks/usePrevious";
  */
 const DownloadProfileDataScreen = () => {
   const dispatch = useIODispatch();
-  const navigation = useNavigation();
+  const { navigate, goBack } = useIONavigation();
   const userDataProcessing = useIOSelector(userDataProcessingSelector);
   const prevUserDataProcessing = usePrevious(userDataProcessing);
-  const [isMarkdownLoaded, setIsMarkdownLoaded] = useState(false);
+  const toast = useIOToast();
+
   const isLoading =
     pot.isLoading(userDataProcessing.DOWNLOAD) ||
     pot.isUpdating(userDataProcessing.DOWNLOAD);
@@ -44,78 +46,115 @@ const DownloadProfileDataScreen = () => {
       pot.isSome(userDataProcessing.DOWNLOAD)
     ) {
       if (pot.isError(userDataProcessing.DOWNLOAD)) {
-        IOToast.error(I18n.t("profile.main.privacy.exportData.error"));
+        toast.error(I18n.t("profile.main.privacy.exportData.error"));
         return;
       }
-      navigation.goBack();
+      goBack();
     }
-  }, [prevUserDataProcessing, userDataProcessing, navigation]);
+  }, [prevUserDataProcessing, userDataProcessing, goBack, toast]);
 
-  const handleDownloadPress = () => {
-    Alert.alert(
-      I18n.t("profile.main.privacy.exportData.alert.requestTitle"),
-      undefined,
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel",
-          onPress: () =>
-            dispatch(
-              resetUserDataProcessingRequest(
-                UserDataProcessingChoiceEnum.DOWNLOAD
-              )
-            )
-        },
-        {
-          text: I18n.t("global.buttons.continue"),
-          style: "default",
-          onPress: () =>
-            dispatch(
-              upsertUserDataProcessing.request(
-                UserDataProcessingChoiceEnum.DOWNLOAD
-              )
-            )
-        }
-      ]
+  const handleDownloadPress = useCallback(() => {
+    dispatch(
+      upsertUserDataProcessing.request(UserDataProcessingChoiceEnum.DOWNLOAD)
     );
-  };
+  }, [dispatch]);
 
-  const requestDataButtonProps: BlockButtonProps = {
-    type: "Solid",
-    buttonProps: {
-      color: "primary",
-      label: I18n.t("profile.main.privacy.exportData.cta"),
-      accessibilityLabel: I18n.t("profile.main.privacy.exportData.cta"),
-      onPress: handleDownloadPress
-    }
-  };
+  const handleNavigateToProfilePrivacy = useCallback(() => {
+    navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.PROFILE_PRIVACY
+    });
+  }, [navigate]);
+
+  const actions = useMemo<IOScrollViewActions>(
+    () => ({
+      type: "SingleButton",
+      primary: {
+        color: "primary",
+        label: I18n.t("profile.main.privacy.exportData.cta"),
+        accessibilityLabel: I18n.t("profile.main.privacy.exportData.cta"),
+        loading: isLoading,
+        onPress: handleDownloadPress
+      }
+    }),
+    [handleDownloadPress, isLoading]
+  );
+
+  const listItems = useMemo<Array<BulletListItem>>(
+    () => [
+      {
+        id: "first_item",
+        value: I18n.t("profile.main.privacy.exportData.detail.bulletList.item1")
+      },
+      {
+        id: "second_item",
+        value: I18n.t("profile.main.privacy.exportData.detail.bulletList.item2")
+      },
+      {
+        id: "third_item",
+        value: I18n.t("profile.main.privacy.exportData.detail.bulletList.item3")
+      },
+      {
+        id: "fourth_item",
+        value: I18n.t("profile.main.privacy.exportData.detail.bulletList.item4")
+      }
+    ],
+    []
+  );
+
+  const titleProps = useMemo<ComponentProps<typeof Body>>(
+    () => ({ weight: "Bold" }),
+    []
+  );
+
+  const secondParagraph = useMemo<Array<BodyProps>>(
+    () => [
+      {
+        text: I18n.t("profile.main.privacy.exportData.detail.paragraph2.part1")
+      },
+      {
+        text: I18n.t("profile.main.privacy.exportData.detail.paragraph2.part2"),
+        weight: "Bold"
+      },
+      {
+        text: I18n.t("profile.main.privacy.exportData.detail.paragraph2.part3")
+      }
+    ],
+    []
+  );
 
   return (
-    <RNavScreenWithLargeHeader
+    <IOScrollViewWithLargeHeader
       title={{
         label: I18n.t("profile.main.privacy.exportData.title"),
         testID: "share-data-component-title"
       }}
-      description={I18n.t("profile.main.privacy.exportData.info.title")}
-      fixedBottomSlot={
-        isMarkdownLoaded && (
-          <FooterWithButtons
-            type={"SingleButton"}
-            primary={requestDataButtonProps}
-          />
-        )
-      }
+      description={I18n.t("profile.main.privacy.exportData.subtitle")}
+      actions={actions}
     >
-      <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={0.9}>
-        <SafeAreaView style={IOStyles.flex}>
-          <ContentWrapper>
-            <LegacyMarkdown onLoadEnd={() => setIsMarkdownLoaded(true)}>
-              {I18n.t("profile.main.privacy.exportData.info.body")}
-            </LegacyMarkdown>
-          </ContentWrapper>
-        </SafeAreaView>
-      </LoadingSpinnerOverlay>
-    </RNavScreenWithLargeHeader>
+      <VSpacer size={8} />
+      <ContentWrapper>
+        <BulletList
+          title={I18n.t(
+            "profile.main.privacy.exportData.detail.bulletList.title"
+          )}
+          titleProps={titleProps}
+          list={listItems}
+        />
+        <VSpacer size={16} />
+        <Body>
+          {I18n.t("profile.main.privacy.exportData.detail.paragraph1")}
+        </Body>
+        <VSpacer />
+        <ComposedBodyFromArray textAlign="left" body={secondParagraph} />
+        <VSpacer />
+        <Body accessibilityRole="link" onPress={handleNavigateToProfilePrivacy}>
+          {I18n.t("profile.main.privacy.exportData.detail.paragraph3.part1")}
+          <LabelLink>
+            {I18n.t("profile.main.privacy.exportData.detail.paragraph3.link")}
+          </LabelLink>
+        </Body>
+      </ContentWrapper>
+    </IOScrollViewWithLargeHeader>
   );
 };
 

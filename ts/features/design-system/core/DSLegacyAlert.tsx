@@ -1,11 +1,10 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import SectionStatusComponent, {
-  getStatusTextColor,
+import StatusContent, {
   statusColorMap,
+  getStatusTextColor,
   statusIconMap
-} from "../../../components/SectionStatus";
-import StatusContent from "../../../components/SectionStatus/StatusContent";
+} from "../../../components/SectionStatus/StatusContent";
 import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 
 /* Types */
@@ -26,10 +25,6 @@ export const DSLegacyAlert = () => (
           "L’invio dei Certificati Verdi è in corso e potrebbe richiedere diversi giorni."
         }
       </StatusContent>
-    </DSFullWidthComponent>
-    <VSpacer size={16} />
-    <DSFullWidthComponent>
-      <SectionStatusComponent sectionKey={"favourite_language"} />
     </DSFullWidthComponent>
     <VSpacer size={16} />
     <DSFullWidthComponent>

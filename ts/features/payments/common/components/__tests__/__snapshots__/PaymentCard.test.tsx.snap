@@ -3,7 +3,7 @@
 exports[`PaymentCard should match snapshot for loading 1`] = `
 <View
   style={
-    Object {
+    {
       "aspectRatio": 1.6,
       "backgroundColor": "#E8EBF1",
       "borderColor": "#D2D6E3",
@@ -16,7 +16,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "justifyContent": "space-between",
       }
@@ -24,14 +24,14 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "height": 48,
             "justifyContent": "space-between",
           },
-          Object {
+          {
             "paddingTop": 8,
           },
         ]
@@ -39,7 +39,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "width": "60%",
           }
         }
@@ -47,7 +47,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
         <View
           collapsable={false}
           style={
-            Object {
+            {
               "opacity": 0.5,
             }
           }
@@ -57,7 +57,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
             height={24}
             radius={28}
             style={
-              Object {
+              {
                 "backgroundColor": "#D2D6E3",
                 "borderRadius": 28,
                 "height": 24,
@@ -70,7 +70,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "width": "20%",
           }
         }
@@ -78,7 +78,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
         <View
           collapsable={false}
           style={
-            Object {
+            {
               "opacity": 0.5,
             }
           }
@@ -88,7 +88,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
             height={24}
             radius={28}
             style={
-              Object {
+              {
                 "backgroundColor": "#D2D6E3",
                 "borderRadius": 28,
                 "height": 24,
@@ -102,7 +102,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "justifyContent": "space-between",
         }
       }
@@ -110,7 +110,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
       <View
         collapsable={false}
         style={
-          Object {
+          {
             "opacity": 0.5,
           }
         }
@@ -120,7 +120,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
           height={18}
           radius={28}
           style={
-            Object {
+            {
               "backgroundColor": "#D2D6E3",
               "borderRadius": 28,
               "height": 18,
@@ -132,7 +132,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "height": 8,
           }
         }
@@ -140,7 +140,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
       <View
         collapsable={false}
         style={
-          Object {
+          {
             "opacity": 0.5,
           }
         }
@@ -150,7 +150,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
           height={18}
           radius={28}
           style={
-            Object {
+            {
               "backgroundColor": "#D2D6E3",
               "borderRadius": 28,
               "height": 18,

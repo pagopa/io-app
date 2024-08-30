@@ -22,10 +22,7 @@ export const CreditCardPan = PatternString(
 );
 export type CreditCardPan = t.TypeOf<typeof CreditCardPan>;
 
-export const CreditCardHolder = PatternString(
-  // eslint-disable-next-line no-useless-escape
-  `^([\x20-\x5f\x61-\x7d]+)$`
-);
+export const CreditCardHolder = PatternString(`^([\x20-\x5f\x61-\x7d]+)$`);
 
 export type CreditCardHolder = t.TypeOf<typeof CreditCardHolder>;
 /**

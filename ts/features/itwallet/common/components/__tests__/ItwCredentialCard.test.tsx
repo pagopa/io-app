@@ -15,7 +15,6 @@ describe("ItwCredentialCard", () => {
       const component = render(
         <ItwCredentialCard
           credentialType={CredentialType.PID}
-          data={["ABCDEFG ABCDEFG", "AAAAAA99A99A999A"]}
           status={status}
         />
       );

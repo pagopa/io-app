@@ -160,7 +160,8 @@ const WalletPaymentConfirmScreen = () => {
         amount: paymentAnalyticsData?.formattedAmount,
         expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
         saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
-        selected_psp_flag: paymentAnalyticsData?.selectedPspFlag
+        selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
+        payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod
       });
       // should be called only when the current step is the confirm screen
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -251,7 +252,8 @@ const SelectedPaymentMethodModuleCheckout = () => {
       saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
       selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
-      editing: "payment_method"
+      editing: "payment_method",
+      amount: paymentAnalyticsData?.formattedAmount
     });
     dispatch(
       walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PAYMENT_METHOD)
@@ -299,7 +301,7 @@ const SelectedPspModuleCheckout = () => {
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const pspList = pot.getOrElse(pspListPot, []);
-  const pspBusinessName = pipe(
+  const pspName = pipe(
     selectedPspOption,
     O.chainNullableK(({ pspBusinessName }) => pspBusinessName),
     O.getOrElse(() => "")
@@ -317,7 +319,8 @@ const SelectedPspModuleCheckout = () => {
       saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
       selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
-      editing: "psp"
+      editing: "psp",
+      amount: paymentAnalyticsData?.formattedAmount
     });
     dispatch(walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PSP));
   };
@@ -328,7 +331,7 @@ const SelectedPspModuleCheckout = () => {
         pspList.length > 1 ? I18n.t("payment.confirm.editButton") : undefined
       }
       title={formatNumberCentsToAmount(taxFee, true, "right")}
-      subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${pspBusinessName}`}
+      subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${pspName}`}
       onPress={handleOnPress}
     />
   );

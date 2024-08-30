@@ -3,42 +3,35 @@ import { useIOToast } from "@pagopa/io-app-design-system";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   archiveMessagesErrorReasonSelector,
-  inboxMessagesErrorReasonSelector,
-  latestMessageOperationToastTypeSelector,
-  latestMessageOperationTranslationKeySelector
+  inboxMessagesErrorReasonSelector
 } from "../../store/reducers/allPaginated";
 import I18n from "../../../../i18n";
+import {
+  processingResultReasonSelector,
+  processingResultTypeSelector
+} from "../../store/reducers/archiving";
 
 export const Toasts = () => {
   const toast = useIOToast();
 
   // Handling of archiving/unarchiving operations result
-  const latestMessageOperationToastType = useIOSelector(
-    latestMessageOperationToastTypeSelector
-  );
-  const latestMessageOperationTranslationKey = useIOSelector(
-    latestMessageOperationTranslationKeySelector
-  );
+  const processingResultType = useIOSelector(processingResultTypeSelector);
+  const processingResultReason = useIOSelector(processingResultReasonSelector);
   useEffect(() => {
-    if (
-      latestMessageOperationToastType &&
-      latestMessageOperationTranslationKey
-    ) {
-      const translationKey = I18n.t(latestMessageOperationTranslationKey);
-      switch (latestMessageOperationToastType) {
+    if (processingResultType && processingResultReason) {
+      switch (processingResultType) {
         case "error":
-          toast.error(translationKey);
+          toast.error(processingResultReason);
           break;
         case "success":
-          toast.success(translationKey);
+          toast.success(processingResultReason);
+          break;
+        case "warning":
+          toast.warning(processingResultReason);
           break;
       }
     }
-  }, [
-    latestMessageOperationToastType,
-    latestMessageOperationTranslationKey,
-    toast
-  ]);
+  }, [processingResultType, processingResultReason, toast]);
 
   // Handling of inbox messages errors. Be aware that any error
   // that happens when the list is empty is not displayed with

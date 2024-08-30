@@ -1,5 +1,5 @@
-/* eslint-disable */
-
+/* eslint-disable functional/no-let */
+/* eslint-disable functional/immutable-data */
 import { Mutex } from "async-mutex";
 import { FunctionN, Lazy, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -140,7 +140,7 @@ export class SessionManager<T> {
         // always return a Promise<IResponseType<A, B>>
         if (E.isRight(response) && (response.right as any).status === 401) {
           // our token is expired, reset it
-          // eslint-disable-next-line
+
           this.token = undefined;
           continue;
         }

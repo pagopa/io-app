@@ -8,14 +8,17 @@ import {
   SearchInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef } from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { Institution } from "../../../../../definitions/services/Institution";
+import SectionStatusComponent from "../../../../components/SectionStatus";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import * as analytics from "../../common/analytics";
 import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
@@ -24,7 +27,6 @@ import { FeaturedInstitutionList } from "../components/FeaturedInstitutionList";
 import { FeaturedServiceList } from "../components/FeaturedServiceList";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
-import * as analytics from "../../common/analytics";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -52,10 +54,13 @@ export const ServicesHomeScreen = () => {
     refresh
   } = useInstitutionsFetcher();
 
-  useOnFirstRender(() => {
-    analytics.trackServicesHome();
-    fetchPage(0);
-  });
+  useOnFirstRender(() => fetchPage(0));
+
+  useFocusEffect(
+    useCallback(() => {
+      analytics.trackServicesHome();
+    }, [])
+  );
 
   useTabItemPressWhenScreenActive(
     () => flatListRef.current?.scrollToOffset({ offset: 0, animated: true }),
@@ -160,8 +165,9 @@ export const ServicesHomeScreen = () => {
   );
 
   const navigateToInstitution = useCallback(
-    ({ id, name }: Institution) => {
+    ({ fiscal_code, id, name }: Institution) => {
       analytics.trackInstitutionSelected({
+        organization_fiscal_code: fiscal_code,
         organization_name: name,
         source: "main_list"
       });
@@ -192,23 +198,26 @@ export const ServicesHomeScreen = () => {
   );
 
   return (
-    <FlatList
-      ItemSeparatorComponent={() => <Divider />}
-      ListEmptyComponent={renderListEmptyComponent}
-      ListFooterComponent={renderListFooterComponent}
-      ListHeaderComponent={renderListHeaderComponent}
-      contentContainerStyle={[
-        styles.scrollContentContainer,
-        IOStyles.horizontalContentPadding
-      ]}
-      data={data?.institutions || []}
-      keyExtractor={(item, index) => `institution-${item.id}-${index}`}
-      onEndReached={handleEndReached}
-      onEndReachedThreshold={0.1}
-      onRefresh={handleRefresh}
-      ref={flatListRef}
-      refreshing={isRefreshing}
-      renderItem={renderInstitutionItem}
-    />
+    <>
+      <FlatList
+        ItemSeparatorComponent={() => <Divider />}
+        ListEmptyComponent={renderListEmptyComponent}
+        ListFooterComponent={renderListFooterComponent}
+        ListHeaderComponent={renderListHeaderComponent}
+        contentContainerStyle={[
+          styles.scrollContentContainer,
+          IOStyles.horizontalContentPadding
+        ]}
+        data={data?.institutions || []}
+        keyExtractor={(item, index) => `institution-${item.id}-${index}`}
+        onEndReached={handleEndReached}
+        onEndReachedThreshold={0.1}
+        onRefresh={handleRefresh}
+        ref={flatListRef}
+        refreshing={isRefreshing}
+        renderItem={renderInstitutionItem}
+      />
+      <SectionStatusComponent sectionKey={"services"} />
+    </>
   );
 };

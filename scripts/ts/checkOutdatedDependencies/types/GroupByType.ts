@@ -8,7 +8,7 @@ const keyOfGroupByType = [
   "resolutionDependencies",
   "others"
 ] as const;
-type KeyGroupByType = typeof keyOfGroupByType[number];
+type KeyGroupByType = (typeof keyOfGroupByType)[number];
 
 /**
  * Represents the grouping of outdated dependencies by type

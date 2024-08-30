@@ -1,5 +1,5 @@
-import I18n from "i18n-js";
 import React from "react";
+import I18n from "../../../i18n";
 import { TokenRefreshState } from "../store/reducers/tokenRefreshReducer";
 import { logoutRequest } from "../../../store/actions/authentication";
 import {

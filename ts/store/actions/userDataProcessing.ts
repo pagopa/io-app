@@ -45,8 +45,13 @@ export const resetUserDataProcessingRequest = createStandardAction(
   "RESET_USER_DATA_PROCESSING_REQUEST"
 )<UserDataProcessingChoiceEnum>();
 
+export const resetDeleteUserDataProcessing = createStandardAction(
+  "RESET_DELETE_USER_DATA_PROCESSING"
+)();
+
 export type UserDataProcessingActions =
   | ActionType<typeof loadUserDataProcessing>
   | ActionType<typeof upsertUserDataProcessing>
   | ActionType<typeof deleteUserDataProcessing>
+  | ActionType<typeof resetDeleteUserDataProcessing>
   | ActionType<typeof resetUserDataProcessingRequest>;

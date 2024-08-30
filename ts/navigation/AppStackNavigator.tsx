@@ -19,7 +19,7 @@ import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { IngressScreen } from "../screens/ingress/IngressScreen";
 import { startApplicationInitialization } from "../store/actions/application";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
-import { useIODispatch, useIOSelector } from "../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import {
   isCGNEnabledSelector,
@@ -45,6 +45,7 @@ import NavigationService, {
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
+import { linkingSubscription } from "./linkingSubscription";
 
 type OnStateChangeStateType = Parameters<
   NonNullable<NavigationContainerProps["onStateChange"]>
@@ -83,6 +84,7 @@ export const AppStackNavigator = (): React.ReactElement => {
 const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
   const routeNameRef = useRef<string>();
   const dispatch = useIODispatch();
+  const store = useIOStore();
 
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
@@ -146,7 +148,8 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }
-    }
+    },
+    subscribe: linkingSubscription(dispatch, store)
   };
 
   return (

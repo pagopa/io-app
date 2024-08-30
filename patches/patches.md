@@ -159,11 +159,18 @@ Created on **16/01/2023**
   This was fine as long as each event was originally created and handled using this library only but 
   initially another library was used, react-native-add-calendar-event, which treated event's Id as long
 
-### react-native+0.70.15
+### react-native-reanimated+3.12.0.patch
 
-Created on **24/05/2024**
+Created on **16/01/2023**
 
 #### Reason:
-- This patch implements the readAsArrayBuffer function in react-native by allowing code-gen to autogenerate
-  API call responses that have a Blob. this is a known issue that the meta team have not yet provided direct support,
-  as already indicated in [this issue](https://github.com/facebook/react-native/issues/34402)
+
+- Patch to fix a crash on android due to wrong file definition, to be removed in a future update
+
+### react-native-fingerprint-scanner+6.0.0.patch
+
+Created on **29/08/2024**
+
+#### Reason:
+
+- Patch to fix an error occurring during Android gradle build (see https://github.com/hieuvp/react-native-fingerprint-scanner/issues/192)

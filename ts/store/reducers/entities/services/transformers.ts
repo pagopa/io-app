@@ -1,5 +1,5 @@
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { logosForService } from "../../../../utils/services";
+import { logosForService } from "../../../../features/services/common/utils";
 
 import { UIService } from "./types";
 

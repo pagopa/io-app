@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as O from "fp-ts/lib/Option";
-import _, { merge } from "lodash";
+import _, { merge, omit } from "lodash";
 import {
   applyMiddleware,
   compose,
@@ -43,6 +43,10 @@ import {
 } from "../store/reducers/installation";
 import { NotificationsState } from "../features/pushNotifications/store/reducers";
 import { getInitialState as getInstallationInitialState } from "../features/pushNotifications/store/reducers/installation";
+import {
+  itwCredentialsPersistConfig,
+  itwPersistConfig
+} from "../features/itwallet/common/store/reducers";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { walletsPersistConfig } from "../store/reducers/wallet";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
@@ -53,7 +57,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 30;
+const CURRENT_REDUX_STORE_VERSION = 33;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -158,16 +162,7 @@ const migrations: MigrationManifest = {
 
   // Version 7
   // we empty the services list to get both services list and services metadata being reloaded and persisted
-  "7": (state: PersistedState) => ({
-    ...state,
-    entities: {
-      ...(state as PersistedGlobalState).entities,
-      services: {
-        ...(state as PersistedGlobalState).entities.services,
-        byId: {}
-      }
-    }
-  }),
+  "7": (state: PersistedState) => _.set(state, "entities.services.byId", {}),
 
   // Version 8
   // we load services scope in an specific view. So now it is uselss to hold (old) services metadata
@@ -418,13 +413,24 @@ const migrations: MigrationManifest = {
       }
     } as GlobalState),
   // Version 30
-  // Adds new wallet section FF
+  // Adds new Messages Home FF
   "30": (state: PersistedState) =>
     merge(state, {
       persistedPreferences: {
         isNewHomeSectionEnabled: false
       }
-    })
+    }),
+  // version 31
+  // remove userMetadata from persisted state
+  "31": (state: PersistedState) => omit(state, "userMetadata"),
+  // Version 32
+  // Removes new Messages Home FF
+  "32": (state: PersistedState) =>
+    omit(state, "persistedPreferences.isNewHomeSectionEnabled"),
+  // Version 33
+  // Removes it wallet section FF
+  "33": (state: PersistedState) =>
+    omit(state, "persistedPreferences.isItWalletTestEnabled")
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
@@ -436,18 +442,16 @@ const rootPersistConfig: PersistConfig = {
   migrate: createMigrate(migrations, { debug: isDevEnv }),
   // Entities and features implement a persisted reduce that avoids persisting messages.
   // Other entities section will be persisted
-  blacklist: ["entities", "features", "lollipop"],
+  blacklist: ["debug", "entities", "features", "lollipop"],
   // Sections of the store that must be persisted and rehydrated with this storage.
   whitelist: [
     "onboarding",
     "notifications",
     "profile",
-    "debug",
     "persistedPreferences",
     "installation",
     "payments",
     "content",
-    "userMetadata",
     "crossSessions"
   ],
   // Transform functions used to manipulate state on store/rehydrate
@@ -464,7 +468,9 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
     rootPersistConfig,
     authenticationPersistConfig,
     walletsPersistConfig,
-    entitiesPersistConfig
+    entitiesPersistConfig,
+    itwPersistConfig,
+    itwCredentialsPersistConfig
   ])
 );
 

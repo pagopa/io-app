@@ -10,8 +10,13 @@ import {
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
+import { useIOSelector } from "../../../../store/hooks";
+import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
+import { UIMessageId } from "../../types";
+import { DoubleAvatar } from "../Home/DS/DoubleAvatar";
 
 export type OrganizationHeaderProps = {
+  messageId: UIMessageId;
   organizationName: string;
   serviceId: ServiceId;
   serviceName: string;
@@ -34,12 +39,16 @@ const styles = StyleSheet.create({
 });
 
 export const OrganizationHeader = ({
+  messageId,
   logoUri,
   serviceId,
   organizationName,
   serviceName
 }: OrganizationHeaderProps) => {
   const navigation = useIONavigation();
+  const paymentData = useIOSelector(state =>
+    messagePaymentDataSelector(state, messageId)
+  );
   const navigateToServiceDetails = useCallback(
     () =>
       navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
@@ -59,7 +68,11 @@ export const OrganizationHeader = ({
         </LabelSmall>
       </View>
       <View style={styles.itemAvatar}>
-        <Avatar logoUri={logoUri} size="small" />
+        {paymentData ? (
+          <DoubleAvatar backgroundLogoUri={logoUri} />
+        ) : (
+          <Avatar logoUri={logoUri} size="small" />
+        )}
       </View>
     </View>
   );

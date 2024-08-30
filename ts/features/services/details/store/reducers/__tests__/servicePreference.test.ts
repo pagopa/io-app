@@ -17,7 +17,7 @@ import {
   isErrorServicePreferenceSelector,
   isLoadingServicePreferenceSelector,
   servicePreferenceResponseSuccessSelector
-} from "../servicePreference";
+} from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
 
 const serviceId = "serviceId" as ServiceId;
@@ -57,7 +57,9 @@ describe("servicePreference reducer", () => {
   it("should have initial state", () => {
     const state = appReducer(undefined, applicationChangeState("active"));
 
-    expect(state.entities.services.servicePreference).toStrictEqual(pot.none);
+    expect(state.features.services.details.servicePreference).toStrictEqual(
+      pot.none
+    );
   });
 
   it("should handle loadServicePreference action", () => {
@@ -66,19 +68,21 @@ describe("servicePreference reducer", () => {
 
     store.dispatch(loadServicePreference.request(serviceId));
 
-    expect(store.getState().entities.services.servicePreference).toStrictEqual(
-      pot.noneLoading
-    );
+    expect(
+      store.getState().features.services.details.servicePreference
+    ).toStrictEqual(pot.noneLoading);
 
     store.dispatch(
       loadServicePreference.success(servicePreferenceResponseSuccess)
     );
-    expect(store.getState().entities.services.servicePreference).toStrictEqual(
-      pot.some(servicePreferenceResponseSuccess)
-    );
+    expect(
+      store.getState().features.services.details.servicePreference
+    ).toStrictEqual(pot.some(servicePreferenceResponseSuccess));
 
     store.dispatch(loadServicePreference.failure(servicePreferenceError));
-    expect(store.getState().entities.services.servicePreference).toStrictEqual(
+    expect(
+      store.getState().features.services.details.servicePreference
+    ).toStrictEqual(
       pot.someError(servicePreferenceResponseSuccess, servicePreferenceError)
     );
   });
@@ -87,11 +91,14 @@ describe("servicePreference reducer", () => {
     const state = appReducer(undefined, applicationChangeState("active"));
     const finalState: GlobalState = {
       ...state,
-      entities: {
-        ...state.entities,
+      features: {
+        ...state.features,
         services: {
-          ...state.entities.services,
-          servicePreference: pot.some(servicePreferenceResponseSuccess)
+          ...state.features.services,
+          details: {
+            ...state.features.services.details,
+            servicePreference: pot.some(servicePreferenceResponseSuccess)
+          }
         }
       }
     };
@@ -99,7 +106,9 @@ describe("servicePreference reducer", () => {
 
     store.dispatch(upsertServicePreference.request(updatingResponse));
 
-    expect(store.getState().entities.services.servicePreference).toStrictEqual(
+    expect(
+      store.getState().features.services.details.servicePreference
+    ).toStrictEqual(
       pot.someUpdating(servicePreferenceResponseSuccess, {
         id: serviceId,
         kind: "success",
@@ -114,7 +123,9 @@ describe("servicePreference reducer", () => {
     );
 
     store.dispatch(upsertServicePreference.failure(servicePreferenceError));
-    expect(store.getState().entities.services.servicePreference).toStrictEqual(
+    expect(
+      store.getState().features.services.details.servicePreference
+    ).toStrictEqual(
       pot.someError(servicePreferenceResponseSuccess, servicePreferenceError)
     );
   });

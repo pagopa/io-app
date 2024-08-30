@@ -4,8 +4,8 @@ exports[`TosWebviewComponent The snapshot for the TosWebviewComponent Should ren
 <RNCSafeAreaProvider
   onInsetsChange={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "flex": 1,
       },
       undefined,
@@ -14,7 +14,7 @@ exports[`TosWebviewComponent The snapshot for the TosWebviewComponent Should ren
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
       }
     }
@@ -23,18 +23,18 @@ exports[`TosWebviewComponent The snapshot for the TosWebviewComponent Should ren
     <View
       androidCameraAccessDisabled={true}
       androidMicrophoneAccessDisabled={true}
-      injectedJavaScript="const meta = document.createElement('meta');meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);function findParent(tagname, el) {while (el) {if ((el.nodeName || el.tagName).toLowerCase() === tagname.toLowerCase()) {return el;}el = el.parentNode;}return null;}document.body.onclick = function(e) {e = e || event;const from = findParent(\\"a\\", e.target || e.srcElement);if (from) {const href = from.href;const message = {type: \\"LINK_MESSAGE\\",payload: {href}};window.ReactNativeWebView.postMessage(JSON.stringify(message));return false;}};true;"
+      injectedJavaScript="const meta = document.createElement('meta');meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);function findParent(tagname, el) {while (el) {if ((el.nodeName || el.tagName).toLowerCase() === tagname.toLowerCase()) {return el;}el = el.parentNode;}return null;}document.body.onclick = function(e) {e = e || event;const from = findParent("a", e.target || e.srcElement);if (from) {const href = from.href;const message = {type: "LINK_MESSAGE",payload: {href}};window.ReactNativeWebView.postMessage(JSON.stringify(message));return false;}};true;"
       onError={[Function]}
       onHttpError={[Function]}
       onLoadEnd={[Function]}
       onMessage={[Function]}
       source={
-        Object {
+        {
           "html": "<html><head></head><body></body></html>",
         }
       }
       style={
-        Object {
+        {
           "flex": 1,
         }
       }

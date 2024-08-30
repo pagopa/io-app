@@ -1,9 +1,11 @@
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
+import * as O from "fp-ts/lib/Option";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { BasicResponseType } from "@pagopa/ts-commons/lib/requests";
-import { call, put, takeLatest } from "typed-redux-saga/macro";
+import { call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
+import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { AccessToken } from "../../definitions/backend/AccessToken";
 import { PasswordLogin } from "../../definitions/backend/PasswordLogin";
 import { BackendPublicClient } from "../api/backendPublic";
@@ -17,6 +19,9 @@ import { SessionToken } from "../types/SessionToken";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { convertUnknownToError } from "../utils/errors";
 import { IdpData } from "../../definitions/content/IdpData";
+import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selectors";
+import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
+import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../features/lollipop/utils/login";
 
 // Started by redux action
 function* handleTestLogin({
@@ -27,19 +32,35 @@ function* handleTestLogin({
   SagaCallReturnType<typeof postTestLogin>
 > {
   const backendPublicClient = BackendPublicClient(apiUrlPrefix);
-
+  const isFastLoginSelected = yield* select(isFastLoginEnabledSelector);
+  const maybePublicKey = yield* select(lollipopPublicKeySelector);
   function postTestLogin(
-    login: PasswordLogin
+    login: PasswordLogin,
+    publicKey?: PublicKey,
+    hashAlgorithm?: string,
+    isFastLogin?: boolean
   ): Promise<t.Validation<BasicResponseType<AccessToken>>> {
     return new Promise((resolve, _) =>
       backendPublicClient
-        .postTestLogin(login)
+        .postTestLogin(
+          publicKey,
+          hashAlgorithm,
+          isFastLogin
+        )(login)
         .then(resolve, e => resolve(E.left([{ context: [], value: e }])))
     );
   }
   try {
     const testLoginResponse: SagaCallReturnType<typeof postTestLogin> =
-      yield* call(postTestLogin, payload);
+      yield* call(
+        postTestLogin,
+        payload,
+        O.isSome(maybePublicKey) ? maybePublicKey.value : undefined,
+        O.isSome(maybePublicKey)
+          ? DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
+          : undefined,
+        O.isSome(maybePublicKey) ? isFastLoginSelected : undefined
+      );
 
     if (E.isRight(testLoginResponse)) {
       if (testLoginResponse.right.status === 200) {

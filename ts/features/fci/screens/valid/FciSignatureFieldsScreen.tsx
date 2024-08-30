@@ -80,14 +80,21 @@ const FciSignatureFieldsScreen = () => {
   const { showModal, hideModal } = React.useContext(LightModalContext);
 
   // get signatureFields for the current document
-  const docSignatures = pipe(
-    documentsSignaturesSelector,
-    RA.findFirst(doc => doc.document_id === docId)
+  const docSignatures = React.useMemo(
+    () =>
+      pipe(
+        documentsSignaturesSelector,
+        RA.findFirst(doc => doc.document_id === docId)
+      ),
+    [docId, documentsSignaturesSelector]
   );
 
   // get required signatureFields for the current document
   // that user should check to sign the document
-  const requiredFields = getRequiredSignatureFields(signatureFieldsSelector);
+  const requiredFields = React.useMemo(
+    () => getRequiredSignatureFields(signatureFieldsSelector),
+    [signatureFieldsSelector]
+  );
 
   React.useEffect(() => {
     // get the required signature fields for the current document,
@@ -107,6 +114,7 @@ const FciSignatureFieldsScreen = () => {
     );
 
     setIsClausesChecked(res.length >= requiredFields.length);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [docSignatures]);
 
   const { present, bottomSheet: fciAbortSignature } =
@@ -168,7 +176,7 @@ const FciSignatureFieldsScreen = () => {
           {clauseLabel}
         </H4>
 
-        {/* 
+        {/*
           Show info icon and signature field info only for unfair clauses
           NOTE: this could be a temporary solution, since we could have
           an improved user experience.

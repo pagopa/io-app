@@ -10,7 +10,6 @@ export const logoItemGutter = 8;
 const styles = StyleSheet.create({
   logoWrapper: {
     justifyContent: "flex-start",
-    marginBottom: 16,
     paddingHorizontal: logoItemGutter / 2
   },
   logoWrapperMedium: {

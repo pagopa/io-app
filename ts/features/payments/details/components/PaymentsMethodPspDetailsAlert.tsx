@@ -1,7 +1,9 @@
 import * as React from "react";
 import { Alert, VSpacer } from "@pagopa/io-app-design-system";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import I18n from "../../../../i18n";
 import { usePaymentsMethodPspDetailsBottomSheet } from "./PaymentsMethodPspDetailsBottomSheet";
+import { PaymentsMethodPspPayPalBanner } from "./PaymentsMethodPspPayPalBanner";
 
 type PaymentsMethodPspDetailsAlertProps = {
   pspBusinessName: string;
@@ -21,16 +23,19 @@ export const PaymentsMethodPspDetailsAlert = ({
 
   return (
     <>
-      <Alert
-        content={I18n.t("features.payments.details.pspAlert.description", {
-          pspBusinessName
-        })}
-        variant="info"
-        action={I18n.t("features.payments.details.pspAlert.action")}
-        onPress={presentPspDetailsBottomSheet}
-      />
-      <VSpacer size={24} />
-      {pspDetailsBottomSheet}
+      <PaymentsMethodPspPayPalBanner />
+      <Animated.View layout={LinearTransition.duration(200)}>
+        <Alert
+          content={I18n.t("features.payments.details.pspAlert.description", {
+            pspBusinessName
+          })}
+          variant="info"
+          action={I18n.t("features.payments.details.pspAlert.action")}
+          onPress={presentPspDetailsBottomSheet}
+        />
+        <VSpacer size={24} />
+        {pspDetailsBottomSheet}
+      </Animated.View>
     </>
   );
 };

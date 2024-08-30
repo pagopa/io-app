@@ -16,6 +16,8 @@ import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { FAQsCategoriesType } from "../../../utils/faq";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
+import useContentWithFF from "../../profile/useContentWithFF";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../store/reducers/backendStatus";
 import {
   trackBiometricActivationAccepted,
   trackBiometricActivationDeclined,
@@ -28,19 +30,24 @@ const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = [
   "onboarding_fingerprint"
 ];
 
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "onboarding.contextualHelpTitle",
-  body: "onboarding.contextualHelpContent"
-};
-
 /**
  * A screen to show, if the fingerprint is supported by the device,
  * the instruction to enable the fingerprint/faceID usage
  */
 const FingerprintScreen = () => {
   const dispatch = useIODispatch();
-  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const { showAlert } = useOnboardingAbortAlert();
+  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
+
+  const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+    title: "onboarding.contextualHelpTitle",
+    body: isSettingsVisibleAndHideProfile
+      ? "onboarding.contextualHelpContent"
+      : "onboarding.legacyContextualHelpContent"
+  };
 
   useOnFirstRender(() => {
     trackBiometricActivationEducationalScreen(
@@ -55,6 +62,8 @@ const FingerprintScreen = () => {
     supportRequest: true,
     contextualHelpMarkdown
   });
+
+  const content = useContentWithFF("onboarding.biometric.available.settings");
 
   const actions = useMemo<IOScrollViewActions>(
     () => ({
@@ -113,10 +122,10 @@ const FingerprintScreen = () => {
       <Body>{I18n.t("onboarding.biometric.available.body.text")}</Body>
       <VSpacer size={24} />
       <Banner
-        content={I18n.t("onboarding.biometric.available.settings")}
+        content={content}
         color="neutral"
         size="small"
-        pictogramName="activate"
+        pictogramName="settings"
       />
     </IOScrollView>
   );

@@ -2,7 +2,6 @@ import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { render } from "@testing-library/react-native";
 import React from "react";
 import { PspRadioItem } from "../../components/PspRadioItem";
-import { privacyUrl } from "../../../../../../config";
 import { IOPayPalPsp } from "../../types";
 
 jest.mock("react-native-safe-area-context", () => ({
@@ -11,12 +10,14 @@ jest.mock("react-native-safe-area-context", () => ({
     .mockReturnValue({ top: 20, left: 0, right: 0, bottom: 0 })
 }));
 
+const mockPrivacyUrl = "https://io.italia.it/app-content/tos_privacy.html";
+
 const payPalPsp: IOPayPalPsp = {
   id: "1",
   logoUrl: "https://paytipper.com/wp-content/uploads/2021/02/logo.png",
   name: "PayTipper",
   fee: 100 as NonNegativeNumber,
-  privacyUrl
+  privacyUrl: mockPrivacyUrl
 };
 
 describe("PspRadioItem", () => {

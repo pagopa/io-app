@@ -11,7 +11,7 @@ import { fciStartSigningRequest } from "../store/actions";
 import { upsertServicePreference } from "../../services/details/store/actions/preference";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { isServicePreferenceResponseSuccess } from "../../services/details/types/ServicePreferenceResponse";
-import { servicePreferenceSelector } from "../../services/details/store/reducers/servicePreference";
+import { servicePreferencePotSelector } from "../../services/details/store/reducers";
 import { fciMetadataServiceIdSelector } from "../store/reducers/fciMetadata";
 import { trackFciUxConversion } from "../analytics";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
@@ -23,9 +23,9 @@ import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 export const useFciCheckService = () => {
   const dispatch = useIODispatch();
   const fciServiceId = useIOSelector(fciMetadataServiceIdSelector);
-  const servicePreference = useIOSelector(servicePreferenceSelector);
+  const servicePreferencePot = useIOSelector(servicePreferencePotSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
-  const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
+  const servicePreferenceValue = pot.getOrElse(servicePreferencePot, undefined);
   const cancelButtonProps: ButtonSolidProps = {
     onPress: () => {
       dispatch(fciStartSigningRequest());

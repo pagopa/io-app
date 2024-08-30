@@ -24,7 +24,7 @@ const mockCameraComponent = <View testID="cameraComponentTestID" />;
 (useIOBarcodeCameraScanner as jest.Mock).mockImplementation(
   (): IOBarcodeCameraScanner => ({
     cameraComponent: mockCameraComponent,
-    cameraPermissionStatus: "authorized",
+    cameraPermissionStatus: "granted",
     requestCameraPermission: jest.fn(),
     openCameraSettings: jest.fn(),
     hasTorch: false,

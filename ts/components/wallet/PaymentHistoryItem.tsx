@@ -39,7 +39,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class PaymentHistoryItem extends React.PureComponent<Props> {
+export default class PaymentHistoryItem extends React.PureComponent<
+  React.PropsWithChildren<Props>
+> {
   public render() {
     return (
       <TouchableDefaultOpacity

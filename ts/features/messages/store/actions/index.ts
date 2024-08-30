@@ -6,20 +6,28 @@ import {
 } from "typesafe-actions";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import {
-  UIMessage,
-  UIMessageDetails,
-  UIMessageId,
-  WithUIMessageId
-} from "../../types";
+import { UIMessage, UIMessageDetails, UIMessageId } from "../../types";
 import { MessageGetStatusFailurePhaseType } from "../reducers/messageGetStatus";
-import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
-import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
-import { MessagesStatus } from "../reducers/messagesStatus";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { MessageListCategory } from "../../types/messageListCategory";
+import {
+  errorPreconditionStatusAction,
+  idlePreconditionStatusAction,
+  loadingContentPreconditionStatusAction,
+  retrievingDataPreconditionStatusAction,
+  scheduledPreconditionStatusAction,
+  shownPreconditionStatusAction,
+  updateRequiredPreconditionStatusAction
+} from "./preconditions";
+import {
+  resetMessageArchivingAction,
+  interruptMessageArchivingProcessingAction,
+  removeScheduledMessageArchivingAction,
+  startProcessingMessageArchivingAction,
+  toggleScheduledMessageArchivingAction
+} from "./archiving";
 
 export type ThirdPartyMessageActions = ActionType<typeof loadThirdPartyMessage>;
 
@@ -36,6 +44,7 @@ export type SuccessGetMessageDataActionType = {
   hasRemoteContent: boolean;
   isPNMessage: boolean;
   messageId: UIMessageId;
+  organizationFiscalCode: string;
   organizationName: string;
   serviceId: ServiceId;
   serviceName: string;
@@ -107,11 +116,13 @@ export type LoadMessagesRequestPayload = {
   pageSize: number;
   cursor?: string;
   filter: Filter;
+  fromUserAction: boolean;
 };
 
 type PaginatedMessagesSuccessPayload = {
   messages: ReadonlyArray<UIMessage>;
   filter: Filter;
+  fromUserAction: boolean;
 };
 
 // The data is appended to the state
@@ -157,7 +168,7 @@ export const reloadAllMessages = createAsyncAction(
   "MESSAGES_RELOAD_SUCCESS",
   "MESSAGES_RELOAD_FAILURE"
 )<
-  Pick<LoadMessagesRequestPayload, "pageSize" | "filter">,
+  Pick<LoadMessagesRequestPayload, "pageSize" | "filter" | "fromUserAction">,
   ReloadMessagesPayload,
   MessagesFailurePayload
 >();
@@ -179,46 +190,6 @@ export const upsertMessageStatusAttributes = createAsyncAction(
   UpsertMessageStatusAttributesPayload,
   { error: Error; payload: UpsertMessageStatusAttributesPayload }
 >();
-
-export const removeMessages =
-  createStandardAction("MESSAGES_REMOVE")<ReadonlyArray<string>>();
-
-type MigrationFailure = {
-  error: unknown;
-  messageId: string;
-};
-
-export type MigrationResult = {
-  failed: Array<MigrationFailure>;
-  succeeded: Array<string>;
-};
-
-export const migrateToPaginatedMessages = createAsyncAction(
-  "MESSAGES_MIGRATE_TO_PAGINATED_REQUEST",
-  "MESSAGES_MIGRATE_TO_PAGINATED_SUCCESS",
-  "MESSAGES_MIGRATE_TO_PAGINATED_FAILURE"
-)<MessagesStatus, number, MigrationResult>();
-
-export const getMessagePrecondition = createAsyncAction(
-  "GET_MESSAGE_PRECONDITION_REQUEST",
-  "GET_MESSAGE_PRECONDITION_SUCCESS",
-  "GET_MESSAGE_PRECONDITION_FAILURE"
-)<
-  WithUIMessageId<{ categoryTag: MessageCategory["tag"] }>,
-  ThirdPartyMessagePrecondition,
-  Error
->();
-
-export const clearMessagePrecondition = createAction(
-  "CLEAR_MESSAGE_PRECONDITION"
-);
-
-/**
- * Used to mark the end of a migration and reset it to a pristine state.
- */
-export const resetMigrationStatus = createAction(
-  "MESSAGES_MIGRATE_TO_PAGINATED_DONE"
-);
 
 export type DownloadAttachmentRequest = {
   attachment: ThirdPartyAttachment;
@@ -276,18 +247,21 @@ export const removeCachedAttachment = createStandardAction(
 export type UpdatePaymentForMessageRequest = {
   messageId: UIMessageId;
   paymentId: string;
+  serviceId: ServiceId;
 };
 
 export type UpdatePaymentForMessageSuccess = {
   messageId: UIMessageId;
   paymentId: string;
   paymentData: PaymentRequestsGetResponse;
+  serviceId: ServiceId;
 };
 
 export type UpdatePaymentForMessageFailure = {
   messageId: UIMessageId;
   paymentId: string;
   details: Detail_v2Enum;
+  serviceId: ServiceId;
 };
 
 export type UpdatePaymentForMessageCancel =
@@ -309,6 +283,13 @@ export const cancelQueuedPaymentUpdates = createAction(
   "CANCEL_QUEUED_PAYMENT_UPDATES"
 );
 
+export const startPaymentStatusTracking = createStandardAction(
+  "MESSAGES_START_TRACKING_PAYMENT_STATUS"
+)<void>();
+export const cancelPaymentStatusTracking = createStandardAction(
+  "MESSAGES_CANCEL_PAYMENT_STATUS_TRACKING"
+)<void>();
+
 export const addUserSelectedPaymentRptId = createAction(
   "MESSAGES_ADD_USER_SELECTED_PAYMENT_RPTID",
   resolve => (paymentId: string) => resolve({ paymentId })
@@ -318,14 +299,15 @@ export const setShownMessageCategoryAction = createStandardAction(
   "SET_SHOWN_MESSAGE_CATEGORY"
 )<MessageListCategory>();
 
+export const requestAutomaticMessagesRefresh = createStandardAction(
+  "REQUEST_AUOMATIC_MESSAGE_REFRESH"
+)<MessageListCategory>();
+
 export type MessagesActions = ActionType<
   | typeof reloadAllMessages
   | typeof loadNextPageMessages
   | typeof loadPreviousPageMessages
   | typeof loadMessageDetails
-  | typeof migrateToPaginatedMessages
-  | typeof resetMigrationStatus
-  | typeof removeMessages
   | typeof upsertMessageStatusAttributes
   | typeof loadMessageById
   | typeof loadThirdPartyMessage
@@ -333,8 +315,13 @@ export type MessagesActions = ActionType<
   | typeof cancelPreviousAttachmentDownload
   | typeof clearRequestedAttachmentDownload
   | typeof removeCachedAttachment
-  | typeof getMessagePrecondition
-  | typeof clearMessagePrecondition
+  | typeof errorPreconditionStatusAction
+  | typeof idlePreconditionStatusAction
+  | typeof loadingContentPreconditionStatusAction
+  | typeof retrievingDataPreconditionStatusAction
+  | typeof scheduledPreconditionStatusAction
+  | typeof shownPreconditionStatusAction
+  | typeof updateRequiredPreconditionStatusAction
   | typeof getMessageDataAction
   | typeof cancelGetMessageDataAction
   | typeof resetGetMessageDataAction
@@ -342,4 +329,12 @@ export type MessagesActions = ActionType<
   | typeof cancelQueuedPaymentUpdates
   | typeof addUserSelectedPaymentRptId
   | typeof setShownMessageCategoryAction
+  | typeof toggleScheduledMessageArchivingAction
+  | typeof resetMessageArchivingAction
+  | typeof startProcessingMessageArchivingAction
+  | typeof removeScheduledMessageArchivingAction
+  | typeof interruptMessageArchivingProcessingAction
+  | typeof requestAutomaticMessagesRefresh
+  | typeof startPaymentStatusTracking
+  | typeof cancelPaymentStatusTracking
 >;

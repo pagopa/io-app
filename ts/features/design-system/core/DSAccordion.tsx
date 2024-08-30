@@ -1,12 +1,12 @@
 import {
   AccordionItem,
   VSpacer,
+  H4,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, View } from "react-native";
 import { Body } from "../../../components/core/typography/Body";
-import { H3 } from "../../../components/core/typography/H3";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const assistanceData: Array<AccordionItem> = [
@@ -41,13 +41,13 @@ const assistanceData: Array<AccordionItem> = [
 ];
 
 export const DSAccordion = () => {
+  const theme = useIOTheme();
+
   const renderAccordionHeader = () => (
     <View style={{ marginBottom: 24 }}>
-      <H3 color={theme["textHeading-default"]}>AccordionItem</H3>
+      <H4 color={theme["textHeading-default"]}>AccordionItem</H4>
     </View>
   );
-
-  const theme = useIOTheme();
 
   const renderItem = ({ item }: ListRenderItemInfo<AccordionItem>) => (
     <AccordionItem title={item.title} body={item.body} />

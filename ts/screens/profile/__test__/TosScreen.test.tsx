@@ -8,7 +8,6 @@ import I18n from "../../../i18n";
 //   WebViewErrorEvent,
 //   WebViewNavigationEvent
 // } from "react-native-webview/lib/WebViewTypes";
-import * as config from "../../../config";
 import { appReducer } from "../../../store/reducers";
 import { applicationChangeState } from "../../../store/actions/application";
 import { GlobalState } from "../../../store/reducers/types";
@@ -18,29 +17,16 @@ import ROUTES from "../../../navigation/routes";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import TosScreen from "../TosScreen";
 
-const CurrentTestZendeskEnabled = true;
 const CurrentTestToSVersion = 2.0;
-
-const zendeskEnabledDefaultValue = config.zendeskEnabled;
 
 // Restore defineProperty
 beforeAll(() => {
   jest.resetAllMocks();
   jest.mock("./../../../config");
-  // This can be replaced by jest.replaceProperty if we update jest to 29.4+
-  // eslint-disable-next-line functional/immutable-data
-  Object.defineProperty(config, "zendeskEnabled", {
-    value: CurrentTestZendeskEnabled
-  });
 });
 
 afterAll(() => {
   jest.resetAllMocks();
-  // This can be removed if we update jest to 29.4+ and switch to jest.replaceProperty
-  // eslint-disable-next-line functional/immutable-data
-  Object.defineProperty(config, "zendeskEnabled", {
-    value: zendeskEnabledDefaultValue
-  });
 });
 
 describe("TosScreen", () => {
@@ -64,14 +50,10 @@ describe("TosScreen", () => {
       expect(helpButtonRTI).toBeDefined();
     });
   });
-  describe("When rendering the screen", () => {
-    it("The title should have a specific text", () => {
-      const renderAPI = commonSetup();
-      const textRTI = renderAPI.queryByText(
-        I18n.t("profile.main.privacy.title")
-      );
-      expect(textRTI).toBeDefined();
-    });
+  it("The title should have a specific text", () => {
+    const renderAPI = commonSetup();
+    const textRTI = renderAPI.queryByText(I18n.t("profile.main.privacy.title"));
+    expect(textRTI).toBeDefined();
   });
   describe("When rendering the screen initially", () => {
     it("There should be the loading spinner overlay without the cancel button", async () => {
@@ -201,6 +183,13 @@ const commonSetup = () => {
           },
           cgn: {
             enabled: false
+          },
+          newPaymentSection: {
+            enabled: false,
+            min_app_version: {
+              android: "0.0.0.0",
+              ios: "0.0.0.0"
+            }
           },
           fims: {
             enabled: false

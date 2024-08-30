@@ -13,6 +13,8 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
@@ -20,6 +22,9 @@ import { IdPayConfigurationMachineContext } from "../machine/provider";
 export const IbanConfigurationLanding = () => {
   const { useActorRef } = IdPayConfigurationMachineContext;
   const machine = useActorRef();
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
 
   const customGoBack = () => machine.send({ type: "back" });
 
@@ -31,7 +36,11 @@ export const IbanConfigurationLanding = () => {
     {
       title: I18n.t("idpay.configuration.iban.landing.modal.title"),
       component: (
-        <Body>{I18n.t("idpay.configuration.iban.landing.modal.content")}</Body>
+        <Body>
+          {isSettingsVisibleAndHideProfile
+            ? I18n.t("idpay.configuration.iban.landing.modal.content")
+            : I18n.t("idpay.configuration.iban.landing.modal.legacyContent")}
+        </Body>
       ),
       footer: (
         <ContentWrapper>
