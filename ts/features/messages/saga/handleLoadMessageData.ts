@@ -37,6 +37,8 @@ import {
   trackRemoteContentMessageDecodingWarning
 } from "../analytics";
 import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
+import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
+import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 
 export function* handleLoadMessageData(
   action: ActionType<typeof getMessageDataAction.request>
@@ -47,6 +49,7 @@ export function* handleLoadMessageData(
   });
 }
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function* loadMessageData({
   messageId,
   fromPushNotification
@@ -72,23 +75,26 @@ function* loadMessageData({
   // Make sure that we have the basic message details
   const paginatedMessage = yield* call(getPaginatedMessage, messageId);
   if (!paginatedMessage) {
-    const phase = "paginatedMessage";
-    trackMessageDataLoadFailure(fromPushNotification, phase);
-    yield* put(getMessageDataAction.failure({ phase }));
+    yield* call(
+      commonFailureHandling,
+      "paginatedMessage",
+      fromPushNotification
+    );
     return;
   }
 
-  // Load the service details asynchronously if we do not have them
-  // (this is a not blocking call)
+  // Make sure that we have the service details
   const serviceId = paginatedMessage.serviceId;
-  yield* call(getService, serviceId);
+  const serviceDetails = yield* call(getServiceDetails, serviceId);
+  if (!serviceDetails) {
+    yield* call(commonFailureHandling, "serviceDetails", fromPushNotification);
+    return;
+  }
 
   // Make sure that we have the message details
   const messageDetails = yield* call(getMessageDetails, messageId);
   if (!messageDetails) {
-    const phase = "messageDetails";
-    trackMessageDataLoadFailure(fromPushNotification, phase);
-    yield* put(getMessageDataAction.failure({ phase }));
+    yield* call(commonFailureHandling, "messageDetails", fromPushNotification);
     return;
   }
 
@@ -102,16 +108,14 @@ function* loadMessageData({
     fromPushNotification &&
     (isPNMessage || paginatedMessage.hasPrecondition)
   ) {
-    const phase = "preconditions";
-    trackMessageDataLoadFailure(fromPushNotification, phase);
     if (isPNMessage) {
       trackPNPushOpened();
     }
-    yield* put(
-      getMessageDataAction.failure({
-        blockedFromPushNotificationOpt: true,
-        phase
-      })
+    yield* call(
+      commonFailureHandling,
+      "preconditions",
+      fromPushNotification,
+      true
     );
     return;
   }
@@ -121,20 +125,22 @@ function* loadMessageData({
   // download it regardless of what is in messageDetails)
   const shouldDownloadThirdPartyData =
     messageDetails.hasThirdPartyData || isPNMessage;
-  if (shouldDownloadThirdPartyData) {
-    const thirdPartyMessageDetails = yield* call(
-      getThirdPartyDataMessage,
-      messageId,
-      isPNMessage,
-      serviceId,
-      paginatedMessage.category.tag
+  const thirdPartyMessageDetails = shouldDownloadThirdPartyData
+    ? yield* call(
+        getThirdPartyDataMessage,
+        messageId,
+        isPNMessage,
+        serviceDetails,
+        paginatedMessage.category.tag
+      )
+    : undefined;
+  if (shouldDownloadThirdPartyData && !thirdPartyMessageDetails) {
+    yield* call(
+      commonFailureHandling,
+      "thirdPartyMessageDetails",
+      fromPushNotification
     );
-    if (!thirdPartyMessageDetails) {
-      const phase = "thirdPartyMessageDetails";
-      trackMessageDataLoadFailure(fromPushNotification, phase);
-      yield* put(getMessageDataAction.failure({ phase }));
-      return;
-    }
+    return;
   }
 
   const messageReadCheckSucceded = yield* call(
@@ -142,14 +148,21 @@ function* loadMessageData({
     paginatedMessage
   );
   if (!messageReadCheckSucceded) {
-    const phase = "readStatusUpdate";
-    trackMessageDataLoadFailure(fromPushNotification, phase);
-    yield* put(getMessageDataAction.failure({ phase }));
+    yield* call(
+      commonFailureHandling,
+      "readStatusUpdate",
+      fromPushNotification
+    );
     return;
   }
 
   trackMessageDataLoadSuccess(fromPushNotification);
-  yield* call(dispatchSuccessAction, paginatedMessage, messageDetails);
+  yield* call(
+    dispatchSuccessAction,
+    paginatedMessage,
+    messageDetails,
+    thirdPartyMessageDetails
+  );
 }
 
 function* getPaginatedMessage(messageId: UIMessageId) {
@@ -172,11 +185,24 @@ function* getPaginatedMessage(messageId: UIMessageId) {
   return pot.toUndefined(initialMessagePot);
 }
 
-function* getService(serviceId: ServiceId) {
-  const servicePot = yield* select(serviceByIdPotSelector, serviceId);
-  if (!pot.isSome(servicePot) || pot.isError(servicePot)) {
+function* getServiceDetails(serviceId: ServiceId) {
+  const initialServicePot = yield* select(serviceByIdPotSelector, serviceId);
+  if (!pot.isSome(initialServicePot) || pot.isError(initialServicePot)) {
     yield* put(loadServiceDetail.request(serviceId));
+
+    const outputAction = yield* take([
+      loadServiceDetail.success,
+      loadServiceDetail.failure
+    ]);
+    if (isActionOf(loadServiceDetail.failure, outputAction)) {
+      return undefined;
+    }
+
+    const finalServicePot = yield* select(serviceByIdPotSelector, serviceId);
+    return pot.toUndefined(finalServicePot);
   }
+
+  return pot.toUndefined(initialServicePot);
 }
 
 function* getMessageDetails(messageId: UIMessageId) {
@@ -211,12 +237,18 @@ function* getMessageDetails(messageId: UIMessageId) {
 function* getThirdPartyDataMessage(
   messageId: UIMessageId,
   isPNMessage: boolean,
-  serviceId: ServiceId,
+  service: ServicePublic,
   tag: string
 ) {
   // Third party data may change anytime, so we must retrieve them on every request
 
-  yield* put(loadThirdPartyMessage.request({ id: messageId, serviceId, tag }));
+  yield* put(
+    loadThirdPartyMessage.request({
+      id: messageId,
+      serviceId: service.service_id,
+      tag
+    })
+  );
 
   const outputAction = yield* take([
     loadThirdPartyMessage.success,
@@ -236,7 +268,7 @@ function* getThirdPartyDataMessage(
     decodeAndTrackThirdPartyMessageDetailsIfNeeded,
     isPNMessage,
     thirdPartyMessageOrUndefined,
-    serviceId,
+    service,
     tag
   );
 
@@ -268,7 +300,7 @@ function* setMessageReadIfNeeded(paginatedMessage: UIMessage) {
 function* dispatchSuccessAction(
   paginatedMessage: UIMessage,
   messageDetails: UIMessageDetails,
-  thirdPartyMessage?: ThirdPartyMessageWithContent
+  thirdPartyMessage: ThirdPartyMessageWithContent | undefined
 ) {
   const isPNMessageCategory = paginatedMessage.category.tag === TagEnum.PN;
   const containsPayment = pipe(
@@ -294,6 +326,7 @@ function* dispatchSuccessAction(
       hasRemoteContent: !!thirdPartyMessage,
       isPNMessage: isPnEnabled && isPNMessageCategory,
       messageId: paginatedMessage.id,
+      organizationFiscalCode: paginatedMessage.organizationFiscalCode,
       organizationName: paginatedMessage.organizationName,
       serviceId: paginatedMessage.serviceId,
       serviceName: paginatedMessage.serviceName
@@ -301,10 +334,25 @@ function* dispatchSuccessAction(
   );
 }
 
+function* commonFailureHandling(
+  phase: MessageGetStatusFailurePhaseType,
+  loadingStartedFromPushNotification: boolean,
+  blockedFromPushNotificationOpt: boolean | undefined = undefined
+) {
+  yield* call(
+    trackMessageDataLoadFailure,
+    loadingStartedFromPushNotification,
+    phase
+  );
+  yield* put(
+    getMessageDataAction.failure({ blockedFromPushNotificationOpt, phase })
+  );
+}
+
 const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
   isPNMessage: boolean,
   thirdPartyMessageOrUndefined: ThirdPartyMessageWithContent | undefined,
-  serviceId: ServiceId,
+  service: ServicePublic,
   tag: string
 ) =>
   pipe(
@@ -320,7 +368,14 @@ const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
         RemoteContentDetails.decode,
         E.mapLeft(errors =>
           pipe(errors, readableReport, reason =>
-            trackRemoteContentMessageDecodingWarning(reason, serviceId, tag)
+            trackRemoteContentMessageDecodingWarning(
+              service.service_id,
+              service.service_name,
+              service.organization_name,
+              service.organization_fiscal_code,
+              tag,
+              reason
+            )
           )
         )
       )
@@ -329,12 +384,13 @@ const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
 
 export const testable = isTestEnv
   ? {
+      commonFailureHandling,
       loadMessageData,
       decodeAndTrackThirdPartyMessageDetailsIfNeeded,
       dispatchSuccessAction,
       setMessageReadIfNeeded,
       getPaginatedMessage,
-      getService,
+      getServiceDetails,
       getMessageDetails,
       getThirdPartyDataMessage
     }

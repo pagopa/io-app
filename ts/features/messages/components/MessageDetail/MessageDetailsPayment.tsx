@@ -5,14 +5,17 @@ import { useIOSelector } from "../../../../store/hooks";
 import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
 import I18n from "../../../../i18n";
 import { getRptIdStringFromPaymentData } from "../../utils";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { MessagePaymentItem } from "./MessagePaymentItem";
 
 type MessageDetailsPaymentProps = {
   messageId: UIMessageId;
+  serviceId: ServiceId;
 };
 
 export const MessageDetailsPayment = ({
-  messageId
+  messageId,
+  serviceId
 }: MessageDetailsPaymentProps) => {
   const paymentData = useIOSelector(state =>
     messagePaymentDataSelector(state, messageId)
@@ -39,6 +42,7 @@ export const MessageDetailsPayment = ({
         noticeNumber={paymentData.noticeNumber}
         paymentAmount={paymentData.amount}
         rptId={rptId}
+        serviceId={serviceId}
       />
     </>
   );

@@ -7,6 +7,7 @@ import { PaymentData, UIMessageDetails, UIMessageId } from "../../../types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MessageDetailsPayment } from "../MessageDetailsPayment";
 import { loadMessageDetails } from "../../../store/actions";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 describe("MessageDetailsPayment", () => {
   it("Should match snapshot for no payment data", () => {
@@ -43,7 +44,12 @@ const renderScreen = (messageId: UIMessageId, paymentData?: PaymentData) => {
   const store = createStore(appReducer, finalState as any);
 
   return renderScreenWithNavigationStoreContext(
-    () => <MessageDetailsPayment messageId={messageId} />,
+    () => (
+      <MessageDetailsPayment
+        messageId={messageId}
+        serviceId={"01J5X3BYKRC2AYVANSCZQM1CPS" as ServiceId}
+      />
+    ),
     "DUMMY",
     {},
     store
