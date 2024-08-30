@@ -4,17 +4,20 @@ import { IconButton, H6, Divider } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
+import { ItwCredentialStatus } from "./ItwCredentialCard";
 
 type Props = {
   title: string;
   claims: ReadonlyArray<ClaimDisplayFormat>;
   canHideValues?: boolean;
+  credentialStatus?: ItwCredentialStatus;
 };
 
 export const ItwCredentialClaimsSection = ({
   title,
   canHideValues,
-  claims
+  claims,
+  credentialStatus
 }: Props) => {
   const [valuesHidden, setValuesHidden] = useState(false);
 
@@ -41,7 +44,11 @@ export const ItwCredentialClaimsSection = ({
         {claims.map((claim, index) => (
           <React.Fragment key={claim.id}>
             {index !== 0 && <Divider />}
-            <ItwCredentialClaim claim={claim} hidden={valuesHidden} />
+            <ItwCredentialClaim
+              claim={claim}
+              hidden={valuesHidden}
+              credentialStatus={credentialStatus}
+            />
           </React.Fragment>
         ))}
       </View>

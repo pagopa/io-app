@@ -3335,7 +3335,8 @@ features:
         hiddenClaim: "Hidden"
         status:
           valid: Valid
-          expired: Expired
+          expired: Not valid
+          expiring: Expiring
         actions:
           removeFromWallet: "Remove from Wallet"
           requestAssistance: "Something wrong? Contact {{authSource}}"

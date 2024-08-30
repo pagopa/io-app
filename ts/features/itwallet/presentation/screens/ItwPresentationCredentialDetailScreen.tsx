@@ -22,7 +22,7 @@ import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import { ItwCredentialClaimsSection } from "../../common/components/ItwCredentialClaimsSection";
 import { ItwReleaserName } from "../../common/components/ItwReleaserName";
 import {
-  getCredentialExpireStatus,
+  getCredentialStatus,
   parseClaims
 } from "../../common/utils/itwClaimsUtils";
 import {
@@ -85,9 +85,7 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
     parsedCredential: credential.parsedCredential
   });
 
-  const credentialStatus = getCredentialExpireStatus(
-    credential.parsedCredential
-  );
+  const credentialStatus = getCredentialStatus(credential);
 
   return (
     <>
@@ -117,6 +115,7 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
               exclude: ["unique_id"]
             })}
             canHideValues={true}
+            credentialStatus={credentialStatus}
           />
           <Divider />
           <ItwReleaserName credential={credential} />
