@@ -1,3 +1,4 @@
+import { errorsToReadableMessages } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
@@ -40,7 +41,8 @@ const extractFimsHistoryResponseAction = (
   pipe(
     historyResult,
     E.fold(
-      error => fimsHistoryGet.failure(error.toString()),
+      error =>
+        fimsHistoryGet.failure(JSON.stringify(errorsToReadableMessages(error))),
       response =>
         response.status === 200
           ? fimsHistoryGet.success(response.value)

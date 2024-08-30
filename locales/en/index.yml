@@ -3141,10 +3141,10 @@ features:
         failure: FALLITA
         success: ""
       receipt:
-        title: PagoPA Receipt
+        title: pagoPA Receipt
         shareButton: Save or share
-        error: Impossibile scaricare la ricevuta, riprova più tardi.
-        download: Scarica ricevuta
+        error: Unable to retrieve the receipt.
+        download: Get receipt
       details:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
         totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
@@ -3976,6 +3976,12 @@ permissionRequest:
     cta: Apri Impostazioni
 FIMS:
   history:
+    errorStates:
+      ko:
+        title: "C’è un problema temporaneo"
+        body: "Il caricamento della lista degli accessi non è riuscito"
+      toast: C’è un problema nel caricamento della lista. Riprova
+    emptyBody: "Non hai ancora effettuato alcun accesso a servizi di terze parti"
     exportData:
       alerts:
         areYouSure: "Vuoi davvero esportare una copia di tutti gli accessi?"
