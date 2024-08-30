@@ -54,7 +54,7 @@ export function* updateCredentialStatusAttestationSaga(
 /**
  * This saga is responsible to check the status attestation for each credential in the wallet.
  */
-export function* checkCredentialsStatus() {
+export function* checkCredentialsStatusAttestation() {
   const { credentials } = yield* select(itwCredentialsSelector);
 
   const credentialsToCheck = pipe(
@@ -65,6 +65,10 @@ export function* checkCredentialsStatus() {
       )
     )
   );
+
+  if (credentialsToCheck.length === 0) {
+    return;
+  }
 
   const updatedCredentials = yield* all(
     credentialsToCheck.map(credential =>
