@@ -3985,6 +3985,7 @@ permissionRequest:
 FIMS:
   history:
     errorStates:
+      dataUnavailable: "Dati non disponibili"
       ko:
         title: "C’è un problema temporaneo"
         body: "Il caricamento della lista degli accessi non è riuscito"
