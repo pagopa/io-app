@@ -2208,7 +2208,11 @@ services:
       cancel: "Annulla"
       clear: "Cancella"
     emptyState:
-      title: "Inserisci il nome di un ente,\nnazionale o locale"
+      invalidQuery:
+        title: "Inserisci il nome di un ente,\nnazionale o locale"
+      noResults:
+        title: "Nessun risultato trovato"
+        subtitle: "Inserisci il nome di un ente nazionale o locale esistente."
   details:
     failure:
       title: "C'è un problema temporaneo, riprova"
