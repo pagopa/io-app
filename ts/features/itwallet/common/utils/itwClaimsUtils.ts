@@ -164,6 +164,11 @@ const DATE_FORMAT_REGEX = "^\\d{4}-\\d{2}-\\d{2}$";
  */
 const PICTURE_URL_REGEX = "^data:image\\/(png|jpg|jpeg|bmp);base64,";
 
+/**
+ * Regex for the PDF data format which is used to validate the PDF file claim as a base64 encoded PDF.
+ */
+const PDF_DATA_REGEX = "^data:application/pdf;base64,";
+
 const FISCAL_CODE_WITH_PREFIX =
   "(TINIT-[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])";
 
@@ -246,6 +251,8 @@ export const StringClaim = NonEmptyString;
 
 export const ImageClaim = PatternString(PICTURE_URL_REGEX);
 
+export const PdfClaim = PatternString(PDF_DATA_REGEX);
+
 /**
  * Decoder type for the claim field of the credential.
  * It includes all the possible types of claims and fallbacks to string.
@@ -263,6 +270,8 @@ export const ClaimValue = t.union([
   DateClaim,
   // Otherwise parse an image
   ImageClaim,
+  // Otherwise parse a PDF
+  PdfClaim,
   // Otherwise parse a fiscal code
   FiscalCodeClaim,
   // Otherwise fallback to string

@@ -2181,7 +2181,7 @@ services:
         servicesPreferences:
           value: Chi può scriverti?
           description: Scegli chi può contattarti
-        settings: 
+        settings:
           value: Tutte le impostazioni
           description: Gestisci i tuoi dati e le preferenze d'uso
     featured:
@@ -3215,6 +3215,7 @@ features:
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
           restrictionConditions: "Codici"
+        attachments: "Allegati"
       unrecognizedData:
         title: "Non riconosci alcuni dati?"
         body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
