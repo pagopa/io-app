@@ -183,7 +183,8 @@ const AuthenticatedStackNavigator = () => {
         name={ROUTES.PROFILE_NAVIGATOR}
         options={{
           ...hideHeaderOptions,
-          ...TransitionPresets.SlideFromRightIOS
+          ...TransitionPresets.SlideFromRightIOS,
+          gestureEnabled: isGestureEnabled
         }}
         component={ProfileStackNavigator}
       />
