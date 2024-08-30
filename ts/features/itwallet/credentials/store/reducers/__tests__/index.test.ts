@@ -124,26 +124,19 @@ describe("ITW credentials reducer", () => {
   });
 
   it("should update selected credentials", () => {
-    const credentialUpdate = {
+    const credentialUpdate: Pick<
+      StoredCredential,
+      "credentialType" | "storedStatusAttestation"
+    > = {
       credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
-      statusAttestation: {
-        credentialStatus: "valid",
+      storedStatusAttestation: {
+        credentialStatus: "valid" as const,
+        statusAttestation: "abc",
         parsedStatusAttestation: { exp: 1000 } as ParsedStatusAttestation
       }
     };
 
-    const updatedCredential: StoredCredential = {
-      credential: "",
-      credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
-      parsedCredential: {},
-      format: "vc+sd-jwt",
-      keyTag: "07ccc69a-d1b5-4c3c-9955-6a436d0c3710",
-      issuerConf: {} as StoredCredential["issuerConf"],
-      statusAttestation: {
-        credentialStatus: "valid",
-        parsedStatusAttestation: { exp: 1000 } as ParsedStatusAttestation
-      }
-    };
+    const updatedCredential = { ...mockedCredential2, ...credentialUpdate };
 
     const targetSate = pipe(
       undefined,

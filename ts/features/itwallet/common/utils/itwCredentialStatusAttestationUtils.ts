@@ -22,32 +22,39 @@ export const getCredentialStatusAttestation = async (
     credentialCryptoContext
   );
 
-  return Credential.Status.verifyAndParseStatusAttestation(
-    issuerConf,
-    rawStatusAttestation,
-    { credentialCryptoContext }
-  );
+  const { parsedStatusAttestation } =
+    await Credential.Status.verifyAndParseStatusAttestation(
+      issuerConf,
+      rawStatusAttestation,
+      { credentialCryptoContext }
+    );
+
+  return {
+    statusAttestation: rawStatusAttestation.statusAttestation,
+    parsedStatusAttestation
+  };
 };
 
 export const shouldRequestStatusAttestation = ({
-  statusAttestation
+  storedStatusAttestation
 }: StoredCredential) => {
-  if (!statusAttestation) {
+  // When no status attestation is present, request a new one
+  if (!storedStatusAttestation) {
     return true;
   }
 
-  switch (statusAttestation.credentialStatus) {
+  switch (storedStatusAttestation.credentialStatus) {
     // We could not determine the status, try to request another attestation
     case "unknown":
       return true;
     // The credential is invalid, no need to request another attestation
     case "invalid":
       return false;
-    // The status attestation is expired, request a new one
+    // When the status attestation is expired request a new one
     case "valid":
       return isAfter(
         new Date(),
-        new Date(statusAttestation.parsedStatusAttestation.exp * 1000)
+        new Date(storedStatusAttestation.parsedStatusAttestation.exp * 1000)
       );
     default:
       throw new Error("Unexpected credential status");

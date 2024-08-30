@@ -19,7 +19,7 @@ describe("isStatusAttestationMissingOrExpired", () => {
   it("return true when the parsed status attestation is null", () => {
     const mockCredential: StoredCredential = {
       ...baseMockCredential,
-      statusAttestation: {
+      storedStatusAttestation: {
         credentialStatus: "unknown"
       }
     };
@@ -31,8 +31,9 @@ describe("isStatusAttestationMissingOrExpired", () => {
 
     const mockCredential: StoredCredential = {
       ...baseMockCredential,
-      statusAttestation: {
+      storedStatusAttestation: {
         credentialStatus: "valid",
+        statusAttestation: "abc",
         parsedStatusAttestation: {
           ...ItwStatusAttestationMocks.mdl,
           exp: 1724752800 // 2024-08-27T10:00:00+00:00
@@ -47,8 +48,9 @@ describe("isStatusAttestationMissingOrExpired", () => {
 
     const mockCredential: StoredCredential = {
       ...baseMockCredential,
-      statusAttestation: {
+      storedStatusAttestation: {
         credentialStatus: "valid",
+        statusAttestation: "abc",
         parsedStatusAttestation: {
           ...ItwStatusAttestationMocks.mdl,
           exp: 1724781600 // 2024-08-27T18:00:00+00:00,
@@ -63,7 +65,7 @@ describe("isStatusAttestationMissingOrExpired", () => {
 
     const mockCredential: StoredCredential = {
       ...baseMockCredential,
-      statusAttestation: {
+      storedStatusAttestation: {
         credentialStatus: "invalid"
       }
     };
@@ -75,7 +77,7 @@ describe("isStatusAttestationMissingOrExpired", () => {
 
     const mockCredential: StoredCredential = {
       ...baseMockCredential,
-      statusAttestation: {
+      storedStatusAttestation: {
         credentialStatus: "unknown"
       }
     };

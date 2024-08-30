@@ -15,32 +15,33 @@ import { ReduxSagaEffect } from "../../../../types/utils";
 
 type PartialUpdatedCredential = Pick<
   StoredCredential,
-  "credentialType" | "statusAttestation"
+  "credentialType" | "storedStatusAttestation"
 >;
 
 const canGetStatusAttestation = (credential: StoredCredential) =>
   credential.credentialType === CredentialType.DRIVING_LICENSE;
 
-function* updateCredentialStatusAttestationSaga(
+export function* updateCredentialStatusAttestationSaga(
   credential: StoredCredential
 ): Generator<ReduxSagaEffect, PartialUpdatedCredential> {
   try {
-    const { parsedStatusAttestation } = yield* call(
+    const { parsedStatusAttestation, statusAttestation } = yield* call(
       getCredentialStatusAttestation,
       credential.credential,
       credential.keyTag
     );
     return {
       credentialType: credential.credentialType,
-      statusAttestation: {
+      storedStatusAttestation: {
         credentialStatus: "valid",
+        statusAttestation,
         parsedStatusAttestation: parsedStatusAttestation.payload
       }
     };
   } catch (error) {
     return {
       credentialType: credential.credentialType,
-      statusAttestation: {
+      storedStatusAttestation: {
         credentialStatus:
           error instanceof Errors.StatusAttestationInvalid
             ? "invalid" // The credential was revoked
