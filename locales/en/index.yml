@@ -3333,7 +3333,7 @@ features:
         documentDataTitle: "Document data"
         lastUpdated: "Last updated on {{lastUpdateTime}}"
         boolClaim:
-          true: Si
+          true: Sì
           false: No
         hiddenClaim: "Hidden"
         status:
