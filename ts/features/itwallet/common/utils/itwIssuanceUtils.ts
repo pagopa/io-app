@@ -17,11 +17,7 @@ import {
 } from "../../../../config";
 import { type IdentificationContext } from "../../machine/eid/context";
 import { StoredCredential } from "./itwTypesUtils";
-import {
-  disposeEidCryptoKeys,
-  DPOP_EID_KEYTAG,
-  regenerateCryptoKey
-} from "./itwCryptoContextUtils";
+import { DPOP_EID_KEYTAG, regenerateCryptoKey } from "./itwCryptoContextUtils";
 
 type AccessToken = Awaited<
   ReturnType<typeof Credential.Issuance.authorizeAccess>
@@ -352,8 +348,4 @@ const getSpidProductionIdpHint = (spidIdpId: string) => {
     throw new Error(`Unknown idp ${spidIdpId}`);
   }
   return SPID_IDP_HINTS[spidIdpId];
-};
-
-export const disposeWallet = async () => {
-  await disposeEidCryptoKeys();
 };

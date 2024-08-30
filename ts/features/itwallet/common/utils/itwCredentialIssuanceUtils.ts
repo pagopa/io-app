@@ -22,7 +22,6 @@ import {
   StoredCredential
 } from "./itwTypesUtils";
 import {
-  disposeCredentialCryptoKeys,
   DPOP_CREDENTIAL_KEYTAG,
   regenerateCryptoKey,
   WIA_CREDENTIAL_KEYTAG
@@ -201,8 +200,4 @@ export const obtainCredential = async ({
   return {
     credential: storedCredential
   };
-};
-
-export const disposeWallet = async () => {
-  await disposeCredentialCryptoKeys();
 };
