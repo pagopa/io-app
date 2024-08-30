@@ -104,12 +104,12 @@ const EmailInsertScreen = () => {
   const isProfileEmailAlreadyTaken = useIOSelector(
     isProfileEmailAlreadyTakenSelector
   );
+  const [errorMessage, setErrorMessage] = useState("");
   const flow = getFlowType(isOnboarding, isFirstOnboarding);
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   // This reference is used to prevent the refresh visual glitch
   // caused by the polling stop in the email validation screen.
   const canShowLoadingSpinner = useRef(true);
-  const [error, setError] = useState("");
 
   useFocusEffect(
     useCallback(
@@ -200,32 +200,32 @@ const EmailInsertScreen = () => {
         email,
         O.fold(
           () => {
-            const errorMessage = I18n.t("email.newinsert.alert.invalidemail");
-            setError(errorMessage);
+            const errMessage = I18n.t("email.newinsert.alert.invalidemail");
+            setErrorMessage(errMessage);
 
             return {
               isValid: false,
-              errorMessage
+              errorMessage: errMessage
             };
           },
           value => {
             if (!validator.isEmail(value)) {
-              const errorMessage = I18n.t("email.newinsert.alert.invalidemail");
-              setError(errorMessage);
+              const errMessage = I18n.t("email.newinsert.alert.invalidemail");
+              setErrorMessage(errMessage);
 
               return {
                 isValid: false,
-                errorMessage
+                errorMessage: errMessage
               };
             }
             if (areSameEmails) {
-              const errorMessage = sameEmailsErrorRender();
-              setError(errorMessage);
+              const errMessage = sameEmailsErrorRender();
+              setErrorMessage(errMessage);
 
-              return { isValid: false, errorMessage };
+              return { isValid: false, errorMessage: errMessage };
             }
             // If the instered email is valid the error is resetted
-            setError("");
+            setErrorMessage("");
 
             return true;
           }
@@ -468,7 +468,7 @@ const EmailInsertScreen = () => {
                 inputMode: "email"
               }}
               accessibilityLabel={I18n.t("email.newinsert.label")}
-              accessibilityHint={error}
+              accessibilityHint={errorMessage}
               placeholder={I18n.t("email.newinsert.label")}
               onValidate={isValidEmail}
               errorMessage={I18n.t("email.newinsert.alert.invalidemail")}
