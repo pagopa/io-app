@@ -197,11 +197,10 @@ const ImageClaimItem = ({ label, claim }: { label: string; claim: string }) => (
 );
 
 /**
- * Component which renders a PDF type claim attachment.
- * @param label - the label of the claim
- * @param claim - the claim value
+ * Component which renders an attachment claim
+ * @param name - name of the file
  */
-const PdfClaimItem = ({ name }: { name: string }) => (
+const AttachmentsClaimItem = ({ name }: { name: string }) => (
   <ListItemInfo
     label={I18n.t("features.itWallet.verifiableCredentials.claims.attachments")}
     value={name}
@@ -348,7 +347,7 @@ export const ItwCredentialClaim = ({
         } else if (ImageClaim.is(decoded)) {
           return <ImageClaimItem label={claim.label} claim={decoded} />;
         } else if (PdfClaim.is(decoded)) {
-          return <PdfClaimItem name={claim.label} />;
+          return <AttachmentsClaimItem name={claim.label} />;
         } else if (DrivingPrivilegesClaim.is(decoded)) {
           return decoded.map((elem, index) => (
             <React.Fragment
