@@ -7,6 +7,10 @@ jobs:
   create-gh-release:
     runs-on: ubuntu-latest
     steps:
+      - id: checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        with:
+          fetch-depth: 0
       - id: github-release-creation
         run: gh release create ${{ github.ref_name }} --latest --generate-notes
         env:
@@ -79,9 +83,9 @@ jobs:
         with:
           name: app-release.aab
           path: android/app/build/outputs/bundle/release/app-release.aab
-      - id: upload-aab-release
+      - id: upload-android-assets-release
         continue-on-error: true
-        run: gh release ${{ github.ref_name }} android/app/build/outputs/bundle/release/app-release.aab#android-app-release.aab
+        run: gh release upload ${{ github.ref_name }} android/app/build/outputs/bundle/release/app-release.aab#android-app-release.aab android/io-app-universal.apk#io-app-universal.apk
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
@@ -151,7 +155,7 @@ jobs:
           path: ios/IO.ipa
       - id: upload-ipa-release
         continue-on-error: true
-        run: gh release ${{ github.ref_name }} ios/IO.ipa#IO-iOS.ipa
+        run: gh release upload ${{ github.ref_name }} ios/IO.ipa#IO-iOS.ipa
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   notify-new-version:
