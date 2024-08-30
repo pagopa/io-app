@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-identical-functions */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
@@ -664,3 +663,5 @@ export const idPayConfigurationMachine = setup({
 });
 
 const decodeFailure = flow(InitiativeFailure.decode, O.fromEither);
+
+export type IdPayConfigurationMachine = typeof idPayConfigurationMachine;

@@ -1,13 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
-import { SnapshotFrom } from "xstate";
+import { StateFrom } from "xstate";
 import { InstrumentDTO } from "../../../../../definitions/idpay/InstrumentDTO";
 import { LOADING_TAG } from "../../../../xstate/utils";
 import { ConfigurationMode } from "../types";
-import { idPayConfigurationMachine } from "./machine";
+import { IdPayConfigurationMachine } from "./machine";
 
-type MachineSnapshot = SnapshotFrom<typeof idPayConfigurationMachine>;
+type MachineSnapshot = StateFrom<IdPayConfigurationMachine>;
 
 type IDPayInstrumentsByIdWallet = {
   [idWallet: string]: InstrumentDTO;

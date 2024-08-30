@@ -1,16 +1,15 @@
-/* eslint-disable no-underscore-dangle */
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
-import { SnapshotFrom } from "xstate";
+import { StateFrom } from "xstate";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import { SelfDeclarationDTO } from "../../../../../definitions/idpay/SelfDeclarationDTO";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
 import * as Context from "./context";
-import { idPayOnboardingMachine } from "./machine";
+import { IdPayOnboardingMachine } from "./machine";
 
-type MachineSnapshot = SnapshotFrom<typeof idPayOnboardingMachine>;
+type MachineSnapshot = StateFrom<IdPayOnboardingMachine>;
 
 export const selectOnboardingFailure = (snapshot: MachineSnapshot) =>
   snapshot.context.failure;
