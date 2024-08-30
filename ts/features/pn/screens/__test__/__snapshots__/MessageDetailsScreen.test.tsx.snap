@@ -964,6 +964,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       A First Attachment
                                     </Text>
                                     <View
+                                      accessible={true}
                                       style={
                                         [
                                           {
@@ -982,8 +983,11 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       }
                                     >
                                       <Text
+                                        accessibilityLabel="PDF"
+                                        accessibilityRole="text"
                                         allowFontScaling={false}
                                         ellipsizeMode="tail"
+                                        importantForAccessibility="yes"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
@@ -1199,6 +1203,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       A Second Attachment
                                     </Text>
                                     <View
+                                      accessible={true}
                                       style={
                                         [
                                           {
@@ -1217,8 +1222,11 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       }
                                     >
                                       <Text
+                                        accessibilityLabel="PDF"
+                                        accessibilityRole="text"
                                         allowFontScaling={false}
                                         ellipsizeMode="tail"
+                                        importantForAccessibility="yes"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={

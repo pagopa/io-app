@@ -409,6 +409,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                               1
                             </Text>
                             <View
+                              accessible={true}
                               style={
                                 [
                                   {
@@ -427,8 +428,11 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                               }
                             >
                               <Text
+                                accessibilityLabel="PDF"
+                                accessibilityRole="text"
                                 allowFontScaling={false}
                                 ellipsizeMode="tail"
+                                importantForAccessibility="yes"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
@@ -1097,6 +1101,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                 1
                               </Text>
                               <View
+                                accessible={true}
                                 style={
                                   [
                                     {
@@ -1115,8 +1120,11 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                 }
                               >
                                 <Text
+                                  accessibilityLabel="PDF"
+                                  accessibilityRole="text"
                                   allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  importantForAccessibility="yes"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
@@ -1628,6 +1636,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                               A PDF File
                             </Text>
                             <View
+                              accessible={true}
                               style={
                                 [
                                   {
@@ -1646,8 +1655,11 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                               }
                             >
                               <Text
+                                accessibilityLabel="PDF"
+                                accessibilityRole="text"
                                 allowFontScaling={false}
                                 ellipsizeMode="tail"
+                                importantForAccessibility="yes"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
@@ -2206,6 +2218,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                 A PDF File
                               </Text>
                               <View
+                                accessible={true}
                                 style={
                                   [
                                     {
@@ -2224,8 +2237,11 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                 }
                               >
                                 <Text
+                                  accessibilityLabel="PDF"
+                                  accessibilityRole="text"
                                   allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  importantForAccessibility="yes"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={

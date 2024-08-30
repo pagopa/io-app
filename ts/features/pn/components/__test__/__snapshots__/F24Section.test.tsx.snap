@@ -775,6 +775,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                           2
                                         </Text>
                                         <View
+                                          accessible={true}
                                           style={
                                             [
                                               {
@@ -793,8 +794,11 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                           }
                                         >
                                           <Text
+                                            accessibilityLabel="PDF"
+                                            accessibilityRole="text"
                                             allowFontScaling={false}
                                             ellipsizeMode="tail"
+                                            importantForAccessibility="yes"
                                             maxFontSizeMultiplier={1.25}
                                             numberOfLines={1}
                                             style={
@@ -1010,6 +1014,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                           4
                                         </Text>
                                         <View
+                                          accessible={true}
                                           style={
                                             [
                                               {
@@ -1028,8 +1033,11 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                           }
                                         >
                                           <Text
+                                            accessibilityLabel="PDF"
+                                            accessibilityRole="text"
                                             allowFontScaling={false}
                                             ellipsizeMode="tail"
+                                            importantForAccessibility="yes"
                                             maxFontSizeMultiplier={1.25}
                                             numberOfLines={1}
                                             style={
@@ -2800,6 +2808,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                 2
                               </Text>
                               <View
+                                accessible={true}
                                 style={
                                   [
                                     {
@@ -2818,8 +2827,11 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                 }
                               >
                                 <Text
+                                  accessibilityLabel="PDF"
+                                  accessibilityRole="text"
                                   allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  importantForAccessibility="yes"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={

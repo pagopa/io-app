@@ -986,6 +986,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -1004,8 +1005,11 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -1260,6 +1264,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -1278,8 +1283,11 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -1534,6 +1542,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -1552,8 +1561,11 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -1808,6 +1820,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -1826,8 +1839,11 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -2082,6 +2098,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -2100,8 +2117,11 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -2356,6 +2376,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -2374,8 +2395,11 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -2630,6 +2654,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -2648,8 +2673,11 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -3396,6 +3424,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -3414,8 +3443,11 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -3670,6 +3702,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -3688,8 +3721,11 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -3944,6 +3980,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -3962,8 +3999,11 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -4218,6 +4258,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -4236,8 +4277,11 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -4492,6 +4536,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -4510,8 +4555,11 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -4766,6 +4814,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -4784,8 +4833,11 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -5040,6 +5092,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -5058,8 +5111,11 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -6402,6 +6458,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -6420,8 +6477,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Revoked"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -6675,6 +6735,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -6693,8 +6754,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Expired"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -6948,6 +7012,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -6966,8 +7031,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Ongoing"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -7221,6 +7289,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -7239,8 +7308,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -8240,6 +8312,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -8258,8 +8331,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Revoked"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -8513,6 +8589,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -8531,8 +8608,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Expired"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -8786,6 +8866,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -8804,8 +8885,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Ongoing"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -9059,6 +9143,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -9077,8 +9162,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -10078,6 +10166,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -10096,8 +10185,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Revoked"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -10351,6 +10443,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -10369,8 +10462,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Expired"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -10624,6 +10720,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -10642,8 +10739,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Ongoing"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -10897,6 +10997,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -10915,8 +11016,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -12036,6 +12140,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -12054,8 +12159,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Revoked"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -12309,6 +12417,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -12327,8 +12436,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Expired"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -12582,6 +12694,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -12600,8 +12713,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Ongoing"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
@@ -12855,6 +12971,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -12873,8 +12990,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Paid"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={

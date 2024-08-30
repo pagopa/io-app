@@ -1172,6 +1172,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <View
+                                        accessible={true}
                                         style={
                                           [
                                             {
@@ -1190,8 +1191,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
+                                          accessibilityLabel="Revoked"
+                                          accessibilityRole="text"
                                           allowFontScaling={false}
                                           ellipsizeMode="tail"
+                                          importantForAccessibility="yes"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={1}
                                           style={
@@ -1445,6 +1449,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <View
+                                        accessible={true}
                                         style={
                                           [
                                             {
@@ -1463,8 +1468,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
+                                          accessibilityLabel="Expired"
+                                          accessibilityRole="text"
                                           allowFontScaling={false}
                                           ellipsizeMode="tail"
+                                          importantForAccessibility="yes"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={1}
                                           style={
@@ -1718,6 +1726,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <View
+                                        accessible={true}
                                         style={
                                           [
                                             {
@@ -1736,8 +1745,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
+                                          accessibilityLabel="Ongoing"
+                                          accessibilityRole="text"
                                           allowFontScaling={false}
                                           ellipsizeMode="tail"
+                                          importantForAccessibility="yes"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={1}
                                           style={
@@ -1991,6 +2003,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <View
+                                        accessible={true}
                                         style={
                                           [
                                             {
@@ -2009,8 +2022,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
+                                          accessibilityLabel="Paid"
+                                          accessibilityRole="text"
                                           allowFontScaling={false}
                                           ellipsizeMode="tail"
+                                          importantForAccessibility="yes"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={1}
                                           style={
@@ -2264,6 +2280,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <View
+                                        accessible={true}
                                         style={
                                           [
                                             {
@@ -2282,8 +2299,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
+                                          accessibilityLabel="Error"
+                                          accessibilityRole="text"
                                           allowFontScaling={false}
                                           ellipsizeMode="tail"
+                                          importantForAccessibility="yes"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={1}
                                           style={
@@ -2537,6 +2557,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <View
+                                        accessible={true}
                                         style={
                                           [
                                             {
@@ -2555,8 +2576,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
+                                          accessibilityLabel="Error"
+                                          accessibilityRole="text"
                                           allowFontScaling={false}
                                           ellipsizeMode="tail"
+                                          importantForAccessibility="yes"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={1}
                                           style={

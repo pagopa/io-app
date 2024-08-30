@@ -1572,6 +1572,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                 }
                               >
                                 <View
+                                  accessible={true}
                                   style={
                                     [
                                       {
@@ -1590,8 +1591,11 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                   }
                                 >
                                   <Text
+                                    accessibilityLabel="Revoked"
+                                    accessibilityRole="text"
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
