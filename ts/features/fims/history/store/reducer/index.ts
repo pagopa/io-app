@@ -12,7 +12,8 @@ import { Action } from "../../../../../store/actions/types";
 import {
   fimsHistoryExport,
   fimsHistoryGet,
-  resetFimsHistoryExportState
+  resetFimsHistoryExportState,
+  resetFimsHistoryState
 } from "../actions";
 
 export type FimsExportSuccessStates = "SUCCESS" | "ALREADY_EXPORTING";
@@ -48,7 +49,7 @@ const reducer = (
       return {
         ...state,
         consentsList: pot.some({
-          ...action.payload,
+          continuationToken: action.payload.continuationToken,
           items: [...currentHistoryItems, ...action.payload.items]
         })
       };
@@ -76,6 +77,12 @@ const reducer = (
       return {
         ...state,
         historyExportState: remoteUndefined
+      };
+    case getType(resetFimsHistoryState):
+      return {
+        // export state shouldn't be reset in order to avoid possible concurrency
+        ...state,
+        consentsList: pot.none
       };
   }
   return state;
