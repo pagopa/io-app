@@ -179,7 +179,7 @@ export const useIOBarcodeCameraScanner = ({
 
   const prevDisabled = usePrevious(isDisabled);
   const device = useCameraDevice("back", {
-    physicalDevices: ["ultra-wide-angle-camera"]
+    physicalDevices: ["wide-angle-camera"]
   });
 
   // Checks that the device has a torch
