@@ -820,183 +820,191 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "flexGrow": 1,
-                                        "flexShrink": 1,
-                                        "paddingEnd": 8,
+                                        "columnGap": 12,
+                                        "display": "flex",
+                                        "flexDirection": "row",
                                       }
                                     }
                                   >
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
+                                    <View
+                                      style={
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
+                                          "flexGrow": 1,
+                                          "flexShrink": 1,
                                         }
                                       }
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={1}
-                                      style={
-                                        [
+                                    >
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="grey-700"
+                                        defaultColor="blue"
+                                        defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
                                           {
                                             "fontSize": 14,
                                             "lineHeight": 21,
-                                          },
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "400",
-                                          },
-                                        ]
-                                      }
-                                      weight="Regular"
-                                    >
-                                      Due date 01/01/2024
-                                    </Text>
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="blueIO-500"
-                                      defaultColor="black"
-                                      defaultWeight="Semibold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
+                                          }
                                         }
-                                      }
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={2}
-                                      style={
-                                        [
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {
+                                              "fontSize": 14,
+                                              "lineHeight": 21,
+                                            },
+                                            {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                            },
+                                          ]
+                                        }
+                                        weight="Regular"
+                                      >
+                                        Due date 01/01/2024
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="blueIO-500"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
                                           {
                                             "fontSize": 16,
                                             "lineHeight": 21,
-                                          },
-                                          {
-                                            "color": "#0B3EE3",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                          },
-                                        ]
-                                      }
-                                      weight="Semibold"
-                                    >
-                                      Uno due tre
-                                    </Text>
-                                  </View>
-                                  <View
-                                    style={
-                                      {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "flex-end",
-                                        "marginLeft": 12,
-                                      }
-                                    }
-                                  >
-                                    <Text
-                                      accessibilityLabel="1.99 €"
-                                      allowFontScaling={false}
-                                      color="blue"
-                                      defaultColor="black"
-                                      defaultWeight="Semibold"
-                                      dynamicTypeRamp="headline"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
+                                          }
+                                        }
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
+                                        style={
+                                          [
+                                            {
+                                              "fontSize": 16,
+                                              "lineHeight": 21,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                            },
+                                          ]
+                                        }
+                                        weight="Semibold"
+                                      >
+                                        Uno due tre
+                                      </Text>
+                                    </View>
+                                    <View
+                                      style={
                                         {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "flex-end",
                                         }
                                       }
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={1}
-                                      style={
-                                        [
+                                    >
+                                      <Text
+                                        accessibilityLabel="1.99 €"
+                                        allowFontScaling={false}
+                                        color="blueIO-500"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
                                           {
                                             "fontSize": 18,
                                             "lineHeight": 25,
-                                          },
-                                          {
-                                            "color": "#0073E6",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                          },
-                                        ]
-                                      }
-                                      weight="Semibold"
-                                    >
-                                      1.99 €
-                                    </Text>
-                                    <RNSVGSvgView
-                                      accessibilityElementsHidden={true}
-                                      accessibilityLabel=""
-                                      accessible={false}
-                                      align="xMidYMid"
-                                      bbHeight={24}
-                                      bbWidth={24}
-                                      focusable={false}
-                                      height={24}
-                                      importantForAccessibility="no-hide-descendants"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
-                                      style={
-                                        [
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          {
-                                            "color": "#0073E6",
-                                          },
-                                          {
-                                            "flex": 0,
-                                            "height": 24,
-                                            "width": 24,
-                                          },
-                                        ]
-                                      }
-                                      tintColor="#0073E6"
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={24}
-                                    >
-                                      <RNSVGGroup
-                                        fill={
-                                          {
-                                            "payload": 4278190080,
-                                            "type": 0,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {
+                                              "fontSize": 18,
+                                              "lineHeight": 25,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                            },
+                                          ]
+                                        }
+                                        weight="Semibold"
                                       >
-                                        <RNSVGPath
-                                          clipRule={0}
-                                          d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
+                                        1.99 €
+                                      </Text>
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={24}
+                                        bbWidth={24}
+                                        focusable={false}
+                                        height={24}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 24,
+                                              "width": 24,
+                                            },
+                                          ]
+                                        }
+                                        tintColor="#0B3EE3"
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={24}
+                                      >
+                                        <RNSVGGroup
                                           fill={
                                             {
-                                              "type": 2,
+                                              "payload": 4278190080,
+                                              "type": 0,
                                             }
                                           }
-                                          fillRule={0}
-                                          propList={
-                                            [
-                                              "fill",
-                                              "fillRule",
-                                            ]
-                                          }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -1073,195 +1081,203 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "flexGrow": 1,
-                                        "flexShrink": 1,
-                                        "paddingEnd": 8,
-                                      }
-                                    }
-                                  >
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
-                                        }
-                                      }
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={1}
-                                      style={
-                                        [
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          },
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "400",
-                                          },
-                                        ]
-                                      }
-                                      weight="Regular"
-                                    >
-                                      Notice code
-                                    </Text>
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="blueIO-500"
-                                      defaultColor="black"
-                                      defaultWeight="Semibold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
-                                        }
-                                      }
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={2}
-                                      style={
-                                        [
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          },
-                                          {
-                                            "color": "#0B3EE3",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                          },
-                                        ]
-                                      }
-                                      weight="Semibold"
-                                    >
-                                      0123  4567  8912  3456  20
-                                    </Text>
-                                  </View>
-                                  <View
-                                    style={
-                                      {
-                                        "alignItems": "center",
+                                        "columnGap": 12,
+                                        "display": "flex",
                                         "flexDirection": "row",
-                                        "justifyContent": "flex-end",
-                                        "marginLeft": 12,
                                       }
                                     }
                                   >
                                     <View
                                       style={
-                                        [
-                                          {
-                                            "alignItems": "center",
-                                            "borderCurve": "continuous",
-                                            "borderRadius": 24,
-                                            "flexDirection": "row",
-                                            "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 4,
-                                          },
-                                          {
-                                            "backgroundColor": "#F4F5F8",
-                                          },
-                                        ]
+                                        {
+                                          "flexGrow": 1,
+                                          "flexShrink": 1,
+                                        }
                                       }
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        ellipsizeMode="tail"
+                                        color="grey-700"
+                                        defaultColor="blue"
+                                        defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          }
+                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {
-                                              "alignSelf": "center",
-                                              "flexShrink": 1,
-                                              "fontSize": 12,
-                                              "lineHeight": 16,
-                                              "textTransform": "uppercase",
-                                            },
-                                            {
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
+                                              "fontSize": 14,
+                                              "lineHeight": 21,
                                             },
                                             {
                                               "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                            },
+                                          ]
+                                        }
+                                        weight="Regular"
+                                      >
+                                        Notice code
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="blueIO-500"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          {
+                                            "fontSize": 16,
+                                            "lineHeight": 21,
+                                          }
+                                        }
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
+                                        style={
+                                          [
+                                            {
+                                              "fontSize": 16,
+                                              "lineHeight": 21,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                            },
+                                          ]
+                                        }
+                                        weight="Semibold"
+                                      >
+                                        0123  4567  8912  3456  20
+                                      </Text>
+                                    </View>
+                                    <View
+                                      style={
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "flex-end",
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#F4F5F8",
                                             },
                                           ]
                                         }
                                       >
-                                        Revoked
-                                      </Text>
-                                    </View>
-                                    <RNSVGSvgView
-                                      accessibilityElementsHidden={true}
-                                      accessibilityLabel=""
-                                      accessible={false}
-                                      align="xMidYMid"
-                                      bbHeight={24}
-                                      bbWidth={24}
-                                      focusable={false}
-                                      height={24}
-                                      importantForAccessibility="no-hide-descendants"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
-                                      style={
-                                        [
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          {
-                                            "color": "#0073E6",
-                                          },
-                                          {
-                                            "flex": 0,
-                                            "height": 24,
-                                            "width": 24,
-                                          },
-                                        ]
-                                      }
-                                      tintColor="#0073E6"
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={24}
-                                    >
-                                      <RNSVGGroup
-                                        fill={
-                                          {
-                                            "payload": 4278190080,
-                                            "type": 0,
-                                          }
-                                        }
-                                      >
-                                        <RNSVGPath
-                                          clipRule={0}
-                                          d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
-                                          fill={
-                                            {
-                                              "type": 2,
-                                            }
-                                          }
-                                          fillRule={0}
-                                          propList={
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
+                                          style={
                                             [
-                                              "fill",
-                                              "fillRule",
+                                              {
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
+                                              },
+                                              {
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#555C70",
+                                              },
                                             ]
                                           }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
+                                        >
+                                          Revoked
+                                        </Text>
+                                      </View>
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={24}
+                                        bbWidth={24}
+                                        focusable={false}
+                                        height={24}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 24,
+                                              "width": 24,
+                                            },
+                                          ]
+                                        }
+                                        tintColor="#0B3EE3"
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={24}
+                                      >
+                                        <RNSVGGroup
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -1338,195 +1354,203 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "flexGrow": 1,
-                                        "flexShrink": 1,
-                                        "paddingEnd": 8,
-                                      }
-                                    }
-                                  >
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
-                                        }
-                                      }
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={1}
-                                      style={
-                                        [
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          },
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "400",
-                                          },
-                                        ]
-                                      }
-                                      weight="Regular"
-                                    >
-                                      Notice code
-                                    </Text>
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="blueIO-500"
-                                      defaultColor="black"
-                                      defaultWeight="Semibold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
-                                        }
-                                      }
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={2}
-                                      style={
-                                        [
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          },
-                                          {
-                                            "color": "#0B3EE3",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                          },
-                                        ]
-                                      }
-                                      weight="Semibold"
-                                    >
-                                      0123  4567  8912  3456  30
-                                    </Text>
-                                  </View>
-                                  <View
-                                    style={
-                                      {
-                                        "alignItems": "center",
+                                        "columnGap": 12,
+                                        "display": "flex",
                                         "flexDirection": "row",
-                                        "justifyContent": "flex-end",
-                                        "marginLeft": 12,
                                       }
                                     }
                                   >
                                     <View
                                       style={
-                                        [
-                                          {
-                                            "alignItems": "center",
-                                            "borderCurve": "continuous",
-                                            "borderRadius": 24,
-                                            "flexDirection": "row",
-                                            "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 4,
-                                          },
-                                          {
-                                            "backgroundColor": "#F4F5F8",
-                                          },
-                                        ]
+                                        {
+                                          "flexGrow": 1,
+                                          "flexShrink": 1,
+                                        }
                                       }
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        ellipsizeMode="tail"
+                                        color="grey-700"
+                                        defaultColor="blue"
+                                        defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          }
+                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {
-                                              "alignSelf": "center",
-                                              "flexShrink": 1,
-                                              "fontSize": 12,
-                                              "lineHeight": 16,
-                                              "textTransform": "uppercase",
-                                            },
-                                            {
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
+                                              "fontSize": 14,
+                                              "lineHeight": 21,
                                             },
                                             {
                                               "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                            },
+                                          ]
+                                        }
+                                        weight="Regular"
+                                      >
+                                        Notice code
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="blueIO-500"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          {
+                                            "fontSize": 16,
+                                            "lineHeight": 21,
+                                          }
+                                        }
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
+                                        style={
+                                          [
+                                            {
+                                              "fontSize": 16,
+                                              "lineHeight": 21,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                            },
+                                          ]
+                                        }
+                                        weight="Semibold"
+                                      >
+                                        0123  4567  8912  3456  30
+                                      </Text>
+                                    </View>
+                                    <View
+                                      style={
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "flex-end",
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#F4F5F8",
                                             },
                                           ]
                                         }
                                       >
-                                        Expired
-                                      </Text>
-                                    </View>
-                                    <RNSVGSvgView
-                                      accessibilityElementsHidden={true}
-                                      accessibilityLabel=""
-                                      accessible={false}
-                                      align="xMidYMid"
-                                      bbHeight={24}
-                                      bbWidth={24}
-                                      focusable={false}
-                                      height={24}
-                                      importantForAccessibility="no-hide-descendants"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
-                                      style={
-                                        [
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          {
-                                            "color": "#0073E6",
-                                          },
-                                          {
-                                            "flex": 0,
-                                            "height": 24,
-                                            "width": 24,
-                                          },
-                                        ]
-                                      }
-                                      tintColor="#0073E6"
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={24}
-                                    >
-                                      <RNSVGGroup
-                                        fill={
-                                          {
-                                            "payload": 4278190080,
-                                            "type": 0,
-                                          }
-                                        }
-                                      >
-                                        <RNSVGPath
-                                          clipRule={0}
-                                          d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
-                                          fill={
-                                            {
-                                              "type": 2,
-                                            }
-                                          }
-                                          fillRule={0}
-                                          propList={
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
+                                          style={
                                             [
-                                              "fill",
-                                              "fillRule",
+                                              {
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
+                                              },
+                                              {
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#555C70",
+                                              },
                                             ]
                                           }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
+                                        >
+                                          Expired
+                                        </Text>
+                                      </View>
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={24}
+                                        bbWidth={24}
+                                        focusable={false}
+                                        height={24}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 24,
+                                              "width": 24,
+                                            },
+                                          ]
+                                        }
+                                        tintColor="#0B3EE3"
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={24}
+                                      >
+                                        <RNSVGGroup
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -1603,195 +1627,203 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "flexGrow": 1,
-                                        "flexShrink": 1,
-                                        "paddingEnd": 8,
-                                      }
-                                    }
-                                  >
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
-                                        }
-                                      }
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={1}
-                                      style={
-                                        [
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          },
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "400",
-                                          },
-                                        ]
-                                      }
-                                      weight="Regular"
-                                    >
-                                      Notice code
-                                    </Text>
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="blueIO-500"
-                                      defaultColor="black"
-                                      defaultWeight="Semibold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
-                                        }
-                                      }
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={2}
-                                      style={
-                                        [
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          },
-                                          {
-                                            "color": "#0B3EE3",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                          },
-                                        ]
-                                      }
-                                      weight="Semibold"
-                                    >
-                                      0123  4567  8912  3456  40
-                                    </Text>
-                                  </View>
-                                  <View
-                                    style={
-                                      {
-                                        "alignItems": "center",
+                                        "columnGap": 12,
+                                        "display": "flex",
                                         "flexDirection": "row",
-                                        "justifyContent": "flex-end",
-                                        "marginLeft": 12,
                                       }
                                     }
                                   >
                                     <View
                                       style={
-                                        [
-                                          {
-                                            "alignItems": "center",
-                                            "borderCurve": "continuous",
-                                            "borderRadius": 24,
-                                            "flexDirection": "row",
-                                            "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 4,
-                                          },
-                                          {
-                                            "backgroundColor": "#E1F5FE",
-                                          },
-                                        ]
+                                        {
+                                          "flexGrow": 1,
+                                          "flexShrink": 1,
+                                        }
                                       }
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        ellipsizeMode="tail"
+                                        color="grey-700"
+                                        defaultColor="blue"
+                                        defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          }
+                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {
-                                              "alignSelf": "center",
-                                              "flexShrink": 1,
-                                              "fontSize": 12,
-                                              "lineHeight": 16,
-                                              "textTransform": "uppercase",
+                                              "fontSize": 14,
+                                              "lineHeight": 21,
                                             },
                                             {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                            },
+                                          ]
+                                        }
+                                        weight="Regular"
+                                      >
+                                        Notice code
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="blueIO-500"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          {
+                                            "fontSize": 16,
+                                            "lineHeight": 21,
+                                          }
+                                        }
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
+                                        style={
+                                          [
+                                            {
+                                              "fontSize": 16,
+                                              "lineHeight": 21,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
+                                          ]
+                                        }
+                                        weight="Semibold"
+                                      >
+                                        0123  4567  8912  3456  40
+                                      </Text>
+                                    </View>
+                                    <View
+                                      style={
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "flex-end",
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          [
                                             {
-                                              "color": "#215C76",
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#E1F5FE",
                                             },
                                           ]
                                         }
                                       >
-                                        Ongoing
-                                      </Text>
-                                    </View>
-                                    <RNSVGSvgView
-                                      accessibilityElementsHidden={true}
-                                      accessibilityLabel=""
-                                      accessible={false}
-                                      align="xMidYMid"
-                                      bbHeight={24}
-                                      bbWidth={24}
-                                      focusable={false}
-                                      height={24}
-                                      importantForAccessibility="no-hide-descendants"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
-                                      style={
-                                        [
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          {
-                                            "color": "#0073E6",
-                                          },
-                                          {
-                                            "flex": 0,
-                                            "height": 24,
-                                            "width": 24,
-                                          },
-                                        ]
-                                      }
-                                      tintColor="#0073E6"
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={24}
-                                    >
-                                      <RNSVGGroup
-                                        fill={
-                                          {
-                                            "payload": 4278190080,
-                                            "type": 0,
-                                          }
-                                        }
-                                      >
-                                        <RNSVGPath
-                                          clipRule={0}
-                                          d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
-                                          fill={
-                                            {
-                                              "type": 2,
-                                            }
-                                          }
-                                          fillRule={0}
-                                          propList={
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
+                                          style={
                                             [
-                                              "fill",
-                                              "fillRule",
+                                              {
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
+                                              },
+                                              {
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#215C76",
+                                              },
                                             ]
                                           }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
+                                        >
+                                          Ongoing
+                                        </Text>
+                                      </View>
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={24}
+                                        bbWidth={24}
+                                        focusable={false}
+                                        height={24}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 24,
+                                              "width": 24,
+                                            },
+                                          ]
+                                        }
+                                        tintColor="#0B3EE3"
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={24}
+                                      >
+                                        <RNSVGGroup
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -1868,195 +1900,203 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "flexGrow": 1,
-                                        "flexShrink": 1,
-                                        "paddingEnd": 8,
-                                      }
-                                    }
-                                  >
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
-                                        }
-                                      }
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={1}
-                                      style={
-                                        [
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          },
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "400",
-                                          },
-                                        ]
-                                      }
-                                      weight="Regular"
-                                    >
-                                      Notice code
-                                    </Text>
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="blueIO-500"
-                                      defaultColor="black"
-                                      defaultWeight="Semibold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
-                                        }
-                                      }
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={2}
-                                      style={
-                                        [
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          },
-                                          {
-                                            "color": "#0B3EE3",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                          },
-                                        ]
-                                      }
-                                      weight="Semibold"
-                                    >
-                                      0123  4567  8912  3456  50
-                                    </Text>
-                                  </View>
-                                  <View
-                                    style={
-                                      {
-                                        "alignItems": "center",
+                                        "columnGap": 12,
+                                        "display": "flex",
                                         "flexDirection": "row",
-                                        "justifyContent": "flex-end",
-                                        "marginLeft": 12,
                                       }
                                     }
                                   >
                                     <View
                                       style={
-                                        [
-                                          {
-                                            "alignItems": "center",
-                                            "borderCurve": "continuous",
-                                            "borderRadius": 24,
-                                            "flexDirection": "row",
-                                            "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 4,
-                                          },
-                                          {
-                                            "backgroundColor": "#E1F4E1",
-                                          },
-                                        ]
+                                        {
+                                          "flexGrow": 1,
+                                          "flexShrink": 1,
+                                        }
                                       }
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        ellipsizeMode="tail"
+                                        color="grey-700"
+                                        defaultColor="blue"
+                                        defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          }
+                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {
-                                              "alignSelf": "center",
-                                              "flexShrink": 1,
-                                              "fontSize": 12,
-                                              "lineHeight": 16,
-                                              "textTransform": "uppercase",
+                                              "fontSize": 14,
+                                              "lineHeight": 21,
                                             },
                                             {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                            },
+                                          ]
+                                        }
+                                        weight="Regular"
+                                      >
+                                        Notice code
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="blueIO-500"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          {
+                                            "fontSize": 16,
+                                            "lineHeight": 21,
+                                          }
+                                        }
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
+                                        style={
+                                          [
+                                            {
+                                              "fontSize": 16,
+                                              "lineHeight": 21,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
+                                          ]
+                                        }
+                                        weight="Semibold"
+                                      >
+                                        0123  4567  8912  3456  50
+                                      </Text>
+                                    </View>
+                                    <View
+                                      style={
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "flex-end",
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          [
                                             {
-                                              "color": "#224021",
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#E1F4E1",
                                             },
                                           ]
                                         }
                                       >
-                                        Paid
-                                      </Text>
-                                    </View>
-                                    <RNSVGSvgView
-                                      accessibilityElementsHidden={true}
-                                      accessibilityLabel=""
-                                      accessible={false}
-                                      align="xMidYMid"
-                                      bbHeight={24}
-                                      bbWidth={24}
-                                      focusable={false}
-                                      height={24}
-                                      importantForAccessibility="no-hide-descendants"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
-                                      style={
-                                        [
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          {
-                                            "color": "#0073E6",
-                                          },
-                                          {
-                                            "flex": 0,
-                                            "height": 24,
-                                            "width": 24,
-                                          },
-                                        ]
-                                      }
-                                      tintColor="#0073E6"
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={24}
-                                    >
-                                      <RNSVGGroup
-                                        fill={
-                                          {
-                                            "payload": 4278190080,
-                                            "type": 0,
-                                          }
-                                        }
-                                      >
-                                        <RNSVGPath
-                                          clipRule={0}
-                                          d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
-                                          fill={
-                                            {
-                                              "type": 2,
-                                            }
-                                          }
-                                          fillRule={0}
-                                          propList={
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
+                                          style={
                                             [
-                                              "fill",
-                                              "fillRule",
+                                              {
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
+                                              },
+                                              {
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#224021",
+                                              },
                                             ]
                                           }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
+                                        >
+                                          Paid
+                                        </Text>
+                                      </View>
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={24}
+                                        bbWidth={24}
+                                        focusable={false}
+                                        height={24}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 24,
+                                              "width": 24,
+                                            },
+                                          ]
+                                        }
+                                        tintColor="#0B3EE3"
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={24}
+                                      >
+                                        <RNSVGGroup
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -2133,195 +2173,203 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "flexGrow": 1,
-                                        "flexShrink": 1,
-                                        "paddingEnd": 8,
-                                      }
-                                    }
-                                  >
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
-                                        }
-                                      }
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={1}
-                                      style={
-                                        [
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          },
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "400",
-                                          },
-                                        ]
-                                      }
-                                      weight="Regular"
-                                    >
-                                      Notice code
-                                    </Text>
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="blueIO-500"
-                                      defaultColor="black"
-                                      defaultWeight="Semibold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
-                                        }
-                                      }
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={2}
-                                      style={
-                                        [
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          },
-                                          {
-                                            "color": "#0B3EE3",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                          },
-                                        ]
-                                      }
-                                      weight="Semibold"
-                                    >
-                                      0123  4567  8912  3456  60
-                                    </Text>
-                                  </View>
-                                  <View
-                                    style={
-                                      {
-                                        "alignItems": "center",
+                                        "columnGap": 12,
+                                        "display": "flex",
                                         "flexDirection": "row",
-                                        "justifyContent": "flex-end",
-                                        "marginLeft": 12,
                                       }
                                     }
                                   >
                                     <View
                                       style={
-                                        [
-                                          {
-                                            "alignItems": "center",
-                                            "borderCurve": "continuous",
-                                            "borderRadius": 24,
-                                            "flexDirection": "row",
-                                            "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 4,
-                                          },
-                                          {
-                                            "backgroundColor": "#FFD9D9",
-                                          },
-                                        ]
+                                        {
+                                          "flexGrow": 1,
+                                          "flexShrink": 1,
+                                        }
                                       }
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        ellipsizeMode="tail"
+                                        color="grey-700"
+                                        defaultColor="blue"
+                                        defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          }
+                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {
-                                              "alignSelf": "center",
-                                              "flexShrink": 1,
-                                              "fontSize": 12,
-                                              "lineHeight": 16,
-                                              "textTransform": "uppercase",
+                                              "fontSize": 14,
+                                              "lineHeight": 21,
                                             },
                                             {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                            },
+                                          ]
+                                        }
+                                        weight="Regular"
+                                      >
+                                        Notice code
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="blueIO-500"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          {
+                                            "fontSize": 16,
+                                            "lineHeight": 21,
+                                          }
+                                        }
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
+                                        style={
+                                          [
+                                            {
+                                              "fontSize": 16,
+                                              "lineHeight": 21,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
+                                          ]
+                                        }
+                                        weight="Semibold"
+                                      >
+                                        0123  4567  8912  3456  60
+                                      </Text>
+                                    </View>
+                                    <View
+                                      style={
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "flex-end",
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          [
                                             {
-                                              "color": "#5D1313",
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#FFD9D9",
                                             },
                                           ]
                                         }
                                       >
-                                        Error
-                                      </Text>
-                                    </View>
-                                    <RNSVGSvgView
-                                      accessibilityElementsHidden={true}
-                                      accessibilityLabel=""
-                                      accessible={false}
-                                      align="xMidYMid"
-                                      bbHeight={24}
-                                      bbWidth={24}
-                                      focusable={false}
-                                      height={24}
-                                      importantForAccessibility="no-hide-descendants"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
-                                      style={
-                                        [
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          {
-                                            "color": "#0073E6",
-                                          },
-                                          {
-                                            "flex": 0,
-                                            "height": 24,
-                                            "width": 24,
-                                          },
-                                        ]
-                                      }
-                                      tintColor="#0073E6"
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={24}
-                                    >
-                                      <RNSVGGroup
-                                        fill={
-                                          {
-                                            "payload": 4278190080,
-                                            "type": 0,
-                                          }
-                                        }
-                                      >
-                                        <RNSVGPath
-                                          clipRule={0}
-                                          d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
-                                          fill={
-                                            {
-                                              "type": 2,
-                                            }
-                                          }
-                                          fillRule={0}
-                                          propList={
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
+                                          style={
                                             [
-                                              "fill",
-                                              "fillRule",
+                                              {
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
+                                              },
+                                              {
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#5D1313",
+                                              },
                                             ]
                                           }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
+                                        >
+                                          Error
+                                        </Text>
+                                      </View>
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={24}
+                                        bbWidth={24}
+                                        focusable={false}
+                                        height={24}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 24,
+                                              "width": 24,
+                                            },
+                                          ]
+                                        }
+                                        tintColor="#0B3EE3"
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={24}
+                                      >
+                                        <RNSVGGroup
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -2398,195 +2446,203 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "flexGrow": 1,
-                                        "flexShrink": 1,
-                                        "paddingEnd": 8,
-                                      }
-                                    }
-                                  >
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
-                                        }
-                                      }
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={1}
-                                      style={
-                                        [
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          },
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "400",
-                                          },
-                                        ]
-                                      }
-                                      weight="Regular"
-                                    >
-                                      Notice code
-                                    </Text>
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="blueIO-500"
-                                      defaultColor="black"
-                                      defaultWeight="Semibold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
-                                        }
-                                      }
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={2}
-                                      style={
-                                        [
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          },
-                                          {
-                                            "color": "#0B3EE3",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                          },
-                                        ]
-                                      }
-                                      weight="Semibold"
-                                    >
-                                      0123  4567  8912  3456  70
-                                    </Text>
-                                  </View>
-                                  <View
-                                    style={
-                                      {
-                                        "alignItems": "center",
+                                        "columnGap": 12,
+                                        "display": "flex",
                                         "flexDirection": "row",
-                                        "justifyContent": "flex-end",
-                                        "marginLeft": 12,
                                       }
                                     }
                                   >
                                     <View
                                       style={
-                                        [
-                                          {
-                                            "alignItems": "center",
-                                            "borderCurve": "continuous",
-                                            "borderRadius": 24,
-                                            "flexDirection": "row",
-                                            "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 4,
-                                          },
-                                          {
-                                            "backgroundColor": "#FFD9D9",
-                                          },
-                                        ]
+                                        {
+                                          "flexGrow": 1,
+                                          "flexShrink": 1,
+                                        }
                                       }
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        ellipsizeMode="tail"
+                                        color="grey-700"
+                                        defaultColor="blue"
+                                        defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          }
+                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {
-                                              "alignSelf": "center",
-                                              "flexShrink": 1,
-                                              "fontSize": 12,
-                                              "lineHeight": 16,
-                                              "textTransform": "uppercase",
+                                              "fontSize": 14,
+                                              "lineHeight": 21,
                                             },
                                             {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                            },
+                                          ]
+                                        }
+                                        weight="Regular"
+                                      >
+                                        Notice code
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="blueIO-500"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          {
+                                            "fontSize": 16,
+                                            "lineHeight": 21,
+                                          }
+                                        }
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
+                                        style={
+                                          [
+                                            {
+                                              "fontSize": 16,
+                                              "lineHeight": 21,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
+                                          ]
+                                        }
+                                        weight="Semibold"
+                                      >
+                                        0123  4567  8912  3456  70
+                                      </Text>
+                                    </View>
+                                    <View
+                                      style={
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "flex-end",
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          [
                                             {
-                                              "color": "#5D1313",
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "backgroundColor": "#FFD9D9",
                                             },
                                           ]
                                         }
                                       >
-                                        Error
-                                      </Text>
-                                    </View>
-                                    <RNSVGSvgView
-                                      accessibilityElementsHidden={true}
-                                      accessibilityLabel=""
-                                      accessible={false}
-                                      align="xMidYMid"
-                                      bbHeight={24}
-                                      bbWidth={24}
-                                      focusable={false}
-                                      height={24}
-                                      importantForAccessibility="no-hide-descendants"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
-                                      style={
-                                        [
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          {
-                                            "color": "#0073E6",
-                                          },
-                                          {
-                                            "flex": 0,
-                                            "height": 24,
-                                            "width": 24,
-                                          },
-                                        ]
-                                      }
-                                      tintColor="#0073E6"
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={24}
-                                    >
-                                      <RNSVGGroup
-                                        fill={
-                                          {
-                                            "payload": 4278190080,
-                                            "type": 0,
-                                          }
-                                        }
-                                      >
-                                        <RNSVGPath
-                                          clipRule={0}
-                                          d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
-                                          fill={
-                                            {
-                                              "type": 2,
-                                            }
-                                          }
-                                          fillRule={0}
-                                          propList={
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
+                                          style={
                                             [
-                                              "fill",
-                                              "fillRule",
+                                              {
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
+                                              },
+                                              {
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              {
+                                                "color": "#5D1313",
+                                              },
                                             ]
                                           }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
+                                        >
+                                          Error
+                                        </Text>
+                                      </View>
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={24}
+                                        bbWidth={24}
+                                        focusable={false}
+                                        height={24}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 24,
+                                              "width": 24,
+                                            },
+                                          ]
+                                        }
+                                        tintColor="#0B3EE3"
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={24}
+                                      >
+                                        <RNSVGGroup
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
