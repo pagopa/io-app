@@ -26,12 +26,8 @@ type SuccessListItemProps = {
   serviceData: ServicePublic;
   consent: Consent;
 };
-type HistoryListItemProps = {
+type BaseHistoryListItemProps = {
   item: Consent;
-};
-
-type FailureListItemProps = {
-  consent: Consent;
 };
 
 // --------- LISTITEMS
@@ -48,7 +44,7 @@ const SuccessListItem = ({ serviceData, consent }: SuccessListItemProps) => (
   />
 );
 
-const FailureListItem = ({ consent }: FailureListItemProps) => {
+const FailureListItem = ({ item }: BaseHistoryListItemProps) => {
   const theme = useIOTheme();
 
   return (
@@ -67,7 +63,7 @@ const FailureListItem = ({ consent }: FailureListItemProps) => {
           <Icon name="calendar" size={16} color="grey-300" />
           <HSpacer size={4} />
           <Caption color={theme["textBody-tertiary"]}>
-            {dateToAccessibilityReadableFormat(consent.timestamp)}
+            {dateToAccessibilityReadableFormat(item.timestamp)}
           </Caption>
         </View>
         <VSpacer size={4} />
@@ -82,14 +78,14 @@ const FailureListItem = ({ consent }: FailureListItemProps) => {
 
 // ------- RENDERER
 
-export const FimsHistoryListItem = ({ item }: HistoryListItemProps) => {
+export const FimsHistoryListItem = ({ item }: BaseHistoryListItemProps) => {
   const { serviceData } = useAutoFetchingServiceByIdPot(
     item.service_id as ServiceId
   );
 
   return potFoldWithDefault(serviceData, {
     default: LoadingFimsHistoryListItem,
-    noneError: _ => <FailureListItem consent={item} />,
+    noneError: _ => <FailureListItem item={item} />,
     some: data => <SuccessListItem serviceData={data} consent={item} />,
     someError: data => <SuccessListItem serviceData={data} consent={item} />,
     someLoading: data => <SuccessListItem serviceData={data} consent={item} />
