@@ -12,7 +12,7 @@ import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
 import { ItwCredentialStatus } from "../components/ItwCredentialCard";
 import { JsonFromString } from "./ItwCodecUtils";
-import { ParsedCredential } from "./itwTypesUtils";
+import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
 /**
  *
