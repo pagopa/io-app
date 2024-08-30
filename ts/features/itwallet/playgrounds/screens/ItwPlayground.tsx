@@ -17,6 +17,7 @@ import {
 } from "../../machine/provider";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwTrialSystemSection } from "../components/ItwTrialSystemSection";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 
 // Sample markdown text
 const sampleMarkdown = `
@@ -60,6 +61,10 @@ const ItwPlayground = () => {
     title: "ITW Playground"
   });
 
+  const startCredentialIssuance = (credentialType: CredentialType) => () => {
+    credentialMachineRef.send({ type: "select-credential", credentialType });
+  };
+
   return (
     <ScrollView>
       <ContentWrapper>
@@ -69,21 +74,25 @@ const ItwPlayground = () => {
           value="mDL issuing"
           accessibilityLabel={"mDL Issuing"}
           description="Start the issuing flow to get your mobile driving license"
-          onPress={() => undefined}
+          onPress={startCredentialIssuance(CredentialType.DRIVING_LICENSE)}
         />
         <Divider />
         <ListItemNav
           value="TS issuing"
           accessibilityLabel={"TS Issuing"}
           description="Start the issuing flow to get your health insurance card"
-          onPress={() => undefined}
+          onPress={startCredentialIssuance(
+            CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+          )}
         />
         <Divider />
         <ListItemNav
           value="DC issuing"
           accessibilityLabel={"DC Issuing"}
           description="Start the issuing flow to get your european disability card card"
-          onPress={() => undefined}
+          onPress={startCredentialIssuance(
+            CredentialType.EUROPEAN_DISABILITY_CARD
+          )}
         />
         <VSpacer size={16} />
         <ItwLifecycleSection />
