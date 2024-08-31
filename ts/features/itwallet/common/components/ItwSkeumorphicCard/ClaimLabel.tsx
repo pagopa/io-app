@@ -1,28 +1,26 @@
 import { useTypographyFactory } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Dimensions, Text } from "react-native";
+import { Text, useWindowDimensions } from "react-native";
 
 type ClaimLabelProps = Omit<React.ComponentPropsWithRef<typeof Text>, "style">;
-
-// Since we only support portrait mode, we don't need to listen to screen size
-// changes
-const screenDimensions = Dimensions.get("screen");
-
-// Maximum screen width to scale the font size on small devices
-const screenWidthThreshold = 400;
 
 /**
  * Custom component to display text claim components on skeumorphic credential cards
  */
 export const ClaimLabel: React.FunctionComponent<ClaimLabelProps> = props => {
-  const fontScale = screenDimensions.width < screenWidthThreshold ? 0.9 : 1;
+  const { width } = useWindowDimensions();
+
+  // 360 is the width of the screen in the smallest device
+  // We calculated the optimal font size for a 360px screen
+  // and then we scale it to the current screen width
+  const fontScale = width / 360;
 
   return useTypographyFactory({
     ...props,
     defaultWeight: "Semibold",
     defaultColor: "black",
     font: "TitilliumSansPro",
-    fontStyle: { fontSize: 13 * fontScale },
+    fontStyle: { fontSize: 11 * fontScale },
     lineBreakMode: "head",
     numberOfLines: 1
   });
