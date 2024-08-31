@@ -33,7 +33,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 13,
+          "fontSize": 22.916666666666668,
         }
       }
       lineBreakMode="head"
@@ -41,7 +41,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       style={
         [
           {
-            "fontSize": 13,
+            "fontSize": 22.916666666666668,
           },
           {
             "color": "#0E0F13",
@@ -78,7 +78,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 13,
+          "fontSize": 22.916666666666668,
         }
       }
       lineBreakMode="head"
@@ -86,7 +86,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       style={
         [
           {
-            "fontSize": 13,
+            "fontSize": 22.916666666666668,
           },
           {
             "color": "#0E0F13",
@@ -123,7 +123,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 13,
+          "fontSize": 22.916666666666668,
         }
       }
       lineBreakMode="head"
@@ -131,7 +131,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       style={
         [
           {
-            "fontSize": 13,
+            "fontSize": 22.916666666666668,
           },
           {
             "color": "#0E0F13",
@@ -168,7 +168,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 13,
+          "fontSize": 22.916666666666668,
         }
       }
       lineBreakMode="head"
@@ -176,7 +176,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       style={
         [
           {
-            "fontSize": 13,
+            "fontSize": 22.916666666666668,
           },
           {
             "color": "#0E0F13",
@@ -260,7 +260,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 13,
+          "fontSize": 22.916666666666668,
         }
       }
       lineBreakMode="head"
@@ -268,7 +268,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       style={
         [
           {
-            "fontSize": 13,
+            "fontSize": 22.916666666666668,
           },
           {
             "color": "#0E0F13",
@@ -305,7 +305,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 13,
+          "fontSize": 22.916666666666668,
         }
       }
       lineBreakMode="head"
@@ -313,7 +313,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       style={
         [
           {
-            "fontSize": 13,
+            "fontSize": 22.916666666666668,
           },
           {
             "color": "#0E0F13",
@@ -350,7 +350,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 13,
+          "fontSize": 22.916666666666668,
         }
       }
       lineBreakMode="head"
@@ -358,7 +358,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       style={
         [
           {
-            "fontSize": 13,
+            "fontSize": 22.916666666666668,
           },
           {
             "color": "#0E0F13",
@@ -395,7 +395,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 13,
+          "fontSize": 22.916666666666668,
         }
       }
       lineBreakMode="head"
@@ -403,7 +403,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       style={
         [
           {
-            "fontSize": 13,
+            "fontSize": 22.916666666666668,
           },
           {
             "color": "#0E0F13",
@@ -440,7 +440,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 13,
+          "fontSize": 22.916666666666668,
         }
       }
       lineBreakMode="head"
@@ -448,7 +448,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       style={
         [
           {
-            "fontSize": 13,
+            "fontSize": 22.916666666666668,
           },
           {
             "color": "#0E0F13",
@@ -485,7 +485,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 13,
+          "fontSize": 22.916666666666668,
         }
       }
       lineBreakMode="head"
@@ -493,7 +493,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       style={
         [
           {
-            "fontSize": 13,
+            "fontSize": 22.916666666666668,
           },
           {
             "color": "#0E0F13",
@@ -530,7 +530,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 13,
+          "fontSize": 22.916666666666668,
         }
       }
       lineBreakMode="head"
@@ -538,7 +538,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       style={
         [
           {
-            "fontSize": 13,
+            "fontSize": 22.916666666666668,
           },
           {
             "color": "#0E0F13",
@@ -575,7 +575,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 13,
+          "fontSize": 22.916666666666668,
         }
       }
       lineBreakMode="head"
@@ -583,7 +583,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       style={
         [
           {
-            "fontSize": 13,
+            "fontSize": 22.916666666666668,
           },
           {
             "color": "#0E0F13",
