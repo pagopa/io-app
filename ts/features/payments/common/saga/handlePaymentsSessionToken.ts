@@ -6,7 +6,6 @@ import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import {
   RefreshThirdPartyApiCallOptions,
-  withRefreshApiCall,
   withThirdPartyRefreshApiCall
 } from "../../../fastLogin/saga/utils";
 import { PagoPaClient } from "../../common/api/client";
