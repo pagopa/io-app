@@ -7,12 +7,14 @@ import { handleWalletCredentialsRehydration } from "../../credentials/saga/handl
 import { itwTrialId } from "../../../../config";
 import { itwCieIsSupported } from "../../identification/store/actions";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
+import { watchItwLifecycleSaga } from "../../lifecycle/saga";
 
 export function* watchItwSaga(): SagaIterator {
   yield* fork(checkWalletInstanceStateSaga);
   yield* fork(handleWalletCredentialsRehydration);
   yield* fork(watchItwIdentificationSaga);
   yield* fork(watchItwCredentialsSaga);
+  yield* fork(watchItwLifecycleSaga);
 
   // TODO: [SIW-1404] remove this CIE check and move the logic to xstate
   yield* put(itwCieIsSupported.request());

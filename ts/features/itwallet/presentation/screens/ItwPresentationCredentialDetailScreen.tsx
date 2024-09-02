@@ -1,42 +1,31 @@
 import {
   ContentWrapper,
-  Divider,
-  IOVisualCostants,
+  IOSpacingScale,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import I18n from "../../../../i18n";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
-import { ItwCredentialClaimsSection } from "../../common/components/ItwCredentialClaimsSection";
-import { ItwReleaserName } from "../../common/components/ItwReleaserName";
-import {
-  getCredentialExpireStatus,
-  parseClaims
-} from "../../common/utils/itwClaimsUtils";
-import {
-  ItWalletError,
-  getItwGenericMappedError
-} from "../../common/utils/itwErrorsUtils";
+import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
+import { getHumanReadableParsedCredential } from "../../common/utils/debug";
+import { getCredentialExpireStatus } from "../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlertsSection";
+import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection";
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
-import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -56,7 +45,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   return pipe(
     credentialOption,
     O.fold(
-      () => <ErrorView />,
+      () => <ItwGenericErrorContent />,
       credential => <ContentView credential={credential} />
     )
   );
@@ -81,7 +70,9 @@ const ContentView = ({ credential }: ContentProps) => {
   });
 
   useDebugInfo({
-    parsedCredential: credential.parsedCredential
+    parsedCredential: getHumanReadableParsedCredential(
+      credential.parsedCredential
+    )
   });
 
   const credentialStatus = getCredentialExpireStatus(
@@ -108,17 +99,13 @@ const ContentView = ({ credential }: ContentProps) => {
           <VSpacer size={16} />
           <ItwPresentationAlertsSection credential={credential} />
           <VSpacer size={16} />
-          <ItwCredentialClaimsSection
+          <ItwPresentationClaimsSection
             title={I18n.t(
               "features.itWallet.presentation.credentialDetails.documentDataTitle"
             )}
-            claims={parseClaims(credential.parsedCredential, {
-              exclude: ["unique_id"]
-            })}
+            data={credential}
             canHideValues={true}
           />
-          <Divider />
-          <ItwReleaserName credential={credential} />
           <VSpacer size={24} />
           <ItwPresentationDetailFooter credential={credential} />
         </ContentWrapper>
@@ -127,20 +114,12 @@ const ContentView = ({ credential }: ContentProps) => {
   );
 };
 
-/**
- * Error view component which currently displays a generic error.
- * @param error - optional ItWalletError to be displayed.
- */
-const ErrorView = ({ error: _ }: { error?: ItWalletError }) => {
-  const navigation = useIONavigation();
-  const mappedError = getItwGenericMappedError(() => navigation.goBack());
-  return <OperationResultScreenContent {...mappedError} />;
-};
+const cardPaddingHorizontal: IOSpacingScale = 16;
 
 const styles = StyleSheet.create({
   cardContainer: {
     position: "relative",
-    paddingHorizontal: IOVisualCostants.appMarginDefault
+    paddingHorizontal: cardPaddingHorizontal
   },
   cardBackdrop: {
     height: "200%", // Twice the card in order to avoid the white background when the scrollview bounces

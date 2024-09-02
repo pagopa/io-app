@@ -18,11 +18,14 @@ import {
   paymentsButtonStateSelector
 } from "../../store/reducers/payments";
 import { trackPNOptInMessageAccepted } from "../../../pn/analytics";
-import { handleCtaAction } from "../../utils/messages";
+import { CTAActionType, handleCtaAction } from "../../utils/messages";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { MessageDetailsPaymentButton } from "./MessageDetailsPaymentButton";
-import { computeAndTrackCTAPressAnalytics } from "./detailsUtils";
+import {
+  computeAndTrackCTAPressAnalytics,
+  computeAndTrackFIMSAuthenticationStart
+} from "./detailsUtils";
 
 const styles = StyleSheet.create({
   container: {
@@ -290,6 +293,14 @@ export const MessageDetailsStickyFooter = ({
     canNavigateToPaymentFromMessageSelector(state)
   );
 
+  const onCTAPreActionCallback = React.useCallback(
+    (cta: CTA) => (type: CTAActionType) => {
+      const state = store.getState();
+      computeAndTrackFIMSAuthenticationStart(type, cta.text, serviceId, state);
+    },
+    [serviceId, store]
+  );
+
   const linkTo = useLinkTo();
   const onCTAPressedCallback = React.useCallback(
     (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => {
@@ -298,9 +309,9 @@ export const MessageDetailsStickyFooter = ({
       if (isPNOptInMessage) {
         trackPNOptInMessageAccepted();
       }
-      handleCtaAction(cta, linkTo);
+      handleCtaAction(cta, linkTo, onCTAPreActionCallback(cta));
     },
-    [linkTo, serviceId, store]
+    [linkTo, onCTAPreActionCallback, serviceId, store]
   );
 
   const footerData = computeFooterData(paymentData, paymentButtonStatus, ctas);

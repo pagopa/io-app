@@ -208,10 +208,6 @@ global:
     invalidSearchBarText: Enter at least {{minCharacter}} characters
     noResultsFound: "There are no results for this search: try something else."
     noResultsTitle: No results.
-  media:
-    email: "Email"
-    pec: "Certified email"
-    phone: "Phone"
 tablet:
   message: The IO interface is optimized for smartphones, but all the functions compatible with your device are still available.
 rooted:
@@ -225,13 +221,8 @@ rooted:
   bodyAndroid: !include rooted_body.md
   continueAlert:
     title: Continue
-    body: Are you sure you understand the risks and want to continue?
-    confirmText: Yes
-    cancelText: Cancel
   cancelAlert:
     title: Exit
-    body: You can close the app
-    confirmText: Exit
 locales:
   it: Italian
   en: English
@@ -285,15 +276,6 @@ profile:
     accessibility:
       fiscalCodeHint: Image of barcode and fiscal code
       unavailable: Unavailable
-      preview:
-        label: Preview of your fiscal code document
-        hint: Activate to show the facsimile of your fiscal code document
-      front:
-        label: Front-side of the document code {{code}} of {{name}} {{family_name}}, gender {{gender}}, born in {{placeOfBirth}},{{province}} the {{birthDate}}
-        hint: Activate to show the landscape view
-      rear:
-        label: barcode of your document
-        hint: Activate to show the landscape view
     title: Your personal documents
     fiscalCode: Fiscal code
     description: Use the barcode to communicate your fiscal code when asked.
@@ -504,12 +486,6 @@ profile:
       need_validate: To be validated
       nameSurname: Name and surname
       fiscalCode: Fiscal code
-    email:
-      contextualHelpTitle: How to manage your email
-      contextualHelpContent: !include profile/profile_data_email_address.md
-    spid_email:
-      contextualHelpTitle: This data is set in your SPID profile
-      contextualHelpContent: !include profile/profile_data_spid_email.md
   security:
     title: Security
     subtitle: Manage in-app authentication methods.
@@ -727,10 +703,7 @@ authentication:
       contextualHelpBody: !include help/ciePinHelpBody.md
       contextualHelpCTA: Did you forget your PIN/PUK?
     pinTempLocked:
-      header: Login with CIE
       title: Card temporarily locked
-      content: !include cie/temporary_blocked_cie.md
-      button: "Load/open CieID"
     card:
       title: Hold your CIE on the back of your phone
       titleiOS: Place the CIE on your phone, on top.
@@ -762,8 +735,6 @@ authentication:
         unknownCardHelpLink: What is the Electronic Identity Card?
         genericErrorTitle: We could not retrieve the data from the card
         genericErrorSubtitle: If you've had the problem a few times, give it a few minutes and try again.
-    dataUsageConsent:
-      retryCTA: Enter
   spid: SPID
   spid_information_request:
     headerTitle: Insert email address
@@ -815,16 +786,6 @@ authentication:
       body: The selected identity provider is not available at this time, you can try again later. If you have another SPID, choose an alternative provider. You can report the problem with the '?' icon at the top right of the screen.
     login:
       title: Login error
-      body: There was an error with the login, please retry!
-    spid:
-      unknown: Unknown error
-      error_19: "You have entered an incorrect username or password too many times: try again in a few minutes or contact your SPID identity provider to change your credentials."
-      error_20: "For security reasons IO requires a login with a second authentication factor: contact your SPID identity provider to understand how to use it."
-      error_21: "It's been too long since you started accessing: please start over again."
-      error_22: "To use IO, you have to consent access to some data. Enter again and consent."
-      error_23: "Your SPID identity is suspended or revoked. To reactivate your account, contact your SPID identity provider."
-      error_25: "You have canceled the login operation: you can try again whenever you want."
-      error_1001: "Access Denied: You are not of the minimum age required to use IO"
   expiredSessionBanner:
     title: Security notice
   unlock:
@@ -871,7 +832,6 @@ email:
   read:
     title: Your email address
     info: This is the email address associated to your SPID account. You can use in IO app a different email address, if you wish. To make operative the new email address, you will need to validate it by clicking on the link you will receive by email.
-    details: You can change this address, then you should validate it by clicking on the link we will sent to your email address. In the meanwhile, those functionalities of IO depending on the email (payments, messages forwarding, etc.) will be disabled.
     alert: "Warning: your pagoPa account is associated to your email. So, if you change it, IO will no more list your registered payment methods and transactions."
     help: Your SPID profile communicates your email to IO app. If you find the address wrong or you no longer use it, you can edit it directly from your SPID services provider account.
   insert:
@@ -1120,8 +1080,6 @@ payment:
     editButton: Modifica
     termsAndConditions: Proseguendo dichiari di aver letto e compreso i
     termsAndConditionsLink: Termini e condizioni d'uso e l'Informativa Privacy
-    loading:
-      title: Sto caricando le informazioni del pagamento
 wallet:
   methodDetails:
     cobadgeTitle: "Debit card"
@@ -1962,18 +1920,6 @@ messages:
     unarchive: Unarchive
     selectAll: All
     deselectAll: None
-    payment:
-      expired: Payment expired
-      paid: This notice is paid. Show the receipt in your
-      addMemo:
-        block1: Add a reminder for the
-        block2: at
-      expiringOrValidAlert:
-        block1: Expiring on
-        block2: at
-      expiredAlert:
-        block1: Expired on
-        block2: at
     pay: Pay € {{amount}}
     onlyPay: Pay
     paid: Paid
@@ -2016,11 +1962,6 @@ messages:
     emptyMessage:
       title: Your message list is empty.
       subtitle: Refresh to check for any new messages.
-  pagination:
-    migration:
-      started: Please wait, we are updating the Messages section.
-      succeeded: Done!
-      failed: We couldn't update the Messages section.
   operations:
     archive:
       success: "Successfully archived!"
@@ -2068,10 +2009,6 @@ messageDetails:
     corruptedFile: "The attachment is corrupt and can't be opened. Please contact the sender"
     downloadFailed: "The attachment is currently not available. Please try again or contact the sender"
     showPreview: "See preview"
-    unavailable:
-      firstPart: "The attachments are no longer available. "
-      secondPart: "Please contact the sender"
-      thirdPart: " for more information."
     failing:
       details: "An error occurred while downloading the attachment. Retry or create a ticket"
   banner:
@@ -2208,7 +2145,11 @@ services:
       cancel: "Cancel"
       clear: "Clear"
     emptyState:
-      title: "Enter the name of an institution,\nnational or local"
+      invalidQuery:
+        title: "Enter the name of an institution,\nnational or local"
+      noResults:
+        title: "No results found"
+        subtitle: "Enter the name of an existing national or local institution."
   details:
     failure:
       title: "There is a temporary problem. Please try again"
@@ -2782,8 +2723,6 @@ bonus:
         seconds:
           one: 1 second
           other: "{{seconds}} seconds"
-  sv:
-    headerTitle: "Sicilia Vola"
   cdc:
     title: "Carta della cultura"
     serviceCta:
@@ -3141,10 +3080,10 @@ features:
         failure: FALLITA
         success: ""
       receipt:
-        title: PagoPA Receipt
+        title: pagoPA Receipt
         shareButton: Save or share
-        error: Impossibile scaricare la ricevuta, riprova più tardi.
-        download: Scarica ricevuta
+        error: Unable to retrieve the receipt.
+        download: Get receipt
       details:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
         totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
@@ -3192,11 +3131,6 @@ features:
         claimLabelNotAvailable: "Etichetta attributo non presente"
         organizationName: "Nome ente non disponibile"
     verifiableCredentials:
-      type:
-        digitalCredential: "Identità digitale"
-        disabilityCard: "Tessera Europa della disabilità"
-        healthCard: "Tessera Sanitaria"
-        drivingLicense: "Licenza di guida"
       claims:
         uniqueId: "ID univoco"
         givenName: "Nome"
@@ -3215,10 +3149,6 @@ features:
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
           restrictionConditions: "Codici"
-      unrecognizedData:
-        title: "Non riconosci alcuni dati?"
-        body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
-        cta: "Chiedi informazioni o segnala errori"
     discovery:
       banner:
         title: È arrivato IT Wallet
@@ -3254,6 +3184,10 @@ features:
           3: Attiva la funzionalità
         primaryAction: Apri impostazioni
         secondaryAction: Continua
+      notMatchingIdentityScreen:
+        title: "Tutti i documenti saranno rimossi da IO"
+        subtitle: "Se accedi con una nuova identità, i documenti già presenti nel Portafoglio saranno rimossi e IT Wallet disattivato."
+        action: "Continua con la nuova identità"
     issuance:
       credentialAuth:
         title: "{{credentialName}}: dati necessari"
@@ -3324,6 +3258,9 @@ features:
         personalDataTitle: "Personal data"
         documentDataTitle: "Document data"
         lastUpdated: "Last updated on {{lastUpdateTime}}"
+        boolClaim:
+          true: Sì
+          false: No
         hiddenClaim: "Hidden"
         status:
           valid: Valid
@@ -3343,11 +3280,6 @@ features:
   trialSystem:
     toast:
       subscribed: Done! You will receive a message when the trial period will begin.
-webView:
-  error:
-    missingParams: Not all information necessary to access this page are available
-    missingToken: Missing authorization to start this flow
-    convertMessage: Unable to decode the message from the webview
 support:
   ticketList:
     noTicket:
@@ -3983,6 +3915,13 @@ permissionRequest:
     cta: Apri Impostazioni
 FIMS:
   history:
+    errorStates:
+      dataUnavailable: "Dati non disponibili"
+      ko:
+        title: "C’è un problema temporaneo"
+        body: "Il caricamento della lista degli accessi non è riuscito"
+      toast: C’è un problema nel caricamento della lista. Riprova
+    emptyBody: "Non hai ancora effettuato alcun accesso a servizi di terze parti"
     exportData:
       alerts:
         areYouSure: "Vuoi davvero esportare una copia di tutti gli accessi?"
@@ -4019,10 +3958,6 @@ FIMS:
     privacyCta: "l’Informativa sulla Privacy "
     bottomSheet:
       title: "Accedi a servizi di terze parti tramite IO"
-      body: "Per consentirti di accedere al servizio esterno senza autenticarti
-        nuovamente con SPID o CIE, l’app IO condivide un set di dati con l’ente
-        che lo eroga."
-      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le
-        finalità indicate dall’ente e consultabili nell’ "
-      bodyPrivacy: "Informativa sulla
-        Privacy."
+      body: "Per consentirti di accedere al servizio esterno senza autenticarti nuovamente con SPID o CIE, l’app IO condivide un set di dati con l’ente che lo eroga."
+      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le finalità indicate dall’ente e consultabili nell’ "
+      bodyPrivacy: "Informativa sulla Privacy."

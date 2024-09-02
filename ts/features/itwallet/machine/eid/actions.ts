@@ -4,6 +4,13 @@ import { ActionArgs } from "xstate5";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
+import { ITW_ROUTES } from "../../navigation/routes";
+import { walletUpsertCard } from "../../../newWallet/store/actions/cards";
+import { itwLifecycleStateUpdated } from "../../lifecycle/store/actions";
+import { ItwLifecycleState } from "../../lifecycle/store/reducers";
+import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
+import { itwCredentialsStore } from "../../credentials/store/actions";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { useIODispatch } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
@@ -137,8 +144,6 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   requestAssistance: () => {},
-
-  disposeWalletAttestation,
 
   handleSessionExpired: () =>
     dispatch(checkCurrentSession.success({ isSessionValid: false }))
