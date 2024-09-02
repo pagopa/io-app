@@ -87,3 +87,6 @@ export const isValidRedirectResponse = (
   isRedirect(res.status) &&
   !!res.headers.location &&
   res.headers.location.trim().length > 0;
+
+export const isFastLoginFailure = (res: HttpClientFailureResponse) =>
+  res.code === 401;

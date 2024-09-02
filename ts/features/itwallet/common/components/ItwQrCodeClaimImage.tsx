@@ -5,7 +5,7 @@ import { ParsedCredential } from "../utils/itwTypesUtils";
 
 type ItwQrCodeClaimImageProps = {
   claim?: ParsedCredential[keyof ParsedCredential];
-  valuesHidden?: boolean;
+  isHidden?: boolean;
 };
 
 /**
@@ -13,9 +13,9 @@ type ItwQrCodeClaimImageProps = {
  */
 export const ItwQrCodeClaimImage = ({
   claim,
-  valuesHidden
+  isHidden
 }: ItwQrCodeClaimImageProps) => {
-  if (claim === undefined || typeof claim.value !== "string" || valuesHidden) {
+  if (claim === undefined || typeof claim.value !== "string" || isHidden) {
     return null;
   }
 

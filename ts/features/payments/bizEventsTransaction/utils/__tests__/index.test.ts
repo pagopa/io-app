@@ -96,10 +96,10 @@ describe("calculateTotalAmount", () => {
     expect(result).toBeUndefined();
   });
 
-  it("should return undefined if fee is not provided", () => {
+  it("should return amount without fee if fee is not provided", () => {
     const transactionInfo = { amount: "10.00" };
     const result = calculateTotalAmount(transactionInfo);
-    expect(result).toBeUndefined();
+    expect(result).toBe("10.00");
   });
 
   it("should return the correct total amount for valid input with dot as decimal separator", () => {

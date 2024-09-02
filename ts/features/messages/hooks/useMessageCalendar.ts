@@ -41,10 +41,10 @@ export const useMessageCalendar = (messageId: UIMessageId) => {
   );
 
   const setPreferredCalendar = useCallback(
-    (preferredCalendar: Calendar) =>
+    (calendar: Calendar) =>
       dispatch(
         preferredCalendarSaveSuccess({
-          preferredCalendar
+          preferredCalendar: calendar
         })
       ),
     [dispatch]
@@ -110,22 +110,15 @@ export const useMessageCalendar = (messageId: UIMessageId) => {
   const addEventToCalendar = (
     dueDate: Date,
     eventTitle: string,
-    preferredCalendar: Calendar
+    calendar: Calendar
   ) => {
     void pipe(
       TE.tryCatch(() => searchEventInCalendar(dueDate, eventTitle), E.toError),
       TE.chain(TE.fromOption(() => new Error("Event not found"))),
       TE.map(eventId =>
-        handleConfirmAddEventToCalendar(
-          dueDate,
-          eventId,
-          preferredCalendar,
-          eventTitle
-        )
+        handleConfirmAddEventToCalendar(dueDate, eventId, calendar, eventTitle)
       ),
-      TE.mapLeft(() =>
-        onAddEventToCalendar(preferredCalendar, dueDate, eventTitle)
-      )
+      TE.mapLeft(() => onAddEventToCalendar(calendar, dueDate, eventTitle))
     )();
   };
 

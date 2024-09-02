@@ -1,3 +1,4 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   Divider,
   H3,
@@ -14,7 +15,7 @@ import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink
 import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
 import { useIOSelector } from "../../../store/hooks";
 import { EUCovidContext } from "../components/EUCovidContext";
-import { getPaginatedMessageCreatedAt } from "../../messages/store/reducers/paginatedById";
+import { getPaginatedMessageById } from "../../messages/store/reducers/paginatedById";
 import { localeDateFormat } from "../../../utils/locale";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
@@ -34,17 +35,18 @@ type Props = {
 const EuCovidCertRevokedContentComponent = (props: Props) => {
   const currentCert = React.useContext(EUCovidContext);
   const messageId = currentCert?.messageId ?? "";
-  const createdAt = useIOSelector(state =>
-    getPaginatedMessageCreatedAt(state, messageId)
+  const paginatedMessagePot = useIOSelector(state =>
+    getPaginatedMessageById(state, messageId)
   );
+  const createdAtOrUndefined = pot.toUndefined(paginatedMessagePot)?.createdAt;
 
   return (
     <>
       <VSpacer size={8} />
-      {createdAt && (
+      {createdAtOrUndefined && (
         <LabelSmall fontSize="regular" color="grey-700">
           {localeDateFormat(
-            createdAt,
+            createdAtOrUndefined,
             I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithTime")
           )}
         </LabelSmall>

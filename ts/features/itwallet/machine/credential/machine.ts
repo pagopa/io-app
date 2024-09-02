@@ -1,5 +1,6 @@
 import { assign, fromPromise, setup } from "xstate5";
 import { ItwTags } from "../tags";
+import { ItwSessionExpiredError } from "../../api/client";
 import {
   InitializeWalletActorOutput,
   ObtainCredentialActorInput,
@@ -26,7 +27,6 @@ export const itwCredentialIssuanceMachine = setup({
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     storeCredential: notImplemented,
-    disposeWallet: notImplemented,
     closeIssuance: notImplemented,
     setFailure: assign(({ event }) => ({
       failure: {
@@ -34,7 +34,8 @@ export const itwCredentialIssuanceMachine = setup({
         type: CredentialIssuanceFailureTypeEnum.GENERIC,
         reason: (event as any).error
       }
-    }))
+    })),
+    handleSessionExpired: notImplemented
   },
   actors: {
     initializeWallet: fromPromise<InitializeWalletActorOutput>(notImplemented),
@@ -45,8 +46,11 @@ export const itwCredentialIssuanceMachine = setup({
     obtainCredential: fromPromise<
       ObtainCredentialActorOutput,
       ObtainCredentialActorInput
-    >(notImplemented),
-    disposeWallet: fromPromise(notImplemented)
+    >(notImplemented)
+  },
+  guards: {
+    isSessionExpired: ({ event }: { event: CredentialIssuanceEvents }) =>
+      "error" in event && event.error instanceof ItwSessionExpiredError
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
@@ -75,10 +79,16 @@ export const itwCredentialIssuanceMachine = setup({
             wiaCryptoContext: event.output.wiaCryptoContext
           }))
         },
-        onError: {
-          target: "#itwCredentialIssuanceMachine.Failure",
-          actions: "setFailure"
-        }
+        onError: [
+          {
+            guard: "isSessionExpired",
+            target: "SessionExpired"
+          },
+          {
+            target: "#itwCredentialIssuanceMachine.Failure",
+            actions: "setFailure"
+          }
+        ]
       }
     },
     RequestingCredential: {
@@ -113,7 +123,7 @@ export const itwCredentialIssuanceMachine = setup({
           target: "ObtainingCredential"
         },
         close: {
-          actions: ["closeIssuance", "disposeWallet"]
+          actions: ["closeIssuance"]
         }
       }
     },
@@ -153,7 +163,7 @@ export const itwCredentialIssuanceMachine = setup({
       entry: "navigateToCredentialPreviewScreen",
       on: {
         "add-to-wallet": {
-          actions: ["storeCredential", "navigateToWallet", "disposeWallet"]
+          actions: ["storeCredential", "navigateToWallet"]
         },
         close: {
           actions: "closeIssuance"
@@ -164,7 +174,7 @@ export const itwCredentialIssuanceMachine = setup({
       entry: ["navigateToFailureScreen"],
       on: {
         close: {
-          actions: ["closeIssuance", "disposeWallet"]
+          actions: ["closeIssuance"]
         },
         reset: {
           target: "Idle"
@@ -173,6 +183,11 @@ export const itwCredentialIssuanceMachine = setup({
           target: "#itwCredentialIssuanceMachine.DisplayingTrustIssuer"
         }
       }
+    },
+    SessionExpired: {
+      entry: ["handleSessionExpired"],
+      // Since the refresh token request does not change the current screen, restart the machine
+      always: { target: "Idle" }
     }
   }
 });

@@ -3,6 +3,7 @@ import {
   ButtonSolid,
   ContentWrapper,
   H6,
+  IOVisualCostants,
   RadioGroup,
   RadioItem,
   TextInput,
@@ -56,8 +57,13 @@ const FooterButton = memo(({ isLoading, onPress }: FooterButtonProps) => {
   const { bottom } = useSafeAreaInsets();
 
   return withKeyboard(
-    <View style={{ marginBottom: bottom }}>
+    <View
+      style={{
+        marginBottom: bottom === 0 ? IOVisualCostants.appMarginDefault : bottom
+      }}
+    >
       <ContentWrapper>
+        <VSpacer size={16} />
         <ButtonSolid
           fullWidth
           loading={isLoading}

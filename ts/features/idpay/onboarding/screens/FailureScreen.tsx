@@ -51,7 +51,7 @@ const FailureScreen = () => {
     switch (failure) {
       case OnboardingFailureEnum.INITIATIVE_NOT_FOUND:
         return {
-          pictogram: "search",
+          pictogram: "attention",
           title: I18n.t(
             "idpay.onboarding.failure.message.INITIATIVE_NOT_FOUND.title"
           ),

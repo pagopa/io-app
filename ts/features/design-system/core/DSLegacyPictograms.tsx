@@ -1,6 +1,5 @@
 import {
   H4,
-  IOColors,
   IOPictograms,
   IOPictogramsLegacy,
   Pictogram,
@@ -17,13 +16,9 @@ import {
 
 /* PICTOGRAMS */
 import BrokenLink from "../../../../img/broken-link.png";
-import AirBaloonArrow from "../../../../img/messages/empty-message-list-icon.png";
 import PiggyBank from "../../../../img/messages/empty-transaction-list-icon.png";
-import Error from "../../../../img/messages/error-message-detail-icon.png";
 import Question from "../../../../img/pictograms/doubt.png";
 import CompletedRaster from "../../../../img/pictograms/payment-completed.png";
-import BeerMug from "../../../../img/search/beer-mug.png";
-import Search from "../../../../img/search/search-icon.png";
 import ABILogo from "../../../../img/wallet/cards-icons/abiLogoFallback.png";
 import Umbrella from "../../../../img/wallet/errors/generic-error-icon.png";
 import NotAvailable from "../../../../img/wallet/errors/payment-unavailable-icon.png";
@@ -34,8 +29,6 @@ import CertificateNotFound from "../../../../img/features/euCovidCert/certificat
 import CertificateRevoked from "../../../../img/features/euCovidCert/certificate_revoked.png";
 import CertificateWrongFormat from "../../../../img/features/euCovidCert/certificate_wrong_format.png";
 import Baloons from "../../../../img/messages/empty-due-date-list-icon.png";
-/* Donations */
-import Heart from "../../../../img/features/uaDonations/heart.svg";
 /* Sections */
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
@@ -101,33 +94,8 @@ const renderRasterPictograms = () => (
     />
     <DSAssetViewerBox
       type="raster"
-      name={"Air Baloon (arrow)"}
-      image={renderRasterImage(AirBaloonArrow)}
-    />
-    <DSAssetViewerBox
-      type="raster"
-      name={"Baloons"}
-      image={renderRasterImage(Baloons)}
-    />
-    <DSAssetViewerBox
-      type="raster"
       name={"PiggyBank"}
       image={renderRasterImage(PiggyBank)}
-    />
-    <DSAssetViewerBox
-      type="raster"
-      name={"Error"}
-      image={renderRasterImage(Error)}
-    />
-    <DSAssetViewerBox
-      type="raster"
-      name={"BeerMug"}
-      image={renderRasterImage(BeerMug)}
-    />
-    <DSAssetViewerBox
-      type="raster"
-      name={"Search"}
-      image={renderRasterImage(Search)}
     />
     <DSAssetViewerBox
       type="raster"
@@ -160,12 +128,16 @@ const renderRasterPictograms = () => (
       name={"BrokenLink"}
       image={renderRasterImage(BrokenLink)}
     />
-    <DSAssetViewerBox name={"Heart"} image={<Heart fill={IOColors.blue} />} />
   </View>
 );
 
 const renderEUCovidCertificatePictograms = () => (
   <View style={styles.itemsWrapper}>
+    <DSAssetViewerBox
+      type="raster"
+      name={"Baloons"}
+      image={renderRasterImage(Baloons)}
+    />
     <DSAssetViewerBox
       type="raster"
       name={"Certificate Expired"}

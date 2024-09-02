@@ -6,6 +6,8 @@ import mdl from "../../__mocks__/mdl.json";
 import ts from "../../__mocks__/ts.json";
 import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
+export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
+
 export const ISSUER_URL = "https://www.interno.gov.it/pid/";
 
 /**

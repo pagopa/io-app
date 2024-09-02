@@ -500,7 +500,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         </View>
                         <View>
                           <View
-                            accessibilityLabel="Rome (IT)"
+                            accessibilityLabel="Place of Birth Hidden"
                             accessible={true}
                             style={
                               {
@@ -594,7 +594,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                     weight="Semibold"
                                   >
-                                    Rome (IT)
+                                    ******
                                   </Text>
                                 </View>
                               </View>
@@ -611,7 +611,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           />
                           <View
-                            accessibilityLabel="Institution Number (TEAM) 500001"
+                            accessibilityLabel="Institution Number (TEAM) Hidden"
                             accessible={true}
                             style={
                               {
@@ -705,7 +705,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                     weight="Semibold"
                                   >
-                                    500001
+                                    ******
                                   </Text>
                                 </View>
                               </View>
@@ -722,7 +722,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           />
                           <View
-                            accessibilityLabel="Date of Birth 06/01/1991"
+                            accessibilityLabel="Date of Birth Hidden"
                             accessible={true}
                             style={
                               {
@@ -816,7 +816,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                     weight="Semibold"
                                   >
-                                    06/01/1991
+                                    ******
                                   </Text>
                                 </View>
                               </View>
@@ -833,7 +833,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           />
                           <View
-                            accessibilityLabel="Province Rome"
+                            accessibilityLabel="Province Hidden"
                             accessible={true}
                             style={
                               {
@@ -927,7 +927,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                     weight="Semibold"
                                   >
-                                    Rome
+                                    ******
                                   </Text>
                                 </View>
                               </View>
@@ -944,7 +944,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           />
                           <View
-                            accessibilityLabel="Nation IT"
+                            accessibilityLabel="Nation Hidden"
                             accessible={true}
                             style={
                               {
@@ -1038,7 +1038,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                     weight="Semibold"
                                   >
-                                    IT
+                                    ******
                                   </Text>
                                 </View>
                               </View>
@@ -1055,7 +1055,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           />
                           <View
-                            accessibilityLabel="Sex M"
+                            accessibilityLabel="Sex Hidden"
                             accessible={true}
                             style={
                               {
@@ -1149,7 +1149,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                     weight="Semibold"
                                   >
-                                    M
+                                    ******
                                   </Text>
                                 </View>
                               </View>
@@ -1166,8 +1166,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           />
                           <View
-                            accessibilityLabel="Expiry Date 22/02/2025"
-                            accessible={false}
+                            accessibilityLabel="Expiry Date Hidden"
+                            accessible={true}
                             style={
                               {
                                 "marginHorizontal": -24,
@@ -1194,7 +1194,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessibilityElementsHidden={false}
-                                  accessible={false}
+                                  accessible={true}
                                   importantForAccessibility="yes"
                                 >
                                   <Text
@@ -1260,61 +1260,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                     weight="Semibold"
                                   >
-                                    22/02/2025
-                                  </Text>
-                                </View>
-                              </View>
-                              <View
-                                style={
-                                  {
-                                    "marginLeft": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "borderCurve": "continuous",
-                                        "borderRadius": 24,
-                                        "flexDirection": "row",
-                                        "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
-                                      },
-                                      {
-                                        "backgroundColor": "#E1F4E1",
-                                      },
-                                    ]
-                                  }
-                                >
-                                  <Text
-                                    allowFontScaling={false}
-                                    ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
-                                    numberOfLines={1}
-                                    style={
-                                      [
-                                        {
-                                          "alignSelf": "center",
-                                          "flexShrink": 1,
-                                          "fontSize": 12,
-                                          "lineHeight": 16,
-                                          "textTransform": "uppercase",
-                                        },
-                                        {
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                        },
-                                        {
-                                          "color": "#224021",
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Valid
+                                    ******
                                   </Text>
                                 </View>
                               </View>
@@ -1331,7 +1277,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           />
                           <View
-                            accessibilityLabel="Document Number (TEAM) 80380000000000000001"
+                            accessibilityLabel="Document Number (TEAM) Hidden"
                             accessible={true}
                             style={
                               {
@@ -1425,7 +1371,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                     weight="Semibold"
                                   >
-                                    80380000000000000001
+                                    ******
                                   </Text>
                                 </View>
                               </View>
@@ -1442,7 +1388,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           />
                           <View
-                            accessibilityLabel="First Name Casimira"
+                            accessibilityLabel="First Name Hidden"
                             accessible={true}
                             style={
                               {
@@ -1536,7 +1482,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                     weight="Semibold"
                                   >
-                                    Casimira
+                                    ******
                                   </Text>
                                 </View>
                               </View>
@@ -1553,7 +1499,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           />
                           <View
-                            accessibilityLabel="Fiscal Code RSSMRA80A10H501A"
+                            accessibilityLabel="Fiscal Code Hidden"
                             accessible={true}
                             style={
                               {
@@ -1647,7 +1593,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                     weight="Semibold"
                                   >
-                                    RSSMRA80A10H501A
+                                    ******
                                   </Text>
                                 </View>
                               </View>
@@ -1664,7 +1610,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           />
                           <View
-                            accessibilityLabel="Family Name Savoia"
+                            accessibilityLabel="Family Name Hidden"
                             accessible={true}
                             style={
                               {
@@ -1758,7 +1704,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                     weight="Semibold"
                                   >
-                                    Savoia
+                                    ******
                                   </Text>
                                 </View>
                               </View>
@@ -1775,8 +1721,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           />
                           <View
-                            accessibilityLabel="Emessa da Ragioneria Generale dello Stato"
-                            accessible={false}
+                            accessibilityLabel="evidence Hidden"
+                            accessible={true}
                             style={
                               {
                                 "marginHorizontal": -24,
@@ -1802,9 +1748,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
-                                  accessibilityElementsHidden={true}
-                                  accessible={false}
-                                  importantForAccessibility="no-hide-descendants"
+                                  accessibilityElementsHidden={false}
+                                  accessible={true}
+                                  importantForAccessibility="yes"
                                 >
                                   <Text
                                     allowFontScaling={false}
@@ -1836,7 +1782,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                     weight="Regular"
                                   >
-                                    Emessa da
+                                    evidence
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
@@ -1869,284 +1815,12 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                     weight="Semibold"
                                   >
-                                    Ragioneria Generale dello Stato
+                                    ******
                                   </Text>
-                                </View>
-                              </View>
-                              <View
-                                style={
-                                  {
-                                    "marginLeft": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  accessibilityLabel="Emessa da Ragioneria Generale dello Stato; test"
-                                  accessibilityRole="button"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": false,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
-                                  }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  hitSlop={8}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
-                                >
-                                  <View
-                                    style={
-                                      [
-                                        {
-                                          "height": 24,
-                                          "width": 24,
-                                        },
-                                        {
-                                          "alignItems": "center",
-                                        },
-                                        {
-                                          "justifyContent": "center",
-                                        },
-                                        {
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    <RNSVGSvgView
-                                      accessibilityElementsHidden={true}
-                                      accessibilityLabel=""
-                                      accessible={false}
-                                      align="xMidYMid"
-                                      animatedProps={
-                                        {
-                                          "color": undefined,
-                                        }
-                                      }
-                                      bbHeight={24}
-                                      bbWidth={24}
-                                      focusable={false}
-                                      height={24}
-                                      importantForAccessibility="no-hide-descendants"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
-                                      style={
-                                        [
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          {
-                                            "color": "#0073E6",
-                                          },
-                                          {
-                                            "flex": 0,
-                                            "height": 24,
-                                            "width": 24,
-                                          },
-                                        ]
-                                      }
-                                      tintColor="#0073E6"
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={24}
-                                    >
-                                      <RNSVGGroup
-                                        fill={
-                                          {
-                                            "payload": 4278190080,
-                                            "type": 0,
-                                          }
-                                        }
-                                      >
-                                        <RNSVGPath
-                                          clipRule={0}
-                                          d="M0 12C0 5.3726 5.3726 0 12 0s12 5.3726 12 12-5.3726 12-12 12S0 18.6274 0 12Zm2 0C2 6.47717 6.47717 2 12 2c5.5228 0 10 4.47717 10 10 0 5.5228-4.4772 10-10 10-5.52283 0-10-4.4772-10-10Zm10.0281-4.50455c.8439 0 1.5281-.68415 1.5281-1.52809 0-.84394-.6842-1.52809-1.5281-1.52809-.844 0-1.5281.68415-1.5281 1.52809 0 .84394.6841 1.52809 1.5281 1.52809Zm0 1.94382h.0005c.5678 0 1.0281.46029 1.0281 1.02813v8.0045c0 .5678-.4603 1.0281-1.0281 1.0281h-.0005C11.4603 19.5 11 19.0397 11 18.4719v-8.0045c0-.56784.4603-1.02813 1.0281-1.02813Z"
-                                          fill={
-                                            {
-                                              "type": 2,
-                                            }
-                                          }
-                                          fillRule={0}
-                                          propList={
-                                            [
-                                              "fill",
-                                              "fillRule",
-                                            ]
-                                          }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
-                                  </View>
                                 </View>
                               </View>
                             </View>
                           </View>
-                          <Modal
-                            accessibilityPositionChangeAnnouncement=""
-                            accessible={false}
-                            backdropComponent={[Function]}
-                            enableDismissOnClose={true}
-                            footerComponent={[Function]}
-                            handleComponent={[Function]}
-                            handleComponentAccessibility={
-                              {
-                                "accessible": false,
-                              }
-                            }
-                            hardwareAccelerated={false}
-                            importantForAccessibility="yes"
-                            snapPoints={
-                              [
-                                1,
-                              ]
-                            }
-                            style={
-                              {
-                                "borderCurve": "continuous",
-                                "borderTopLeftRadius": 24,
-                                "borderTopRightRadius": 24,
-                                "overflow": "hidden",
-                              }
-                            }
-                            visible={true}
-                          >
-                            <RCTScrollView
-                              style={
-                                {
-                                  "flex": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View>
-                                <View
-                                  onLayout={[Function]}
-                                >
-                                  <View
-                                    style={
-                                      {
-                                        "flex": 1,
-                                      }
-                                    }
-                                  >
-                                    <View>
-                                      <Text
-                                        allowFontScaling={false}
-                                        color="black"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
-                                        dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
-                                        maxFontSizeMultiplier={1.25}
-                                        style={
-                                          [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
-                                            {
-                                              "color": "#0E0F13",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                            },
-                                          ]
-                                        }
-                                        weight="Semibold"
-                                      >
-                                        Chi è?
-                                      </Text>
-                                      <View
-                                        style={
-                                          {
-                                            "height": 8,
-                                          }
-                                        }
-                                      />
-                                      <Text
-                                        allowFontScaling={false}
-                                        color="bluegrey"
-                                        defaultColor="bluegrey"
-                                        defaultWeight="Regular"
-                                        dynamicTypeRamp="body"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          }
-                                        }
-                                        maxFontSizeMultiplier={1.25}
-                                        style={
-                                          [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 24,
-                                            },
-                                            {
-                                              "color": "#475A6D",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                            },
-                                          ]
-                                        }
-                                        weight="Regular"
-                                      >
-                                        È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo.
-                                      </Text>
-                                      <View
-                                        style={
-                                          {
-                                            "height": 16,
-                                          }
-                                        }
-                                      />
-                                    </View>
-                                    <View
-                                      style={
-                                        {
-                                          "height": 24,
-                                        }
-                                      }
-                                    />
-                                  </View>
-                                </View>
-                              </View>
-                            </RCTScrollView>
-                          </Modal>
                         </View>
                         <View
                           style={

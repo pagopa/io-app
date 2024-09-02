@@ -3,7 +3,7 @@
  */
 
 import { patternDateFromString } from "@pagopa/ts-commons/lib/dates";
-import { PatternString } from "@pagopa/ts-commons/lib/strings";
+import { NonEmptyString, PatternString } from "@pagopa/ts-commons/lib/strings";
 import { differenceInCalendarDays, isValid } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -12,7 +12,7 @@ import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
 import { ItwCredentialStatus } from "../components/ItwCredentialCard";
 import { JsonFromString } from "./ItwCodecUtils";
-import { ParsedCredential } from "./itwTypesUtils";
+import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
 /**
  *
@@ -25,7 +25,7 @@ import { ParsedCredential } from "./itwTypesUtils";
  */
 
 /**
- * We strongly discurage direct claim manipulation, but some spacial cased must be addressed with direct access
+ * We strongly discourage direct claim manipulation, but some special cases must be addressed with direct access
  */
 export enum WellKnownClaim {
   /**
@@ -38,7 +38,7 @@ export enum WellKnownClaim {
    */
   expiry_date = "expiry_date",
   /**
-   * Claim used to display a QR Code for the Disability Card. It must be exlcuded from the common claims list
+   * Claim used to display a QR Code for the Disability Card. It must be excluded from the common claims list
    * and rendered using a {@see QRCodeImage}
    */
   link_qr_code = "link_qr_code"
@@ -219,9 +219,22 @@ export const UrlClaim = PatternString(URL_REGEX);
 export const BoolClaim = t.boolean;
 
 /**
- * Alias for the string fallback of the claim field of the credential.
+ * Empty string fallback of the claim field of the credential.
  */
-export const PlainTextClaim = t.string;
+export const EmptyStringClaim = new t.Type<string, string, unknown>(
+  "EmptyString",
+  (input: unknown): input is string => input === "", // Type guard
+  (input, context) =>
+    typeof input === "string" && input === ""
+      ? t.success(input)
+      : t.failure(input, context, "Expected an empty string"),
+  t.identity
+);
+
+/**
+ * Alias for the string claim field of the credential.
+ */
+export const StringClaim = NonEmptyString;
 
 /**
  * Decoder for an URL image in base64 format
@@ -252,7 +265,9 @@ export const ClaimValue = t.union([
   // Otherwise parse an url value
   UrlClaim,
   // Otherwise fallback to string
-  PlainTextClaim
+  StringClaim,
+  // Otherwise fallback to empty string
+  EmptyStringClaim
 ]);
 
 export type DateClaimConfig = Partial<{
@@ -348,3 +363,18 @@ const FISCAL_CODE_REGEX =
  */
 export const extractFiscalCode = (s: string) =>
   pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));
+
+const EID_FISCAL_CODE_KEY = "tax_id_code";
+
+export const getFiscalCodeFromCredential = (
+  credential: StoredCredential | undefined
+) =>
+  pipe(
+    credential?.parsedCredential,
+    O.fromNullable,
+    O.chain(x => O.fromNullable(x[EID_FISCAL_CODE_KEY]?.value)),
+    O.map(t.string.decode),
+    O.chain(O.fromEither),
+    O.chain(extractFiscalCode),
+    O.getOrElse(() => "")
+  );

@@ -25,6 +25,7 @@ const fontName: IOFontFamily = "TitilliumSansPro";
  * default values(if not defined) are weight: `Bold`, color: `blue`
  * @param props`
  * @constructor
+ * @deprecated Don't use local `Label`. Import it from `io-app-design-system` instead.
  */
 export const Label = ({ fontSize, ...rest }: LabelProps) =>
   useTypographyFactory<AllowedWeight, AllowedColors>({

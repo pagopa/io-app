@@ -7,9 +7,8 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { Errors } from "io-ts";
-import { Locales, TranslationKeys } from "../../locales/locales";
+import { Locales } from "../../locales/locales";
 import I18n from "../i18n";
-import { ExpireStatus } from "../features/messages/utils/messages";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 import { getLocalePrimary, localeDateFormat } from "./locale";
 import { NumberFromString } from "./number";
@@ -43,32 +42,6 @@ export const formatFiscalCodeBirthdayAsShortFormat = (
         const month = pad(d.getUTCMonth() + 1);
         const day = pad(d.getUTCDate());
         return `${day}/${month}/${year}`;
-      }
-    )
-  );
-
-export const formatFiscalCodeBirthdayAsAccessibilityReadableFormat = (
-  date: Date | undefined
-): string =>
-  pipe(
-    date,
-    O.fromNullable,
-    O.chain(O.fromPredicate(d => !isNaN(d.getTime()))),
-    O.fold(
-      () => I18n.t("global.date.invalid"),
-      d => {
-        const year = d.getUTCFullYear();
-        const month = d.getUTCMonth() + 1;
-        const date = d.getUTCDate();
-        const day = d.getUTCDay();
-        const dayTranslationKey = I18n.t(
-          `date.day_names.${day}` as TranslationKeys
-        );
-        const monthTranslationKey = I18n.t(
-          `date.month_names.${month}` as TranslationKeys
-        );
-
-        return `${dayTranslationKey} ${date} ${monthTranslationKey} ${year}`;
       }
     )
   );
@@ -235,6 +208,8 @@ export const isExpiredDate = (expiryDate: Date): boolean => {
   const nowYearMonth = new Date(now.getFullYear(), now.getMonth());
   return nowYearMonth > expiryDate;
 };
+
+export type ExpireStatus = "VALID" | "EXPIRING" | "EXPIRED";
 
 /**
  * A function to check if the given date is in the past or in the future.

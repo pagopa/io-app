@@ -40,9 +40,9 @@ export const ItwPresentationClaimsSection = ({
       </View>
       <ItwQrCodeClaimImage
         claim={data.parsedCredential.link_qr_code}
-        valuesHidden={valuesHidden}
+        isHidden={valuesHidden}
       />
-      <ItwCredentialClaimsList data={data} />
+      <ItwCredentialClaimsList data={data} isHidden={valuesHidden} />
     </View>
   );
 };
