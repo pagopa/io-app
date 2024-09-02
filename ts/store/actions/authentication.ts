@@ -9,8 +9,8 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { PasswordLogin } from "../../../definitions/backend/PasswordLogin";
-import { PublicSession } from "../../../definitions/backend/PublicSession";
+import { PublicSession } from "../../../definitions/session_manager/PublicSession";
+import { PasswordLogin } from "../../../definitions/session_manager/PasswordLogin";
 import { SessionToken } from "../../types/SessionToken";
 import { SupportToken } from "../../../definitions/backend/SupportToken";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
