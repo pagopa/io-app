@@ -120,8 +120,6 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
 
 const cardPaddingHorizontal: IOSpacingScale = 16;
 
-const cardPaddingHorizontal: IOSpacingScale = 16;
-
 const styles = StyleSheet.create({
   cardContainer: {
     position: "relative",
