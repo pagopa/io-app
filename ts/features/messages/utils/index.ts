@@ -13,7 +13,6 @@ import { PaymentData, UIMessage, UIMessageId } from "../types";
 import { NetworkError, getNetworkError } from "../../../utils/errors";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { getAmountFromPaymentAmount } from "../../../utils/payment";
-import { trackPNPaymentStart } from "../../pn/analytics";
 import { addUserSelectedPaymentRptId } from "../store/actions";
 import { Action } from "../../../store/actions/types";
 import { startPaymentFlowWithRptIdWorkaround } from "../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
@@ -40,7 +39,7 @@ export const initializeAndNavigateToWalletForPayment = (
   paymentAmount: PaymentAmount | undefined,
   canNavigateToPayment: boolean,
   dispatch: Dispatch<Action>,
-  isPNPayment: boolean,
+  analyticsCallback: (() => void) | undefined,
   decodeErrorCallback: (() => void) | undefined,
   preNavigationCallback: (() => void) | undefined = undefined
 ) => {
@@ -64,9 +63,7 @@ export const initializeAndNavigateToWalletForPayment = (
     return;
   }
 
-  if (isPNPayment) {
-    trackPNPaymentStart();
-  }
+  analyticsCallback?.();
 
   if (!isPaidOrHasAnError) {
     dispatch(addUserSelectedPaymentRptId(paymentId));

@@ -60,6 +60,8 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
       return "PAYMENT_GENERIC_ERROR";
     case WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE:
       return "PAYMENT_NO_METHOD_SAVED_ERROR";
+    case WalletPaymentOutcomeEnum.WAITING_CONFIRMATION_EMAIL:
+      return "PAYMENT_UNKNOWN_OUTCOME_ERROR";
     default:
       return outcome;
   }
@@ -298,22 +300,22 @@ export const trackPaymentErrorHelp = (
   );
 };
 
-export const trackPaymentMethodErrorContinue = (
+export const trackPaymentNoSavedMethodContinue = (
   props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
-    "PAYMENT_METHOD_ERROR_CONTINUE",
+    "PAYMENT_NO_SAVED_METHOD_CONTINUE",
     buildEventProperties("UX", "action", {
       ...props
     })
   );
 };
 
-export const trackPaymentMethodErrorExit = (
+export const trackPaymentNoSavedMethodExit = (
   props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
-    "PAYMENT_METHOD_ERROR_EXIT",
+    "PAYMENT_NO_SAVED_METHOD_EXIT",
     buildEventProperties("UX", "action", {
       ...props
     })

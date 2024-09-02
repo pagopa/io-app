@@ -1,7 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
-import { setAutomaticSessionRefresh } from "../actions/sessionRefreshActions";
+import {
+  areTwoMinElapsedFromLastActivity,
+  setAutomaticSessionRefresh
+} from "../actions/sessionRefreshActions";
 import { Action } from "../../../../store/actions/types";
 import {
   logoutFailure,
@@ -10,11 +13,13 @@ import {
 
 export type AutomaticSessionRefreshState = {
   enabled: boolean | undefined;
+  areAlreadyTwoMinAfterLastActivity: boolean;
 };
 
 export const automaticSessionRefreshInitialState: AutomaticSessionRefreshState =
   {
-    enabled: undefined
+    enabled: undefined,
+    areAlreadyTwoMinAfterLastActivity: false
   };
 
 const AutomaticSessionRefreshReducer = (
@@ -29,6 +34,11 @@ const AutomaticSessionRefreshReducer = (
       return {
         ...state,
         enabled: action.payload.enabled
+      };
+    case getType(areTwoMinElapsedFromLastActivity):
+      return {
+        ...state,
+        areAlreadyTwoMinAfterLastActivity: action.payload.hasTwoMinPassed
       };
     default:
       return state;

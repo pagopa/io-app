@@ -33,6 +33,7 @@ const lineHeightMapping: Record<FontSize, number> = { regular: 21, small: 18 };
  * default values(if not defined) are weight: `Bold`, color: `blue`
  * @param props`
  * @constructor
+ * @deprecated Don't use local `LabelSmall`. Import it from `io-app-design-system` instead.
  */
 export const LabelSmall: React.FunctionComponent<OwnProps> = props =>
   useTypographyFactory<AllowedWeight, AllowedColors>({
