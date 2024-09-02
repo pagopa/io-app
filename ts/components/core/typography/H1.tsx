@@ -33,6 +33,7 @@ export const h1DefaultWeight: AllowedWeight = "Bold";
  * default values(if not defined) are weight: `Bold`, color: `bluegreyDark`
  * @param props
  * @constructor
+ * @deprecated Don't use local `H1`. Import it from `io-app-design-system` instead.
  */
 export const H1: React.FunctionComponent<OwnProps> = props =>
   useTypographyFactory<AllowedWeight, AllowedColors>({
