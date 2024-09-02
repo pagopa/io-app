@@ -12,6 +12,12 @@ export const isAutomaticSessionRefreshToggleActiveSelector = (
   state: GlobalState
 ) => !!state.features.loginFeatures.fastLogin.automaticSessionRefresh.enabled;
 
+export const hasTwoMinutesElapsedSinceLastActivitySelector = (
+  state: GlobalState
+) =>
+  state.features.loginFeatures.fastLogin.automaticSessionRefresh
+    .areAlreadyTwoMinAfterLastActivity;
+
 const securityAdviceAcknowledgedSelector = (state: GlobalState) =>
   state.features.loginFeatures.fastLogin.securityAdviceAcknowledged;
 

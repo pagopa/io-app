@@ -12,6 +12,7 @@ import {
   fimsGetRedirectUrlAndOpenIABAction
 } from "../actions";
 import { abortUrlFromConsentsPot } from "../selectors";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 export type FimsFlowStateTags =
   | "idle"
@@ -26,15 +27,19 @@ export type FimsErrorStateType = {
 };
 
 export type FimsSSOState = {
-  currentFlowState: FimsFlowStateTags;
   consentsData: pot.Pot<ConsentData, FimsErrorStateType>;
+  ctaText?: string;
+  currentFlowState: FimsFlowStateTags;
+  relyingPartyServiceId?: ServiceId;
   relyingPartyUrl?: string;
 };
 
 const INITIAL_STATE: FimsSSOState = {
+  consentsData: pot.none,
+  ctaText: undefined,
   currentFlowState: "idle",
-  relyingPartyUrl: undefined,
-  consentsData: pot.none
+  relyingPartyServiceId: undefined,
+  relyingPartyUrl: undefined
 };
 
 const reducer = (
@@ -47,20 +52,24 @@ const reducer = (
         ? {
             ...state,
             consentsData: pot.none,
-            currentFlowState: "fastLogin_forced_restart"
+            currentFlowState: "fastLogin_forced_restart",
+            relyingPartyServiceId: undefined
           }
         : INITIAL_STATE;
 
     case getType(fimsGetConsentsListAction.request):
       return {
+        ctaText: action.payload.ctaText,
         currentFlowState: "consents",
         consentsData: pot.noneLoading,
+        relyingPartyServiceId: undefined,
         relyingPartyUrl: action.payload.ctaUrl
       };
     case getType(fimsGetConsentsListAction.success):
       return {
         ...state,
-        consentsData: pot.some(action.payload)
+        consentsData: pot.some(action.payload),
+        relyingPartyServiceId: action.payload.service_id as ServiceId
       };
     case getType(fimsGetRedirectUrlAndOpenIABAction.request):
       return {

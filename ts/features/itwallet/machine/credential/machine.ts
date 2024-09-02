@@ -27,7 +27,6 @@ export const itwCredentialIssuanceMachine = setup({
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     storeCredential: notImplemented,
-    disposeWallet: notImplemented,
     closeIssuance: notImplemented,
     setFailure: assign(({ event }) => ({
       failure: {
@@ -124,7 +123,7 @@ export const itwCredentialIssuanceMachine = setup({
           target: "ObtainingCredential"
         },
         close: {
-          actions: ["closeIssuance", "disposeWallet"]
+          actions: ["closeIssuance"]
         }
       }
     },
@@ -164,7 +163,7 @@ export const itwCredentialIssuanceMachine = setup({
       entry: "navigateToCredentialPreviewScreen",
       on: {
         "add-to-wallet": {
-          actions: ["storeCredential", "navigateToWallet", "disposeWallet"]
+          actions: ["storeCredential", "navigateToWallet"]
         },
         close: {
           actions: ["closeIssuance", "disposeWallet"]
@@ -175,7 +174,7 @@ export const itwCredentialIssuanceMachine = setup({
       entry: ["navigateToFailureScreen"],
       on: {
         close: {
-          actions: ["closeIssuance", "disposeWallet"]
+          actions: ["closeIssuance"]
         },
         reset: {
           target: "Idle"

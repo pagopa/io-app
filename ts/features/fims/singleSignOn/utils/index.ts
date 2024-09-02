@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ActionType } from "typesafe-actions";
 import { FimsFlowStateTags, FimsSSOState } from "../store/reducers";
 import { startApplicationInitialization } from "../../../../store/actions/application";
+import { isStrictSome } from "../../../../utils/pot";
 
 export const foldFimsFlowState = <A>(
   flowState: FimsFlowStateTags,
@@ -46,11 +47,20 @@ export const shouldRestartFimsAuthAfterFastLoginFailure = (
   state: FimsSSOState,
   action: ActionType<typeof startApplicationInitialization>
 ) => {
-  const isConsentsLoading = pot.isLoading(state.consentsData);
-  const isIabLoading = state.currentFlowState === "in-app-browser-loading";
   const fastLoginSessionExpired = !!(
     action.payload && action.payload.handleSessionExpiration
   );
-  const isInLoadingState = isConsentsLoading || isIabLoading;
-  return fastLoginSessionExpired && isInLoadingState;
+  if (fastLoginSessionExpired) {
+    const hasExpiredDuringConsentsRetrieval = pot.isLoading(state.consentsData);
+    const hasExpiredWhileRetrievingServiceData =
+      state.currentFlowState === "consents" && isStrictSome(state.consentsData);
+    const hasExpiredDuringInAppBrowserRedirectUriRetrieval =
+      state.currentFlowState === "in-app-browser-loading";
+    return (
+      hasExpiredDuringConsentsRetrieval ||
+      hasExpiredWhileRetrievingServiceData ||
+      hasExpiredDuringInAppBrowserRedirectUriRetrieval
+    );
+  }
+  return false;
 };

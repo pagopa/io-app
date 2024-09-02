@@ -10,7 +10,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { sequenceS } from "fp-ts/lib/Apply";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -20,10 +20,11 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
-import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
-import { parseClaims } from "../../common/utils/itwClaimsUtils";
+import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
 import {
@@ -52,7 +53,7 @@ const ItwIssuanceCredentialTrustIssuerScreen = () => {
     selectCredentialTypeOption
   );
 
-  useItwDisbleGestureNavigation();
+  useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
   return pipe(
@@ -61,7 +62,10 @@ const ItwIssuanceCredentialTrustIssuerScreen = () => {
       requestedCredential: requestedCredentialOption,
       eid: eidOption
     }),
-    O.fold(constNull, props => <ContentView {...props} />)
+    O.fold(
+      () => <ItwGenericErrorContent />,
+      props => <ContentView {...props} />
+    )
   );
 };
 
@@ -93,7 +97,9 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
     parsedCredential: eid.parsedCredential
   });
 
-  const claims = parseClaims(eid.parsedCredential, { exclude: ["unique_id"] });
+  const claims = parseClaims(eid.parsedCredential, {
+    exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
+  });
   const requiredClaims = claims.map(
     claim =>
       ({

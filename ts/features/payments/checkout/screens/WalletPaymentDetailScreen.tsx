@@ -195,7 +195,7 @@ const WalletPaymentDetailContent = ({
                 rptId: paymentDetails?.rptId
               })
             );
-            navigation.replace(
+            navigation.navigate(
               PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR,
               {
                 screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
