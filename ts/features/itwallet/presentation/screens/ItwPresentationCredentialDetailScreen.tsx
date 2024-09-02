@@ -104,7 +104,6 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
             )}
             data={credential}
             canHideValues={true}
-            credentialStatus={credentialStatus}
           />
           <VSpacer size={24} />
           <ItwPresentationDetailFooter
