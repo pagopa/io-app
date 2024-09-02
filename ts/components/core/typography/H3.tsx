@@ -86,6 +86,7 @@ export const calculateH3WeightColor = (
  * default values(if not defined) are weight: `Semibold`, color: `bluegreyDark`
  * @param props
  * @constructor
+ * @deprecated Don't use local `H3`. Import it from `io-app-design-system` instead.
  */
 export const H3: React.FunctionComponent<OwnProps> = props =>
   useTypographyFactory<AllowedWeight, AllowedColors>({
