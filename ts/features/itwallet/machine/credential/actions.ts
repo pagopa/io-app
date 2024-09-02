@@ -1,5 +1,5 @@
 import { IOToast } from "@pagopa/io-app-design-system";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ActionArgs } from "xstate5";
 import I18n from "../../../../i18n";
@@ -8,7 +8,6 @@ import ROUTES from "../../../../navigation/routes";
 import { useIODispatch } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { walletUpsertCard } from "../../../newWallet/store/actions/cards";
-import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
@@ -89,10 +88,6 @@ export default (
         credentialType: context.credentialType
       })
     );
-  },
-
-  disposeWallet: () => {
-    credentialIssuanceUtils.disposeWallet().then(constNull).catch(constNull);
   },
 
   closeIssuance: () => {

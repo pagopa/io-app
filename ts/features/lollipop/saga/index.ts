@@ -35,7 +35,7 @@ import {
   trackLollipopKeyGenerationFailure,
   trackLollipopKeyGenerationSuccess
 } from "../../../utils/analytics";
-import { PublicSession } from "../../../../definitions/backend/PublicSession";
+import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import { mixpanelTrack } from "../../../mixpanel";
 
 const WAIT_A_BIT_AFTER_SESSION_EXPIRED = 1000 as Millisecond;
