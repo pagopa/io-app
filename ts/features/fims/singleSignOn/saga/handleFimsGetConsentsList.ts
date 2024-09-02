@@ -125,6 +125,8 @@ export function* handleFimsGetConsentsList(
   yield* put(nextAction);
 }
 
+// --------- UTILS --------
+
 const decodeSuccessfulConsentsResponse = (
   getConsentsResult: HttpClientSuccessResponse
 ) =>

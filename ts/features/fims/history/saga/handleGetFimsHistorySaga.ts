@@ -33,7 +33,7 @@ export function* handleGetFimsHistorySaga(
     trackFailureIfNeeded(resultAction);
     yield* put(resultAction);
   } catch (e) {
-    const reason = `${e}`;
+    const reason = JSON.stringify(e);
     trackHistoryFailure(reason);
     yield* put(fimsHistoryGet.failure(reason));
   }
