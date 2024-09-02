@@ -1,24 +1,37 @@
 import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/SelfConsentMultiDTO";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
-import { GlobalEvents } from "../../../../xstate/types/events";
 
-export interface StartOnboarding {
+export type StartOnboarding = {
   readonly type: "start-onboarding";
   readonly serviceId: string;
-}
+};
 
-export interface ToggleBoolCriteria {
+export type ToggleBoolCriteria = {
   readonly type: "toggle-bool-criteria";
   readonly criteria: SelfDeclarationBoolDTO;
-}
+};
 
-export interface SelectMultiConsent {
+export type SelectMultiConsent = {
   readonly type: "select-multi-consent";
   readonly data: SelfConsentMultiDTO;
-}
+};
 
-export type Events =
-  | GlobalEvents
+export type Next = {
+  readonly type: "next";
+};
+
+export type Back = {
+  readonly type: "back";
+};
+
+export type Close = {
+  readonly type: "close";
+};
+
+export type IdPayOnboardingEvents =
   | StartOnboarding
   | SelectMultiConsent
-  | ToggleBoolCriteria;
+  | ToggleBoolCriteria
+  | Next
+  | Back
+  | Close;

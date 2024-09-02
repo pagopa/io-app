@@ -5,26 +5,27 @@ import { and, assertEvent, assign, fromPromise, setup } from "xstate";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
-import {
-  LOADING_TAG,
-  WAITING_USER_INPUT_TAG,
-  notImplementedStub
-} from "../../../../xstate/utils";
+import { IdPayTags } from "../../common/machine/tags";
+import { InitiativeFailureType } from "../../configuration/types/failure";
 import {
   OnboardingFailure,
   OnboardingFailureEnum
 } from "../types/OnboardingFailure";
-import * as Context from "./context";
-import * as Events from "./events";
+import { Context, InitialContext } from "./context";
+import { IdPayOnboardingEvents } from "./events";
 import {
   getBooleanSelfDeclarationListFromContext,
   getMultiSelfDeclarationListFromContext
 } from "./selectors";
 
+const notImplementedStub = () => {
+  throw new Error("Not implemented");
+};
+
 export const idPayOnboardingMachine = setup({
   types: {
-    context: {} as Context.Context,
-    events: {} as Events.Events
+    context: {} as Context,
+    events: {} as IdPayOnboardingEvents
   },
   actions: {
     navigateToInitiativeDetailsScreen: notImplementedStub,
@@ -34,7 +35,8 @@ export const idPayOnboardingMachine = setup({
     navigateToCompletionScreen: notImplementedStub,
     navigateToFailureScreen: notImplementedStub,
     navigateToInitiativeMonitoringScreen: notImplementedStub,
-    closeOnboarding: notImplementedStub
+    closeOnboarding: notImplementedStub,
+    handleSessionExpired: notImplementedStub
   },
   actors: {
     getInitiativeInfo: fromPromise<InitiativeDataDTO, string>(
@@ -49,9 +51,7 @@ export const idPayOnboardingMachine = setup({
       O.Option<RequiredCriteriaDTO>,
       O.Option<string>
     >(notImplementedStub),
-    acceptRequiredCriteria: fromPromise<undefined, Context.Context>(
-      notImplementedStub
-    )
+    acceptRequiredCriteria: fromPromise<undefined, Context>(notImplementedStub)
   },
   guards: {
     assertServiceId: ({ event }) => {
@@ -78,11 +78,13 @@ export const idPayOnboardingMachine = setup({
       context.selfDeclarationsMultiPage === 0,
     isLastMultiConsent: ({ context }) =>
       context.selfDeclarationsMultiPage >=
-      getMultiSelfDeclarationListFromContext(context).length - 1
+      getMultiSelfDeclarationListFromContext(context).length - 1,
+    isSessionExpired: ({ event }: { event: IdPayOnboardingEvents }) =>
+      "error" in event && event.error === InitiativeFailureType.SESSION_EXPIRED
   }
 }).createMachine({
   id: "idpay-onboarding",
-  context: Context.Context,
+  context: InitialContext,
   initial: "Idle",
   on: {
     close: {
@@ -91,7 +93,7 @@ export const idPayOnboardingMachine = setup({
   },
   states: {
     Idle: {
-      tags: [LOADING_TAG],
+      tags: [IdPayTags.Loading],
       on: {
         "start-onboarding": {
           guard: "assertServiceId",
@@ -103,7 +105,7 @@ export const idPayOnboardingMachine = setup({
       }
     },
     LoadingInitiative: {
-      tags: [LOADING_TAG],
+      tags: [IdPayTags.Loading],
       entry: "navigateToInitiativeDetailsScreen",
       initial: "LoadingInitiativeInfo",
       states: {
@@ -117,15 +119,21 @@ export const idPayOnboardingMachine = setup({
               })),
               target: "LoadingOnboardingStatus"
             },
-            onError: {
-              actions: assign(({ event }) => ({
-                failure: pipe(
-                  OnboardingFailure.decode(event.error),
-                  O.fromEither
-                )
-              })),
-              target: "#idpay-onboarding.OnboardingFailure"
-            }
+            onError: [
+              {
+                guard: "isSessionExpired",
+                target: "SessionExpired"
+              },
+              {
+                actions: assign(({ event }) => ({
+                  failure: pipe(
+                    OnboardingFailure.decode(event.error),
+                    O.fromEither
+                  )
+                })),
+                target: "#idpay-onboarding.OnboardingFailure"
+              }
+            ]
           }
         },
 
@@ -158,7 +166,7 @@ export const idPayOnboardingMachine = setup({
     },
 
     DisplayingInitiativeInfo: {
-      tags: [WAITING_USER_INPUT_TAG],
+      tags: [IdPayTags.WaitingUserInput],
       on: {
         next: {
           target: "AcceptingTos"
@@ -167,39 +175,51 @@ export const idPayOnboardingMachine = setup({
     },
 
     AcceptingTos: {
-      tags: [LOADING_TAG],
+      tags: [IdPayTags.Loading],
       invoke: {
         src: "acceptTos",
         input: ({ context }) => selectInitiativeId(context),
-        onError: {
-          actions: assign(({ event }) => ({
-            failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
-          })),
-          target: "OnboardingFailure"
-        },
         onDone: {
           target: "LoadingCriteria"
-        }
+        },
+        onError: [
+          {
+            guard: "isSessionExpired",
+            target: "SessionExpired"
+          },
+          {
+            actions: assign(({ event }) => ({
+              failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
+            })),
+            target: "OnboardingFailure"
+          }
+        ]
       }
     },
 
     LoadingCriteria: {
-      tags: [LOADING_TAG],
+      tags: [IdPayTags.Loading],
       invoke: {
         src: "getRequiredCriteria",
         input: ({ context }) => selectInitiativeId(context),
-        onError: {
-          actions: assign(({ event }) => ({
-            failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
-          })),
-          target: "OnboardingFailure"
-        },
         onDone: {
           actions: assign(({ event }) => ({
             requiredCriteria: event.output
           })),
           target: "EvaluatingRequiredCriteria"
-        }
+        },
+        onError: [
+          {
+            guard: "isSessionExpired",
+            target: "SessionExpired"
+          },
+          {
+            actions: assign(({ event }) => ({
+              failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
+            })),
+            target: "OnboardingFailure"
+          }
+        ]
       }
     },
 
@@ -220,7 +240,7 @@ export const idPayOnboardingMachine = setup({
     },
 
     DisplayingPdndCriteria: {
-      tags: [WAITING_USER_INPUT_TAG],
+      tags: [IdPayTags.WaitingUserInput],
       entry: "navigateToPdndCriteriaScreen",
       on: {
         next: [
@@ -239,11 +259,11 @@ export const idPayOnboardingMachine = setup({
     },
 
     DisplayingSelfDeclarationList: {
-      tags: [WAITING_USER_INPUT_TAG],
+      tags: [IdPayTags.WaitingUserInput],
       initial: "Evaluating",
       states: {
         Evaluating: {
-          tags: [LOADING_TAG],
+          tags: [IdPayTags.Loading],
           always: [
             {
               guard: "hasBooleanSelfDeclarationList",
@@ -257,7 +277,7 @@ export const idPayOnboardingMachine = setup({
         },
 
         DisplayingBooleanSelfDeclarationList: {
-          tags: [WAITING_USER_INPUT_TAG],
+          tags: [IdPayTags.WaitingUserInput],
           entry: "navigateToBoolSelfDeclarationListScreen",
           on: {
             back: [
@@ -290,7 +310,7 @@ export const idPayOnboardingMachine = setup({
         },
 
         DisplayingMultiSelfDeclarationList: {
-          tags: [WAITING_USER_INPUT_TAG],
+          tags: [IdPayTags.WaitingUserInput],
           initial: "DisplayingMultiSelfDeclarationItem",
           states: {
             DisplayingMultiSelfDeclarationItem: {
@@ -352,48 +372,50 @@ export const idPayOnboardingMachine = setup({
     },
 
     AcceptingCriteria: {
-      tags: [LOADING_TAG],
+      tags: [IdPayTags.Loading],
       invoke: {
         src: "acceptRequiredCriteria",
         input: ({ context }) => context,
-        onError: {
-          actions: assign(({ event }) => ({
-            failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
-          })),
-          target: "OnboardingFailure"
-        },
         onDone: {
           target: "OnboardingCompleted"
-        }
+        },
+        onError: [
+          {
+            guard: "isSessionExpired",
+            target: "SessionExpired"
+          },
+          {
+            actions: assign(({ event }) => ({
+              failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
+            })),
+            target: "OnboardingFailure"
+          }
+        ]
       }
     },
 
     OnboardingCompleted: {
-      tags: [WAITING_USER_INPUT_TAG],
+      tags: [IdPayTags.WaitingUserInput],
       entry: "navigateToCompletionScreen"
     },
 
     OnboardingFailure: {
       entry: "navigateToFailureScreen",
-      always: {
-        guard: ({ context }) =>
-          pipe(
-            context.failure,
-            O.map(f => f === OnboardingFailureEnum.SESSION_EXPIRED),
-            O.getOrElse(() => false)
-          ),
-        actions: "closeOnboarding"
-      },
       on: {
         next: {
           actions: "navigateToInitiativeMonitoringScreen"
         }
       }
+    },
+
+    SessionExpired: {
+      entry: ["handleSessionExpired"],
+      always: { target: "LoadingInitiative" }
     }
   }
 });
 
-const selectInitiativeId = (context: Context.Context) =>
+const selectInitiativeId = (context: Context) =>
   pipe(
     context.initiative,
     O.map(initiative => initiative.initiativeId)

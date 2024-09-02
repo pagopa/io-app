@@ -21,22 +21,20 @@ import {
   StatusEnum as InstrumentStatusEnum
 } from "../../../../../definitions/idpay/InstrumentDTO";
 import { Wallet } from "../../../../types/pagopa";
-import {
-  LOADING_TAG,
-  UPSERTING_TAG,
-  WAITING_USER_INPUT_TAG,
-  notImplementedStub
-} from "../../../../xstate/utils";
+import { IdPayTags } from "../../common/machine/tags";
 import { ConfigurationMode, InstrumentStatusByIdWallet } from "../types";
 import { InitiativeFailure, InitiativeFailureType } from "../types/failure";
-import * as Context from "./context";
-import * as Events from "./events";
+import { Context, InitialContext } from "./context";
+import { IdPayConfigurationEvents } from "./events";
 
-/** PLEASE DO NO USE AUTO-LAYOUT WHEN USING VISUAL EDITOR */
+const notImplementedStub = () => {
+  throw new Error("Not implemented");
+};
+
 export const idPayConfigurationMachine = setup({
   types: {
-    context: {} as Context.Context,
-    events: {} as Events.Events
+    context: {} as Context,
+    events: {} as IdPayConfigurationEvents
   },
   actions: {
     navigateToConfigurationIntro: notImplementedStub,
@@ -115,7 +113,8 @@ export const idPayConfigurationMachine = setup({
       };
     }),
     showFailureToast: notImplementedStub,
-    exitConfiguration: notImplementedStub
+    exitConfiguration: notImplementedStub,
+    handleSessionExpired: notImplementedStub
   },
   actors: {
     getInitiative: fromPromise<InitiativeDTO, string>(notImplementedStub),
@@ -125,7 +124,7 @@ export const idPayConfigurationMachine = setup({
     getInitiativeInstruments: fromPromise<ReadonlyArray<InstrumentDTO>, string>(
       notImplementedStub
     ),
-    instrumentsEnrollmentLogic: fromCallback<Events.Events, string>(
+    instrumentsEnrollmentLogic: fromCallback<IdPayConfigurationEvents, string>(
       notImplementedStub
     ),
     enrollIban: fromPromise<
@@ -144,13 +143,15 @@ export const idPayConfigurationMachine = setup({
         O.getOrElse(() => false)
       ),
     hasIbanList: ({ context }) => context.ibanList.length > 0,
-    hasInstruments: ({ context }) => context.walletInstruments.length > 0
+    hasInstruments: ({ context }) => context.walletInstruments.length > 0,
+    isSessionExpired: ({ event }: { event: IdPayConfigurationEvents }) =>
+      "error" in event && event.error === InitiativeFailureType.SESSION_EXPIRED
   },
   delays: {
     INSTRUMENTS_POLLING_INTERVAL: 3000
   }
 }).createMachine({
-  context: Context.Context,
+  context: InitialContext,
   id: "idpay-configuration",
   initial: "Idle",
   on: {
@@ -160,7 +161,7 @@ export const idPayConfigurationMachine = setup({
   },
   states: {
     Idle: {
-      tags: [LOADING_TAG],
+      tags: [IdPayTags.Loading],
       on: {
         "start-configuration": {
           guard: ({ event }) => event.initiativeId.length > 0,
@@ -174,7 +175,7 @@ export const idPayConfigurationMachine = setup({
     },
 
     LoadingInitiative: {
-      tags: [LOADING_TAG],
+      tags: [IdPayTags.Loading],
       invoke: {
         src: "getInitiative",
         id: "getInitiative",
@@ -185,17 +186,23 @@ export const idPayConfigurationMachine = setup({
           })),
           target: "EvaluatingInitiativeConfiguration"
         },
-        onError: {
-          actions: assign(({ event }) => ({
-            failure: pipe(InitiativeFailure.decode(event.error), O.fromEither)
-          })),
-          target: "ConfigurationFailure"
-        }
+        onError: [
+          {
+            guard: "isSessionExpired",
+            target: "SessionExpired"
+          },
+          {
+            actions: assign(({ event }) => ({
+              failure: pipe(InitiativeFailure.decode(event.error), O.fromEither)
+            })),
+            target: "ConfigurationFailure"
+          }
+        ]
       }
     },
 
     EvaluatingInitiativeConfiguration: {
-      tags: [LOADING_TAG],
+      tags: [IdPayTags.Loading],
       always: [
         {
           guard: "isInstrumentsOnlyMode",
@@ -216,7 +223,7 @@ export const idPayConfigurationMachine = setup({
     },
 
     DisplayingConfigurationIntro: {
-      tags: [WAITING_USER_INPUT_TAG],
+      tags: [IdPayTags.WaitingUserInput],
       entry: "navigateToConfigurationIntro",
       on: {
         next: {
@@ -231,7 +238,7 @@ export const idPayConfigurationMachine = setup({
       entry: "navigateToIbanEnrollmentScreen",
       states: {
         LoadingIbanList: {
-          tags: [LOADING_TAG],
+          tags: [IdPayTags.Loading],
           invoke: {
             src: "getIbanList",
             id: "getIbanList",
@@ -242,6 +249,10 @@ export const idPayConfigurationMachine = setup({
               target: "EvaluatingIbanList"
             },
             onError: [
+              {
+                guard: "isSessionExpired",
+                target: "SessionExpired"
+              },
               {
                 guard: "isIbanOnlyMode",
                 actions: assign(({ event }) => ({
@@ -263,7 +274,7 @@ export const idPayConfigurationMachine = setup({
         },
 
         EvaluatingIbanList: {
-          tags: [LOADING_TAG],
+          tags: [IdPayTags.Loading],
           always: [
             {
               guard: "hasIbanList",
@@ -276,7 +287,7 @@ export const idPayConfigurationMachine = setup({
         },
 
         DisplayingIbanOnboardingLanding: {
-          tags: [WAITING_USER_INPUT_TAG],
+          tags: [IdPayTags.WaitingUserInput],
           entry: "navigateToIbanOnboardingScreen",
           on: {
             next: {
@@ -295,7 +306,7 @@ export const idPayConfigurationMachine = setup({
         },
 
         DisplayingIbanOnboardingForm: {
-          tags: [WAITING_USER_INPUT_TAG],
+          tags: [IdPayTags.WaitingUserInput],
           entry: "navigateToIbanOnboardingFormScreen",
           on: {
             back: [
@@ -314,7 +325,7 @@ export const idPayConfigurationMachine = setup({
         },
 
         OnboardingNewIban: {
-          tags: [LOADING_TAG],
+          tags: [IdPayTags.Loading],
           invoke: {
             src: "enrollIban",
             id: "enrollIban",
@@ -328,20 +339,26 @@ export const idPayConfigurationMachine = setup({
             onDone: {
               target: "IbanConfigurationCompleted"
             },
-            onError: {
-              actions: [
-                assign(({ event }) => ({
-                  failure: decodeFailure(event.error)
-                })),
-                "showFailureToast"
-              ],
-              target: "DisplayingIbanOnboardingForm"
-            }
+            onError: [
+              {
+                guard: "isSessionExpired",
+                target: "SessionExpired"
+              },
+              {
+                actions: [
+                  assign(({ event }) => ({
+                    failure: decodeFailure(event.error)
+                  })),
+                  "showFailureToast"
+                ],
+                target: "DisplayingIbanOnboardingForm"
+              }
+            ]
           }
         },
 
         DisplayingIbanList: {
-          tags: [WAITING_USER_INPUT_TAG],
+          tags: [IdPayTags.WaitingUserInput],
           entry: "navigateToIbanEnrollmentScreen",
           on: {
             back: [
@@ -363,7 +380,7 @@ export const idPayConfigurationMachine = setup({
         },
 
         EnrollingIban: {
-          tags: [UPSERTING_TAG],
+          tags: [IdPayTags.Upserting],
           invoke: {
             src: "enrollIban",
             id: "enrollIban",
@@ -385,6 +402,10 @@ export const idPayConfigurationMachine = setup({
               }
             ],
             onError: [
+              {
+                guard: "isSessionExpired",
+                target: "SessionExpired"
+              },
               {
                 target: "DisplayingIbanList",
                 actions: "showFailureToast"
@@ -413,7 +434,7 @@ export const idPayConfigurationMachine = setup({
       initial: "LoadingInstruments",
       states: {
         LoadingInstruments: {
-          tags: [LOADING_TAG],
+          tags: [IdPayTags.Loading],
           entry: "navigateToInstrumentsEnrollmentScreen",
           type: "parallel",
           states: {
@@ -432,6 +453,10 @@ export const idPayConfigurationMachine = setup({
                       target: "Success"
                     },
                     onError: [
+                      {
+                        guard: "isSessionExpired",
+                        target: "SessionExpired"
+                      },
                       {
                         guard: "isInstrumentsOnlyMode",
                         actions: assign(({ event }) => ({
@@ -473,6 +498,10 @@ export const idPayConfigurationMachine = setup({
                     },
                     onError: [
                       {
+                        guard: "isSessionExpired",
+                        target: "SessionExpired"
+                      },
+                      {
                         guard: "isInstrumentsOnlyMode",
                         actions: assign(({ event }) => ({
                           failure: decodeFailure(event.error)
@@ -513,7 +542,7 @@ export const idPayConfigurationMachine = setup({
         },
 
         DisplayingInstruments: {
-          tags: [WAITING_USER_INPUT_TAG],
+          tags: [IdPayTags.WaitingUserInput],
           entry: "updateAllInstrumentsStatus",
           initial: "DisplayingInstrument",
           invoke: {
@@ -617,7 +646,7 @@ export const idPayConfigurationMachine = setup({
     },
 
     DisplayingConfigurationSuccess: {
-      tags: [WAITING_USER_INPUT_TAG],
+      tags: [IdPayTags.WaitingUserInput],
       entry: "navigateToConfigurationSuccessScreen",
       on: {
         next: {
@@ -627,7 +656,7 @@ export const idPayConfigurationMachine = setup({
     },
 
     ConfigurationNotNeeded: {
-      tags: [WAITING_USER_INPUT_TAG],
+      tags: [IdPayTags.WaitingUserInput],
       entry: "navigateToConfigurationSuccessScreen",
       on: {
         next: {
@@ -648,16 +677,12 @@ export const idPayConfigurationMachine = setup({
 
     ConfigurationFailure: {
       type: "final",
-      always: {
-        guard: ({ context }) =>
-          pipe(
-            context.failure,
-            O.map(f => f === InitiativeFailureType.SESSION_EXPIRED),
-            O.getOrElse(() => false)
-          ),
-        actions: "exitConfiguration"
-      },
       entry: ["showFailureToast", "exitConfiguration"]
+    },
+
+    SessionExpired: {
+      entry: ["handleSessionExpired"],
+      always: { target: "LoadingInitiative" }
     }
   }
 });

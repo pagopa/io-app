@@ -11,11 +11,9 @@ import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import { InstrumentDTO } from "../../../../../definitions/idpay/InstrumentDTO";
 import { TypeEnum } from "../../../../../definitions/pagopa/Wallet";
 import { PaymentManagerClient } from "../../../../api/pagopa";
-import { useIODispatch } from "../../../../store/hooks";
 import { PaymentManagerToken, Wallet } from "../../../../types/pagopa";
 import { SessionManager } from "../../../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
-import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 import { IDPayClient } from "../../common/api/client";
 import { InitiativeFailureType } from "../types/failure";
 import * as Events from "./events";
@@ -25,19 +23,8 @@ export const createActorsImplementation = (
   paymentManagerClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   bearerToken: string,
-  language: PreferredLanguageEnum,
-  dispatch: ReturnType<typeof useIODispatch>
+  language: PreferredLanguageEnum
 ) => {
-  const handleSessionExpired = () => {
-    dispatch(
-      refreshSessionToken.request({
-        withUserInteraction: true,
-        showIdentificationModalAtStartup: false,
-        showLoader: true
-      })
-    );
-  };
-
   const getInitiative = fromPromise<InitiativeDTO, string>(async params => {
     const response = await idPayClient.getWalletDetail({
       initiativeId: params.input,
@@ -54,7 +41,6 @@ export const createActorsImplementation = (
             case 200:
               return Promise.resolve(value);
             case 401:
-              handleSessionExpired();
               return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
             default:
               return Promise.reject(InitiativeFailureType.GENERIC);
@@ -88,7 +74,6 @@ export const createActorsImplementation = (
               );
               return Promise.resolve({ ibanList: uniqueIbanList });
             case 401:
-              handleSessionExpired();
               return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
             default:
               return Promise.reject(
@@ -125,7 +110,6 @@ export const createActorsImplementation = (
               case 200:
                 return Promise.resolve(undefined);
               case 401:
-                handleSessionExpired();
                 return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
               default:
                 return Promise.reject(
@@ -167,7 +151,6 @@ export const createActorsImplementation = (
               return Promise.resolve(wallet);
 
             case 401:
-              handleSessionExpired();
               return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
             default:
               return Promise.reject(
@@ -201,7 +184,6 @@ export const createActorsImplementation = (
             case 200:
               return Promise.resolve(value.instrumentList);
             case 401:
-              handleSessionExpired();
               return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
             default:
               return Promise.reject(
@@ -236,7 +218,6 @@ export const createActorsImplementation = (
             case 200:
               return Promise.resolve(undefined);
             case 401:
-              handleSessionExpired();
               return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
             default:
               return Promise.reject(
@@ -274,7 +255,6 @@ export const createActorsImplementation = (
             case 200:
               return Promise.resolve(undefined);
             case 401:
-              handleSessionExpired();
               return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
             default:
               return Promise.reject(

@@ -5,7 +5,7 @@ import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCr
 import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/SelfConsentMultiDTO";
 import { OnboardingFailure } from "../types/OnboardingFailure";
 
-export interface Context {
+export type Context = {
   readonly serviceId: string;
   readonly initiative: O.Option<InitiativeDataDTO>;
   readonly onboardingStatus: O.Option<StatusEnum>;
@@ -14,9 +14,9 @@ export interface Context {
   readonly selfDeclarationsMultiAnwsers: Record<number, SelfConsentMultiDTO>;
   readonly selfDeclarationsBoolAnswers: Record<string, boolean>;
   readonly failure: O.Option<OnboardingFailure>;
-}
+};
 
-export const Context: Context = {
+export const InitialContext: Context = {
   serviceId: "",
   initiative: O.none,
   onboardingStatus: O.none,

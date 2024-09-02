@@ -89,10 +89,9 @@ export const IDPayConfigurationMachineProvider = ({ children }: Props) => {
     paymentManagerClient,
     pmSessionManager,
     idPayToken,
-    language,
-    dispatch
+    language
   );
-  const actions = createActionsImplementation(navigation);
+  const actions = createActionsImplementation(navigation, dispatch);
 
   const machine = idPayConfigurationMachine.provide({
     actors,

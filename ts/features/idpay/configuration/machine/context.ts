@@ -6,7 +6,7 @@ import { Wallet } from "../../../../types/pagopa";
 import { ConfigurationMode, InstrumentStatusByIdWallet } from "../types";
 import { InitiativeFailureType } from "../types/failure";
 
-export interface Context {
+export type Context = {
   readonly initiativeId: string;
   readonly mode: ConfigurationMode;
   readonly initiative: O.Option<InitiativeDTO>;
@@ -16,9 +16,9 @@ export interface Context {
   readonly instrumentStatuses: InstrumentStatusByIdWallet;
   readonly areInstrumentsSkipped: boolean;
   readonly failure: O.Option<InitiativeFailureType>;
-}
+};
 
-export const Context: Context = {
+export const InitialContext: Context = {
   initiativeId: "",
   mode: ConfigurationMode.COMPLETE,
   initiative: O.none,

@@ -1,39 +1,32 @@
 import * as O from "fp-ts/lib/Option";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { guardedNavigationAction } from "../../../../xstate/helpers/guardedNavigationAction";
+import { useIODispatch } from "../../../../store/hooks";
+import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayOnboardingRoutes } from "../navigation/routes";
 import * as Context from "./context";
 
 export const createActionsImplementation = (
-  navigation: ReturnType<typeof useIONavigation>
+  navigation: ReturnType<typeof useIONavigation>,
+  dispatch: ReturnType<typeof useIODispatch>
 ) => {
-  const navigateToInitiativeDetailsScreen =
-    guardedNavigationAction<Context.Context>(() =>
-      navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-        screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
-        params: {}
-      })
-    );
-
-  const navigateToPdndCriteriaScreen = guardedNavigationAction(() =>
+  const navigateToInitiativeDetailsScreen = () =>
+    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
+      params: {}
+    });
+  const navigateToPdndCriteriaScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
-    })
-  );
-
-  const navigateToBoolSelfDeclarationListScreen = guardedNavigationAction(() =>
+    });
+  const navigateToBoolSelfDeclarationListScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS
-    })
-  );
-
-  const navigateToMultiSelfDeclarationListScreen = guardedNavigationAction(() =>
+    });
+  const navigateToMultiSelfDeclarationListScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS
-    })
-  );
-
+    });
   const navigateToCompletionScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION
@@ -65,6 +58,16 @@ export const createActionsImplementation = (
     navigation.popToTop();
   };
 
+  const handleSessionExpired = () => {
+    dispatch(
+      refreshSessionToken.request({
+        withUserInteraction: true,
+        showIdentificationModalAtStartup: false,
+        showLoader: true
+      })
+    );
+  };
+
   return {
     navigateToInitiativeDetailsScreen,
     navigateToPdndCriteriaScreen,
@@ -73,6 +76,7 @@ export const createActionsImplementation = (
     navigateToCompletionScreen,
     navigateToFailureScreen,
     navigateToInitiativeMonitoringScreen,
-    closeOnboarding
+    closeOnboarding,
+    handleSessionExpired
   };
 };

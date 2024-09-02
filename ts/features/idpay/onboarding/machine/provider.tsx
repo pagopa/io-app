@@ -55,8 +55,8 @@ export const IdPayOnboardingMachineProvider = ({ children }: Props) => {
     isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl
   );
 
-  const actors = createActorsImplementation(client, token, language, dispatch);
-  const actions = createActionsImplementation(navigation);
+  const actors = createActorsImplementation(client, token, language);
+  const actions = createActionsImplementation(navigation, dispatch);
 
   const machine = idPayOnboardingMachine.provide({
     actors,

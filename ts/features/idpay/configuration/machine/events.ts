@@ -1,55 +1,66 @@
 import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
 import { IbanPutDTO } from "../../../../../definitions/idpay/IbanPutDTO";
-import { GlobalEvents } from "../../../../xstate/types/events";
 import { ConfigurationMode } from "../types";
 
-export interface StartConfiguration {
+export type StartConfiguration = {
   readonly type: "start-configuration";
   readonly initiativeId: string;
   readonly mode: ConfigurationMode;
-}
+};
 
-export interface ConfirmIbanOnboarding {
+export type ConfirmIbanOnboarding = {
   readonly type: "confirm-iban-onboarding";
   readonly ibanBody: IbanPutDTO;
-}
+};
 
-export interface NewIbanOnboarding {
+export type NewIbanOnboarding = {
   readonly type: "new-iban-onboarding";
-}
+};
 
-export interface EnrollIban {
+export type EnrollIban = {
   readonly type: "enroll-iban";
   readonly iban: IbanDTO;
-}
+};
 
-export interface EnrollInstrument {
+export type EnrollInstrument = {
   readonly type: "enroll-instrument";
   readonly walletId: string;
-}
+};
 
-export interface DeleteInstrument {
+export type DeleteInstrument = {
   readonly type: "delete-instrument";
   readonly instrumentId: string;
   readonly walletId: string;
-}
+};
 
-export interface UpdateInstrumentSuccess {
+export type UpdateInstrumentSuccess = {
   readonly type: "update-instrument-success";
   readonly walletId: string;
   readonly enrolling: boolean;
-}
+};
 
-export interface UpdateInstrumentFailure {
+export type UpdateInstrumentFailure = {
   readonly type: "update-instrument-failure";
   readonly walletId: string;
-}
+};
 
-export interface SkipInstruments {
+export type SkipInstruments = {
   readonly type: "skip-instruments";
-}
+};
 
-export type Events =
+export type Next = {
+  readonly type: "next";
+};
+
+export type Back = {
+  readonly type: "back";
+};
+
+export type Close = {
+  readonly type: "close";
+};
+
+export type IdPayConfigurationEvents =
   | StartConfiguration
   | NewIbanOnboarding
   | ConfirmIbanOnboarding
@@ -59,4 +70,6 @@ export type Events =
   | UpdateInstrumentSuccess
   | UpdateInstrumentFailure
   | SkipInstruments
-  | GlobalEvents;
+  | Next
+  | Back
+  | Close;

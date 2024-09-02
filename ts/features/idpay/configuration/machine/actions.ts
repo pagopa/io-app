@@ -3,56 +3,49 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { guardedNavigationAction } from "../../../../xstate/helpers/guardedNavigationAction";
+import { useIODispatch } from "../../../../store/hooks";
+import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayConfigurationRoutes } from "../navigation/routes";
 import { InitiativeFailure } from "../types/failure";
 import * as Context from "./context";
 
 const createActionsImplementation = (
-  navigation: ReturnType<typeof useIONavigation>
+  navigation: ReturnType<typeof useIONavigation>,
+  dispatch: ReturnType<typeof useIODispatch>
 ) => {
-  const navigateToConfigurationIntro = guardedNavigationAction<Context.Context>(
-    () => {
-      navigation.navigate(
-        IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
-        {
-          screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
-          params: {}
-        }
-      );
-    }
-  );
-
-  const navigateToIbanEnrollmentScreen = guardedNavigationAction(() =>
+  const navigateToConfigurationIntro = () => {
+    navigation.navigate(
+      IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
+      {
+        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
+        params: {}
+      }
+    );
+  };
+  const navigateToIbanEnrollmentScreen = () =>
     navigation.navigate(
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
         screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
         params: {}
       }
-    )
-  );
-
-  const navigateToIbanOnboardingScreen = guardedNavigationAction(() =>
+    );
+  const navigateToIbanOnboardingScreen = () =>
     navigation.navigate(
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
         screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING
       }
-    )
-  );
-
-  const navigateToIbanOnboardingFormScreen = guardedNavigationAction(() =>
+    );
+  const navigateToIbanOnboardingFormScreen = () =>
     navigation.navigate(
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
         screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING
       }
-    )
-  );
-
-  const navigateToInstrumentsEnrollmentScreen = guardedNavigationAction(() =>
+    );
+  const navigateToInstrumentsEnrollmentScreen = () =>
     navigation.navigate(
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
@@ -60,9 +53,7 @@ const createActionsImplementation = (
           IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
         params: {}
       }
-    )
-  );
-
+    );
   const navigateToConfigurationSuccessScreen = () => {
     navigation.navigate(
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
@@ -100,6 +91,16 @@ const createActionsImplementation = (
     navigation.pop();
   };
 
+  const handleSessionExpired = () => {
+    dispatch(
+      refreshSessionToken.request({
+        withUserInteraction: true,
+        showIdentificationModalAtStartup: false,
+        showLoader: true
+      })
+    );
+  };
+
   return {
     navigateToConfigurationIntro,
     navigateToIbanEnrollmentScreen,
@@ -110,7 +111,8 @@ const createActionsImplementation = (
     navigateToInitiativeDetailScreen,
     showUpdateIbanToast,
     showFailureToast,
-    exitConfiguration
+    exitConfiguration,
+    handleSessionExpired
   };
 };
 
