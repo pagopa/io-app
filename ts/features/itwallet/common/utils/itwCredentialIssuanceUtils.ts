@@ -185,7 +185,7 @@ export const obtainCredential = async ({
       issuerConf,
       credential,
       format,
-      { credentialCryptoContext, ignoreMissingAttributes: true }
+      { credentialCryptoContext, ignoreMissingAttributes: false }
     );
 
   const storedCredential: StoredCredential = {
