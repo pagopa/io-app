@@ -6,10 +6,11 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { ForceScrollDownView } from "../../../../components/ForceScrollDownView";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { isLoadingSelector } from "../../../../xstate/selectors";
+import { isLoadingSelector } from "../../common/machine/selectors";
 import {
   OnboardingDescriptionMarkdown,
   OnboardingDescriptionMarkdownSkeleton
@@ -19,7 +20,6 @@ import { OnboardingServiceHeader } from "../components/OnboardingServiceHeader";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
 import { IdPayOnboardingParamsList } from "../navigation/params";
-import { FooterActions } from "../../../../components/ui/FooterActions";
 
 export type InitiativeDetailsScreenParams = {
   serviceId?: string;

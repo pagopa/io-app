@@ -25,10 +25,10 @@ import { H4 } from "../../../../components/core/typography/H4";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { isLoadingSelector } from "../../../../xstate/selectors";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
-import { ConfigurationMode } from "../types";
 import { IdPayConfigurationParamsList } from "../navigation/params";
+import { ConfigurationMode } from "../types";
+import { isLoadingSelector } from "../../common/machine/selectors";
 
 export type IdPayInitiativeConfigurationIntroScreenParams = {
   initiativeId?: string;

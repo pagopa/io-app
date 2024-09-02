@@ -16,7 +16,7 @@ import { SessionManager } from "../../../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
 import { IDPayClient } from "../../common/api/client";
 import { InitiativeFailureType } from "../types/failure";
-import * as Events from "./events";
+import { IdPayConfigurationEvents } from "./events";
 
 export const createActorsImplementation = (
   idPayClient: IDPayClient,
@@ -268,47 +268,48 @@ export const createActorsImplementation = (
     return data;
   };
 
-  const instrumentsEnrollmentLogic = fromCallback<Events.Events, string>(
-    ({ sendBack, receive, input }) => {
-      receive(event => {
-        switch (event.type) {
-          case "delete-instrument":
-            deleteInstrument(input, event.instrumentId)
-              .then(() =>
-                sendBack({
-                  ...event,
-                  type: "update-instrument-success"
-                })
-              )
-              .catch(() =>
-                sendBack({
-                  ...event,
-                  type: "update-instrument-failure"
-                })
-              );
-            break;
-          case "enroll-instrument":
-            enrollInstrument(input, event.walletId)
-              .then(() =>
-                sendBack({
-                  ...event,
-                  type: "update-instrument-success",
-                  enrolling: true
-                })
-              )
-              .catch(() =>
-                sendBack({
-                  ...event,
-                  type: "update-instrument-failure"
-                })
-              );
-            break;
-          default:
-            break;
-        }
-      });
-    }
-  );
+  const instrumentsEnrollmentLogic = fromCallback<
+    IdPayConfigurationEvents,
+    string
+  >(({ sendBack, receive, input }) => {
+    receive(event => {
+      switch (event.type) {
+        case "delete-instrument":
+          deleteInstrument(input, event.instrumentId)
+            .then(() =>
+              sendBack({
+                ...event,
+                type: "update-instrument-success"
+              })
+            )
+            .catch(() =>
+              sendBack({
+                ...event,
+                type: "update-instrument-failure"
+              })
+            );
+          break;
+        case "enroll-instrument":
+          enrollInstrument(input, event.walletId)
+            .then(() =>
+              sendBack({
+                ...event,
+                type: "update-instrument-success",
+                enrolling: true
+              })
+            )
+            .catch(() =>
+              sendBack({
+                ...event,
+                type: "update-instrument-failure"
+              })
+            );
+          break;
+        default:
+          break;
+      }
+    });
+  });
 
   return {
     getInitiative,

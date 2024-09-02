@@ -13,7 +13,6 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
@@ -25,7 +24,6 @@ import { IdPayConfigurationMachineContext } from "../machine/provider";
 import {
   failureSelector,
   initiativeInstrumentsByIdWalletSelector,
-  isLoadingSelector,
   isUpsertingInstrumentSelector,
   selectInitiativeDetails,
   selectIsInstrumentsOnlyMode,
@@ -34,6 +32,7 @@ import {
 import { IdPayConfigurationParamsList } from "../navigation/params";
 import { ConfigurationMode } from "../types";
 import { InitiativeFailureType } from "../types/failure";
+import { isLoadingSelector } from "../../common/machine/selectors";
 
 export type IdPayInstrumentsEnrollmentScreenParams = {
   initiativeId?: string;
@@ -229,10 +228,6 @@ export const InstrumentsEnrollmentScreen = () => {
       />
     );
   };
-
-  useNavigationSwipeBackListener(() => {
-    machine.send({ type: "back", skipNavigation: true });
-  });
 
   const handleInstrumentValueChange = (wallet: Wallet) => (value: boolean) => {
     if (value) {

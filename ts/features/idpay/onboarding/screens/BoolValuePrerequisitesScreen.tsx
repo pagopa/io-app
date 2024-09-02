@@ -9,19 +9,18 @@ import { H1 } from "../../../../components/core/typography/H1";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
-import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { dpr28Dec2000Url } from "../../../../urls";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../../../utils/url";
-import { isLoadingSelector } from "../../../../xstate/selectors";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   areAllSelfDeclarationsToggledSelector,
   boolRequiredCriteriaSelector,
   selectSelfDeclarationBoolAnswers
 } from "../machine/selectors";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { isLoadingSelector } from "../../common/machine/selectors";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -47,10 +46,6 @@ const InitiativeSelfDeclarationsScreen = () => {
 
   const getSelfCriteriaBoolAnswer = (criteria: SelfDeclarationBoolDTO) =>
     selfCriteriaBoolAnswers[criteria.code] ?? false;
-
-  useNavigationSwipeBackListener(() => {
-    machine.send({ type: "back", skipNavigation: true });
-  });
 
   useHeaderSecondLevel({
     title: I18n.t("idpay.onboarding.navigation.header"),

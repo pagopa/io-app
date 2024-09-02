@@ -143,7 +143,7 @@ export const idPayConfigurationMachine = setup({
         O.getOrElse(() => false)
       ),
     hasIbanList: ({ context }) => context.ibanList.length > 0,
-    hasInstruments: ({ context }) => context.walletInstruments.length > 0,
+    hasInstruments: ({ context }) => context.walletInstruments?.length > 0,
     isSessionExpired: ({ event }: { event: IdPayConfigurationEvents }) =>
       "error" in event && event.error === InitiativeFailureType.SESSION_EXPIRED
   },
@@ -189,7 +189,7 @@ export const idPayConfigurationMachine = setup({
         onError: [
           {
             guard: "isSessionExpired",
-            target: "SessionExpired"
+            target: "#idpay-configuration.SessionExpired"
           },
           {
             actions: assign(({ event }) => ({
@@ -223,7 +223,6 @@ export const idPayConfigurationMachine = setup({
     },
 
     DisplayingConfigurationIntro: {
-      tags: [IdPayTags.WaitingUserInput],
       entry: "navigateToConfigurationIntro",
       on: {
         next: {
@@ -251,7 +250,7 @@ export const idPayConfigurationMachine = setup({
             onError: [
               {
                 guard: "isSessionExpired",
-                target: "SessionExpired"
+                target: "#idpay-configuration.SessionExpired"
               },
               {
                 guard: "isIbanOnlyMode",
@@ -287,7 +286,6 @@ export const idPayConfigurationMachine = setup({
         },
 
         DisplayingIbanOnboardingLanding: {
-          tags: [IdPayTags.WaitingUserInput],
           entry: "navigateToIbanOnboardingScreen",
           on: {
             next: {
@@ -306,7 +304,6 @@ export const idPayConfigurationMachine = setup({
         },
 
         DisplayingIbanOnboardingForm: {
-          tags: [IdPayTags.WaitingUserInput],
           entry: "navigateToIbanOnboardingFormScreen",
           on: {
             back: [
@@ -342,7 +339,7 @@ export const idPayConfigurationMachine = setup({
             onError: [
               {
                 guard: "isSessionExpired",
-                target: "SessionExpired"
+                target: "#idpay-configuration.SessionExpired"
               },
               {
                 actions: [
@@ -358,7 +355,6 @@ export const idPayConfigurationMachine = setup({
         },
 
         DisplayingIbanList: {
-          tags: [IdPayTags.WaitingUserInput],
           entry: "navigateToIbanEnrollmentScreen",
           on: {
             back: [
@@ -404,7 +400,7 @@ export const idPayConfigurationMachine = setup({
             onError: [
               {
                 guard: "isSessionExpired",
-                target: "SessionExpired"
+                target: "#idpay-configuration.SessionExpired"
               },
               {
                 target: "DisplayingIbanList",
@@ -455,7 +451,7 @@ export const idPayConfigurationMachine = setup({
                     onError: [
                       {
                         guard: "isSessionExpired",
-                        target: "SessionExpired"
+                        target: "#idpay-configuration.SessionExpired"
                       },
                       {
                         guard: "isInstrumentsOnlyMode",
@@ -499,7 +495,7 @@ export const idPayConfigurationMachine = setup({
                     onError: [
                       {
                         guard: "isSessionExpired",
-                        target: "SessionExpired"
+                        target: "#idpay-configuration.SessionExpired"
                       },
                       {
                         guard: "isInstrumentsOnlyMode",
@@ -542,7 +538,6 @@ export const idPayConfigurationMachine = setup({
         },
 
         DisplayingInstruments: {
-          tags: [IdPayTags.WaitingUserInput],
           entry: "updateAllInstrumentsStatus",
           initial: "DisplayingInstrument",
           invoke: {
@@ -646,7 +641,6 @@ export const idPayConfigurationMachine = setup({
     },
 
     DisplayingConfigurationSuccess: {
-      tags: [IdPayTags.WaitingUserInput],
       entry: "navigateToConfigurationSuccessScreen",
       on: {
         next: {
@@ -656,7 +650,6 @@ export const idPayConfigurationMachine = setup({
     },
 
     ConfigurationNotNeeded: {
-      tags: [IdPayTags.WaitingUserInput],
       entry: "navigateToConfigurationSuccessScreen",
       on: {
         next: {

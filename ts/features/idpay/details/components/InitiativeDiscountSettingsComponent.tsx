@@ -22,17 +22,19 @@ const InitiativeDiscountSettingsComponent = (props: Props) => {
   const navigation =
     useNavigation<IOStackNavigationProp<IdPayConfigurationParamsList>>();
 
-  const navigateToInstrumentsConfiguration = (initiative: InitiativeDTO) => {
+  const navigateToInstrumentsConfiguration = ({
+    initiativeId,
+    initiativeName
+  }: InitiativeDTO) => {
     navigation.navigate(
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
         screen:
           IdPayConfigurationRoutes.IDPAY_CONFIGURATION_DISCOUNT_INSTRUMENTS,
         params: {
-          initiativeId: initiative.initiativeId,
-          initiativeName: initiative.initiativeName
-        },
-        initiativeId: initiative.initiativeId
+          initiativeId,
+          initiativeName
+        }
       }
     );
   };
@@ -53,15 +55,15 @@ const InitiativeDiscountSettingsComponent = (props: Props) => {
           onPress={() => null}
         />
       ),
-      initiative => {
+      ({ nInstr }) => {
         const methodCountString = I18n.t(
           `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods`,
           {
             defaultValue: I18n.t(
               `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods.other`,
-              { count: initiative.nInstr }
+              { count: nInstr }
             ),
-            count: initiative.nInstr
+            count: nInstr
           }
         );
         return (

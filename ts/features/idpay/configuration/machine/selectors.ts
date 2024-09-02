@@ -3,7 +3,6 @@ import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 import { InstrumentDTO } from "../../../../../definitions/idpay/InstrumentDTO";
-import { LOADING_TAG } from "../../../../xstate/utils";
 import { ConfigurationMode } from "../types";
 import { IdPayConfigurationMachine } from "./machine";
 
@@ -12,9 +11,6 @@ type MachineSnapshot = StateFrom<IdPayConfigurationMachine>;
 type IDPayInstrumentsByIdWallet = {
   [idWallet: string]: InstrumentDTO;
 };
-
-const isLoadingSelector = (snapshot: MachineSnapshot) =>
-  snapshot.hasTag(LOADING_TAG as never);
 
 const selectInitiativeDetails = (snapshot: MachineSnapshot) =>
   snapshot.context.initiative;
@@ -86,7 +82,6 @@ export {
   initiativeInstrumentsByIdWalletSelector,
   instrumentStatusByIdWalletSelector,
   isLoadingIbanListSelector,
-  isLoadingSelector,
   isUpsertingInstrumentSelector,
   selectAreInstrumentsSkipped,
   selectEnrolledIban,

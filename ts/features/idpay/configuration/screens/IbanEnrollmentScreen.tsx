@@ -15,17 +15,18 @@ import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
-import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { isUpseringSelector } from "../../../../xstate/selectors";
+import {
+  isLoadingSelector,
+  isUpsertingSelector
+} from "../../common/machine/selectors";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 import {
   ibanListSelector,
-  isLoadingSelector,
   selectEnrolledIban,
   selectIsIbanOnlyMode
 } from "../machine/selectors";
@@ -53,7 +54,7 @@ export const IbanEnrollmentScreen = () => {
   const isIbanOnly =
     IdPayConfigurationMachineContext.useSelector(selectIsIbanOnlyMode);
   const isUpsertingIban =
-    IdPayConfigurationMachineContext.useSelector(isUpseringSelector);
+    IdPayConfigurationMachineContext.useSelector(isUpsertingSelector);
   const enrolledIban =
     IdPayConfigurationMachineContext.useSelector(selectEnrolledIban);
 
@@ -105,10 +106,6 @@ export const IbanEnrollmentScreen = () => {
   const handleAddNewIbanPress = () => {
     machine.send({ type: "new-iban-onboarding" });
   };
-
-  useNavigationSwipeBackListener(() => {
-    machine.send({ type: "back", skipNavigation: true });
-  });
 
   const renderFooter = () => {
     if (isIbanOnly) {

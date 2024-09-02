@@ -7,10 +7,7 @@ import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/i
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
 import { IdPayTags } from "../../common/machine/tags";
 import { InitiativeFailureType } from "../../configuration/types/failure";
-import {
-  OnboardingFailure,
-  OnboardingFailureEnum
-} from "../types/OnboardingFailure";
+import { OnboardingFailure } from "../types/OnboardingFailure";
 import { Context, InitialContext } from "./context";
 import { IdPayOnboardingEvents } from "./events";
 import {
@@ -166,7 +163,6 @@ export const idPayOnboardingMachine = setup({
     },
 
     DisplayingInitiativeInfo: {
-      tags: [IdPayTags.WaitingUserInput],
       on: {
         next: {
           target: "AcceptingTos"
@@ -240,7 +236,6 @@ export const idPayOnboardingMachine = setup({
     },
 
     DisplayingPdndCriteria: {
-      tags: [IdPayTags.WaitingUserInput],
       entry: "navigateToPdndCriteriaScreen",
       on: {
         next: [
@@ -259,7 +254,6 @@ export const idPayOnboardingMachine = setup({
     },
 
     DisplayingSelfDeclarationList: {
-      tags: [IdPayTags.WaitingUserInput],
       initial: "Evaluating",
       states: {
         Evaluating: {
@@ -277,7 +271,6 @@ export const idPayOnboardingMachine = setup({
         },
 
         DisplayingBooleanSelfDeclarationList: {
-          tags: [IdPayTags.WaitingUserInput],
           entry: "navigateToBoolSelfDeclarationListScreen",
           on: {
             back: [
@@ -310,7 +303,6 @@ export const idPayOnboardingMachine = setup({
         },
 
         DisplayingMultiSelfDeclarationList: {
-          tags: [IdPayTags.WaitingUserInput],
           initial: "DisplayingMultiSelfDeclarationItem",
           states: {
             DisplayingMultiSelfDeclarationItem: {
@@ -395,7 +387,6 @@ export const idPayOnboardingMachine = setup({
     },
 
     OnboardingCompleted: {
-      tags: [IdPayTags.WaitingUserInput],
       entry: "navigateToCompletionScreen"
     },
 

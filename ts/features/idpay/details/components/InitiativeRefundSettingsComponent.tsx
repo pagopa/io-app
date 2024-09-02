@@ -20,7 +20,6 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { Skeleton } from "../../common/components/Skeleton";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
-import { ConfigurationMode } from "../../configuration/types";
 
 type Props = {
   initiative?: InitiativeDTO;
@@ -35,10 +34,10 @@ const InitiativeRefundSettingsComponent = (props: Props) => {
     navigation.navigate(
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
-        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
+        screen:
+          IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
         params: {
-          initiativeId,
-          mode: ConfigurationMode.INSTRUMENTS
+          initiativeId
         }
       }
     );
@@ -48,10 +47,9 @@ const InitiativeRefundSettingsComponent = (props: Props) => {
     navigation.navigate(
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
-        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
+        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
         params: {
-          initiativeId,
-          mode: ConfigurationMode.IBAN
+          initiativeId
         }
       }
     );

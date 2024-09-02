@@ -11,7 +11,6 @@ import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
@@ -27,10 +26,6 @@ export const IbanConfigurationLanding = () => {
   );
 
   const customGoBack = () => machine.send({ type: "back" });
-
-  useNavigationSwipeBackListener(() => {
-    machine.send({ type: "back", skipNavigation: true });
-  });
 
   const { bottomSheet, dismiss, present } = useIOBottomSheetAutoresizableModal(
     {

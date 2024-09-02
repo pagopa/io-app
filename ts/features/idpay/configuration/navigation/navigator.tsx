@@ -1,7 +1,10 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
-import { IDPayConfigurationMachineProvider } from "../machine/provider";
+import {
+  IdPayConfigurationMachineContext,
+  IDPayConfigurationMachineProvider
+} from "../machine/provider";
 import { ConfigurationSuccessScreen } from "../screens/ConfigurationSuccessScreen";
 import { IbanConfigurationLanding } from "../screens/IbanConfigurationLandingScreen";
 import { IbanEnrollmentScreen } from "../screens/IbanEnrollmentScreen";
@@ -16,9 +19,26 @@ const Stack = createStackNavigator<IdPayConfigurationParamsList>();
 
 export const IdPayConfigurationNavigator = () => (
   <IDPayConfigurationMachineProvider>
+    <InnerNavigator />
+  </IDPayConfigurationMachineProvider>
+);
+
+const InnerNavigator = () => {
+  const idPayConfigurationMachineRef =
+    IdPayConfigurationMachineContext.useActorRef();
+
+  return (
     <Stack.Navigator
       initialRouteName={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO}
       screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
+      screenListeners={{
+        beforeRemove: () => {
+          // Read more on https://reactnavigation.org/docs/preventing-going-back/
+          // Whenever we have a back navigation action we send a "back" event to the machine.
+          // Since the back event is accepted only by specific states, we can safely send a back event to each machine
+          idPayConfigurationMachineRef.send({ type: "back" });
+        }
+      }}
     >
       <Stack.Screen
         name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO}
@@ -57,5 +77,5 @@ export const IdPayConfigurationNavigator = () => (
         component={IdPayDiscountInstrumentsScreen}
       />
     </Stack.Navigator>
-  </IDPayConfigurationMachineProvider>
-);
+  );
+};

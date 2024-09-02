@@ -16,13 +16,12 @@ import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
-import { isLoadingSelector } from "../machine/selectors";
 
 export const IbanOnboardingScreen = () => {
   const machine = IdPayConfigurationMachineContext.useActorRef();
@@ -39,10 +38,6 @@ export const IbanOnboardingScreen = () => {
   const isSettingsVisibleAndHideProfile = useIOSelector(
     isSettingsVisibleAndHideProfileSelector
   );
-
-  useNavigationSwipeBackListener(() => {
-    machine.send({ type: "back", skipNavigation: true });
-  });
 
   const isInputValid = O.isSome(iban.value) && ibanName.length > 0;
 

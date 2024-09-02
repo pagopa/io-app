@@ -3,16 +3,15 @@ import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
 import { assertEvent, assign, fromPromise, setup } from "xstate";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
-import {
-  LOADING_TAG,
-  UPSERTING_TAG,
-  WAITING_USER_INPUT_TAG,
-  notImplementedStub
-} from "../../../../xstate/utils";
+import { IdPayTags } from "../../common/machine/tags";
 import { IDPayTransactionCode } from "../common/types";
 import { PaymentFailure, PaymentFailureEnum } from "../types/PaymentFailure";
 import * as Context from "./context";
 import * as Events from "./events";
+
+const notImplementedStub = () => {
+  throw new Error("Not implemented");
+};
 
 export const idPayPaymentMachine = setup({
   types: {
@@ -52,7 +51,7 @@ export const idPayPaymentMachine = setup({
   initial: "Idle",
   states: {
     Idle: {
-      tags: [LOADING_TAG],
+      tags: [IdPayTags.Loading],
       on: {
         "authorize-payment": {
           guard: "asserTransactionCode",
@@ -62,7 +61,7 @@ export const idPayPaymentMachine = setup({
       }
     },
     PreAuthorizing: {
-      tags: [UPSERTING_TAG],
+      tags: [IdPayTags.Loading],
       invoke: {
         id: "preAuthorizePayment",
         src: "preAuthorizePayment",
@@ -86,7 +85,6 @@ export const idPayPaymentMachine = setup({
     },
 
     AwaitingConfirmation: {
-      tags: [WAITING_USER_INPUT_TAG],
       entry: "navigateToAuthorizationScreen",
       on: {
         next: {
@@ -99,7 +97,7 @@ export const idPayPaymentMachine = setup({
     },
 
     Cancelling: {
-      tags: [UPSERTING_TAG],
+      tags: [IdPayTags.Loading],
       invoke: {
         id: "deletePayment",
         src: "deletePayment",
@@ -124,7 +122,7 @@ export const idPayPaymentMachine = setup({
     },
 
     Authorizing: {
-      tags: [UPSERTING_TAG],
+      tags: [IdPayTags.Loading],
       invoke: {
         id: "authorizePayment",
         src: "authorizePayment",

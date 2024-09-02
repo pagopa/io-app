@@ -16,7 +16,6 @@ import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDe
 import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
@@ -32,8 +31,7 @@ type ListItemProps = {
 
 const MultiValuePrerequisitesScreen = () => {
   const pagerRef = React.useRef<PagerView>(null);
-  const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
-  const machine = useActorRef();
+  const { useSelector } = IdPayOnboardingMachineContext;
 
   const multiSelfDeclarations = useSelector(multiRequiredCriteriaSelector);
   const currentPage = useSelector(selectCurrentMultiSelfDeclarationPage);
@@ -41,10 +39,6 @@ const MultiValuePrerequisitesScreen = () => {
   React.useEffect(() => {
     pagerRef.current?.setPage(currentPage);
   }, [pagerRef, currentPage]);
-
-  useNavigationSwipeBackListener(() => {
-    machine.send({ type: "back", skipNavigation: true });
-  });
 
   return (
     <SafeAreaView style={IOStyles.flex}>

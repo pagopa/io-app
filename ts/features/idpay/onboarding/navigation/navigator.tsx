@@ -1,7 +1,10 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
-import { IdPayOnboardingMachineProvider } from "../machine/provider";
+import {
+  IdPayOnboardingMachineContext,
+  IdPayOnboardingMachineProvider
+} from "../machine/provider";
 import BoolValuePrerequisitesScreen from "../screens/BoolValuePrerequisitesScreen";
 import CompletionScreen from "../screens/CompletionScreen";
 import FailureScreen from "../screens/FailureScreen";
@@ -15,11 +18,27 @@ const Stack = createStackNavigator<IdPayOnboardingParamsList>();
 
 export const IdPayOnboardingNavigator = () => (
   <IdPayOnboardingMachineProvider>
+    <InnerNavigator />
+  </IdPayOnboardingMachineProvider>
+);
+
+export const InnerNavigator = () => {
+  const idPayOnboardingMachineRef = IdPayOnboardingMachineContext.useActorRef();
+
+  return (
     <Stack.Navigator
       initialRouteName={
         IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS
       }
       screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
+      screenListeners={{
+        beforeRemove: () => {
+          // Read more on https://reactnavigation.org/docs/preventing-going-back/
+          // Whenever we have a back navigation action we send a "back" event to the machine.
+          // Since the back event is accepted only by specific states, we can safely send a back event to each machine
+          idPayOnboardingMachineRef.send({ type: "back" });
+        }
+      }}
     >
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS}
@@ -48,5 +67,5 @@ export const IdPayOnboardingNavigator = () => (
         options={{ gestureEnabled: false }}
       />
     </Stack.Navigator>
-  </IdPayOnboardingMachineProvider>
-);
+  );
+};

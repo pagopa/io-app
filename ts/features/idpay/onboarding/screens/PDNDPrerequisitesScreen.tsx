@@ -1,8 +1,8 @@
 import {
-  ModuleSummary,
   ButtonSolid,
   ContentWrapper,
   FooterWithButtons,
+  ModuleSummary,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -16,14 +16,13 @@ import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { serviceByIdPotSelector } from "../../../services/details/store/reducers";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../machine/selectors";
-import { serviceByIdPotSelector } from "../../../services/details/store/reducers";
 import { getPDNDCriteriaDescription } from "../utils/strings";
 
 const styles = StyleSheet.create({
@@ -89,10 +88,6 @@ export const PDNDPrerequisitesScreen = () => {
   );
 
   const pdndCriteria = useSelector(pdndCriteriaSelector);
-
-  useNavigationSwipeBackListener(() => {
-    machine.send({ type: "back", skipNavigation: true });
-  });
 
   useHeaderSecondLevel({
     title: I18n.t("idpay.onboarding.navigation.header"),

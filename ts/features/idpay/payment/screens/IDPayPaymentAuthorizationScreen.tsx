@@ -22,10 +22,6 @@ import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import {
-  isLoadingSelector,
-  isUpseringSelector
-} from "../../../../xstate/selectors";
 import { Skeleton } from "../../common/components/Skeleton";
 import {
   formatDateOrDefault,
@@ -39,6 +35,7 @@ import {
   transactionDataSelector
 } from "../machine/selectors";
 import { IdPayPaymentParamsList } from "../navigation/params";
+import { isLoadingSelector } from "../../common/machine/selectors";
 
 export type IDPayPaymentAuthorizationScreenRouteParams = {
   trxCode?: string;
@@ -65,7 +62,6 @@ const IDPayPaymentAuthorizationScreen = () => {
 
   const transactionData = useSelector(transactionDataSelector);
   const isLoading = useSelector(isLoadingSelector);
-  const isUpserting = useSelector(isUpseringSelector);
   const isAuthorizing = useSelector(isAuthorizingSelector);
   const isCancelling = useSelector(isCancellingSelector);
 
@@ -119,7 +115,7 @@ const IDPayPaymentAuthorizationScreen = () => {
           buttonProps: {
             label: isCancelling ? "" : I18n.t("global.buttons.deny"),
             onPress: handleCancel,
-            disabled: isUpserting || isLoading
+            disabled: isLoading
           }
         }}
         secondary={{
@@ -128,7 +124,7 @@ const IDPayPaymentAuthorizationScreen = () => {
             label: I18n.t("global.buttons.confirm"),
             onPress: handleConfirm,
             loading: isAuthorizing,
-            disabled: isUpserting || isLoading
+            disabled: isLoading
           }
         }}
       />

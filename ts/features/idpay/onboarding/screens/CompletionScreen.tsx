@@ -12,8 +12,8 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import themeVariables from "../../../../theme/variables";
-import { isLoadingSelector } from "../../../../xstate/selectors";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
+import { isLoadingSelector } from "../../common/machine/selectors";
 
 const CompletionScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
