@@ -1,6 +1,5 @@
 import {
   ContentWrapper,
-  IOVisualCostants,
   IOSpacingScale,
   VSpacer
 } from "@pagopa/io-app-design-system";
