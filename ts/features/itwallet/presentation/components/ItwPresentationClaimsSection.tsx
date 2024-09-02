@@ -1,23 +1,21 @@
+import { H6, IconButton } from "@pagopa/io-app-design-system";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { IconButton, H6, Divider } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
-import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";
-import { ItwCredentialClaim } from "./ItwCredentialClaim";
-import { ItwCredentialStatus } from "./ItwCredentialCard";
+import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
+import { ItwQrCodeClaimImage } from "../../common/components/ItwQrCodeClaimImage";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
 type Props = {
   title: string;
-  claims: ReadonlyArray<ClaimDisplayFormat>;
+  data: StoredCredential;
   canHideValues?: boolean;
-  credentialStatus?: ItwCredentialStatus;
 };
 
-export const ItwCredentialClaimsSection = ({
+export const ItwPresentationClaimsSection = ({
   title,
   canHideValues,
-  claims,
-  credentialStatus
+  data
 }: Props) => {
   const [valuesHidden, setValuesHidden] = useState(false);
 
@@ -40,18 +38,11 @@ export const ItwCredentialClaimsSection = ({
         <H6 color="grey-700">{title}</H6>
         {canHideValues && renderHideValuesToggle()}
       </View>
-      <View>
-        {claims.map((claim, index) => (
-          <React.Fragment key={claim.id}>
-            {index !== 0 && <Divider />}
-            <ItwCredentialClaim
-              claim={claim}
-              hidden={valuesHidden}
-              credentialStatus={credentialStatus}
-            />
-          </React.Fragment>
-        ))}
-      </View>
+      <ItwQrCodeClaimImage
+        claim={data.parsedCredential.link_qr_code}
+        isHidden={valuesHidden}
+      />
+      <ItwCredentialClaimsList data={data} isHidden={valuesHidden} />
     </View>
   );
 };

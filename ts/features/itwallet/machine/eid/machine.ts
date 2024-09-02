@@ -45,7 +45,6 @@ export const itwEidIssuanceMachine = setup({
     closeIssuance: notImplemented,
     setWalletInstanceToOperational: notImplemented,
     setWalletInstanceToValid: notImplemented,
-    disposeWallet: notImplemented,
     handleSessionExpired: notImplemented
   },
   actors: {
@@ -358,15 +357,11 @@ export const itwEidIssuanceMachine = setup({
         DisplayingPreview: {
           on: {
             "add-to-wallet": {
-              actions: [
-                "storeEidCredential",
-                "setWalletInstanceToValid",
-                "disposeWallet"
-              ],
+              actions: ["storeEidCredential", "setWalletInstanceToValid"],
               target: "#itwEidIssuanceMachine.Success"
             },
             close: {
-              actions: ["closeIssuance", "disposeWallet"]
+              actions: ["closeIssuance"]
             }
           }
         }
@@ -390,7 +385,7 @@ export const itwEidIssuanceMachine = setup({
       entry: "navigateToFailureScreen",
       on: {
         close: {
-          actions: ["closeIssuance", "disposeWallet"]
+          actions: ["closeIssuance"]
         },
         reset: {
           target: "Idle"
