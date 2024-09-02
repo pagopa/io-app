@@ -48,7 +48,7 @@ export function* handleFimsGetConsentsList(
   const inAppBrowserSupported = yield* call(supportsInAppBrowser);
   if (!inAppBrowserSupported) {
     const debugMessage = `InApp Browser not supported`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
 
     yield* put(
       fimsGetConsentsListAction.failure({
