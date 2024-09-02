@@ -1,4 +1,5 @@
 import {
+  HttpClientSuccessResponse,
   isCancelledFailure,
   nativeRequest,
   setCookie
@@ -7,17 +8,17 @@ import { supportsInAppBrowser } from "@pagopa/io-react-native-login-utils";
 import * as E from "fp-ts/lib/Either";
 import { identity, pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import { fimsTokenSelector } from "../../../../store/reducers/authentication";
 import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
 import { fimsGetConsentsListAction } from "../store/actions";
 import { ConsentData } from "../types";
 import { deallocateFimsAndRenewFastLoginSession } from "./handleFimsResourcesDeallocation";
 import {
+  computeAndTrackAuthenticationError,
   formatHttpClientResponseForMixPanel,
   isFastLoginFailure,
-  isValidRedirectResponse,
-  logToMixPanel
+  isValidRedirectResponse
 } from "./sagaUtils";
 
 export function* handleFimsGetConsentsList(
@@ -30,7 +31,7 @@ export function* handleFimsGetConsentsList(
   if (!fimsToken || !fimsProviderDomain || !fimsCTAUrl) {
     // TODO:: proper error handling
     const debugMessage = `missing FIMS data: fimsToken: ${!!fimsToken}, oidcProviderUrl: ${!!fimsProviderDomain}, fimsCTAUrl: ${!!fimsCTAUrl}`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
 
     yield* put(
       fimsGetConsentsListAction.failure({
@@ -72,7 +73,7 @@ export function* handleFimsGetConsentsList(
     const debugMessage = `cta url has invalid redirect response: ${formatHttpClientResponseForMixPanel(
       fimsCTAUrlResponse
     )}`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetConsentsListAction.failure({
         standardMessage: "cta url has invalid redirect response",
@@ -90,7 +91,7 @@ export function* handleFimsGetConsentsList(
 
   if (!isRedirectTowardsFimsProvider) {
     const debugMessage = `relying party did not redirect to provider, URL was: ${relyingPartyRedirectUrl}`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetConsentsListAction.failure({
         standardMessage: "relying party did not redirect to provider",
@@ -122,7 +123,7 @@ export function* handleFimsGetConsentsList(
     const debugMessage = `consent data fetch error: ${formatHttpClientResponseForMixPanel(
       getConsentsResult
     )}`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetConsentsListAction.failure({
         standardMessage: "consent data fetch error",
@@ -131,7 +132,23 @@ export function* handleFimsGetConsentsList(
     );
     return;
   }
-  yield pipe(
+  const nextAction = yield* call(
+    decodeSuccessfulConsentsResponse,
+    getConsentsResult
+  );
+  if (isActionOf(fimsGetConsentsListAction.failure, nextAction)) {
+    const debugMessage = nextAction.payload.debugMessage;
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
+  }
+  yield* put(nextAction);
+}
+
+// --------- UTILS --------
+
+const decodeSuccessfulConsentsResponse = (
+  getConsentsResult: HttpClientSuccessResponse
+) =>
+  pipe(
     getConsentsResult.body,
     E.tryCatchK(JSON.parse, identity),
     E.map(ConsentData.decode),
@@ -139,15 +156,11 @@ export function* handleFimsGetConsentsList(
     E.foldW(
       () => {
         const debugMessage = `could not decode, body: ${getConsentsResult.body}`;
-        logToMixPanel(debugMessage);
-        return put(
-          fimsGetConsentsListAction.failure({
-            standardMessage: "could not decode",
-            debugMessage
-          })
-        );
+        return fimsGetConsentsListAction.failure({
+          standardMessage: "could not decode",
+          debugMessage
+        });
       },
-      decodedConsents => put(fimsGetConsentsListAction.success(decodedConsents))
+      decodedConsents => fimsGetConsentsListAction.success(decodedConsents)
     )
   );
-}
