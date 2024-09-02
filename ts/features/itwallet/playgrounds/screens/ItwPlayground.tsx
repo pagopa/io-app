@@ -15,6 +15,7 @@ import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
+import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
 import { ItwTrialSystemSection } from "../components/ItwTrialSystemSection";
 
 // Sample markdown text
@@ -63,7 +64,7 @@ const ItwPlayground = () => {
     };
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>
       <ContentWrapper>
         {/* Issuing Playground */}
         <ListItemHeader label="Credentials issuing" />
@@ -110,8 +111,8 @@ const ItwPlayground = () => {
         <H3>{"IT Wallet markdown preview"}</H3>
         <VSpacer size={8} />
         <ItwMarkdown>{sampleMarkdown}</ItwMarkdown>
-        {/* TODO: Add more items here */}
-        <VSpacer size={32} />
+        <VSpacer size={16} />
+        <ItwSkeumorphicCredentialSection />
       </ContentWrapper>
     </ScrollView>
   );
