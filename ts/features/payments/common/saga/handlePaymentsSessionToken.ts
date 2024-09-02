@@ -4,7 +4,11 @@ import { ActionType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import {
+  RefreshThirdPartyApiCallOptions,
+  withRefreshApiCall,
+  withThirdPartyRefreshApiCall
+} from "../../../fastLogin/saga/utils";
 import { PagoPaClient } from "../../common/api/client";
 import {
   paymentsGetPagoPaPlatformSessionTokenAction,
@@ -53,9 +57,9 @@ export function* handlePaymentsSessionToken(
   const newSessionTokenRequest = newSessionToken({});
   try {
     const newSessionTokenResult = (yield* call(
-      withRefreshApiCall,
+      withThirdPartyRefreshApiCall,
       newSessionTokenRequest,
-      action
+      { action } as RefreshThirdPartyApiCallOptions
     )) as SagaCallReturnType<typeof newSessionToken>;
 
     if (E.isLeft(newSessionTokenResult)) {
