@@ -14,7 +14,7 @@ import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import React, { useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { PasswordLogin } from "../../../definitions/backend/PasswordLogin";
+import { PasswordLogin } from "../../../definitions/session_manager/PasswordLogin";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ActivityIndicator from "../../components/ui/ActivityIndicator";
