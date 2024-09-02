@@ -6,7 +6,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
@@ -18,7 +18,8 @@ import { identificationRequest } from "../../../../store/actions/identification"
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
-import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
+import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { selectEidOption, selectIsLoading } from "../../machine/eid/selectors";
@@ -28,7 +29,7 @@ export const ItwIssuanceEidPreviewScreen = () => {
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
 
-  useItwDisbleGestureNavigation();
+  useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
   if (isLoading) {
@@ -39,7 +40,10 @@ export const ItwIssuanceEidPreviewScreen = () => {
 
   return pipe(
     eidOption,
-    O.fold(constNull, eid => <ContentView eid={eid} />)
+    O.fold(
+      () => <ItwGenericErrorContent />,
+      eid => <ContentView eid={eid} />
+    )
   );
 };
 

@@ -14,14 +14,14 @@ import {
 import { selectFailureOption } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 
 export const ItwIssuanceEidFailureScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const failureOption =
     ItwEidIssuanceMachineContext.useSelector(selectFailureOption);
 
-  useItwDisbleGestureNavigation();
+  useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
   const closeIssuance = () => machineRef.send({ type: "close" });
