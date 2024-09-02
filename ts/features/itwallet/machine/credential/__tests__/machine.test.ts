@@ -99,7 +99,6 @@ describe("itwCredentialIssuanceMachine", () => {
   const navigateToWallet = jest.fn();
   const storeCredential = jest.fn();
   const closeIssuance = jest.fn();
-  const disposeWallet = jest.fn();
   const handleSessionExpired = jest.fn();
 
   const initializeWallet = jest.fn();
@@ -116,7 +115,6 @@ describe("itwCredentialIssuanceMachine", () => {
       navigateToWallet,
       storeCredential,
       closeIssuance,
-      disposeWallet,
       handleSessionExpired
     },
     actors: {
@@ -235,7 +233,6 @@ describe("itwCredentialIssuanceMachine", () => {
     );
     expect(storeCredential).toHaveBeenCalledTimes(1);
     expect(navigateToWallet).toHaveBeenCalledTimes(1);
-    expect(disposeWallet).toHaveBeenCalledTimes(1);
   });
 
   it("Should not store the credential if the user closes the issuance", () => {
@@ -274,7 +271,6 @@ describe("itwCredentialIssuanceMachine", () => {
     );
     expect(storeCredential).toHaveBeenCalledTimes(0);
     expect(navigateToWallet).toHaveBeenCalledTimes(0);
-    expect(disposeWallet).toHaveBeenCalledTimes(1);
     expect(closeIssuance).toHaveBeenCalledTimes(1);
   });
 
@@ -318,7 +314,6 @@ describe("itwCredentialIssuanceMachine", () => {
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
-    expect(disposeWallet).toHaveBeenCalledTimes(1);
     expect(closeIssuance).toHaveBeenCalledTimes(1);
   });
 
@@ -369,7 +364,6 @@ describe("itwCredentialIssuanceMachine", () => {
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
-    expect(disposeWallet).toHaveBeenCalledTimes(1);
     expect(closeIssuance).toHaveBeenCalledTimes(1);
   });
 
@@ -397,7 +391,6 @@ describe("itwCredentialIssuanceMachine", () => {
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("DisplayingTrustIssuer");
-    expect(disposeWallet).toHaveBeenCalledTimes(1);
     expect(closeIssuance).toHaveBeenCalledTimes(1);
   });
 
@@ -443,7 +436,6 @@ describe("itwCredentialIssuanceMachine", () => {
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
-    expect(disposeWallet).toHaveBeenCalledTimes(1);
     expect(closeIssuance).toHaveBeenCalledTimes(1);
   });
 });
