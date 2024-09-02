@@ -1,6 +1,6 @@
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
-import { createActor, fromPromise, StateFrom } from "xstate5";
+import { createActor, fromPromise, StateFrom } from "xstate";
 import { idps } from "../../../../../utils/idps";
 import { WalletAttestationResult } from "../../../common/utils/itwAttestationUtils";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";

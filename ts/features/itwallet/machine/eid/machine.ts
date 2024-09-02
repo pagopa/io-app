@@ -1,4 +1,4 @@
-import { assign, fromPromise, setup } from "xstate5";
+import { assign, fromPromise, setup } from "xstate";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { WalletAttestationResult } from "../../common/utils/itwAttestationUtils";
 import { assert } from "../../../../utils/assert";

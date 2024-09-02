@@ -1,4 +1,4 @@
-import { ErrorActorEvent } from "xstate5";
+import { ErrorActorEvent } from "xstate";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 
 export type Reset = {

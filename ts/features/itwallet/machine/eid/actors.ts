@@ -1,4 +1,4 @@
-import { fromPromise } from "xstate5";
+import { fromPromise } from "xstate";
 import * as O from "fp-ts/lib/Option";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";

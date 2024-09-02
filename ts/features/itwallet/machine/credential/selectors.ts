@@ -1,5 +1,5 @@
 import * as O from "fp-ts/lib/Option";
-import { StateFrom } from "xstate5";
+import { StateFrom } from "xstate";
 import { ItwTags } from "../tags";
 import { ItwCredentialIssuanceMachine } from "./machine";
 
