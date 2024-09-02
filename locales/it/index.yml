@@ -208,10 +208,6 @@ global:
     invalidSearchBarText: Inserisci almeno {{minCharacter}} caratteri
     noResultsFound: "Non ci sono risultati per questa ricerca: prova qualcos'altro."
     noResultsTitle: Nessun risultato.
-  media:
-    email: "Email"
-    pec: "PEC"
-    phone: "Telefono"
 tablet:
   message: L’interfaccia di IO è ottimizzata per smartphone, ma tutte le funzioni compatibili con il tuo dispositivo sono comunque disponibili.
 rooted:
@@ -225,13 +221,8 @@ rooted:
   bodyAndroid: !include rooted_body.md
   continueAlert:
     title: Continua
-    body: Hai compreso i rischi e vuoi continuare?
-    confirmText: Si
-    cancelText: Annulla
   cancelAlert:
     title: Esci
-    body: Puoi chiudere l'app
-    confirmText: Esci
 locales:
   it: Italiano
   en: Inglese
@@ -285,15 +276,6 @@ profile:
     accessibility:
       fiscalCodeHint: Immagine del codice a barre del tuo codice fiscale
       unavailable: Non disponibile
-      preview:
-        label: Anteprima del tuo codice fiscale
-        hint: Attiva per visualizzare il facsimile del tuo codice fiscale
-      front:
-        label: Parte anteriore del documento codice fiscale {{code}} di {{name}} {{family_name}}, sesso {{gender}}, nato a {{placeOfBirth}},{{province}} il {{birthDate}}
-        hint: Attiva per passare alla visualizzazione a schermo intero
-      rear:
-        label: Codice a barre del tuo documento
-        hint: Attiva per passare alla visualizzazione a schermo intero
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
     description: Usa il codice a barre per comunicare il tuo codice fiscale quando ti viene richiesto.
@@ -504,12 +486,6 @@ profile:
       need_validate: Da validare
       nameSurname: Nome e cognome
       fiscalCode: Codice Fiscale
-    email:
-      contextualHelpTitle: Come gestire la tua mail
-      contextualHelpContent: !include profile/profile_data_email_address.md
-    spid_email:
-      contextualHelpTitle: Questo dato è impostato nel tuo profilo SPID
-      contextualHelpContent: !include profile/profile_data_spid_email.md
   security:
     title: Sicurezza
     subtitle: Gestisci le modalità di autenticazione in app.
@@ -727,10 +703,7 @@ authentication:
       contextualHelpBody: !include help/ciePinHelpBody.md
       contextualHelpCTA: Hai dimenticato il PIN/PUK?
     pinTempLocked:
-      header: Entra con CIE
       title: Carta temporaneamente bloccata
-      content: !include cie/temporary_blocked_cie.md
-      button: "Scarica / Apri CieID"
     card:
       title: Appoggia la CIE sul retro del dispositivo
       titleiOS: Appoggia la CIE sul dispositivo, in alto
@@ -762,8 +735,6 @@ authentication:
         unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
         genericErrorTitle: Non siamo riusciti a recuperare i dati dalla carta
         genericErrorSubtitle: Se riscontri più volte il problema, attendi qualche minuto e riprova.
-    dataUsageConsent:
-      retryCTA: Entra
   spid: SPID
   spid_information_request:
     headerTitle: Non hai SPID?
@@ -815,16 +786,6 @@ authentication:
       body: L'identity provider che hai scelto non è disponibile in questo momento, puoi riprovare più tardi. Se disponi di un altra identità SPID scegli un provider alternativo. Puoi segnalarci il problema con l’icona '?' in alto a destra.
     login:
       title: Errore nel login
-      body: Si è verificato un errore durante il login, si prega di riprovare!
-    spid:
-      unknown: Errore sconosciuto
-      error_19: "Hai inserito troppe volte un nome utente o una password non corretti: riprova fra qualche minuto o contatta il tuo fornitore di identità SPID per cambiare le tue credenziali."
-      error_20: "Per motivi di sicurezza IO richiede un login con un secondo fattore di autenticazione: contatta il tuo fornitore di identità SPID per capire come si usa."
-      error_21: "È passato troppo tempo da quando hai iniziato l'accesso: per piacere riparti dall'inizio."
-      error_22: "Per usare IO, devi acconsentire all’invio di alcuni dati. Entra di nuovo e dai il tuo consenso."
-      error_23: "La tua identità SPID risulta sospesa o revocata. Per riattivare il tuo account, contatta il tuo fornitore di identità SPID."
-      error_25: "Hai annullato l'operazione di login: puoi riprovare quando vuoi."
-      error_1001: "Accesso negato: non hai l'età minima richiesta per usare IO"
   expiredSessionBanner:
     title: Avviso di sicurezza
   unlock:
@@ -871,7 +832,6 @@ email:
   read:
     title: Il tuo indirizzo email
     info: Questo è l'indirizzo email che hai associato all'account SPID. Puoi usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua casella di posta elettronica.
-    details: Puoi modificare questo indirizzo, che dovrai validare cliccando su un link che spediremo alla tua casella di posta. Nel frattempo, le funzioni di IO che dipendono dalla email (pagamenti, inoltro messaggi, etc.) saranno disattivate.
     alert: "Attenzione: il tuo account pagoPA è associato alla tua email, quindi se la modifichi non troverai più elencati nell'applicazione le tue transazioni ed i tuoi metodi di pagamento."
     help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal tuo provider di servizi SPID.
   insert:
@@ -1120,8 +1080,6 @@ payment:
     editButton: Modifica
     termsAndConditions: Proseguendo dichiari di aver letto e compreso i
     termsAndConditionsLink: Termini e condizioni d'uso e l'Informativa Privacy
-    loading:
-      title: Sto caricando le informazioni del pagamento
 wallet:
   methodDetails:
     cobadgeTitle: "Carta di debito"
@@ -1962,18 +1920,6 @@ messages:
     unarchive: Ripristina
     selectAll: Tutti
     deselectAll: Nessuno
-    payment:
-      expired: Pagamento scaduto
-      paid: Questo avviso è stato pagato. Visualizza la ricevuta nel tuo
-      addMemo:
-        block1: Aggiungi un promemoria per il
-        block2: alle
-      expiringOrValidAlert:
-        block1: Scade il
-        block2: alle ore
-      expiredAlert:
-        block1: Scaduto il
-        block2: alle ore
     pay: Paga € {{amount}}
     onlyPay: Paga
     paid: Pagato
@@ -2016,11 +1962,6 @@ messages:
     emptyMessage:
       title: Non hai ancora ricevuto alcun messaggio
       subtitle: "Quando un ente ti invierà una comunicazione la visualizzerai qui."
-  pagination:
-    migration:
-      started: "Attendi, stiamo aggiornando la sezione messaggi"
-      succeeded: "Fatto!"
-      failed: "Non siamo riusciti ad aggiornare la sezione messaggi."
   operations:
     archive:
       success: "Archiviazione riuscita!"
@@ -2068,10 +2009,6 @@ messageDetails:
     corruptedFile: "L'allegato è danneggato e non può essere aperto. Contatta l'ente mittente"
     downloadFailed: "L'allegato non è al momento disponibile. Riprova o contatta l'ente mittente"
     showPreview: "Visualizza anteprima"
-    unavailable:
-      firstPart: "Gli allegati non sono più disponibili. "
-      secondPart: "Contatta l'ente mittente"
-      thirdPart: " per maggiori informazioni."
     failing:
       details: "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
   banner:
@@ -2208,7 +2145,11 @@ services:
       cancel: "Annulla"
       clear: "Cancella"
     emptyState:
-      title: "Inserisci il nome di un ente,\nnazionale o locale"
+      invalidQuery:
+        title: "Inserisci il nome di un ente,\nnazionale o locale"
+      noResults:
+        title: "Nessun risultato trovato"
+        subtitle: "Inserisci il nome di un ente nazionale o locale esistente."
   details:
     failure:
       title: "C'è un problema temporaneo, riprova"
@@ -2782,8 +2723,6 @@ bonus:
         seconds:
           one: 1 secondo
           other: "{{seconds}} secondi"
-  sv:
-    headerTitle: "Sicilia Vola"
   cdc:
     title: "Carta della cultura"
     serviceCta:
@@ -3192,11 +3131,6 @@ features:
         claimLabelNotAvailable: "Etichetta attributo non presente"
         organizationName: "Nome ente non disponibile"
     verifiableCredentials:
-      type:
-        digitalCredential: "Identità digitale"
-        disabilityCard: "Tessera Europa della disabilità"
-        healthCard: "Tessera Sanitaria"
-        drivingLicense: "Licenza di guida"
       claims:
         uniqueId: "ID univoco"
         givenName: "Nome"
@@ -3210,12 +3144,12 @@ features:
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
         releasedBy: "Rilasciata da"
+        attachments: "Allegati"
         mdl:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
           restrictionConditions: "Codici"
-        attachments: "Allegati"
       unrecognizedData:
         title: "Non riconosci alcuni dati?"
         body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
@@ -3255,6 +3189,10 @@ features:
           3: Attiva la funzionalità
         primaryAction: Apri impostazioni
         secondaryAction: Continua
+      notMatchingIdentityScreen:
+        title: "Tutti i documenti saranno rimossi da IO"
+        subtitle: "Se accedi con una nuova identità, i documenti già presenti nel Portafoglio saranno rimossi e IT Wallet disattivato."
+        action: "Continua con la nuova identità"
     issuance:
       credentialAuth:
         title: "{{credentialName}}: dati necessari"
@@ -3337,11 +3275,6 @@ features:
   trialSystem:
     toast:
       subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione
-webView:
-  error:
-    missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
-    missingToken: Non hai l'autorizzazione per avviare questo flusso
-    convertMessage: Non è stato possibile decodificare il messaggio inviato all'app
 support:
   ticketList:
     noTicket:
@@ -3977,6 +3910,13 @@ permissionRequest:
     cta: Apri Impostazioni
 FIMS:
   history:
+    errorStates:
+      dataUnavailable: "Dati non disponibili"
+      ko:
+        title: "C’è un problema temporaneo"
+        body: "Il caricamento della lista degli accessi non è riuscito"
+      toast: C’è un problema nel caricamento della lista. Riprova
+    emptyBody: "Non hai ancora effettuato alcun accesso a servizi di terze parti"
     exportData:
       alerts:
         areYouSure: "Vuoi davvero esportare una copia di tutti gli accessi?"
@@ -4013,10 +3953,6 @@ FIMS:
     privacyCta: "l’Informativa sulla Privacy "
     bottomSheet:
       title: "Accedi a servizi di terze parti tramite IO"
-      body: "Per consentirti di accedere al servizio esterno senza autenticarti
-        nuovamente con SPID o CIE, l’app IO condivide un set di dati con l’ente
-        che lo eroga."
-      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le
-        finalità indicate dall’ente e consultabili nell’ "
-      bodyPrivacy: "Informativa sulla
-        Privacy."
+      body: "Per consentirti di accedere al servizio esterno senza autenticarti nuovamente con SPID o CIE, l’app IO condivide un set di dati con l’ente che lo eroga."
+      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le finalità indicate dall’ente e consultabili nell’ "
+      bodyPrivacy: "Informativa sulla Privacy."
