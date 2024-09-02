@@ -41,7 +41,8 @@ import I18n from "../../i18n";
 import { openWebUrl } from "../../utils/url";
 import { IOMarkdownRenderRules, Renderer } from "./types";
 
-const BULLET_ITEM = "\u2022";
+const BULLET_ITEM_FULL = "\u2022";
+const BULLET_ITEM_EMPTY = "\u25E6";
 const HEADINGS_MAP = {
   1: H1,
   2: H2,
@@ -74,6 +75,24 @@ export function getStrValue({ children }: TxtParentNode): string {
     }
     return acc;
   }, "");
+}
+
+/**
+ *
+ * @param node The node to scan.
+ * @param nodeType If defined this function checks how many nodes of this type wrap the interested node, otherwise it takes all the nodes.
+ * @returns The `node` nesting level.
+ */
+function getNodeNestingLevel<T extends AnyTxtNode | undefined>(
+  node: T,
+  nodeType?: AnyTxtNode["type"]
+): number {
+  if (typeof node === "undefined" || !("parent" in node)) {
+    return 0;
+  }
+  const current = nodeType ? Number(node?.parent?.type === nodeType) : 1;
+
+  return current + getNodeNestingLevel(node.parent, nodeType);
 }
 
 /**
@@ -213,31 +232,39 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    */
   List(list: TxtListNode, render: Renderer) {
     const isOrdered = list.ordered;
+    const nestingLevel = getNodeNestingLevel(list, "List");
+    const bulletItem =
+      nestingLevel % 2 === 1 ? BULLET_ITEM_EMPTY : BULLET_ITEM_FULL;
+    const isFirstList = nestingLevel === 0;
 
     function getLeftAdornment(i: number) {
       if (isOrdered) {
         return <Body>{i + 1}.</Body>;
       }
 
-      return <Body>{BULLET_ITEM}</Body>;
+      return <Body>{bulletItem}</Body>;
     }
 
     return (
-      <View key={getTxtNodeKey(list)} style={IOStyles.row}>
-        <HSpacer size={8} />
-        <View
-          style={[IOStyles.flex, { flexGrow: 1 }]}
-          accessible={true}
-          accessibilityRole="list"
-        >
-          {list.children.map((child, i) => (
-            <View accessible key={`${child.type}_${i}`} style={IOStyles.row}>
-              {getLeftAdornment(i)}
-              <HSpacer size={8} />
-              {render(child)}
-            </View>
-          ))}
+      <View key={getTxtNodeKey(list)}>
+        {isFirstList && <VSpacer size={8} />}
+        <View style={IOStyles.row}>
+          {isFirstList && <HSpacer size={12} />}
+          <View
+            style={[IOStyles.flex, { flexGrow: 1 }]}
+            accessible={true}
+            accessibilityRole="list"
+          >
+            {list.children.map((child, i) => (
+              <View accessible key={`${child.type}_${i}`} style={IOStyles.row}>
+                {getLeftAdornment(i)}
+                <HSpacer size={8} />
+                {render(child)}
+              </View>
+            ))}
+          </View>
         </View>
+        {isFirstList && <VSpacer size={8} />}
       </View>
     );
   },
