@@ -3258,6 +3258,9 @@ features:
         personalDataTitle: "Dati personali"
         documentDataTitle: "Dati documento"
         lastUpdated: "Dati aggiornati al {{lastUpdateTime}}"
+        boolClaim:
+          true: Sì
+          false: No
         hiddenClaim: "Nascosto"
         status:
           valid: Valida
