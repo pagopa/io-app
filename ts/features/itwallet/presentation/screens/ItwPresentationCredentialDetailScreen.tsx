@@ -1,12 +1,8 @@
-import {
-  ContentWrapper,
-  IOSpacingScale,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView } from "react-native";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -14,10 +10,8 @@ import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { getHumanReadableParsedCredential } from "../../common/utils/debug";
-import { getCredentialExpireStatus } from "../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
@@ -25,6 +19,7 @@ import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlertsSection";
 import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection";
+import { ItwPresentationCredentialCard } from "../components/ItwPresentationCredentialCard";
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
 
 // TODO: use the real credential update time
@@ -76,10 +71,6 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
     )
   });
 
-  const credentialStatus = getCredentialExpireStatus(
-    credential.parsedCredential
-  );
-
   return (
     <>
       <FocusAwareStatusBar
@@ -87,15 +78,7 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
         barStyle="light-content"
       />
       <ScrollView contentContainerStyle={{ paddingBottom: screenEndMargin }}>
-        <View style={styles.cardContainer}>
-          <ItwCredentialCard
-            credentialType={credential.credentialType}
-            status={credentialStatus}
-          />
-          <View
-            style={[styles.cardBackdrop, { backgroundColor: themeColor }]}
-          />
-        </View>
+        <ItwPresentationCredentialCard credential={credential} />
         <ContentWrapper>
           <VSpacer size={16} />
           <ItwPresentationAlertsSection credential={credential} />
@@ -117,20 +100,3 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
     </>
   );
 };
-
-const cardPaddingHorizontal: IOSpacingScale = 16;
-
-const styles = StyleSheet.create({
-  cardContainer: {
-    position: "relative",
-    paddingHorizontal: cardPaddingHorizontal
-  },
-  cardBackdrop: {
-    height: "200%", // Twice the card in order to avoid the white background when the scrollview bounces
-    position: "absolute",
-    top: "-130%", // Offset by the card height + a 30%
-    right: 0,
-    left: 0,
-    zIndex: -1
-  }
-});
