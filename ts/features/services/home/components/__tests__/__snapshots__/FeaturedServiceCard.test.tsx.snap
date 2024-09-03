@@ -1002,6 +1002,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                 </View>
                               </View>
                               <View
+                                accessible={true}
                                 style={
                                   [
                                     {
@@ -1020,8 +1021,11 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                 }
                               >
                                 <Text
+                                  accessibilityLabel="New"
+                                  accessibilityRole="text"
                                   allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  importantForAccessibility="yes"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={

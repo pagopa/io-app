@@ -15,13 +15,6 @@ import {
 import { NetworkError } from "../../../../../utils/errors";
 import I18n from "../../../../../i18n";
 
-jest.mock("react-native-reanimated", () => ({
-  ...require("react-native-reanimated/mock"),
-  Layout: {
-    duration: jest.fn()
-  }
-}));
-
 const mockedInitiative: InitiativeDTO = {
   endDate: new Date(2023, 1, 1),
   initiativeId: "ABC123",
