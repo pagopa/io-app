@@ -22,7 +22,6 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { getHumanReadableParsedCredential } from "../../common/utils/debug";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   selectCredentialOption,
@@ -67,7 +66,7 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
 };
 
 type ContentViewProps = {
-  credentialType: CredentialType;
+  credentialType: string;
   credential: StoredCredential;
 };
 
