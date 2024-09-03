@@ -1,5 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { PersistConfig, PersistPartial, persistReducer } from "redux-persist";
+import {
+  createMigrate,
+  MigrationManifest,
+  PersistConfig,
+  PersistPartial,
+  persistReducer
+} from "redux-persist";
 import { combineReducers } from "redux";
 import { Action } from "../../../../../store/actions/types";
 import identificationReducer, {
@@ -15,6 +21,7 @@ import itwCredentialsReducer, {
   ItwCredentialsState
 } from "../../../credentials/store/reducers";
 import itwCreateCredentialsStorage from "../storages/itwCredentialsStorage";
+import { isDevEnv } from "../../../../../utils/environment";
 
 export type ItWalletState = {
   identification: ItwIdentificationState;
@@ -26,7 +33,13 @@ export type ItWalletState = {
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
 
 const CURRENT_REDUX_ITW_STORE_VERSION = -1;
-const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = -1;
+const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 0;
+export const itwCredentialsStateMigrations: MigrationManifest = {
+  "0": (state): ItwCredentialsState & PersistPartial =>
+    // Version 0
+    // Add optional `storedStatusAttestation` field, no updates required
+    state as ItwCredentialsState & PersistPartial
+};
 
 const itwPersistConfig: PersistConfig = {
   key: "itWallet",
@@ -38,7 +51,8 @@ const itwPersistConfig: PersistConfig = {
 const itwCredentialsPersistConfig: PersistConfig = {
   key: "itWalletCredentials",
   storage: itwCreateCredentialsStorage(),
-  version: CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION
+  version: CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION,
+  migrate: createMigrate(itwCredentialsStateMigrations, { debug: isDevEnv })
 };
 
 const itwReducer = combineReducers({
