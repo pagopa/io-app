@@ -100,7 +100,7 @@ export const FimsFlowHandlerScreen = (
       loadingState === "in-app-browser-loading" || loadingState === "abort" ? (
         <View style={IOStyles.alignCenter}>
           <LabelSmall color="grey-650" weight="Regular">
-            {I18n.t("FIMS.loadingScreen.in-app-browser-loading.subtitle")}
+            {I18n.t(`FIMS.loadingScreen.subtitle`)}
           </LabelSmall>
         </View>
       ) : (
