@@ -427,7 +427,7 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      value: "IT Wallet",
+      value: "Documenti su IO",
       onPress: () =>
         navigation.navigate(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.PLAYGROUNDS
