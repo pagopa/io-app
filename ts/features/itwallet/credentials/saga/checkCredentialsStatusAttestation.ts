@@ -13,18 +13,15 @@ import {
 import { itwCredentialsMultipleUpdate } from "../store/actions";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-
-type PartialUpdatedCredential = Pick<
-  StoredCredential,
-  "credentialType" | "storedStatusAttestation"
->;
+import { walletAddCards } from "../../../newWallet/store/actions/cards";
+import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 
 const canGetStatusAttestation = (credential: StoredCredential) =>
   credential.credentialType === CredentialType.DRIVING_LICENSE;
 
 export function* updateCredentialStatusAttestationSaga(
   credential: StoredCredential
-): Generator<ReduxSagaEffect, PartialUpdatedCredential> {
+): Generator<ReduxSagaEffect, StoredCredential> {
   try {
     const { parsedStatusAttestation, statusAttestation } = yield* call(
       getCredentialStatusAttestation,
@@ -32,7 +29,7 @@ export function* updateCredentialStatusAttestationSaga(
       credential.keyTag
     );
     return {
-      credentialType: credential.credentialType,
+      ...credential,
       storedStatusAttestation: {
         credentialStatus: "valid",
         statusAttestation,
@@ -41,7 +38,7 @@ export function* updateCredentialStatusAttestationSaga(
     };
   } catch (error) {
     return {
-      credentialType: credential.credentialType,
+      ...credential,
       storedStatusAttestation: {
         credentialStatus:
           error instanceof Errors.StatusAttestationInvalid
@@ -85,4 +82,15 @@ export function* checkCredentialsStatusAttestation() {
   );
 
   yield* put(itwCredentialsMultipleUpdate(updatedCredentials));
+  yield* put(
+    walletAddCards(
+      updatedCredentials.map(c => ({
+        key: c.keyTag,
+        type: "itw",
+        category: "itw",
+        credentialType: c.credentialType,
+        status: getCredentialStatus(c)
+      }))
+    )
+  );
 }
