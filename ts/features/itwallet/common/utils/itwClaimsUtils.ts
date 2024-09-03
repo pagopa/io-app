@@ -8,6 +8,7 @@ import { differenceInCalendarDays, isValid } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
+import { truncate } from "lodash";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
 import { ItwCredentialStatus } from "../components/ItwCredentialCard";
@@ -378,3 +379,8 @@ export const getFiscalCodeFromCredential = (
     O.chain(extractFiscalCode),
     O.getOrElse(() => "")
   );
+
+/**
+ * Truncate long strings to avoid performance issues when rendering claims.
+ */
+export const getSafeText = (text: string) => truncate(text, { length: 128 });
