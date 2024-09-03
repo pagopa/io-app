@@ -1,4 +1,4 @@
-import { IOStyles, LabelSmall } from "@pagopa/io-app-design-system";
+import { Body, IOStyles } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
@@ -99,9 +99,7 @@ export const FimsFlowHandlerScreen = (
     const subtitle =
       loadingState === "in-app-browser-loading" || loadingState === "abort" ? (
         <View style={IOStyles.alignCenter}>
-          <LabelSmall color="grey-650" weight="Regular">
-            {I18n.t(`FIMS.loadingScreen.subtitle`)}
-          </LabelSmall>
+          <Body color="grey-650">{I18n.t(`FIMS.loadingScreen.subtitle`)}</Body>
         </View>
       ) : (
         <></>
