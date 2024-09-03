@@ -166,7 +166,7 @@ export const itwCredentialIssuanceMachine = setup({
           actions: ["storeCredential", "navigateToWallet"]
         },
         close: {
-          actions: "closeIssuance"
+          actions: ["closeIssuance"]
         }
       }
     },
