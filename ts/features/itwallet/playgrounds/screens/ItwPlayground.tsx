@@ -17,7 +17,6 @@ import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
 import { ItwTrialSystemSection } from "../components/ItwTrialSystemSection";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 
 // Sample markdown text
 const sampleMarkdown = `
