@@ -5,13 +5,16 @@ import {
 } from "typesafe-actions";
 import { ConsentData } from "../../types";
 import { FimsErrorStateType } from "../reducers";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 type FimsGetConsentsListRequestType = {
+  ctaText: string;
   ctaUrl: string;
 };
 
 type FimsGetRedirectUrlAndOpenIABRequestType = {
   acceptUrl?: string;
+  serviceId: ServiceId;
 };
 
 export const fimsGetConsentsListAction = createAsyncAction(
@@ -29,7 +32,7 @@ export const fimsGetRedirectUrlAndOpenIABAction = createAsyncAction(
 
 export const fimsCancelOrAbortAction = createStandardAction(
   "FIMS_CANCEL_OR_ABORT"
-)();
+)<void>();
 
 export type FimsSSOActions =
   | ActionType<typeof fimsGetConsentsListAction>
