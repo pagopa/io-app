@@ -271,22 +271,6 @@ export const ClaimValue = t.union([
   EmptyStringClaim
 ]);
 
-export type DateClaimConfig = Partial<{
-  iconVisible: boolean;
-  expirationBadgeVisible: boolean;
-}>;
-
-export const dateClaimsConfig: Record<string, DateClaimConfig> = {
-  issue_date: { iconVisible: true },
-  expiry_date: { iconVisible: true, expirationBadgeVisible: true },
-  expiration_date: { iconVisible: true, expirationBadgeVisible: true }
-};
-
-export const previewDateClaimsConfig: DateClaimConfig = {
-  iconVisible: false,
-  expirationBadgeVisible: false
-};
-
 /**
  *
  *
@@ -354,6 +338,19 @@ export const getCredentialExpireStatus = (
     : "expired";
 };
 
+/**
+ * Get the overall status of the credential, taking into account
+ * the status attestation if present and the credential's own expiration date.
+ */
+export const getCredentialStatus = (
+  credential: StoredCredential
+): ItwCredentialStatus | undefined => {
+  if (credential.storedStatusAttestation?.credentialStatus === "invalid") {
+    return "expired";
+  }
+  return getCredentialExpireStatus(credential.parsedCredential);
+};
+
 const FISCAL_CODE_REGEX =
   /([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])/g;
 
@@ -384,3 +381,6 @@ export const getFiscalCodeFromCredential = (
  * Truncate long strings to avoid performance issues when rendering claims.
  */
 export const getSafeText = (text: string) => truncate(text, { length: 128 });
+
+export const isExpirationDateClaim = (claim: ClaimDisplayFormat) =>
+  claim.id === WellKnownClaim.expiry_date;
