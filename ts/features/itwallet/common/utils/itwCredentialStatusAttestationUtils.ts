@@ -3,28 +3,22 @@ import {
   Credential
 } from "@pagopa/io-react-native-wallet";
 import { isAfter } from "date-fns";
-import { itwEaaProviderBaseUrl } from "../../../../config";
 import { StoredCredential } from "./itwTypesUtils";
 
 export const getCredentialStatusAttestation = async (
-  credential: string,
-  credentialKeyTag: string
+  credential: StoredCredential
 ) => {
-  const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
-
-  const { issuerConf } = await Credential.Status.evaluateIssuerTrust(
-    itwEaaProviderBaseUrl
-  );
+  const credentialCryptoContext = createCryptoContextFor(credential.keyTag);
 
   const rawStatusAttestation = await Credential.Status.statusAttestation(
-    issuerConf,
-    credential,
+    credential.issuerConf,
+    credential.credential,
     credentialCryptoContext
   );
 
   const { parsedStatusAttestation } =
     await Credential.Status.verifyAndParseStatusAttestation(
-      issuerConf,
+      credential.issuerConf,
       rawStatusAttestation,
       { credentialCryptoContext }
     );

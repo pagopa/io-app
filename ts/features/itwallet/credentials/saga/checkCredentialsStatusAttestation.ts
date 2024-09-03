@@ -25,8 +25,7 @@ export function* updateCredentialStatusAttestationSaga(
   try {
     const { parsedStatusAttestation, statusAttestation } = yield* call(
       getCredentialStatusAttestation,
-      credential.credential,
-      credential.keyTag
+      credential
     );
     return {
       ...credential,
