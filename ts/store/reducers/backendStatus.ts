@@ -31,10 +31,7 @@ import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 
-import {
-  isIdPayTestEnabledSelector,
-  isNewScanSectionLocallyEnabledSelector
-} from "./persistedPreferences";
+import { isIdPayTestEnabledSelector } from "./persistedPreferences";
 import { GlobalState } from "./types";
 import { isPropertyWithMinAppVersionEnabled } from "./featureFlagWithMinAppVersionStatus";
 
@@ -479,9 +476,7 @@ export const isNewPaymentSectionEnabledSelector = createSelector(
 // isNewScanSectionLocallyEnabled will be deleted
 export const isSettingsVisibleAndHideProfileSelector = createSelector(
   isNewPaymentSectionEnabledSelector,
-  isNewScanSectionLocallyEnabledSelector,
-  (isNewPaymentSectionEnabled, isNewScanSectionLocallyEnabled) =>
-    isNewPaymentSectionEnabled && isNewScanSectionLocallyEnabled
+  isNewPaymentSectionEnabled => isNewPaymentSectionEnabled
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
