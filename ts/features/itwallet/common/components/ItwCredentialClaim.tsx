@@ -23,7 +23,8 @@ import {
   PlaceOfBirthClaimType,
   StringClaim,
   extractFiscalCode,
-  isExpirationDateClaim
+  isExpirationDateClaim,
+  getSafeText
 } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "./ItwCredentialCard";
 
@@ -75,17 +76,23 @@ const PlainTextClaimItem = ({
 }: {
   label: string;
   claim: string;
-}) => (
-  <ListItemInfo
-    label={label}
-    value={claim}
-    accessibilityLabel={`${label} ${
-      claim === HIDDEN_CLAIM
-        ? I18n.t("features.itWallet.presentation.credentialDetails.hiddenClaim")
-        : claim
-    }`}
-  />
-);
+}) => {
+  const safeValue = getSafeText(claim);
+  return (
+    <ListItemInfo
+      numberOfLines={2}
+      label={label}
+      value={safeValue}
+      accessibilityLabel={`${label} ${
+        claim === HIDDEN_CLAIM
+          ? I18n.t(
+              "features.itWallet.presentation.credentialDetails.hiddenClaim"
+            )
+          : safeValue
+      }`}
+    />
+  );
+};
 
 /**
  * Component which renders a date type claim with an optional icon and expiration badge.
