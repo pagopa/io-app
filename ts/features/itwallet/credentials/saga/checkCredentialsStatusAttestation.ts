@@ -12,6 +12,7 @@ import {
 } from "../../common/utils/itwCredentialStatusAttestationUtils";
 import { itwCredentialsMultipleUpdate } from "../store/actions";
 import { ReduxSagaEffect } from "../../../../types/utils";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 
 type PartialUpdatedCredential = Pick<
   StoredCredential,
@@ -55,6 +56,13 @@ export function* updateCredentialStatusAttestationSaga(
  * This saga is responsible to check the status attestation for each credential in the wallet.
  */
 export function* checkCredentialsStatusAttestation() {
+  const isWalletValid = yield* select(itwLifecycleIsValidSelector);
+
+  // Credentials can be requested only when the wallet is valid, i.e. the eID was issued
+  if (!isWalletValid) {
+    return;
+  }
+
   const { credentials } = yield* select(itwCredentialsSelector);
 
   const credentialsToCheck = pipe(

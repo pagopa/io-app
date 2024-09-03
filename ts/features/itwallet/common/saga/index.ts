@@ -2,10 +2,7 @@ import { SagaIterator } from "redux-saga";
 import { fork, put, call } from "typed-redux-saga/macro";
 import { trialSystemActivationStatus } from "../../../trialSystem/store/actions";
 import { watchItwIdentificationSaga } from "../../identification/saga";
-import {
-  checkWalletInstanceStateSaga,
-  WalletInstanceCheckResult
-} from "../../lifecycle/saga/checkWalletInstanceStateSaga";
+import { checkWalletInstanceStateSaga } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
 import { itwTrialId } from "../../../../config";
 import { itwCieIsSupported } from "../../identification/store/actions";
@@ -15,16 +12,8 @@ import { checkCredentialsStatusAttestation } from "../../credentials/saga/checkC
 function* checkWalletInstanceAndCredentialsValiditySaga() {
   // Status attestations of credentials are checked only in case of a valid wallet instance.
   // For this reason, these sagas must be called sequentially.
-  const walletInstanceCheckResult = yield* call(checkWalletInstanceStateSaga);
-
-  const shouldCheckCredentials = [
-    WalletInstanceCheckResult.OK,
-    WalletInstanceCheckResult.UNKNOWN
-  ].includes(walletInstanceCheckResult);
-
-  if (shouldCheckCredentials) {
-    yield* call(checkCredentialsStatusAttestation);
-  }
+  yield* call(checkWalletInstanceStateSaga);
+  yield* call(checkCredentialsStatusAttestation);
 }
 
 export function* watchItwSaga(): SagaIterator {

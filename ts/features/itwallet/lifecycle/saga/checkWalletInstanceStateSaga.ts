@@ -10,16 +10,7 @@ import { sessionTokenSelector } from "../../../../store/reducers/authentication"
 import { assert } from "../../../../utils/assert";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 
-export const enum WalletInstanceCheckResult {
-  SKIPPED,
-  OK,
-  RESET,
-  UNKNOWN
-}
-
-export function* getAttestationOrResetWalletInstance(
-  integrityKeyTag: string
-): Generator<ReduxSagaEffect, WalletInstanceCheckResult> {
+export function* getAttestationOrResetWalletInstance(integrityKeyTag: string) {
   const sessionToken = yield* select(sessionTokenSelector);
 
   assert(sessionToken, "Missing session token");
@@ -27,16 +18,13 @@ export function* getAttestationOrResetWalletInstance(
   try {
     yield* call(ensureIntegrityServiceIsReady);
     yield* call(getAttestation, integrityKeyTag, sessionToken);
-    return WalletInstanceCheckResult.OK;
   } catch (err) {
     if (
       err instanceof Errors.WalletInstanceRevokedError ||
       err instanceof Errors.WalletInstanceNotFoundError
     ) {
       yield* call(handleWalletInstanceResetSaga);
-      return WalletInstanceCheckResult.RESET;
     }
-    return WalletInstanceCheckResult.UNKNOWN;
   }
 }
 
@@ -46,7 +34,7 @@ export function* getAttestationOrResetWalletInstance(
  */
 export function* checkWalletInstanceStateSaga(): Generator<
   ReduxSagaEffect,
-  WalletInstanceCheckResult
+  void
 > {
   const isItwOperationalOrValid = yield* select(
     itwLifecycleIsOperationalOrValid
@@ -55,11 +43,6 @@ export function* checkWalletInstanceStateSaga(): Generator<
 
   // Only operational or valid wallet instances can be revoked.
   if (isItwOperationalOrValid && O.isSome(integrityKeyTag)) {
-    return yield* call(
-      getAttestationOrResetWalletInstance,
-      integrityKeyTag.value
-    );
+    yield* call(getAttestationOrResetWalletInstance, integrityKeyTag.value);
   }
-
-  return WalletInstanceCheckResult.SKIPPED;
 }
