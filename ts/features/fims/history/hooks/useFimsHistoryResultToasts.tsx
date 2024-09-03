@@ -11,6 +11,7 @@ import {
   resetFimsHistoryExportState
 } from "../store/actions";
 import { fimsHistoryExportStateSelector } from "../store/selectors";
+import { trackExportHistory } from "../../common/analytics";
 
 const showFimsExportError = () =>
   IOToast.error(I18n.t("FIMS.history.exportData.errorToast"));
@@ -70,6 +71,7 @@ export const useFimsHistoryExport = () => {
             isPreferred: true,
             onPress: () => {
               isProcessing.current = true;
+              trackExportHistory();
               dispatch(fimsHistoryExport.request());
             }
           }
