@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { Action } from "../../../../../store/actions/types";
 import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
@@ -26,14 +27,14 @@ const reducer = (
         return { eid: O.some(action.payload), credentials: [] };
       }
 
-      if (O.isSome(state.eid)) {
-        return {
-          eid: state.eid,
-          credentials: [...state.credentials, O.some(action.payload)]
-        };
+      if (O.isNone(state.eid)) {
+        return state;
       }
 
-      return state;
+      return {
+        eid: state.eid,
+        credentials: getUpsertedCredentials(state.credentials, action.payload)
+      };
     }
 
     case getType(itwCredentialsRemove): {
@@ -58,6 +59,36 @@ const reducer = (
     default:
       return state;
   }
+};
+
+/**
+ * Get the new list of credentials overwriting those of the same type, if present.
+ */
+const getUpsertedCredentials = (
+  credentials: ItwCredentialsState["credentials"],
+  newCredential: StoredCredential
+): ItwCredentialsState["credentials"] => {
+  const credentialAlreadyExists =
+    credentials.findIndex(credential =>
+      pipe(
+        credential,
+        O.map(x => x.credentialType === newCredential.credentialType),
+        O.getOrElse(() => false)
+      )
+    ) !== -1;
+
+  if (credentialAlreadyExists) {
+    return credentials.map(credential =>
+      pipe(
+        credential,
+        O.map(x =>
+          x.credentialType === newCredential.credentialType ? newCredential : x
+        )
+      )
+    );
+  }
+
+  return [...credentials, O.some(newCredential)];
 };
 
 export default reducer;

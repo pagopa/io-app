@@ -106,4 +106,30 @@ describe("ITW credentials reducer", () => {
       credentials: []
     });
   });
+
+  it("should overwrite a credential of the same type without duplication", () => {
+    const newMockedCredential = {
+      ...mockedCredential,
+      keyTag: "0d634e7b-40bf-4986-934a-7b18051290e6"
+    };
+    const mockedCredential2 = {
+      ...mockedCredential,
+      credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+      keyTag: "fe1233cb-ed98-4619-abe6-54603f97a998"
+    };
+
+    const targetSate = pipe(
+      undefined,
+      curriedAppReducer(applicationChangeState("active")),
+      curriedAppReducer(itwCredentialsStore(mockedEid)),
+      curriedAppReducer(itwCredentialsStore(mockedCredential)),
+      curriedAppReducer(itwCredentialsStore(mockedCredential2)),
+      curriedAppReducer(itwCredentialsStore(newMockedCredential))
+    );
+
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual([
+      O.some(newMockedCredential),
+      O.some(mockedCredential2)
+    ]);
+  });
 });
