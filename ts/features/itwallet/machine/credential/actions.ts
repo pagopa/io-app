@@ -82,7 +82,7 @@ export default (
     dispatch(itwCredentialsStore(context.credential));
     dispatch(
       walletUpsertCard({
-        key: context.credential.keyTag,
+        key: `ITW_${context.credentialType}`,
         type: "itw",
         category: "itw",
         credentialType: context.credentialType

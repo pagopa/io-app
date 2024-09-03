@@ -13,7 +13,7 @@ const mapCredentialsToWalletCards = (
   credentials: Array<StoredCredential>
 ): Array<WalletCard> =>
   credentials.map(credential => ({
-    key: credential.keyTag,
+    key: `ITW_${credential.credentialType}`,
     type: "itw",
     category: "itw",
     credentialType: credential.credentialType as CredentialType

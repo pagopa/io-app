@@ -27,7 +27,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
       .put(
         walletAddCards([
           {
-            key: "1",
+            key: `ITW_${CredentialType.PID}`,
             type: "itw",
             category: "itw",
             credentialType: CredentialType.PID
@@ -66,19 +66,19 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
       .put(
         walletAddCards([
           {
-            key: "1",
+            key: `ITW_${CredentialType.PID}`,
             type: "itw",
             category: "itw",
             credentialType: CredentialType.PID
           },
           {
-            key: "2",
+            key: `ITW_${CredentialType.DRIVING_LICENSE}`,
             type: "itw",
             category: "itw",
             credentialType: CredentialType.DRIVING_LICENSE
           },
           {
-            key: "3",
+            key: `ITW_${CredentialType.EUROPEAN_DISABILITY_CARD}`,
             type: "itw",
             category: "itw",
             credentialType: CredentialType.EUROPEAN_DISABILITY_CARD
@@ -112,7 +112,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
       .not.put(
         walletAddCards([
           {
-            key: "2",
+            key: `ITW_${CredentialType.DRIVING_LICENSE}`,
             type: "itw",
             category: "itw",
             credentialType: CredentialType.DRIVING_LICENSE

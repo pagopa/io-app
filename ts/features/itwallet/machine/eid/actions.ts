@@ -137,7 +137,7 @@ export const createEidIssuanceActionsImplementation = (
     dispatch(itwCredentialsStore(context.eid));
     dispatch(
       walletUpsertCard({
-        key: context.eid.keyTag,
+        key: `ITW_${CredentialType.PID}`,
         type: "itw",
         category: "itw",
         credentialType: CredentialType.PID
