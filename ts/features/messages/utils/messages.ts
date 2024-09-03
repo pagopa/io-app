@@ -29,24 +29,42 @@ import {
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { FIMS_ROUTES } from "../../fims/common/navigation";
 
-export const handleCtaAction = (cta: CTA, linkTo: (path: string) => void) => {
+export type CTAActionType =
+  | "io_handled_link"
+  | "io_internal_link"
+  | "fims"
+  | "none";
+
+export const handleCtaAction = (
+  cta: CTA,
+  linkTo: (path: string) => void,
+  preActionCallback?: (actionType: CTAActionType) => void
+) => {
   if (isIoInternalLink(cta.action)) {
+    preActionCallback?.("io_internal_link");
     const convertedLink = getInternalRoute(cta.action);
     handleInternalLink(linkTo, `${convertedLink}`);
+    return;
   } else if (isIoFIMSLink(cta.action)) {
+    preActionCallback?.("fims");
     const url = removeFIMSPrefixFromUrl(cta.action);
     NavigationService.navigate(FIMS_ROUTES.MAIN, {
       screen: FIMS_ROUTES.CONSENTS,
       params: {
+        ctaText: cta.text,
         ctaUrl: url
       }
     });
+    return;
   } else {
     const maybeHandledAction = deriveCustomHandledLink(cta.action);
     if (E.isRight(maybeHandledAction)) {
+      preActionCallback?.("io_handled_link");
       Linking.openURL(maybeHandledAction.right.url).catch(() => 0);
+      return;
     }
   }
+  preActionCallback?.("none");
 };
 
 const hasMetadataTokenName = (metadata?: ServiceMetadata): boolean =>

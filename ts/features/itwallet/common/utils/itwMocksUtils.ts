@@ -4,7 +4,7 @@ import eid from "../../__mocks__/eid.json";
 import mdlCredential from "../../__mocks__/mdl";
 import mdl from "../../__mocks__/mdl.json";
 import ts from "../../__mocks__/ts.json";
-import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
+import { StoredCredential } from "./itwTypesUtils";
 
 export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
 
@@ -87,16 +87,10 @@ export const mockedmDLResponse = Buffer.from(
   "hex"
 );
 
-export const ItwParsedCredentialsMocks = {
-  eid: (eid as unknown as StoredCredential).parsedCredential,
-  dc: (dc as unknown as StoredCredential).parsedCredential,
-  mdl: mdl as unknown as ParsedCredential,
-  ts: (ts as unknown as StoredCredential).parsedCredential
-};
-
 export const ItwStoredCredentialsMocks = {
   eid: eid as unknown as StoredCredential,
   dc: dc as unknown as StoredCredential,
+  mdl: mdl as unknown as StoredCredential,
   ts: ts as unknown as StoredCredential
 };
 

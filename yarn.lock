@@ -2046,10 +2046,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.43.0":
-  version "1.43.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.43.0.tgz#2eb15091c67f99e3a21248ff0cbf0a356a1535d9"
-  integrity sha512-qyb2lqtVSLGEAdz8f7M3jD0SxZCgrPflCy3GL9+thBoXpKhilqE4Q6ZPLJNwYcg/6jm/otfA6nVV0RzEgQ5obg==
+"@pagopa/io-app-design-system@1.46.0":
+  version "1.46.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.46.0.tgz#b8605df8131f487d7325a46653588fac9a186244"
+  integrity sha512-z7q4/O0iyIXm6L6WrZXktzZ0kc317mRtfWwEEJwHuMaOca9Uj8YtcmRyluLtbE1OXUPcBh57ebsLs+o6JSEwoA==
   dependencies:
     "@pagopa/ts-commons" "^12.0.0"
     "@testing-library/jest-native" "^5.4.2"
@@ -2105,11 +2105,12 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.4.tgz#e37932ef9c17a6fb0871aba43f9c3729b34fd893"
   integrity sha512-b/1hCKV65mHbHklq1dv8yGuJ2NGfqh0gaqbFKeL1epVmXA9gOfz/O3visjQeXMBO2ArXbDZOalBWvUE+8dWBZw==
 
-"@pagopa/io-react-native-wallet@^0.15.4":
-  version "0.15.4"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.15.4.tgz#78519d896f0dbfc9c40e442be74f64ba974bff76"
-  integrity sha512-O9ytvv5zkDFZGnc1k3TkRHOqrdfWn4yyWBDv7ScYAuVftDZAEurgcWKmFzX75Lr/XFJ1wJGvUjvGIaQcC3UqZQ==
+"@pagopa/io-react-native-wallet@^0.16.2":
+  version "0.16.2"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.16.2.tgz#b15b76e19c038d6d8e8543f506bc046ce5e421bf"
+  integrity sha512-h/JL0kzdcBqZlE/0yD1MZWHNRdmdc1HQrv/ZR/h3A4FltVb70ASozKQHfEL3R58POA8j/56WRoz65RPLzNr3eQ==
   dependencies:
+    js-sha256 "^0.9.0"
     parse-url "^9.2.0"
     react-native-url-polyfill "^2.0.0"
     react-native-uuid "^2.0.1"
@@ -10096,6 +10097,11 @@ js-base64@^3.2.4:
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-3.7.4.tgz#af95b20f23efc8034afd2d1cc5b9d0adf7419037"
   integrity sha512-wpM/wi20Tl+3ifTyi0RdDckS4YTD4Lf953mBRrpG8547T7hInHNPEj8+ck4gB8VDcGyeAWFK++Wb/fU1BeavKQ==
 
+js-sha256@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/js-sha256/-/js-sha256-0.9.0.tgz#0b89ac166583e91ef9123644bd3c5334ce9d0966"
+  integrity sha512-sga3MHh9sgQN2+pJ9VYZ+1LPwXOxuBJBA5nrR5/ofPfuiJBE2hnjsaN8se8JznOmGLN2p49Pe5U/ttafcs/apA==
+
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -16541,7 +16547,7 @@ xss@1.0.10:
     commander "^2.20.3"
     cssfilter "0.0.10"
 
-"xstate5@npm:xstate@5":
+"xstate5@npm:xstate@5", xstate@^5.13.0:
   version "5.13.0"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.13.0.tgz#7f7092d813a89d94024b083fe23a86b6cf4a323a"
   integrity sha512-Z0om784N5u8sAzUvQJBa32jiTCIGGF/2ZsmKkerQEqeeUktAeOMK20FIHFUMywC4GcAkNksSvaeX7lwoRNXPEQ==
@@ -16550,11 +16556,6 @@ xstate@^4.29.0, xstate@^4.33.6:
   version "4.35.4"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.35.4.tgz#87b2a45b6c7e84d820f56378408c6531ca5c4662"
   integrity sha512-mqRBYHhljP1xIItI4xnSQNHEv6CKslSM1cOGmvhmxeoDPAZgNbhSUYAL5N6DZIxRfpYY+M+bSm3mUFHD63iuvg==
-
-xstate@^5.13.0:
-  version "5.13.0"
-  resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.13.0.tgz#7f7092d813a89d94024b083fe23a86b6cf4a323a"
-  integrity sha512-Z0om784N5u8sAzUvQJBa32jiTCIGGF/2ZsmKkerQEqeeUktAeOMK20FIHFUMywC4GcAkNksSvaeX7lwoRNXPEQ==
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.2"
