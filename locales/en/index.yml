@@ -3270,6 +3270,7 @@ features:
           requestAssistance: "Something wrong? Contact {{authSource}}"
           showClaimValues: "Show claim values"
           hideClaimValues: "Hide claim values"
+      flipCard: "Show back"
   trialSystem:
     toast:
       subscribed: Done! You will receive a message when the trial period will begin.

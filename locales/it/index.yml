@@ -3270,6 +3270,7 @@ features:
           requestAssistance: "Qualcosa non torna? Contatta {{authSource}}"
           showClaimValues: "Mostra gli attributi del documento"
           hideClaimValues: "Nascondi gli attributi del documento"
+      flipCard: "Mostra retro"
   trialSystem:
     toast:
       subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione

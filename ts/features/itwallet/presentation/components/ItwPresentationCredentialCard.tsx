@@ -5,12 +5,13 @@ import {
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import I18n from "../../../../i18n";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
+import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
+import { getCredentialExpireStatus } from "../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { getCredentialExpireStatus } from "../../common/utils/itwClaimsUtils";
-import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 
 type Props = {
   credential: StoredCredential;
@@ -41,7 +42,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
         </Wrapper>
         <View style={styles.flipButton}>
           <ButtonLink
-            label="Mostra retro"
+            label={I18n.t("features.itWallet.presentation.flipCard")}
             onPress={() => setIsFlipped(_ => !_)}
             icon="switchCard"
             iconPosition="end"
