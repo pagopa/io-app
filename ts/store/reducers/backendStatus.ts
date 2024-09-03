@@ -474,10 +474,8 @@ export const isNewPaymentSectionEnabledSelector = createSelector(
 // It will be possible to delete this control and all the code it carries
 // it carries when isNewPaymentSectionEnabledSelector and
 // isNewScanSectionLocallyEnabled will be deleted
-export const isSettingsVisibleAndHideProfileSelector = createSelector(
-  isNewPaymentSectionEnabledSelector,
-  isNewPaymentSectionEnabled => isNewPaymentSectionEnabled
-);
+export const isSettingsVisibleAndHideProfileSelector =
+  isNewPaymentSectionEnabledSelector;
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
 export const DEAD_COUNTER_THRESHOLD = 2;
