@@ -57,17 +57,17 @@ const reducer = (
     }
 
     case getType(itwCredentialsMultipleUpdate): {
-      const credentialUpdatesByType = action.payload.reduce(
+      const credentialsToUpdateByType = action.payload.reduce(
         (acc, c) => ({ ...acc, [c.credentialType]: c }),
-        {} as { [K in CredentialType]?: Partial<StoredCredential> }
+        {} as { [K in CredentialType]?: StoredCredential }
       );
       return {
         ...state,
         credentials: state.credentials.map(
           O.map(c => {
-            const updates =
-              credentialUpdatesByType[c.credentialType as CredentialType];
-            return updates ? { ...c, ...updates } : c;
+            const updatedCredential =
+              credentialsToUpdateByType[c.credentialType as CredentialType];
+            return updatedCredential ?? c;
           })
         )
       };

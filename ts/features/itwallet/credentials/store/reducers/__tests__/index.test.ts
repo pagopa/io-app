@@ -124,11 +124,8 @@ describe("ITW credentials reducer", () => {
   });
 
   it("should update selected credentials", () => {
-    const credentialUpdate: Pick<
-      StoredCredential,
-      "credentialType" | "storedStatusAttestation"
-    > = {
-      credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
+    const credentialUpdate: StoredCredential = {
+      ...mockedCredential2,
       storedStatusAttestation: {
         credentialStatus: "valid" as const,
         statusAttestation: "abc",

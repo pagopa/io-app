@@ -11,13 +11,11 @@ export const itwCredentialsRemove = createStandardAction(
 
 /**
  * This action updates multiple credentials using their type as key.
- * The rest of the properties are merged with the original credential.
+ * The new credential completely overwrites the previous one.
  */
 export const itwCredentialsMultipleUpdate = createStandardAction(
   "ITW_CREDENTIALS_MULTIPLE_UPDATE"
-)<
-  Array<Partial<StoredCredential> & Pick<StoredCredential, "credentialType">>
->();
+)<Array<StoredCredential>>();
 
 export type ItwCredentialsActions =
   | ActionType<typeof itwCredentialsStore>
