@@ -377,4 +377,4 @@ export const getFiscalCodeFromCredential = (
   );
 
 export const isExpirationDateClaim = (claim: ClaimDisplayFormat) =>
-  ["expiry_date", "expiration_date"].includes(claim.id);
+  claim.id === WellKnownClaim.expiry_date;
