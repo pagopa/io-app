@@ -498,17 +498,11 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         snapPoints={
@@ -1052,17 +1046,11 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         snapPoints={
@@ -1677,17 +1665,11 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         snapPoints={
@@ -2513,17 +2495,11 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         snapPoints={
@@ -3417,17 +3393,11 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         snapPoints={
@@ -4472,17 +4442,11 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         snapPoints={
@@ -5663,17 +5627,11 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         snapPoints={
@@ -7854,17 +7812,11 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         snapPoints={
