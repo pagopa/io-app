@@ -19,7 +19,7 @@ const ItwPresentationDetailsHeader = ({
   );
 
   useHeaderSecondLevel({
-    title: "",
+    title: "Tessera sanitaria",
     supportRequest: true,
     variant: "contrast",
     backgroundColor: themeColor

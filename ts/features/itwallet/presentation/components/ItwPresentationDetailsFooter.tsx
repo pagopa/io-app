@@ -15,7 +15,7 @@ type Props = {
   issuerConf: IssuerConfiguration;
 };
 
-export const ItwPresentationDetailFooter = ({
+export const ItwPresentationDetailsFooter = ({
   lastUpdateTime,
   issuerConf
 }: Props) => (
