@@ -331,7 +331,9 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns A `Body` containing the `value` content.
    */
   Code: (code: TxtCodeNode) => (
-    <Body key={getTxtNodeKey(code)}>{code.value.replace(/s/g, "  ")}</Body>
+    <Body key={getTxtNodeKey(code)} weight="Light">
+      {code.value.replace(/\s+/g, "   ")}
+    </Body>
   ),
   /**
    * @param breakNode The `Break` node.
