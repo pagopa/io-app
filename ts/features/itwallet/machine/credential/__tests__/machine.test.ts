@@ -169,7 +169,8 @@ describe("itwCredentialIssuanceMachine", () => {
 
     actor.send({
       type: "select-credential",
-      credentialType: "MDL"
+      credentialType: "MDL",
+      skipNavigation: true
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("WalletInitialization");
@@ -290,7 +291,8 @@ describe("itwCredentialIssuanceMachine", () => {
 
     actor.send({
       type: "select-credential",
-      credentialType: "MDL"
+      credentialType: "MDL",
+      skipNavigation: true
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("WalletInitialization");
@@ -340,7 +342,8 @@ describe("itwCredentialIssuanceMachine", () => {
 
     actor.send({
       type: "select-credential",
-      credentialType: "MDL"
+      credentialType: "MDL",
+      skipNavigation: true
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("WalletInitialization");
