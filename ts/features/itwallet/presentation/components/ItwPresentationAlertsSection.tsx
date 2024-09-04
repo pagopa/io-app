@@ -21,7 +21,8 @@ export const ItwPresentationAlertsSection = ({ credential }: Props) => {
   const beginCredentialIssuance = () => {
     machineRef.send({
       type: "select-credential",
-      credentialType: credential.credentialType as CredentialType
+      credentialType: credential.credentialType,
+      skipNavigation: false
     });
   };
 

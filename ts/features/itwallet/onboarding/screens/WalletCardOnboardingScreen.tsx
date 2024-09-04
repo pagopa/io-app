@@ -83,7 +83,11 @@ const ItwCredentialOnboardingSection = () => {
     if (isCredentialIssuancePending) {
       return;
     }
-    machineRef.send({ type: "select-credential", credentialType: type });
+    machineRef.send({
+      type: "select-credential",
+      credentialType: type,
+      skipNavigation: true
+    });
   };
   // List of available credentials to show to the user
   const availableCredentials = [
