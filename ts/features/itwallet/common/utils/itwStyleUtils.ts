@@ -15,7 +15,7 @@ export const getThemeColorByCredentialType = (credentialType: string) => {
   }
 };
 
-export const getHeaderPropsyCredentialType = (
+export const getHeaderPropsByCredentialType = (
   credentialType: string
 ): HeaderSecondLevelHookProps => {
   switch (credentialType) {

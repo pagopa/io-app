@@ -5,7 +5,7 @@ import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
-  getHeaderPropsyCredentialType,
+  getHeaderPropsByCredentialType,
   getThemeColorByCredentialType
 } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
@@ -20,7 +20,7 @@ const ItwPresentationDetailsHeader = ({
   const themeColor = getThemeColorByCredentialType(
     credential.credentialType as CredentialType
   );
-  const headerProps = getHeaderPropsyCredentialType(credential.credentialType);
+  const headerProps = getHeaderPropsByCredentialType(credential.credentialType);
 
   useHeaderSecondLevel(headerProps);
 
