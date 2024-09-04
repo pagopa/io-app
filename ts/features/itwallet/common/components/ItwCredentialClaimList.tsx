@@ -1,7 +1,11 @@
 import React from "react";
 import { View } from "react-native";
 import { Divider } from "@pagopa/io-app-design-system";
-import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
+import {
+  getCredentialStatus,
+  parseClaims,
+  WellKnownClaim
+} from "../utils/itwClaimsUtils";
 import { StoredCredential } from "../utils/itwTypesUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 import { ItwReleaserName } from "./ItwReleaserName";
@@ -20,6 +24,7 @@ export const ItwCredentialClaimsList = ({
   isPreview?: boolean;
   isHidden?: boolean;
 }) => {
+  const credentialStatus = getCredentialStatus(data);
   const claims = parseClaims(data.parsedCredential, {
     exclude: [
       WellKnownClaim.unique_id,
@@ -37,6 +42,7 @@ export const ItwCredentialClaimsList = ({
             claim={elem}
             isPreview={isPreview}
             hidden={isHidden}
+            credentialStatus={credentialStatus}
           />
         </View>
       ))}

@@ -6,7 +6,6 @@ import { pipe } from "fp-ts/lib/function";
 import React, { useMemo } from "react";
 import { Image } from "react-native";
 import I18n from "../../../../i18n";
-import { getExpireStatus } from "../../../../utils/dates";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { localeDateFormat } from "../../../../utils/locale";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
@@ -14,7 +13,6 @@ import {
   BoolClaim,
   ClaimDisplayFormat,
   ClaimValue,
-  DateClaimConfig,
   DrivingPrivilegeClaimType,
   DrivingPrivilegesClaim,
   EmptyStringClaim,
@@ -25,10 +23,11 @@ import {
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
   StringClaim,
-  dateClaimsConfig,
   extractFiscalCode,
-  previewDateClaimsConfig
+  isExpirationDateClaim,
+  getSafeText
 } from "../utils/itwClaimsUtils";
+import { ItwCredentialStatus } from "./ItwCredentialCard";
 
 const HIDDEN_CLAIM = "******";
 
@@ -78,17 +77,23 @@ const PlainTextClaimItem = ({
 }: {
   label: string;
   claim: string;
-}) => (
-  <ListItemInfo
-    label={label}
-    value={claim}
-    accessibilityLabel={`${label} ${
-      claim === HIDDEN_CLAIM
-        ? I18n.t("features.itWallet.presentation.credentialDetails.hiddenClaim")
-        : claim
-    }`}
-  />
-);
+}) => {
+  const safeValue = getSafeText(claim);
+  return (
+    <ListItemInfo
+      numberOfLines={2}
+      label={label}
+      value={safeValue}
+      accessibilityLabel={`${label} ${
+        claim === HIDDEN_CLAIM
+          ? I18n.t(
+              "features.itWallet.presentation.credentialDetails.hiddenClaim"
+            )
+          : safeValue
+      }`}
+    />
+  );
+};
 
 /**
  * Component which renders a date type claim with an optional icon and expiration badge.
@@ -98,33 +103,42 @@ const PlainTextClaimItem = ({
 const DateClaimItem = ({
   label,
   claim,
-  expirationBadgeVisible
+  status
 }: {
   label: string;
   claim: Date;
-} & DateClaimConfig) => {
+  status?: ItwCredentialStatus;
+}) => {
   const value = localeDateFormat(
     claim,
     I18n.t("global.dateFormats.shortFormat")
   );
 
   const endElement: ListItemInfo["endElement"] = useMemo(() => {
-    if (!expirationBadgeVisible) {
+    if (!status || status === "pending") {
       return;
     }
-    const isExpired = getExpireStatus(claim) === "EXPIRED";
+
+    const credentialStatusProps = {
+      expired: {
+        badge: "error",
+        text: "features.itWallet.presentation.credentialDetails.status.expired"
+      },
+      expiring: {
+        badge: "warning",
+        text: "features.itWallet.presentation.credentialDetails.status.expiring"
+      },
+      valid: {
+        badge: "success",
+        text: "features.itWallet.presentation.credentialDetails.status.valid"
+      }
+    } as const;
+    const { badge, text } = credentialStatusProps[status];
     return {
       type: "badge",
-      componentProps: {
-        variant: isExpired ? "error" : "success",
-        text: I18n.t(
-          `features.itWallet.presentation.credentialDetails.status.${
-            isExpired ? "expired" : "valid"
-          }`
-        )
-      }
+      componentProps: { variant: badge, text: I18n.t(text) }
     };
-  }, [expirationBadgeVisible, claim]);
+  }, [status]);
 
   return (
     <ListItemInfo
@@ -329,11 +343,13 @@ const DrivingPrivilegesClaimItem = ({
 export const ItwCredentialClaim = ({
   claim,
   hidden,
-  isPreview
+  isPreview,
+  credentialStatus
 }: {
   claim: ClaimDisplayFormat;
   hidden?: boolean;
   isPreview?: boolean;
+  credentialStatus?: ItwCredentialStatus;
 }) =>
   pipe(
     claim.value,
@@ -346,14 +362,15 @@ export const ItwCredentialClaim = ({
         if (PlaceOfBirthClaim.is(decoded)) {
           return <PlaceOfBirthClaimItem label={claim.label} claim={decoded} />;
         } else if (DateFromString.is(decoded)) {
-          const dateClaimProps = isPreview
-            ? previewDateClaimsConfig
-            : dateClaimsConfig[claim.id];
           return (
             <DateClaimItem
               label={claim.label}
               claim={decoded}
-              {...dateClaimProps}
+              status={
+                !isPreview && isExpirationDateClaim(claim)
+                  ? credentialStatus
+                  : undefined
+              }
             />
           );
         } else if (EvidenceClaim.is(decoded)) {

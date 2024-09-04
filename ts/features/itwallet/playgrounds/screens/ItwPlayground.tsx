@@ -60,7 +60,11 @@ const ItwPlayground = () => {
 
   const handleStartCredentialIssuance =
     (credentialType: CredentialType) => () => {
-      credentialMachineRef.send({ type: "select-credential", credentialType });
+      credentialMachineRef.send({
+        type: "select-credential",
+        credentialType,
+        skipNavigation: false
+      });
     };
 
   return (

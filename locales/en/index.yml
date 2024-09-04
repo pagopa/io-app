@@ -3271,13 +3271,21 @@ features:
         hiddenClaim: "Hidden"
         status:
           valid: Valid
-          expired: Expired
+          expired: Not valid
+          expiring: Expiring
         actions:
           removeFromWallet: "Remove from Wallet"
           requestAssistance: "Something wrong? Contact {{authSource}}"
           showClaimValues: "Show claim values"
           hideClaimValues: "Hide claim values"
-      flipCard: "Show back"
+        dialogs:
+          remove:
+            title: Vuoi rimuovere il documento dal Portafoglio?
+            content: Se cambi idea, potrai riaggiungerlo in seguito.
+            confirm: Sì, rimuovi
+        toast:
+          removed: Fatto! Hai rimosso {{credentialName}}
+        flipCard: "Show back"
   trialSystem:
     toast:
       subscribed: Done! You will receive a message when the trial period will begin.

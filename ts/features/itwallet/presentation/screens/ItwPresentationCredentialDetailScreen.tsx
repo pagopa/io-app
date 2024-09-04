@@ -16,9 +16,6 @@ import { ItwPresentationDetailsFooter } from "../components/ItwPresentationDetai
 import { ItwPresentationDetailsHeader } from "../components/ItwPresentationDetailsHeader";
 import { ItwPresentationDetailsScreenBase } from "../components/ItwPresentationDetailsScreenBase";
 
-// TODO: use the real credential update time
-const today = new Date();
-
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
 };
@@ -68,10 +65,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
         />
       </ContentWrapper>
       <VSpacer size={24} />
-      <ItwPresentationDetailsFooter
-        lastUpdateTime={today}
-        issuerConf={credential.issuerConf}
-      />
+      <ItwPresentationDetailsFooter credential={credential} />
     </ItwPresentationDetailsScreenBase>
   );
 };
