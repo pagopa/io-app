@@ -31,7 +31,7 @@ export enum WellKnownClaim {
   /**
    * Unique ID must be excluded from every credential and should not rendered in the claims list
    */
-  unique_id = "unique_ID",
+  unique_id = "unique_id",
   /**
    * Claim used to extract expiry date from a credential. This is used to display how many days are left for
    * the credential expiration or to know if the credential is expired
@@ -39,7 +39,7 @@ export enum WellKnownClaim {
   expiry_date = "expiry_date",
   /**
    * Claim used to display a QR Code for the Disability Card. It must be excluded from the common claims list
-   * and rendered using a {@see QRCodeImage}
+   * and rendered using a {@link QRCodeImage}
    */
   link_qr_code = "link_qr_code"
 }
