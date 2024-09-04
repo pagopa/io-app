@@ -41,7 +41,11 @@ export enum WellKnownClaim {
    * Claim used to display a QR Code for the Disability Card. It must be excluded from the common claims list
    * and rendered using a {@see QRCodeImage}
    */
-  link_qr_code = "link_qr_code"
+  link_qr_code = "link_qr_code",
+  /**
+   * Claim used to display the attachments of a credential
+   */
+  content = "content"
 }
 
 /**

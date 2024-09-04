@@ -21,7 +21,11 @@ export const ItwCredentialClaimsList = ({
   isHidden?: boolean;
 }) => {
   const claims = parseClaims(data.parsedCredential, {
-    exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
+    exclude: [
+      WellKnownClaim.unique_id,
+      WellKnownClaim.link_qr_code,
+      WellKnownClaim.content
+    ]
   });
 
   return (
@@ -36,7 +40,7 @@ export const ItwCredentialClaimsList = ({
           />
         </View>
       ))}
-      <Divider />
+      {claims.length > 0 && <Divider />}
       <ItwReleaserName credential={data} isPreview={isPreview} />
     </>
   );
