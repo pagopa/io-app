@@ -1,6 +1,10 @@
-import { ListItemAction, useIOToast } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  ListItemAction,
+  useIOToast
+} from "@pagopa/io-app-design-system";
 import React from "react";
-import { Alert, Linking, View } from "react-native";
+import { Alert, Linking } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
@@ -56,7 +60,7 @@ const ItwPresentationDetailsFooter = ({
   const { federation_entity } = credential.issuerConf;
 
   return (
-    <View>
+    <ContentWrapper>
       <ListItemAction
         variant="primary"
         icon="message"
@@ -86,7 +90,7 @@ const ItwPresentationDetailsFooter = ({
           onPress={showRemoveCredentialDialog}
         />
       ) : null}
-    </View>
+    </ContentWrapper>
   );
 };
 
