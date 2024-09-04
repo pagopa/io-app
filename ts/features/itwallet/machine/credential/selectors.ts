@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { StateFrom } from "xstate5";
+import { pipe } from "fp-ts/lib/function";
 import { ItwTags } from "../tags";
 import { ItwCredentialIssuanceMachine } from "./machine";
 
@@ -22,3 +23,8 @@ export const selectCredentialOption = (snapshot: MachineSnapshot) =>
 
 export const selectFailureOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.failure);
+
+export const selectCredential = (snapshot: MachineSnapshot) =>
+  pipe(O.fromNullable(snapshot.context.credential), credential =>
+    O.isSome(credential) ? credential.value : undefined
+  );

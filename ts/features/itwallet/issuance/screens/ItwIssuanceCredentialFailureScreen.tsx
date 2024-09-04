@@ -1,6 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -12,10 +12,19 @@ import {
   CredentialIssuanceFailureType,
   CredentialIssuanceFailureTypeEnum
 } from "../../machine/credential/failure";
-import { selectFailureOption } from "../../machine/credential/selectors";
+import {
+  selectCredential,
+  selectFailureOption
+} from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import {
+  CREDENTIALS_MAP,
+  trackAddCredentialTimeout,
+  trackWalletCreationFailed
+} from "../../analytics";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -44,9 +53,25 @@ type ContentViewProps = { failure: CredentialIssuanceFailure };
  */
 const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const storedCredential =
+    ItwCredentialIssuanceMachineContext.useSelector(selectCredential);
 
-  const closeIssuance = () => machineRef.send({ type: "close" });
-  const retryIssuance = () => machineRef.send({ type: "retry" });
+  const closeIssuance = () => {
+    machineRef.send({ type: "close" });
+    trackWalletCreationFailed({
+      reason: failure.reason as string,
+      cta_category: "custom_2",
+      cta_id: I18n.t("features.itWallet.issuance.genericError.secondaryAction")
+    });
+  };
+  const retryIssuance = () => {
+    machineRef.send({ type: "retry" });
+    trackWalletCreationFailed({
+      reason: failure.reason as string,
+      cta_category: "custom_1",
+      cta_id: I18n.t("features.itWallet.issuance.genericError.primaryAction")
+    });
+  };
 
   useDebugInfo({
     failure
@@ -72,6 +97,16 @@ const ContentView = ({ failure }: ContentViewProps) => {
       }
     }
   };
+
+  useEffect(() => {
+    if (storedCredential) {
+      trackAddCredentialTimeout({
+        reason: failure.reason as string,
+        credential:
+          CREDENTIALS_MAP[storedCredential.credentialType as CredentialType]
+      });
+    }
+  }, [failure.reason, storedCredential]);
 
   const resultScreenProps = resultScreensMap[failure.type];
   return <OperationResultScreenContent {...resultScreenProps} />;

@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -11,20 +11,35 @@ import {
   IssuanceFailure,
   IssuanceFailureType
 } from "../../machine/eid/failure";
-import { selectFailureOption } from "../../machine/eid/selectors";
+import {
+  selectFailureOption,
+  selectIdentification
+} from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import {
+  KoState,
+  trackIdNotMatch,
+  trackWalletCreationFailed
+} from "../../analytics";
 
 export const ItwIssuanceEidFailureScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const failureOption =
     ItwEidIssuanceMachineContext.useSelector(selectFailureOption);
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  const closeIssuance = () => machineRef.send({ type: "close" });
+  const closeIssuance = (errorConfig?: KoState) => {
+    machineRef.send({ type: "close" });
+    if (errorConfig) {
+      trackWalletCreationFailed(errorConfig);
+    }
+  };
 
   const ContentView = ({ failure }: { failure: IssuanceFailure }) => {
     useDebugInfo({
@@ -41,7 +56,7 @@ export const ItwIssuanceEidFailureScreen = () => {
         pictogram: "workInProgress",
         action: {
           label: I18n.t("global.buttons.close"),
-          onPress: closeIssuance // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+          onPress: () => closeIssuance() // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         }
       },
       [IssuanceFailureType.ISSUER_GENERIC]: {
@@ -52,13 +67,27 @@ export const ItwIssuanceEidFailureScreen = () => {
           label: I18n.t(
             "features.itWallet.issuance.genericError.primaryAction"
           ),
-          onPress: closeIssuance // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+          onPress: () =>
+            closeIssuance({
+              reason: failure.reason as string,
+              cta_category: "custom_1",
+              cta_id: I18n.t(
+                "features.itWallet.issuance.genericError.primaryAction"
+              )
+            }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         },
         secondaryAction: {
           label: I18n.t(
             "features.itWallet.issuance.genericError.secondaryAction"
           ),
-          onPress: closeIssuance // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+          onPress: () =>
+            closeIssuance({
+              reason: failure.reason as string,
+              cta_category: "custom_2",
+              cta_id: I18n.t(
+                "features.itWallet.issuance.genericError.secondaryAction"
+              )
+            }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         }
       },
       [IssuanceFailureType.UNSUPPORTED_DEVICE]: {
@@ -69,7 +98,7 @@ export const ItwIssuanceEidFailureScreen = () => {
           label: I18n.t(
             "features.itWallet.unsupportedDevice.error.primaryAction"
           ),
-          onPress: closeIssuance // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+          onPress: () => closeIssuance() // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         },
         secondaryAction: {
           label: I18n.t(
@@ -90,7 +119,7 @@ export const ItwIssuanceEidFailureScreen = () => {
           label: I18n.t(
             "features.itWallet.issuance.notMatchingIdentityError.primaryAction"
           ),
-          onPress: closeIssuance // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+          onPress: () => closeIssuance() // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         },
         secondaryAction: {
           label: I18n.t(
@@ -100,6 +129,15 @@ export const ItwIssuanceEidFailureScreen = () => {
         }
       }
     };
+
+    useEffect(() => {
+      if (
+        failure.type === IssuanceFailureType.NOT_MATCHING_IDENTITY &&
+        identification
+      ) {
+        trackIdNotMatch(identification.mode);
+      }
+    }, [failure.reason, failure.type]);
 
     const resultScreenProps =
       resultScreensMap[failure.type] ?? resultScreensMap.GENERIC;

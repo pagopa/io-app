@@ -36,11 +36,18 @@ import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import {
   selectCieAuthUrlOption,
   selectCiePin,
+  selectIdentification,
   selectIsLoading
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { itwIdpHintTest } from "../../../../../config";
+import {
+  trackItwIdRequestFailure,
+  trackItwIdRequestTimeout,
+  trackItwRequest,
+  trackItwRequestSuccess
+} from "../../../analytics";
 
 // This can be any URL, as long as it has http or https as its protocol, otherwise it cannot be managed by the webview.
 const CIE_L3_REDIRECT_URI = "https://wallet.io.pagopa.it/index.html";
@@ -140,6 +147,8 @@ export const ItwCieCardReaderScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isMachineLoading =
     ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
   const ciePin = ItwEidIssuanceMachineContext.useSelector(selectCiePin);
   const cieAuthUrl = ItwEidIssuanceMachineContext.useSelector(
     selectCieAuthUrlOption
@@ -210,7 +219,11 @@ export const ItwCieCardReaderScreen = () => {
         navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.CIE_EXPIRED_SCREEN);
         break;
       case Cie.CieErrorType.GENERIC:
+        trackItwIdRequestTimeout(identification?.mode);
+        break;
       case Cie.CieErrorType.AUTHENTICATION_ERROR:
+        trackItwIdRequestFailure(identification?.mode);
+        break;
       default:
         navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR);
         break;
@@ -220,9 +233,11 @@ export const ItwCieCardReaderScreen = () => {
   const handleCieReadSuccess = (url: string) => {
     setWebViewVisible(false); // Try to hide the error page because the callback url is fake
     machineRef.send({ type: "cie-identification-completed", url });
+    trackItwRequestSuccess(identification?.mode);
   };
 
   if (isMachineLoading) {
+    trackItwRequest(identification?.mode);
     return LoadingSpinner;
   }
 

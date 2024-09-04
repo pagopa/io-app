@@ -192,18 +192,22 @@ export const trackAddCredentialFailure = ({
   );
 };
 
-export const trackItwRequest = (ITW_ID_method: ItwIdMethod) => {
-  void mixpanelTrack(
-    WALLET_EVENTS.ITW_ID_REQUEST,
-    buildEventProperties("TECH", "error", { ITW_ID_method })
-  );
+export const trackItwRequest = (ITW_ID_method?: ItwIdMethod) => {
+  if (ITW_ID_method) {
+    void mixpanelTrack(
+      WALLET_EVENTS.ITW_ID_REQUEST,
+      buildEventProperties("TECH", "error", { ITW_ID_method })
+    );
+  }
 };
 
-export const trackItwRequestSuccess = (ITW_ID_method: ItwIdMethod) => {
-  void mixpanelTrack(
-    WALLET_EVENTS.ITW_ID_REQUEST_SUCCESS,
-    buildEventProperties("TECH", "error", { ITW_ID_method })
-  );
+export const trackItwRequestSuccess = (ITW_ID_method?: ItwIdMethod) => {
+  if (ITW_ID_method) {
+    void mixpanelTrack(
+      WALLET_EVENTS.ITW_ID_REQUEST_SUCCESS,
+      buildEventProperties("TECH", "error", { ITW_ID_method })
+    );
+  }
 };
 
 export const trackIdNotMatch = (ITW_ID_method: ItwIdMethod) => {
@@ -213,16 +217,20 @@ export const trackIdNotMatch = (ITW_ID_method: ItwIdMethod) => {
   );
 };
 
-export const trackItwIdRequestTimeout = (ITW_ID_method: ItwIdMethod) => {
-  void mixpanelTrack(
-    WALLET_EVENTS.ITW_ID_REQUEST_TIMEOUT,
-    buildEventProperties("KO", "error", { ITW_ID_method })
-  );
+export const trackItwIdRequestTimeout = (ITW_ID_method?: ItwIdMethod) => {
+  if (ITW_ID_method) {
+    void mixpanelTrack(
+      WALLET_EVENTS.ITW_ID_REQUEST_TIMEOUT,
+      buildEventProperties("KO", "error", { ITW_ID_method })
+    );
+  }
 };
 
-export const trackItwIdRequestFailure = (ITW_ID_method: ItwIdMethod) => {
-  void mixpanelTrack(
-    WALLET_EVENTS.ITW_ID_REQUEST_FAILURE,
-    buildEventProperties("KO", "error", { ITW_ID_method })
-  );
+export const trackItwIdRequestFailure = (ITW_ID_method?: ItwIdMethod) => {
+  if (ITW_ID_method) {
+    void mixpanelTrack(
+      WALLET_EVENTS.ITW_ID_REQUEST_FAILURE,
+      buildEventProperties("KO", "error", { ITW_ID_method })
+    );
+  }
 };

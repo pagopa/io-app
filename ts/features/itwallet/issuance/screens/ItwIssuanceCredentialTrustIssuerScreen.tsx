@@ -12,8 +12,9 @@ import {
 import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -26,7 +27,10 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
+import {
+  CredentialType,
+  ISSUER_MOCK_NAME
+} from "../../common/utils/itwMocksUtils";
 import {
   RequestObject,
   StoredCredential
@@ -42,6 +46,13 @@ import {
   ItwRequestedClaimsList,
   RequiredClaim
 } from "../components/ItwRequiredClaimsList";
+import {
+  CREDENTIALS_MAP,
+  trackItwExit,
+  trackOpenItwTos,
+  trackWalletDataShare,
+  trackWalletDataShareAccepted
+} from "../../analytics";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -79,17 +90,31 @@ type ContentViewProps = {
  * Renders the content of the screen
  */
 const ContentView = ({ credentialType, eid }: ContentViewProps) => {
+  const route = useRoute();
+  const mixPanelCredential = useMemo(
+    () => CREDENTIALS_MAP[credentialType as CredentialType],
+    [credentialType]
+  );
+
+  useEffect(() => {
+    trackWalletDataShare(mixPanelCredential);
+  }, [mixPanelCredential]);
+
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
 
   const handleContinuePress = () => {
     machineRef.send({ type: "confirm-trust-data" });
+    trackWalletDataShareAccepted(
+      CREDENTIALS_MAP[credentialType as CredentialType]
+    );
   };
 
-  const dismissDialog = useItwDismissalDialog(() =>
-    machineRef.send({ type: "close" })
-  );
+  const dismissDialog = useItwDismissalDialog(() => {
+    machineRef.send({ type: "close" });
+    trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+  });
 
   useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });
 
@@ -160,7 +185,10 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           )}
         />
         <VSpacer size={32} />
-        <ItwMarkdown styles={{ body: { fontSize: 14 } }}>
+        <ItwMarkdown
+          styles={{ body: { fontSize: 14 } }}
+          onLinkOpen={trackOpenItwTos}
+        >
           {I18n.t("features.itWallet.issuance.credentialAuth.tos")}
         </ItwMarkdown>
       </ContentWrapper>

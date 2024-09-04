@@ -1,11 +1,26 @@
 import React from "react";
+import { useRoute } from "@react-navigation/native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import {
+  trackAddFirstCredential,
+  trackBackToWallet,
+  trackSaveCredentialSuccess
+} from "../../analytics";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+
+const ITW_CREDENTIAL = "ITW_ID";
 
 export const ItwIssuanceEidResultScreen = () => {
+  const route = useRoute();
+
+  useOnFirstRender(() => {
+    trackSaveCredentialSuccess(ITW_CREDENTIAL);
+  });
+
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   useItwDisableGestureNavigation();
@@ -13,10 +28,12 @@ export const ItwIssuanceEidResultScreen = () => {
 
   const handleContinue = () => {
     machineRef.send({ type: "add-new-credential" });
+    trackAddFirstCredential();
   };
 
   const handleClose = () => {
     machineRef.send({ type: "go-to-wallet" });
+    trackBackToWallet({ exit_page: route.name, credential: ITW_CREDENTIAL });
   };
 
   return (

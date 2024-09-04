@@ -15,6 +15,7 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { selectIsLoading } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { trackOpenItwTos } from "../../analytics";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -49,7 +50,10 @@ const ItwDiscoveryInfoScreen = () => {
         <ItwMarkdown>
           {I18n.t("features.itWallet.discovery.content")}
         </ItwMarkdown>
-        <ItwMarkdown styles={{ body: { fontSize: 14 } }}>
+        <ItwMarkdown
+          styles={{ body: { fontSize: 14 } }}
+          onLinkOpen={trackOpenItwTos}
+        >
           {I18n.t("features.itWallet.discovery.tos")}
         </ItwMarkdown>
       </ContentWrapper>
