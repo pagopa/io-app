@@ -614,9 +614,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -853,9 +851,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -1030,9 +1026,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
