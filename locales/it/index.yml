@@ -3264,7 +3264,8 @@ features:
         hiddenClaim: "Nascosto"
         status:
           valid: Valida
-          expired: Scaduta
+          expired: Non valida
+          expiring: In scadenza
         actions:
           removeFromWallet: "Rimuovi dal Portafoglio"
           requestAssistance: "Qualcosa non torna? Contatta {{authSource}}"
