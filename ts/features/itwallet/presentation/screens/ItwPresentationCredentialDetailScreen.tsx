@@ -8,7 +8,6 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { useIOSelector } from "../../../../store/hooks";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { getHumanReadableParsedCredential } from "../../common/utils/debug";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlertsSection";
@@ -35,28 +34,23 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
     itwCredentialByTypeSelector(credentialType)
   );
 
-  return pipe(
-    credentialOption,
-    O.fold(
-      () => <ItwGenericErrorContent />,
-      credential => <ContentView credential={credential} />
-    )
-  );
-};
-
-type ContentViewProps = {
-  credential: StoredCredential;
-};
-
-/**
- * This component renders the entire credential detail.
- */
-const ContentView = ({ credential }: ContentViewProps) => {
   useDebugInfo({
-    parsedCredential: getHumanReadableParsedCredential(
-      credential.parsedCredential
+    parsedCredential: pipe(
+      credentialOption,
+      O.map(credential =>
+        getHumanReadableParsedCredential(credential.parsedCredential)
+      ),
+      O.toUndefined
     )
   });
+
+  if (O.isNone(credentialOption)) {
+    // This is unlikely to happen, but we want to handle the case where the credential is not found
+    // because of inconsistencies in the state, and assert that the credential is O.some
+    return <ItwGenericErrorContent />;
+  }
+
+  const credential = credentialOption.value;
 
   return (
     <ItwPresentationDetailsScreenBase credential={credential}>
