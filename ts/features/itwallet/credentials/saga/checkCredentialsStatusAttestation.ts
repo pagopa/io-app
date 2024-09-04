@@ -5,7 +5,6 @@ import * as O from "fp-ts/Option";
 import { Errors } from "@pagopa/io-react-native-wallet";
 import { itwCredentialsSelector } from "../store/selectors";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
   shouldRequestStatusAttestation,
   getCredentialStatusAttestation
@@ -15,9 +14,6 @@ import { ReduxSagaEffect } from "../../../../types/utils";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { walletAddCards } from "../../../newWallet/store/actions/cards";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
-
-const canGetStatusAttestation = (credential: StoredCredential) =>
-  credential.credentialType === CredentialType.DRIVING_LICENSE;
 
 export function* updateCredentialStatusAttestationSaga(
   credential: StoredCredential
@@ -63,11 +59,7 @@ export function* checkCredentialsStatusAttestation() {
 
   const credentialsToCheck = pipe(
     credentials,
-    RA.filterMap(
-      O.filter(
-        x => canGetStatusAttestation(x) && shouldRequestStatusAttestation(x)
-      )
-    )
+    RA.filterMap(O.filter(x => shouldRequestStatusAttestation(x)))
   );
 
   if (credentialsToCheck.length === 0) {
