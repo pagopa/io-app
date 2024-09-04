@@ -526,7 +526,7 @@ function configureStoreAndPersistor(): {
   const persistor = persistStore(store);
 
   if (isDebuggingInChrome) {
-    // eslint-disable-next-line
+    // eslint-disable-next-line functional/immutable-data
     (window as any).store = store;
   }
 
