@@ -520,7 +520,7 @@ export const DSCards = () => {
         <TabItem label="Payments" accessibilityLabel="Payments" />
         <TabItem label="Bonus" accessibilityLabel="Bonus" />
         <TabItem label="Services" accessibilityLabel="Services" />
-        <TabItem label="IT Wallet" accessibilityLabel="IT Wallet" />
+        <TabItem label="Documenti" accessibilityLabel="Documenti" />
       </TabNavigation>
       <VSpacer size={24} />
       <ContentWrapper>

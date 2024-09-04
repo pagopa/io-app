@@ -26,10 +26,7 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import {
-  CredentialType,
-  ISSUER_MOCK_NAME
-} from "../../common/utils/itwMocksUtils";
+import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
 import {
   RequestObject,
   StoredCredential
@@ -73,7 +70,7 @@ const ItwIssuanceCredentialTrustIssuerScreen = () => {
 };
 
 type ContentViewProps = {
-  credentialType: CredentialType;
+  credentialType: string;
   requestedCredential: RequestObject;
   eid: StoredCredential;
 };

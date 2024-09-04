@@ -17,7 +17,6 @@ import { useIOSelector } from "../../../../store/hooks";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { getHumanReadableParsedCredential } from "../../common/utils/debug";
-import { getCredentialExpireStatus } from "../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
@@ -26,6 +25,7 @@ import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlertsSection";
 import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection";
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
+import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 
 // TODO: use the real credential update time
 const today = new Date();
@@ -76,9 +76,7 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
     )
   });
 
-  const credentialStatus = getCredentialExpireStatus(
-    credential.parsedCredential
-  );
+  const credentialStatus = getCredentialStatus(credential);
 
   return (
     <>

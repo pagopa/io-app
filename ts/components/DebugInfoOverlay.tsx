@@ -82,7 +82,7 @@ const DebugInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <>
       <SafeAreaView style={styles.versionContainer} pointerEvents="box-none">
-        <VStack space={4} alignItems="center">
+        <VStack space={4} style={{ alignItems: "center" }}>
           <HStack space={4}>
             <Pressable
               style={styles.versionTextWrapper}
