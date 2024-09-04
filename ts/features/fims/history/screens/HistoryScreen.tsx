@@ -16,6 +16,10 @@ import {
   fimsHistoryToUndefinedSelector,
   isFimsHistoryLoadingSelector
 } from "../store/selectors";
+import {
+  trackHistoryFailure,
+  trackHistoryScreen
+} from "../../common/analytics";
 
 export const FimsHistoryScreen = () => {
   const dispatch = useIODispatch();
@@ -37,7 +41,10 @@ export const FimsHistoryScreen = () => {
 
   React.useEffect(() => {
     if (!requiresAppUpdate) {
+      trackHistoryScreen();
       dispatch(fimsHistoryGet.request({ shouldReloadFromScratch: true }));
+    } else {
+      trackHistoryFailure("update_required");
     }
     return () => {
       // full reset in order to avoid wonky error toast behaviour
