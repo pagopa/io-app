@@ -1,11 +1,12 @@
 import {
   Chip,
+  ContentWrapper,
   IOStyles,
   ListItemAction,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Linking, View } from "react-native";
+import { Linking } from "react-native";
 import I18n from "../../../../i18n";
 import { format } from "../../../../utils/dates";
 import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
@@ -19,7 +20,7 @@ export const ItwPresentationDetailsFooter = ({
   lastUpdateTime,
   issuerConf
 }: Props) => (
-  <View>
+  <ContentWrapper>
     <ListItemAction
       variant="primary"
       icon="message"
@@ -41,5 +42,5 @@ export const ItwPresentationDetailsFooter = ({
         lastUpdateTime: format(lastUpdateTime, "DD MMMM YYYY, HH:mm")
       })}
     </Chip>
-  </View>
+  </ContentWrapper>
 );
