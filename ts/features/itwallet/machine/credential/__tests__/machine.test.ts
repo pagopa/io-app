@@ -178,6 +178,7 @@ describe("itwCredentialIssuanceMachine", () => {
       credentialType: "MDL"
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(0);
     await waitFor(() => expect(initializeWallet).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(1));
 
@@ -209,7 +210,7 @@ describe("itwCredentialIssuanceMachine", () => {
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("ObtainingCredential");
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Issuing]));
     await waitFor(() => expect(obtainCredential).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual(
@@ -300,6 +301,7 @@ describe("itwCredentialIssuanceMachine", () => {
       credentialType: "MDL"
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(0);
     await waitFor(() => expect(initializeWallet).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(0));
 
@@ -351,6 +353,7 @@ describe("itwCredentialIssuanceMachine", () => {
       credentialType: "MDL"
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(0);
     await waitFor(() => expect(initializeWallet).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(1));
 
@@ -423,7 +426,7 @@ describe("itwCredentialIssuanceMachine", () => {
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("ObtainingCredential");
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Issuing]));
     await waitFor(() => expect(obtainCredential).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
@@ -440,5 +443,36 @@ describe("itwCredentialIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(closeIssuance).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should navigate to the next screen if skipNavigation is false", () => {
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    initializeWallet.mockImplementation(() =>
+      Promise.resolve({
+        walletInstanceAttestation: T_WIA_CONTEXT.walletAttestation,
+        wiaCryptoContext: T_WIA_CONTEXT.wiaCryptoContext
+      })
+    );
+
+    requestCredential.mockImplementation(() =>
+      Promise.resolve({
+        clientId: T_CLIENT_ID,
+        codeVerifier: T_CODE_VERIFIER,
+        credentialDefinition: T_CREDENTIAL_DEFINITION,
+        requestedCredential: T_REQUESTED_CREDENTIAL,
+        issuerConf: T_ISSUER_CONFIG
+      })
+    );
+
+    actor.send({
+      type: "select-credential",
+      credentialType: "MDL",
+      skipNavigation: false
+    });
+
+    expect(actor.getSnapshot().value).toStrictEqual("WalletInitialization");
+    expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(1);
   });
 });
