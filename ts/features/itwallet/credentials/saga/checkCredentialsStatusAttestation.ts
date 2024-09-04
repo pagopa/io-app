@@ -84,7 +84,7 @@ export function* checkCredentialsStatusAttestation() {
   yield* put(
     walletAddCards(
       updatedCredentials.map(c => ({
-        key: c.keyTag,
+        key: `ITW_${c.credentialType}`,
         type: "itw",
         category: "itw",
         credentialType: c.credentialType,
