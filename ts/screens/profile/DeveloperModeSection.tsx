@@ -36,7 +36,6 @@ import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
-  preferencesNewScanSectionSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
@@ -49,7 +48,6 @@ import {
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
   isIdPayTestEnabledSelector,
-  isNewScanSectionLocallyEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -303,10 +301,6 @@ const DesignSystemSection = () => {
   const { themeType, setTheme } = useIOThemeContext();
   const dispatch = useIODispatch();
 
-  const isNewScanSectionLocallyEnabled = useIOSelector(
-    isNewScanSectionLocallyEnabledSelector
-  );
-
   const isAutomaticSessionRefreshToggleActive = useIOSelector(
     isAutomaticSessionRefreshToggleActiveSelector
   );
@@ -317,14 +311,6 @@ const DesignSystemSection = () => {
     },
     [dispatch]
   );
-
-  const onNewScanSectionToggle = (enabled: boolean) => {
-    dispatch(
-      preferencesNewScanSectionSetEnabled({
-        isNewScanSectionEnabled: enabled
-      })
-    );
-  };
 
   return (
     <ContentWrapper>
@@ -350,11 +336,6 @@ const DesignSystemSection = () => {
         }
       />
       <Divider />
-      <ListItemSwitch
-        label={I18n.t("profile.main.newScanSection")}
-        value={isNewScanSectionLocallyEnabled}
-        onSwitchValueChange={onNewScanSectionToggle}
-      />
       <ListItemSwitch
         label={I18n.t("profile.main.sessionRefresh")}
         value={isAutomaticSessionRefreshToggleActive}
