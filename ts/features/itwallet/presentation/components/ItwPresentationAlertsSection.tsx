@@ -4,7 +4,7 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bott
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import {
   getCredentialExpireDays,
-  getCredentialExpireStatus
+  getCredentialStatus
 } from "../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
@@ -36,7 +36,7 @@ export const ItwPresentationAlertsSection = ({ credential }: Props) => {
     )
   });
 
-  const expireStatus = getCredentialExpireStatus(credential.parsedCredential);
+  const expireStatus = getCredentialStatus(credential);
   const expireDays = getCredentialExpireDays(credential.parsedCredential);
   const isExpired = expireStatus === "expired";
   const isExpiring = expireStatus === "expiring";

@@ -49,10 +49,6 @@ export const preferencesDesignSystemSetEnabled = createStandardAction(
   "PREFERENCES_DESIGN_SYSTEM_SET_ENABLED"
 )<{ isDesignSystemEnabled: boolean }>();
 
-export const preferencesNewScanSectionSetEnabled = createStandardAction(
-  "PREFERENCES_NEW_SCAN_SECTION_SET_ENABLED"
-)<{ isNewScanSectionEnabled: boolean }>();
-
 export type PersistedPreferencesActions = ActionType<
   | typeof preferenceFingerprintIsEnabledSaveSuccess
   | typeof preferredCalendarSaveSuccess
@@ -65,5 +61,4 @@ export type PersistedPreferencesActions = ActionType<
   | typeof preferencesPnTestEnvironmentSetEnabled
   | typeof preferencesIdPayTestSetEnabled
   | typeof preferencesDesignSystemSetEnabled
-  | typeof preferencesNewScanSectionSetEnabled
 >;
