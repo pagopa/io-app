@@ -1,12 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
-import { pipe } from "fp-ts/lib/function";
 import { Action } from "../../../../../store/actions/types";
-import {
-  itwCredentialsRemove,
-  itwCredentialsStore,
-  itwCredentialsMultipleUpdate
-} from "../actions";
+import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
@@ -27,17 +22,24 @@ const reducer = (
 ): ItwCredentialsState => {
   switch (action.type) {
     case getType(itwCredentialsStore): {
-      if (action.payload.credentialType === CredentialType.PID) {
-        return { eid: O.some(action.payload), credentials: [] };
-      }
+      const credentialsToStore = Array.isArray(action.payload)
+        ? action.payload
+        : [action.payload];
 
-      if (O.isNone(state.eid)) {
+      const { [CredentialType.PID]: eid, ...otherCredentials } =
+        credentialsToStore.reduce(
+          (acc, c) => ({ ...acc, [c.credentialType]: c }),
+          {} as { [K in CredentialType]?: StoredCredential }
+        );
+
+      // Can't add other credentials when there is no eID
+      if (!eid && O.isNone(state.eid)) {
         return state;
       }
 
       return {
-        eid: state.eid,
-        credentials: getUpsertedCredentials(state.credentials, action.payload)
+        eid: eid ? O.some(eid) : state.eid,
+        credentials: getUpsertedCredentials(state.credentials, otherCredentials)
       };
     }
 
@@ -57,23 +59,6 @@ const reducer = (
       };
     }
 
-    case getType(itwCredentialsMultipleUpdate): {
-      const credentialsToUpdateByType = action.payload.reduce(
-        (acc, c) => ({ ...acc, [c.credentialType]: c }),
-        {} as { [K in CredentialType]?: StoredCredential }
-      );
-      return {
-        ...state,
-        credentials: state.credentials.map(
-          O.map(c => {
-            const updatedCredential =
-              credentialsToUpdateByType[c.credentialType as CredentialType];
-            return updatedCredential ?? c;
-          })
-        )
-      };
-    }
-
     case getType(itwLifecycleStoresReset):
       return { ...itwCredentialsInitialState };
 
@@ -87,29 +72,22 @@ const reducer = (
  */
 const getUpsertedCredentials = (
   credentials: ItwCredentialsState["credentials"],
-  newCredential: StoredCredential
+  newCredentials: { [K in CredentialType]?: StoredCredential }
 ): ItwCredentialsState["credentials"] => {
-  const credentialAlreadyExists =
-    credentials.findIndex(credential =>
-      pipe(
-        credential,
-        O.map(x => x.credentialType === newCredential.credentialType),
-        O.getOrElse(() => false)
-      )
-    ) !== -1;
+  const originalCredentials = credentials.reduce(
+    (acc, credentialOption) =>
+      O.isSome(credentialOption)
+        ? {
+            ...acc,
+            [credentialOption.value.credentialType]: credentialOption.value
+          }
+        : acc,
+    {} as Record<CredentialType, StoredCredential>
+  );
 
-  if (credentialAlreadyExists) {
-    return credentials.map(credential =>
-      pipe(
-        credential,
-        O.map(x =>
-          x.credentialType === newCredential.credentialType ? newCredential : x
-        )
-      )
-    );
-  }
-
-  return [...credentials, O.some(newCredential)];
+  return Object.values({ ...originalCredentials, ...newCredentials }).map(
+    O.some
+  );
 };
 
 export default reducer;

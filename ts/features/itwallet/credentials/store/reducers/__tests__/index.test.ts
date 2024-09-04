@@ -7,11 +7,7 @@ import {
   ParsedStatusAttestation,
   StoredCredential
 } from "../../../../common/utils/itwTypesUtils";
-import {
-  itwCredentialsMultipleUpdate,
-  itwCredentialsRemove,
-  itwCredentialsStore
-} from "../../actions";
+import { itwCredentialsRemove, itwCredentialsStore } from "../../actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
@@ -58,6 +54,7 @@ describe("ITW credentials reducer", () => {
     expect(targetSate.features.itWallet.credentials.eid).toEqual(
       O.some(mockedEid)
     );
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual([]);
   });
 
   it("should add a credential when the eID is present", () => {
@@ -68,6 +65,43 @@ describe("ITW credentials reducer", () => {
       curriedAppReducer(itwCredentialsStore(mockedCredential))
     );
 
+    expect(targetSate.features.itWallet.credentials.eid).toEqual(
+      O.some(mockedEid)
+    );
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual([
+      O.some(mockedCredential)
+    ]);
+  });
+
+  it("should add multiple credentials with a single action when the eID is present", () => {
+    const targetSate = pipe(
+      undefined,
+      curriedAppReducer(applicationChangeState("active")),
+      curriedAppReducer(itwCredentialsStore(mockedEid)),
+      curriedAppReducer(
+        itwCredentialsStore([mockedCredential, mockedCredential2])
+      )
+    );
+
+    expect(targetSate.features.itWallet.credentials.eid).toEqual(
+      O.some(mockedEid)
+    );
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual([
+      O.some(mockedCredential),
+      O.some(mockedCredential2)
+    ]);
+  });
+
+  it("should add the eID and a credential with a single action", () => {
+    const targetSate = pipe(
+      undefined,
+      curriedAppReducer(applicationChangeState("active")),
+      curriedAppReducer(itwCredentialsStore([mockedCredential, mockedEid]))
+    );
+
+    expect(targetSate.features.itWallet.credentials.eid).toEqual(
+      O.some(mockedEid)
+    );
     expect(targetSate.features.itWallet.credentials.credentials).toEqual([
       O.some(mockedCredential)
     ]);
@@ -80,6 +114,7 @@ describe("ITW credentials reducer", () => {
       curriedAppReducer(itwCredentialsStore(mockedCredential))
     );
 
+    expect(targetSate.features.itWallet.credentials.eid).toEqual(O.none);
     expect(targetSate.features.itWallet.credentials.credentials).toEqual([]);
   });
 
@@ -105,6 +140,9 @@ describe("ITW credentials reducer", () => {
       curriedAppReducer(itwCredentialsRemove(mockedCredential))
     );
 
+    expect(targetSate.features.itWallet.credentials.eid).toEqual(
+      O.some(mockedEid)
+    );
     expect(targetSate.features.itWallet.credentials.credentials).toEqual([]);
   });
 
@@ -123,7 +161,7 @@ describe("ITW credentials reducer", () => {
     });
   });
 
-  it("should update selected credentials", () => {
+  it("should update existing credentials overwriting the previous instances", () => {
     const credentialUpdate: StoredCredential = {
       ...mockedCredential2,
       storedStatusAttestation: {
@@ -139,35 +177,18 @@ describe("ITW credentials reducer", () => {
       undefined,
       curriedAppReducer(applicationChangeState("active")),
       curriedAppReducer(itwCredentialsStore(mockedEid)),
-      curriedAppReducer(itwCredentialsStore(mockedCredential)),
-      curriedAppReducer(itwCredentialsStore(mockedCredential2)),
-      curriedAppReducer(itwCredentialsMultipleUpdate([credentialUpdate]))
+      curriedAppReducer(
+        itwCredentialsStore([mockedCredential, mockedCredential2])
+      ),
+      curriedAppReducer(itwCredentialsStore(credentialUpdate))
     );
 
+    expect(targetSate.features.itWallet.credentials.eid).toEqual(
+      O.some(mockedEid)
+    );
     expect(targetSate.features.itWallet.credentials.credentials).toEqual([
       O.some(mockedCredential),
       O.some(updatedCredential)
-    ]);
-  });
-
-  it("should overwrite a credential of the same type without duplication", () => {
-    const newMockedCredential = {
-      ...mockedCredential,
-      keyTag: "0d634e7b-40bf-4986-934a-7b18051290e6"
-    };
-
-    const targetSate = pipe(
-      undefined,
-      curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(itwCredentialsStore(mockedEid)),
-      curriedAppReducer(itwCredentialsStore(mockedCredential)),
-      curriedAppReducer(itwCredentialsStore(mockedCredential2)),
-      curriedAppReducer(itwCredentialsStore(newMockedCredential))
-    );
-
-    expect(targetSate.features.itWallet.credentials.credentials).toEqual([
-      O.some(newMockedCredential),
-      O.some(mockedCredential2)
     ]);
   });
 });
