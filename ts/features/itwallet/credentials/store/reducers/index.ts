@@ -1,10 +1,14 @@
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
+import {
+  itwCredentialsRemove,
+  itwCredentialsStore,
+  itwCredentialsMultipleUpdate
+} from "../actions";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { itwLifecycleWalletReset } from "../../../lifecycle/store/actions";
+import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 
 export type ItwCredentialsState = {
   eid: O.Option<StoredCredential>;
@@ -52,7 +56,24 @@ const reducer = (
       };
     }
 
-    case getType(itwLifecycleWalletReset):
+    case getType(itwCredentialsMultipleUpdate): {
+      const credentialsToUpdateByType = action.payload.reduce(
+        (acc, c) => ({ ...acc, [c.credentialType]: c }),
+        {} as { [K in CredentialType]?: StoredCredential }
+      );
+      return {
+        ...state,
+        credentials: state.credentials.map(
+          O.map(c => {
+            const updatedCredential =
+              credentialsToUpdateByType[c.credentialType as CredentialType];
+            return updatedCredential ?? c;
+          })
+        )
+      };
+    }
+
+    case getType(itwLifecycleStoresReset):
       return { ...itwCredentialsInitialState };
 
     default:

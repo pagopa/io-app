@@ -14,7 +14,6 @@ import { itwCredentialsStore } from "../../credentials/store/actions";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { assert } from "../../../../utils/assert";
-import { disposeWallet } from "../../common/utils/itwIssuanceUtils";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -147,8 +146,6 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   requestAssistance: () => {},
-
-  disposeWallet,
 
   handleSessionExpired: () =>
     dispatch(checkCurrentSession.success({ isSessionValid: false })),

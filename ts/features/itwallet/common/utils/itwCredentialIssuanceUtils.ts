@@ -15,14 +15,12 @@ import {
 import { SessionToken } from "../../../../types/SessionToken";
 import { createItWalletFetch } from "../../api/client";
 import { getIntegrityContext } from "./itwIntegrityUtils";
-import { CredentialType } from "./itwMocksUtils";
 import {
   IssuerConfiguration,
   RequestObject,
   StoredCredential
 } from "./itwTypesUtils";
 import {
-  disposeCredentialCryptoKeys,
   DPOP_CREDENTIAL_KEYTAG,
   regenerateCryptoKey,
   WIA_CREDENTIAL_KEYTAG
@@ -61,7 +59,7 @@ export const initializeWallet = async ({
 };
 
 export type RequestCredentialParams = {
-  credentialType: CredentialType;
+  credentialType: string;
   walletInstanceAttestation: string;
   wiaCryptoContext: CryptoContext;
 };
@@ -107,7 +105,7 @@ export const requestCredential = async ({
 };
 
 export type ObtainCredentialParams = {
-  credentialType: CredentialType;
+  credentialType: string;
   walletInstanceAttestation: string;
   wiaCryptoContext: CryptoContext;
   requestedCredential: RequestObject;
@@ -186,7 +184,7 @@ export const obtainCredential = async ({
       issuerConf,
       credential,
       format,
-      { credentialCryptoContext, ignoreMissingAttributes: true }
+      { credentialCryptoContext, ignoreMissingAttributes: false }
     );
 
   const storedCredential: StoredCredential = {
@@ -201,8 +199,4 @@ export const obtainCredential = async ({
   return {
     credential: storedCredential
   };
-};
-
-export const disposeWallet = async () => {
-  await disposeCredentialCryptoKeys();
 };

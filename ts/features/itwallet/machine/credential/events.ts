@@ -1,5 +1,4 @@
 import { ErrorActorEvent } from "xstate5";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 
 export type Reset = {
   type: "reset";
@@ -7,7 +6,7 @@ export type Reset = {
 
 export type SelecteCredential = {
   type: "select-credential";
-  credentialType: CredentialType;
+  credentialType: string;
 };
 
 export type ConfirmTrustData = {

@@ -31,10 +31,7 @@ import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 
-import {
-  isIdPayTestEnabledSelector,
-  isNewScanSectionLocallyEnabledSelector
-} from "./persistedPreferences";
+import { isIdPayTestEnabledSelector } from "./persistedPreferences";
 import { GlobalState } from "./types";
 import { isPropertyWithMinAppVersionEnabled } from "./featureFlagWithMinAppVersionStatus";
 
@@ -248,20 +245,6 @@ export const isCGNEnabledSelector = createSelector(
     pipe(
       backendStatus,
       O.map(bs => bs.config.cgn.enabled),
-      O.toUndefined
-    ) ?? false
-);
-
-/**
- * return the remote config about FIMS enabled/disabled
- * if there is no data, false is the default value -> (FIMS disabled)
- */
-export const isFIMSEnabledSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): boolean =>
-    pipe(
-      backendStatus,
-      O.map(bs => bs.config.fims.enabled),
       O.toUndefined
     ) ?? false
 );
@@ -491,12 +474,8 @@ export const isNewPaymentSectionEnabledSelector = createSelector(
 // It will be possible to delete this control and all the code it carries
 // it carries when isNewPaymentSectionEnabledSelector and
 // isNewScanSectionLocallyEnabled will be deleted
-export const isSettingsVisibleAndHideProfileSelector = createSelector(
-  isNewPaymentSectionEnabledSelector,
-  isNewScanSectionLocallyEnabledSelector,
-  (isNewPaymentSectionEnabled, isNewScanSectionLocallyEnabled) =>
-    isNewPaymentSectionEnabled && isNewScanSectionLocallyEnabled
-);
+export const isSettingsVisibleAndHideProfileSelector =
+  isNewPaymentSectionEnabledSelector;
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
 export const DEAD_COUNTER_THRESHOLD = 2;

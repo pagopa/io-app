@@ -24,8 +24,12 @@ import {
 } from "../store/selectors";
 import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
 import { openAppStoreUrl } from "../../../../utils/url";
+import { trackAuthenticationError } from "../../common/analytics";
 
-export type FimsFlowHandlerScreenRouteParams = { ctaUrl: string };
+export type FimsFlowHandlerScreenRouteParams = {
+  ctaText: string;
+  ctaUrl: string;
+};
 
 type FimsFlowHandlerScreenRouteProps = IOStackNavigationRouteProps<
   FimsParamsList,
@@ -35,7 +39,7 @@ type FimsFlowHandlerScreenRouteProps = IOStackNavigationRouteProps<
 export const FimsFlowHandlerScreen = (
   props: FimsFlowHandlerScreenRouteProps
 ) => {
-  const { ctaUrl } = props.route.params;
+  const { ctaText, ctaUrl } = props.route.params;
   const dispatch = useIODispatch();
 
   const requiresAppUpdate = useIOSelector(fimsRequiresAppUpdateSelector);
@@ -62,9 +66,17 @@ export const FimsFlowHandlerScreen = (
 
   React.useEffect(() => {
     if (ctaUrl && !requiresAppUpdate) {
-      dispatch(fimsGetConsentsListAction.request({ ctaUrl }));
+      dispatch(fimsGetConsentsListAction.request({ ctaText, ctaUrl }));
+    } else if (requiresAppUpdate) {
+      trackAuthenticationError(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        "update_required"
+      );
     }
-  }, [ctaUrl, dispatch, requiresAppUpdate]);
+  }, [ctaText, ctaUrl, dispatch, requiresAppUpdate]);
 
   if (requiresAppUpdate) {
     return (

@@ -13,14 +13,3 @@ export const regenerateCryptoKey = (keyTag: string) =>
   deleteKey(keyTag)
     .catch(constNull)
     .finally(() => generate(keyTag));
-
-export const disposeEidCryptoKeys = () =>
-  Promise.all([deleteKey(WIA_EID_KEYTAG), deleteKey(DPOP_EID_KEYTAG)]).catch(
-    constNull
-  );
-
-export const disposeCredentialCryptoKeys = () =>
-  Promise.all([
-    deleteKey(WIA_CREDENTIAL_KEYTAG),
-    deleteKey(DPOP_CREDENTIAL_KEYTAG)
-  ]).catch(constNull);

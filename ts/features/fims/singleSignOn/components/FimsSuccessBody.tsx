@@ -24,13 +24,17 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { Link } from "../../../../components/core/typography/Link";
 import { LoadingSkeleton } from "../../../../components/ui/Markdown/LoadingSkeleton";
 import I18n from "../../../../i18n";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
 import { logoForService } from "../../../services/home/utils";
 import { useAutoFetchingServiceByIdPot } from "../../common/utils/hooks";
 import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import { ConsentData, FimsClaimType } from "../types";
+import {
+  computeAndTrackDataShare,
+  computeAndTrackDataShareAccepted
+} from "../../common/utils";
 
 type FimsSuccessBodyProps = { consents: ConsentData; onAbort: () => void };
 
@@ -39,6 +43,7 @@ export const FimsFlowSuccessBody = ({
   onAbort
 }: FimsSuccessBodyProps) => {
   const dispatch = useIODispatch();
+  const store = useIOStore();
   const serviceId = consents.service_id as ServiceId;
 
   const servicePot = useAutoFetchingServiceByIdPot(serviceId);
@@ -90,6 +95,13 @@ export const FimsFlowSuccessBody = ({
     ),
     snapPoint: [340]
   });
+
+  React.useEffect(() => {
+    if (serviceData) {
+      const state = store.getState();
+      computeAndTrackDataShare(serviceData, state);
+    }
+  }, [serviceId, serviceData, store]);
 
   return (
     <>
@@ -146,13 +158,16 @@ export const FimsFlowSuccessBody = ({
                 label: I18n.t("global.buttons.consent"),
                 icon: "security",
                 iconPosition: "end",
-                onPress: () =>
+                onPress: () => {
+                  const state = store.getState();
+                  computeAndTrackDataShareAccepted(serviceId, state);
                   dispatch(
                     fimsGetRedirectUrlAndOpenIABAction.request(
                       // eslint-disable-next-line no-underscore-dangle
-                      { acceptUrl: consents._links.consent.href }
+                      { acceptUrl: consents._links.consent.href, serviceId }
                     )
-                  )
+                  );
+                }
               }
             }}
           />
