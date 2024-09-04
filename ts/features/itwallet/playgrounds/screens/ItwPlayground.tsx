@@ -63,7 +63,7 @@ const ItwPlayground = () => {
       credentialMachineRef.send({
         type: "select-credential",
         credentialType,
-        skipNavigation: true
+        skipNavigation: false
       });
     };
 
