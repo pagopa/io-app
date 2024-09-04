@@ -23,7 +23,7 @@ type Props = {
  */
 const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const [isFlipped, setIsFlipped] = React.useState(false);
-  const themeColor = getThemeColorByCredentialType(
+  const { backgroundColor } = getThemeColorByCredentialType(
     credential.credentialType as CredentialType
   );
 
@@ -37,7 +37,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   if (hasSkeumorphicCard) {
     return (
       <VStack space={8}>
-        <Wrapper backgroundColor={themeColor}>
+        <Wrapper backgroundColor={backgroundColor}>
           <ItwSkeumorphicCard credential={credential} isFlipped={isFlipped} />
         </Wrapper>
         <View style={styles.flipButton}>
@@ -53,7 +53,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   }
 
   return (
-    <Wrapper backgroundColor={themeColor}>
+    <Wrapper backgroundColor={backgroundColor}>
       <ItwCredentialCard
         credentialType={credential.credentialType}
         status={credentialStatus}

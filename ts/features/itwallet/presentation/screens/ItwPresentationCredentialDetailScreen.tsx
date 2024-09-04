@@ -2,9 +2,7 @@ import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { ScrollView } from "react-native";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
-import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -17,6 +15,7 @@ import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlert
 import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection";
 import { ItwPresentationDetailsFooter } from "../components/ItwPresentationDetailsFooter";
 import { ItwPresentationDetailsHeader } from "../components/ItwPresentationDetailsHeader";
+import { ItwPresentationDetailsScreenBase } from "../components/ItwPresentationDetailsScreenBase";
 
 // TODO: use the real credential update time
 const today = new Date();
@@ -45,12 +44,14 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   );
 };
 
+type ContentViewProps = {
+  credential: StoredCredential;
+};
+
 /**
  * This component renders the entire credential detail.
  */
-const ContentView = ({ credential }: { credential: StoredCredential }) => {
-  const { screenEndMargin } = useScreenEndMargin();
-
+const ContentView = ({ credential }: ContentViewProps) => {
   useDebugInfo({
     parsedCredential: getHumanReadableParsedCredential(
       credential.parsedCredential
@@ -58,7 +59,7 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
   });
 
   return (
-    <ScrollView contentContainerStyle={{ paddingBottom: screenEndMargin }}>
+    <ItwPresentationDetailsScreenBase credential={credential}>
       <ItwPresentationDetailsHeader credential={credential} />
       <VSpacer size={16} />
       <ContentWrapper>
@@ -77,6 +78,6 @@ const ContentView = ({ credential }: { credential: StoredCredential }) => {
         lastUpdateTime={today}
         issuerConf={credential.issuerConf}
       />
-    </ScrollView>
+    </ItwPresentationDetailsScreenBase>
   );
 };

@@ -1,37 +1,65 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { StatusBarStyle } from "react-native";
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
+import { getCredentialNameFromType } from "./itwCredentialUtils";
 import { CredentialType } from "./itwMocksUtils";
 
-export const getThemeColorByCredentialType = (credentialType: string) => {
+export type CredentialTheme = {
+  backgroundColor: string;
+  textColor: string;
+  statusBarStyle: StatusBarStyle;
+};
+
+export const getThemeColorByCredentialType = (
+  credentialType: string
+): CredentialTheme => {
   switch (credentialType) {
     case CredentialType.PID:
-      return IOColors["blueItalia-600"];
-    case CredentialType.DRIVING_LICENSE:
-      return IOColors.antiqueFuchsia;
-    case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
-      return "#B3DCF9";
     default:
-      return IOColors["blueItalia-850"];
+      return {
+        backgroundColor: "#295699",
+        textColor: "#032D5C",
+        statusBarStyle: "light-content"
+      };
+    case CredentialType.DRIVING_LICENSE:
+      return {
+        backgroundColor: "#744C63",
+        textColor: "#652035",
+        statusBarStyle: "light-content"
+      };
+    case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
+      return {
+        backgroundColor: "#B3DCF9",
+        textColor: "#032D5C",
+        statusBarStyle: "dark-content"
+      };
+    case CredentialType.EUROPEAN_DISABILITY_CARD:
+      return {
+        backgroundColor: "#315B76",
+        textColor: "#17406F",
+        statusBarStyle: "light-content"
+      };
   }
 };
 
 export const getHeaderPropsByCredentialType = (
   credentialType: string
 ): HeaderSecondLevelHookProps => {
+  const { backgroundColor } = getThemeColorByCredentialType(credentialType);
+
   switch (credentialType) {
     case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
       return {
-        title: "",
+        title: getCredentialNameFromType(credentialType),
         supportRequest: true,
         variant: "neutral",
-        backgroundColor: getThemeColorByCredentialType(credentialType)
+        backgroundColor
       };
     default:
       return {
-        title: "",
+        title: getCredentialNameFromType(credentialType),
         supportRequest: true,
         variant: "contrast",
-        backgroundColor: getThemeColorByCredentialType(credentialType)
+        backgroundColor
       };
   }
 };
