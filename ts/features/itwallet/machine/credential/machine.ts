@@ -60,12 +60,24 @@ export const itwCredentialIssuanceMachine = setup({
     Idle: {
       entry: assign(() => InitialContext),
       on: {
-        "select-credential": {
-          target: "WalletInitialization",
-          actions: assign(({ event }) => ({
-            credentialType: event.credentialType
-          }))
-        }
+        "select-credential": [
+          {
+            guard: ({ event }) => !event.skipNavigation,
+            target: "WalletInitialization",
+            actions: [
+              assign(({ event }) => ({
+                credentialType: event.credentialType
+              })),
+              "navigateToTrustIssuerScreen"
+            ]
+          },
+          {
+            target: "WalletInitialization",
+            actions: assign(({ event }) => ({
+              credentialType: event.credentialType
+            }))
+          }
+        ]
       }
     },
     WalletInitialization: {
@@ -128,7 +140,7 @@ export const itwCredentialIssuanceMachine = setup({
       }
     },
     ObtainingCredential: {
-      tags: [ItwTags.Loading],
+      tags: [ItwTags.Issuing],
       invoke: {
         src: "obtainCredential",
         input: ({ context }) => ({
