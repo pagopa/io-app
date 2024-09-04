@@ -1,23 +1,13 @@
-import {
-  Chip,
-  IOStyles,
-  ListItemAction,
-  useIOToast,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { ListItemAction, useIOToast } from "@pagopa/io-app-design-system";
 import React from "react";
 import { Alert, Linking, View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
-import { format } from "../../../../utils/dates";
 import { itwCredentialNameByCredentialType } from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsRemove } from "../../credentials/store/actions";
-
-// TODO: use the real credential update time
-const lastUpdateTime = new Date();
 
 type Props = {
   credential: StoredCredential;
@@ -95,15 +85,6 @@ export const ItwPresentationDetailFooter = ({ credential }: Props) => {
           onPress={showRemoveCredentialDialog}
         />
       ) : null}
-      <VSpacer size={24} />
-      <Chip color="grey-650" style={IOStyles.selfCenter}>
-        {I18n.t(
-          "features.itWallet.presentation.credentialDetails.lastUpdated",
-          {
-            lastUpdateTime: format(lastUpdateTime, "DD MMMM YYYY, HH:mm")
-          }
-        )}
-      </Chip>
     </View>
   );
 };
