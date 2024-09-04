@@ -18,5 +18,5 @@ export const useAutoFetchingServiceByIdPot = (serviceId: ServiceId) => {
     }
   }, [dispatch, serviceId, shouldFetchServiceData]);
 
-  return { serviceData };
+  return serviceData;
 };
