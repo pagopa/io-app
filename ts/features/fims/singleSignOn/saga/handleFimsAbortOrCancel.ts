@@ -9,8 +9,8 @@ import { fimsPartialAbortUrl } from "../store/selectors";
 import { deallocateFimsResourcesAndNavigateBack } from "./handleFimsResourcesDeallocation";
 import {
   buildAbsoluteUrl,
-  formatHttpClientResponseForMixPanel,
-  logToMixPanel
+  computeAndTrackAuthenticationError,
+  formatHttpClientResponseForMixPanel
 } from "./sagaUtils";
 
 const abortTimeoutMillisecondsGenerator = () => 8000;
@@ -34,7 +34,7 @@ export function* handleFimsAbortOrCancel() {
       });
       if (isFailureResponse(abortResponse)) {
         yield* call(
-          logToMixPanel,
+          computeAndTrackAuthenticationError,
           `Abort call failed: ${formatHttpClientResponseForMixPanel(
             abortResponse
           )}`
@@ -42,7 +42,7 @@ export function* handleFimsAbortOrCancel() {
       }
     } else {
       yield* call(
-        logToMixPanel,
+        computeAndTrackAuthenticationError,
         `Unable to compose absolute Abort call url: ${abortUrlMaybePartial}`
       );
     }

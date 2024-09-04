@@ -65,11 +65,15 @@ const IDPayUnsubscriptionMachineProvider = (props: Props) => {
 
   const navigation = useIONavigation();
 
-  if (O.isNone(sessionInfo)) {
+  if (
+    O.isNone(sessionInfo) ||
+    (O.isSome(sessionInfo) && sessionInfo.value.bpdToken === undefined)
+  ) {
     throw new Error("Session info is undefined");
   }
 
-  const { bpdToken } = sessionInfo.value;
+  // Here we are sure that sessionInfo.bpdToken is defined
+  const bpdToken = sessionInfo.value.bpdToken as string;
 
   const idPayToken = idPayTestToken ?? bpdToken;
 

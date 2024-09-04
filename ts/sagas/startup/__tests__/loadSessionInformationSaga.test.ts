@@ -7,7 +7,7 @@ import {
   sessionInformationLoadSuccess
 } from "../../../store/actions/authentication";
 
-import { PublicSession } from "../../../../definitions/backend/PublicSession";
+import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 
 import { loadSessionInformationSaga } from "../loadSessionInformationSaga";
 
