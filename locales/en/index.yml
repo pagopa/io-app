@@ -3273,6 +3273,13 @@ features:
           requestAssistance: "Something wrong? Contact {{authSource}}"
           showClaimValues: "Show claim values"
           hideClaimValues: "Hide claim values"
+        dialogs:
+          remove:
+            title: Vuoi rimuovere il documento dal Portafoglio?
+            content: Se cambi idea, potrai riaggiungerlo in seguito.
+            confirm: Sì, rimuovi
+        toast:
+          removed: Fatto! Hai rimosso {{credentialName}}
   trialSystem:
     toast:
       subscribed: Done! You will receive a message when the trial period will begin.

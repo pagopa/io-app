@@ -5,13 +5,12 @@ import { ActionArgs } from "xstate5";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
+import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { useIODispatch } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
-import { walletUpsertCard } from "../../../newWallet/store/actions/cards";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -77,17 +76,8 @@ export default (
     CredentialIssuanceEvents
   >) => {
     assert(context.credential, "credential is undefined");
-    assert(context.credentialType, "credentialType is undefined");
 
     dispatch(itwCredentialsStore(context.credential));
-    dispatch(
-      walletUpsertCard({
-        key: context.credential.keyTag,
-        type: "itw",
-        category: "itw",
-        credentialType: context.credentialType
-      })
-    );
   },
 
   closeIssuance: () => {
