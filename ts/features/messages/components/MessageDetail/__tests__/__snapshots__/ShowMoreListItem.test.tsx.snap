@@ -367,6 +367,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                         testID="show-more-data-action"
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -920,6 +921,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                         testID="show-more-data-action"
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -1544,6 +1546,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                         testID="show-more-data-action"
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -1818,6 +1821,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -2378,6 +2382,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                         testID="show-more-data-action"
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -2652,6 +2657,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -3280,6 +3286,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                         testID="show-more-data-action"
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -3554,6 +3561,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -3772,6 +3780,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -4332,6 +4341,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                         testID="show-more-data-action"
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -4606,6 +4616,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -4892,6 +4903,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -5520,6 +5532,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                         testID="show-more-data-action"
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -5794,6 +5807,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -6074,6 +6088,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -6292,6 +6307,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -6640,6 +6656,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -6858,6 +6875,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -7144,6 +7162,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -7704,6 +7723,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                         testID="show-more-data-action"
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -7978,6 +7998,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -8258,6 +8279,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -8476,6 +8498,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [

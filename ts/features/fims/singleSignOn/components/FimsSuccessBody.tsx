@@ -15,6 +15,7 @@ import {
   ListItemHeader,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
 import * as React from "react";
@@ -23,14 +24,17 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { Link } from "../../../../components/core/typography/Link";
 import { LoadingSkeleton } from "../../../../components/ui/Markdown/LoadingSkeleton";
 import I18n from "../../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
-import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { serviceByIdSelector } from "../../../services/details/store/reducers";
 import { logoForService } from "../../../services/home/utils";
+import { useAutoFetchingServiceByIdPot } from "../../common/utils/hooks";
 import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import { ConsentData, FimsClaimType } from "../types";
+import {
+  computeAndTrackDataShare,
+  computeAndTrackDataShareAccepted
+} from "../../common/utils";
 
 type FimsSuccessBodyProps = { consents: ConsentData; onAbort: () => void };
 
@@ -39,17 +43,11 @@ export const FimsFlowSuccessBody = ({
   onAbort
 }: FimsSuccessBodyProps) => {
   const dispatch = useIODispatch();
+  const store = useIOStore();
   const serviceId = consents.service_id as ServiceId;
 
-  const serviceData = useIOSelector(state =>
-    serviceByIdSelector(state, serviceId)
-  );
-
-  React.useEffect(() => {
-    if (serviceData === undefined) {
-      dispatch(loadServiceDetail.request(serviceId));
-    }
-  }, [serviceData, serviceId, dispatch]);
+  const servicePot = useAutoFetchingServiceByIdPot(serviceId);
+  const serviceData = pot.toUndefined(servicePot.serviceData);
 
   const serviceLogo = pipe(
     serviceData,
@@ -97,6 +95,13 @@ export const FimsFlowSuccessBody = ({
     ),
     snapPoint: [340]
   });
+
+  React.useEffect(() => {
+    if (serviceData) {
+      const state = store.getState();
+      computeAndTrackDataShare(serviceData, state);
+    }
+  }, [serviceId, serviceData, store]);
 
   return (
     <>
@@ -153,13 +158,16 @@ export const FimsFlowSuccessBody = ({
                 label: I18n.t("global.buttons.consent"),
                 icon: "security",
                 iconPosition: "end",
-                onPress: () =>
+                onPress: () => {
+                  const state = store.getState();
+                  computeAndTrackDataShareAccepted(serviceId, state);
                   dispatch(
                     fimsGetRedirectUrlAndOpenIABAction.request(
                       // eslint-disable-next-line no-underscore-dangle
-                      { acceptUrl: consents._links.consent.href }
+                      { acceptUrl: consents._links.consent.href, serviceId }
                     )
-                  )
+                  );
+                }
               }
             }}
           />

@@ -1,4 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable functional/immutable-data */
 const { getDefaultConfig, mergeConfig } = require("@react-native/metro-config");
+const {
+  createSentryMetroSerializer
+} = require("@sentry/react-native/dist/js/tools/sentryMetroSerializer");
 
 const {
   resolver: { sourceExts, assetExts }
@@ -9,6 +14,9 @@ const withE2ESourceExts = process.env.RN_SRC_EXT
   : sourceExts;
 
 const config = {
+  serializer: {
+    customSerializer: createSentryMetroSerializer()
+  },
   transformer: {
     babelTransformerPath: require.resolve("react-native-svg-transformer")
   },

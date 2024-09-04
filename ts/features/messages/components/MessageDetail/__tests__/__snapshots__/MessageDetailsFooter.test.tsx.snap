@@ -388,6 +388,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                           testID="show-more-data-action"
                         >
                           <View
+                            accessibilityElementsHidden={true}
                             importantForAccessibility="no-hide-descendants"
                             style={
                               [
@@ -919,6 +920,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                           testID="show-more-data-action"
                         >
                           <View
+                            accessibilityElementsHidden={true}
                             importantForAccessibility="no-hide-descendants"
                             style={
                               [
@@ -1450,6 +1452,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                           testID="show-more-data-action"
                         >
                           <View
+                            accessibilityElementsHidden={true}
                             importantForAccessibility="no-hide-descendants"
                             style={
                               [
@@ -1981,6 +1984,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                           testID="show-more-data-action"
                         >
                           <View
+                            accessibilityElementsHidden={true}
                             importantForAccessibility="no-hide-descendants"
                             style={
                               [
@@ -2512,6 +2516,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                           testID="contacts-action"
                         >
                           <View
+                            accessibilityElementsHidden={true}
                             importantForAccessibility="no-hide-descendants"
                             style={
                               [
@@ -2677,6 +2682,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                           testID="show-more-data-action"
                         >
                           <View
+                            accessibilityElementsHidden={true}
                             importantForAccessibility="no-hide-descendants"
                             style={
                               [
@@ -3208,6 +3214,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                           testID="contacts-action"
                         >
                           <View
+                            accessibilityElementsHidden={true}
                             importantForAccessibility="no-hide-descendants"
                             style={
                               [
@@ -3373,6 +3380,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                           testID="show-more-data-action"
                         >
                           <View
+                            accessibilityElementsHidden={true}
                             importantForAccessibility="no-hide-descendants"
                             style={
                               [
@@ -3904,6 +3912,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                           testID="contacts-action"
                         >
                           <View
+                            accessibilityElementsHidden={true}
                             importantForAccessibility="no-hide-descendants"
                             style={
                               [
@@ -4069,6 +4078,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                           testID="show-more-data-action"
                         >
                           <View
+                            accessibilityElementsHidden={true}
                             importantForAccessibility="no-hide-descendants"
                             style={
                               [
@@ -4600,6 +4610,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                           testID="contacts-action"
                         >
                           <View
+                            accessibilityElementsHidden={true}
                             importantForAccessibility="no-hide-descendants"
                             style={
                               [
@@ -4765,6 +4776,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                           testID="show-more-data-action"
                         >
                           <View
+                            accessibilityElementsHidden={true}
                             importantForAccessibility="no-hide-descendants"
                             style={
                               [

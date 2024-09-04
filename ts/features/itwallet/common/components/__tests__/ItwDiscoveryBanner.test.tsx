@@ -13,8 +13,8 @@ import { BackendStatusState } from "../../../../../store/reducers/backendStatus"
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
-import { ITW_TRIAL_ID } from "../../utils/itwTrialUtils";
 import { ItwDiscoveryBanner } from "../ItwDiscoveryBanner";
+import { itwTrialId } from "../../../../../config";
 
 type RenderOptions = {
   isItwTrial?: boolean;
@@ -61,7 +61,7 @@ const renderComponent = ({
     _.merge(undefined, globalState, {
       trialSystem: isItwTrial
         ? {
-            [ITW_TRIAL_ID]: pot.some(SubscriptionStateEnum.ACTIVE)
+            [itwTrialId]: pot.some(SubscriptionStateEnum.ACTIVE)
           }
         : {},
       features: {

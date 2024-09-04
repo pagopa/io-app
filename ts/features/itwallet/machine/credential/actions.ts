@@ -1,17 +1,16 @@
 import { IOToast } from "@pagopa/io-app-design-system";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ActionArgs } from "xstate5";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
+import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { useIODispatch } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
-import { walletUpsertCard } from "../../../newWallet/store/actions/cards";
-import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -77,24 +76,14 @@ export default (
     CredentialIssuanceEvents
   >) => {
     assert(context.credential, "credential is undefined");
-    assert(context.credentialType, "credentialType is undefined");
 
     dispatch(itwCredentialsStore(context.credential));
-    dispatch(
-      walletUpsertCard({
-        key: context.credential.keyTag,
-        type: "itw",
-        category: "itw",
-        credentialType: context.credentialType
-      })
-    );
-  },
-
-  disposeWallet: () => {
-    credentialIssuanceUtils.disposeWallet().then(constNull).catch(constNull);
   },
 
   closeIssuance: () => {
     navigation.popToTop();
-  }
+  },
+
+  handleSessionExpired: () =>
+    dispatch(checkCurrentSession.success({ isSessionValid: false }))
 });

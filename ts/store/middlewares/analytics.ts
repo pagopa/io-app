@@ -9,10 +9,6 @@ import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/
 import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
 import trackFciAction from "../../features/fci/analytics";
 import { fciEnvironmentSelector } from "../../features/fci/store/reducers/fciEnvironment";
-import {
-  migrateToPaginatedMessages,
-  removeMessages
-} from "../../features/messages/store/actions";
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
 import trackPaypalOnboarding from "../../features/wallet/onboarding/paypal/analytics/index";
@@ -107,13 +103,13 @@ import {
   updateNotificationsInstallationToken
 } from "../../features/pushNotifications/store/actions/notifications";
 import { trackServicesAction } from "../../features/services/common/analytics";
+import { trackMessagesActionsPostDispatch } from "../../features/messages/analytics";
 import { trackContentAction } from "./contentAnalytics";
 
 const trackAction =
   (mp: NonNullable<typeof mixpanel>) =>
   // eslint-disable-next-line complexity
   (action: Action): void | ReadonlyArray<null> => {
-    // eslint-disable-next-line sonarjs/max-switch-cases
     switch (action.type) {
       //
       // Application state actions
@@ -220,28 +216,6 @@ const trackAction =
           reason: getNetworkErrorMessage(action.payload)
         });
 
-      // Messages actions with properties
-      case getType(removeMessages): {
-        return mp.track(action.type, {
-          messagesIdsToRemoveFromCache: action.payload
-        });
-      }
-      case getType(migrateToPaginatedMessages.request): {
-        return mp.track("MESSAGES_MIGRATION_START", {
-          total: Object.keys(action.payload).length
-        });
-      }
-      case getType(migrateToPaginatedMessages.success): {
-        return mp.track("MESSAGES_MIGRATION_SUCCESS", {
-          total: action.payload
-        });
-      }
-      case getType(migrateToPaginatedMessages.failure): {
-        return mp.track("MESSAGES_MIGRATION_FAILURE", {
-          failed: action.payload.failed.length,
-          succeeded: action.payload.succeeded.length
-        });
-      }
       // logout / load message / delete wallets / failure
       case getType(deleteAllPaymentMethodsByFunction.failure):
       case getType(upsertUserDataProcessing.failure):
@@ -382,8 +356,11 @@ export const actionTracking =
   (next: Dispatch) =>
   (action: Action): Action => {
     if (mixpanel !== undefined) {
-      // call mixpanel tracking only after we have initialized mixpanel with the
-      // API token
+      // Call mixpanel tracking only after we have
+      // initialized mixpanel with the API token
+
+      // Be aware that, at this point, tracking is called before
+      // the action has been dispatched to the redux store
       void trackAction(mixpanel)(action);
       void trackBPayAction(mixpanel)(action);
       void trackCoBadgeAction(mixpanel)(action);
@@ -398,5 +375,15 @@ export const actionTracking =
       const fciEnvironment = fciEnvironmentSelector(middleware.getState());
       void trackFciAction(mixpanel, fciEnvironment)(action);
     }
-    return next(action);
+    // This dispatches the action towards the redux store
+    const result = next(action);
+    if (mixpanel !== undefined) {
+      // Call mixpanel tracking only after we have
+      // initialized mixpanel with the API token
+
+      // Be aware that, at this point, tracking is called after
+      // the action has been dispatched to the redux store
+      trackMessagesActionsPostDispatch(action, middleware.getState());
+    }
+    return result;
   };

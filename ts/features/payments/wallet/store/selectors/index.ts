@@ -1,3 +1,4 @@
+import _ from "lodash";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -11,7 +12,9 @@ export const paymentsWalletUserMethodsSelector = createSelector(
   wallet =>
     pot.map(
       wallet.userMethods,
-      ({ wallets }) => wallets || ([] as ReadonlyArray<WalletInfo>)
+      ({ wallets }) =>
+        _.orderBy(wallets, wallet => wallet.creationDate, "desc") ||
+        ([] as ReadonlyArray<WalletInfo>)
     )
 );
 

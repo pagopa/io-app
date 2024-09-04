@@ -15,12 +15,13 @@ import { appReducer } from "../../../../../store/reducers";
 import { BackendStatusState } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { ITW_TRIAL_ID } from "../../../common/utils/itwTrialUtils";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
 import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+import { itwTrialId } from "../../../../../config";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 type RenderOptions = {
   isIdPayEnabled?: boolean;
@@ -43,14 +44,17 @@ describe("WalletCardOnboardingScreen", () => {
   it("it should render the IT Wallet modules", () => {
     const { queryByTestId } = renderComponent({});
 
-    expect(queryByTestId("itwDrivingLicenseModuleTestID")).toBeTruthy();
-    expect(queryByTestId("itwDisabilityCardModuleTestID")).toBeTruthy();
+    expect(
+      queryByTestId(`${CredentialType.DRIVING_LICENSE}ModuleTestID`)
+    ).toBeTruthy();
+    expect(
+      queryByTestId(`${CredentialType.EUROPEAN_DISABILITY_CARD}ModuleTestID`)
+    ).toBeTruthy();
   });
 
   test.each([
     { itwTrialStatus: SubscriptionStateEnum.DISABLED },
     { isItwEnabled: false },
-    { isItwTestEnabled: false },
     { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED },
     { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_DEACTIVATED }
   ] as ReadonlyArray<RenderOptions>)(
@@ -60,25 +64,12 @@ describe("WalletCardOnboardingScreen", () => {
       expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
     }
   );
-
-  it("it should not render the ID Pay module if ID Pay is not active", () => {
-    const { queryByTestId } = renderComponent({ isIdPayEnabled: false });
-
-    expect(queryByTestId("idPayModuleTestID")).toBeFalsy();
-  });
-
-  it("it should render the ID Pay module if ID Pay is active", () => {
-    const { queryByTestId } = renderComponent({ isIdPayEnabled: true });
-
-    expect(queryByTestId("idPayModuleTestID")).toBeTruthy();
-  });
 });
 
 const renderComponent = ({
   isIdPayEnabled = true,
   isItwEnabled = true,
   itwTrialStatus = SubscriptionStateEnum.ACTIVE,
-  isItwTestEnabled = true,
   itwLifecycle = ItwLifecycleState.ITW_LIFECYCLE_VALID
 }: RenderOptions) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -96,13 +87,12 @@ const renderComponent = ({
         }
       },
       trialSystem: {
-        [ITW_TRIAL_ID as TrialId]: itwTrialStatus
+        [itwTrialId as TrialId]: itwTrialStatus
           ? pot.some(itwTrialStatus)
           : pot.none
       },
       persistedPreferences: {
-        isIdPayTestEnabled: isIdPayEnabled,
-        isItWalletTestEnabled: isItwTestEnabled
+        isIdPayTestEnabled: isIdPayEnabled
       },
       backendStatus: {
         status: O.some({

@@ -15,7 +15,6 @@ export function* handleWalletPaymentDeleteTransaction(
     const requestTransactionUserCancellationResult =
       yield* withPaymentsSessionToken(
         requestTransactionUserCancellation,
-        paymentsDeleteTransactionAction.failure,
         action,
         {
           transactionId: action.payload

@@ -24,7 +24,6 @@ export function* handleDeleteWalletDetails(
   try {
     const deleteWalletResult = yield* withPaymentsSessionToken(
       deleteWalletById,
-      paymentsDeleteMethodAction.failure,
       action,
       {
         walletId: action.payload.walletId

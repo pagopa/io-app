@@ -1,36 +1,34 @@
-import React, { useMemo } from "react";
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
+import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import * as E from "fp-ts/Either";
 import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
+import React, { useMemo } from "react";
 import { Image } from "react-native";
-import { DateFromString } from "@pagopa/ts-commons/lib/dates";
+import I18n from "../../../../i18n";
+import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { localeDateFormat } from "../../../../utils/locale";
+import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import {
+  BoolClaim,
   ClaimDisplayFormat,
   ClaimValue,
-  DateClaimConfig,
   DrivingPrivilegeClaimType,
   DrivingPrivilegesClaim,
+  EmptyStringClaim,
   EvidenceClaim,
   FiscalCodeClaim,
   ImageClaim,
-  ImageClaimNoUrl,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
-  PlainTextClaim,
-  dateClaimsConfig,
+  StringClaim,
   extractFiscalCode,
-  previewDateClaimsConfig
+  isExpirationDateClaim,
+  getSafeText
 } from "../utils/itwClaimsUtils";
-import I18n from "../../../../i18n";
-import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
-import { localeDateFormat } from "../../../../utils/locale";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import { getExpireStatus } from "../../../../utils/dates";
+import { ItwCredentialStatus } from "./ItwCredentialCard";
 
 const HIDDEN_CLAIM = "******";
-
-const base64Url = "data:image/png;base64,";
 
 /**
  * Component which renders a place of birth type claim.
@@ -51,6 +49,23 @@ const PlaceOfBirthClaimItem = ({
 };
 
 /**
+ * Component which renders a yes/no claim.
+ * @param label - the label of the claim
+ * @param claim - the claim value
+ */
+const BoolClaimItem = ({ label, claim }: { label: string; claim: boolean }) => (
+  <ListItemInfo
+    label={label}
+    value={I18n.t(
+      `features.itWallet.presentation.credentialDetails.boolClaim.${claim}`
+    )}
+    accessibilityLabel={I18n.t(
+      `features.itWallet.presentation.credentialDetails.boolClaim.${claim}`
+    )}
+  />
+);
+
+/**
  * Component which renders a generic text type claim.
  * @param label - the label of the claim
  * @param claim - the claim value
@@ -61,17 +76,23 @@ const PlainTextClaimItem = ({
 }: {
   label: string;
   claim: string;
-}) => (
-  <ListItemInfo
-    label={label}
-    value={claim}
-    accessibilityLabel={`${label} ${
-      claim === HIDDEN_CLAIM
-        ? I18n.t("features.itWallet.presentation.credentialDetails.hiddenClaim")
-        : claim
-    }`}
-  />
-);
+}) => {
+  const safeValue = getSafeText(claim);
+  return (
+    <ListItemInfo
+      numberOfLines={2}
+      label={label}
+      value={safeValue}
+      accessibilityLabel={`${label} ${
+        claim === HIDDEN_CLAIM
+          ? I18n.t(
+              "features.itWallet.presentation.credentialDetails.hiddenClaim"
+            )
+          : safeValue
+      }`}
+    />
+  );
+};
 
 /**
  * Component which renders a date type claim with an optional icon and expiration badge.
@@ -81,41 +102,48 @@ const PlainTextClaimItem = ({
 const DateClaimItem = ({
   label,
   claim,
-  iconVisible,
-  expirationBadgeVisible
+  status
 }: {
   label: string;
   claim: Date;
-} & DateClaimConfig) => {
+  status?: ItwCredentialStatus;
+}) => {
   const value = localeDateFormat(
     claim,
     I18n.t("global.dateFormats.shortFormat")
   );
 
   const endElement: ListItemInfo["endElement"] = useMemo(() => {
-    if (!expirationBadgeVisible) {
+    if (!status || status === "pending") {
       return;
     }
-    const isExpired = getExpireStatus(claim) === "EXPIRED";
+
+    const credentialStatusProps = {
+      expired: {
+        badge: "error",
+        text: "features.itWallet.presentation.credentialDetails.status.expired"
+      },
+      expiring: {
+        badge: "warning",
+        text: "features.itWallet.presentation.credentialDetails.status.expiring"
+      },
+      valid: {
+        badge: "success",
+        text: "features.itWallet.presentation.credentialDetails.status.valid"
+      }
+    } as const;
+    const { badge, text } = credentialStatusProps[status];
     return {
       type: "badge",
-      componentProps: {
-        variant: isExpired ? "error" : "success",
-        text: I18n.t(
-          `features.itWallet.presentation.credentialDetails.status.${
-            isExpired ? "expired" : "valid"
-          }`
-        )
-      }
+      componentProps: { variant: badge, text: I18n.t(text) }
     };
-  }, [expirationBadgeVisible, claim]);
+  }, [status]);
 
   return (
     <ListItemInfo
       key={`${label}-${value}`}
       label={label}
       value={value}
-      icon={iconVisible ? "calendar" : undefined}
       accessibilityLabel={`${label} ${value}`}
       endElement={endElement}
     />
@@ -137,14 +165,6 @@ const EvidenceClaimItem = ({ issuerName }: { issuerName: string }) => {
         ),
         body: I18n.t(
           "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle"
-        )
-      },
-      {
-        title: I18n.t(
-          "features.itWallet.issuance.credentialPreview.bottomSheet.data.title"
-        ),
-        body: I18n.t(
-          "features.itWallet.issuance.credentialPreview.bottomSheet.data.subtitle"
         )
       }
     ]
@@ -196,8 +216,8 @@ const ImageClaimItem = ({ label, claim }: { label: string; claim: string }) => (
       <Image
         source={{ uri: claim }}
         style={{
-          width: 250,
-          height: 250
+          width: 200,
+          aspectRatio: 3 / 4
         }}
         resizeMode="contain"
         accessibilityIgnoresInvertColors
@@ -254,14 +274,18 @@ const DrivingPrivilegesClaimItem = ({
           value={localExpiryDate}
           accessibilityLabel={`${label} ${localExpiryDate}`}
         />
-        <Divider />
-        <ListItemInfo
-          label={I18n.t(
-            "features.itWallet.verifiableCredentials.claims.mdl.restrictionConditions"
-          )}
-          value={claim.restrictions_conditions || "-"}
-          accessibilityLabel={`${label} ${claim.restrictions_conditions}`}
-        />
+        {claim.restrictions_conditions && (
+          <>
+            <Divider />
+            <ListItemInfo
+              label={I18n.t(
+                "features.itWallet.verifiableCredentials.claims.mdl.restrictionConditions"
+              )}
+              value={claim.restrictions_conditions || "-"}
+              accessibilityLabel={`${label} ${claim.restrictions_conditions}`}
+            />
+          </>
+        )}
       </>
     )
   });
@@ -297,30 +321,34 @@ const DrivingPrivilegesClaimItem = ({
 export const ItwCredentialClaim = ({
   claim,
   hidden,
-  isPreview
+  isPreview,
+  credentialStatus
 }: {
   claim: ClaimDisplayFormat;
   hidden?: boolean;
   isPreview?: boolean;
+  credentialStatus?: ItwCredentialStatus;
 }) =>
   pipe(
     claim.value,
     ClaimValue.decode,
     E.fold(
       () => <UnknownClaimItem label={claim.label} />,
+      // eslint-disable-next-line sonarjs/cognitive-complexity
       _decoded => {
         const decoded = hidden ? HIDDEN_CLAIM : _decoded;
         if (PlaceOfBirthClaim.is(decoded)) {
           return <PlaceOfBirthClaimItem label={claim.label} claim={decoded} />;
         } else if (DateFromString.is(decoded)) {
-          const dateClaimProps = isPreview
-            ? previewDateClaimsConfig
-            : dateClaimsConfig[claim.id];
           return (
             <DateClaimItem
               label={claim.label}
               claim={decoded}
-              {...dateClaimProps}
+              status={
+                !isPreview && isExpirationDateClaim(claim)
+                  ? credentialStatus
+                  : undefined
+              }
             />
           );
         } else if (EvidenceClaim.is(decoded)) {
@@ -331,18 +359,18 @@ export const ItwCredentialClaim = ({
           );
         } else if (ImageClaim.is(decoded)) {
           return <ImageClaimItem label={claim.label} claim={decoded} />;
-        } else if (ImageClaimNoUrl.is(decoded)) {
-          // TODO [SIW-1378] remove this branch when the image claim is always with url
-          const fixedImage = base64Url.concat(decoded);
-          return <ImageClaimItem label={claim.label} claim={fixedImage} />;
         } else if (DrivingPrivilegesClaim.is(decoded)) {
           return decoded.map((elem, index) => (
-            <DrivingPrivilegesClaimItem
-              label={claim.label}
-              claim={elem}
-              key={`${index}_{elem.label}`}
-              detailsButtonVisible={!isPreview}
-            />
+            <React.Fragment
+              key={`${index}_${claim.label}_${elem.driving_privilege}`}
+            >
+              {index !== 0 && <Divider />}
+              <DrivingPrivilegesClaimItem
+                label={claim.label}
+                claim={elem}
+                detailsButtonVisible={!isPreview}
+              />
+            </React.Fragment>
           ));
         } else if (FiscalCodeClaim.is(decoded)) {
           const fiscalCode = pipe(
@@ -351,7 +379,16 @@ export const ItwCredentialClaim = ({
             O.getOrElseW(() => decoded)
           );
           return <PlainTextClaimItem label={claim.label} claim={fiscalCode} />;
-        } else if (PlainTextClaim.is(decoded)) {
+        } else if (BoolClaim.is(decoded)) {
+          return <BoolClaimItem label={claim.label} claim={decoded} />; // m
+        } else if (EmptyStringClaim.is(decoded)) {
+          return null; // We want to hide the claim if it's empty
+        }
+        if (StringClaim.is(decoded)) {
+          // This is needed because otherwise empty string will be rendered as a claim due to the decoded value being HIDDEN_CLAIM
+          if (hidden && EmptyStringClaim.is(_decoded)) {
+            return null;
+          }
           return <PlainTextClaimItem label={claim.label} claim={decoded} />; // must be the last one to be checked due to overlap with IPatternStringTag
         } else {
           return <UnknownClaimItem label={claim.label} _claim={decoded} />;

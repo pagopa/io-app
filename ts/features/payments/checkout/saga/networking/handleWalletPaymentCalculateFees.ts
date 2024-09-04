@@ -26,7 +26,6 @@ export function* handleWalletPaymentCalculateFees(
     const { paymentMethodId, idPsp, ...body } = { ...action.payload, language };
     const calculateFeesResult = yield* withPaymentsSessionToken(
       calculateFees,
-      paymentsCalculatePaymentFeesAction.failure,
       action,
       {
         id: paymentMethodId,

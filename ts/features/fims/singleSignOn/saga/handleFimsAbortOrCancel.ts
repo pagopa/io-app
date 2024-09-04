@@ -5,13 +5,13 @@ import {
 } from "@pagopa/io-react-native-http-client";
 import { call, select } from "typed-redux-saga/macro";
 import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
-import { fimsPartialAbortUrl } from "../store/reducers";
+import { fimsPartialAbortUrl } from "../store/selectors";
+import { deallocateFimsResourcesAndNavigateBack } from "./handleFimsResourcesDeallocation";
 import {
   buildAbsoluteUrl,
-  formatHttpClientResponseForMixPanel,
-  logToMixPanel
+  computeAndTrackAuthenticationError,
+  formatHttpClientResponseForMixPanel
 } from "./sagaUtils";
-import { handleFimsResourcesDeallocation } from "./handleFimsResourcesDeallocation";
 
 const abortTimeoutMillisecondsGenerator = () => 8000;
 
@@ -34,7 +34,7 @@ export function* handleFimsAbortOrCancel() {
       });
       if (isFailureResponse(abortResponse)) {
         yield* call(
-          logToMixPanel,
+          computeAndTrackAuthenticationError,
           `Abort call failed: ${formatHttpClientResponseForMixPanel(
             abortResponse
           )}`
@@ -42,11 +42,11 @@ export function* handleFimsAbortOrCancel() {
       }
     } else {
       yield* call(
-        logToMixPanel,
+        computeAndTrackAuthenticationError,
         `Unable to compose absolute Abort call url: ${abortUrlMaybePartial}`
       );
     }
   }
 
-  yield* call(handleFimsResourcesDeallocation);
+  yield* call(deallocateFimsResourcesAndNavigateBack);
 }

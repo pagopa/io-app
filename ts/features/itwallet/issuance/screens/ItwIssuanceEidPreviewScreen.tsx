@@ -1,34 +1,72 @@
-import { ContentWrapper } from "@pagopa/io-app-design-system";
+import {
+  ForceScrollDownView,
+  H2,
+  HeaderSecondLevel,
+  IOVisualCostants,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { StyleSheet, View } from "react-native";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { FooterActions } from "../../../../components/ui/FooterActions";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
-import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
-import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
-import {
-  ItWalletError,
-  getItwGenericMappedError
-} from "../../common/utils/itwErrorsUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { selectEidOption } from "../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
+import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { selectEidOption, selectIsLoading } from "../../machine/eid/selectors";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
 export const ItwIssuanceEidPreviewScreen = () => {
-  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const navigation = useIONavigation();
-  const dispatch = useIODispatch();
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
+
+  useItwDisableGestureNavigation();
+  useAvoidHardwareBackButton();
+
+  if (isLoading) {
+    return (
+      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+    );
+  }
+
+  return pipe(
+    eidOption,
+    O.fold(
+      () => <ItwGenericErrorContent />,
+      eid => <ContentView eid={eid} />
+    )
+  );
+};
+
+type ContentViewProps = {
+  eid: StoredCredential;
+};
+
+/**
+ * Renders the content of the screen if the PID is decoded.
+ * @param eid - the decoded eID
+ */
+const ContentView = ({ eid }: ContentViewProps) => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const dispatch = useIODispatch();
+  const navigation = useIONavigation();
+
+  useDebugInfo({
+    parsedCredential: eid.parsedCredential
+  });
+
   const dismissDialog = useItwDismissalDialog(() =>
     machineRef.send({ type: "close" })
   );
-
-  useAvoidHardwareBackButton();
 
   const handleStoreEidSuccess = () => {
     machineRef.send({ type: "add-to-wallet" });
@@ -51,24 +89,33 @@ export const ItwIssuanceEidPreviewScreen = () => {
     );
   };
 
-  /**
-   * Renders the content of the screen if the PID is decoded.
-   * @param eid - the decoded eID
-   */
-  const ContentView = ({ eid }: { eid: StoredCredential }) => {
-    React.useLayoutEffect(() => {
-      navigation.setOptions({
-        headerShown: true
-      });
-    }, []);
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      header: () => (
+        <HeaderSecondLevel
+          title=""
+          type="singleAction"
+          firstAction={{
+            icon: "closeLarge",
+            onPress: dismissDialog.show,
+            accessibilityLabel: I18n.t("global.buttons.close")
+          }}
+        />
+      )
+    });
+  }, [navigation, dismissDialog]);
 
-    return (
-      <IOScrollViewWithLargeHeader
-        excludeEndContentMargin
-        canGoback={false}
-        title={{
-          label: I18n.t("features.itWallet.issuance.eidPreview.title")
-        }}
+  return (
+    <ForceScrollDownView contentContainerStyle={styles.scroll}>
+      <View style={styles.contentWrapper}>
+        <H2>{I18n.t("features.itWallet.issuance.eidPreview.title")}</H2>
+        <VSpacer size={24} />
+        <ItwCredentialClaimsList data={eid} isPreview={true} />
+        <VSpacer size={24} />
+      </View>
+      <FooterActions
+        fixed={false}
         actions={{
           type: "TwoButtons",
           primary: {
@@ -84,28 +131,17 @@ export const ItwIssuanceEidPreviewScreen = () => {
             onPress: dismissDialog.show
           }
         }}
-      >
-        <ContentWrapper>
-          <ItwCredentialClaimsList data={eid} isPreview={true} />
-        </ContentWrapper>
-      </IOScrollViewWithLargeHeader>
-    );
-  };
-
-  /**
-   * Error view component which currently displays a generic error.
-   * @param error - optional ItWalletError to be displayed.
-   */
-  const ErrorView = ({ error: _ }: { error?: ItWalletError }) => {
-    const mappedError = getItwGenericMappedError(() => navigation.goBack());
-    return <OperationResultScreenContent {...mappedError} />;
-  };
-
-  return pipe(
-    eidOption,
-    O.fold(
-      () => <ErrorView />,
-      eid => <ContentView eid={eid} />
-    )
+      />
+    </ForceScrollDownView>
   );
 };
+
+const styles = StyleSheet.create({
+  scroll: {
+    flexGrow: 1
+  },
+  contentWrapper: {
+    flexGrow: 1,
+    paddingHorizontal: IOVisualCostants.appMarginDefault
+  }
+});

@@ -6,7 +6,6 @@ import { MessageStatusAttributes } from "../../../../../definitions/backend/Mess
 import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { apiUrlPrefix } from "../../../../config";
-import { ContentTypeValues } from "../../types/contentType";
 import {
   EUCovidCertificate,
   PaymentData,
@@ -106,7 +105,7 @@ export const toUIMessageDetails = (
 export const attachmentDisplayName = (attachment: ThirdPartyAttachment) =>
   attachment.name ?? attachment.id;
 export const attachmentContentType = (attachment: ThirdPartyAttachment) =>
-  attachment.content_type ?? ContentTypeValues.applicationOctetStream;
+  attachment.content_type ?? "application/octet-stream";
 export const attachmentDownloadUrl = (
   messageId: UIMessageId,
   attachment: ThirdPartyAttachment

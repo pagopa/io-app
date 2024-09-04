@@ -14,12 +14,12 @@ import { BackendStatusState } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { CredentialType } from "../../../itwallet/common/utils/itwMocksUtils";
-import { ITW_TRIAL_ID } from "../../../itwallet/common/utils/itwTrialUtils";
 import { ItwLifecycleState } from "../../../itwallet/lifecycle/store/reducers";
 import { WalletCardsState } from "../../store/reducers/cards";
 import { WalletPlaceholdersState } from "../../store/reducers/placeholders";
 import { WalletCard } from "../../types";
 import { WalletCardsContainer } from "../WalletCardsContainer";
+import { itwTrialId } from "../../../../config";
 
 type RenderOptions = {
   cards?: WalletCardsState;
@@ -179,7 +179,7 @@ const renderComponent = ({
     _.merge(undefined, globalState, {
       trialSystem: isItwTrial
         ? {
-            [ITW_TRIAL_ID]: pot.some(SubscriptionStateEnum.ACTIVE)
+            [itwTrialId]: pot.some(SubscriptionStateEnum.ACTIVE)
           }
         : {},
       features: {

@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
   assetWrapper: {
     width: "50%",
     justifyContent: "flex-start",
-    marginBottom: 16,
     paddingHorizontal: assetItemGutter / 2
   },
   assetWrapperSmall: {

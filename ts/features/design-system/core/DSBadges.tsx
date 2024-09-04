@@ -1,120 +1,118 @@
 import {
   Badge,
-  HSpacer,
+  H4,
+  HStack,
   IOColors,
   IOTagRadius,
   Tag,
-  VSpacer
+  VStack,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
-import { H2 } from "../../../components/core/typography/H2";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
-export const DSBadges = () => (
-  <DesignSystemScreen title={"Badge"}>
-    <H2 weight={"Bold"} style={{ marginBottom: 16 }}>
-      Tag
-    </H2>
-    {renderTag()}
+const sectionTitleMargin = 16;
+const sectionMargin = 40;
+const componentMargin = 24;
+const componentInnerMargin = 8;
 
-    <VSpacer size={16} />
+export const DSBadges = () => {
+  const theme = useIOTheme();
 
-    <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
-      Badge
-    </H2>
-    {renderBadge()}
-  </DesignSystemScreen>
-);
+  return (
+    <DesignSystemScreen title={"Badge"}>
+      <VStack space={sectionMargin}>
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Tag</H4>
+          {renderTag()}
+        </VStack>
+
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Badge</H4>
+          {renderBadge()}
+        </VStack>
+      </VStack>
+    </DesignSystemScreen>
+  );
+};
 
 const renderBadge = () => (
-  <>
-    <View style={IOStyles.row}>
-      <Badge text={"Default"} variant="default" />
-      <HSpacer size={16} />
-      <Badge outline text={"Default"} variant="default" />
-    </View>
-    <VSpacer size={16} />
-    <View style={IOStyles.row}>
-      <Badge text={"Info"} variant="info" />
-      <HSpacer size={16} />
-      <Badge text={"Warning"} variant="warning" />
-      <HSpacer size={16} />
-      <Badge text={"Error"} variant="error" />
-      <HSpacer size={16} />
-      <Badge text={"Success"} variant="success" />
-    </View>
-    <VSpacer size={16} />
-    <View style={IOStyles.row}>
-      <Badge text={"Purple"} variant="purple" />
-      <HSpacer size={16} />
-      <Badge text={"Light blue"} variant="lightBlue" />
-      <HSpacer size={16} />
-      <Badge text={"Blue"} variant="blue" />
-      <HSpacer size={16} />
-      <Badge text={"Turquoise"} variant="turquoise" />
-      <HSpacer size={16} />
-    </View>
-    <VSpacer size={16} />
-    <View style={IOStyles.row}>
-      <Badge outline text={"Info"} variant="info" />
-      <HSpacer size={16} />
-      <Badge outline text={"Warning"} variant="warning" />
-      <HSpacer size={16} />
-      <Badge outline text={"Error"} variant="error" />
-      <HSpacer size={16} />
-      <Badge outline text={"Success"} variant="success" />
-    </View>
-    <VSpacer size={16} />
-    <View style={IOStyles.row}>
-      <Badge outline text={"Purple"} variant="purple" />
-      <HSpacer size={16} />
-      <Badge outline text={"Light blue"} variant="lightBlue" />
-      <HSpacer size={16} />
-      <Badge outline text={"Blue"} variant="blue" />
-      <HSpacer size={16} />
-      <Badge outline text={"Turquoise"} variant="turquoise" />
-      <HSpacer size={16} />
-    </View>
-    <VSpacer size={16} />
-    <View
-      style={{
-        backgroundColor: IOColors.bluegrey,
-        padding: 16,
-        borderRadius: 8
-      }}
-    >
-      <View style={IOStyles.row}>
+  <VStack space={componentMargin}>
+    <DSComponentViewerBox name={"Badge · Default variant"}>
+      <HStack space={componentInnerMargin}>
         <Badge text={"Default"} variant="default" />
-        <HSpacer size={16} />
-        <Badge text={"Contrast"} variant="contrast" />
+        <Badge outline text={"Default"} variant="default" />
+      </HStack>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name={"Badge · Different variants"}>
+      <VStack space={componentInnerMargin}>
+        <HStack space={componentInnerMargin}>
+          <Badge text={"Info"} variant="info" />
+          <Badge text={"Warning"} variant="warning" />
+          <Badge text={"Error"} variant="error" />
+          <Badge text={"Success"} variant="success" />
+        </HStack>
+        <HStack space={componentInnerMargin}>
+          <Badge text={"Purple"} variant="purple" />
+          <Badge text={"Light blue"} variant="lightBlue" />
+          <Badge text={"Blue"} variant="blue" />
+          <Badge text={"Turquoise"} variant="turquoise" />
+        </HStack>
+      </VStack>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name={"Badge · Outline variants"}>
+      <VStack space={componentInnerMargin}>
+        <HStack space={componentInnerMargin}>
+          <Badge outline text={"Info"} variant="info" />
+          <Badge outline text={"Warning"} variant="warning" />
+          <Badge outline text={"Error"} variant="error" />
+          <Badge outline text={"Success"} variant="success" />
+        </HStack>
+        <HStack space={componentInnerMargin}>
+          <Badge outline text={"Purple"} variant="purple" />
+          <Badge outline text={"Light blue"} variant="lightBlue" />
+          <Badge outline text={"Blue"} variant="blue" />
+          <Badge outline text={"Turquoise"} variant="turquoise" />
+        </HStack>
+      </VStack>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name={"Badge · Contrast variant"}>
+      <View
+        style={{
+          backgroundColor: IOColors.bluegrey,
+          padding: 16,
+          borderRadius: 24,
+          borderCurve: "continuous"
+        }}
+      >
+        <HStack space={componentInnerMargin}>
+          <Badge text={"Default"} variant="default" />
+          <Badge text={"Contrast"} variant="contrast" />
+        </HStack>
       </View>
-    </View>
-  </>
+    </DSComponentViewerBox>
+  </VStack>
 );
 
 const renderTag = () => (
-  <View>
+  <VStack space={componentMargin}>
     <DSComponentViewerBox name={"Tag · Different variants"}>
-      <Tag text={"Entro il 30 mag"} variant="warning" />
-      <VSpacer size={8} />
-      <Tag text={"Completato"} variant="success" />
-      <VSpacer size={8} />
-      <Tag text={"Scaduto"} variant="error" />
-      <VSpacer size={8} />
-      <View style={IOStyles.row}>
-        <Tag text={"Certificato"} variant="qrCode" />
-        <HSpacer size={8} />
-        <Tag text={"Valore legale"} variant="legalMessage" />
-      </View>
+      <VStack space={componentInnerMargin}>
+        <Tag text={"Entro il 30 mag"} variant="warning" />
+        <Tag text={"Completato"} variant="success" />
+        <Tag text={"Scaduto"} variant="error" />
+        <HStack space={componentInnerMargin}>
+          <Tag text={"Certificato"} variant="qrCode" />
+          <Tag text={"Valore legale"} variant="legalMessage" />
+        </HStack>
+      </VStack>
     </DSComponentViewerBox>
     <DSComponentViewerBox name={"Tag · With icon, no text"}>
-      <Tag variant="attachment" />
+      <Tag variant="attachment" iconAccessibilityLabel="Allegati" />
     </DSComponentViewerBox>
     <DSComponentViewerBox name={"Tag · Without icon"}>
-      <VSpacer size={8} />
       <Tag text={"No icon"} variant="noIcon" />
     </DSComponentViewerBox>
     <DSComponentViewerBox name={"Tag · Custom icon (with custom color)"}>
@@ -132,12 +130,12 @@ const renderTag = () => (
         style={{
           backgroundColor: IOColors["error-100"],
           padding: 8,
-          width: "60%",
+          width: "40%",
           borderRadius: IOTagRadius + 8
         }}
       >
         <Tag text={"Loooooooooooong string"} variant="error" />
       </View>
     </DSComponentViewerBox>
-  </View>
+  </VStack>
 );

@@ -25,13 +25,20 @@ import {
 } from "../../../lollipop/store/reducers/lollipop";
 import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
 import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
-import { handleFimsResourcesDeallocation } from "./handleFimsResourcesDeallocation";
+import { serviceByIdSelector } from "../../../services/details/store/reducers";
+import { fimsCtaTextSelector } from "../store/selectors";
+import { trackInAppBrowserOpening } from "../../common/analytics";
+import {
+  deallocateFimsAndRenewFastLoginSession,
+  deallocateFimsResourcesAndNavigateBack
+} from "./handleFimsResourcesDeallocation";
 import {
   buildAbsoluteUrl,
+  computeAndTrackAuthenticationError,
   formatHttpClientResponseForMixPanel,
+  isFastLoginFailure,
   isRedirect,
-  isValidRedirectResponse,
-  logToMixPanel
+  isValidRedirectResponse
 } from "./sagaUtils";
 
 // note: IAB => InAppBrowser
@@ -41,9 +48,13 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
 ) {
   const oidcProviderDomain = yield* select(fimsDomainSelector);
   if (!oidcProviderDomain) {
-    logToMixPanel(`missing FIMS, domain is ${oidcProviderDomain}`);
+    const debugMessage = `missing FIMS, domain is ${oidcProviderDomain}`;
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure("missing FIMS domain")
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage: "missing FIMS domain",
+        debugMessage
+      })
     );
     return;
   }
@@ -51,13 +62,13 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
 
   const acceptUrl = buildAbsoluteUrl(maybeAcceptUrl ?? "", oidcProviderDomain);
   if (!acceptUrl) {
-    logToMixPanel(
-      `unable to accept grants, could not buld url. obtained URL: ${maybeAcceptUrl}`
-    );
+    const debugMessage = `unable to accept grants, could not buld url. obtained URL: ${maybeAcceptUrl}`;
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "unable to accept grants: invalid URL"
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage: "unable to accept grants: invalid URL",
+        debugMessage
+      })
     );
     return;
   }
@@ -73,15 +84,19 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     if (isCancelledFailure(rpRedirectResponse)) {
       return;
     }
-    logToMixPanel(
-      `could not get RelyingParty redirect URL, ${formatHttpClientResponseForMixPanel(
-        rpRedirectResponse
-      )}`
-    );
+    if (isFastLoginFailure(rpRedirectResponse)) {
+      yield* call(deallocateFimsAndRenewFastLoginSession);
+      return;
+    }
+    const debugMessage = `could not get RelyingParty redirect URL, ${formatHttpClientResponseForMixPanel(
+      rpRedirectResponse
+    )}`;
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "could not get RelyingParty redirect URL"
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage: "could not get RelyingParty redirect URL",
+        debugMessage
+      })
     );
     return;
   }
@@ -106,18 +121,18 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
   );
 
   if (!inAppBrowserRedirectUrl) {
-    logToMixPanel(
-      `IAB url call failed or without a valid redirect, code: ${
-        inAppBrowserUrlResponse.type === "failure"
-          ? // eslint-disable-next-line sonarjs/no-nested-template-literals
-            `${inAppBrowserUrlResponse.code}, message: ${inAppBrowserUrlResponse.message}`
-          : inAppBrowserUrlResponse.status
-      }`
-    );
+    const debugMessage = `IAB url call failed or without a valid redirect, code: ${
+      inAppBrowserUrlResponse.type === "failure"
+        ? // eslint-disable-next-line sonarjs/no-nested-template-literals
+          `${inAppBrowserUrlResponse.code}, message: ${inAppBrowserUrlResponse.message}`
+        : inAppBrowserUrlResponse.status
+    }`;
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "IAB url call failed or without a valid redirect"
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage: "IAB url call failed or without a valid redirect",
+        debugMessage
+      })
     );
     return;
   }
@@ -125,7 +140,9 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
   // ----------------- end lolliPoP -----------------
 
   yield* put(fimsGetRedirectUrlAndOpenIABAction.success());
-  yield* call(handleFimsResourcesDeallocation);
+  yield* call(deallocateFimsResourcesAndNavigateBack);
+  yield* call(computeAndTrackInAppBrowserOpening, action);
+
   return openAuthenticationSession(inAppBrowserRedirectUrl, "", true);
 }
 
@@ -211,13 +228,14 @@ function* postToRelyingPartyWithImplicitCodeFlow(
   );
   if (E.isLeft(formPostDataEither)) {
     const errorMessage = formPostDataEither.left;
-    logToMixPanel(
-      `Form extraction from HTML page failed, implicit code flow: ${errorMessage}`
-    );
+    const debugMessage = `Form extraction from HTML page failed, implicit code flow: ${errorMessage}`;
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "Could not process redirection page, Implicit code flow"
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage:
+          "Could notprocess redirection page, Implicit code flow",
+        debugMessage
+      })
     );
     return undefined;
   }
@@ -234,13 +252,14 @@ function* postToRelyingPartyWithImplicitCodeFlow(
   );
   if (E.isLeft(lollipopSignatureEither)) {
     const errorMessage = lollipopSignatureEither.left;
-    logToMixPanel(
-      `Could not sign request with LolliPoP, Implicit code flow: ${errorMessage}`
-    );
+    const debugMessage = `Could not sign request with LolliPoP, Implicit code flow: ${errorMessage}`;
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "could not sign request with LolliPoP, Implicit code flow"
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage:
+          "could not sign request with LolliPoP, Implicit code flow",
+        debugMessage
+      })
     );
     return undefined;
   }
@@ -271,13 +290,14 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
 ): Generator<ReduxSagaEffect, RelyingPartyOutput | undefined, any> {
   const relyingPartyRedirectUrl = rpRedirectResponse.headers.location;
   if (!relyingPartyRedirectUrl || relyingPartyRedirectUrl.trim().length === 0) {
-    logToMixPanel(
-      `could not find valid Location header for Relying Party redirect url, authorization code flow: ${!!relyingPartyRedirectUrl}`
-    );
+    const debugMessage = `could not find valid Location header for Relying Party redirect url, authorization code flow: ${!!relyingPartyRedirectUrl}`;
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "Could not find valid Location header, Authorization code flow"
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage:
+          "Could not find valid Location header, Authorization code flow",
+        debugMessage
+      })
     );
     return undefined;
   }
@@ -287,13 +307,13 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
   );
   const state = lollipopParamsMap?.get("state");
   if (!lollipopParamsMap || !state) {
-    logToMixPanel(
-      `could not extract lollipop params or state from RelyingParty URL, params: ${!!lollipopParamsMap}, state: ${!!state}`
-    );
+    const debugMessage = `could not extract lollipop params or state from RelyingParty URL, params: ${!!lollipopParamsMap}, state: ${!!state}`;
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "could not extract data from RelyingParty URL"
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage: "could not extract data from RelyingParty URL",
+        debugMessage
+      })
     );
     return undefined;
   }
@@ -306,13 +326,14 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
   );
   if (E.isLeft(lollipopSignatureEither)) {
     const errorMessage = lollipopSignatureEither.left;
-    logToMixPanel(
-      `Could not sign request with LolliPoP, Authorization code flow: ${errorMessage}`
-    );
+    const debugMessage = `Could not sign request with LolliPoP, Authorization code flow: ${errorMessage}`;
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "could not sign request with LolliPoP, Authorization code flow"
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure({
+        standardMessage:
+          "could not sign request with LolliPoP, Authorization code flow",
+        debugMessage
+      })
     );
     return undefined;
   }
@@ -407,10 +428,10 @@ const processHtmlFormTag = (
       formData.set("action", action.trim());
     }
   } else if (tagInput === name.toLowerCase()) {
-    const name = attributes.name;
+    const attributeName = attributes.name;
     const value = attributes.value;
-    if (name && value) {
-      formData.set(name.trim(), value.trim());
+    if (attributeName && value) {
+      formData.set(attributeName.trim(), value.trim());
     }
   }
 };
@@ -428,6 +449,7 @@ const validateAndProcessExtractedFormData = (
     return E.left(`Missing form 'action' value`);
   }
   try {
+    /* eslint-disable no-new */
     new URL(relyingPartyRedirectUrl);
   } catch {
     return E.left(`Invalid form 'action' value`);
@@ -447,3 +469,19 @@ const validateAndProcessExtractedFormData = (
     url: relyingPartyRedirectUrl
   });
 };
+
+function* computeAndTrackInAppBrowserOpening(
+  action: ActionType<typeof fimsGetRedirectUrlAndOpenIABAction.request>
+) {
+  const serviceId = action.payload.serviceId;
+  const service = yield* select(serviceByIdSelector, serviceId);
+  const ctaText = yield* select(fimsCtaTextSelector);
+  yield* call(
+    trackInAppBrowserOpening,
+    serviceId,
+    service?.service_name,
+    service?.organization_name,
+    service?.organization_fiscal_code,
+    ctaText
+  );
+}

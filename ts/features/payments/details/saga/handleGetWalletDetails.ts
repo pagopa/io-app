@@ -21,7 +21,6 @@ export function* handleGetWalletDetails(
   try {
     const getWalletDetailsResult = yield* withPaymentsSessionToken(
       getWalletById,
-      paymentsGetMethodDetailsAction.failure,
       action,
       {
         walletId: action.payload.walletId

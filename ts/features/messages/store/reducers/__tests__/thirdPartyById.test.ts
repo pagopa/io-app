@@ -6,7 +6,6 @@ import { loadMessageDetails, loadThirdPartyMessage } from "../../actions";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import {
   hasAttachmentsSelector,
-  isThirdPartyMessageSelector,
   messageMarkdownSelector,
   messageTitleSelector,
   thirdPartyFromIdSelector,
@@ -49,25 +48,6 @@ describe("thirdPartyFromIdSelector", () => {
     expect(thirdPartyMessageFromSelector).toStrictEqual(
       pot.some(thirdPartyMessage)
     );
-  });
-});
-
-describe("isThirdPartyMessageSelector", () => {
-  it("Should return false for an unmatching message Id", () => {
-    const messageId = "m1" as UIMessageId;
-    const state = appReducer(undefined, applicationChangeState("active"));
-    const isThirdPartyMessage = isThirdPartyMessageSelector(state, messageId);
-    expect(isThirdPartyMessage).toBe(false);
-  });
-  it("Should return true for a matching message Id", () => {
-    const messageId = "m1" as UIMessageId;
-    const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
-      id: messageId,
-      content: { id: messageId as string } as ThirdPartyMessageWithContent
-    });
-    const state = appReducer(undefined, loadThirdPartyMessageSuccess);
-    const isThirdPartyMessage = isThirdPartyMessageSelector(state, messageId);
-    expect(isThirdPartyMessage).toBe(true);
   });
 });
 
@@ -398,7 +378,7 @@ describe("thirdPartyMessageAttachments", () => {
     expect(attachments).toBeDefined();
     expect(attachments.length).toBe(0);
   });
-  it("should return an empty array on a third party message with empty attachments", () => {
+  it("should return the first attachment on a third party message with just one attachment", () => {
     const messageId = "01HNWRS7DP721KTC3SMCJ7G82E" as UIMessageId;
     const thirdPartyAttachment = {
       id: "1",

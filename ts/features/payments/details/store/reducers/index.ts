@@ -1,3 +1,5 @@
+import { PersistConfig, persistReducer } from "redux-persist";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
@@ -7,15 +9,18 @@ import { WalletApplicationStatusEnum } from "../../../../../../definitions/pagop
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import {
   paymentsGetMethodDetailsAction,
+  paymentsPayPalBannerSetIsClosedAction,
   paymentsTogglePagoPaCapabilityAction
 } from "../actions";
 
 export type PaymentsMethodDetailsState = {
   walletDetails: pot.Pot<WalletInfo, NetworkError>;
+  isWalletPayPalBannerClosed: boolean;
 };
 
 const INITIAL_STATE: PaymentsMethodDetailsState = {
-  walletDetails: pot.noneLoading
+  walletDetails: pot.noneLoading,
+  isWalletPayPalBannerClosed: false
 };
 
 const reducer = (
@@ -44,7 +49,11 @@ const reducer = (
         ...state,
         walletDetails: pot.none
       };
-
+    case getType(paymentsPayPalBannerSetIsClosedAction):
+      return {
+        ...state,
+        isWalletPayPalBannerClosed: action.payload
+      };
     // TOGGLE PAGOPA CAPABILITY
     case getType(paymentsTogglePagoPaCapabilityAction.success):
       const walletDetails = pot.getOrElse(
@@ -76,4 +85,18 @@ const reducer = (
   return state;
 };
 
-export default reducer;
+const CURRENT_REDUX_FEATURES_STORE_VERSION = -1;
+
+const persistConfig: PersistConfig = {
+  key: "paymentsWallet",
+  storage: AsyncStorage,
+  version: CURRENT_REDUX_FEATURES_STORE_VERSION,
+  whitelist: ["isWalletPayPalBannerClosed"]
+};
+
+export const persistedReducer = persistReducer<
+  PaymentsMethodDetailsState,
+  Action
+>(persistConfig, reducer);
+
+export default persistedReducer;

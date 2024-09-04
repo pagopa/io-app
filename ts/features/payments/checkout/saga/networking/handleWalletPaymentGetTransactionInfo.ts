@@ -16,7 +16,6 @@ export function* handleWalletPaymentGetTransactionInfo(
   try {
     const getTransactionInfoResult = yield* withPaymentsSessionToken(
       getTransactionInfo,
-      paymentsGetPaymentTransactionInfoAction.failure,
       action,
       {
         transactionId: action.payload.transactionId

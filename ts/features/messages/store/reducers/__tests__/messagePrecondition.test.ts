@@ -23,7 +23,6 @@ import {
 import {
   MessagePreconditionStatus,
   foldPreconditionStatus,
-  isShownPreconditionStatusSelector,
   preconditionReducer,
   preconditionsCategoryTagSelector,
   preconditionsContentMarkdownSelector,
@@ -54,14 +53,14 @@ const content = {
   markdown: "A markdown"
 };
 const messagePreconditionStatusesGenerator = (
-  categoryTag: MessageCategory["tag"]
+  inputCategoryTag: MessageCategory["tag"]
 ) => [
-  toErrorMPS(messageId, categoryTag, errorReason),
+  toErrorMPS(messageId, inputCategoryTag, errorReason),
   toIdleMPS(),
-  toLoadingContentMPS(messageId, categoryTag, content),
-  toRetrievingDataMPS(messageId, categoryTag),
-  toScheduledMPS(messageId, categoryTag),
-  toShownMPS(messageId, categoryTag, content),
+  toLoadingContentMPS(messageId, inputCategoryTag, content),
+  toRetrievingDataMPS(messageId, inputCategoryTag),
+  toScheduledMPS(messageId, inputCategoryTag),
+  toShownMPS(messageId, inputCategoryTag, content),
   toUpdateRequiredMPS()
 ];
 
@@ -456,25 +455,9 @@ describe("preconditionsContentMarkdownSelector", () => {
           }
         }
       } as GlobalState;
-      const content = preconditionsContentMarkdownSelector(globalStatus);
-      expect(content).toStrictEqual(expectedOutput);
-    });
-  });
-});
-
-describe("isShownPreconditionStatusSelector", () => {
-  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
-    const expectedOutput = status.state === "shown";
-    it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
-      const globalStatus = {
-        entities: {
-          messages: {
-            precondition: status
-          }
-        }
-      } as GlobalState;
-      const isShown = isShownPreconditionStatusSelector(globalStatus);
-      expect(isShown).toStrictEqual(expectedOutput);
+      const internalContent =
+        preconditionsContentMarkdownSelector(globalStatus);
+      expect(internalContent).toStrictEqual(expectedOutput);
     });
   });
 });
@@ -520,8 +503,9 @@ describe("preconditionsCategoryTagSelector", () => {
           }
         }
       } as GlobalState;
-      const categoryTag = preconditionsCategoryTagSelector(globalStatus);
-      expect(categoryTag).toStrictEqual(expectedOutput);
+      const internalCategoryTag =
+        preconditionsCategoryTagSelector(globalStatus);
+      expect(internalCategoryTag).toStrictEqual(expectedOutput);
     });
   });
 });
@@ -540,8 +524,8 @@ describe("preconditionsMessageIdSelector", () => {
           }
         }
       } as GlobalState;
-      const messageId = preconditionsMessageIdSelector(globalStatus);
-      expect(messageId).toStrictEqual(expectedOutput);
+      const internalMessageId = preconditionsMessageIdSelector(globalStatus);
+      expect(internalMessageId).toStrictEqual(expectedOutput);
     });
   });
 });

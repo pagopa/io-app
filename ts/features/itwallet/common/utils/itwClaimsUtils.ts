@@ -3,17 +3,16 @@
  */
 
 import { patternDateFromString } from "@pagopa/ts-commons/lib/dates";
-import { PatternString } from "@pagopa/ts-commons/lib/strings";
+import { NonEmptyString, PatternString } from "@pagopa/ts-commons/lib/strings";
 import { differenceInCalendarDays, isValid } from "date-fns";
-import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
+import { truncate } from "lodash";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
 import { ItwCredentialStatus } from "../components/ItwCredentialCard";
 import { JsonFromString } from "./ItwCodecUtils";
-import { CredentialCatalogDisplay } from "./itwMocksUtils";
 import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
 /**
@@ -27,29 +26,24 @@ import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
  */
 
 /**
- * Retrieves the organization name from the evidence claim of the given credential.
- * If the evidence claim is not present or cannot be decoded, a fallback value is returned.
- * @param credential - The parsed credential object.
- * @returns The organization name from the evidence claim or a fallback value.
+ * We strongly discourage direct claim manipulation, but some special cases must be addressed with direct access
  */
-export const getEvidenceOrganizationName = (credential: ParsedCredential) =>
-  pipe(
-    credential.evidence,
-    O.fromNullable,
-    O.fold(
-      () => I18n.t("features.itWallet.generic.placeholders.organizationName"),
-      evidence =>
-        pipe(
-          evidence.value,
-          EvidenceClaim.decode,
-          E.fold(
-            () =>
-              I18n.t("features.itWallet.generic.placeholders.organizationName"),
-            some => some[0].record.source.organization_name
-          )
-        )
-    )
-  );
+export enum WellKnownClaim {
+  /**
+   * Unique ID must be excluded from every credential and should not rendered in the claims list
+   */
+  unique_id = "unique_id",
+  /**
+   * Claim used to extract expiry date from a credential. This is used to display how many days are left for
+   * the credential expiration or to know if the credential is expired
+   */
+  expiry_date = "expiry_date",
+  /**
+   * Claim used to display a QR Code for the Disability Card. It must be excluded from the common claims list
+   * and rendered using a {@link QRCodeImage}
+   */
+  link_qr_code = "link_qr_code"
+}
 
 /**
  * Type for each claim to be displayed.
@@ -69,38 +63,25 @@ export type ClaimDisplayFormat = {
  * If there's no locale that matches the current locale then we take the attribute key as the name.
  * The value is taken from the attribute value.
  * @param parsedCredential - the parsed credential.
+ * @param options.exclude - an array of keys to exclude from the claims. TODO [SIW-1383]: remove this dirty hack
  * @returns the array of {@link ClaimDisplayFormat} of the credential contained in its configuration schema.
  */
 export const parseClaims = (
-  parsedCredential: ParsedCredential
-): Array<ClaimDisplayFormat> =>
-  Object.entries(parsedCredential).map(([key, attribute]) => {
-    const attributeName =
-      typeof attribute.name === "string"
-        ? attribute.name
-        : attribute.name?.[getClaimsFullLocale()] || key;
+  parsedCredential: ParsedCredential,
+  options: { exclude?: Array<string> } = {}
+): Array<ClaimDisplayFormat> => {
+  const { exclude = [] } = options;
+  return Object.entries(parsedCredential)
+    .filter(([key]) => !exclude.includes(key))
+    .map(([key, attribute]) => {
+      const attributeName =
+        typeof attribute.name === "string"
+          ? attribute.name
+          : attribute.name?.[getClaimsFullLocale()] || key;
 
-    return { label: attributeName, value: attribute.value, id: key };
-  });
-
-/**
- * Sorts the parsedCredential according to the order of the displayData.
- * If the order is not available, the schema is returned as is.
- * @param parsedCredential - the parsed credential.
- * @param order - the order of the displayData.
- * @returns a new parsedCredential sorted according to the order of the displayData.
- */
-export const sortClaims = (
-  order: CredentialCatalogDisplay["order"],
-  parsedCredential: ParsedCredential
-) =>
-  order
-    ? Object.fromEntries(
-        Object.entries(parsedCredential)
-          .slice()
-          .sort(([key1], [key2]) => order.indexOf(key1) - order.indexOf(key2))
-      )
-    : parsedCredential;
+      return { label: attributeName, value: attribute.value, id: key };
+    });
+};
 
 /**
  *
@@ -156,16 +137,16 @@ const DATE_FORMAT_REGEX = "^\\d{4}-\\d{2}-\\d{2}$";
 /**
  * Regex for the picture URL format which is used to validate the image claim as a base64 encoded png image.
  */
-const PICTURE_URL_REGEX = "^data:image\\/png;base64,";
+const PICTURE_URL_REGEX = "^data:image\\/(png|jpg|jpeg|bmp);base64,";
 
 /**
- * Regex for the picture without URL format which is used to validate the image claim as a base64 encoded png image.
- * This is needed until the issuer adds the URL to the image claim.
- * TODO [SIW-1378]: remove this regex when the issuer adds the URL schema to the image claim.
+ * Regex for a generic URL
  */
-const PICTURE_WITHOUT_URL_REGEX =
-  "(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)";
+const URL_REGEX = "^https?://";
 
+/**
+ * Regex for the fiscal code
+ */
 const FISCAL_CODE_WITH_PREFIX =
   "(TINIT-[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])";
 
@@ -229,14 +210,37 @@ export type DrivingPrivilegesClaimType = t.TypeOf<
 export const FiscalCodeClaim = PatternString(FISCAL_CODE_WITH_PREFIX);
 
 /**
- * Alias for the string fallback of the claim field of the credential.
+ * Decoder for a generic URL
  */
-export const PlainTextClaim = t.string;
+export const UrlClaim = PatternString(URL_REGEX);
 
+/**
+ * Alias for a boolean claim
+ */
+export const BoolClaim = t.boolean;
+
+/**
+ * Empty string fallback of the claim field of the credential.
+ */
+export const EmptyStringClaim = new t.Type<string, string, unknown>(
+  "EmptyString",
+  (input: unknown): input is string => input === "", // Type guard
+  (input, context) =>
+    typeof input === "string" && input === ""
+      ? t.success(input)
+      : t.failure(input, context, "Expected an empty string"),
+  t.identity
+);
+
+/**
+ * Alias for the string claim field of the credential.
+ */
+export const StringClaim = NonEmptyString;
+
+/**
+ * Decoder for an URL image in base64 format
+ */
 export const ImageClaim = PatternString(PICTURE_URL_REGEX);
-
-// TODO [SIW-1378]: remove this decoder when the issuer adds the URL schema to the image claim.
-export const ImageClaimNoUrl = PatternString(PICTURE_WITHOUT_URL_REGEX);
 
 /**
  * Decoder type for the claim field of the credential.
@@ -255,80 +259,25 @@ export const ClaimValue = t.union([
   DateClaim,
   // Otherwise parse an image
   ImageClaim,
-  // Otherwise parse an image without URL
-  ImageClaimNoUrl,
   // Otherwise parse a fiscal code
   FiscalCodeClaim,
+  // Otherwise parse bool value
+  BoolClaim,
+  // Otherwise parse an url value
+  UrlClaim,
   // Otherwise fallback to string
-  PlainTextClaim
+  StringClaim,
+  // Otherwise fallback to empty string
+  EmptyStringClaim
 ]);
 
-type ClaimSection =
-  | "personalData"
-  | "documentData"
-  | "licenseData"
-  | "noSection";
-
-export type DateClaimConfig = Partial<{
-  iconVisible: boolean;
-  expirationBadgeVisible: boolean;
-}>;
-
 /**
- * Hardcoded claims sections: currently it's not possible to determine how to group claims from the credential.
- * The order of the claims doesn't matter here, the credential's `displayData` order wins.
- * Claims that are present here but not in the credential are safely ignored.
+ *
+ *
+ * Expiration date and status
+ *
+ *
  */
-const sectionsByClaim: Record<string, ClaimSection> = {
-  // Personal data claims
-  given_name: "personalData",
-  family_name: "personalData",
-  birthdate: "personalData",
-  place_of_birth: "personalData",
-  tax_id_code: "personalData",
-  tax_id_number: "personalData",
-  portrait: "personalData",
-  sex: "personalData",
-
-  // Document data claims
-  issue_date: "documentData",
-  expiry_date: "documentData",
-  expiration_date: "documentData",
-  document_number: "documentData",
-
-  // Driving license claims
-  driving_privileges: "licenseData"
-};
-
-export const dateClaimsConfig: Record<string, DateClaimConfig> = {
-  issue_date: { iconVisible: true },
-  expiry_date: { iconVisible: true, expirationBadgeVisible: true },
-  expiration_date: { iconVisible: true, expirationBadgeVisible: true }
-};
-
-export const previewDateClaimsConfig: DateClaimConfig = {
-  iconVisible: false,
-  expirationBadgeVisible: false
-};
-
-/**
- * Groups claims in a credential according to {@link sectionsByClaim}.
- * Claims are assigned to the designated section in the order specified by the credential's `displayData`.
- * Claims without a section are assigned to the key `noSection` so they can be rendered separately.
- * @param credential
- * @returns
- */
-export const groupCredentialClaims = (credential: StoredCredential) => {
-  const claims = parseClaims(credential.parsedCredential);
-
-  return claims.reduce((acc, claim) => {
-    const section = sectionsByClaim[claim.id] || "noSection";
-    return {
-      ...acc,
-      [section]: (acc[section] || []).concat(claim)
-    };
-  }, {} as Record<ClaimSection, ReadonlyArray<ClaimDisplayFormat>>);
-};
 
 /**
  * Returns the expiration date from a {@see ParsedCredential}, if present
@@ -338,9 +287,8 @@ export const groupCredentialClaims = (credential: StoredCredential) => {
 export const getCredentialExpireDate = (
   credential: ParsedCredential
 ): Date | undefined => {
-  // A credential could contain its expiration date in `expiry_date` or `expiration_date` claims
-  const expireDate: ParsedCredential[keyof ParsedCredential] | undefined =
-    credential.expiry_date || credential.expiration_date;
+  // A credential could contain its expiration date in `expiry_date`
+  const expireDate = credential[WellKnownClaim.expiry_date];
 
   if (!expireDate?.value) {
     return undefined;
@@ -390,6 +338,19 @@ export const getCredentialExpireStatus = (
     : "expired";
 };
 
+/**
+ * Get the overall status of the credential, taking into account
+ * the status attestation if present and the credential's own expiration date.
+ */
+export const getCredentialStatus = (
+  credential: StoredCredential
+): ItwCredentialStatus | undefined => {
+  if (credential.storedStatusAttestation?.credentialStatus === "invalid") {
+    return "expired";
+  }
+  return getCredentialExpireStatus(credential.parsedCredential);
+};
+
 const FISCAL_CODE_REGEX =
   /([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])/g;
 
@@ -400,3 +361,26 @@ const FISCAL_CODE_REGEX =
  */
 export const extractFiscalCode = (s: string) =>
   pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));
+
+const EID_FISCAL_CODE_KEY = "tax_id_code";
+
+export const getFiscalCodeFromCredential = (
+  credential: StoredCredential | undefined
+) =>
+  pipe(
+    credential?.parsedCredential,
+    O.fromNullable,
+    O.chain(x => O.fromNullable(x[EID_FISCAL_CODE_KEY]?.value)),
+    O.map(t.string.decode),
+    O.chain(O.fromEither),
+    O.chain(extractFiscalCode),
+    O.getOrElse(() => "")
+  );
+
+/**
+ * Truncate long strings to avoid performance issues when rendering claims.
+ */
+export const getSafeText = (text: string) => truncate(text, { length: 128 });
+
+export const isExpirationDateClaim = (claim: ClaimDisplayFormat) =>
+  claim.id === WellKnownClaim.expiry_date;

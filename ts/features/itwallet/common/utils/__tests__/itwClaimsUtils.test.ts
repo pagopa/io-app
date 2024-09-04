@@ -1,12 +1,17 @@
 import MockDate from "mockdate";
 import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import {
   extractFiscalCode,
   getCredentialExpireDate,
   getCredentialExpireDays,
-  getCredentialExpireStatus
+  getCredentialExpireStatus,
+  getFiscalCodeFromCredential,
+  ImageClaim
 } from "../itwClaimsUtils";
+import { StoredCredential } from "../itwTypesUtils";
+import { ItwStoredCredentialsMocks } from "../itwMocksUtils";
 
 describe("getCredentialExpireDate", () => {
   it("should return undefined", () => {
@@ -23,15 +28,6 @@ describe("getCredentialExpireDate", () => {
         }
       },
       new Date(2035, 9, 20)
-    ],
-    [
-      {
-        expiration_date: {
-          name: "",
-          value: "01/01/2015"
-        }
-      },
-      new Date(2015, 0, 1)
     ],
     [
       {
@@ -141,5 +137,77 @@ describe("extractFiscalCode", () => {
 
   it("returns none when the string does not contain any fiscal code", () => {
     expect(extractFiscalCode("RANDOM_STRING_MRARS001H1B")).toEqual(O.none);
+  });
+});
+
+describe("ImageClaim", () => {
+  const base64 =
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAEElEQVR4nGKKrzEGBAAA//8CVAERMRFlewAAAABJRU5ErkJggg==";
+  it("should decode a valid png image", () => {
+    const decoded = ImageClaim.decode(`data:image/png;base64,${base64}`);
+    expect(E.isRight(decoded)).toBe(true);
+  });
+  it("should decode a valid jpg image", () => {
+    const decoded = ImageClaim.decode(`data:image/jpg;base64,${base64}`);
+    expect(E.isRight(decoded)).toBe(true);
+  });
+  it("should decode a valid jpeg image", () => {
+    const decoded = ImageClaim.decode(`data:image/jpeg;base64,${base64}`);
+    expect(E.isRight(decoded)).toBe(true);
+  });
+  it("should decode a valid bmp image", () => {
+    const decoded = ImageClaim.decode(`data:image/bmp;base64,${base64}`);
+    expect(E.isRight(decoded)).toBe(true);
+  });
+  it("should decode an unsupported image", () => {
+    const decoded = ImageClaim.decode(`data:image/gif;base64,${base64}`);
+    expect(E.isLeft(decoded)).toBe(true);
+  });
+});
+
+describe("getFiscalCodeFromCredential", () => {
+  it("should return empty string in case of undefined credentials", () => {
+    expect(getFiscalCodeFromCredential(undefined)).toEqual("");
+  });
+
+  it("should return empty string when no tax code is found in the credential", () => {
+    const mockCredential: StoredCredential = {
+      ...ItwStoredCredentialsMocks.eid,
+      parsedCredential: {
+        family_name: {
+          name: { "en-US": "Family name", "it-IT": "Cognome" },
+          value: "ROSSI"
+        }
+      }
+    };
+    expect(getFiscalCodeFromCredential(mockCredential)).toEqual("");
+  });
+
+  it("should return empty string when the tax code uses an unexpected format", () => {
+    const mockCredential: StoredCredential = {
+      ...ItwStoredCredentialsMocks.eid,
+      parsedCredential: {
+        tax_id_code: {
+          name: { "en-US": "Tax Id number", "it-IT": "Codice Fiscale" },
+          value: 1000
+        }
+      }
+    };
+    expect(getFiscalCodeFromCredential(mockCredential)).toEqual("");
+  });
+
+  it("should return the tax code when the credential is valid", () => {
+    const mockCredential: StoredCredential = {
+      ...ItwStoredCredentialsMocks.eid,
+      parsedCredential: {
+        tax_id_code: {
+          name: { "en-US": "Tax Id number", "it-IT": "Codice Fiscale" },
+          value: "MRARSS00A01H501B"
+        }
+      }
+    };
+    expect(getFiscalCodeFromCredential(mockCredential)).toEqual(
+      "MRARSS00A01H501B"
+    );
   });
 });

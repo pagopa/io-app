@@ -1,37 +1,110 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
+/* eslint-disable functional/immutable-data */
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { SafeAreaView, Text, View } from "react-native";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { fimsHistoryGet } from "../store/actions";
-import { fimsHistoryPotSelector } from "../store/selectors";
+import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
+import { openAppStoreUrl } from "../../../../utils/url";
+import { FimsHistoryEmptyContent } from "../components/FimsHistoryEmptyContent";
+import { FimsHistoryKoScreen } from "../components/FimsHistoryKoScreen";
+import { FimsHistoryNonEmptyContent } from "../components/FimsHistoryNonEmptyContent";
+import { fimsHistoryGet, resetFimsHistoryState } from "../store/actions";
+import {
+  fimsHistoryErrorSelector,
+  fimsHistoryToUndefinedSelector,
+  isFimsHistoryLoadingSelector
+} from "../store/selectors";
+import {
+  trackHistoryFailure,
+  trackHistoryScreen
+} from "../../common/analytics";
 
 export const FimsHistoryScreen = () => {
   const dispatch = useIODispatch();
-  const historyPot = useIOSelector(fimsHistoryPotSelector);
 
-  React.useEffect(() => {
-    dispatch(fimsHistoryGet.request({}));
-  }, [dispatch]);
+  const requiresAppUpdate = useIOSelector(fimsRequiresAppUpdateSelector);
+  const consents = useIOSelector(fimsHistoryToUndefinedSelector);
+  const historyErrorState = useIOSelector(fimsHistoryErrorSelector);
+  const isHistoryLoading = useIOSelector(isFimsHistoryLoadingSelector);
+
+  const lastErrorToastDate = React.useRef<number | null>(null);
+
+  const shouldShowErrorToast = historyErrorState === "ALERT_ONLY";
+  // ---------- HOOKS
 
   useHeaderSecondLevel({
-    title: "History"
+    title: I18n.t("FIMS.history.historyScreen.header"),
+    supportRequest: true
   });
-  if (pot.isLoading(historyPot)) {
-    return <LoadingScreenContent contentTitle="" />;
-  }
-  const history = pot.toUndefined(historyPot)?.items ?? [];
 
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      {history.map((item, index) => (
-        <View key={index}>
-          <Text>{item.timestamp.toDateString()}</Text>
-          <VSpacer size={8} />
-        </View>
-      ))}
-    </SafeAreaView>
+  React.useEffect(() => {
+    if (!requiresAppUpdate) {
+      trackHistoryScreen();
+      dispatch(fimsHistoryGet.request({ shouldReloadFromScratch: true }));
+    } else {
+      trackHistoryFailure("update_required");
+    }
+    return () => {
+      // full reset in order to avoid wonky error toast behaviour
+      dispatch(resetFimsHistoryState());
+    };
+  }, [dispatch, requiresAppUpdate]);
+
+  React.useEffect(() => {
+    if (shouldShowErrorToast) {
+      // needed to avoid multiple state changes simultaneously
+      lastErrorToastDate.current = Date.now();
+      IOToast.error(I18n.t("FIMS.history.errorStates.toast"));
+    }
+  }, [shouldShowErrorToast]);
+
+  const fetchMoreHistoryItems = React.useCallback(() => {
+    const hasErrorTimeoutExpired = lastErrorToastDate.current
+      ? Date.now() - lastErrorToastDate.current >= 500
+      : true;
+
+    if (hasErrorTimeoutExpired && consents?.continuationToken) {
+      dispatch(
+        fimsHistoryGet.request({
+          continuationToken: consents.continuationToken
+        })
+      );
+    }
+  }, [consents, dispatch]);
+
+  // ---------- FAILURE CASES
+
+  if (requiresAppUpdate) {
+    return (
+      <OperationResultScreenContent
+        isHeaderVisible
+        title={I18n.t("titleUpdateAppAlert")}
+        pictogram="umbrellaNew"
+        action={{
+          label: I18n.t("btnUpdateApp"),
+          onPress: () => openAppStoreUrl
+        }}
+      />
+    );
+  }
+
+  if (historyErrorState === "FULL_KO") {
+    return <FimsHistoryKoScreen />;
+  }
+
+  // ---------- SUCCESS
+
+  const shouldShowEmptyContent =
+    !isHistoryLoading && (consents?.items ?? []).length === 0;
+
+  return shouldShowEmptyContent ? (
+    <FimsHistoryEmptyContent />
+  ) : (
+    <FimsHistoryNonEmptyContent
+      consents={consents}
+      fetchMore={fetchMoreHistoryItems}
+    />
   );
 };
