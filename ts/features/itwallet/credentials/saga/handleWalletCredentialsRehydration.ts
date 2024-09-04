@@ -8,6 +8,7 @@ import { WalletCard } from "../../../newWallet/types";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { walletAddCards } from "../../../newWallet/store/actions/cards";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 
 const mapCredentialsToWalletCards = (
   credentials: Array<StoredCredential>
@@ -16,7 +17,8 @@ const mapCredentialsToWalletCards = (
     key: `ITW_${credential.credentialType}`,
     type: "itw",
     category: "itw",
-    credentialType: credential.credentialType as CredentialType
+    credentialType: credential.credentialType as CredentialType,
+    status: getCredentialStatus(credential)
   }));
 
 /**

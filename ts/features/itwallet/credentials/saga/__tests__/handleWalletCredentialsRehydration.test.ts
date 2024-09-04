@@ -6,8 +6,21 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { handleWalletCredentialsRehydration } from "../handleWalletCredentialsRehydration";
 import { walletAddCards } from "../../../../newWallet/store/actions/cards";
 import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 
 describe("ITW handleWalletCredentialsRehydration saga", () => {
+  const expirationClaim = { value: "2100-09-04", name: "exp" };
+  const mockedEid: StoredCredential = {
+    credential: "",
+    credentialType: CredentialType.PID,
+    parsedCredential: {
+      expiry_date: expirationClaim
+    },
+    format: "vc+sd-jwt",
+    keyTag: "1",
+    issuerConf: {} as StoredCredential["issuerConf"]
+  };
+
   it("rehydrates the eID when the wallet is valid", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
@@ -15,7 +28,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
           lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
           issuance: { integrityKeyTag: O.some("key-tag") },
           credentials: {
-            eid: O.some({ keyTag: "1", credentialType: CredentialType.PID }),
+            eid: O.some(mockedEid),
             credentials: []
           }
         }
@@ -30,7 +43,8 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             key: `ITW_${CredentialType.PID}`,
             type: "itw",
             category: "itw",
-            credentialType: CredentialType.PID
+            credentialType: CredentialType.PID,
+            status: "valid"
           }
         ])
       )
@@ -44,16 +58,22 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
           lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
           issuance: { integrityKeyTag: O.some("key-tag") },
           credentials: {
-            eid: O.some({ keyTag: "1", credentialType: CredentialType.PID }),
+            eid: O.some(mockedEid),
             credentials: [
               O.none,
               O.some({
                 keyTag: "2",
-                credentialType: CredentialType.DRIVING_LICENSE
+                credentialType: CredentialType.DRIVING_LICENSE,
+                parsedCredential: {
+                  expiry_date: expirationClaim
+                }
               }),
               O.some({
                 keyTag: "3",
-                credentialType: CredentialType.EUROPEAN_DISABILITY_CARD
+                credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
+                parsedCredential: {
+                  expiry_date: expirationClaim
+                }
               })
             ]
           }
@@ -69,19 +89,22 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             key: `ITW_${CredentialType.PID}`,
             type: "itw",
             category: "itw",
-            credentialType: CredentialType.PID
+            credentialType: CredentialType.PID,
+            status: "valid"
           },
           {
             key: `ITW_${CredentialType.DRIVING_LICENSE}`,
             type: "itw",
             category: "itw",
-            credentialType: CredentialType.DRIVING_LICENSE
+            credentialType: CredentialType.DRIVING_LICENSE,
+            status: "valid"
           },
           {
             key: `ITW_${CredentialType.EUROPEAN_DISABILITY_CARD}`,
             type: "itw",
             category: "itw",
-            credentialType: CredentialType.EUROPEAN_DISABILITY_CARD
+            credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
+            status: "valid"
           }
         ])
       )
@@ -99,7 +122,10 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             credentials: [
               O.some({
                 keyTag: "2",
-                credentialType: CredentialType.DRIVING_LICENSE
+                credentialType: CredentialType.DRIVING_LICENSE,
+                parsedCredential: {
+                  expiry_date: expirationClaim
+                }
               })
             ]
           }
@@ -115,7 +141,8 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             key: `ITW_${CredentialType.DRIVING_LICENSE}`,
             type: "itw",
             category: "itw",
-            credentialType: CredentialType.DRIVING_LICENSE
+            credentialType: CredentialType.DRIVING_LICENSE,
+            status: "valid"
           }
         ])
       )

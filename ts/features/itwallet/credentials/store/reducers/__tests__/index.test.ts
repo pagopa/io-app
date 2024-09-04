@@ -3,8 +3,15 @@ import { pipe } from "fp-ts/lib/function";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
-import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
-import { itwCredentialsRemove, itwCredentialsStore } from "../../actions";
+import {
+  ParsedStatusAttestation,
+  StoredCredential
+} from "../../../../common/utils/itwTypesUtils";
+import {
+  itwCredentialsMultipleUpdate,
+  itwCredentialsRemove,
+  itwCredentialsStore
+} from "../../actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
@@ -28,6 +35,15 @@ const mockedCredential: StoredCredential = {
   parsedCredential: {},
   format: "vc+sd-jwt",
   keyTag: "d191ad52-2674-46f3-9610-6eb7bd9146a3",
+  issuerConf: {} as StoredCredential["issuerConf"]
+};
+
+const mockedCredential2: StoredCredential = {
+  credential: "",
+  credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
+  parsedCredential: {},
+  format: "vc+sd-jwt",
+  keyTag: "07ccc69a-d1b5-4c3c-9955-6a436d0c3710",
   issuerConf: {} as StoredCredential["issuerConf"]
 };
 
@@ -107,15 +123,37 @@ describe("ITW credentials reducer", () => {
     });
   });
 
+  it("should update selected credentials", () => {
+    const credentialUpdate: StoredCredential = {
+      ...mockedCredential2,
+      storedStatusAttestation: {
+        credentialStatus: "valid" as const,
+        statusAttestation: "abc",
+        parsedStatusAttestation: { exp: 1000 } as ParsedStatusAttestation
+      }
+    };
+
+    const updatedCredential = { ...mockedCredential2, ...credentialUpdate };
+
+    const targetSate = pipe(
+      undefined,
+      curriedAppReducer(applicationChangeState("active")),
+      curriedAppReducer(itwCredentialsStore(mockedEid)),
+      curriedAppReducer(itwCredentialsStore(mockedCredential)),
+      curriedAppReducer(itwCredentialsStore(mockedCredential2)),
+      curriedAppReducer(itwCredentialsMultipleUpdate([credentialUpdate]))
+    );
+
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual([
+      O.some(mockedCredential),
+      O.some(updatedCredential)
+    ]);
+  });
+
   it("should overwrite a credential of the same type without duplication", () => {
     const newMockedCredential = {
       ...mockedCredential,
       keyTag: "0d634e7b-40bf-4986-934a-7b18051290e6"
-    };
-    const mockedCredential2 = {
-      ...mockedCredential,
-      credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
-      keyTag: "fe1233cb-ed98-4619-abe6-54603f97a998"
     };
 
     const targetSate = pipe(
