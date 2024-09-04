@@ -17,7 +17,6 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
@@ -44,12 +43,15 @@ import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
 import { PaymentsBarcodeRoutes } from "../../payments/barcode/navigation/routes";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
+import { usePagoPaPayment } from "../../payments/checkout/hooks/usePagoPaPayment";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
   const openDeepLink = useOpenDeepLink();
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+
+  const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
   useHardwareBackButton(() => {
     navigation.goBack();
@@ -137,13 +139,11 @@ const BarcodeScanScreen = () => {
           void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
         }
 
-        navigateToPaymentTransactionSummaryScreen({
-          rptId: barcode.rptId,
-          initialAmount: barcode.amount,
-          paymentStartOrigin: isDataMatrix
-            ? "poste_datamatrix_scan"
-            : "qrcode_scan"
+        startPaymentFlowWithRptId(barcode.rptId, {
+          onSuccess: "showTransaction",
+          startOrigin: isDataMatrix ? "poste_datamatrix_scan" : "qrcode_scan"
         });
+
         break;
       case "IDPAY":
         openDeepLink(barcode.authUrl);
