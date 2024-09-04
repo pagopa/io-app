@@ -42,7 +42,9 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
         </Wrapper>
         <View style={styles.flipButton}>
           <ButtonLink
-            label={I18n.t("features.itWallet.presentation.flipCard")}
+            label={I18n.t(
+              "features.itWallet.presentation.credentialDetails.flipCard"
+            )}
             onPress={() => setIsFlipped(_ => !_)}
             icon="switchCard"
             iconPosition="end"
