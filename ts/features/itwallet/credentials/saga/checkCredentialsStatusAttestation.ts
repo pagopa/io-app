@@ -10,11 +10,9 @@ import {
   shouldRequestStatusAttestation,
   getCredentialStatusAttestation
 } from "../../common/utils/itwCredentialStatusAttestationUtils";
-import { itwCredentialsMultipleUpdate } from "../store/actions";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { walletAddCards } from "../../../newWallet/store/actions/cards";
-import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
+import { itwCredentialsStore } from "../store/actions";
 
 const canGetStatusAttestation = (credential: StoredCredential) =>
   credential.credentialType === CredentialType.DRIVING_LICENSE;
@@ -80,16 +78,5 @@ export function* checkCredentialsStatusAttestation() {
     )
   );
 
-  yield* put(itwCredentialsMultipleUpdate(updatedCredentials));
-  yield* put(
-    walletAddCards(
-      updatedCredentials.map(c => ({
-        key: c.keyTag,
-        type: "itw",
-        category: "itw",
-        credentialType: c.credentialType,
-        status: getCredentialStatus(c)
-      }))
-    )
-  );
+  yield* put(itwCredentialsStore(updatedCredentials));
 }
