@@ -1,10 +1,10 @@
 import {
   ContentWrapper,
-  H2,
-  IOVisualCostants
+  IOVisualCostants,
+  makeFontStyleObject
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { ImageSourcePropType, StyleSheet, View } from "react-native";
+import { ImageSourcePropType, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
@@ -41,9 +41,8 @@ const ItwPresentationDetailsHeader = ({
 }: ItwPresentationDetailsHeaderProps) => {
   const safeAreaInsets = useSafeAreaInsets();
 
-  const { backgroundColor, statusBarStyle } = getThemeColorByCredentialType(
-    credential.credentialType as CredentialType
-  );
+  const { backgroundColor, textColor, statusBarStyle } =
+    getThemeColorByCredentialType(credential.credentialType as CredentialType);
 
   const headerHeight = safeAreaInsets.top + IOVisualCostants.headerHeight;
 
@@ -67,13 +66,13 @@ const ItwPresentationDetailsHeader = ({
           style={styles.headerImage}
         />
         <ContentWrapper>
-          <H2 color="blueIO-850">
+          <Text style={[styles.headerLabel, { color: textColor }]}>
             {getCredentialNameFromType(credential.credentialType)}
-          </H2>
+          </Text>
         </ContentWrapper>
       </View>
     );
-  }, [credential, backgroundColor, headerHeight]);
+  }, [credential, backgroundColor, textColor, headerHeight]);
 
   return (
     <View
@@ -94,6 +93,10 @@ const styles = StyleSheet.create({
   headerImage: {
     width: "100%",
     position: "absolute"
+  },
+  headerLabel: {
+    ...makeFontStyleObject("Semibold", false, "ReadexPro"),
+    fontSize: 26
   }
 });
 
