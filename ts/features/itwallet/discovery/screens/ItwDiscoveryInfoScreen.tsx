@@ -2,7 +2,6 @@ import {
   ContentWrapper,
   ForceScrollDownView,
   H1,
-  LabelLink,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";

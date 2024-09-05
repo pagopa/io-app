@@ -12,7 +12,6 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 import { WithTestID } from "../../../../../types/WithTestID";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { useItwPreventNavigationEvent } from "../../../common/hooks/useItwPreventNavigationEvent";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   trackItWalletCiePinForgotten,
   trackItWalletCiePukForgotten,

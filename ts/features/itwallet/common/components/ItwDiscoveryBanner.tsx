@@ -1,5 +1,5 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
-import React, { useEffect } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -13,7 +13,6 @@ import {
   trackItWalletBannerTap,
   trackITWalletBannerVisualized
 } from "../../analytics/itWalletAnalytics";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 type ItwDiscoveryBannerProps = {

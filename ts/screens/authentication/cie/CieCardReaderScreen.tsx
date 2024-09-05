@@ -62,7 +62,6 @@ import {
   trackLoginCieCardReadingError,
   trackLoginCieCardReadingSuccess
 } from "../analytics/cieAnalytics";
-import { trackItWalletCieCardReadingFailure } from "../../../features/itwallet/analytics/itWalletAnalytics";
 
 export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
