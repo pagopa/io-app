@@ -15,7 +15,7 @@ export const ItwQrCodeClaimImage = ({
   claim,
   isHidden
 }: ItwQrCodeClaimImageProps) => {
-  if (claim === undefined || typeof claim.value !== "string" || isHidden) {
+  if (claim === undefined || typeof claim.value !== "string") {
     return null;
   }
 

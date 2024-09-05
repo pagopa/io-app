@@ -3,18 +3,18 @@ import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
-import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
+import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { getHumanReadableParsedCredential } from "../../common/utils/debug";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlertsSection";
-import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection";
 import { ItwPresentationDetailsFooter } from "../components/ItwPresentationDetailsFooter";
 import { ItwPresentationDetailsHeader } from "../components/ItwPresentationDetailsHeader";
 import { ItwPresentationDetailsScreenBase } from "../components/ItwPresentationDetailsScreenBase";
+import { ItwQrCodeClaimImage } from "../../common/components/ItwQrCodeClaimImage";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -56,12 +56,13 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
       <ContentWrapper>
         <ItwPresentationAlertsSection credential={credential} />
         <VSpacer size={16} />
-        <ItwPresentationClaimsSection
-          title={I18n.t(
-            "features.itWallet.presentation.credentialDetails.documentDataTitle"
-          )}
+        <ItwCredentialClaimsList
           data={credential}
-          canHideValues={true}
+          customClaimsSlot={
+            <ItwQrCodeClaimImage
+              claim={credential.parsedCredential.link_qr_code}
+            />
+          }
         />
       </ContentWrapper>
       <VSpacer size={24} />
