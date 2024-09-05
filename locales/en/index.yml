@@ -3943,7 +3943,7 @@ FIMS:
       body: Qui puoi vedere tutti gli accessi a servizi esterni che hai fatto tramite IO e richiederne una copia via email
   loadingScreen:
     abort:
-      title: "Operazione annullata"
+      title: "I dati non sono stati condivisi"
     consents:
       title: "Attendi qualche secondo"
     idle:
@@ -3952,7 +3952,7 @@ FIMS:
       title: "Attendi qualche secondo"
     in-app-browser-loading:
       title: "Ti stiamo indirizzando al servizio"
-      subtitle: "Attendi qualche secondo"
+    subtitle: "Attendi qualche secondo"
   consentsScreen:
     errorStates:
       tempErrorBody: "C’è un problema temporaneo, riprova più tardi"
