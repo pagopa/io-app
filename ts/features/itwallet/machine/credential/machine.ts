@@ -1,4 +1,4 @@
-import { assign, fromPromise, setup, DoneActorEvent } from "xstate5";
+import { assign, fromPromise, setup } from "xstate5";
 import { ItwTags } from "../tags";
 import { ItwSessionExpiredError } from "../../api/client";
 import {
@@ -163,7 +163,10 @@ export const itwCredentialIssuanceMachine = setup({
               issuerConf: context.issuerConf
             }),
             onDone: {
-              target: "ObtainingStatusAttestation"
+              target: "ObtainingStatusAttestation",
+              actions: assign(({ event }) => ({
+                credential: event.output.credential
+              }))
             },
             onError: {
               target: "#itwCredentialIssuanceMachine.Failure",
@@ -174,11 +177,7 @@ export const itwCredentialIssuanceMachine = setup({
         ObtainingStatusAttestation: {
           invoke: {
             src: "obtainStatusAttestation",
-            input: ({ event }) => {
-              const actorEvent =
-                event as DoneActorEvent<ObtainCredentialActorOutput>;
-              return { credential: actorEvent.output.credential };
-            },
+            input: ({ context }) => ({ credential: context.credential }),
             onDone: {
               target: "Completed",
               actions: assign(({ event }) => ({
