@@ -32,11 +32,7 @@ function renderComponent() {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwPresentationClaimsSection
-        title="Personal data"
-        data={ItwStoredCredentialsMocks.ts}
-        canHideValues
-      />
+      <ItwPresentationClaimsSection credential={ItwStoredCredentialsMocks.ts} />
     ),
     ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
     {},
