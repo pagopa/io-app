@@ -2,51 +2,20 @@ import { select, call, all, put } from "typed-redux-saga/macro";
 import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/ReadonlyArray";
 import * as O from "fp-ts/Option";
-import { Errors } from "@pagopa/io-react-native-wallet";
 import { itwCredentialsSelector } from "../store/selectors";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
   shouldRequestStatusAttestation,
-  getCredentialStatusAttestation
+  updateCredentialWithStatusAttestation
 } from "../../common/utils/itwCredentialStatusAttestationUtils";
 import { itwCredentialsMultipleUpdate } from "../store/actions";
-import { ReduxSagaEffect } from "../../../../types/utils";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { walletAddCards } from "../../../newWallet/store/actions/cards";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 
 const canGetStatusAttestation = (credential: StoredCredential) =>
   credential.credentialType === CredentialType.DRIVING_LICENSE;
-
-export function* updateCredentialStatusAttestationSaga(
-  credential: StoredCredential
-): Generator<ReduxSagaEffect, StoredCredential> {
-  try {
-    const { parsedStatusAttestation, statusAttestation } = yield* call(
-      getCredentialStatusAttestation,
-      credential
-    );
-    return {
-      ...credential,
-      storedStatusAttestation: {
-        credentialStatus: "valid",
-        statusAttestation,
-        parsedStatusAttestation: parsedStatusAttestation.payload
-      }
-    };
-  } catch (error) {
-    return {
-      ...credential,
-      storedStatusAttestation: {
-        credentialStatus:
-          error instanceof Errors.StatusAttestationInvalid
-            ? "invalid" // The credential was revoked
-            : "unknown" // We do not have enough information on the status, the error was unexpected
-      }
-    };
-  }
-}
 
 /**
  * This saga is responsible to check the status attestation for each credential in the wallet.
@@ -76,7 +45,7 @@ export function* checkCredentialsStatusAttestation() {
 
   const updatedCredentials = yield* all(
     credentialsToCheck.map(credential =>
-      call(updateCredentialStatusAttestationSaga, credential)
+      call(updateCredentialWithStatusAttestation, credential)
     )
   );
 
