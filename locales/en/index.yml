@@ -3951,6 +3951,8 @@ FIMS:
       title: "Ti stiamo indirizzando al servizio"
     subtitle: "Attendi qualche secondo"
   consentsScreen:
+    errorStates:
+      tempErrorBody: "C’è un problema temporaneo, riprova più tardi"
     title: "Consenti la condivisione dei tuoi dati"
     subtitle: "Autorizza IO a trasmettere a "
     subtitle2: " i dati necessari per la tua autenticazione su "
