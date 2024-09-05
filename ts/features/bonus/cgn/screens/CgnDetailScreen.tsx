@@ -8,8 +8,6 @@ import {
   VSpacer,
   IOStyles,
   Alert,
-  Tag,
-  Chip,
   H4
 } from "@pagopa/io-app-design-system";
 import WebView from "react-native-webview";
@@ -66,6 +64,7 @@ import { Point, generateRandomSvgMovement } from "../utils/svgBackground";
 import { playSvg } from "../components/detail/CardSvgPayload";
 import { profileSelector } from "../../../../store/reducers/profile";
 import { Card } from "../../../../../definitions/cgn/Card";
+import { CgnCardStatus } from "./CgnCardStatus";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -244,34 +243,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);
-
-export function CgnCardStatus({ card }: { card: Card }) {
-  return (
-    <React.Fragment>
-      {CardRevoked.is(card) && (
-        <Tag
-          testID="card-status-revoked"
-          variant="error"
-          text={I18n.t("bonus.cgn.detail.status.badge.revoked")}
-        />
-      )}
-      {CardExpired.is(card) && (
-        <Tag
-          testID="card-status-expired"
-          variant="error"
-          text={I18n.t("bonus.cgn.detail.status.badge.expired")}
-        />
-      )}
-      {CardActivated.is(card) && (
-        <Chip color="grey-650" testID="card-bottom-content">
-          {I18n.t("bonus.cgn.detail.status.date.valid_until", {
-            date: formatDateAsShortFormat(card.expiration_date)
-          })}
-        </Chip>
-      )}
-    </React.Fragment>
-  );
-}
 
 function AnimatedBackground({ onLoadEnd }: { onLoadEnd?(): void }) {
   return (
