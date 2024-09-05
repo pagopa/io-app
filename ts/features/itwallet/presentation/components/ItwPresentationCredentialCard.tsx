@@ -13,6 +13,13 @@ import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
+/**
+ * Credentials that should display a skeumorphic card
+ */
+const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
+  CredentialType.DRIVING_LICENSE
+];
+
 type Props = {
   credential: StoredCredential;
 };
@@ -31,15 +38,16 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
     credential.parsedCredential
   );
 
-  const hasSkeumorphicCard =
-    credential.credentialType === CredentialType.DRIVING_LICENSE;
+  const hasSkeumorphicCard = credentialsWithSkeumorphicCard.includes(
+    credential.credentialType
+  );
 
   if (hasSkeumorphicCard) {
     return (
       <VStack space={8}>
-        <Wrapper backgroundColor={backgroundColor}>
+        <CardContainer backgroundColor={backgroundColor}>
           <ItwSkeumorphicCard credential={credential} isFlipped={isFlipped} />
-        </Wrapper>
+        </CardContainer>
         <View style={styles.flipButton}>
           <ButtonLink
             label={I18n.t(
@@ -55,21 +63,23 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   }
 
   return (
-    <Wrapper backgroundColor={backgroundColor}>
+    <CardContainer backgroundColor={backgroundColor}>
       <ItwCredentialCard
         credentialType={credential.credentialType}
         status={credentialStatus}
       />
-    </Wrapper>
+    </CardContainer>
   );
 };
 
-type WrapperProps = {
-  children: React.ReactNode;
+type CardContainerProps = {
   backgroundColor: string;
 };
 
-const Wrapper = ({ children, backgroundColor }: WrapperProps) => (
+const CardContainer = ({
+  children,
+  backgroundColor
+}: React.PropsWithChildren<CardContainerProps>) => (
   <View style={styles.cardContainer}>
     {children}
     <View style={[styles.cardBackdrop, { backgroundColor }]} />
