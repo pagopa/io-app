@@ -65,7 +65,7 @@ export const FimsFlowSuccessBody = ({
       const state = store.getState();
       computeAndTrackDataShare(serviceData, state);
     }
-  }, [serviceId, serviceData, store]);
+  }, [serviceData, store]);
 
   // -------- ERROR LOGIC
 
