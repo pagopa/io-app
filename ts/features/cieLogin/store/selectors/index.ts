@@ -19,8 +19,6 @@ const isCieIdMinAppVersionEnabledSelector = createSelector(
 export const isCieIDLocalFeatureEnabledSelector = (state: GlobalState) =>
   state.features.loginFeatures.cieLogin.isCieIDFeatureEnabled;
 
-export const isCieIDFFEnabledSelector = createSelector(
-  isCieIDLocalFeatureEnabledSelector,
-  isCieIdMinAppVersionEnabledSelector,
-  (localFlag, remoteFlag) => localFlag || remoteFlag
-);
+export const isCieIDFFEnabledSelector = (state: GlobalState) =>
+  isCieIDLocalFeatureEnabledSelector(state) ||
+  isCieIdMinAppVersionEnabledSelector(state);
