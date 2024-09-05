@@ -4,9 +4,10 @@ export type Reset = {
   type: "reset";
 };
 
-export type SelecteCredential = {
+export type SelectCredential = {
   type: "select-credential";
   credentialType: string;
+  skipNavigation: boolean;
 };
 
 export type ConfirmTrustData = {
@@ -31,7 +32,7 @@ export type Close = {
 
 export type CredentialIssuanceEvents =
   | Reset
-  | SelecteCredential
+  | SelectCredential
   | ConfirmTrustData
   | AddToWallet
   | Retry

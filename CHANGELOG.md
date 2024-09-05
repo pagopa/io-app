@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.69.0-rc.6](https://github.com/pagopa/io-app/compare/2.69.0-rc.5...2.69.0-rc.6) (2024-09-04)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1426](https://pagopa.atlassian.net/browse/SIW-1426)] Allow user to remove IT Wallet credential from wallet ([#6126](https://github.com/pagopa/io-app/issues/6126)) ([6de4900](https://github.com/pagopa/io-app/commit/6de490024548ff62ebc962c4ca93285a6b61b1d9))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1537](https://pagopa.atlassian.net/browse/SIW-1537)] Duplicate fiscal code in trust issuer screen ([#6146](https://github.com/pagopa/io-app/issues/6146)) ([f71a846](https://github.com/pagopa/io-app/commit/f71a8465c8016130af966acc9afe701dc6147123))
+* [[IOBP-847](https://pagopa.atlassian.net/browse/IOBP-847)] Navigate to the new payment flow from scan notice qr-code ([#6147](https://github.com/pagopa/io-app/issues/6147)) ([5da6266](https://github.com/pagopa/io-app/commit/5da626641114b34d9b776fd521a8fa6dd6f39dc9))
+
+
+### Chores
+
+* [[IOCOM-1672](https://pagopa.atlassian.net/browse/IOCOM-1672)] InApp Browser checking on FIMS ([#6099](https://github.com/pagopa/io-app/issues/6099)) ([965e1d8](https://github.com/pagopa/io-app/commit/965e1d85ad6120723d1fa14e2e3d9f119dc7744a)), closes [io-react-native-login-utils#16](https://github.com/pagopa/io-react-native-login-utils/issues/16)
+* **IT Wallet:** [[SIW-1538](https://pagopa.atlassian.net/browse/SIW-1538)] Add navigation on credential renewal ([#6148](https://github.com/pagopa/io-app/issues/6148)) ([20c50be](https://github.com/pagopa/io-app/commit/20c50be027563a582670662a128f0ba0530e5d6d))
+
 ## [2.69.0-rc.5](https://github.com/pagopa/io-app/compare/2.69.0-rc.4...2.69.0-rc.5) (2024-09-04)
 
 
