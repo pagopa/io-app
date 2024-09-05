@@ -3915,6 +3915,9 @@ permissionRequest:
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
 FIMS:
+  updateApp:
+    header: "Aggiorna l’app per proseguire"
+    body: "Per continuare a utilizzare tutte le funzionalità, scarica la nuova versione di IO dallo store."
   history:
     errorStates:
       dataUnavailable: "Dati non disponibili"
