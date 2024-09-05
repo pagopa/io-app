@@ -67,11 +67,6 @@ import { CgnAnimatedBackground } from "./CgnAnimatedBackground";
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const getPrimaryactionLabel = (isEycaEnabled: boolean) =>
-  isEycaEnabled
-    ? I18n.t("bonus.cgn.detail.cta.buyers")
-    : I18n.t("bonus.cgn.detail.cta.discover");
-
 function getLogoUris(card: Card | undefined, eycaDetails: EycaDetailsState) {
   const canCgnLogoBeShown = CardActivated.is(card);
   const canDisplayEycaLogo =
@@ -163,24 +158,12 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
       }
       footerCtaPrimary={
         showDiscoverCta
-          ? {
-              label: getPrimaryactionLabel(canDisplayEycaDetails),
-              onPress: onPressShowCgnDiscounts
-            }
+          ? footerCtaPrimary(canDisplayEycaDetails, onPressShowCgnDiscounts)
           : undefined
       }
       footerCtaSecondary={
         showDiscoverCta && canDisplayEycaDetails
-          ? {
-              label: I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts"),
-              accessibilityLabel: I18n.t(
-                "bonus.cgn.detail.cta.eyca.showEycaDiscounts"
-              ),
-              onPress: () =>
-                openWebUrl(EYCA_WEBSITE_DISCOUNTS_PAGE_URL, () =>
-                  IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
-                )
-            }
+          ? footerCtaSecondary
           : undefined
       }
     >
@@ -240,3 +223,25 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);
+
+function footerCtaPrimary(
+  canDisplayEycaDetails: boolean,
+  onPressShowCgnDiscounts: () => void
+) {
+  const label = canDisplayEycaDetails
+    ? I18n.t("bonus.cgn.detail.cta.buyers")
+    : I18n.t("bonus.cgn.detail.cta.discover");
+  return {
+    label,
+    onPress: onPressShowCgnDiscounts
+  };
+}
+
+const footerCtaSecondary = {
+  label: I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts"),
+  accessibilityLabel: I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts"),
+  onPress: () =>
+    openWebUrl(EYCA_WEBSITE_DISCOUNTS_PAGE_URL, () =>
+      IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
+    )
+};
