@@ -32,6 +32,11 @@ import {
   selectIsLoading
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import {
+  trackWalletAddListItem,
+  trackWalletAddStart
+} from "../../../newWallet/analytics/NewWalletAnalytics";
 
 const activeBadge: Badge = {
   variant: "success",
@@ -50,6 +55,8 @@ const WalletCardOnboardingScreen = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
+
+  useOnFirstRender(trackWalletAddListItem);
 
   const isItwSectionVisible = React.useMemo(
     // IT Wallet cedential catalog should be visible if
@@ -70,18 +77,22 @@ const WalletCardOnboardingScreen = () => {
       return;
     }
 
+    trackWalletAddStart({ wallet_item: "CGN" });
+
     dispatch(loadAvailableBonuses.request());
     dispatch(cgnActivationStart());
   };
 
   const navigateToInitiativesList = () => {
     // TODO add navigation to welfare initiatives list
+    trackWalletAddStart({ wallet_item: "welfare" });
   };
 
   const navigateToPaymentMethodOnboarding = () => {
     if (isCredentialLoading) {
       return;
     }
+    trackWalletAddStart({ wallet_item: "payment_method" });
 
     navigation.navigate(PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR, {
       screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD

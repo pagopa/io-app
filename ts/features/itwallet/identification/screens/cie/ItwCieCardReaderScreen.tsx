@@ -41,6 +41,12 @@ import {
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { itwIdpHintTest } from "../../../../../config";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import {
+  trackItWalletCieCardReading,
+  trackItWalletCieCardReadingFailure,
+  trackItWalletCieCardReadingSuccess
+} from "../../../analytics/itWalletAnalytics";
 
 // This can be any URL, as long as it has http or https as its protocol, otherwise it cannot be managed by the webview.
 const CIE_L3_REDIRECT_URI = "https://wallet.io.pagopa.it/index.html";
@@ -137,6 +143,8 @@ const LoadingSpinner = (
 export const ItwCieCardReaderScreen = () => {
   const navigation = useNavigation<StackNavigationProp<ItwParamsList>>();
 
+  useOnFirstRender(trackItWalletCieCardReading);
+
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isMachineLoading =
     ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
@@ -191,6 +199,8 @@ export const ItwCieCardReaderScreen = () => {
   const handleCieReadError = (error: Cie.CieError) => {
     handleAccessibilityAnnouncement(error);
 
+    // TODO Add **trackItWalletCieCardReadingFailure({ reason: "ADPU not supported" })** when ItwADPUnotsupported screen is added
+
     switch (error.type) {
       case Cie.CieErrorType.WEB_VIEW_ERROR:
         break;
@@ -204,6 +214,7 @@ export const ItwCieCardReaderScreen = () => {
         });
         break;
       case Cie.CieErrorType.TAG_NOT_VALID:
+        trackItWalletCieCardReadingFailure({ reason: "unknown card" });
         navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.WRONG_CARD);
         break;
       case Cie.CieErrorType.CERTIFICATE_ERROR:
@@ -212,12 +223,14 @@ export const ItwCieCardReaderScreen = () => {
       case Cie.CieErrorType.GENERIC:
       case Cie.CieErrorType.AUTHENTICATION_ERROR:
       default:
+        trackItWalletCieCardReadingFailure({ reason: "KO" });
         navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR);
         break;
     }
   };
 
   const handleCieReadSuccess = (url: string) => {
+    trackItWalletCieCardReadingSuccess();
     setWebViewVisible(false); // Try to hide the error page because the callback url is fake
     machineRef.send({ type: "cie-identification-completed", url });
   };

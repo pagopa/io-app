@@ -34,6 +34,7 @@ type ProfileProperties = {
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
   TRACKING: MixpanelOptInTrackingType;
   PAYMENTS_CONFIGURATION: PaymentsTrackingConfiguration;
+  ITW_HAS_READ_IPZS_POLICY: boolean;
 };
 
 export const updateMixpanelProfileProperties = async (
@@ -63,7 +64,8 @@ export const updateMixpanelProfileProperties = async (
       getNotificationPermissionType(notificationsEnabled),
     SERVICE_CONFIGURATION,
     TRACKING,
-    PAYMENTS_CONFIGURATION
+    PAYMENTS_CONFIGURATION,
+    ITW_HAS_READ_IPZS_POLICY: false
   };
 
   if (forceUpdateFor) {

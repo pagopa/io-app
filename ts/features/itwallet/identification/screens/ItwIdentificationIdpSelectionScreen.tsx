@@ -1,6 +1,6 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
 import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { isReady } from "../../../../common/model/RemoteValue";
 import IdpsGrid from "../../../../components/IdpsGrid";
@@ -14,6 +14,11 @@ import {
   idps as idpsFallback
 } from "../../../../utils/idps";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import {
+  trackItWalletSpidIDPSelected,
+  trackItWalletSpidIDPSelection
+} from "../../analytics/itWalletAnalytics";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
   const dispatch = useIODispatch();
@@ -25,6 +30,8 @@ export const ItwIdentificationIdpSelectionScreen = () => {
     randomOrderIdps(idpValue)
   );
 
+  useOnFirstRender(trackItWalletSpidIDPSelection);
+
   useFocusEffect(
     React.useCallback(() => {
       dispatch(loadIdps.request());
@@ -32,6 +39,7 @@ export const ItwIdentificationIdpSelectionScreen = () => {
   );
 
   const onIdpSelected = (idp: LocalIdpsFallback) => {
+    trackItWalletSpidIDPSelected({ idp: idp.name });
     machineRef.send({ type: "select-spid-idp", idp });
   };
 

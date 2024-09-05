@@ -31,13 +31,14 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/b
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { openWebUrl } from "../../../../../utils/url";
-import {
-  trackLoginCiePinInfo,
-  trackLoginCiePinScreen
-} from "../../../../../screens/authentication/analytics/cieAnalytics"; // TODO: separate cie analytics?
 import { itwNfcIsEnabled } from "../../store/actions";
 import { itwIsNfcEnabledSelector } from "../../store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import {
+  trackItWalletCiePinEnter,
+  trackItWalletCiePinForgotten,
+  trackItWalletCiePinInfo
+} from "../../../analytics/itWalletAnalytics";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -45,7 +46,10 @@ const getContextualHelp = (): ContextualHelpPropsMarkdown => ({
   title: "authentication.cie.pin.contextualHelpTitle",
   body: "authentication.cie.pin.contextualHelpBody"
 });
-const onOpenForgotPinPage = () => openWebUrl(pinPukHelpUrl);
+const onOpenForgotPinPage = () => {
+  trackItWalletCiePinForgotten();
+  openWebUrl(pinPukHelpUrl);
+};
 
 const ForgottenPin = () => (
   <View>
@@ -79,7 +83,7 @@ export const ItwCiePinScreen = () => {
     title: I18n.t("bottomSheets.ciePin.title")
   });
 
-  useOnFirstRender(trackLoginCiePinScreen);
+  useOnFirstRender(trackItWalletCiePinEnter);
 
   const requestNfcEnabledCheck = useCallback(
     () => dispatch(itwNfcIsEnabled.request()),
@@ -132,7 +136,7 @@ export const ItwCiePinScreen = () => {
             <VSpacer size={8} />
             <LabelLink
               onPress={() => {
-                trackLoginCiePinInfo();
+                trackItWalletCiePinInfo();
                 present();
               }}
             >

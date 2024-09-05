@@ -12,6 +12,15 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 import { WithTestID } from "../../../../../types/WithTestID";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { useItwPreventNavigationEvent } from "../../../common/hooks/useItwPreventNavigationEvent";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import {
+  trackItWalletCiePinForgotten,
+  trackItWalletCiePukForgotten,
+  trackItWalletCieRetryPin,
+  trackItWalletErrorPinIncorrect,
+  trackItWalletErrorPinIncorrectLast,
+  trackItWalletErrorPinIncorrectTwice
+} from "../../../analytics/itWalletAnalytics";
 
 export type ItwCieWrongCiePinScreenNavigationParams = {
   remainingCount: number;
@@ -49,7 +58,22 @@ export const ItwCieWrongCiePinScreen = () => {
     >();
   const { remainingCount } = route.params;
 
+  const handleTrackPinErrors = (key: number) => {
+    switch (key) {
+      case 2:
+        trackItWalletErrorPinIncorrect();
+        break;
+      case 1:
+        trackItWalletErrorPinIncorrectTwice();
+        break;
+      case 0:
+        trackItWalletErrorPinIncorrectLast();
+        break;
+    }
+  };
+
   const handleRetry = React.useCallback(() => {
+    trackItWalletCieRetryPin();
     machineRef.send({ type: "back" });
   }, [machineRef]);
 
@@ -58,12 +82,14 @@ export const ItwCieWrongCiePinScreen = () => {
   }, [machineRef]);
 
   const didYouForgetPin = React.useCallback(() => {
+    trackItWalletCiePinForgotten();
     Linking.openURL(
       "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/"
     ).catch(constNull);
   }, []);
 
   const didYouForgetPuk = React.useCallback(() => {
+    trackItWalletCiePukForgotten();
     Linking.openURL(
       "https://www.cartaidentita.interno.gov.it/info-utili/recupero-puk/"
     ).catch(constNull);
@@ -159,8 +185,12 @@ export const ItwCieWrongCiePinScreen = () => {
   );
 
   const getMessage = React.useCallback(
-    (key: number) =>
-      key in messages ? messages[key] : defaultMessageThatShouldNeverHappen,
+    (key: number) => {
+      handleTrackPinErrors(key);
+      return key in messages
+        ? messages[key]
+        : defaultMessageThatShouldNeverHappen;
+    },
     [defaultMessageThatShouldNeverHappen, messages]
   );
 

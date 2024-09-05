@@ -6,11 +6,15 @@ import I18n from "../../../../../i18n";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { useItwPreventNavigationEvent } from "../../../common/hooks/useItwPreventNavigationEvent";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { trackItWalletCieCardReadingFailure } from "../../../analytics/itWalletAnalytics";
 
 export const ItwCieUnexpectedErrorScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   useItwPreventNavigationEvent();
+
+  useOnFirstRender(() => trackItWalletCieCardReadingFailure({ reason: "KO" }));
 
   const handleRetry = React.useCallback(() => {
     machineRef.send({ type: "back" });

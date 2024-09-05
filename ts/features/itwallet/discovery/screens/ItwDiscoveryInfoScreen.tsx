@@ -2,6 +2,7 @@ import {
   ContentWrapper,
   ForceScrollDownView,
   H1,
+  LabelLink,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
@@ -15,6 +16,11 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { selectIsLoading } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import {
+  trackItWalletActivationStart,
+  trackItWalletIntroScreen,
+  trackItWalletTOSTap
+} from "../../analytics/itWalletAnalytics";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -23,8 +29,15 @@ import { ItwEidIssuanceMachineContext } from "../../machine/provider";
  * with a primary and secondary action.
  */
 const ItwDiscoveryInfoScreen = () => {
+  useOnFirstRender(trackItWalletIntroScreen);
+
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+
+  const handleContinuePress = () => {
+    trackItWalletActivationStart();
+    return machineRef.send({ type: "accept-tos" });
+  };
 
   useOnFirstRender(() => {
     machineRef.send({ type: "start" });
@@ -49,7 +62,10 @@ const ItwDiscoveryInfoScreen = () => {
         <ItwMarkdown>
           {I18n.t("features.itWallet.discovery.content")}
         </ItwMarkdown>
-        <ItwMarkdown styles={{ body: { fontSize: 14 } }}>
+        <ItwMarkdown
+          styles={{ body: { fontSize: 14 } }}
+          onLinkOpen={trackItWalletTOSTap}
+        >
           {I18n.t("features.itWallet.discovery.tos")}
         </ItwMarkdown>
       </ContentWrapper>
@@ -61,7 +77,7 @@ const ItwDiscoveryInfoScreen = () => {
             loading: isLoading,
             label: I18n.t("global.buttons.continue"),
             accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: () => machineRef.send({ type: "accept-tos" })
+            onPress: handleContinuePress
           }
         }}
       />

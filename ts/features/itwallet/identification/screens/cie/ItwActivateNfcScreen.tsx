@@ -10,11 +10,19 @@ import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScro
 import I18n from "../../../../../i18n";
 import * as cieUtils from "../../../../../utils/cie";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import {
+  trackItWalletCieNfcActivation,
+  trackItWalletCieNfcGoToSettings
+} from "../../../analytics/itWalletAnalytics";
 
 export const ItwActivateNfcScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
+  useOnFirstRender(trackItWalletCieNfcActivation);
+
   const openSettings = useCallback(async () => {
+    trackItWalletCieNfcGoToSettings();
     await cieUtils.openNFCSettings();
   }, []);
 
