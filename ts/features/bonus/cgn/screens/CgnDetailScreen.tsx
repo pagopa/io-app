@@ -10,7 +10,6 @@ import {
   Alert,
   H4
 } from "@pagopa/io-app-design-system";
-import WebView from "react-native-webview";
 import {
   CardActivated,
   StatusEnum
@@ -60,11 +59,10 @@ import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { useIOSelector } from "../../../../store/hooks";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
-import { Point, generateRandomSvgMovement } from "../utils/svgBackground";
-import { playSvg } from "../components/detail/CardSvgPayload";
 import { profileSelector } from "../../../../store/reducers/profile";
 import { Card } from "../../../../../definitions/cgn/Card";
 import { CgnCardStatus } from "./CgnCardStatus";
+import { CgnAnimatedBackground } from "./CgnAnimatedBackground";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -147,7 +145,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
       name={I18n.t("bonus.cgn.name")}
       organizationName={I18n.t("bonus.cgn.departmentName")}
       counters={[]}
-      cardBackground={<AnimatedBackground />}
+      cardBackground={<CgnAnimatedBackground />}
       status={
         props.cgnDetails ? <CgnCardStatus card={props.cgnDetails} /> : undefined
       }
@@ -243,72 +241,3 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);
-
-function AnimatedBackground({ onLoadEnd }: { onLoadEnd?(): void }) {
-  return (
-    <WebView
-      androidCameraAccessDisabled={true}
-      androidMicrophoneAccessDisabled={true}
-      testID={"background-webview"}
-      source={{
-        html: generatedSvg
-      }}
-      style={{
-        height: "100%",
-        width: "100%"
-      }}
-      onLoadEnd={onLoadEnd}
-    />
-  );
-}
-
-const minPointA: Point = {
-  x: 80,
-  y: -100
-};
-const maxPointA: Point = {
-  x: 100,
-  y: 50
-};
-
-const minPointB: Point = {
-  x: -80,
-  y: 0
-};
-const maxPointB: Point = {
-  x: 100,
-  y: 10
-};
-
-const minPointC: Point = {
-  x: -50,
-  y: 50
-};
-const maxPointC: Point = {
-  x: 50,
-  y: 10
-};
-
-const MOVEMENT_STEPS = 12;
-
-const generatedTranslationA = generateRandomSvgMovement(
-  MOVEMENT_STEPS,
-  minPointA,
-  maxPointA
-);
-const generatedTranslationB = generateRandomSvgMovement(
-  MOVEMENT_STEPS,
-  minPointB,
-  maxPointB
-);
-const generatedTranslationC = generateRandomSvgMovement(
-  MOVEMENT_STEPS,
-  minPointC,
-  maxPointC
-);
-
-const generatedSvg = playSvg(
-  generatedTranslationA,
-  generatedTranslationB,
-  generatedTranslationC
-);
