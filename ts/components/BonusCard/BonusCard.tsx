@@ -30,7 +30,7 @@ type ContentProps = {
   name: string;
   organizationName: string;
   status: React.ReactNode;
-  counters: ReadonlyArray<BonusCardCounter>;
+  counters?: ReadonlyArray<BonusCardCounter>;
   cardFooter?: React.ReactNode;
   cardBackground?: React.ReactNode;
 };
@@ -82,17 +82,19 @@ const BonusCardContent = (props: BonusCard) => {
       <VSpacer size={16} />
       <BonusCardStatus>{status}</BonusCardStatus>
       <VSpacer size={16} />
-      <View style={styles.counters}>
-        {counters.map((counter, index) => {
-          const isLast = index === counters.length - 1;
-          return (
-            <React.Fragment key={`${counter.label}_${index}`}>
-              <BonusCardCounter {...counter} />
-              {!isLast && <HSpacer size={16} />}
-            </React.Fragment>
-          );
-        })}
-      </View>
+      {counters && (
+        <View style={styles.counters}>
+          {counters.map((counter, index) => {
+            const isLast = index === counters.length - 1;
+            return (
+              <React.Fragment key={`${counter.label}_${index}`}>
+                <BonusCardCounter {...counter} />
+                {!isLast && <HSpacer size={16} />}
+              </React.Fragment>
+            );
+          })}
+        </View>
+      )}
       {cardFooter}
     </View>
   );

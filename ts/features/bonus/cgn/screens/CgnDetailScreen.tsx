@@ -144,7 +144,6 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
       logoUris={logoUris}
       name={I18n.t("bonus.cgn.name")}
       organizationName={I18n.t("bonus.cgn.departmentName")}
-      counters={[]}
       cardBackground={<CgnAnimatedBackground />}
       status={
         props.cgnDetails ? <CgnCardStatus card={props.cgnDetails} /> : undefined
