@@ -2046,10 +2046,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@2.0.0-1":
-  version "2.0.0-1"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-2.0.0-1.tgz#6343c386057b5c0165becf6657bae4c9c66afbd3"
-  integrity sha512-PQErTyYG+0yNSDaBUol8roKmNAWU7OdOJQy1RFVJ2wCO1g6laKTi2ey/NqEZsMHpUjz+d3HH1rwh5++23yhuEQ==
+"@pagopa/io-app-design-system@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-2.0.0.tgz#f927b8fa14e44a69c8aaf635b9e0ca5980239aa7"
+  integrity sha512-uBSSVvTULZlS1AGzKGQ1RPCycTiE5DnmHA6y3PLNQY42bZaqr4v8f5KSWjqc9t67Gxt8OoeVhwjM7IIowWV1dw==
   dependencies:
     "@pagopa/ts-commons" "^12.0.0"
     "@testing-library/jest-native" "^5.4.2"
@@ -16541,7 +16541,7 @@ xss@1.0.10:
     commander "^2.20.3"
     cssfilter "0.0.10"
 
-"xstate5@npm:xstate@5":
+"xstate5@npm:xstate@5", xstate@^5.13.0:
   version "5.13.0"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.13.0.tgz#7f7092d813a89d94024b083fe23a86b6cf4a323a"
   integrity sha512-Z0om784N5u8sAzUvQJBa32jiTCIGGF/2ZsmKkerQEqeeUktAeOMK20FIHFUMywC4GcAkNksSvaeX7lwoRNXPEQ==
@@ -16550,11 +16550,6 @@ xstate@^4.29.0, xstate@^4.33.6:
   version "4.35.4"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.35.4.tgz#87b2a45b6c7e84d820f56378408c6531ca5c4662"
   integrity sha512-mqRBYHhljP1xIItI4xnSQNHEv6CKslSM1cOGmvhmxeoDPAZgNbhSUYAL5N6DZIxRfpYY+M+bSm3mUFHD63iuvg==
-
-xstate@^5.13.0:
-  version "5.13.0"
-  resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.13.0.tgz#7f7092d813a89d94024b083fe23a86b6cf4a323a"
-  integrity sha512-Z0om784N5u8sAzUvQJBa32jiTCIGGF/2ZsmKkerQEqeeUktAeOMK20FIHFUMywC4GcAkNksSvaeX7lwoRNXPEQ==
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.2"
