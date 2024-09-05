@@ -6,6 +6,8 @@ import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuan
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
+import { updateCredentialWithStatusAttestation } from "../../common/utils/itwCredentialStatusAttestationUtils";
+import { type Context } from "./context";
 
 export type InitializeWalletActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.initializeWallet>
@@ -23,6 +25,12 @@ export type ObtainCredentialActorInput =
 
 export type ObtainCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.obtainCredential>
+>;
+
+export type ObtainStatusAttestationActorInput = Pick<Context, "credential">;
+
+export type ObtainStatusAttestationActorOutput = Awaited<
+  ReturnType<typeof updateCredentialWithStatusAttestation>
 >;
 
 export default (store: ReturnType<typeof useIOStore>) => {
@@ -99,9 +107,19 @@ export default (store: ReturnType<typeof useIOStore>) => {
     });
   });
 
+  const obtainStatusAttestation = fromPromise<
+    ObtainStatusAttestationActorOutput,
+    ObtainStatusAttestationActorInput
+  >(async ({ input }) => {
+    assert(input.credential, "credential is undefined");
+
+    return updateCredentialWithStatusAttestation(input.credential);
+  });
+
   return {
     initializeWallet,
     requestCredential,
-    obtainCredential
+    obtainCredential,
+    obtainStatusAttestation
   };
 };

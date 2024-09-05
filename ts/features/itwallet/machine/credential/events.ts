@@ -1,4 +1,4 @@
-import { ErrorActorEvent } from "xstate5";
+import { ErrorActorEvent, DoneActorEvent } from "xstate5";
 
 export type Reset = {
   type: "reset";
@@ -38,4 +38,5 @@ export type CredentialIssuanceEvents =
   | Retry
   | Back
   | Close
-  | ErrorActorEvent;
+  | ErrorActorEvent
+  | DoneActorEvent;
