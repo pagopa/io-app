@@ -79,7 +79,7 @@ const FailureListItem = ({ item }: BaseHistoryListItemProps) => {
 // ------- RENDERER
 
 export const FimsHistoryListItem = ({ item }: BaseHistoryListItemProps) => {
-  const { serviceData } = useAutoFetchingServiceByIdPot(
+  const serviceData = useAutoFetchingServiceByIdPot(
     item.service_id as ServiceId
   );
 
