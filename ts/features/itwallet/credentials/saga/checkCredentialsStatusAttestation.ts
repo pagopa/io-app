@@ -12,8 +12,6 @@ import {
 } from "../../common/utils/itwCredentialStatusAttestationUtils";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { walletAddCards } from "../../../newWallet/store/actions/cards";
-import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 import { itwCredentialsStore } from "../store/actions";
 
 const canGetStatusAttestation = (credential: StoredCredential) =>
@@ -81,15 +79,4 @@ export function* checkCredentialsStatusAttestation() {
   );
 
   yield* put(itwCredentialsStore(updatedCredentials));
-  yield* put(
-    walletAddCards(
-      updatedCredentials.map(c => ({
-        key: `ITW_${c.credentialType}`,
-        type: "itw",
-        category: "itw",
-        credentialType: c.credentialType,
-        status: getCredentialStatus(c)
-      }))
-    )
-  );
 }
