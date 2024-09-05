@@ -4,7 +4,6 @@ import React from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import I18n from "../../../../i18n";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { openAppStoreUrl } from "../../../../utils/url";
 
 export const FimsUpdateAppAlert = () => {
@@ -30,11 +29,7 @@ export const FimsUpdateAppAlert = () => {
 
 const useOnlySupportRequestHeader = () => {
   const navigation = useNavigation();
-  const startSupportRequest = useStartSupportRequest({
-    faqCategories: undefined,
-    contextualHelpMarkdown: undefined,
-    contextualHelp: emptyContextualHelp
-  });
+  const startSupportRequest = useStartSupportRequest({});
 
   React.useEffect(() => {
     navigation.setOptions({
