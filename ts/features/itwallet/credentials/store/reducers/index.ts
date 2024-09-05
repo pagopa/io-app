@@ -22,12 +22,8 @@ const reducer = (
 ): ItwCredentialsState => {
   switch (action.type) {
     case getType(itwCredentialsStore): {
-      const credentialsToStore = Array.isArray(action.payload)
-        ? action.payload
-        : [action.payload];
-
       const { [CredentialType.PID]: eid, ...otherCredentials } =
-        credentialsToStore.reduce(
+        action.payload.reduce(
           (acc, c) => ({ ...acc, [c.credentialType]: c }),
           {} as { [K in CredentialType]?: StoredCredential }
         );

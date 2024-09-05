@@ -48,7 +48,7 @@ describe("ITW credentials reducer", () => {
     const targetSate = pipe(
       undefined,
       curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(itwCredentialsStore(mockedEid))
+      curriedAppReducer(itwCredentialsStore([mockedEid]))
     );
 
     expect(targetSate.features.itWallet.credentials.eid).toEqual(
@@ -61,8 +61,8 @@ describe("ITW credentials reducer", () => {
     const targetSate = pipe(
       undefined,
       curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(itwCredentialsStore(mockedEid)),
-      curriedAppReducer(itwCredentialsStore(mockedCredential))
+      curriedAppReducer(itwCredentialsStore([mockedEid])),
+      curriedAppReducer(itwCredentialsStore([mockedCredential]))
     );
 
     expect(targetSate.features.itWallet.credentials.eid).toEqual(
@@ -77,7 +77,7 @@ describe("ITW credentials reducer", () => {
     const targetSate = pipe(
       undefined,
       curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(itwCredentialsStore(mockedEid)),
+      curriedAppReducer(itwCredentialsStore([mockedEid])),
       curriedAppReducer(
         itwCredentialsStore([mockedCredential, mockedCredential2])
       )
@@ -111,7 +111,7 @@ describe("ITW credentials reducer", () => {
     const targetSate = pipe(
       undefined,
       curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(itwCredentialsStore(mockedCredential))
+      curriedAppReducer(itwCredentialsStore([mockedCredential]))
     );
 
     expect(targetSate.features.itWallet.credentials.eid).toEqual(O.none);
@@ -122,7 +122,7 @@ describe("ITW credentials reducer", () => {
     const targetSate = pipe(
       undefined,
       curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(itwCredentialsStore(mockedEid)),
+      curriedAppReducer(itwCredentialsStore([mockedEid])),
       curriedAppReducer(itwCredentialsRemove(mockedEid))
     );
 
@@ -135,8 +135,8 @@ describe("ITW credentials reducer", () => {
     const targetSate = pipe(
       undefined,
       curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(itwCredentialsStore(mockedEid)),
-      curriedAppReducer(itwCredentialsStore(mockedCredential)),
+      curriedAppReducer(itwCredentialsStore([mockedEid])),
+      curriedAppReducer(itwCredentialsStore([mockedCredential])),
       curriedAppReducer(itwCredentialsRemove(mockedCredential))
     );
 
@@ -150,8 +150,8 @@ describe("ITW credentials reducer", () => {
     const targetSate = pipe(
       undefined,
       curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(itwCredentialsStore(mockedEid)),
-      curriedAppReducer(itwCredentialsStore(mockedCredential)),
+      curriedAppReducer(itwCredentialsStore([mockedEid])),
+      curriedAppReducer(itwCredentialsStore([mockedCredential])),
       curriedAppReducer(itwLifecycleStoresReset())
     );
 
@@ -176,11 +176,11 @@ describe("ITW credentials reducer", () => {
     const targetSate = pipe(
       undefined,
       curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(itwCredentialsStore(mockedEid)),
+      curriedAppReducer(itwCredentialsStore([mockedEid])),
       curriedAppReducer(
         itwCredentialsStore([mockedCredential, mockedCredential2])
       ),
-      curriedAppReducer(itwCredentialsStore(credentialUpdate))
+      curriedAppReducer(itwCredentialsStore([credentialUpdate]))
     );
 
     expect(targetSate.features.itWallet.credentials.eid).toEqual(

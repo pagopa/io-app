@@ -7,7 +7,7 @@ import { StoredCredential } from "../../../common/utils/itwTypesUtils";
  */
 export const itwCredentialsStore = createStandardAction(
   "ITW_CREDENTIALS_STORE"
-)<StoredCredential | Array<StoredCredential>>();
+)<Array<StoredCredential>>();
 
 export const itwCredentialsRemove = createStandardAction(
   "ITW_CREDENTIALS_REMOVE"
