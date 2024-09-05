@@ -1,21 +1,17 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
-import { ParsedCredential } from "../utils/itwTypesUtils";
+import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";
 
 type ItwQrCodeClaimImageProps = {
-  claim?: ParsedCredential[keyof ParsedCredential];
-  isHidden?: boolean;
+  claim: ClaimDisplayFormat;
 };
 
 /**
  * This component allows to render the content of a claim in form of a QR Code
  */
-export const ItwQrCodeClaimImage = ({
-  claim,
-  isHidden
-}: ItwQrCodeClaimImageProps) => {
-  if (claim === undefined || typeof claim.value !== "string") {
+export const ItwQrCodeClaimImage = ({ claim }: ItwQrCodeClaimImageProps) => {
+  if (claim.value === undefined || typeof claim.value !== "string") {
     return null;
   }
 

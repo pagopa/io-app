@@ -17,7 +17,6 @@ import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
@@ -27,9 +26,10 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   selectCredentialOption,
   selectCredentialTypeOption,
-  selectIsLoading
+  selectIsIssuing
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
@@ -38,13 +38,13 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialOption
   );
-  const isLoading =
-    ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
+  const isIssuing =
+    ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  if (isLoading) {
+  if (isIssuing) {
     return (
       <LoadingScreenContent
         contentTitle={I18n.t(
@@ -119,7 +119,7 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
           })}
         </H2>
         <VSpacer size={24} />
-        <ItwCredentialClaimsList data={credential} isPreview={true} />
+        <ItwCredentialPreviewClaimsList data={credential} />
       </View>
       <FooterActions
         fixed={false}
