@@ -111,6 +111,8 @@ const WalletPaymentOutcomeScreen = () => {
     analytics.trackPaymentErrorHelp({
       error: outcome,
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
       service_name: paymentAnalyticsData?.serviceName,
       first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
@@ -164,6 +166,8 @@ const WalletPaymentOutcomeScreen = () => {
       onPress: () => {
         analytics.trackPaymentNoSavedMethodExit({
           organization_name: paymentAnalyticsData?.verifiedData?.paName,
+          organization_fiscal_code:
+            paymentAnalyticsData?.verifiedData?.paFiscalCode,
           service_name: paymentAnalyticsData?.serviceName,
           first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
           expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
@@ -185,6 +189,8 @@ const WalletPaymentOutcomeScreen = () => {
       onPress: () => {
         analytics.trackPaymentNoSavedMethodContinue({
           organization_name: paymentAnalyticsData?.verifiedData?.paName,
+          organization_fiscal_code:
+            paymentAnalyticsData?.verifiedData?.paFiscalCode,
           service_name: paymentAnalyticsData?.serviceName,
           first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
           expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
@@ -219,6 +225,8 @@ const WalletPaymentOutcomeScreen = () => {
       analytics.trackPaymentOutcomeSuccess({
         attempt: paymentOngoingHistory?.attempt,
         organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        organization_fiscal_code:
+          paymentAnalyticsData?.verifiedData?.paFiscalCode,
         service_name: paymentAnalyticsData?.serviceName,
         amount: paymentAnalyticsData?.formattedAmount,
         expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
@@ -233,6 +241,8 @@ const WalletPaymentOutcomeScreen = () => {
       data_entry: paymentAnalyticsData?.startOrigin,
       first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
       service_name: paymentAnalyticsData?.serviceName,
       attempt: paymentOngoingHistory?.attempt,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,

@@ -95,6 +95,8 @@ const WalletPaymentPickPspScreen = () => {
       analytics.trackPaymentFeeSelection({
         attempt: paymentAnalyticsData?.attempt,
         organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        organization_fiscal_code:
+          paymentAnalyticsData?.verifiedData?.paFiscalCode,
         service_name: paymentAnalyticsData?.serviceName,
         amount: paymentAnalyticsData?.formattedAmount,
         expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
@@ -127,6 +129,8 @@ const WalletPaymentPickPspScreen = () => {
     analytics.trackPaymentFeeSelected({
       attempt: paymentAnalyticsData?.attempt,
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
       service_name: paymentAnalyticsData?.serviceName,
       amount: paymentAnalyticsData?.formattedAmount,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,

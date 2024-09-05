@@ -154,6 +154,8 @@ const WalletPaymentPickMethodScreen = () => {
       analytics.trackPaymentMethodSelection({
         attempt: paymentAnalyticsData?.attempt,
         organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        organization_fiscal_code:
+          paymentAnalyticsData?.verifiedData?.paFiscalCode,
         service_name: paymentAnalyticsData?.serviceName,
         amount: paymentAnalyticsData?.formattedAmount,
         saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
@@ -203,6 +205,8 @@ const WalletPaymentPickMethodScreen = () => {
     analytics.trackPaymentMethodSelected({
       attempt: paymentAnalyticsData?.attempt,
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
       service_name: paymentAnalyticsData?.serviceName,
       amount: paymentAnalyticsData?.formattedAmount,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
