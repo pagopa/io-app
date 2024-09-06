@@ -197,7 +197,6 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
         {canDisplayEycaDetails && <EycaDetailComponent />}
         <VSpacer size={24} />
         {CardActivated.is(props.cgnDetails) && <CgnUnsubscribe />}
-        <VSpacer size={40} />
       </View>
       <SectionStatusComponent sectionKey={"cgn"} />
     </BonusCardScreenComponent>

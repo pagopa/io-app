@@ -31,7 +31,6 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
 import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
@@ -304,7 +303,6 @@ const IdPayInitiativeDetailsScreen = () => {
       name={initiativeName || ""}
       organizationName={organizationName || ""}
       status={<IdPayCardStatus now={new Date()} initiative={initiative} />}
-      contextualHelp={emptyContextualHelp}
       counters={getInitiativeCounters(initiative)}
       footerCtaPrimary={getInitiativeFooterProps(initiativeRewardType)}
     >

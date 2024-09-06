@@ -7,7 +7,6 @@ import {
 import * as React from "react";
 import { Alert } from "react-native";
 import { BonusCardScreenComponent } from "../../../components/BonusCard";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import I18n from "../../../i18n";
 
 const DSBonusCardScreen = () => (
@@ -45,7 +44,6 @@ const DSBonusCardScreen = () => (
       accessibilityLabel: "Autorizza una transazione",
       onPress: () => Alert.alert("Autorizzata!")
     }}
-    contextualHelp={emptyContextualHelp}
   >
     <VSpacer size={16} />
     <ContentWrapper>
