@@ -1,4 +1,4 @@
-import { deleteKey, generate } from "@pagopa/io-react-native-crypto";
+import { generate } from "@pagopa/io-react-native-crypto";
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
   AuthorizationDetail,
@@ -6,7 +6,6 @@ import {
   Credential,
   WalletInstanceAttestation
 } from "@pagopa/io-react-native-wallet";
-import { constNull } from "fp-ts/lib/function";
 import uuid from "react-native-uuid";
 import {
   itWalletIssuanceRedirectUri,
@@ -16,14 +15,16 @@ import {
 import { SessionToken } from "../../../../types/SessionToken";
 import { createItWalletFetch } from "../../api/client";
 import { getIntegrityContext } from "./itwIntegrityUtils";
-import { CredentialType } from "./itwMocksUtils";
 import {
   IssuerConfiguration,
   RequestObject,
   StoredCredential
 } from "./itwTypesUtils";
-
-const WIA_CRDENTIAL_KEYTAG = "WIA_CRDENTIAL_KEYTAG";
+import {
+  DPOP_CREDENTIAL_KEYTAG,
+  regenerateCryptoKey,
+  WIA_CREDENTIAL_KEYTAG
+} from "./itwCryptoContextUtils";
 
 export type InitializeWalletParams = {
   integrityKeyTag: string;
@@ -34,15 +35,13 @@ export const initializeWallet = async ({
   integrityKeyTag,
   sessionToken
 }: InitializeWalletParams) => {
-  await deleteKey(WIA_CRDENTIAL_KEYTAG)
-    .catch(constNull)
-    .finally(() => generate(WIA_CRDENTIAL_KEYTAG));
+  await regenerateCryptoKey(WIA_CREDENTIAL_KEYTAG);
 
   const appFetch = createItWalletFetch(itwWalletProviderBaseUrl, sessionToken);
 
   // Obtain a wallet attestation.
 
-  const wiaCryptoContext = createCryptoContextFor(WIA_CRDENTIAL_KEYTAG);
+  const wiaCryptoContext = createCryptoContextFor(WIA_CREDENTIAL_KEYTAG);
   const integrityContext = getIntegrityContext(integrityKeyTag);
 
   const walletInstanceAttestation =
@@ -60,7 +59,7 @@ export const initializeWallet = async ({
 };
 
 export type RequestCredentialParams = {
-  credentialType: CredentialType;
+  credentialType: string;
   walletInstanceAttestation: string;
   wiaCryptoContext: CryptoContext;
 };
@@ -106,7 +105,7 @@ export const requestCredential = async ({
 };
 
 export type ObtainCredentialParams = {
-  credentialType: CredentialType;
+  credentialType: string;
   walletInstanceAttestation: string;
   wiaCryptoContext: CryptoContext;
   requestedCredential: RequestObject;
@@ -128,8 +127,11 @@ export const obtainCredential = async ({
   credentialDefinition,
   issuerConf
 }: ObtainCredentialParams) => {
-  // Create PID crypto context;
+  await regenerateCryptoKey(DPOP_CREDENTIAL_KEYTAG);
+
+  // Create PID and DPoP crypto context;
   const pidCryptoContext = createCryptoContextFor(pid.keyTag);
+  const dPopCryptoContext = createCryptoContextFor(DPOP_CREDENTIAL_KEYTAG);
 
   // Complete the user authorization via form_post.jwt mode
   const { code } =
@@ -143,18 +145,18 @@ export const obtainCredential = async ({
       }
     );
 
-  const { accessToken, dPoPContext } =
-    await Credential.Issuance.authorizeAccess(
-      issuerConf,
-      code,
-      clientId,
-      `${itWalletIssuanceRedirectUri}`,
-      codeVerifier,
-      {
-        walletInstanceAttestation,
-        wiaCryptoContext
-      }
-    );
+  const { accessToken } = await Credential.Issuance.authorizeAccess(
+    issuerConf,
+    code,
+    clientId,
+    `${itWalletIssuanceRedirectUri}`,
+    codeVerifier,
+    {
+      walletInstanceAttestation,
+      dPopCryptoContext,
+      wiaCryptoContext
+    }
+  );
 
   // Create credential crypto context
 
@@ -169,8 +171,8 @@ export const obtainCredential = async ({
     accessToken,
     clientId,
     credentialDefinition,
-    dPoPContext,
     {
+      dPopCryptoContext,
       credentialCryptoContext
     }
   );
@@ -182,7 +184,7 @@ export const obtainCredential = async ({
       issuerConf,
       credential,
       format,
-      { credentialCryptoContext, ignoreMissingAttributes: true }
+      { credentialCryptoContext, ignoreMissingAttributes: false }
     );
 
   const storedCredential: StoredCredential = {
@@ -197,8 +199,4 @@ export const obtainCredential = async ({
   return {
     credential: storedCredential
   };
-};
-
-export const disposeWallet = async () => {
-  await deleteKey(WIA_CRDENTIAL_KEYTAG).catch(constNull);
 };

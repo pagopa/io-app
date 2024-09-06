@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-
 /* globals jest, NativeModules, require, global */
 /**
  * Set up of the testing environment
@@ -33,9 +32,12 @@ jest.mock("react-native-reanimated", () => {
   // The mock misses the `addWhitelistedUIProps` implementation
   // So we override it with a no-op
   // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function
-  Reanimated.default.addWhitelistedUIProps = () => {};
+  Reanimated.default.addWhitelistedUIProps = () => { };
 
-  return Reanimated;
+  return {
+    ...Reanimated,
+    useScrollViewOffset: jest.fn
+  };
 });
 
 jest.mock("react-native-blob-util", () => ({

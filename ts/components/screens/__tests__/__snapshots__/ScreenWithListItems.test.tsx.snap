@@ -495,9 +495,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -583,9 +581,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -2072,9 +2068,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -2160,9 +2154,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}

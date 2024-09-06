@@ -123,150 +123,48 @@ exports[`IOMarkdown Should match snapshot 1`] = `
   >
     Here is a bullet list:
   </Text>
-  <View
-    style={
-      {
-        "flexDirection": "row",
-      }
-    }
-  >
+  <View>
     <View
       style={
         {
-          "width": 8,
+          "height": 8,
         }
       }
     />
     <View
-      accessibilityRole="list"
-      accessible={true}
       style={
-        [
-          {
-            "flex": 1,
-          },
-          {
-            "flexGrow": 1,
-          },
-        ]
+        {
+          "flexDirection": "row",
+        }
       }
     >
       <View
-        accessible={true}
         style={
           {
-            "flexDirection": "row",
+            "width": 12,
           }
         }
-      >
-        <Text
-          allowFontScaling={false}
-          dynamicTypeRamp="body"
-          maxFontSizeMultiplier={1.25}
-          style={
-            [
-              {},
-              {
-                "color": "#555C70",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 16,
-                "fontStyle": "normal",
-                "fontWeight": "400",
-                "lineHeight": 24,
-              },
-            ]
-          }
-        >
-          •
-        </Text>
-        <View
-          style={
-            {
-              "width": 8,
-            }
-          }
-        />
-        <View
-          accessible={false}
-          style={
-            [
-              {
-                "flex": 1,
-              },
-              {
-                "flexShrink": 1,
-              },
-            ]
-          }
-        >
-          <Text
-            allowFontScaling={false}
-            dynamicTypeRamp="body"
-            maxFontSizeMultiplier={1.25}
-            style={
-              [
-                {},
-                {
-                  "color": "#555C70",
-                  "fontFamily": "Titillium Sans Pro",
-                  "fontSize": 16,
-                  "fontStyle": "normal",
-                  "fontWeight": "400",
-                  "lineHeight": 24,
-                },
-              ]
-            }
-          >
-            Item 1
-          </Text>
-        </View>
-      </View>
+      />
       <View
+        accessibilityRole="list"
         accessible={true}
         style={
-          {
-            "flexDirection": "row",
-          }
+          [
+            {
+              "flex": 1,
+            },
+            {
+              "flexGrow": 1,
+            },
+          ]
         }
       >
-        <Text
-          allowFontScaling={false}
-          dynamicTypeRamp="body"
-          maxFontSizeMultiplier={1.25}
-          style={
-            [
-              {},
-              {
-                "color": "#555C70",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 16,
-                "fontStyle": "normal",
-                "fontWeight": "400",
-                "lineHeight": 24,
-              },
-            ]
-          }
-        >
-          •
-        </Text>
         <View
+          accessible={true}
           style={
             {
-              "width": 8,
+              "flexDirection": "row",
             }
-          }
-        />
-        <View
-          accessible={false}
-          style={
-            [
-              {
-                "flex": 1,
-              },
-              {
-                "flexShrink": 1,
-              },
-            ]
           }
         >
           <Text
@@ -287,56 +185,68 @@ exports[`IOMarkdown Should match snapshot 1`] = `
               ]
             }
           >
-            Item 2
+            •
           </Text>
+          <View
+            style={
+              {
+                "width": 8,
+              }
+            }
+          />
+          <View
+            accessible={false}
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "flexShrink": 1,
+                },
+              ]
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              color="bluegrey"
+              defaultColor="bluegrey"
+              defaultWeight="Regular"
+              dynamicTypeRamp="body"
+              font="TitilliumSansPro"
+              fontStyle={
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                }
+              }
+              maxFontSizeMultiplier={1.25}
+              style={
+                [
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  {
+                    "color": "#475A6D",
+                    "fontFamily": "Titillium Sans Pro",
+                    "fontStyle": "normal",
+                    "fontWeight": "400",
+                  },
+                ]
+              }
+              weight="Regular"
+            >
+              Item 1
+            </Text>
+          </View>
         </View>
-      </View>
-      <View
-        accessible={true}
-        style={
-          {
-            "flexDirection": "row",
-          }
-        }
-      >
-        <Text
-          allowFontScaling={false}
-          dynamicTypeRamp="body"
-          maxFontSizeMultiplier={1.25}
-          style={
-            [
-              {},
-              {
-                "color": "#555C70",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 16,
-                "fontStyle": "normal",
-                "fontWeight": "400",
-                "lineHeight": 24,
-              },
-            ]
-          }
-        >
-          •
-        </Text>
         <View
+          accessible={true}
           style={
             {
-              "width": 8,
+              "flexDirection": "row",
             }
-          }
-        />
-        <View
-          accessible={false}
-          style={
-            [
-              {
-                "flex": 1,
-              },
-              {
-                "flexShrink": 1,
-              },
-            ]
           }
         >
           <Text
@@ -357,11 +267,165 @@ exports[`IOMarkdown Should match snapshot 1`] = `
               ]
             }
           >
-            Item 3
+            •
           </Text>
+          <View
+            style={
+              {
+                "width": 8,
+              }
+            }
+          />
+          <View
+            accessible={false}
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "flexShrink": 1,
+                },
+              ]
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              color="bluegrey"
+              defaultColor="bluegrey"
+              defaultWeight="Regular"
+              dynamicTypeRamp="body"
+              font="TitilliumSansPro"
+              fontStyle={
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                }
+              }
+              maxFontSizeMultiplier={1.25}
+              style={
+                [
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  {
+                    "color": "#475A6D",
+                    "fontFamily": "Titillium Sans Pro",
+                    "fontStyle": "normal",
+                    "fontWeight": "400",
+                  },
+                ]
+              }
+              weight="Regular"
+            >
+              Item 2
+            </Text>
+          </View>
+        </View>
+        <View
+          accessible={true}
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            color="bluegrey"
+            defaultColor="bluegrey"
+            defaultWeight="Regular"
+            dynamicTypeRamp="body"
+            font="TitilliumSansPro"
+            fontStyle={
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              }
+            }
+            maxFontSizeMultiplier={1.25}
+            style={
+              [
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                {
+                  "color": "#475A6D",
+                  "fontFamily": "Titillium Sans Pro",
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                },
+              ]
+            }
+            weight="Regular"
+          >
+            •
+          </Text>
+          <View
+            style={
+              {
+                "width": 8,
+              }
+            }
+          />
+          <View
+            accessible={false}
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "flexShrink": 1,
+                },
+              ]
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              color="bluegrey"
+              defaultColor="bluegrey"
+              defaultWeight="Regular"
+              dynamicTypeRamp="body"
+              font="TitilliumSansPro"
+              fontStyle={
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                }
+              }
+              maxFontSizeMultiplier={1.25}
+              style={
+                [
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  {
+                    "color": "#475A6D",
+                    "fontFamily": "Titillium Sans Pro",
+                    "fontStyle": "normal",
+                    "fontWeight": "400",
+                  },
+                ]
+              }
+              weight="Regular"
+            >
+              Item 3
+            </Text>
+          </View>
         </View>
       </View>
     </View>
+    <View
+      style={
+        {
+          "height": 8,
+        }
+      }
+    />
   </View>
   <View
     style={
@@ -390,152 +454,48 @@ exports[`IOMarkdown Should match snapshot 1`] = `
   >
     Here is a numbered list:
   </Text>
-  <View
-    style={
-      {
-        "flexDirection": "row",
-      }
-    }
-  >
+  <View>
     <View
       style={
         {
-          "width": 8,
+          "height": 8,
         }
       }
     />
     <View
-      accessibilityRole="list"
-      accessible={true}
       style={
-        [
-          {
-            "flex": 1,
-          },
-          {
-            "flexGrow": 1,
-          },
-        ]
+        {
+          "flexDirection": "row",
+        }
       }
     >
       <View
-        accessible={true}
         style={
           {
-            "flexDirection": "row",
+            "width": 12,
           }
         }
-      >
-        <Text
-          allowFontScaling={false}
-          dynamicTypeRamp="body"
-          maxFontSizeMultiplier={1.25}
-          style={
-            [
-              {},
-              {
-                "color": "#555C70",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 16,
-                "fontStyle": "normal",
-                "fontWeight": "400",
-                "lineHeight": 24,
-              },
-            ]
-          }
-        >
-          1
-          .
-        </Text>
-        <View
-          style={
-            {
-              "width": 8,
-            }
-          }
-        />
-        <View
-          accessible={false}
-          style={
-            [
-              {
-                "flex": 1,
-              },
-              {
-                "flexShrink": 1,
-              },
-            ]
-          }
-        >
-          <Text
-            allowFontScaling={false}
-            dynamicTypeRamp="body"
-            maxFontSizeMultiplier={1.25}
-            style={
-              [
-                {},
-                {
-                  "color": "#555C70",
-                  "fontFamily": "Titillium Sans Pro",
-                  "fontSize": 16,
-                  "fontStyle": "normal",
-                  "fontWeight": "400",
-                  "lineHeight": 24,
-                },
-              ]
-            }
-          >
-            First
-          </Text>
-        </View>
-      </View>
+      />
       <View
+        accessibilityRole="list"
         accessible={true}
         style={
-          {
-            "flexDirection": "row",
-          }
+          [
+            {
+              "flex": 1,
+            },
+            {
+              "flexGrow": 1,
+            },
+          ]
         }
       >
-        <Text
-          allowFontScaling={false}
-          dynamicTypeRamp="body"
-          maxFontSizeMultiplier={1.25}
-          style={
-            [
-              {},
-              {
-                "color": "#555C70",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 16,
-                "fontStyle": "normal",
-                "fontWeight": "400",
-                "lineHeight": 24,
-              },
-            ]
-          }
-        >
-          2
-          .
-        </Text>
         <View
+          accessible={true}
           style={
             {
-              "width": 8,
+              "flexDirection": "row",
             }
-          }
-        />
-        <View
-          accessible={false}
-          style={
-            [
-              {
-                "flex": 1,
-              },
-              {
-                "flexShrink": 1,
-              },
-            ]
           }
         >
           <Text
@@ -556,57 +516,69 @@ exports[`IOMarkdown Should match snapshot 1`] = `
               ]
             }
           >
-            Second
+            1
+            .
           </Text>
+          <View
+            style={
+              {
+                "width": 8,
+              }
+            }
+          />
+          <View
+            accessible={false}
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "flexShrink": 1,
+                },
+              ]
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              color="bluegrey"
+              defaultColor="bluegrey"
+              defaultWeight="Regular"
+              dynamicTypeRamp="body"
+              font="TitilliumSansPro"
+              fontStyle={
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                }
+              }
+              maxFontSizeMultiplier={1.25}
+              style={
+                [
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  {
+                    "color": "#475A6D",
+                    "fontFamily": "Titillium Sans Pro",
+                    "fontStyle": "normal",
+                    "fontWeight": "400",
+                  },
+                ]
+              }
+              weight="Regular"
+            >
+              First
+            </Text>
+          </View>
         </View>
-      </View>
-      <View
-        accessible={true}
-        style={
-          {
-            "flexDirection": "row",
-          }
-        }
-      >
-        <Text
-          allowFontScaling={false}
-          dynamicTypeRamp="body"
-          maxFontSizeMultiplier={1.25}
-          style={
-            [
-              {},
-              {
-                "color": "#555C70",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 16,
-                "fontStyle": "normal",
-                "fontWeight": "400",
-                "lineHeight": 24,
-              },
-            ]
-          }
-        >
-          3
-          .
-        </Text>
         <View
+          accessible={true}
           style={
             {
-              "width": 8,
+              "flexDirection": "row",
             }
-          }
-        />
-        <View
-          accessible={false}
-          style={
-            [
-              {
-                "flex": 1,
-              },
-              {
-                "flexShrink": 1,
-              },
-            ]
           }
         >
           <Text
@@ -627,11 +599,167 @@ exports[`IOMarkdown Should match snapshot 1`] = `
               ]
             }
           >
-            Third
+            2
+            .
           </Text>
+          <View
+            style={
+              {
+                "width": 8,
+              }
+            }
+          />
+          <View
+            accessible={false}
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "flexShrink": 1,
+                },
+              ]
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              color="bluegrey"
+              defaultColor="bluegrey"
+              defaultWeight="Regular"
+              dynamicTypeRamp="body"
+              font="TitilliumSansPro"
+              fontStyle={
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                }
+              }
+              maxFontSizeMultiplier={1.25}
+              style={
+                [
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  {
+                    "color": "#475A6D",
+                    "fontFamily": "Titillium Sans Pro",
+                    "fontStyle": "normal",
+                    "fontWeight": "400",
+                  },
+                ]
+              }
+              weight="Regular"
+            >
+              Second
+            </Text>
+          </View>
+        </View>
+        <View
+          accessible={true}
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            color="bluegrey"
+            defaultColor="bluegrey"
+            defaultWeight="Regular"
+            dynamicTypeRamp="body"
+            font="TitilliumSansPro"
+            fontStyle={
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              }
+            }
+            maxFontSizeMultiplier={1.25}
+            style={
+              [
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                {
+                  "color": "#475A6D",
+                  "fontFamily": "Titillium Sans Pro",
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                },
+              ]
+            }
+            weight="Regular"
+          >
+            3
+            .
+          </Text>
+          <View
+            style={
+              {
+                "width": 8,
+              }
+            }
+          />
+          <View
+            accessible={false}
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "flexShrink": 1,
+                },
+              ]
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              color="bluegrey"
+              defaultColor="bluegrey"
+              defaultWeight="Regular"
+              dynamicTypeRamp="body"
+              font="TitilliumSansPro"
+              fontStyle={
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                }
+              }
+              maxFontSizeMultiplier={1.25}
+              style={
+                [
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  {
+                    "color": "#475A6D",
+                    "fontFamily": "Titillium Sans Pro",
+                    "fontStyle": "normal",
+                    "fontWeight": "400",
+                  },
+                ]
+              }
+              weight="Regular"
+            >
+              Third
+            </Text>
+          </View>
         </View>
       </View>
     </View>
+    <View
+      style={
+        {
+          "height": 8,
+        }
+      }
+    />
   </View>
   <View
     style={
@@ -713,9 +841,16 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     <Image
       accessibilityIgnoresInvertColors={true}
       accessibilityLabel="Alt text"
+      resizeMode="contain"
       source={
         {
           "uri": "https://via.placeholder.com/150",
+        }
+      }
+      style={
+        {
+          "aspectRatio": 1,
+          "width": 0,
         }
       }
     />

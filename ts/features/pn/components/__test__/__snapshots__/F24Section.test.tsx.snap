@@ -698,62 +698,40 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                     <View
                                       style={
                                         {
-                                          "alignItems": "flex-start",
-                                          "flexShrink": 1,
+                                          "alignItems": "center",
+                                          "columnGap": 8,
+                                          "display": "flex",
+                                          "flexDirection": "row",
                                         }
                                       }
                                     >
-                                      <Text
-                                        allowFontScaling={false}
-                                        dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
-                                        numberOfLines={2}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                              "lineHeight": 21,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        2
-                                      </Text>
                                       <View
                                         style={
                                           {
-                                            "height": 4,
+                                            "alignItems": "flex-start",
+                                            "display": "flex",
+                                            "flexDirection": "column",
+                                            "flexGrow": 1,
+                                            "flexShrink": 1,
+                                            "rowGap": 4,
                                           }
-                                        }
-                                      />
-                                      <View
-                                        style={
-                                          [
-                                            {
-                                              "alignItems": "center",
-                                              "borderCurve": "continuous",
-                                              "borderRadius": 24,
-                                              "flexDirection": "row",
-                                              "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
-                                            },
-                                            {
-                                              "backgroundColor": "#F4F5F8",
-                                            },
-                                          ]
                                         }
                                       >
                                         <Text
                                           allowFontScaling={false}
-                                          ellipsizeMode="tail"
+                                          color="blueIO-500"
+                                          defaultColor="black"
+                                          defaultWeight="Semibold"
+                                          dynamicTypeRamp="footnote"
+                                          font="TitilliumSansPro"
+                                          fontStyle={
+                                            {
+                                              "fontSize": 16,
+                                              "lineHeight": 21,
+                                            }
+                                          }
                                           maxFontSizeMultiplier={1.25}
-                                          numberOfLines={1}
+                                          numberOfLines={2}
                                           style={
                                             [
                                               {},
@@ -766,25 +744,72 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                                 "lineHeight": 16,
                                               },
                                               {
-                                                "alignSelf": "center",
-                                                "flexShrink": 1,
-                                                "letterSpacing": 0.5,
-                                                "textTransform": "uppercase",
+                                                "fontSize": 16,
+                                                "lineHeight": 21,
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                            ]
+                                          }
+                                          weight="Semibold"
+                                        >
+                                          2
+                                        </Text>
+                                        <View
+                                          accessible={true}
+                                          style={
+                                            [
+                                              {
+                                                "alignItems": "center",
+                                                "borderCurve": "continuous",
+                                                "borderRadius": 24,
+                                                "flexDirection": "row",
+                                                "justifyContent": "center",
+                                                "paddingHorizontal": 8,
+                                                "paddingVertical": 4,
+                                              },
+                                              {
+                                                "backgroundColor": "#F4F5F8",
                                               },
                                             ]
                                           }
                                         >
-                                          PDF
-                                        </Text>
+                                          <Text
+                                            accessibilityLabel="PDF"
+                                            accessibilityRole="text"
+                                            allowFontScaling={false}
+                                            ellipsizeMode="tail"
+                                            importantForAccessibility="yes"
+                                            maxFontSizeMultiplier={1.25}
+                                            numberOfLines={1}
+                                            style={
+                                              [
+                                                {
+                                                  "alignSelf": "center",
+                                                  "flexShrink": 1,
+                                                  "fontSize": 12,
+                                                  "lineHeight": 16,
+                                                  "textTransform": "uppercase",
+                                                },
+                                                {
+                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                },
+                                                {
+                                                  "color": "#555C70",
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            PDF
+                                          </Text>
+                                        </View>
                                       </View>
-                                    </View>
-                                    <View
-                                      style={
-                                        {
-                                          "marginLeft": 12,
-                                        }
-                                      }
-                                    >
                                       <RNSVGSvgView
                                         accessibilityElementsHidden={true}
                                         accessibilityLabel=""
@@ -921,62 +946,40 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                     <View
                                       style={
                                         {
-                                          "alignItems": "flex-start",
-                                          "flexShrink": 1,
+                                          "alignItems": "center",
+                                          "columnGap": 8,
+                                          "display": "flex",
+                                          "flexDirection": "row",
                                         }
                                       }
                                     >
-                                      <Text
-                                        allowFontScaling={false}
-                                        dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
-                                        numberOfLines={2}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                              "lineHeight": 21,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        4
-                                      </Text>
                                       <View
                                         style={
                                           {
-                                            "height": 4,
+                                            "alignItems": "flex-start",
+                                            "display": "flex",
+                                            "flexDirection": "column",
+                                            "flexGrow": 1,
+                                            "flexShrink": 1,
+                                            "rowGap": 4,
                                           }
-                                        }
-                                      />
-                                      <View
-                                        style={
-                                          [
-                                            {
-                                              "alignItems": "center",
-                                              "borderCurve": "continuous",
-                                              "borderRadius": 24,
-                                              "flexDirection": "row",
-                                              "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
-                                            },
-                                            {
-                                              "backgroundColor": "#F4F5F8",
-                                            },
-                                          ]
                                         }
                                       >
                                         <Text
                                           allowFontScaling={false}
-                                          ellipsizeMode="tail"
+                                          color="blueIO-500"
+                                          defaultColor="black"
+                                          defaultWeight="Semibold"
+                                          dynamicTypeRamp="footnote"
+                                          font="TitilliumSansPro"
+                                          fontStyle={
+                                            {
+                                              "fontSize": 16,
+                                              "lineHeight": 21,
+                                            }
+                                          }
                                           maxFontSizeMultiplier={1.25}
-                                          numberOfLines={1}
+                                          numberOfLines={2}
                                           style={
                                             [
                                               {},
@@ -989,25 +992,72 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                                 "lineHeight": 16,
                                               },
                                               {
-                                                "alignSelf": "center",
-                                                "flexShrink": 1,
-                                                "letterSpacing": 0.5,
-                                                "textTransform": "uppercase",
+                                                "fontSize": 16,
+                                                "lineHeight": 21,
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                            ]
+                                          }
+                                          weight="Semibold"
+                                        >
+                                          4
+                                        </Text>
+                                        <View
+                                          accessible={true}
+                                          style={
+                                            [
+                                              {
+                                                "alignItems": "center",
+                                                "borderCurve": "continuous",
+                                                "borderRadius": 24,
+                                                "flexDirection": "row",
+                                                "justifyContent": "center",
+                                                "paddingHorizontal": 8,
+                                                "paddingVertical": 4,
+                                              },
+                                              {
+                                                "backgroundColor": "#F4F5F8",
                                               },
                                             ]
                                           }
                                         >
-                                          PDF
-                                        </Text>
+                                          <Text
+                                            accessibilityLabel="PDF"
+                                            accessibilityRole="text"
+                                            allowFontScaling={false}
+                                            ellipsizeMode="tail"
+                                            importantForAccessibility="yes"
+                                            maxFontSizeMultiplier={1.25}
+                                            numberOfLines={1}
+                                            style={
+                                              [
+                                                {
+                                                  "alignSelf": "center",
+                                                  "flexShrink": 1,
+                                                  "fontSize": 12,
+                                                  "lineHeight": 16,
+                                                  "textTransform": "uppercase",
+                                                },
+                                                {
+                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                },
+                                                {
+                                                  "color": "#555C70",
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            PDF
+                                          </Text>
+                                        </View>
                                       </View>
-                                    </View>
-                                    <View
-                                      style={
-                                        {
-                                          "marginLeft": 12,
-                                        }
-                                      }
-                                    >
                                       <RNSVGSvgView
                                         accessibilityElementsHidden={true}
                                         accessibilityLabel=""
@@ -2675,62 +2725,40 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                           <View
                             style={
                               {
-                                "alignItems": "flex-start",
-                                "flexShrink": 1,
+                                "alignItems": "center",
+                                "columnGap": 8,
+                                "display": "flex",
+                                "flexDirection": "row",
                               }
                             }
                           >
-                            <Text
-                              allowFontScaling={false}
-                              dynamicTypeRamp="footnote"
-                              maxFontSizeMultiplier={1.25}
-                              numberOfLines={2}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#0B3EE3",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 21,
-                                  },
-                                ]
-                              }
-                            >
-                              2
-                            </Text>
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "alignItems": "flex-start",
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "flexGrow": 1,
+                                  "flexShrink": 1,
+                                  "rowGap": 4,
                                 }
-                              }
-                            />
-                            <View
-                              style={
-                                [
-                                  {
-                                    "alignItems": "center",
-                                    "borderCurve": "continuous",
-                                    "borderRadius": 24,
-                                    "flexDirection": "row",
-                                    "justifyContent": "center",
-                                    "paddingHorizontal": 8,
-                                    "paddingVertical": 4,
-                                  },
-                                  {
-                                    "backgroundColor": "#F4F5F8",
-                                  },
-                                ]
                               }
                             >
                               <Text
                                 allowFontScaling={false}
-                                ellipsizeMode="tail"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
+                                font="TitilliumSansPro"
+                                fontStyle={
+                                  {
+                                    "fontSize": 16,
+                                    "lineHeight": 21,
+                                  }
+                                }
                                 maxFontSizeMultiplier={1.25}
-                                numberOfLines={1}
+                                numberOfLines={2}
                                 style={
                                   [
                                     {},
@@ -2743,25 +2771,72 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                       "lineHeight": 16,
                                     },
                                     {
-                                      "alignSelf": "center",
-                                      "flexShrink": 1,
-                                      "letterSpacing": 0.5,
-                                      "textTransform": "uppercase",
+                                      "fontSize": 16,
+                                      "lineHeight": 21,
+                                    },
+                                    {
+                                      "color": "#0B3EE3",
+                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                    },
+                                  ]
+                                }
+                                weight="Semibold"
+                              >
+                                2
+                              </Text>
+                              <View
+                                accessible={true}
+                                style={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "borderCurve": "continuous",
+                                      "borderRadius": 24,
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                      "paddingHorizontal": 8,
+                                      "paddingVertical": 4,
+                                    },
+                                    {
+                                      "backgroundColor": "#F4F5F8",
                                     },
                                   ]
                                 }
                               >
-                                PDF
-                              </Text>
+                                <Text
+                                  accessibilityLabel="PDF"
+                                  accessibilityRole="text"
+                                  allowFontScaling={false}
+                                  ellipsizeMode="tail"
+                                  importantForAccessibility="yes"
+                                  maxFontSizeMultiplier={1.25}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {
+                                        "alignSelf": "center",
+                                        "flexShrink": 1,
+                                        "fontSize": 12,
+                                        "lineHeight": 16,
+                                        "textTransform": "uppercase",
+                                      },
+                                      {
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                      },
+                                      {
+                                        "color": "#555C70",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  PDF
+                                </Text>
+                              </View>
                             </View>
-                          </View>
-                          <View
-                            style={
-                              {
-                                "marginLeft": 12,
-                              }
-                            }
-                          >
                             <RNSVGSvgView
                               accessibilityElementsHidden={true}
                               accessibilityLabel=""

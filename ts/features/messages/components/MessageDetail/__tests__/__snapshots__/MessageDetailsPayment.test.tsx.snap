@@ -844,85 +844,98 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                             style={
                               {
                                 "alignItems": "center",
+                                "columnGap": 8,
+                                "display": "flex",
                                 "flexDirection": "row",
                               }
                             }
                           >
-                            <View>
-                              <View
-                                collapsable={false}
-                                style={
-                                  {
-                                    "opacity": 0.5,
-                                  }
-                                }
-                              >
-                                <View
-                                  height={13}
-                                  radius={8}
-                                  style={
-                                    {
-                                      "backgroundColor": "#efefef",
-                                      "borderRadius": 8,
-                                      "height": 13,
-                                      "width": 121,
-                                    }
-                                  }
-                                  width={121}
-                                />
-                              </View>
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
-                              <View
-                                collapsable={false}
-                                style={
-                                  {
-                                    "opacity": 0.5,
-                                  }
-                                }
-                              >
-                                <View
-                                  height={16}
-                                  radius={8}
-                                  style={
-                                    {
-                                      "backgroundColor": "#efefef",
-                                      "borderRadius": 8,
-                                      "height": 16,
-                                      "width": 179,
-                                    }
-                                  }
-                                  width={179}
-                                />
-                              </View>
-                            </View>
-                          </View>
-                          <View
-                            collapsable={false}
-                            style={
-                              {
-                                "opacity": 0.5,
-                              }
-                            }
-                          >
                             <View
-                              height={24}
-                              radius={16}
                               style={
                                 {
-                                  "backgroundColor": "#efefef",
-                                  "borderRadius": 16,
-                                  "height": 24,
-                                  "width": 62,
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
                                 }
                               }
-                              width={62}
-                            />
+                            >
+                              <View
+                                style={
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "column",
+                                    "rowGap": 4,
+                                  }
+                                }
+                              >
+                                <View
+                                  collapsable={false}
+                                  style={
+                                    {
+                                      "opacity": 0.5,
+                                    }
+                                  }
+                                >
+                                  <View
+                                    height={12}
+                                    radius={8}
+                                    style={
+                                      {
+                                        "backgroundColor": "#efefef",
+                                        "borderRadius": 8,
+                                        "height": 12,
+                                        "width": 120,
+                                      }
+                                    }
+                                    width={120}
+                                  />
+                                </View>
+                                <View
+                                  collapsable={false}
+                                  style={
+                                    {
+                                      "opacity": 0.5,
+                                    }
+                                  }
+                                >
+                                  <View
+                                    height={16}
+                                    radius={8}
+                                    style={
+                                      {
+                                        "backgroundColor": "#efefef",
+                                        "borderRadius": 8,
+                                        "height": 16,
+                                        "width": 180,
+                                      }
+                                    }
+                                    width={180}
+                                  />
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              collapsable={false}
+                              style={
+                                {
+                                  "opacity": 0.5,
+                                }
+                              }
+                            >
+                              <View
+                                height={24}
+                                radius={16}
+                                style={
+                                  {
+                                    "backgroundColor": "#efefef",
+                                    "borderRadius": 16,
+                                    "height": 24,
+                                    "width": 64,
+                                  }
+                                }
+                                width={64}
+                              />
+                            </View>
                           </View>
                         </View>
                       </View>

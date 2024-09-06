@@ -2,7 +2,6 @@ import {
   Avatar,
   BlockButtons,
   ButtonLink,
-  Divider,
   ForceScrollDownView,
   H2,
   H6,
@@ -21,16 +20,22 @@ import * as O from "fp-ts/Option";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { Link } from "../../../../components/core/typography/Link";
 import { LoadingSkeleton } from "../../../../components/ui/Markdown/LoadingSkeleton";
 import I18n from "../../../../i18n";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
 import { logoForService } from "../../../services/home/utils";
+import {
+  computeAndTrackDataShare,
+  computeAndTrackDataShareAccepted
+} from "../../common/utils";
 import { useAutoFetchingServiceByIdPot } from "../../common/utils/hooks";
 import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
-import { ConsentData, FimsClaimType } from "../types";
+import { ConsentData } from "../types";
+import { FimsClaimsList } from "./FimsClaims";
+import { FimsMissingDataErrorScreen } from "./FimsErrorScreens";
+import { FimsPrivacyInfo } from "./FimsPrivacyInfo";
 
 type FimsSuccessBodyProps = { consents: ConsentData; onAbort: () => void };
 
@@ -39,10 +44,34 @@ export const FimsFlowSuccessBody = ({
   onAbort
 }: FimsSuccessBodyProps) => {
   const dispatch = useIODispatch();
+  const store = useIOStore();
   const serviceId = consents.service_id as ServiceId;
 
   const servicePot = useAutoFetchingServiceByIdPot(serviceId);
-  const serviceData = pot.toUndefined(servicePot.serviceData);
+  const serviceData = pot.toUndefined(servicePot);
+  const privacyUrl = serviceData?.service_metadata?.privacy_url;
+
+  const isPrivacyUrlMissing =
+    pot.isSome(servicePot) && privacyUrl === undefined;
+
+  // --------- HOOKS
+
+  const BottomSheet = useIOBottomSheetModal(
+    generateBottomSheetProps(privacyUrl)
+  );
+
+  React.useEffect(() => {
+    if (serviceData) {
+      const state = store.getState();
+      computeAndTrackDataShare(serviceData, state);
+    }
+  }, [serviceData, store]);
+
+  // -------- ERROR LOGIC
+
+  if (pot.isError(servicePot) || isPrivacyUrlMissing) {
+    return <FimsMissingDataErrorScreen />;
+  }
 
   const serviceLogo = pipe(
     serviceData,
@@ -67,29 +96,6 @@ export const FimsFlowSuccessBody = ({
     ) : (
       <LoadingSkeleton lines={3} />
     );
-  const privacyUrl = serviceData?.service_metadata?.privacy_url;
-
-  const BottomSheet = useIOBottomSheetModal({
-    title: I18n.t("FIMS.consentsScreen.bottomSheet.title"),
-    component: (
-      <>
-        <Label weight="Regular">
-          {I18n.t("FIMS.consentsScreen.bottomSheet.body")}
-        </Label>
-        <VSpacer size={8} />
-        <Label weight="Regular">
-          {I18n.t("FIMS.consentsScreen.bottomSheet.body2")}
-          <H6
-            onPress={() => privacyUrl && openWebUrl(privacyUrl)}
-            color="blueIO-500"
-          >
-            {I18n.t("FIMS.consentsScreen.bottomSheet.bodyPrivacy")}
-          </H6>
-        </Label>
-      </>
-    ),
-    snapPoint: [340]
-  });
 
   return (
     <>
@@ -121,10 +127,10 @@ export const FimsFlowSuccessBody = ({
           />
           <VSpacer size={24} />
           <ListItemHeader label="Dati richiesti" iconName="security" />
-          <ClaimsList claims={consents.user_metadata} />
+          <FimsClaimsList claims={consents.user_metadata} />
           <VSpacer size={24} />
 
-          <PrivacyInfo privacyUrl={privacyUrl} />
+          <FimsPrivacyInfo privacyUrl={privacyUrl} />
 
           <VSpacer size={32} />
         </View>
@@ -144,13 +150,16 @@ export const FimsFlowSuccessBody = ({
                 label: I18n.t("global.buttons.consent"),
                 icon: "security",
                 iconPosition: "end",
-                onPress: () =>
+                onPress: () => {
+                  const state = store.getState();
+                  computeAndTrackDataShareAccepted(serviceId, state);
                   dispatch(
                     fimsGetRedirectUrlAndOpenIABAction.request(
                       // eslint-disable-next-line no-underscore-dangle
-                      { acceptUrl: consents._links.consent.href }
+                      { acceptUrl: consents._links.consent.href, serviceId }
                     )
-                  )
+                  );
+                }
               }
             }}
           />
@@ -161,47 +170,32 @@ export const FimsFlowSuccessBody = ({
   );
 };
 
-const ClaimsList = ({ claims }: ClaimsListProps) => (
-  <View style={styles.grantsList}>
-    {claims.map((claim, index) => (
-      <React.Fragment key={index}>
-        <ClaimListItem label={claim.display_name} />
-        {index < claims.length - 1 && <Divider />}
-      </React.Fragment>
-    ))}
-  </View>
-);
-
-const ClaimListItem = ({ label }: ClaimsListItemProps) => (
-  <View style={styles.grantItem}>
-    <H6>{label ?? ""}</H6>
-    <Icon name="checkTickBig" size={24} color="grey-300" />
-  </View>
-);
-
-const PrivacyInfo = ({ privacyUrl }: PrivacyInfoProps) =>
-  privacyUrl !== undefined ? (
-    <Label weight="Regular">
-      {I18n.t("FIMS.consentsScreen.privacy1")}
-      <Link onPress={() => openWebUrl(privacyUrl)}>
-        {I18n.t("FIMS.consentsScreen.privacyCta")}
-      </Link>
-    </Label>
-  ) : (
-    <LoadingSkeleton lines={2} />
-  );
+type BSPropType = Parameters<typeof useIOBottomSheetModal>[0];
+const generateBottomSheetProps = (
+  privacyUrl: string | undefined
+): BSPropType => ({
+  title: I18n.t("FIMS.consentsScreen.bottomSheet.title"),
+  component: (
+    <>
+      <Label weight="Regular">
+        {I18n.t("FIMS.consentsScreen.bottomSheet.body")}
+      </Label>
+      <VSpacer size={8} />
+      <Label weight="Regular">
+        {I18n.t("FIMS.consentsScreen.bottomSheet.body2")}
+        <H6
+          onPress={() => privacyUrl && openWebUrl(privacyUrl)}
+          color="blueIO-500"
+        >
+          {I18n.t("FIMS.consentsScreen.bottomSheet.bodyPrivacy")}
+        </H6>
+      </Label>
+    </>
+  ),
+  snapPoint: [340]
+});
 
 const styles = StyleSheet.create({
-  grantsList: {
-    backgroundColor: IOColors["grey-50"],
-    borderRadius: 8,
-    paddingHorizontal: 24
-  },
-  grantItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 12
-  },
   outlineContainer: {
     padding: 6,
     borderWidth: 1,
@@ -214,9 +208,3 @@ const styles = StyleSheet.create({
   },
   rowAlignCenter: { flexDirection: "row", alignItems: "center" }
 });
-
-type ClaimsListProps = {
-  claims: ReadonlyArray<FimsClaimType>;
-};
-type PrivacyInfoProps = { privacyUrl?: string };
-type ClaimsListItemProps = { label?: string };

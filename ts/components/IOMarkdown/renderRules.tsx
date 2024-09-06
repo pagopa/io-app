@@ -35,13 +35,14 @@ import {
   TxtStrNode,
   TxtStrongNode
 } from "@textlint/ast-node-types";
-import React, { Fragment } from "react";
-import { Image, Text, View } from "react-native";
+import React, { Fragment, useLayoutEffect, useState } from "react";
+import { Dimensions, Image, Text, View } from "react-native";
 import I18n from "../../i18n";
 import { openWebUrl } from "../../utils/url";
 import { IOMarkdownRenderRules, Renderer } from "./types";
 
-const BULLET_ITEM = "\u2022";
+const BULLET_ITEM_FULL = "\u2022";
+const BULLET_ITEM_EMPTY = "\u25E6";
 const HEADINGS_MAP = {
   1: H1,
   2: H2,
@@ -74,6 +75,24 @@ export function getStrValue({ children }: TxtParentNode): string {
     }
     return acc;
   }, "");
+}
+
+/**
+ *
+ * @param node The node to scan.
+ * @param nodeType If defined this function checks how many nodes of this type wrap the interested node, otherwise it takes all the nodes.
+ * @returns The `node` nesting level.
+ */
+function getNodeNestingLevel<T extends AnyTxtNode | undefined>(
+  node: T,
+  nodeType?: AnyTxtNode["type"]
+): number {
+  if (typeof node === "undefined" || !("parent" in node)) {
+    return 0;
+  }
+  const current = nodeType ? Number(node?.parent?.type === nodeType) : 1;
+
+  return current + getNodeNestingLevel(node.parent, nodeType);
 }
 
 /**
@@ -176,12 +195,33 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns The rendered component.
    */
   Image(image: TxtImageNode) {
+    const [imageSize, setImageSize] = useState({
+      width: 0,
+      aspectRatio: 1
+    });
+    const screenWidth =
+      Dimensions.get("screen").width -
+      IOStyles.horizontalContentPadding.paddingHorizontal * 2;
+
+    useLayoutEffect(() => {
+      Image.getSize(image.url, (width, height) => {
+        const aspectRatio = width / height;
+        const maxScreenWidth = width > screenWidth ? screenWidth : width;
+
+        setImageSize({ width: maxScreenWidth, aspectRatio });
+      });
+    }, [screenWidth, image.url]);
+
     return (
       <Image
         key={getTxtNodeKey(image)}
         accessibilityIgnoresInvertColors
+        style={imageSize}
+        resizeMode="contain"
         accessibilityLabel={image.alt ?? ""}
-        source={{ uri: image.url }}
+        source={{
+          uri: image.url
+        }}
       />
     );
   },
@@ -192,31 +232,39 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    */
   List(list: TxtListNode, render: Renderer) {
     const isOrdered = list.ordered;
+    const nestingLevel = getNodeNestingLevel(list, "List");
+    const bulletItem =
+      nestingLevel % 2 === 1 ? BULLET_ITEM_EMPTY : BULLET_ITEM_FULL;
+    const isFirstList = nestingLevel === 0;
 
     function getLeftAdornment(i: number) {
       if (isOrdered) {
         return <Body>{i + 1}.</Body>;
       }
 
-      return <Body>{BULLET_ITEM}</Body>;
+      return <Body>{bulletItem}</Body>;
     }
 
     return (
-      <View key={getTxtNodeKey(list)} style={IOStyles.row}>
-        <HSpacer size={8} />
-        <View
-          style={[IOStyles.flex, { flexGrow: 1 }]}
-          accessible={true}
-          accessibilityRole="list"
-        >
-          {list.children.map((child, i) => (
-            <View accessible key={`${child.type}_${i}`} style={IOStyles.row}>
-              {getLeftAdornment(i)}
-              <HSpacer size={8} />
-              {render(child)}
-            </View>
-          ))}
+      <View key={getTxtNodeKey(list)}>
+        {isFirstList && <VSpacer size={8} />}
+        <View style={IOStyles.row}>
+          {isFirstList && <HSpacer size={12} />}
+          <View
+            style={[IOStyles.flex, { flexGrow: 1 }]}
+            accessible={true}
+            accessibilityRole="list"
+          >
+            {list.children.map((child, i) => (
+              <View accessible key={`${child.type}_${i}`} style={IOStyles.row}>
+                {getLeftAdornment(i)}
+                <HSpacer size={8} />
+                {render(child)}
+              </View>
+            ))}
+          </View>
         </View>
+        {isFirstList && <VSpacer size={8} />}
       </View>
     );
   },
@@ -283,7 +331,9 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns A `Body` containing the `value` content.
    */
   Code: (code: TxtCodeNode) => (
-    <Body key={getTxtNodeKey(code)}>{code.value}</Body>
+    <Body key={getTxtNodeKey(code)} weight="Light">
+      {code.value.replace(/\s+/g, "   ")}
+    </Body>
   ),
   /**
    * @param breakNode The `Break` node.
