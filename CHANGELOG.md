@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.69.0-rc.7](https://github.com/pagopa/io-app/compare/2.69.0-rc.6...2.69.0-rc.7) (2024-09-05)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1535](https://pagopa.atlassian.net/browse/SIW-1535)] Credential duplication after renewal ([#6149](https://github.com/pagopa/io-app/issues/6149)) ([5abad36](https://github.com/pagopa/io-app/commit/5abad36b0787ad19b38d7fdd10f5af0a720f6ef7))
+* **IT Wallet:** [[SIW-1548](https://pagopa.atlassian.net/browse/SIW-1548)] Error screen instead of loading screen while issuing credential ([#6156](https://github.com/pagopa/io-app/issues/6156)) ([5464069](https://github.com/pagopa/io-app/commit/54640692370650a246e6fdb32d5703a2a3e9650f))
+* **IT Wallet:** [[SIW-1549](https://pagopa.atlassian.net/browse/SIW-1549)] Update copy for credential issuance generic error message  ([#6158](https://github.com/pagopa/io-app/issues/6158)) ([f0c8995](https://github.com/pagopa/io-app/commit/f0c89958635944855cf72081302ff5861fcf8ec9))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1541](https://pagopa.atlassian.net/browse/SIW-1541)] Add status attestation for any credential ([#6150](https://github.com/pagopa/io-app/issues/6150)) ([4a6418a](https://github.com/pagopa/io-app/commit/4a6418a947a2034946da34242acf5d17780c099d))
+* [[IOCOM-1580](https://pagopa.atlassian.net/browse/IOCOM-1580)] Fims auth missing service data error case ([#6151](https://github.com/pagopa/io-app/issues/6151)) ([cc1a3fc](https://github.com/pagopa/io-app/commit/cc1a3fcbf871bfa456228eaeff61f2136aceaf54))
+* [[IOCOM-1666](https://pagopa.atlassian.net/browse/IOCOM-1666)] Proper labels on FIMS abort screen ([#6143](https://github.com/pagopa/io-app/issues/6143)) ([61cb0f4](https://github.com/pagopa/io-app/commit/61cb0f4cd353ed8900d6d0484fdcb74dbc989686))
+* [[IOCOM-1676](https://pagopa.atlassian.net/browse/IOCOM-1676),[IOCOM-1674](https://pagopa.atlassian.net/browse/IOCOM-1674)] Fims minVersion not met error UI ([#6157](https://github.com/pagopa/io-app/issues/6157)) ([8262867](https://github.com/pagopa/io-app/commit/8262867598d2abfe1ae5939b89e72dddc812910f))
+* [[IOPID-2196](https://pagopa.atlassian.net/browse/IOPID-2196)] Revert old PR to delete local FF to activate new scan and settings sections ([#6155](https://github.com/pagopa/io-app/issues/6155)) ([a710ae8](https://github.com/pagopa/io-app/commit/a710ae819b16c0f4dc76a1fd28b23cd0fd0a0e9a))
+
+## [2.69.0-rc.6](https://github.com/pagopa/io-app/compare/2.69.0-rc.5...2.69.0-rc.6) (2024-09-04)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1426](https://pagopa.atlassian.net/browse/SIW-1426)] Allow user to remove IT Wallet credential from wallet ([#6126](https://github.com/pagopa/io-app/issues/6126)) ([6de4900](https://github.com/pagopa/io-app/commit/6de490024548ff62ebc962c4ca93285a6b61b1d9))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1537](https://pagopa.atlassian.net/browse/SIW-1537)] Duplicate fiscal code in trust issuer screen ([#6146](https://github.com/pagopa/io-app/issues/6146)) ([f71a846](https://github.com/pagopa/io-app/commit/f71a8465c8016130af966acc9afe701dc6147123))
+* [[IOBP-847](https://pagopa.atlassian.net/browse/IOBP-847)] Navigate to the new payment flow from scan notice qr-code ([#6147](https://github.com/pagopa/io-app/issues/6147)) ([5da6266](https://github.com/pagopa/io-app/commit/5da626641114b34d9b776fd521a8fa6dd6f39dc9))
+
+
+### Chores
+
+* [[IOCOM-1672](https://pagopa.atlassian.net/browse/IOCOM-1672)] InApp Browser checking on FIMS ([#6099](https://github.com/pagopa/io-app/issues/6099)) ([965e1d8](https://github.com/pagopa/io-app/commit/965e1d85ad6120723d1fa14e2e3d9f119dc7744a)), closes [io-react-native-login-utils#16](https://github.com/pagopa/io-react-native-login-utils/issues/16)
+* **IT Wallet:** [[SIW-1538](https://pagopa.atlassian.net/browse/SIW-1538)] Add navigation on credential renewal ([#6148](https://github.com/pagopa/io-app/issues/6148)) ([20c50be](https://github.com/pagopa/io-app/commit/20c50be027563a582670662a128f0ba0530e5d6d))
+
 ## [2.69.0-rc.5](https://github.com/pagopa/io-app/compare/2.69.0-rc.4...2.69.0-rc.5) (2024-09-04)
 
 

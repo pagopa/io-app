@@ -27,7 +27,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   selectCredentialOption,
   selectCredentialTypeOption,
-  selectIsLoading
+  selectIsIssuing
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 
@@ -38,13 +38,13 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialOption
   );
-  const isLoading =
-    ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
+  const isIssuing =
+    ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  if (isLoading) {
+  if (isIssuing) {
     return (
       <LoadingScreenContent
         contentTitle={I18n.t(
