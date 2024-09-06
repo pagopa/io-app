@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import Share from "react-native-share";
 
 import { IOColors, IOStyles } from "@pagopa/io-app-design-system";
@@ -48,7 +48,9 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
     await Share.open({
       type: "application/pdf",
       url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptFile}`,
-      filename: `${I18n.t("features.payments.transactions.receipt.title")}.pdf`,
+      filename: `${I18n.t("features.payments.transactions.receipt.title")}${
+        Platform.OS === "ios" ? ".pdf" : ""
+      }`,
       failOnCancel: false
     });
   };
