@@ -4,16 +4,21 @@ import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import { createActor, fromPromise, StateFrom } from "xstate5";
 import { WalletAttestationResult } from "../../../common/utils/itwAttestationUtils";
-import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
+import {
+  ItwStatusAttestationMocks,
+  ItwStoredCredentialsMocks
+} from "../../../common/utils/itwMocksUtils";
 import {
   IssuerConfiguration,
-  RequestObject
+  RequestObject,
+  StoredCredential
 } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
   InitializeWalletActorOutput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
+  ObtainStatusAttestationActorInput,
   RequestCredentialActorInput,
   RequestCredentialActorOutput
 } from "../actors";
@@ -91,6 +96,12 @@ const T_REQUESTED_CREDENTIAL: RequestObject = {
   scope: "",
   state: ""
 };
+const T_STORED_STATUS_ATTESTATION: StoredCredential["storedStatusAttestation"] =
+  {
+    credentialStatus: "valid",
+    statusAttestation: "abcdefghijklmnopqrstuvwxyz",
+    parsedStatusAttestation: ItwStatusAttestationMocks.mdl
+  };
 
 describe("itwCredentialIssuanceMachine", () => {
   const navigateToTrustIssuerScreen = jest.fn();
@@ -104,6 +115,7 @@ describe("itwCredentialIssuanceMachine", () => {
   const initializeWallet = jest.fn();
   const requestCredential = jest.fn();
   const obtainCredential = jest.fn();
+  const obtainStatusAttestation = jest.fn();
 
   const isSessionExpired = jest.fn();
 
@@ -127,7 +139,11 @@ describe("itwCredentialIssuanceMachine", () => {
       obtainCredential: fromPromise<
         ObtainCredentialActorOutput,
         ObtainCredentialActorInput
-      >(obtainCredential)
+      >(obtainCredential),
+      obtainStatusAttestation: fromPromise<
+        StoredCredential,
+        ObtainStatusAttestationActorInput
+      >(obtainStatusAttestation)
     },
     guards: {
       isSessionExpired
@@ -138,7 +154,7 @@ describe("itwCredentialIssuanceMachine", () => {
     jest.clearAllMocks();
   });
 
-  it("Should obtain a credential", async () => {
+  it("Should obtain a credential with a valid status attestation", async () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
@@ -205,20 +221,37 @@ describe("itwCredentialIssuanceMachine", () => {
       })
     );
 
+    obtainStatusAttestation.mockImplementation(() =>
+      Promise.resolve({
+        ...ItwStoredCredentialsMocks.ts,
+        storedStatusAttestation: T_STORED_STATUS_ATTESTATION
+      })
+    );
+
     actor.send({
       type: "confirm-trust-data"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual("ObtainingCredential");
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Issuance: "ObtainingCredential"
+    });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Issuing]));
     await waitFor(() => expect(obtainCredential).toHaveBeenCalledTimes(1));
+    await waitFor(() =>
+      expect(obtainStatusAttestation).toHaveBeenCalledTimes(1)
+    );
 
     expect(actor.getSnapshot().value).toStrictEqual(
       "DisplayingCredentialPreview"
     );
-    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      credential: ItwStoredCredentialsMocks.ts
-    });
+    expect(actor.getSnapshot().context).toEqual(
+      expect.objectContaining<Partial<Context>>({
+        credential: {
+          ...ItwStoredCredentialsMocks.ts,
+          storedStatusAttestation: T_STORED_STATUS_ATTESTATION
+        }
+      })
+    );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
     expect(navigateToCredentialPreviewScreen).toHaveBeenCalledTimes(1);
 
@@ -425,9 +458,12 @@ describe("itwCredentialIssuanceMachine", () => {
       type: "confirm-trust-data"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual("ObtainingCredential");
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Issuance: "ObtainingCredential"
+    });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Issuing]));
     await waitFor(() => expect(obtainCredential).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(obtainStatusAttestation).not.toHaveBeenCalled());
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
