@@ -464,7 +464,8 @@ profile:
       idpayTest: IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
     cieID:
-      title: CIE ID
+      cieIdTest:
+        title: CieID
     trial:
       titleSection: Partecipa alla sperimentazione
     designSystemEnvironment: Design System sperimentale

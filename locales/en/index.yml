@@ -464,7 +464,8 @@ profile:
       idpayTest: IDPay
       idpayTestAlert: This change requires app reboot
     cieID:
-      title: CIE ID
+      cieIdTest:
+        title: CieID
     designSystemEnvironment: Experimental Design System
     newScanSection: New 'Scan' feature
     sessionRefresh: Activate Session Refresh

@@ -563,7 +563,7 @@ const DeveloperTestEnvironmentSection = ({
       onSwitchValueChange: onIdPayTestToggle
     },
     {
-      label: I18n.t("profile.main.cieID.title"),
+      label: I18n.t("profile.main.cieID.cieIdTest.title"),
       value: isCieIDFeatureEnabled,
       onSwitchValueChange: onCieIDFeatureToggle
     }
