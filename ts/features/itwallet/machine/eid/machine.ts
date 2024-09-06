@@ -164,7 +164,6 @@ export const itwEidIssuanceMachine = setup({
       states: {
         ModeSelection: {
           entry: "navigateToIdentificationModeScreen",
-          tags: [ItwTags.TransitionFromPreview],
           on: {
             "select-identification-mode": [
               {

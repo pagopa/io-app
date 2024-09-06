@@ -21,27 +21,18 @@ import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorC
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import {
-  selectCanTransitionFromPreview,
-  selectEidOption,
-  selectIsLoading
-} from "../../machine/eid/selectors";
+import { selectEidOption, selectIsLoading } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { ItwIssuanceLoadingScreen } from "../components/ItwIssuanceLoadingScreen";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const transitionFromPreview = ItwEidIssuanceMachineContext.useSelector(
-    selectCanTransitionFromPreview
-  );
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  // Avoid flashing the generic error content during transitions
-  // from the preview loading screen to other screens.
-  if (isLoading || transitionFromPreview) {
+  if (isLoading) {
     return <ItwIssuanceLoadingScreen />;
   }
 
