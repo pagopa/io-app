@@ -1,4 +1,4 @@
-import { IOColors, IOStyles } from "@pagopa/io-app-design-system";
+import { IOColors, IOStyles, useIOToast } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";
@@ -40,6 +40,7 @@ export const ItwPresentationCredentialAttachmentScreen = ({
   route
 }: ScreenProps) => {
   const { attachmentClaim } = route.params;
+  const toast = useIOToast();
 
   const [footerActionsMeasurements, setfooterActionsMeasurements] =
     React.useState<FooterActionsMeasurements>({
@@ -64,7 +65,7 @@ export const ItwPresentationCredentialAttachmentScreen = ({
           url: uri
         });
       } catch (err) {
-        // Don't do anything if the user cancels the share action
+        toast.show(I18n.t("messagePDFPreview.errors.sharing"));
       }
     };
 
