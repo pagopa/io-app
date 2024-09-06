@@ -4,7 +4,6 @@ import {
   Body,
   ButtonLink,
   ContentWrapper,
-  IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
@@ -17,7 +16,7 @@ const CieIdConnectionContent = () => {
   return (
     <ContentWrapper>
       <VSpacer size={8} />
-      <View style={IOStyles.centerJustified}>
+      <View>
         <Body style={{ textAlign: "center" }}>
           {I18n.t("features.itWallet.identification.loading.cieId.subtitle")}
         </Body>
