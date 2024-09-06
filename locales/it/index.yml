@@ -3235,7 +3235,7 @@ features:
         secondaryAction: Chiudi
       genericCredentialError:
         title: Documento non disponibile
-        body: Si è verificato un errore oppure potresti non avere diritto al documento. 
+        body: Si è verificato un errore oppure potresti non avere diritto al documento.
         primaryAction: Riprova
         secondaryAction: Chiudi
     unsupportedDevice:
@@ -3287,6 +3287,8 @@ features:
         toast:
           removed: Fatto! Hai rimosso {{credentialName}}
         flipCard: "Mostra retro"
+      ctas:
+        openPdf: "Apri documento PDF"
   trialSystem:
     toast:
       subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione
