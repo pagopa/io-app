@@ -21,18 +21,23 @@ import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorC
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { selectEidOption, selectIsLoading } from "../../machine/eid/selectors";
+import {
+  selectEidOption,
+  selectIsDisplayingPreview
+} from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { ItwIssuanceLoadingScreen } from "../components/ItwIssuanceLoadingScreen";
 
 export const ItwIssuanceEidPreviewScreen = () => {
-  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
+  const isDisplayingPreview = ItwEidIssuanceMachineContext.useSelector(
+    selectIsDisplayingPreview
+  );
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  if (isLoading) {
+  if (!isDisplayingPreview) {
     return <ItwIssuanceLoadingScreen />;
   }
 
