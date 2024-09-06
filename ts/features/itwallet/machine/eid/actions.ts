@@ -132,7 +132,7 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assert(context.eid, "eID is undefined");
 
-    dispatch(itwCredentialsStore(context.eid));
+    dispatch(itwCredentialsStore([context.eid]));
   },
 
   requestAssistance: () => {},
