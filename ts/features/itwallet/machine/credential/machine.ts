@@ -1,12 +1,12 @@
 import { assign, fromPromise, setup } from "xstate5";
 import { ItwTags } from "../tags";
 import { ItwSessionExpiredError } from "../../api/client";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   InitializeWalletActorOutput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAttestationActorInput,
-  ObtainStatusAttestationActorOutput,
   RequestCredentialActorInput,
   RequestCredentialActorOutput
 } from "./actors";
@@ -50,7 +50,7 @@ export const itwCredentialIssuanceMachine = setup({
       ObtainCredentialActorInput
     >(notImplemented),
     obtainStatusAttestation: fromPromise<
-      ObtainStatusAttestationActorOutput,
+      StoredCredential,
       ObtainStatusAttestationActorInput
     >(notImplemented)
   },

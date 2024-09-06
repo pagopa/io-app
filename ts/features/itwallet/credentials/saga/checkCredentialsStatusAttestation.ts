@@ -2,13 +2,45 @@ import { select, call, all, put } from "typed-redux-saga/macro";
 import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/ReadonlyArray";
 import * as O from "fp-ts/Option";
+import { Errors } from "@pagopa/io-react-native-wallet";
 import { itwCredentialsSelector } from "../store/selectors";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   shouldRequestStatusAttestation,
-  updateCredentialWithStatusAttestation
+  getCredentialStatusAttestation
 } from "../../common/utils/itwCredentialStatusAttestationUtils";
+import { ReduxSagaEffect } from "../../../../types/utils";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { itwCredentialsStore } from "../store/actions";
+
+export function* updateCredentialStatusAttestationSaga(
+  credential: StoredCredential
+): Generator<ReduxSagaEffect, StoredCredential> {
+  try {
+    const { parsedStatusAttestation, statusAttestation } = yield* call(
+      getCredentialStatusAttestation,
+      credential
+    );
+    return {
+      ...credential,
+      storedStatusAttestation: {
+        credentialStatus: "valid",
+        statusAttestation,
+        parsedStatusAttestation: parsedStatusAttestation.payload
+      }
+    };
+  } catch (error) {
+    return {
+      ...credential,
+      storedStatusAttestation: {
+        credentialStatus:
+          error instanceof Errors.StatusAttestationInvalid
+            ? "invalid" // The credential was revoked
+            : "unknown" // We do not have enough information on the status, the error was unexpected
+      }
+    };
+  }
+}
 
 /**
  * This saga is responsible to check the status attestation for each credential in the wallet.
@@ -34,7 +66,7 @@ export function* checkCredentialsStatusAttestation() {
 
   const updatedCredentials = yield* all(
     credentialsToCheck.map(credential =>
-      call(updateCredentialWithStatusAttestation, credential)
+      call(updateCredentialStatusAttestationSaga, credential)
     )
   );
 

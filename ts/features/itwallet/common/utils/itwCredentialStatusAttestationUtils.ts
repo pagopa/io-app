@@ -1,12 +1,11 @@
 import {
   createCryptoContextFor,
-  Credential,
-  Errors
+  Credential
 } from "@pagopa/io-react-native-wallet";
 import { isAfter } from "date-fns";
 import { StoredCredential } from "./itwTypesUtils";
 
-export const fetchCredentialStatusAttestation = async (
+export const getCredentialStatusAttestation = async (
   credential: StoredCredential
 ) => {
   const credentialCryptoContext = createCryptoContextFor(credential.keyTag);
@@ -53,38 +52,5 @@ export const shouldRequestStatusAttestation = ({
       );
     default:
       throw new Error("Unexpected credential status");
-  }
-};
-
-/**
- * This function updates the given credential with a fresh status attestation.
- *
- * Note that it makes a request to the credential issuer.
- */
-export const updateCredentialWithStatusAttestation = async (
-  credential: StoredCredential
-): Promise<StoredCredential> => {
-  try {
-    const { parsedStatusAttestation, statusAttestation } =
-      await fetchCredentialStatusAttestation(credential);
-
-    return {
-      ...credential,
-      storedStatusAttestation: {
-        credentialStatus: "valid",
-        statusAttestation,
-        parsedStatusAttestation: parsedStatusAttestation.payload
-      }
-    };
-  } catch (error) {
-    return {
-      ...credential,
-      storedStatusAttestation: {
-        credentialStatus:
-          error instanceof Errors.StatusAttestationInvalid
-            ? "invalid" // The credential was revoked
-            : "unknown" // We do not have enough information on the status, the error was unexpected
-      }
-    };
   }
 };
