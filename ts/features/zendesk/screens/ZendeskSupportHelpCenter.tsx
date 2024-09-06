@@ -124,7 +124,7 @@ const FaqManager = (props: FaqManagerProps) => {
   const renderFaqItem = ({ item }: ListRenderItemInfo<FAQType>) => (
     <AccordionItem
       title={item.title}
-      body={item.content}
+      body={<IOMarkdown content={item.content} />}
       // onLinkClicked={props.onLinkClicked}
       // shouldHandleLink={props.shouldHandleLink}
     />
