@@ -32,6 +32,7 @@ import { isDevEnv } from "../../utils/environment";
 import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
 import { notificationsReducer } from "../../features/pushNotifications/store/reducers";
 import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
+import { itwIdentificationInitialState } from "../../features/itwallet/identification/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
@@ -211,7 +212,6 @@ export function createRootReducer(
             // data should be kept across multiple sessions
             entities: {
               organizations: state.entities.organizations,
-              messagesStatus: state.entities.messagesStatus,
               paymentByRptId: state.entities.paymentByRptId,
               calendarEvents: state.entities.calendarEvents,
               // eslint-disable-next-line no-underscore-dangle
@@ -250,7 +250,16 @@ export function createRootReducer(
                 _persist: state.features.profileSettings._persist
               },
               // eslint-disable-next-line no-underscore-dangle
-              _persist: state.features._persist
+              _persist: state.features._persist,
+              // IT Wallet must be kept
+              itWallet: {
+                identification: itwIdentificationInitialState,
+                issuance: state.features.itWallet.issuance,
+                lifecycle: state.features.itWallet.lifecycle,
+                credentials: state.features.itWallet.credentials,
+                // eslint-disable-next-line no-underscore-dangle
+                _persist: state.features.itWallet._persist
+              }
             },
             identification: {
               ...identificationInitialState,

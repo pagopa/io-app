@@ -205,10 +205,6 @@ global:
     invalidSearchBarText: "Mindestens {{minCharacter}} Zeichen eingeben"
     noResultsFound: "Es gibt keine Ergebnisse für diese Suche: versuche etwas anderes."
     noResultsTitle: "Keine Ergebnisse"
-  media:
-    email: "E-Mail"
-    pec: "PEC"
-    phone: "Telefon"
 tablet:
   message: "Die Benutzeroberfläche von IO ist für Smartphones optimiert, aber alle mit deinem Gerät kompatiblen Funktionen sind weiterhin verfügbar."
 rooted:
@@ -222,13 +218,8 @@ rooted:
   bodyAndroid: !include rooted_body.md
   continueAlert:
     title: "Weiter"
-    body: "Hast du die Risiken verstanden und möchtest fortfahren?"
-    confirmText: "Ja"
-    cancelText: "Abbrechen"
   cancelAlert:
     title: "Beenden"
-    body: "Du kannst die App schließen"
-    confirmText: "Beenden"
 locales:
   it: "Italienisch"
   en: "Englisch"
@@ -262,7 +253,6 @@ startup:
   profileEnabled: "Benutzerprofil aktiviert"
   userDeletePendingAlert:
     title: "Profil wird gelöscht"
-    message: "Wenn du deine Meinung geändert hast, kannst du deinen Antrag im Abschnitt Datenschutz deines Profils zurückziehen."
     cta_2: "Ignorieren"
   contextualHelp:
     title: "Initialisierungsprobleme?"
@@ -278,15 +268,6 @@ profile:
   fiscalCode:
     accessibility:
       unavailable: "Nicht verfügbar"
-      preview:
-        label: "Vorschau auf deine Steuernummer"
-        hint: "Aktiviere diese Option, um ein Faksimile deiner Steuernummer anzuzeigen"
-      front:
-        label: "Vorderseite der Karte mit Steuernummer {{code}} von {{name}} {{Familienname}}, Geschlecht {{Geschlecht}}, geboren in {{Geburtsort}} ({{Provinz}}) am {{Geburtsdatum}}"
-        hint: "Aktiviere diese Option, um zur Vollbildansicht zu wechseln"
-      rear:
-        label: "Barcode deiner Steuernummer"
-        hint: "Aktiviere diese Option, um zur Vollbildansicht zu wechseln"
     title: "Deine persönlichen Dokumente"
     fiscalCode: "Steuernummer"
     facSimile: "Faksimile"
@@ -327,7 +308,6 @@ profile:
       description: "Deine Rechte und Pflichten bei der Nutzung der IO-App"
       loading: "Warte ein paar Sekunden, wir überprüfen dein Profil..."
       removeAccount:
-        title: "Dein Konto löschen"
         error: "Bei der Anfrage zur Kontolöschung ist ein Fehler aufgetreten. Bitte versuche es erneut."
         alert:
           cta:
@@ -389,10 +369,6 @@ profile:
       email: "E-Mail-Adresse"
       need_validate: "Noch zu bestätigen"
       nameSurname: "Vor- und Nachname"
-    email:
-      contextualHelpTitle: "Wie verwalte ich meine E-Mail-Adresse?"
-    spid_email:
-      contextualHelpTitle: "Diese Daten sind in deinem SPID-Profil festgelegt"
   security:
     title: "Sicherheit"
     subtitle: "Verwalte die Authentifizierungsmethoden in der App"
@@ -533,9 +509,7 @@ authentication:
       contextualHelpTitle: "Wo kann ich meine PIN und meinen PUK finden?"
       contextualHelpCTA: "Hast du deine PIN / deinen PUK vergessen?"
     pinTempLocked:
-      header: "Anmeldung mit CIE"
       title: "Karte vorübergehend gesperrt"
-      button: "Lade / Öffne CieID"
     card:
       layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, bewege die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."
       readerCardHeader: "Wir lesen die Daten deiner Identitätskarte ein und überprüfen deren Gültigkeit."
@@ -553,8 +527,6 @@ authentication:
         unknownCardTitle: "Unbekannte Karte"
         unknownCardContent: "Die verwendete Karte scheint keine elektronische Identitätskarte zu sein."
         unknownCardHelpLink: "Was ist eine elektronische Identitätskarte?"
-    dataUsageConsent:
-      retryCTA: "Weiter"
   spid: "SPID"
   spid_information_request:
     headerTitle: "Du hast keinen SPID?"
@@ -603,16 +575,6 @@ authentication:
       body: "Der von dir gewählte Identitätsanbieter ist im Moment nicht verfügbar. Du kannst es später noch einmal versuchen.\nWenn du eine andere SPID-Identität hast, wähle bitte einen anderen Anbieter.\nDu kannst das Problem über das Symbol '?' in der oberen rechten Ecke melden."
     login:
       title: "Fehler beim Anmelden"
-      body: "Es gab einen Fehler bei der Anmeldung, bitte versuche es erneut!"
-    spid:
-      unknown: "Unbekannter Fehler"
-      error_19: "Du hast zu oft einen falschen Benutzernamen oder ein falsches Passwort eingegeben: Versuche es in ein paar Minuten erneut oder wende dich an deinen SPID-Identitätsanbieter um deine Anmeldedaten zu ändern."
-      error_20: "Aus Sicherheitsgründen erfordert die IO-App eine Anmeldung mittels der SPID-Sicherheitsstufe 2: Wende dich an deinen SPID-Identitätsanbieter um zu erfahren, wie du diesen verwenden kannst."
-      error_21: "Seit dem Beginn des Anmeldevorgangs ist zu viel Zeit vergangen: Bitte beginne noch einmal von vorne."
-      error_22: "Um IO benutzen zu können, musst du die Übermittlung einiger deiner Daten erlauben: Melde dich erneut an und gib dein Einverständnis zur Datenübermittlung."
-      error_23: "Deine SPID-Identität ist gesperrt oder widerrufen. Um dein Konto zu reaktivieren, wende dich an deinen SPID-Identitätsanbieter."
-      error_25: "Du hast den Anmeldevorgang abgebrochen: Du kannst es jederzeit erneut versuchen."
-      error_1001: "Zugang verweigert: Du hast nicht das Mindestalter für die Nutzung von IO"
   expiredSessionBanner:
     title: "Sicherheitshinweis"
   unlock:
@@ -658,7 +620,6 @@ email:
   read:
     title: "Deine E-Mail-Adresse"
     info: "Das ist die E-Mail-Adresse, die mit deinem SPID-Konto verknüpft ist. Wenn du magst, kannst du in IO eine andere E-Mail-Adresse verwenden. Um die neue E-Mail-Adresse zu aktivieren, musst du sie bestätigen, indem du auf den Link klickst, den du mittels E-Mail erhalten hast."
-    details: "Du kannst diese Adresse ändern, die du dann mittels Link, den du als E-Mail erhältst, bestätigen musst. In der Zwischenzeit werden IO-Funktionen, die von E-Mails abhängig sind (Zahlungen, Weiterleitung von Nachrichten usw.), deaktiviert."
     alert: "Achtung: dein pagoPA Konto ist mit deiner E-Mail-Adresse verknüpft. Wenn du sie änderst, wird IO deine registrierten Zahlungsmethoden und Transaktionen nicht mehr auflisten."
     help: "Dein SPID-Profil übermittelt deine E-Mail-Adresse an die IO-App. Sollte die Adresse falsch sein oder nicht mehr verwendet werden, kannst du sie direkt in deinem SPID-Konto bearbeiten."
   insert:
@@ -854,8 +815,6 @@ payment:
     editButton: "Ändern"
     termsAndConditions: "Wenn du fortfährst, erklärst du folgende Informationen gelesen und verstanden zu haben: "
     termsAndConditionsLink: "Nutzungsbedingungen und Datenschutzrichtlinie"
-    loading:
-      title: "Die Informationen zur Zahlung werden geladen"
 wallet:
   methodDetails:
     cobadgeTitle: "Debitkarte"
@@ -1670,18 +1629,6 @@ messages:
     unarchive: "Wiederherstellen"
     selectAll: "Alle"
     deselectAll: "Keine"
-    payment:
-      expired: "Überfällige Zahlung"
-      paid: "Diese Zahlungsmitteilung ist bereits bezahlt. Überprüfe die Quittung in deinem"
-      addMemo:
-        block1: "Erstelle eine Erinnerung am"
-        block2: "um"
-      expiringOrValidAlert:
-        block1: "Verfällt am"
-        block2: "um"
-      expiredAlert:
-        block1: "Abgelaufen am"
-        block2: "um"
     pay: "Bezahle {{amount}} €"
     onlyPay: "Bezahlen"
     paid: "Bezahlt"
@@ -1722,11 +1669,6 @@ messages:
     emptyMessage:
       title: "Deine Mitteilungsliste ist leer."
       subtitle: "Aktualisiere, um zu prüfen, ob neue Mitteilungen vorhanden sind."
-  pagination:
-    migration:
-      started: "Bitte warte, wir aktualisieren den Mitteilungsbereich"
-      succeeded: "Fertig!"
-      failed: "Wir waren nicht in der Lage, den Mitteilungsbereich zu aktualisieren."
   operations:
     archive:
       success: "Erfolgreich archiviert!"
@@ -1761,10 +1703,6 @@ messageDetails:
     corruptedFile: "Der Anhang ist beschädigt und kann nicht geöffnet werden. Kontaktiere den Absender"
     downloadFailed: "Der Anhang ist derzeit nicht verfügbar. Bitte versuche es erneut oder kontaktiere den Absender"
     showPreview: "Vorschau anzeigen"
-    unavailable:
-      firstPart: "Die Anhänge sind nicht mehr verfügbar."
-      secondPart: "Kontaktiere den Absender"
-      thirdPart: " für weitere Informationen."
     failing:
       details: "Der Anhang konnte nicht heruntergeladen werden. Bitte versuche es erneut oder öffne eine Ticket"
   banner:
@@ -1990,7 +1928,11 @@ bonus:
       online: "Online"
       places: "Orte"
       navigationTitle: "Rabatte und Ermäßigungen"
-      screenTitle: "Wähle einen Anbieter und entdecke Rabatte und Ermäßigungen"
+      screenTitle: Scopri le opportunità
+      merchantsAll: Tutti i partner
+      tabs:
+        perInitiative: Per categoria
+        perMerchant: Per partner
       cta:
         filter: "Filtern"
       categoriesList:
@@ -2035,7 +1977,6 @@ bonus:
         discountUrl: "Nutze die Ermäßigung"
         website: Vai al sito del partner
       categories:
-        all: "Alle Anbieter"
         counting: "und weitere {{count}}"
         cultureAndEntertainment: "Kultur und Freizeit"
         health: "Gesundheit und Wohlbefinden"
@@ -2050,7 +1991,7 @@ bonus:
     cta:
       activeBonus: "Die Karte beantragen"
       deactivateBonus: "Die Karte deaktivieren"
-      goToDetail: "Die Karte anzeigen"
+      goToDetail: Usa la Carta
     detail:
       cta:
         buyers: Scopri le opportunità CGN
@@ -2099,16 +2040,16 @@ bonus:
         subCaption: "Bitte warte etwas."
       error:
         title: "Der Dienst Nationale Jugendkarte ist derzeit nicht verfügbar."
-        body: "Wir entschuldigen uns für die Unannehmlichkeiten.\nBitte versuche es später noch einmal."
+        body: "Ci dispiace, riprova più tardi."
       ineligible:
         title: "Leider erfüllst du nicht die Voraussetzungen für die Nationale Jugendkarte."
         body: "Die Nationale Jugendkarte ist nur für italienische und europäische Staatsbürger mit Wohnsitz in Italien im Alter von 18 bis 35 Jahren erhältlich."
       timeout:
-        title: "Wir bearbeiten deine Anfrage."
+        title: "Stiamo lavorando la tua richiesta."
         body: "Wir werden dir eine Nachricht in der App schicken, wenn deine Jugendkarte aktiv ist."
       alreadyActive:
         title: "Deine Nationale Jugendkarte ist bereits aktiv!"
-        body: "Du kannst die Details im Abschnitt Konto einsehen."
+        body: "Puoi trovare la tua Carta nella sezione Portafoglio."
       pending:
         title: "Deine Nationale Jugendkarte wird gerade aktiviert."
         body: "Du erhältst eine Nachricht, wenn sie aktiviert ist."
@@ -2120,6 +2061,7 @@ bonus:
         alert:
           title: "Karte deaktivieren"
           message: "Vuoi davvero disattivare la tua Carta Giovani Nazionale? Se confermi, non potrai più accedere alle opportunità e la carta scomparirà dal Portafoglio."
+        expired: Elimina Carta Giovani Nazionale
     otp:
       error: "Aufgrund eines technischen Problems war es uns nicht möglich, einen Rabattcode zu generieren. Bitte versuche es erneut."
       code:
@@ -2271,7 +2213,7 @@ features:
         all: "Alle"
         bonus: "Initiativen für das Gemeinwohl"
         cgn: "Nationale Jugendkarte"
-        itw: "IT Wallet"
+        itw: Documenti
         payment: "Zahlungsmethoden"
     onboarding:
       title: "Was möchtest du deinem Konto hinzufügen?"
@@ -2299,10 +2241,6 @@ features:
       status:
         failure: "FEHLGESCHLAGEN"
         success: ""
-  itWallet:
-    discovery:
-      content: "# Attiva IT Wallet \n ###### Cos'è e come funziona? \n IT Wallet è la nuova funzionalità di IO che ti permette di aggiungere al Portafoglio la tua **Identità Digitale** e di portare sempre con te **la versione digitale dei documenti fisici** che già possiedi, come la Tessera Sanitaria e presto molti altri. \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
-      tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()
 support:
   ticketList:
     noTicket:

@@ -83,18 +83,18 @@ export type TransactionErrorScreenNavigationParams = {
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const imageTimeout: IOPictograms = "inProgress";
-const imageDefaultFallback: IOPictograms = "error";
+const imageTimeout: IOPictograms = "ended";
+const imageDefaultFallback: IOPictograms = "fatalError";
 const imageMapping: Record<ErrorTypes, IOPictograms> = {
-  DATA: "question",
-  DUPLICATED: "fireworks",
-  EC: "notAvailable",
-  ONGOING: "hourglass",
-  UNCOVERED: "umbrella",
-  REVOKED: "error",
-  EXPIRED: "error",
-  TECHNICAL: "error",
-  NOT_FOUND: "unrecognized"
+  DATA: "attention",
+  DUPLICATED: "attention",
+  EC: "attention",
+  ONGOING: "timing",
+  UNCOVERED: "umbrellaNew",
+  REVOKED: "fatalError",
+  EXPIRED: "ended",
+  TECHNICAL: "fatalError",
+  NOT_FOUND: "attention"
 };
 
 const requestZendeskAssistanceForPaymentFailure = (

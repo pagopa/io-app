@@ -471,6 +471,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                           }
                                         />
                                         <View
+                                          accessibilityElementsHidden={true}
                                           importantForAccessibility="no-hide-descendants"
                                           pointerEvents="none"
                                         >
@@ -697,6 +698,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                           }
                                         />
                                         <View
+                                          accessibilityElementsHidden={true}
                                           importantForAccessibility="no-hide-descendants"
                                           pointerEvents="none"
                                         >
@@ -923,6 +925,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                           }
                                         />
                                         <View
+                                          accessibilityElementsHidden={true}
                                           importantForAccessibility="no-hide-descendants"
                                           pointerEvents="none"
                                         >

@@ -10,7 +10,7 @@ import { WizardScreen, WizardScreenProps } from "../WizardScreen";
 const defaultProps: WizardScreenProps = {
   title: "This is a title",
   description: "This is a description",
-  pictogram: "abacus",
+  pictogram: "success",
   primaryButton: {
     label: "primaryButton",
     accessibilityLabel: "accessible primaryButton",

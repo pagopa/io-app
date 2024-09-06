@@ -152,6 +152,7 @@ const globalStateFromStatus = (
           serviceId: "s1" as ServiceId,
           serviceName: "serName",
           organizationName: "orgName",
+          organizationFiscalCode: "orgFisCod",
           firstTimeOpening: true,
           isPNMessage: false,
           containsAttachments: false,

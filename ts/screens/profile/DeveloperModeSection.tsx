@@ -23,7 +23,6 @@ import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../config";
 import {
-  automaticSessionRefreshFFEnabled,
   isAutomaticSessionRefreshToggleActiveSelector,
   isFastLoginEnabledSelector
 } from "../../features/fastLogin/store/selectors";
@@ -304,16 +303,12 @@ const DesignSystemSection = () => {
   const { themeType, setTheme } = useIOThemeContext();
   const dispatch = useIODispatch();
 
-  const isNewScanSectionLocallyEnabled = useIOSelector(
-    isNewScanSectionLocallyEnabledSelector
-  );
-
-  const isAutomaticSessionRefreshRemoteFFActive = useIOSelector(
-    automaticSessionRefreshFFEnabled
-  );
-
   const isAutomaticSessionRefreshToggleActive = useIOSelector(
     isAutomaticSessionRefreshToggleActiveSelector
+  );
+
+  const isNewScanSectionLocallyEnabled = useIOSelector(
+    isNewScanSectionLocallyEnabledSelector
   );
 
   const dispatchAutomaticSessionRefresh = React.useCallback(
@@ -360,18 +355,11 @@ const DesignSystemSection = () => {
         value={isNewScanSectionLocallyEnabled}
         onSwitchValueChange={onNewScanSectionToggle}
       />
-      {/* this control isAutomaticSessionRefreshRemoteFFActive is a
-      workaround to hide this toogle before this task
-      (https://pagopa.atlassian.net/browse/IOPID-2051)
-      is completed because otherwise nothing would be activated using this toggle
-       */}
-      {isAutomaticSessionRefreshRemoteFFActive && (
-        <ListItemSwitch
-          label={I18n.t("profile.main.sessionRefresh")}
-          value={isAutomaticSessionRefreshToggleActive}
-          onSwitchValueChange={dispatchAutomaticSessionRefresh}
-        />
-      )}
+      <ListItemSwitch
+        label={I18n.t("profile.main.sessionRefresh")}
+        value={isAutomaticSessionRefreshToggleActive}
+        onSwitchValueChange={dispatchAutomaticSessionRefresh}
+      />
     </ContentWrapper>
   );
 };
@@ -439,7 +427,7 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      value: "IT Wallet",
+      value: "Documenti su IO",
       onPress: () =>
         navigation.navigate(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.PLAYGROUNDS

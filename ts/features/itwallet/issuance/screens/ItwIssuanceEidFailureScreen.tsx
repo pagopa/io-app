@@ -13,11 +13,16 @@ import {
 } from "../../machine/eid/failure";
 import { selectFailureOption } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 
 export const ItwIssuanceEidFailureScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const failureOption =
     ItwEidIssuanceMachineContext.useSelector(selectFailureOption);
+
+  useItwDisableGestureNavigation();
+  useAvoidHardwareBackButton();
 
   const closeIssuance = () => machineRef.send({ type: "close" });
 
@@ -40,18 +45,18 @@ export const ItwIssuanceEidFailureScreen = () => {
         }
       },
       [IssuanceFailureType.ISSUER_GENERIC]: {
-        title: I18n.t("features.itWallet.issuance.genericError.title"),
-        subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
+        title: I18n.t("features.itWallet.issuance.genericEidError.title"),
+        subtitle: I18n.t("features.itWallet.issuance.genericEidError.body"),
         pictogram: "workInProgress",
         action: {
           label: I18n.t(
-            "features.itWallet.issuance.genericError.primaryAction"
+            "features.itWallet.issuance.genericEidError.primaryAction"
           ),
           onPress: closeIssuance // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         },
         secondaryAction: {
           label: I18n.t(
-            "features.itWallet.issuance.genericError.secondaryAction"
+            "features.itWallet.issuance.genericEidError.secondaryAction"
           ),
           onPress: closeIssuance // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         }

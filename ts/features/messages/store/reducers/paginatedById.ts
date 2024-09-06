@@ -1,7 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import {
   loadMessageById,
@@ -114,27 +112,12 @@ export default reducer;
 
 // Selectors
 
-export const allPaginatedByIdSelector = (state: GlobalState): PaginatedById =>
-  state.entities.messages.paginatedById;
-
-export const getPaginatedMessageById = createSelector(
-  [allPaginatedByIdSelector, (_: GlobalState, messageId: string) => messageId],
-  (paginatedById, messageId): pot.Pot<UIMessage, Error> =>
-    paginatedById[messageId] ?? pot.none
-);
-
-export const getServiceByMessageId = createSelector(
-  getPaginatedMessageById,
-  message => (pot.isSome(message) ? message.value.serviceId : undefined)
-);
-
-export const getPaginatedMessageCreatedAt = (
+export const getPaginatedMessageById = (
   state: GlobalState,
-  id: string
-): Date | undefined =>
-  pipe(
-    getPaginatedMessageById(state, id),
-    pot.toOption,
-    O.map(paginatedMessage => paginatedMessage.createdAt),
-    O.toUndefined
+  messageId: string
+) => state.entities.messages.paginatedById[messageId] ?? pot.none;
+
+export const getServiceByMessageId = (state: GlobalState, messageId: string) =>
+  pipe(getPaginatedMessageById(state, messageId), message =>
+    pot.isSome(message) ? message.value.serviceId : undefined
   );

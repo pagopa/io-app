@@ -9,7 +9,6 @@ import CieLoginConfigScreen from "../features/cieLogin/components/screens/CieLog
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import { LandingScreen } from "../screens/authentication/LandingScreen";
-import NewOptInScreen from "../screens/authentication/NewOptInScreen";
 import TestAuthenticationScreen from "../screens/authentication/TestAuthenticationScreen";
 import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthorizeDataUsageScreen";
 import { CieCardReaderScreenWrapper } from "../screens/authentication/cie/CieCardReaderScreenWrapper";
@@ -26,6 +25,7 @@ import CieExtendedApduNotSupportedScreen from "../screens/authentication/cie/Cie
 import CieWrongCardScreen from "../screens/authentication/cie/CieWrongCardScreen";
 import ActivateNfcScreen from "../screens/authentication/cie/ActivateNfcScreen";
 import AuthErrorScreen from "../screens/authentication/AuthErrorScreen";
+import OptInScreen from "../screens/authentication/OptInScreen";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 import CloseButton from "./components/CloseButton";
@@ -58,7 +58,7 @@ const AuthenticationStackNavigator = () => (
 
     <Stack.Screen
       name={ROUTES.AUTHENTICATION_OPT_IN}
-      component={NewOptInScreen}
+      component={OptInScreen}
       options={{ headerShown: true }}
     />
 

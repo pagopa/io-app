@@ -1,13 +1,13 @@
 import { ErrorActorEvent } from "xstate5";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 
 export type Reset = {
   type: "reset";
 };
 
-export type SelecteCredential = {
+export type SelectCredential = {
   type: "select-credential";
-  credentialType: CredentialType;
+  credentialType: string;
+  skipNavigation: boolean;
 };
 
 export type ConfirmTrustData = {
@@ -32,7 +32,7 @@ export type Close = {
 
 export type CredentialIssuanceEvents =
   | Reset
-  | SelecteCredential
+  | SelectCredential
   | ConfirmTrustData
   | AddToWallet
   | Retry

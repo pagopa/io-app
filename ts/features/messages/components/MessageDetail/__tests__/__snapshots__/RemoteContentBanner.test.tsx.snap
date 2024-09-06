@@ -448,6 +448,8 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               }
                             />
                             <View
+                              accessibilityElementsHidden={true}
+                              importantForAccessibility="no-hide-descendants"
                               pointerEvents="none"
                             >
                               <View
