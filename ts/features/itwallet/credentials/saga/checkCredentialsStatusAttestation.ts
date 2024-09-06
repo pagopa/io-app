@@ -3,19 +3,12 @@ import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/ReadonlyArray";
 import * as O from "fp-ts/Option";
 import { itwCredentialsSelector } from "../store/selectors";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
   shouldRequestStatusAttestation,
   updateCredentialWithStatusAttestation
 } from "../../common/utils/itwCredentialStatusAttestationUtils";
-import { itwCredentialsMultipleUpdate } from "../store/actions";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { walletAddCards } from "../../../newWallet/store/actions/cards";
-import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
-
-const canGetStatusAttestation = (credential: StoredCredential) =>
-  credential.credentialType === CredentialType.DRIVING_LICENSE;
+import { itwCredentialsStore } from "../store/actions";
 
 /**
  * This saga is responsible to check the status attestation for each credential in the wallet.
@@ -32,11 +25,7 @@ export function* checkCredentialsStatusAttestation() {
 
   const credentialsToCheck = pipe(
     credentials,
-    RA.filterMap(
-      O.filter(
-        x => canGetStatusAttestation(x) && shouldRequestStatusAttestation(x)
-      )
-    )
+    RA.filterMap(O.filter(x => shouldRequestStatusAttestation(x)))
   );
 
   if (credentialsToCheck.length === 0) {
@@ -49,16 +38,5 @@ export function* checkCredentialsStatusAttestation() {
     )
   );
 
-  yield* put(itwCredentialsMultipleUpdate(updatedCredentials));
-  yield* put(
-    walletAddCards(
-      updatedCredentials.map(c => ({
-        key: c.keyTag,
-        type: "itw",
-        category: "itw",
-        credentialType: c.credentialType,
-        status: getCredentialStatus(c)
-      }))
-    )
-  );
+  yield* put(itwCredentialsStore(updatedCredentials));
 }

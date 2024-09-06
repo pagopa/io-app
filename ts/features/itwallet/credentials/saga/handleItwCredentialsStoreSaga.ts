@@ -1,5 +1,5 @@
 import { put } from "typed-redux-saga/macro";
-import { walletUpsertCard } from "../../../newWallet/store/actions/cards";
+import { walletAddCards } from "../../../newWallet/store/actions/cards";
 import { itwCredentialsStore } from "../store/actions";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 
@@ -10,14 +10,15 @@ import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 export function* handleItwCredentialsStoreSaga(
   itwCredentialsStoreAction: ReturnType<typeof itwCredentialsStore>
 ) {
-  const credential = itwCredentialsStoreAction.payload;
   yield* put(
-    walletUpsertCard({
-      key: credential.keyTag,
-      type: "itw",
-      category: "itw",
-      credentialType: credential.credentialType,
-      status: getCredentialStatus(credential)
-    })
+    walletAddCards(
+      itwCredentialsStoreAction.payload.map(c => ({
+        key: `ITW_${c.credentialType}`,
+        type: "itw",
+        category: "itw",
+        credentialType: c.credentialType,
+        status: getCredentialStatus(c)
+      }))
+    )
   );
 }
