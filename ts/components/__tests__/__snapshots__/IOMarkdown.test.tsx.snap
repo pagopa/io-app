@@ -209,33 +209,21 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           >
             <Text
               allowFontScaling={false}
-              color="bluegrey"
-              defaultColor="bluegrey"
-              defaultWeight="Regular"
               dynamicTypeRamp="body"
-              font="TitilliumSansPro"
-              fontStyle={
-                {
-                  "fontSize": 16,
-                  "lineHeight": 24,
-                }
-              }
               maxFontSizeMultiplier={1.25}
               style={
                 [
+                  {},
                   {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  },
-                  {
-                    "color": "#475A6D",
+                    "color": "#555C70",
                     "fontFamily": "Titillium Sans Pro",
+                    "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "400",
+                    "lineHeight": 24,
                   },
                 ]
               }
-              weight="Regular"
             >
               Item 1
             </Text>
@@ -291,33 +279,21 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           >
             <Text
               allowFontScaling={false}
-              color="bluegrey"
-              defaultColor="bluegrey"
-              defaultWeight="Regular"
               dynamicTypeRamp="body"
-              font="TitilliumSansPro"
-              fontStyle={
-                {
-                  "fontSize": 16,
-                  "lineHeight": 24,
-                }
-              }
               maxFontSizeMultiplier={1.25}
               style={
                 [
+                  {},
                   {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  },
-                  {
-                    "color": "#475A6D",
+                    "color": "#555C70",
                     "fontFamily": "Titillium Sans Pro",
+                    "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "400",
+                    "lineHeight": 24,
                   },
                 ]
               }
-              weight="Regular"
             >
               Item 2
             </Text>
@@ -333,33 +309,21 @@ exports[`IOMarkdown Should match snapshot 1`] = `
         >
           <Text
             allowFontScaling={false}
-            color="bluegrey"
-            defaultColor="bluegrey"
-            defaultWeight="Regular"
             dynamicTypeRamp="body"
-            font="TitilliumSansPro"
-            fontStyle={
-              {
-                "fontSize": 16,
-                "lineHeight": 24,
-              }
-            }
             maxFontSizeMultiplier={1.25}
             style={
               [
+                {},
                 {
-                  "fontSize": 16,
-                  "lineHeight": 24,
-                },
-                {
-                  "color": "#475A6D",
+                  "color": "#555C70",
                   "fontFamily": "Titillium Sans Pro",
+                  "fontSize": 16,
                   "fontStyle": "normal",
                   "fontWeight": "400",
+                  "lineHeight": 24,
                 },
               ]
             }
-            weight="Regular"
           >
             •
           </Text>
@@ -385,33 +349,21 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           >
             <Text
               allowFontScaling={false}
-              color="bluegrey"
-              defaultColor="bluegrey"
-              defaultWeight="Regular"
               dynamicTypeRamp="body"
-              font="TitilliumSansPro"
-              fontStyle={
-                {
-                  "fontSize": 16,
-                  "lineHeight": 24,
-                }
-              }
               maxFontSizeMultiplier={1.25}
               style={
                 [
+                  {},
                   {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  },
-                  {
-                    "color": "#475A6D",
+                    "color": "#555C70",
                     "fontFamily": "Titillium Sans Pro",
+                    "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "400",
+                    "lineHeight": 24,
                   },
                 ]
               }
-              weight="Regular"
             >
               Item 3
             </Text>
@@ -541,33 +493,21 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           >
             <Text
               allowFontScaling={false}
-              color="bluegrey"
-              defaultColor="bluegrey"
-              defaultWeight="Regular"
               dynamicTypeRamp="body"
-              font="TitilliumSansPro"
-              fontStyle={
-                {
-                  "fontSize": 16,
-                  "lineHeight": 24,
-                }
-              }
               maxFontSizeMultiplier={1.25}
               style={
                 [
+                  {},
                   {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  },
-                  {
-                    "color": "#475A6D",
+                    "color": "#555C70",
                     "fontFamily": "Titillium Sans Pro",
+                    "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "400",
+                    "lineHeight": 24,
                   },
                 ]
               }
-              weight="Regular"
             >
               First
             </Text>
@@ -624,33 +564,21 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           >
             <Text
               allowFontScaling={false}
-              color="bluegrey"
-              defaultColor="bluegrey"
-              defaultWeight="Regular"
               dynamicTypeRamp="body"
-              font="TitilliumSansPro"
-              fontStyle={
-                {
-                  "fontSize": 16,
-                  "lineHeight": 24,
-                }
-              }
               maxFontSizeMultiplier={1.25}
               style={
                 [
+                  {},
                   {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  },
-                  {
-                    "color": "#475A6D",
+                    "color": "#555C70",
                     "fontFamily": "Titillium Sans Pro",
+                    "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "400",
+                    "lineHeight": 24,
                   },
                 ]
               }
-              weight="Regular"
             >
               Second
             </Text>
@@ -666,33 +594,21 @@ exports[`IOMarkdown Should match snapshot 1`] = `
         >
           <Text
             allowFontScaling={false}
-            color="bluegrey"
-            defaultColor="bluegrey"
-            defaultWeight="Regular"
             dynamicTypeRamp="body"
-            font="TitilliumSansPro"
-            fontStyle={
-              {
-                "fontSize": 16,
-                "lineHeight": 24,
-              }
-            }
             maxFontSizeMultiplier={1.25}
             style={
               [
+                {},
                 {
-                  "fontSize": 16,
-                  "lineHeight": 24,
-                },
-                {
-                  "color": "#475A6D",
+                  "color": "#555C70",
                   "fontFamily": "Titillium Sans Pro",
+                  "fontSize": 16,
                   "fontStyle": "normal",
                   "fontWeight": "400",
+                  "lineHeight": 24,
                 },
               ]
             }
-            weight="Regular"
           >
             3
             .
@@ -719,33 +635,21 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           >
             <Text
               allowFontScaling={false}
-              color="bluegrey"
-              defaultColor="bluegrey"
-              defaultWeight="Regular"
               dynamicTypeRamp="body"
-              font="TitilliumSansPro"
-              fontStyle={
-                {
-                  "fontSize": 16,
-                  "lineHeight": 24,
-                }
-              }
               maxFontSizeMultiplier={1.25}
               style={
                 [
+                  {},
                   {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  },
-                  {
-                    "color": "#475A6D",
+                    "color": "#555C70",
                     "fontFamily": "Titillium Sans Pro",
+                    "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "400",
+                    "lineHeight": 24,
                   },
                 ]
               }
-              weight="Regular"
             >
               Third
             </Text>

@@ -46,8 +46,10 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
+            "fontSize": 22.916666666666668,
             "fontStyle": "normal",
             "fontWeight": "600",
+            "lineHeight": undefined,
           },
         ]
       }
@@ -91,8 +93,10 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
+            "fontSize": 22.916666666666668,
             "fontStyle": "normal",
             "fontWeight": "600",
+            "lineHeight": undefined,
           },
         ]
       }
@@ -136,8 +140,10 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
+            "fontSize": 22.916666666666668,
             "fontStyle": "normal",
             "fontWeight": "600",
+            "lineHeight": undefined,
           },
         ]
       }
@@ -181,8 +187,10 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
+            "fontSize": 22.916666666666668,
             "fontStyle": "normal",
             "fontWeight": "600",
+            "lineHeight": undefined,
           },
         ]
       }
@@ -273,8 +281,10 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
+            "fontSize": 22.916666666666668,
             "fontStyle": "normal",
             "fontWeight": "600",
+            "lineHeight": undefined,
           },
         ]
       }
@@ -318,8 +328,10 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
+            "fontSize": 22.916666666666668,
             "fontStyle": "normal",
             "fontWeight": "600",
+            "lineHeight": undefined,
           },
         ]
       }
@@ -363,8 +375,10 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
+            "fontSize": 22.916666666666668,
             "fontStyle": "normal",
             "fontWeight": "600",
+            "lineHeight": undefined,
           },
         ]
       }
@@ -408,8 +422,10 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
+            "fontSize": 22.916666666666668,
             "fontStyle": "normal",
             "fontWeight": "600",
+            "lineHeight": undefined,
           },
         ]
       }
@@ -453,8 +469,10 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
+            "fontSize": 22.916666666666668,
             "fontStyle": "normal",
             "fontWeight": "600",
+            "lineHeight": undefined,
           },
         ]
       }
@@ -498,8 +516,10 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
+            "fontSize": 22.916666666666668,
             "fontStyle": "normal",
             "fontWeight": "600",
+            "lineHeight": undefined,
           },
         ]
       }
@@ -543,8 +563,10 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
+            "fontSize": 22.916666666666668,
             "fontStyle": "normal",
             "fontWeight": "600",
+            "lineHeight": undefined,
           },
         ]
       }
@@ -588,8 +610,10 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
+            "fontSize": 22.916666666666668,
             "fontStyle": "normal",
             "fontWeight": "600",
+            "lineHeight": undefined,
           },
         ]
       }
