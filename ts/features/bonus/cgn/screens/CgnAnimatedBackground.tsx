@@ -14,7 +14,8 @@ export function CgnAnimatedBackground({ onLoadEnd }: { onLoadEnd?(): void }) {
       }}
       style={{
         height: "100%",
-        width: "100%"
+        width: "100%",
+        backgroundColor
       }}
       onLoadEnd={onLoadEnd}
     />
@@ -65,3 +66,5 @@ const generatedSvg = playSvg(
   generatedTranslationB,
   generatedTranslationC
 );
+
+const backgroundColor = "#f4f5f8";
