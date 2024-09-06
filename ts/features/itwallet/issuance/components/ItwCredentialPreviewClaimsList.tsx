@@ -26,11 +26,7 @@ const ItwCredentialPreviewClaimsList = ({
   const credentialStatus = getCredentialStatus(data);
 
   const claims = parseClaims(data.parsedCredential, {
-    exclude: [
-      WellKnownClaim.unique_id,
-      WellKnownClaim.link_qr_code,
-      WellKnownClaim.content
-    ]
+    exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
   });
 
   return (
