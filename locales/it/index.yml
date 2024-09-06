@@ -3289,6 +3289,8 @@ features:
         flipCard: "Mostra retro"
       ctas:
         openPdf: "Apri documento PDF"
+      attachments:
+        shareButton: Salva o condividi
   trialSystem:
     toast:
       subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione

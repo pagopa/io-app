@@ -11,7 +11,7 @@ import {
 import { useIOSelector } from "../../../../store/hooks";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { getHumanReadableParsedCredential } from "../../common/utils/debug";
-import { PdfClaim, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
+import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
@@ -85,20 +85,16 @@ const getCtaProps = (
 ): CredentialCtaProps | undefined => {
   const { parsedCredential } = credential;
 
-  const contentClaim = parsedCredential[WellKnownClaim.content];
-
-  // We check if the "content" claim exists and is a PDF document.
-  // If so, return a CTA to view and download the PDF.
-  if (PdfClaim.is(contentClaim.value)) {
-    const pdfBase64 = contentClaim.value;
+  // If the "content" claim exists, return a CTA to view and download it.
+  if (parsedCredential[WellKnownClaim.content]) {
     return {
       label: I18n.t("features.itWallet.presentation.ctas.openPdf"),
-      icon: "docAttachPDF",
+      icon: "docPaymentTitle",
       onPress: () => {
         navigation.navigate(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
           params: {
-            base64: pdfBase64
+            attachmentClaim: parsedCredential[WellKnownClaim.content]
           }
         });
       }

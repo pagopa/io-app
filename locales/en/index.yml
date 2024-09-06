@@ -3289,6 +3289,8 @@ features:
         flipCard: "Show back"
       ctas:
         openPdf: "Open PDF document"
+      attachments:
+        shareButton: Save or share
   trialSystem:
     toast:
       subscribed: Done! You will receive a message when the trial period will begin.
