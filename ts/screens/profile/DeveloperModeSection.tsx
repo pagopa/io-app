@@ -303,12 +303,12 @@ const DesignSystemSection = () => {
   const { themeType, setTheme } = useIOThemeContext();
   const dispatch = useIODispatch();
 
-  const isNewScanSectionLocallyEnabled = useIOSelector(
-    isNewScanSectionLocallyEnabledSelector
-  );
-
   const isAutomaticSessionRefreshToggleActive = useIOSelector(
     isAutomaticSessionRefreshToggleActiveSelector
+  );
+
+  const isNewScanSectionLocallyEnabled = useIOSelector(
+    isNewScanSectionLocallyEnabledSelector
   );
 
   const dispatchAutomaticSessionRefresh = React.useCallback(
@@ -427,7 +427,7 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      value: "IT Wallet",
+      value: "Documenti su IO",
       onPress: () =>
         navigation.navigate(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.PLAYGROUNDS

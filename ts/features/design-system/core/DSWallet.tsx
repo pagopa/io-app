@@ -111,11 +111,11 @@ export const DSWallet = () => {
         onSwitchValueChange={setStacked}
       />
       <VStack space={blockMargin}>
-        <DesignSystemSection title="With IT Wallet">
+        <DesignSystemSection title="With Documenti su IO">
           <WalletCardsCategoryContainer
             cards={cardsByCategory.itw}
             header={{
-              label: "IT Wallet",
+              label: "Documenti",
               iconName: "fiscalCodeIndividual"
             }}
             isStacked={isStacked}
@@ -148,7 +148,7 @@ export const DSWallet = () => {
           />
         </DesignSystemSection>
 
-        <DesignSystemSection title="Without IT Wallet">
+        <DesignSystemSection title="Without Documenti su IO">
           <WalletCardsCategoryContainer
             cards={[
               ...cardsByCategory.payment,

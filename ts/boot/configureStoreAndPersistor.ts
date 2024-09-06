@@ -53,7 +53,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 33;
+const CURRENT_REDUX_STORE_VERSION = 35;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -426,7 +426,18 @@ const migrations: MigrationManifest = {
   // Version 33
   // Removes it wallet section FF
   "33": (state: PersistedState) =>
-    omit(state, "persistedPreferences.isItWalletTestEnabled")
+    omit(state, "persistedPreferences.isItWalletTestEnabled"),
+  // removes show scan section and hide profile local FF
+  "34": (state: PersistedState) =>
+    omit(state, "persistedPreferences.isNewScanSectionEnabled"),
+  // as a result of the PR revert, the data above was reinserted
+  // PR: https://github.com/pagopa/io-app/pull/6145
+  "35": (state: PersistedState) =>
+    merge(state, {
+      persistedPreferences: {
+        isNewScanSectionEnabled: false
+      }
+    })
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
