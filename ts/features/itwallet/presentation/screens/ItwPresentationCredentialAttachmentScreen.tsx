@@ -1,6 +1,6 @@
 import { IOColors, IOStyles, useIOToast } from "@pagopa/io-app-design-system";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";
 import Share from "react-native-share";
 import {
@@ -39,7 +39,6 @@ type AttachmentData = {
 export const ItwPresentationCredentialAttachmentScreen = ({
   route
 }: ScreenProps) => {
-  const { attachmentClaim } = route.params;
   const toast = useIOToast();
 
   const [footerActionsMeasurements, setfooterActionsMeasurements] =
@@ -60,7 +59,7 @@ export const ItwPresentationCredentialAttachmentScreen = ({
       try {
         await Share.open({
           activityItemSources: [],
-          filename: fileName,
+          filename: getFileNameWithExtension(fileName, type),
           type,
           url: uri,
           failOnCancel: false
@@ -76,7 +75,7 @@ export const ItwPresentationCredentialAttachmentScreen = ({
     setfooterActionsMeasurements(values);
   };
 
-  const attachmentData = getAttachmentData(attachmentClaim);
+  const attachmentData = getAttachmentData(route.params.attachmentClaim);
 
   if (attachmentData === undefined) {
     // The attachment claim is not supported or containes invalid data
@@ -117,22 +116,41 @@ export const ItwPresentationCredentialAttachmentScreen = ({
   );
 };
 
+/**
+ * Given the attachment claim, return the data needed to display the attachment
+ */
 const getAttachmentData = ({
   name,
   value
 }: ParsedCredential[string]): AttachmentData | undefined => {
-  const attachmentTitle =
+  const fileName =
     typeof name === "string" ? name : name?.[getClaimsFullLocale()] || "";
 
   if (PdfClaim.is(value)) {
     return {
-      fileName: attachmentTitle,
+      fileName,
       uri: value,
       type: "application/pdf"
     };
   }
 
   return undefined;
+};
+
+/**
+ * Given the filename and the type of the attachment, return the filename with the extension.
+ * On Android the extension is added automatically by the OS, on iOS we need to add it manually
+ */
+const getFileNameWithExtension = (
+  fileName: string,
+  type: SupportedAttachmentType
+) => {
+  const extension = type.split("/")[1];
+  const fileNameWithoutExtension = /^[^.]+/.exec(fileName)?.[0];
+
+  return Platform.OS === "ios"
+    ? `${fileNameWithoutExtension}.${extension}`
+    : fileNameWithoutExtension;
 };
 
 const styles = StyleSheet.create({
