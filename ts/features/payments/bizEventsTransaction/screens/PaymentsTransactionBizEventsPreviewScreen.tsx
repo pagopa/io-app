@@ -45,17 +45,12 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
     if (!transactionReceiptFile) {
       return;
     }
-    try {
-      await Share.open({
-        type: "application/pdf",
-        url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptFile}`,
-        filename: `${I18n.t(
-          "features.payments.transactions.receipt.title"
-        )}.pdf`
-      });
-    } catch (err) {
-      // Don't do anything if the user cancels the share action
-    }
+    await Share.open({
+      type: "application/pdf",
+      url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptFile}`,
+      filename: `${I18n.t("features.payments.transactions.receipt.title")}.pdf`,
+      failOnCancel: false
+    });
   };
 
   const handleFooterActionsMeasurements = (
