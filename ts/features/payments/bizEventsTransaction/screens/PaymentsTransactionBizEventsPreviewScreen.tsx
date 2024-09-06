@@ -47,26 +47,11 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
     }
     try {
       await Share.open({
-        activityItemSources: [
-          {
-            item: {
-              default: {
-                content: `${I18n.t(
-                  "features.payments.transactions.receipt.title"
-                )}.pdf`,
-                type: "url"
-              }
-            },
-            placeholderItem: {
-              content: `${I18n.t(
-                "features.payments.transactions.receipt.title"
-              )}.pdf`,
-              type: "url"
-            }
-          }
-        ],
         type: "application/pdf",
-        url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptFile}`
+        url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptFile}`,
+        filename: `${I18n.t(
+          "features.payments.transactions.receipt.title"
+        )}.pdf`
       });
     } catch (err) {
       // Don't do anything if the user cancels the share action
