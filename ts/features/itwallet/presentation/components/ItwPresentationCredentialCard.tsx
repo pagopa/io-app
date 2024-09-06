@@ -8,7 +8,6 @@ import { StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
-import { getCredentialExpireStatus } from "../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
@@ -25,10 +24,6 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const [isFlipped, setIsFlipped] = React.useState(false);
   const themeColor = getThemeColorByCredentialType(
     credential.credentialType as CredentialType
-  );
-
-  const credentialStatus = getCredentialExpireStatus(
-    credential.parsedCredential
   );
 
   const hasSkeumorphicCard =
