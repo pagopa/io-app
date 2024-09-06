@@ -62,7 +62,8 @@ export const ItwPresentationCredentialAttachmentScreen = ({
           activityItemSources: [],
           filename: fileName,
           type,
-          url: uri
+          url: uri,
+          failOnCancel: false
         });
       } catch (err) {
         toast.show(I18n.t("messagePDFPreview.errors.sharing"));
