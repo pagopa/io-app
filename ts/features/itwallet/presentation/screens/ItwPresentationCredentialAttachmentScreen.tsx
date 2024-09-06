@@ -105,9 +105,7 @@ export const ItwPresentationCredentialAttachmentScreen = ({
         actions={{
           type: "SingleButton",
           primary: {
-            label: I18n.t(
-              "features.itWallet.presentation.attachments.shareButton"
-            ),
+            label: I18n.t("features.itWallet.presentation.ctas.shareButton"),
             onPress: handleOnShare(attachmentData)
           }
         }}

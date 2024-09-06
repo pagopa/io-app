@@ -3289,7 +3289,6 @@ features:
         flipCard: "Mostra retro"
       ctas:
         openPdf: "Apri documento PDF"
-      attachments:
         shareButton: Salva o condividi
   trialSystem:
     toast:
