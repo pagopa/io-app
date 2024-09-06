@@ -603,6 +603,17 @@ authentication:
       os_problem: È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori.
       nfc_alert: Il tuo dispositivo non ha l'NFC.
       os_alert: Il sistema operativo del dispositivo non è aggiornato.
+    cie_bottom_sheet:
+      title: Come vuoi entrare?
+      module_cie_pin:
+        title: Entra con CIE + PIN
+        subtitle: Usa Carta di Identità Elettronica e PIN
+      module_cie_id:
+        title: Entra con CieID
+        subtitle: Usa l'app CieID
+      help_banner:
+        title: Non sai cosa scegliere?
+        action: Ti diamo una mano
     contentTitleCie: Non hai SPID o la CIE?
     cie_information_request: !include cie.md
     spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.

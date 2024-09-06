@@ -3,9 +3,11 @@
  * It includes a carousel with highlights on the app functionalities
  */
 import {
+  Banner,
   ButtonLink,
   ButtonSolid,
   ContentWrapper,
+  ModuleNavigation,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -45,6 +47,7 @@ import { openWebUrl } from "../../utils/url";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { tosConfigSelector } from "../../features/tos/store/selectors";
+import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 import {
   trackCieLoginSelected,
   trackMethodInfo,
@@ -70,6 +73,61 @@ const SPACE_AROUND_BUTTON_LINK = 16;
 export const LandingScreen = () => {
   const accessibilityFirstFocuseViewRef = React.useRef<View>(null);
   const insets = useSafeAreaInsets();
+  const { present, dismiss, bottomSheet } = useIOBottomSheetModal({
+    title: I18n.t("authentication.landing.cie_bottom_sheet.title"),
+    component: (
+      <View>
+        <ModuleNavigation
+          title={I18n.t(
+            "authentication.landing.cie_bottom_sheet.module_cie_pin.title"
+          )}
+          subtitle={I18n.t(
+            "authentication.landing.cie_bottom_sheet.module_cie_pin.subtitle"
+          )}
+          icon="fiscalCodeIndividual"
+          onPress={() => {
+            dismiss();
+            if (isFastLoginOptInFFEnabled) {
+              navigation.navigate(ROUTES.AUTHENTICATION, {
+                screen: ROUTES.AUTHENTICATION_OPT_IN,
+                params: { identifier: "CIE" }
+              });
+            } else {
+              navigation.navigate(ROUTES.AUTHENTICATION, {
+                screen: ROUTES.CIE_PIN_SCREEN
+              });
+            }
+          }}
+        />
+        <VSpacer size={8} />
+        <ModuleNavigation
+          title={I18n.t(
+            "authentication.landing.cie_bottom_sheet.module_cie_id.title"
+          )}
+          subtitle={I18n.t(
+            "authentication.landing.cie_bottom_sheet.module_cie_id.subtitle"
+          )}
+          icon="device"
+          onPress={() => console.log("Pressed")}
+        />
+        <VSpacer size={24} />
+        <Banner
+          onPress={() => console.log("Pressed")}
+          pictogramName="help"
+          color="turquoise"
+          title={I18n.t(
+            "authentication.landing.cie_bottom_sheet.help_banner.title"
+          )}
+          action={I18n.t(
+            "authentication.landing.cie_bottom_sheet.help_banner.action"
+          )}
+          size="small"
+        />
+        <VSpacer />
+      </View>
+    ),
+    snapPoint: [400]
+  });
 
   const tosConfig = useIOSelector(tosConfigSelector);
   const privacyUrl = tosConfig.tos_url;
@@ -168,22 +226,13 @@ export const LandingScreen = () => {
     if (isCieSupported()) {
       void trackCieLoginSelected(store.getState());
       dispatch(idpSelected(IdpCIE));
-      if (isFastLoginOptInFFEnabled) {
-        navigation.navigate(ROUTES.AUTHENTICATION, {
-          screen: ROUTES.AUTHENTICATION_OPT_IN,
-          params: { identifier: "CIE" }
-        });
-      } else {
-        navigation.navigate(ROUTES.AUTHENTICATION, {
-          screen: ROUTES.CIE_PIN_SCREEN
-        });
-      }
+      present();
     } else {
       navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.CIE_NOT_SUPPORTED
       });
     }
-  }, [dispatch, isCieSupported, isFastLoginOptInFFEnabled, navigation, store]);
+  }, [dispatch, isCieSupported, navigation, present, store]);
 
   const navigateToPrivacyUrl = React.useCallback(() => {
     trackMethodInfo();
@@ -346,6 +395,7 @@ export const LandingScreen = () => {
             <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
           </View>
           {insets.bottom !== 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
+          {bottomSheet}
         </ContentWrapper>
       </View>
     );
