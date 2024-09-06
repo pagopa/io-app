@@ -6,25 +6,25 @@ import * as React from "react";
 import { View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
+import { trackAuthenticationError } from "../../common/analytics";
+import { FimsUpdateAppAlert } from "../../common/components/FimsUpdateAppAlert";
+import { FimsParamsList } from "../../common/navigation";
+import { FimsFlowSuccessBody } from "../components/FimsSuccessBody";
 import {
   fimsCancelOrAbortAction,
   fimsGetConsentsListAction
 } from "../store/actions/";
-import { FimsFlowSuccessBody } from "../components/FimsSuccessBody";
-import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
-import { FimsParamsList } from "../../common/navigation";
 import {
   fimsConsentsDataSelector,
   fimsErrorStateSelector,
   fimsLoadingStateSelector
 } from "../store/selectors";
-import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
-import { openAppStoreUrl } from "../../../../utils/url";
-import { trackAuthenticationError } from "../../common/analytics";
 
 export type FimsFlowHandlerScreenRouteParams = {
   ctaText: string;
@@ -79,17 +79,7 @@ export const FimsFlowHandlerScreen = (
   }, [ctaText, ctaUrl, dispatch, requiresAppUpdate]);
 
   if (requiresAppUpdate) {
-    return (
-      <OperationResultScreenContent
-        isHeaderVisible
-        title={I18n.t("titleUpdateAppAlert")}
-        pictogram="umbrellaNew"
-        action={{
-          label: I18n.t("btnUpdateApp"),
-          onPress: () => openAppStoreUrl()
-        }}
-      />
-    );
+    return <FimsUpdateAppAlert />;
   }
 
   if (errorState !== undefined) {

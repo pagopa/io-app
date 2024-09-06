@@ -11,7 +11,7 @@ import { itwCredentialsRemove } from "../store/actions";
 export function* handleItwCredentialsRemoveSaga(
   itwCredentialsRemoveAction: ReturnType<typeof itwCredentialsRemove>
 ) {
-  const { keyTag } = itwCredentialsRemoveAction.payload;
+  const { credentialType, keyTag } = itwCredentialsRemoveAction.payload;
   yield* call(deleteKey, keyTag);
-  yield* put(walletRemoveCards([keyTag]));
+  yield* put(walletRemoveCards([`ITW_${credentialType}`]));
 }
