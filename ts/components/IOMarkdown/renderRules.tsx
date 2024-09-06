@@ -1,6 +1,7 @@
 import {
   Banner,
   Body,
+  BodyMonospace,
   Divider,
   H1,
   H2,
@@ -331,9 +332,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns A `Body` containing the `value` content.
    */
   Code: (code: TxtCodeNode) => (
-    <Body key={getTxtNodeKey(code)} weight="Light">
-      {code.value.replace(/\s+/g, "   ")}
-    </Body>
+    <BodyMonospace key={getTxtNodeKey(code)}>{code.value}</BodyMonospace>
   ),
   /**
    * @param breakNode The `Break` node.
