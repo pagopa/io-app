@@ -77,7 +77,7 @@ export default (
   >) => {
     assert(context.credential, "credential is undefined");
 
-    dispatch(itwCredentialsStore(context.credential));
+    dispatch(itwCredentialsStore([context.credential]));
   },
 
   closeIssuance: () => {

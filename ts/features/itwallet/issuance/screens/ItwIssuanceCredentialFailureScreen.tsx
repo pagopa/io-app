@@ -57,16 +57,20 @@ const ContentView = ({ failure }: ContentViewProps) => {
     OperationResultScreenContentProps
   > = {
     GENERIC: {
-      title: I18n.t("features.itWallet.issuance.genericError.title"),
-      subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
+      title: I18n.t("features.itWallet.issuance.genericCredentialError.title"),
+      subtitle: I18n.t(
+        "features.itWallet.issuance.genericCredentialError.body"
+      ),
       pictogram: "workInProgress",
       action: {
-        label: I18n.t("features.itWallet.issuance.genericError.primaryAction"),
+        label: I18n.t(
+          "features.itWallet.issuance.genericCredentialError.primaryAction"
+        ),
         onPress: retryIssuance
       },
       secondaryAction: {
         label: I18n.t(
-          "features.itWallet.issuance.genericError.secondaryAction"
+          "features.itWallet.issuance.genericCredentialError.secondaryAction"
         ),
         onPress: closeIssuance
       }

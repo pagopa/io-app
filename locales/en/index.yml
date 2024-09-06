@@ -3227,9 +3227,14 @@ features:
         body: Non puoi attivare Documenti con un’identità diversa da quella che usi per accedere a IO. Verifica le credenziali di accesso e riprova.
         primaryAction: Ho capito
         secondaryAction: Segnala un problema
-      genericError:
+      genericEidError:
         title: Si è verificato un errore imprevisto
         body: La tua richiesta verso l'ente che emette il documento non è andata a buon fine.
+        primaryAction: Riprova
+        secondaryAction: Chiudi
+      genericCredentialError:
+        title: Documento non disponibile
+        body: Si è verificato un errore oppure potresti non avere diritto al documento. 
         primaryAction: Riprova
         secondaryAction: Chiudi
     unsupportedDevice:
@@ -3916,6 +3921,9 @@ permissionRequest:
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
 FIMS:
+  updateApp:
+    header: "Aggiorna l’app per proseguire"
+    body: "Per continuare a utilizzare tutte le funzionalità, scarica la nuova versione di IO dallo store."
   history:
     errorStates:
       dataUnavailable: "Dati non disponibili"
