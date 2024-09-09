@@ -1,4 +1,4 @@
-import { assign, fromPromise, setup } from "xstate5";
+import { assign, fromPromise, setup, or } from "xstate5";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { WalletAttestationResult } from "../../common/utils/itwAttestationUtils";
 import { assert } from "../../../../utils/assert";
@@ -45,7 +45,8 @@ export const itwEidIssuanceMachine = setup({
     closeIssuance: notImplemented,
     setWalletInstanceToOperational: notImplemented,
     setWalletInstanceToValid: notImplemented,
-    handleSessionExpired: notImplemented
+    handleSessionExpired: notImplemented,
+    abortIdentification: notImplemented
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
@@ -63,7 +64,8 @@ export const itwEidIssuanceMachine = setup({
   guards: {
     isNativeAuthSessionClosed: notImplemented,
     issuedEidMatchesAuthenticatedUser: notImplemented,
-    isSessionExpired: notImplemented
+    isSessionExpired: notImplemented,
+    isOperationAborted: notImplemented
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -174,7 +176,12 @@ export const itwEidIssuanceMachine = setup({
               },
               {
                 guard: ({ event }) => event.mode === "cieId",
-                actions: assign(() => ({ identification: { mode: "cieId" } })),
+                actions: assign(() => ({
+                  identification: {
+                    mode: "cieId",
+                    abortController: new AbortController()
+                  }
+                })),
                 target: "#itwEidIssuanceMachine.UserIdentification.Completed"
               }
             ],
@@ -313,6 +320,9 @@ export const itwEidIssuanceMachine = setup({
       initial: "RequestingEid",
       states: {
         RequestingEid: {
+          on: {
+            abort: { actions: "abortIdentification" }
+          },
           tags: [ItwTags.Loading],
           invoke: {
             src: "requestEid",
@@ -327,7 +337,7 @@ export const itwEidIssuanceMachine = setup({
             },
             onError: [
               {
-                guard: "isNativeAuthSessionClosed",
+                guard: or(["isNativeAuthSessionClosed", "isOperationAborted"]),
                 target: "#itwEidIssuanceMachine.UserIdentification"
               },
               {
