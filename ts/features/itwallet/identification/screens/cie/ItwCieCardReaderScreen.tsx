@@ -45,7 +45,8 @@ import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   trackItWalletCieCardReading,
   trackItWalletCieCardReadingFailure,
-  trackItWalletCieCardReadingSuccess
+  trackItWalletCieCardReadingSuccess,
+  trackItWalletErrorCardReading
 } from "../../../analytics/itWalletAnalytics";
 
 // This can be any URL, as long as it has http or https as its protocol, otherwise it cannot be managed by the webview.
@@ -134,6 +135,18 @@ const getTextForState = (
     })
   };
   return texts[state];
+};
+
+const getMixpanelHandler = (
+  state: ReadingState
+): ((...args: Array<unknown>) => void) => {
+  const events: Record<ReadingState, (...args: Array<unknown>) => void> = {
+    [ReadingState.waiting_card]: () => null,
+    [ReadingState.reading]: () => null,
+    [ReadingState.completed]: () => null,
+    [ReadingState.error]: trackItWalletErrorCardReading
+  };
+  return events[state];
 };
 
 const LoadingSpinner = (
@@ -262,6 +275,8 @@ export const ItwCieCardReaderScreen = () => {
       readingState,
       isScreenReaderEnabled
     );
+
+    getMixpanelHandler(readingState)();
 
     return (
       <ScrollView

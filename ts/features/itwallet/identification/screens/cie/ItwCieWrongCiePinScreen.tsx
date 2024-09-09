@@ -16,9 +16,9 @@ import {
   trackItWalletCiePinForgotten,
   trackItWalletCiePukForgotten,
   trackItWalletCieRetryPin,
-  trackItWalletErrorPinIncorrect,
-  trackItWalletErrorPinIncorrectLast,
-  trackItWalletErrorPinIncorrectTwice
+  trackItWalletErrorPin,
+  trackItWalletLastErrorPin,
+  trackItWalletSecondErrorPin
 } from "../../../analytics/itWalletAnalytics";
 
 export type ItwCieWrongCiePinScreenNavigationParams = {
@@ -60,13 +60,13 @@ export const ItwCieWrongCiePinScreen = () => {
   const handleTrackPinErrors = (key: number) => {
     switch (key) {
       case 2:
-        trackItWalletErrorPinIncorrect();
+        trackItWalletErrorPin();
         break;
       case 1:
-        trackItWalletErrorPinIncorrectTwice();
+        trackItWalletSecondErrorPin();
         break;
       case 0:
-        trackItWalletErrorPinIncorrectLast();
+        trackItWalletLastErrorPin();
         break;
     }
   };

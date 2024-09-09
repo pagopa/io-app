@@ -15,6 +15,7 @@ import { selectFailureOption } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
+import { trackItWalletErrorDeviceNotSupported } from "../../analytics/itWalletAnalytics";
 
 export const ItwIssuanceEidFailureScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -101,8 +102,25 @@ export const ItwIssuanceEidFailureScreen = () => {
       }
     };
 
+    const failureTrackMap: Record<
+      IssuanceFailureType,
+      (...args: Array<unknown>) => void
+    > = {
+      [IssuanceFailureType.GENERIC]: () => null,
+      [IssuanceFailureType.ISSUER_GENERIC]: () => null,
+      [IssuanceFailureType.UNSUPPORTED_DEVICE]:
+        trackItWalletErrorDeviceNotSupported,
+      [IssuanceFailureType.NOT_MATCHING_IDENTITY]: () => null
+    };
+
     const resultScreenProps =
       resultScreensMap[failure.type] ?? resultScreensMap.GENERIC;
+
+    const failureTrackFunction = failureTrackMap[failure.type];
+
+    if (failureTrackFunction) {
+      failureTrackFunction();
+    }
 
     return <OperationResultScreenContent {...resultScreenProps} />;
   };

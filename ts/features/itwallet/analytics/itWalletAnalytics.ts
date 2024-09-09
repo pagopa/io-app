@@ -162,18 +162,18 @@ export function trackItWalletErrorCardReading() {
   );
 }
 
-export function trackItWalletErrorPinIncorrect() {
+export function trackItWalletErrorPin() {
   void mixpanelTrack("ITW_CIE_PIN_ERROR", buildEventProperties("UX", "error"));
 }
 
-export function trackItWalletErrorPinIncorrectTwice() {
+export function trackItWalletSecondErrorPin() {
   void mixpanelTrack(
     "ITW_CIE_PIN_SECOND_ERROR",
     buildEventProperties("UX", "error")
   );
 }
 
-export function trackItWalletErrorPinIncorrectLast() {
+export function trackItWalletLastErrorPin() {
   void mixpanelTrack(
     "ITW_CIE_PIN_LAST_ERROR",
     buildEventProperties("UX", "error")
@@ -187,7 +187,6 @@ export function trackItWalletCieCardVerifyFailure() {
   );
 }
 
-// TODO where we need to call it? la lettura della CIe è completata (false)
 export function trackItWalletCieCardReadingFailure(
   properties: TrackItWalletCieCardReadingFailure
 ) {
