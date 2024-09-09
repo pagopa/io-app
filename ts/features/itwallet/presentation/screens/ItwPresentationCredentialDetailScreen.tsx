@@ -21,7 +21,6 @@ import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlert
 import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection";
 import { ItwPresentationCredentialCard } from "../components/ItwPresentationCredentialCard";
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
-import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;

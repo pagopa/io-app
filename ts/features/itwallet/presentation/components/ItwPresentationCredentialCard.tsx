@@ -11,6 +11,7 @@ import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { getCredentialExpireStatus } from "../../common/utils/itwClaimsUtils";
 
 type Props = {
   credential: StoredCredential;
@@ -29,6 +30,10 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const hasSkeumorphicCard =
     credential.credentialType === CredentialType.DRIVING_LICENSE;
 
+  const credentialStatus = getCredentialExpireStatus(
+    credential.parsedCredential
+  );
+
   if (hasSkeumorphicCard) {
     return (
       <VStack space={8}>
@@ -37,7 +42,9 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
         </Wrapper>
         <View style={styles.flipButton}>
           <ButtonLink
-            label={I18n.t("features.itWallet.presentation.credentialDetails.flipCard")}
+            label={I18n.t(
+              "features.itWallet.presentation.credentialDetails.flipCard"
+            )}
             onPress={() => setIsFlipped(_ => !_)}
             icon="switchCard"
             iconPosition="end"
