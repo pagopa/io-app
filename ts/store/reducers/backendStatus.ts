@@ -483,7 +483,6 @@ export const isSettingsVisibleAndHideProfileSelector = createSelector(
   (isNewPaymentSectionEnabled, isNewScanSectionLocallyEnabled) =>
     isNewPaymentSectionEnabled && isNewScanSectionLocallyEnabled
 );
-
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
 export const DEAD_COUNTER_THRESHOLD = 2;
 

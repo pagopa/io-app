@@ -56,9 +56,9 @@ describe("IT Wallet lifecycle selectors", () => {
         itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3")
       ),
       curriedAppReducer(
-        itwCredentialsStore({
-          credentialType: CredentialType.PID
-        } as StoredCredential)
+        itwCredentialsStore([
+          { credentialType: CredentialType.PID }
+        ] as Array<StoredCredential>)
       )
     );
 
