@@ -252,20 +252,6 @@ export const isCGNEnabledSelector = createSelector(
     ) ?? false
 );
 
-/**
- * return the remote config about FIMS enabled/disabled
- * if there is no data, false is the default value -> (FIMS disabled)
- */
-export const isFIMSEnabledSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): boolean =>
-    pipe(
-      backendStatus,
-      O.map(bs => bs.config.fims.enabled),
-      O.toUndefined
-    ) ?? false
-);
-
 export const fimsRequiresAppUpdateSelector = (state: GlobalState) =>
   pipe(
     state,
@@ -497,7 +483,6 @@ export const isSettingsVisibleAndHideProfileSelector = createSelector(
   (isNewPaymentSectionEnabled, isNewScanSectionLocallyEnabled) =>
     isNewPaymentSectionEnabled && isNewScanSectionLocallyEnabled
 );
-
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
 export const DEAD_COUNTER_THRESHOLD = 2;
 
