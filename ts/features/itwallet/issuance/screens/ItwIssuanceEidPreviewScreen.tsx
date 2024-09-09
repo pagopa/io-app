@@ -37,6 +37,8 @@ export const ItwIssuanceEidPreviewScreen = () => {
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
+  // In the state machine this screen is mounted before we actually reach the eID preview state.
+  // While in the other states we render the loading screen to avoid accidentally showing the generic error content.
   if (!isDisplayingPreview) {
     return <ItwIssuanceLoadingScreen />;
   }
