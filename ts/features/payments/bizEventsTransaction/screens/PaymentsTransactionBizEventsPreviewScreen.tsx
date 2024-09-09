@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import Share from "react-native-share";
 
 import { IOColors, IOStyles } from "@pagopa/io-app-design-system";
@@ -45,32 +45,14 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
     if (!transactionReceiptFile) {
       return;
     }
-    try {
-      await Share.open({
-        activityItemSources: [
-          {
-            item: {
-              default: {
-                content: `${I18n.t(
-                  "features.payments.transactions.receipt.title"
-                )}.pdf`,
-                type: "url"
-              }
-            },
-            placeholderItem: {
-              content: `${I18n.t(
-                "features.payments.transactions.receipt.title"
-              )}.pdf`,
-              type: "url"
-            }
-          }
-        ],
-        type: "application/pdf",
-        url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptFile}`
-      });
-    } catch (err) {
-      // Don't do anything if the user cancels the share action
-    }
+    await Share.open({
+      type: "application/pdf",
+      url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptFile}`,
+      filename: `${I18n.t("features.payments.transactions.receipt.title")}${
+        Platform.OS === "ios" ? ".pdf" : ""
+      }`,
+      failOnCancel: false
+    });
   };
 
   const handleFooterActionsMeasurements = (
