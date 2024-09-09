@@ -1,6 +1,4 @@
 import { mixpanelTrack } from "../../../mixpanel";
-import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
-import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
 import { CredentialType } from "../common/utils/itwMocksUtils";
 import { IdentificationContext } from "../machine/eid/context";
@@ -88,18 +86,7 @@ export const trackSaveCredentialToWallet = (currentCredential: string) => {
   }
 };
 
-export const trackSaveCredentialSuccess = async (
-  credential: MixPanelCredential,
-  state: GlobalState
-) => {
-  await updateMixpanelProfileProperties(state, {
-    property: "ITW_STATUS",
-    value: "L2"
-  });
-  await updateMixpanelProfileProperties(state, {
-    property: "ITW_ID",
-    value: "valid"
-  });
+export const trackSaveCredentialSuccess = (credential: MixPanelCredential) => {
   void mixpanelTrack(
     WALLET_EVENTS.ITW_UX_SUCCESS,
     buildEventProperties("UX", "confirm", { credential })

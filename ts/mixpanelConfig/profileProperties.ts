@@ -64,11 +64,11 @@ export const updateMixpanelProfileProperties = async (
   const SERVICE_CONFIGURATION = serviceConfigHandler(state);
   const TRACKING = mixpanelOptInHandler(state);
   const PAYMENTS_CONFIGURATION = getPaymentsAnalyticsConfiguration(state);
-  const ITW_STATUS = walletStatusHandler(state);
-  const ITW_ID = idStatusHandler(state);
-  const ITW_PG = pgStatusHandler(state);
-  const ITW_TS = tsStatusHandler(state);
-  const ITW_CED = cedStatusHandler(state);
+  const ITW_STATUS = walletStatusHandler();
+  const ITW_ID = idStatusHandler();
+  const ITW_PG = pgStatusHandler();
+  const ITW_TS = tsStatusHandler();
+  const ITW_CED = cedStatusHandler();
 
   const profilePropertiesObject: ProfileProperties = {
     LOGIN_SESSION,
@@ -117,8 +117,8 @@ const tosVersionHandler = (state: GlobalState): number | string => {
 };
 
 // TODO [SIW-1438]: Add dynamic profile properties
-const walletStatusHandler = (state: GlobalState): ItwStatus => "L2";
-const idStatusHandler = (state: GlobalState): ItwId => "valid";
-const pgStatusHandler = (state: GlobalState): ItwPg => "valid";
-const tsStatusHandler = (state: GlobalState): ItwTs => "valid";
-const cedStatusHandler = (state: GlobalState): ItwCed => "valid";
+const walletStatusHandler = (): ItwStatus => "L2";
+const idStatusHandler = (): ItwId => "valid";
+const pgStatusHandler = (): ItwPg => "valid";
+const tsStatusHandler = (): ItwTs => "valid";
+const cedStatusHandler = (): ItwCed => "valid";
