@@ -231,14 +231,19 @@ const AuthenticatedStackNavigator = () => {
         options={hideHeaderOptions}
         component={WorkunitGenericFailure}
       />
-      <Stack.Screen
-        name={ZENDESK_ROUTES.MAIN}
-        component={ZendeskStackNavigator}
-        options={{
-          ...TransitionPresets.ModalSlideFromBottomIOS,
-          ...hideHeaderOptions
+
+      <Stack.Group
+        screenOptions={{
+          headerShown: false,
+          presentation: "modal"
         }}
-      />
+      >
+        <Stack.Screen
+          name={ZENDESK_ROUTES.MAIN}
+          component={ZendeskStackNavigator}
+        />
+      </Stack.Group>
+
       <Stack.Screen
         name={UADONATION_ROUTES.WEBVIEW}
         options={hideHeaderOptions}

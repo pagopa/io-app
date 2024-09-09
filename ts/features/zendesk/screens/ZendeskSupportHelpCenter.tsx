@@ -8,6 +8,9 @@ import {
   H6,
   HeaderSecondLevel,
   IOToast,
+  IOVisualCostants,
+  IconButton,
+  LabelSmall,
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -16,7 +19,7 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { FlatList, ListRenderItemInfo, ScrollView } from "react-native";
+import { FlatList, ListRenderItemInfo, ScrollView, View } from "react-native";
 import IOMarkdown from "../../../components/IOMarkdown";
 import { ContextualHelpProps } from "../../../components/screens/BaseScreenComponent";
 import {
@@ -167,6 +170,7 @@ const FaqManager = (props: FaqManagerProps) => {
  * @constructor
  */
 const ZendeskSupportHelpCenter = () => {
+  const theme = useIOTheme();
   const dispatch = useIODispatch();
   const workUnitCancel = () => dispatch(zendeskSupportCancel());
   const workUnitComplete = () => dispatch(zendeskSupportCompleted());
@@ -225,20 +229,25 @@ const ZendeskSupportHelpCenter = () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerShown: true,
-      header: () => (
-        <HeaderSecondLevel
-          type="singleAction"
-          title={I18n.t("support.helpCenter.header")}
-          firstAction={{
-            icon: "closeLarge",
-            onPress: workUnitCancel,
-            accessibilityLabel: I18n.t(
+      headerLeft: () => null,
+      headerTitle: () => (
+        <LabelSmall weight={"Regular"} color={theme["textHeading-default"]}>
+          {I18n.t("support.helpCenter.header")}
+        </LabelSmall>
+      ),
+      headerRight: () => (
+        <View style={{ marginRight: IOVisualCostants.appMarginDefault }}>
+          <IconButton
+            icon="closeLarge"
+            color="neutral"
+            onPress={workUnitCancel}
+            accessibilityLabel={I18n.t(
               "global.accessibility.contextualHelp.close"
-            )
-          }}
-        />
-      )
+            )}
+          />
+        </View>
+      ),
+      headerStyle: { height: IOVisualCostants.headerHeight }
     });
   });
 
@@ -246,6 +255,7 @@ const ZendeskSupportHelpCenter = () => {
     <>
       <ScrollView
         contentContainerStyle={{
+          paddingTop: IOVisualCostants.appMarginDefault,
           paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
         }}
         testID={"ZendeskSupportHelpCenterScreen"}

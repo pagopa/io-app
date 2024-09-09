@@ -39,6 +39,9 @@ type Props = WithTestID<
     title: LargeHeaderTitleProps;
     description?: string | Array<BodyProps>;
     goBack?: BackProps["goBack"];
+    ignoreSafeAreaMargin?: ComponentProps<
+      typeof HeaderSecondLevel
+    >["ignoreSafeAreaMargin"];
     headerActionsProp?: HeaderActionProps;
     canGoback?: boolean;
     excludeEndContentMargin?: boolean;
@@ -62,6 +65,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       contextualHelp,
       contextualHelpMarkdown,
       faqCategories,
+      ignoreSafeAreaMargin = false,
       headerActionsProp = {},
       excludeEndContentMargin,
       testID
@@ -86,8 +90,9 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       ...headerActionsProp
     };
 
-    const headerProps: ComponentProps<typeof HeaderSecondLevel> =
-      useHeaderProps(
+    const headerProps: ComponentProps<typeof HeaderSecondLevel> = {
+      ignoreSafeAreaMargin,
+      ...useHeaderProps(
         canGoback
           ? {
               ...headerPropsWithoutGoBack,
@@ -95,7 +100,8 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
               goBack: goBack ?? navigation.goBack
             }
           : headerPropsWithoutGoBack
-      );
+      )
+    };
 
     return (
       <IOScrollView

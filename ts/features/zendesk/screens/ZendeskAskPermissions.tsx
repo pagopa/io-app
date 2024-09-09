@@ -358,6 +358,7 @@ const ZendeskAskPermissions = () => {
       }}
       testID={"ZendeskAskPermissions"}
       description={I18n.t("support.askPermissions.body")}
+      ignoreSafeAreaMargin={true}
       actions={buttonConf}
     >
       <ContentWrapper>

@@ -92,6 +92,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
         label: I18n.t("support.chooseCategory.title.subCategory"),
         section: selectedCategory.description[locale]
       }}
+      ignoreSafeAreaMargin={true}
       testID={"ZendeskChooseCategory"}
     >
       <FlatList
