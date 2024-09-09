@@ -2,7 +2,12 @@
 import { AuthorizationDetail } from "@pagopa/io-react-native-wallet";
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
-import { createActor, fromPromise, StateFrom } from "xstate5";
+import {
+  createActor,
+  fromPromise,
+  StateFrom,
+  waitFor as waitForActor
+} from "xstate5";
 import { WalletAttestationResult } from "../../../common/utils/itwAttestationUtils";
 import {
   ItwStatusAttestationMocks,
@@ -232,14 +237,25 @@ describe("itwCredentialIssuanceMachine", () => {
       type: "confirm-trust-data"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual({
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Issuing]));
+
+    // Step 1: get the credential
+    const intermediateState1 = await waitForActor(actor, snapshot =>
+      snapshot.matches({ Issuance: "ObtainingCredential" })
+    );
+    expect(intermediateState1.value).toStrictEqual({
       Issuance: "ObtainingCredential"
     });
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Issuing]));
-    await waitFor(() => expect(obtainCredential).toHaveBeenCalledTimes(1));
-    await waitFor(() =>
-      expect(obtainStatusAttestation).toHaveBeenCalledTimes(1)
+    expect(obtainCredential).toHaveBeenCalledTimes(1);
+
+    // Step 2: get the status attestation
+    const intermediateState2 = await waitForActor(actor, snapshot =>
+      snapshot.matches({ Issuance: "ObtainingStatusAttestation" })
     );
+    expect(intermediateState2.value).toStrictEqual({
+      Issuance: "ObtainingStatusAttestation"
+    });
+    expect(obtainStatusAttestation).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().value).toStrictEqual(
       "DisplayingCredentialPreview"
