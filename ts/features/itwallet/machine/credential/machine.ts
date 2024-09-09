@@ -225,7 +225,7 @@ export const itwCredentialIssuanceMachine = setup({
           target: "Idle"
         },
         retry: {
-          target: "#itwCredentialIssuanceMachine.DisplayingTrustIssuer"
+          target: "#itwCredentialIssuanceMachine.RequestingCredential"
         }
       }
     },
