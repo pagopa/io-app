@@ -153,6 +153,7 @@ import {
 } from "./startup/watchCheckSessionSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
+import { checkItWalletIdentitySaga } from "./startup/checkItWalletIdentitySaga";
 import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
@@ -340,7 +341,12 @@ export function* initializeApplicationSaga(
   // we have to load the session information from the backend.
   // In a future refactoring where the checkSession won't get the session tokens
   // anymore, we will need to rethink about this check.
-  if (O.isNone(maybeSessionInformation)) {
+  if (
+    O.isNone(maybeSessionInformation) ||
+    (O.isSome(maybeSessionInformation) &&
+      (maybeSessionInformation.value.bpdToken === undefined ||
+        maybeSessionInformation.value.walletToken === undefined))
+  ) {
     // let's try to load the session information from the backend.
 
     maybeSessionInformation = yield* call(
@@ -348,7 +354,12 @@ export function* initializeApplicationSaga(
       backendClient.getSession
     );
 
-    if (O.isNone(maybeSessionInformation)) {
+    if (
+      O.isNone(maybeSessionInformation) ||
+      (O.isSome(maybeSessionInformation) &&
+        (maybeSessionInformation.value.bpdToken === undefined ||
+          maybeSessionInformation.value.walletToken === undefined))
+    ) {
       yield* call(handleApplicationStartupTransientError, "GET_SESSION_DOWN");
       return;
     }
@@ -515,6 +526,10 @@ export function* initializeApplicationSaga(
   // possible to begin receiving push notifications
   yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
+  // This saga is called before the startup status is set to authenticated to avoid flashing
+  // the home screen when the user is taken to the alert screen in case of identities that don't match.
+  yield* call(checkItWalletIdentitySaga);
+
   yield* put(startupLoadSuccess(StartupStatusEnum.AUTHENTICATED));
   //
   // User is autenticated, session token is valid
@@ -527,9 +542,11 @@ export function* initializeApplicationSaga(
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
   }
 
+  // Here we can be sure that the session information is loaded and valid
+  const bpdToken = maybeSessionInformation.value.bpdToken as string;
   if (cdcEnabled) {
     // Start watching for cdc actions
-    yield* fork(watchBonusCdcSaga, maybeSessionInformation.value.bpdToken);
+    yield* fork(watchBonusCdcSaga, bpdToken);
   }
 
   // Start watching for cgn actions
@@ -554,7 +571,7 @@ export function* initializeApplicationSaga(
 
   if (idPayTestEnabled) {
     // Start watching for IDPay actions
-    yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
+    yield* fork(watchIDPaySaga, bpdToken);
   }
 
   // Start watching for trial system saga
@@ -563,12 +580,10 @@ export function* initializeApplicationSaga(
   // Start watching for itw saga
   yield* fork(watchItwSaga);
 
+  // Here we can be sure that the session information is loaded and valid
+  const walletToken = maybeSessionInformation.value.walletToken as string;
   // Start watching for Wallet V3 actions
-  yield* fork(watchPaymentsSaga, maybeSessionInformation.value.walletToken);
-
-  // the wallet token is available,
-  // proceed with starting the "watch wallet" saga
-  const walletToken = maybeSessionInformation.value.walletToken;
+  yield* fork(watchPaymentsSaga, walletToken);
 
   const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> =
     yield* select(isPagoPATestEnabledSelector);

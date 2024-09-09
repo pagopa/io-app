@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { ComponentProps } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import {
@@ -8,7 +8,9 @@ import {
   VSpacer,
   IOStyles,
   Alert,
-  H4
+  H4,
+  ButtonSolid,
+  ButtonLink
 } from "@pagopa/io-app-design-system";
 import {
   CardActivated,
@@ -61,6 +63,7 @@ import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
 import { profileSelector } from "../../../../store/reducers/profile";
 import { Card } from "../../../../../definitions/cgn/Card";
+import { useCgnUnsubscribe } from "../hooks/useCgnUnsubscribe";
 import { CgnCardStatus } from "./CgnCardStatus";
 import { CgnAnimatedBackground } from "./CgnAnimatedBackground";
 
@@ -102,6 +105,8 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     return true;
   });
 
+  const { requestUnsubscription } = useCgnUnsubscribe();
+
   const eycaDetails = useIOSelector(eycaDetailSelector);
 
   const logoUris = getLogoUris(props.cgnDetails, eycaDetails);
@@ -134,6 +139,48 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     }
   };
 
+  const footerActions = (() => {
+    if (showDiscoverCta) {
+      const footerCtaPrimary: Omit<
+        ComponentProps<typeof ButtonSolid>,
+        "fullWidth"
+      > = {
+        label: canDisplayEycaDetails
+          ? I18n.t("bonus.cgn.detail.cta.buyers")
+          : I18n.t("bonus.cgn.detail.cta.discover"),
+        onPress: onPressShowCgnDiscounts
+      };
+      const footerCtaSecondary:
+        | Omit<ComponentProps<typeof ButtonLink>, "color">
+        | undefined = canDisplayEycaDetails
+        ? {
+            label: I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts"),
+            accessibilityLabel: I18n.t(
+              "bonus.cgn.detail.cta.eyca.showEycaDiscounts"
+            ),
+            onPress: () =>
+              openWebUrl(EYCA_WEBSITE_DISCOUNTS_PAGE_URL, () =>
+                IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
+              )
+          }
+        : undefined;
+
+      return { footerCtaPrimary, footerCtaSecondary };
+    }
+    if (CardExpired.is(props.cgnDetails)) {
+      const footerCtaPrimary: Omit<
+        ComponentProps<typeof ButtonSolid>,
+        "fullWidth"
+      > = {
+        color: "danger",
+        label: I18n.t("bonus.cgn.activation.deactivate.expired"),
+        onPress: requestUnsubscription
+      };
+      return { footerCtaPrimary };
+    }
+    return {};
+  })();
+
   return (
     <BonusCardScreenComponent
       logoUris={logoUris}
@@ -156,16 +203,8 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             : ""}
         </H4>
       }
-      footerCtaPrimary={
-        showDiscoverCta
-          ? footerCtaPrimary(canDisplayEycaDetails, onPressShowCgnDiscounts)
-          : undefined
-      }
-      footerCtaSecondary={
-        showDiscoverCta && canDisplayEycaDetails
-          ? footerCtaSecondary
-          : undefined
-      }
+      footerCtaPrimary={footerActions.footerCtaPrimary}
+      footerCtaSecondary={footerActions.footerCtaSecondary}
     >
       <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
         {CardRevoked.is(props.cgnDetails) && (
@@ -222,25 +261,3 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);
-
-function footerCtaPrimary(
-  canDisplayEycaDetails: boolean,
-  onPressShowCgnDiscounts: () => void
-) {
-  const label = canDisplayEycaDetails
-    ? I18n.t("bonus.cgn.detail.cta.buyers")
-    : I18n.t("bonus.cgn.detail.cta.discover");
-  return {
-    label,
-    onPress: onPressShowCgnDiscounts
-  };
-}
-
-const footerCtaSecondary = {
-  label: I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts"),
-  accessibilityLabel: I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts"),
-  onPress: () =>
-    openWebUrl(EYCA_WEBSITE_DISCOUNTS_PAGE_URL, () =>
-      IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
-    )
-};

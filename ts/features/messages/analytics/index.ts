@@ -3,6 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
 import { pipe } from "fp-ts/lib/function";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import { mixpanelTrack } from "../../../mixpanel";
@@ -10,314 +11,498 @@ import { readablePrivacyReport } from "../../../utils/reporters";
 import { UIMessageId } from "../types";
 import { booleanToYesNo, buildEventProperties } from "../../../utils/analytics";
 import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
+import { MessageListCategory } from "../types/messageListCategory";
+import { Action } from "../../../store/actions/types";
+import { GlobalState } from "../../../store/reducers/types";
+import {
+  loadNextPageMessages,
+  loadPreviousPageMessages,
+  reloadAllMessages
+} from "../store/actions";
+import {
+  messageCountForCategorySelector,
+  shownMessageCategorySelector
+} from "../store/reducers/allPaginated";
+import { pageSize } from "../../../config";
 
-export function trackOpenMessage(
-  organizationName: string,
+export const trackMessagesActionsPostDispatch = (
+  action: Action,
+  state: GlobalState
+) => {
+  switch (action.type) {
+    case getType(reloadAllMessages.success):
+    case getType(loadPreviousPageMessages.success):
+    case getType(loadNextPageMessages.success):
+      const shownCategory = shownMessageCategorySelector(state);
+      const messageCount = messageCountForCategorySelector(
+        state,
+        shownCategory
+      );
+      trackMessagesPage(
+        shownCategory,
+        messageCount,
+        pageSize,
+        action.payload.fromUserAction
+      );
+      break;
+  }
+};
+
+export const trackOpenMessage = (
+  serviceId: ServiceId,
   serviceName: string,
+  organizationName: string,
+  organizationFiscalCode: string,
   firstTimeOpening: boolean,
   containsPayment: boolean | undefined,
   hasRemoteContent: boolean,
   containsAttachments: boolean,
   fromPushNotification: boolean
-) {
-  void mixpanelTrack(
-    "OPEN_MESSAGE",
-    buildEventProperties("UX", "screen_view", {
-      organization_name: organizationName,
-      service_name: serviceName,
-      contains_payment: pipe(
-        containsPayment,
-        O.fromNullable,
-        O.fold(() => "unknown" as const, booleanToYesNo)
-      ),
-      remote_content: booleanToYesNo(hasRemoteContent),
-      contains_attachment: booleanToYesNo(containsAttachments),
-      first_time_opening: booleanToYesNo(firstTimeOpening),
-      fromPushNotification: booleanToYesNo(fromPushNotification)
-    })
-  );
-}
-
-export function trackMessageCTAFrontMatterDecodingError(serviceId?: ServiceId) {
-  void mixpanelTrack("CTA_FRONT_MATTER_DECODING_ERROR", {
-    serviceId
+) => {
+  const eventName = "OPEN_MESSAGE";
+  const props = buildEventProperties("UX", "screen_view", {
+    service_id: serviceId,
+    service_name: serviceName,
+    organization_name: organizationName,
+    organization_fiscal_code: organizationFiscalCode,
+    contains_payment: pipe(
+      containsPayment,
+      O.fromNullable,
+      O.fold(() => "unknown" as const, booleanToYesNo)
+    ),
+    remote_content: booleanToYesNo(hasRemoteContent),
+    contains_attachment: booleanToYesNo(containsAttachments),
+    first_time_opening: booleanToYesNo(firstTimeOpening),
+    fromPushNotification: booleanToYesNo(fromPushNotification)
   });
-}
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackMessageNotificationTap(messageId: NonEmptyString) {
-  return mixpanelTrack(
-    "NOTIFICATIONS_MESSAGE_TAP",
-    buildEventProperties("UX", "action", {
-      messageId
-    })
-  );
-}
+export const trackMessageCTAFrontMatterDecodingError = (
+  serviceId?: ServiceId
+) => {
+  const eventName = "CTA_FRONT_MATTER_DECODING_ERROR";
+  const props = buildEventProperties("KO", undefined, { serviceId });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackMessageNotificationParsingFailure(errors: t.Errors) {
-  void mixpanelTrack("NOTIFICATION_PARSING_FAILURE", {
+export const trackMessageNotificationTap = (messageId: NonEmptyString) => {
+  const eventName = "NOTIFICATIONS_MESSAGE_TAP";
+  const props = buildEventProperties("UX", "action", {
+    messageId
+  });
+  return mixpanelTrack(eventName, props);
+};
+
+export const trackMessageNotificationParsingFailure = (errors: t.Errors) => {
+  const eventName = "NOTIFICATION_PARSING_FAILURE";
+  const props = buildEventProperties("KO", undefined, {
     reason: readablePrivacyReport(errors)
   });
-}
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackThirdPartyMessageAttachmentCount(attachmentCount: number) {
-  void mixpanelTrack(
-    "THIRD_PARTY_MESSAGE_ATTACHMENT_COUNT",
-    buildEventProperties("UX", "screen_view", {
-      attachmentCount
-    })
-  );
-}
+export const trackThirdPartyMessageAttachmentCount = (
+  attachmentCount: number
+) => {
+  const eventName = "THIRD_PARTY_MESSAGE_ATTACHMENT_COUNT";
+  const props = buildEventProperties("UX", "screen_view", {
+    attachmentCount
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackThirdPartyMessageAttachmentUnavailable(
+export const trackThirdPartyMessageAttachmentUnavailable = (
   messageId: UIMessageId,
   serviceId: ServiceId | undefined
-) {
-  void mixpanelTrack(
-    "THIRD_PARTY_MESSAGE_ATTACHMENT_UNAVAILABLE",
-    buildEventProperties("KO", undefined, {
-      messageId,
-      serviceId: serviceId ?? ""
-    })
-  );
-}
+) => {
+  const eventName = "THIRD_PARTY_MESSAGE_ATTACHMENT_UNAVAILABLE";
+  const props = buildEventProperties("KO", undefined, {
+    messageId,
+    service_id: serviceId
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackThirdPartyMessageAttachmentDownloadFailed(
+export const trackThirdPartyMessageAttachmentDownloadFailed = (
   messageId: UIMessageId,
   serviceId: ServiceId | undefined
-) {
-  void mixpanelTrack(
-    "THIRD_PARTY_MESSAGE_ATTACHMENT_DOWNLOAD_FAILED",
-    buildEventProperties("KO", undefined, {
-      messageId,
-      serviceId: serviceId ?? ""
-    })
-  );
-}
+) => {
+  const eventName = "THIRD_PARTY_MESSAGE_ATTACHMENT_DOWNLOAD_FAILED";
+  const props = buildEventProperties("KO", undefined, {
+    messageId,
+    service_id: serviceId
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackThirdPartyMessageAttachmentBadFormat(
+export const trackThirdPartyMessageAttachmentBadFormat = (
   messageId: UIMessageId,
   serviceId: ServiceId | undefined
-) {
-  void mixpanelTrack(
-    "THIRD_PARTY_MESSAGE_ATTACHMENT_BAD_FORMAT",
-    buildEventProperties("KO", undefined, {
-      messageId,
-      serviceId: serviceId ?? ""
-    })
-  );
-}
+) => {
+  const eventName = "THIRD_PARTY_MESSAGE_ATTACHMENT_BAD_FORMAT";
+  const props = buildEventProperties("KO", undefined, {
+    messageId,
+    service_id: serviceId
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackThirdPartyMessageAttachmentCorruptedFile(
+export const trackThirdPartyMessageAttachmentCorruptedFile = (
   messageId: UIMessageId,
   serviceId?: ServiceId
-) {
-  void mixpanelTrack(
-    "THIRD_PARTY_MESSAGE_ATTACHMENT_CORRUPTED_FILE",
-    buildEventProperties("KO", undefined, {
-      messageId,
-      serviceId: serviceId ?? ""
-    })
-  );
-}
+) => {
+  const eventName = "THIRD_PARTY_MESSAGE_ATTACHMENT_CORRUPTED_FILE";
+  const props = buildEventProperties("KO", undefined, {
+    messageId,
+    service_id: serviceId
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackThirdPartyMessageAttachmentPreviewSuccess() {
-  void mixpanelTrack(
-    "THIRD_PARTY_MESSAGE_ATTACHMENT_PREVIEW_SUCCESS",
-    buildEventProperties("TECH", "control")
-  );
-}
+export const trackThirdPartyMessageAttachmentPreviewSuccess = () => {
+  const eventName = "THIRD_PARTY_MESSAGE_ATTACHMENT_PREVIEW_SUCCESS";
+  const props = buildEventProperties("TECH", "control");
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackThirdPartyMessageAttachmentShowPreview() {
-  void mixpanelTrack(
-    "THIRD_PARTY_MESSAGE_ATTACHMENT_SHOW_PREVIEW",
-    buildEventProperties("UX", "action")
-  );
-}
+export const trackThirdPartyMessageAttachmentShowPreview = () => {
+  const eventName = "THIRD_PARTY_MESSAGE_ATTACHMENT_SHOW_PREVIEW";
+  const props = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackThirdPartyMessageAttachmentUserAction(
-  userAction: "download" | "open" | "share"
-) {
-  void mixpanelTrack(
-    "THIRD_PARTY_MESSAGE_ATTACHMENT_USER_ACTION",
-    buildEventProperties("UX", "action", {
-      userAction
-    })
-  );
-}
+export const trackThirdPartyMessageAttachmentUserAction = (
+  userAction: "download" | "share"
+) => {
+  const eventName = "THIRD_PARTY_MESSAGE_ATTACHMENT_USER_ACTION";
+  const props = buildEventProperties("UX", "action", {
+    userAction
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackDisclaimerOpened(tag: MessageCategory["tag"]) {
-  void mixpanelTrack(
-    `${S.toUpperCase(tag)}_DISCLAIMER_OPENED`,
-    buildEventProperties("UX", "screen_view")
-  );
-}
+export const trackDisclaimerOpened = (tag: MessageCategory["tag"]) => {
+  const eventName = `${S.toUpperCase(tag)}_DISCLAIMER_OPENED`;
+  const props = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackUxConversion(tag: MessageCategory["tag"]) {
-  void mixpanelTrack(
-    `${S.toUpperCase(tag)}_UX_CONVERSION`,
-    buildEventProperties("UX", "action")
-  );
-}
+export const trackUxConversion = (tag: MessageCategory["tag"]) => {
+  const eventName = `${S.toUpperCase(tag)}_UX_CONVERSION`;
+  const props = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackDisclaimerLoadError(tag: MessageCategory["tag"]) {
-  void mixpanelTrack(
-    `${S.toUpperCase(tag)}_DISCLAIMER_LOAD_ERROR`,
-    buildEventProperties("TECH", undefined)
-  );
-}
+export const trackDisclaimerLoadError = (tag: MessageCategory["tag"]) => {
+  const eventName = `${S.toUpperCase(tag)}_DISCLAIMER_LOAD_ERROR`;
+  const props = buildEventProperties("TECH", undefined);
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackNotificationRejected(tag: MessageCategory["tag"]) {
-  void mixpanelTrack(
-    `${S.toUpperCase(tag)}_NOTIFICATION_REJECTED`,
-    buildEventProperties("UX", "exit")
-  );
-}
+export const trackNotificationRejected = (tag: MessageCategory["tag"]) => {
+  const eventName = `${S.toUpperCase(tag)}_NOTIFICATION_REJECTED`;
+  const props = buildEventProperties("UX", "exit");
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackLoadMessageByIdFailure(reason: string) {
-  void mixpanelTrack(
-    "FAILURE_LOAD_MESSAGE_BY_ID",
-    buildEventProperties("TECH", undefined, {
-      reason
-    })
-  );
-}
+export const trackLoadMessageByIdFailure = (reason: string) => {
+  const eventName = "FAILURE_LOAD_MESSAGE_BY_ID";
+  const props = buildEventProperties("TECH", undefined, {
+    reason
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackLoadMessageDetailsFailure(reason: string) {
-  void mixpanelTrack(
-    "FAILURE_LOAD_MESSAGE_DETAILS",
-    buildEventProperties("TECH", undefined, {
-      reason
-    })
-  );
-}
+export const trackLoadMessageDetailsFailure = (reason: string) => {
+  const eventName = "FAILURE_LOAD_MESSAGE_DETAILS";
+  const props = buildEventProperties("TECH", undefined, {
+    reason
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackLoadNextPageMessagesFailure(reason: string) {
-  void mixpanelTrack(
-    "FAILURE_LOAD_NEXT_PAGE_MESSAGES",
-    buildEventProperties("TECH", undefined, {
-      reason
-    })
-  );
-}
+export const trackLoadNextPageMessagesFailure = (reason: string) => {
+  const eventName = "FAILURE_LOAD_NEXT_PAGE_MESSAGES";
+  const props = buildEventProperties("TECH", undefined, {
+    reason
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackLoadPreviousPageMessagesFailure(reason: string) {
-  void mixpanelTrack(
-    "FAILURE_LOAD_PREVIOUS_PAGE_MESSAGES",
-    buildEventProperties("TECH", undefined, {
-      reason
-    })
-  );
-}
+export const trackLoadPreviousPageMessagesFailure = (reason: string) => {
+  const eventName = "FAILURE_LOAD_PREVIOUS_PAGE_MESSAGES";
+  const props = buildEventProperties("TECH", undefined, {
+    reason
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackReloadAllMessagesFailure(reason: string) {
-  void mixpanelTrack(
-    "FAILURE_RELOAD_ALL_MESSAGES",
-    buildEventProperties("TECH", undefined, {
-      reason
-    })
-  );
-}
+export const trackReloadAllMessagesFailure = (reason: string) => {
+  const eventName = "FAILURE_RELOAD_ALL_MESSAGES";
+  const props = buildEventProperties("TECH", undefined, {
+    reason
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackUpsertMessageStatusAttributesFailure(reason: string) {
-  void mixpanelTrack(
-    "FAILURE_UPSERT_MESSAGE_STATUS_ATTRIBUTES",
-    buildEventProperties("TECH", undefined, {
-      reason
-    })
-  );
-}
+export const trackUpsertMessageStatusAttributesFailure = (reason: string) => {
+  const eventName = "FAILURE_UPSERT_MESSAGE_STATUS_ATTRIBUTES";
+  const props = buildEventProperties("TECH", undefined, {
+    reason
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackRemoteContentLoadRequest(tag: string) {
-  void mixpanelTrack(
-    "REMOTE_CONTENT_LOAD_REQUEST",
-    buildEventProperties("TECH", undefined, {
-      message_category_tag: tag
-    })
-  );
-}
-
-export function trackRemoteContentLoadSuccess(tag: string) {
-  void mixpanelTrack(
-    "REMOTE_CONTENT_LOAD_SUCCESS",
-    buildEventProperties("TECH", undefined, {
-      message_category_tag: tag
-    })
-  );
-}
-
-export function trackRemoteContentLoadFailure(
+export const trackRemoteContentLoadRequest = (
   serviceId: ServiceId,
+  serviceName: string | undefined,
+  organizationName: string | undefined,
+  organizationFiscalCode: string | undefined,
+  tag: string
+) => {
+  const eventName = "REMOTE_CONTENT_LOAD_REQUEST";
+  const props = buildEventProperties("TECH", undefined, {
+    message_category_tag: tag,
+    service_id: serviceId,
+    service_name: serviceName,
+    organization_name: organizationName,
+    organization_fiscal_code: organizationFiscalCode
+  });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackRemoteContentLoadSuccess = (
+  serviceId: ServiceId | undefined,
+  serviceName: string | undefined,
+  organizationName: string | undefined,
+  organizationFiscalCode: string | undefined,
+  tag: string
+) => {
+  const eventName = "REMOTE_CONTENT_LOAD_SUCCESS";
+  const props = buildEventProperties("TECH", undefined, {
+    message_category_tag: tag,
+    service_id: serviceId,
+    service_name: serviceName,
+    organization_name: organizationName,
+    organization_fiscal_code: organizationFiscalCode
+  });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackRemoteContentLoadFailure = (
+  serviceId: ServiceId | undefined,
+  serviceName: string | undefined,
+  organizationName: string | undefined,
+  organizationFiscalCode: string | undefined,
   tag: string,
   reason: string
-) {
-  void mixpanelTrack(
-    "REMOTE_CONTENT_LOAD_FAILURE",
-    buildEventProperties("TECH", undefined, {
-      reason,
-      serviceId,
-      message_category_tag: tag
-    })
-  );
-}
+) => {
+  const eventName = "REMOTE_CONTENT_LOAD_FAILURE";
+  const props = buildEventProperties("TECH", undefined, {
+    reason,
+    message_category_tag: tag,
+    serviceId,
+    service_name: serviceName,
+    organization_name: organizationName,
+    organization_fiscal_code: organizationFiscalCode
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackMessageDataLoadRequest(fromPushNotification: boolean) {
-  void mixpanelTrack(
-    "MESSAGE_DATA_LOAD_REQUEST",
-    buildEventProperties("TECH", undefined, {
-      fromPushNotification: booleanToYesNo(fromPushNotification)
-    })
-  );
-}
+export const trackMessageDataLoadRequest = (fromPushNotification: boolean) => {
+  const eventName = "MESSAGE_DATA_LOAD_REQUEST";
+  const props = buildEventProperties("TECH", undefined, {
+    fromPushNotification: booleanToYesNo(fromPushNotification)
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackMessageDataLoadPending(fromPushNotification: boolean) {
-  void mixpanelTrack(
-    "MESSAGE_DATA_LOAD_PENDING",
-    buildEventProperties("TECH", undefined, {
-      fromPushNotification: booleanToYesNo(fromPushNotification)
-    })
-  );
-}
+export const trackMessageDataLoadPending = (fromPushNotification: boolean) => {
+  const eventName = "MESSAGE_DATA_LOAD_PENDING";
+  const props = buildEventProperties("TECH", undefined, {
+    fromPushNotification: booleanToYesNo(fromPushNotification)
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackMessageDataLoadFailure(
+export const trackMessageDataLoadFailure = (
   fromPushNotification: boolean,
   phase: MessageGetStatusFailurePhaseType
-) {
-  void mixpanelTrack(
-    "MESSAGE_DATA_LOAD_FAILURE",
-    buildEventProperties("TECH", undefined, {
-      fromPushNotification: booleanToYesNo(fromPushNotification),
-      phase
-    })
-  );
-}
+) => {
+  const eventName = "MESSAGE_DATA_LOAD_FAILURE";
+  const props = buildEventProperties("TECH", undefined, {
+    fromPushNotification: booleanToYesNo(fromPushNotification),
+    phase
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackMessageDataLoadSuccess(fromPushNotification: boolean) {
-  void mixpanelTrack(
-    "MESSAGE_DATA_LOAD_SUCCESS",
-    buildEventProperties("TECH", undefined, {
-      fromPushNotification: booleanToYesNo(fromPushNotification)
-    })
-  );
-}
+export const trackMessageDataLoadSuccess = (fromPushNotification: boolean) => {
+  const eventName = "MESSAGE_DATA_LOAD_SUCCESS";
+  const props = buildEventProperties("TECH", undefined, {
+    fromPushNotification: booleanToYesNo(fromPushNotification)
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackRemoteContentMessageDecodingWarning(
-  reason: string,
+export const trackRemoteContentMessageDecodingWarning = (
   serviceId: ServiceId,
-  tag: string
-) {
-  void mixpanelTrack(
-    "REMOTE_CONTENT_DETAILS_DECODING_WARNING",
-    buildEventProperties("TECH", undefined, {
-      reason,
-      serviceId,
-      message_category_tag: tag
-    })
-  );
-}
+  serviceName: string | undefined,
+  organizationName: string | undefined,
+  organizationFiscalCode: string | undefined,
+  tag: string,
+  reason: string
+) => {
+  const eventName = "REMOTE_CONTENT_DETAILS_DECODING_WARNING";
+  const props = buildEventProperties("TECH", undefined, {
+    reason,
+    serviceId,
+    message_category_tag: tag,
+    service_name: serviceName,
+    organization_name: organizationName,
+    organization_fiscal_code: organizationFiscalCode
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export function trackRemoteContentInfo() {
-  void mixpanelTrack(
-    "REMOTE_CONTENT_INFO",
-    buildEventProperties("UX", "action")
-  );
-}
+export const trackRemoteContentInfo = () => {
+  const eventName = "REMOTE_CONTENT_INFO";
+  const props = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackMessagesPage = (
+  category: MessageListCategory,
+  messageCount: number,
+  inputPageSize: number,
+  fromUserAction: boolean
+) => {
+  const eventName = `MESSAGES_${
+    category === "ARCHIVE" ? "ARCHIVE" : "INBOX"
+  }_PAGE`;
+  const props = buildEventProperties("UX", "screen_view", {
+    page: Math.max(1, Math.ceil(messageCount / inputPageSize)),
+    count_messages: messageCount,
+    fromUserAction
+  });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackArchivedRestoredMessages = (
+  archived: boolean,
+  messageCount: number
+) => {
+  const eventName = `MESSAGES_${archived ? "ARCHIVED" : "RESTORED"}`;
+  const props = buildEventProperties("UX", "action", {
+    [`count_messages_${archived ? "archived" : "restored"}`]: messageCount
+  });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackMessageListEndReached = (
+  category: MessageListCategory,
+  willLoadNextMessagePage: boolean
+) => {
+  const eventName = `MESSAGES_${category === "ARCHIVE" ? "ARCHIVE" : "INBOX"}_${
+    willLoadNextMessagePage ? "SCROLL" : "ENDLIST"
+  }`;
+  const props = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackPullToRefresh = (category: MessageListCategory) => {
+  const eventName = `MESSAGES_${
+    category === "ARCHIVE" ? "ARCHIVE" : "INBOX"
+  }_REFRESH`;
+  const props = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackAutoRefresh = (category: MessageListCategory) => {
+  const eventName = `MESSAGES_${
+    category === "ARCHIVE" ? "ARCHIVE" : "INBOX"
+  }_AUTO_REFRESH`;
+  const props = buildEventProperties("TECH", undefined);
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackMessageSearchPage = () => {
+  const eventName = `MESSAGES_SEARCH_PAGE`;
+  const props = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackMessageSearchResult = (resultCount: number) => {
+  const eventName = `MESSAGES_SEARCH_RESULT_PAGE`;
+  const props = buildEventProperties("UX", "screen_view", {
+    count_result_returned: resultCount
+  });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackMessageSearchSelection = () => {
+  const eventName = `MESSAGES_SEARCH_RESULT_SELECTED`;
+  const props = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackMessageSearchClosing = () => {
+  const eventName = `MESSAGES_SEARCH_CLOSE`;
+  const props = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackPaymentStatus = (
+  serviceId: ServiceId | undefined,
+  serviceName: string | undefined,
+  organizationName: string | undefined,
+  organizationFiscalCode: string | undefined,
+  paymentStatus: string
+) => {
+  const eventName = `MESSAGE_PAYMENT_STATUS`;
+  const props = buildEventProperties("TECH", undefined, {
+    service_id: serviceId,
+    service_name: serviceName,
+    organization_fiscal_code: organizationFiscalCode,
+    organization_name: organizationName,
+    payment_status: paymentStatus
+  });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackPaymentStart = (
+  serviceId: ServiceId,
+  serviceName: string | undefined,
+  organizationName: string | undefined,
+  organizationFiscalCode: string | undefined
+) => {
+  const eventName = `MESSAGE_PAYMENT_START`;
+  const props = buildEventProperties("UX", "action", {
+    service_id: serviceId,
+    service_name: serviceName,
+    organization_name: organizationName,
+    organization_fiscal_code: organizationFiscalCode
+  });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackCTAPressed = (
+  serviceId: ServiceId,
+  serviceName: string | undefined,
+  organizationName: string | undefined,
+  organizationFiscalCode: string | undefined,
+  isFirstCTA: boolean,
+  ctaText: string
+) => {
+  const eventName = `MESSAGE_CTA_TAPPED`;
+  const props = buildEventProperties("UX", "action", {
+    service_id: serviceId,
+    service_name: serviceName,
+    organization_name: organizationName,
+    organization_fiscal_code: organizationFiscalCode,
+    cta_category: isFirstCTA ? "custom_1" : "custom_2",
+    cta_id: ctaText
+  });
+  void mixpanelTrack(eventName, props);
+};
