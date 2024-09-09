@@ -8,9 +8,13 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { logoutRequest } from "../../../../store/actions/authentication";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useIODispatch } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { trackItwIdNotMatch } from "../../analytics";
 
 export const ItwIdentityNotMatchingScreen = () => {
   useAvoidHardwareBackButton();
+
+  useOnFirstRender(trackItwIdNotMatch);
 
   const dispatch = useIODispatch();
 

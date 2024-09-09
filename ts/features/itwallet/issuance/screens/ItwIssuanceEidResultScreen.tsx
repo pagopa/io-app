@@ -11,14 +11,16 @@ import {
   trackSaveCredentialSuccess
 } from "../../analytics";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { useIOStore } from "../../../../store/hooks";
 
 const ITW_CREDENTIAL = "ITW_ID";
 
 export const ItwIssuanceEidResultScreen = () => {
   const route = useRoute();
+  const store = useIOStore();
 
   useOnFirstRender(() => {
-    trackSaveCredentialSuccess(ITW_CREDENTIAL);
+    void trackSaveCredentialSuccess(ITW_CREDENTIAL, store.getState());
   });
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();

@@ -15,14 +15,22 @@ import {
   selectFailureOption,
   selectIdentification
 } from "../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import {
+  ItwCredentialIssuanceMachineContext,
+  ItwEidIssuanceMachineContext
+} from "../../machine/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import {
+  CREDENTIALS_MAP,
   KoState,
+  trackAddCredentialTimeout,
   trackIdNotMatch,
+  trackItwUnsupportedDevice,
   trackWalletCreationFailed
 } from "../../analytics";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { selectCredential } from "../../machine/credential/selectors";
 
 export const ItwIssuanceEidFailureScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -30,6 +38,8 @@ export const ItwIssuanceEidFailureScreen = () => {
     ItwEidIssuanceMachineContext.useSelector(selectFailureOption);
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+  const storedCredential =
+    ItwCredentialIssuanceMachineContext.useSelector(selectCredential);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
@@ -136,6 +146,19 @@ export const ItwIssuanceEidFailureScreen = () => {
         identification
       ) {
         trackIdNotMatch(identification.mode);
+      }
+      if (failure.type === IssuanceFailureType.UNSUPPORTED_DEVICE) {
+        trackItwUnsupportedDevice();
+      }
+      if (
+        failure.type === IssuanceFailureType.ISSUER_GENERIC &&
+        storedCredential
+      ) {
+        trackAddCredentialTimeout({
+          reason: failure.reason as string,
+          credential:
+            CREDENTIALS_MAP[storedCredential.credentialType as CredentialType]
+        });
       }
     }, [failure.reason, failure.type]);
 

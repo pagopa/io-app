@@ -1,4 +1,6 @@
 import { mixpanelTrack } from "../../../mixpanel";
+import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
 import { CredentialType } from "../common/utils/itwMocksUtils";
 import { IdentificationContext } from "../machine/eid/context";
@@ -23,7 +25,10 @@ enum WALLET_EVENTS {
   ITW_ID_REQUEST_SUCCESS = "ITW_ID_REQUEST_SUCCESS",
   ITW_ID_NOT_MATCH = "ITW_ID_NOT_MATCH",
   ITW_ID_REQUEST_TIMEOUT = "ITW_ID_REQUEST_TIMEOUT",
-  ITW_ID_REQUEST_FAILURE = "ITW_ID_REQUEST_FAILURE"
+  ITW_ID_REQUEST_FAILURE = "ITW_ID_REQUEST_FAILURE",
+  ITW_DEVICE_NOT_SUPPORTED = "ITW_DEVICE_NOT_SUPPORTED",
+  ITW_LOGIN_ID_NOT_MATCH = "ITW_LOGIN_ID_NOT_MATCH",
+  ITW_ALREADY_HAS_CREDENTIAL = "ITW_ALREADY_HAS_CREDENTIAL"
 }
 
 export type KoState = {
@@ -83,7 +88,18 @@ export const trackSaveCredentialToWallet = (currentCredential: string) => {
   }
 };
 
-export const trackSaveCredentialSuccess = (credential: MixPanelCredential) => {
+export const trackSaveCredentialSuccess = async (
+  credential: MixPanelCredential,
+  state: GlobalState
+) => {
+  await updateMixpanelProfileProperties(state, {
+    property: "ITW_STATUS",
+    value: "L2"
+  });
+  await updateMixpanelProfileProperties(state, {
+    property: "ITW_ID",
+    value: "valid"
+  });
   void mixpanelTrack(
     WALLET_EVENTS.ITW_UX_SUCCESS,
     buildEventProperties("UX", "confirm", { credential })
@@ -233,4 +249,26 @@ export const trackItwIdRequestFailure = (ITW_ID_method?: ItwIdMethod) => {
       buildEventProperties("KO", "error", { ITW_ID_method })
     );
   }
+};
+
+export const trackItwUnsupportedDevice = () => {
+  void mixpanelTrack(
+    WALLET_EVENTS.ITW_DEVICE_NOT_SUPPORTED,
+    buildEventProperties("KO", "error")
+  );
+};
+
+export const trackItwIdNotMatch = () => {
+  void mixpanelTrack(
+    WALLET_EVENTS.ITW_LOGIN_ID_NOT_MATCH,
+    buildEventProperties("KO", "error")
+  );
+};
+
+export const trackItwHasAlreadyCredential = () => {
+  // TODO [SIW-1438] -> add status and credential
+  void mixpanelTrack(
+    WALLET_EVENTS.ITW_ALREADY_HAS_CREDENTIAL,
+    buildEventProperties("KO", "error")
+  );
 };
