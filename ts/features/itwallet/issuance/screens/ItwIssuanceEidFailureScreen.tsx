@@ -82,7 +82,7 @@ export const ItwIssuanceEidFailureScreen = () => {
               reason: failure.reason as string,
               cta_category: "custom_1",
               cta_id: I18n.t(
-                "features.itWallet.issuance.genericError.primaryAction"
+                "features.itWallet.issuance.genericEidError.primaryAction"
               )
             }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         },
@@ -95,7 +95,7 @@ export const ItwIssuanceEidFailureScreen = () => {
               reason: failure.reason as string,
               cta_category: "custom_2",
               cta_id: I18n.t(
-                "features.itWallet.issuance.genericError.secondaryAction"
+                "features.itWallet.issuance.genericEidError.secondaryAction"
               )
             }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         }

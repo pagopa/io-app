@@ -61,7 +61,9 @@ const ContentView = ({ failure }: ContentViewProps) => {
     trackWalletCreationFailed({
       reason: failure.reason as string,
       cta_category: "custom_2",
-      cta_id: I18n.t("features.itWallet.issuance.genericError.secondaryAction")
+      cta_id: I18n.t(
+        "features.itWallet.issuance.genericCredentialError.secondaryAction"
+      )
     });
   };
   const retryIssuance = () => {
@@ -69,7 +71,9 @@ const ContentView = ({ failure }: ContentViewProps) => {
     trackWalletCreationFailed({
       reason: failure.reason as string,
       cta_category: "custom_1",
-      cta_id: I18n.t("features.itWallet.issuance.genericError.primaryAction")
+      cta_id: I18n.t(
+        "features.itWallet.issuance.genericCredentialError.primaryAction"
+      )
     });
   };
 
