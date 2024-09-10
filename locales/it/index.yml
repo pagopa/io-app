@@ -642,6 +642,29 @@ authentication:
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
+  wizards:
+    cie_id_wizard:
+      title: Hai l'app CieID?
+      description: Se hai l’app CieID sul tuo dispositivo, accedi a IO inserendo le credenziali dell’app. Puoi usare anche il tuo volto o l’impronta, oppure il codice che hai impostato per l’app CieID.
+      actions:
+        primary:
+          label: Sì, entra con CieID
+        secondary:
+          label: Non ho CieID
+      link: Cos'è CieID?
+    cie_pin_wizard:
+      title: Hai la Carta di Identità Elettronica e il PIN?
+      description: Se hai la tua Carta di Identità Elettronica a portata di mano, puoi accedere a IO inserendo il PIN della carta e avvicinandola al dispositivo per consentire la lettura dei dati.
+      actions:
+        primary:
+          label: Sì, entra con CIE + PIN
+        secondary:
+          label: Non ho la CIE e il PIN
+      bottom_sheet:
+        title: Dove trovo il PIN della CIE?
+        content: !include authentication/wizards/cie_pin_content.md
+        cta:
+          label: Dove trovo il PIN della CIE?
   auth_errors:
     error_19:
       title: Hai effettuato troppi tentativi di accesso

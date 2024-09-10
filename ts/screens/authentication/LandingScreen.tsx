@@ -8,9 +8,9 @@ import {
   ButtonSolid,
   ContentWrapper,
   ModuleNavigation,
+  useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
 import * as React from "react";
@@ -18,29 +18,20 @@ import DeviceInfo from "react-native-device-info";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Alert, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../components/SectionStatus";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
-import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
-import {
-  fastLoginOptInFFEnabled,
-  isFastLoginEnabledSelector
-} from "../../features/fastLogin/store/selectors";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
-import {
-  idpSelected,
-  resetAuthenticationState
-} from "../../store/actions/authentication";
-import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
+import { resetAuthenticationState } from "../../store/actions/authentication";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
-import { isCieSupportedSelector } from "../../store/reducers/cie";
 import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../utils/url";
@@ -48,11 +39,8 @@ import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { tosConfigSelector } from "../../features/tos/store/selectors";
 import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
-import {
-  trackCieLoginSelected,
-  trackMethodInfo,
-  trackSpidLoginSelected
-} from "./analytics";
+import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
+import { trackMethodInfo } from "./analytics";
 import { Carousel } from "./carousel/Carousel";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -60,20 +48,20 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "authentication.landing.contextualHelpContent"
 };
 
-export const IdpCIE: SpidIdp = {
-  id: "cie",
-  name: "CIE",
-  logo: "",
-  profileUrl: ""
-};
-
 const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
 
 export const LandingScreen = () => {
   const accessibilityFirstFocuseViewRef = React.useRef<View>(null);
+  const { navigateToIdpSelection, navigateToCiePinInsertion, isCieSupported } =
+    useNavigateToLoginMethod();
+  const toast = useIOToast();
   const insets = useSafeAreaInsets();
-  const { present, dismiss, bottomSheet } = useIOBottomSheetModal({
+  const {
+    present,
+    dismiss: dismissBottomSheet,
+    bottomSheet
+  } = useIOBottomSheetModal({
     title: I18n.t("authentication.landing.cie_bottom_sheet.title"),
     component: (
       <View>
@@ -85,19 +73,7 @@ export const LandingScreen = () => {
             "authentication.landing.cie_bottom_sheet.module_cie_pin.subtitle"
           )}
           icon="fiscalCodeIndividual"
-          onPress={() => {
-            dismiss();
-            if (isFastLoginOptInFFEnabled) {
-              navigation.navigate(ROUTES.AUTHENTICATION, {
-                screen: ROUTES.AUTHENTICATION_OPT_IN,
-                params: { identifier: "CIE" }
-              });
-            } else {
-              navigation.navigate(ROUTES.AUTHENTICATION, {
-                screen: ROUTES.CIE_PIN_SCREEN
-              });
-            }
-          }}
+          onPress={navigateToCiePinInsertion}
         />
         <VSpacer size={8} />
         <ModuleNavigation
@@ -108,11 +84,18 @@ export const LandingScreen = () => {
             "authentication.landing.cie_bottom_sheet.module_cie_id.subtitle"
           )}
           icon="device"
-          onPress={() => console.log("Pressed")}
+          onPress={() => {
+            // TODO: depends on https://pagopa.atlassian.net/browse/IOPID-2134
+            toast.info("Not implemented yet...");
+          }}
         />
         <VSpacer size={24} />
         <Banner
-          onPress={() => console.log("Pressed")}
+          onPress={() =>
+            navigation.navigate(ROUTES.AUTHENTICATION, {
+              screen: ROUTES.AUTHENTICATION_CIE_ID_WIZARD
+            })
+          }
           pictogramName="help"
           color="turquoise"
           title={I18n.t(
@@ -140,8 +123,6 @@ export const LandingScreen = () => {
     setHasTabletCompatibilityAlertAlreadyShown
   ] = React.useState<boolean>(false);
 
-  const store = useIOStore();
-
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
@@ -157,19 +138,16 @@ export const LandingScreen = () => {
   );
 
   const isFastLoginEnabled = useIOSelector(isFastLoginEnabledSelector);
-  const isFastLoginOptInFFEnabled = useIOSelector(fastLoginOptInFFEnabled);
 
-  const isCIEAuthenticationSupported = useIOSelector(isCieSupportedSelector);
-
-  const isCieSupported = React.useCallback(
-    () =>
-      cieFlowForDevServerEnabled ||
-      pot.getOrElse(isCIEAuthenticationSupported, false),
-    [isCIEAuthenticationSupported]
-  );
   const isCieUatEnabled = useIOSelector(isCieLoginUatEnabledSelector);
 
-  useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
+  useFocusEffect(
+    React.useCallback(() => {
+      setAccessibilityFocus(accessibilityFirstFocuseViewRef);
+
+      return dismissBottomSheet;
+    }, [dismissBottomSheet])
+  );
 
   useOnFirstRender(() => {
     const isRootedOrJailbrokenFromJailMonkey = JailMonkey.isJailBroken();
@@ -208,31 +186,19 @@ export const LandingScreen = () => {
     }
   }, [hasTabletCompatibilityAlertAlreadyShown]);
 
-  const navigateToIdpSelection = React.useCallback(() => {
-    trackSpidLoginSelected();
-    if (isFastLoginOptInFFEnabled) {
-      navigation.navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.AUTHENTICATION_OPT_IN,
-        params: { identifier: "SPID" }
-      });
-    } else {
-      navigation.navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.AUTHENTICATION_IDP_SELECTION
-      });
-    }
-  }, [isFastLoginOptInFFEnabled, navigation]);
-
   const navigateToCiePinScreen = React.useCallback(() => {
-    if (isCieSupported()) {
-      void trackCieLoginSelected(store.getState());
-      dispatch(idpSelected(IdpCIE));
+    // TODO: enable FF
+    if (isCieSupported) {
       present();
     } else {
+      // Depends on https://pagopa.atlassian.net/browse/IOPID-2134
+      // TODO: navigate to CieID login
+      toast.info("Not implemented yet...");
       navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.CIE_NOT_SUPPORTED
       });
     }
-  }, [dispatch, isCieSupported, navigation, present, store]);
+  }, [present, toast, isCieSupported, navigation]);
 
   const navigateToPrivacyUrl = React.useCallback(() => {
     trackMethodInfo();
@@ -240,7 +206,7 @@ export const LandingScreen = () => {
   }, [privacyUrl]);
 
   const navigateToCieUatSelectionScreen = React.useCallback(() => {
-    if (isCieSupported()) {
+    if (isCieSupported) {
       navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.CIE_LOGIN_CONFIG_SCREEN
       });
@@ -336,37 +302,37 @@ export const LandingScreen = () => {
         <ContentWrapper>
           <ButtonSolid
             testID={
-              isCieSupported()
+              isCieSupported
                 ? "landing-button-login-cie"
                 : "landing-button-login-spid"
             }
             accessibilityLabel={
-              isCieSupported()
+              isCieSupported
                 ? I18n.t("authentication.landing.loginCie")
                 : I18n.t("authentication.landing.loginSpid")
             }
             fullWidth={true}
             color={isCieUatEnabled ? "danger" : "primary"}
             label={
-              isCieSupported()
+              isCieSupported
                 ? I18n.t("authentication.landing.loginCie")
                 : I18n.t("authentication.landing.loginSpid")
             }
-            icon={isCieSupported() ? "cie" : "spid"}
+            icon={isCieSupported ? "cie" : "spid"}
             onPress={
-              isCieSupported() ? navigateToCiePinScreen : navigateToIdpSelection
+              isCieSupported ? navigateToCiePinScreen : navigateToIdpSelection
             }
           />
           <VSpacer size={SPACE_BETWEEN_BUTTONS} />
           <ButtonSolid
             testID={
-              isCieSupported()
+              isCieSupported
                 ? "landing-button-login-spid"
                 : "landing-button-login-cie"
             }
             fullWidth={true}
             accessibilityLabel={
-              isCieSupported()
+              isCieSupported
                 ? I18n.t("authentication.landing.loginSpid")
                 : I18n.t("authentication.landing.loginCie")
             }
@@ -375,13 +341,13 @@ export const LandingScreen = () => {
             // "semi-enabled" state, we leave the button enabled
             // but we navigate to the CIE unsupported info screen.
             label={
-              isCieSupported()
+              isCieSupported
                 ? I18n.t("authentication.landing.loginSpid")
                 : I18n.t("authentication.landing.loginCie")
             }
-            icon={isCieSupported() ? "spid" : "cie"}
+            icon={isCieSupported ? "spid" : "cie"}
             onPress={
-              isCieSupported() ? navigateToIdpSelection : navigateToCiePinScreen
+              isCieSupported ? navigateToIdpSelection : navigateToCiePinScreen
             }
           />
           <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
