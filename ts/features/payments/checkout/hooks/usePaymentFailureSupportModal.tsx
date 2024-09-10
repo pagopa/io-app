@@ -88,7 +88,7 @@ const usePaymentFailureSupportModal = ({
         startingRoute: "n/a",
         assistanceForPayment: false,
         assistanceForCard: false,
-        assistanceForFci: true
+        assistanceForFci: false
       })
     );
     dispatch(zendeskSelectedCategory(zendeskPaymentCategory));
