@@ -1,4 +1,3 @@
-import { deleteKey, generate } from "@pagopa/io-react-native-crypto";
 import {
   IntegrityContext,
   WalletInstance,
@@ -6,7 +5,6 @@ import {
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
 import { CryptoContext } from "@pagopa/io-react-native-jwt";
-import { constNull } from "fp-ts/lib/function";
 import { itwWalletProviderBaseUrl } from "../../../../config";
 import { createItWalletFetch } from "../../api/client";
 import { SessionToken } from "../../../../types/SessionToken";
@@ -15,8 +13,7 @@ import {
   generateIntegrityHardwareKeyTag,
   getIntegrityContext
 } from "./itwIntegrityUtils";
-
-const WIA_EID_KEYTAG = "WIA_EID_KEYTAG";
+import { regenerateCryptoKey, WIA_EID_KEYTAG } from "./itwCryptoContextUtils";
 
 /**
  * Getter for the integrity hardware keytag to be used for an {@link IntegrityContext}.
@@ -62,10 +59,7 @@ export const getAttestation = async (
 ): Promise<WalletAttestationResult> => {
   const integrityContext = getIntegrityContext(hardwareKeyTag);
 
-  await deleteKey(WIA_EID_KEYTAG)
-    .catch(constNull)
-    .finally(() => generate(WIA_EID_KEYTAG));
-
+  await regenerateCryptoKey(WIA_EID_KEYTAG);
   const wiaCryptoContext = createCryptoContextFor(WIA_EID_KEYTAG);
 
   const appFetch = createItWalletFetch(itwWalletProviderBaseUrl, sessionToken);
@@ -79,6 +73,3 @@ export const getAttestation = async (
 
   return { walletAttestation, wiaCryptoContext };
 };
-
-export const disposeWalletAttestation = () =>
-  deleteKey(WIA_EID_KEYTAG).catch(constNull);

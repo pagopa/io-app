@@ -1,4 +1,4 @@
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import {
@@ -14,20 +14,26 @@ import {
 } from "../../machine/credential/failure";
 import { selectFailureOption } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
     ItwCredentialIssuanceMachineContext.useSelector(selectFailureOption);
 
-  useItwDisbleGestureNavigation();
+  useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
   return pipe(
     failureOption,
-    O.alt(() => O.some({ type: CredentialIssuanceFailureTypeEnum.GENERIC })),
-    O.fold(constNull, type => <ContentView failure={type} />)
+    O.fold(
+      () => (
+        <ContentView
+          failure={{ type: CredentialIssuanceFailureTypeEnum.GENERIC }}
+        />
+      ),
+      type => <ContentView failure={type} />
+    )
   );
 };
 
@@ -51,16 +57,20 @@ const ContentView = ({ failure }: ContentViewProps) => {
     OperationResultScreenContentProps
   > = {
     GENERIC: {
-      title: I18n.t("features.itWallet.issuance.genericError.title"),
-      subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
+      title: I18n.t("features.itWallet.issuance.genericCredentialError.title"),
+      subtitle: I18n.t(
+        "features.itWallet.issuance.genericCredentialError.body"
+      ),
       pictogram: "workInProgress",
       action: {
-        label: I18n.t("features.itWallet.issuance.genericError.primaryAction"),
+        label: I18n.t(
+          "features.itWallet.issuance.genericCredentialError.primaryAction"
+        ),
         onPress: retryIssuance
       },
       secondaryAction: {
         label: I18n.t(
-          "features.itWallet.issuance.genericError.secondaryAction"
+          "features.itWallet.issuance.genericCredentialError.secondaryAction"
         ),
         onPress: closeIssuance
       }

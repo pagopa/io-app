@@ -29,6 +29,7 @@ import {
 import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground";
 import { ItwPresentationCredentialDetailScreen } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
+import { ItwIdentityNotMatchingScreen } from "../lifecycle/screens/ItwIdentityNotMatchingScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -129,6 +130,7 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER}
         component={ItwIssuanceCredentialTrustIssuerScreen}
+        options={hiddenHeader}
       />
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW}
@@ -161,6 +163,12 @@ const InnerNavigator = () => {
       />
       {/* PLAYGROUNDS */}
       <Stack.Screen name={ITW_ROUTES.PLAYGROUNDS} component={ItwPlayground} />
+
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN}
+        component={ItwIdentityNotMatchingScreen}
+        options={{ headerShown: false, gestureEnabled: false }}
+      />
     </Stack.Navigator>
   );
 };

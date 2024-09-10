@@ -59,6 +59,8 @@ import { isDevEnv } from "../../utils/environment";
 
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import { setAutomaticSessionRefresh } from "../../features/fastLogin/store/actions/sessionRefreshActions";
+import { isCieIDLocalFeatureEnabledSelector } from "../../features/cieLogin/store/selectors";
+import { cieIDFeatureSetEnabled } from "../../features/cieLogin/store/actions";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -303,12 +305,12 @@ const DesignSystemSection = () => {
   const { themeType, setTheme } = useIOThemeContext();
   const dispatch = useIODispatch();
 
-  const isNewScanSectionLocallyEnabled = useIOSelector(
-    isNewScanSectionLocallyEnabledSelector
-  );
-
   const isAutomaticSessionRefreshToggleActive = useIOSelector(
     isAutomaticSessionRefreshToggleActiveSelector
+  );
+
+  const isNewScanSectionLocallyEnabled = useIOSelector(
+    isNewScanSectionLocallyEnabledSelector
   );
 
   const dispatchAutomaticSessionRefresh = React.useCallback(
@@ -427,7 +429,7 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      value: "IT Wallet",
+      value: "Documenti su IO",
       onPress: () =>
         navigation.navigate(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.PLAYGROUNDS
@@ -489,6 +491,9 @@ const DeveloperTestEnvironmentSection = ({
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
   const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
+  const isCieIDFeatureEnabled = useIOSelector(
+    isCieIDLocalFeatureEnabledSelector
+  );
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -535,6 +540,9 @@ const DeveloperTestEnvironmentSection = ({
     dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled: enabled }));
     handleShowModal();
   };
+  const onCieIDFeatureToggle = (enabled: boolean) => {
+    dispatch(cieIDFeatureSetEnabled({ isCieIDFeatureEnabled: enabled }));
+  };
 
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
     {
@@ -553,6 +561,11 @@ const DeveloperTestEnvironmentSection = ({
       description: I18n.t("profile.main.idpay.idpayTestAlert"),
       value: isIdPayTestEnabled,
       onSwitchValueChange: onIdPayTestToggle
+    },
+    {
+      label: I18n.t("profile.main.cieID.cieIdTest.title"),
+      value: isCieIDFeatureEnabled,
+      onSwitchValueChange: onCieIDFeatureToggle
     }
   ];
 
