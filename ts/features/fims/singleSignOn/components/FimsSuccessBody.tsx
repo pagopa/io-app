@@ -1,6 +1,7 @@
 import {
   Avatar,
-  BlockButtons,
+  ButtonLink,
+  ButtonSolid,
   ButtonText,
   ForceScrollDownView,
   H2,
@@ -18,9 +19,10 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
 import * as React from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { LoadingSkeleton } from "../../../../components/ui/Markdown/LoadingSkeleton";
+import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -46,6 +48,7 @@ export const FimsFlowSuccessBody = ({
   const dispatch = useIODispatch();
   const store = useIOStore();
   const serviceId = consents.service_id as ServiceId;
+  const { screenEndMargin } = useScreenEndMargin();
 
   const servicePot = useAutoFetchingServiceByIdPot(serviceId);
   const serviceData = pot.toUndefined(servicePot);
@@ -98,77 +101,76 @@ export const FimsFlowSuccessBody = ({
     );
 
   return (
-    <>
-      <ForceScrollDownView
-        style={IOStyles.horizontalContentPadding}
-        contentContainerStyle={styles.flexSpaceBetween}
-      >
-        <View>
-          <VSpacer size={24} />
-          <View style={styles.rowAlignCenter}>
-            <View style={styles.outlineContainer}>
-              <Icon name="productIOApp" size={30} color="blueIO-500" />
-            </View>
-            <HSpacer size={8} />
-            <Icon name="transactions" color="grey-450" />
-            <HSpacer size={8} />
-            <Avatar logoUri={serviceLogo} size={"small"} />
+    <ForceScrollDownView
+      scrollEnabled
+      threshold={150}
+      contentContainerStyle={[
+        IOStyles.horizontalContentPadding,
+        {
+          paddingBottom: screenEndMargin
+        }
+      ]}
+    >
+      <View>
+        <VSpacer size={24} />
+        <View style={styles.rowAlignCenter}>
+          <View style={styles.outlineContainer}>
+            <Icon name="productIOApp" size={30} color="blueIO-500" />
           </View>
-
-          <VSpacer size={24} />
-          <H2>{I18n.t("FIMS.consentsScreen.title")}</H2>
-          <Subtitle />
-
-          <VSpacer size={24} />
-          <ButtonText
-            weight="Bold"
-            color="blueIO-500"
-            onPress={BottomSheet.present}
-          >
-            {I18n.t("global.why")}
-          </ButtonText>
-          <VSpacer size={24} />
-          <ListItemHeader label="Dati richiesti" iconName="security" />
-          <FimsClaimsList claims={consents.user_metadata} />
-          <VSpacer size={24} />
-
-          <FimsPrivacyInfo privacyUrl={privacyUrl} />
-
-          <VSpacer size={32} />
+          <HSpacer size={8} />
+          <Icon name="transactions" color="grey-450" />
+          <HSpacer size={8} />
+          <Avatar logoUri={serviceLogo} size={"small"} />
         </View>
-        <SafeAreaView>
-          <BlockButtons
-            type="TwoButtonsInlineHalf"
-            primary={{
-              type: "Outline",
-              buttonProps: {
-                label: I18n.t("global.buttons.cancel"),
-                onPress: onAbort
-              }
-            }}
-            secondary={{
-              type: "Solid",
-              buttonProps: {
-                label: I18n.t("global.buttons.consent"),
-                icon: "security",
-                iconPosition: "end",
-                onPress: () => {
-                  const state = store.getState();
-                  computeAndTrackDataShareAccepted(serviceId, state);
-                  dispatch(
-                    fimsGetRedirectUrlAndOpenIABAction.request(
-                      // eslint-disable-next-line no-underscore-dangle
-                      { acceptUrl: consents._links.consent.href, serviceId }
-                    )
-                  );
-                }
-              }
-            }}
+
+        <VSpacer size={24} />
+        <H2>{I18n.t("FIMS.consentsScreen.title")}</H2>
+        <Subtitle />
+
+        <VSpacer size={24} />
+        <ButtonText
+          weight="Bold"
+          color="blueIO-500"
+          onPress={BottomSheet.present}
+        >
+          {I18n.t("global.why")}
+        </ButtonText>
+        <VSpacer size={24} />
+        <ListItemHeader label="Dati richiesti" iconName="security" />
+        <FimsClaimsList claims={consents.user_metadata} />
+        <VSpacer size={24} />
+
+        <FimsPrivacyInfo privacyUrl={privacyUrl} />
+
+        <VSpacer size={32} />
+      </View>
+      <>
+        <ButtonSolid
+          fullWidth
+          label={I18n.t("global.buttons.consent")}
+          icon={"security"}
+          iconPosition={"end"}
+          onPress={() => {
+            const state = store.getState();
+            computeAndTrackDataShareAccepted(serviceId, state);
+            dispatch(
+              fimsGetRedirectUrlAndOpenIABAction.request(
+                // eslint-disable-next-line no-underscore-dangle
+                { acceptUrl: consents._links.consent.href, serviceId }
+              )
+            );
+          }}
+        />
+        <View style={IOStyles.selfCenter}>
+          <VSpacer size={16} />
+          <ButtonLink
+            label={I18n.t("global.buttons.cancel")}
+            onPress={onAbort}
           />
-        </SafeAreaView>
-      </ForceScrollDownView>
+        </View>
+      </>
       {BottomSheet.bottomSheet}
-    </>
+    </ForceScrollDownView>
   );
 };
 
@@ -203,10 +205,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     borderColor: hexToRgba(IOColors.black, 0.1)
-  },
-  flexSpaceBetween: {
-    flex: 1,
-    justifyContent: "space-between"
   },
   rowAlignCenter: { flexDirection: "row", alignItems: "center" }
 });
