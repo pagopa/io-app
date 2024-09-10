@@ -1,7 +1,7 @@
 import React from "react";
 import WebView from "react-native-webview";
 import { Point, generateRandomSvgMovement } from "../utils/svgBackground";
-import { playSvg } from "../components/detail/CardSvgPayload";
+import { playSvg } from "./detail/CardSvgPayload";
 
 export function CgnAnimatedBackground({ onLoadEnd }: { onLoadEnd?(): void }) {
   return (

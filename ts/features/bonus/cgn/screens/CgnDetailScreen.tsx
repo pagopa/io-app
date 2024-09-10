@@ -64,8 +64,8 @@ import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
 import { profileSelector } from "../../../../store/reducers/profile";
 import { Card } from "../../../../../definitions/cgn/Card";
 import { useCgnUnsubscribe } from "../hooks/useCgnUnsubscribe";
-import { CgnCardStatus } from "./CgnCardStatus";
-import { CgnAnimatedBackground } from "./CgnAnimatedBackground";
+import { CgnCardStatus } from "../components/CgnCardStatus";
+import { CgnAnimatedBackground } from "../components/CgnAnimatedBackground";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

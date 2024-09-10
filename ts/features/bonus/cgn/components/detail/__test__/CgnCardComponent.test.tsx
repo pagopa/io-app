@@ -13,7 +13,7 @@ import {
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { CgnCardStatus } from "../../../screens/CgnCardStatus";
+import { CgnCardStatus } from "../../CgnCardStatus";
 
 const cgnStatusActivated: Card = {
   status: CgnActivatedStatusEnum.ACTIVATED,
