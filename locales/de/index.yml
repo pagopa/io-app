@@ -1913,7 +1913,7 @@ bonus:
   active: "Aktiv"
   failed: "Fehlgeschlagen"
   redeemed: "Eingelöst"
-  termsAndConditionFooter: "Durch Drücken von {{ctaText}} erklärst du, dass du den [Leitfaden]({{regulationLink}}) und die [Datenschutzrichtlinie]({{tosUrl}}) gelesen und verstanden hast."
+  termsAndConditionFooter: 'Premendo "{{ctaText}}" dichiari di essere in possesso dei requisiti e di aver letto e compreso la [Guida]({{regulationLink}}) e l''[Informativa Privacy]({{tosUrl}})'
   tos:
     title: "Datenschutzbestimmungen"
   cgn:
@@ -1989,7 +1989,8 @@ bonus:
         mobility: "Nachhaltige Mobilität"
         job: "Jobs und Ausbildungsplätze"
     cta:
-      activeBonus: "Die Karte beantragen"
+      activeBonus: Attiva Carta Giovani Nazionale
+      back: Non ora
       deactivateBonus: "Die Karte deaktivieren"
       goToDetail: Usa la Carta
     detail:
@@ -2037,7 +2038,7 @@ bonus:
           body: "Wir entschuldigen uns für die Unannehmlichkeiten.\nBitte versuche es später noch einmal."
       loading:
         caption: "Wir aktivieren deine Nationale Jugendkarte"
-        subCaption: "Bitte warte etwas."
+        subCaption: "Attendi qualche secondo..."
       error:
         title: "Der Dienst Nationale Jugendkarte ist derzeit nicht verfügbar."
         body: "Ci dispiace, riprova più tardi."
@@ -2213,7 +2214,7 @@ features:
         all: "Alle"
         bonus: "Initiativen für das Gemeinwohl"
         cgn: "Nationale Jugendkarte"
-        itw: "IT Wallet"
+        itw: Documenti
         payment: "Zahlungsmethoden"
     onboarding:
       title: "Was möchtest du deinem Konto hinzufügen?"
@@ -2241,10 +2242,6 @@ features:
       status:
         failure: "FEHLGESCHLAGEN"
         success: ""
-  itWallet:
-    discovery:
-      content: "# Attiva IT Wallet \n ###### Cos'è e come funziona? \n IT Wallet è la nuova funzionalità di IO che ti permette di aggiungere al Portafoglio la tua **Identità Digitale** e di portare sempre con te **la versione digitale dei documenti fisici** che già possiedi, come la Tessera Sanitaria e presto molti altri. \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
-      tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()
 support:
   ticketList:
     noTicket:

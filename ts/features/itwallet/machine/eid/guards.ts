@@ -57,5 +57,8 @@ export const createEidIssuanceGuardsImplementation = (
   },
 
   isSessionExpired: ({ event }: { event: EidIssuanceEvents }) =>
-    "error" in event && event.error instanceof ItwSessionExpiredError
+    "error" in event && event.error instanceof ItwSessionExpiredError,
+
+  isOperationAborted: ({ event }: { event: EidIssuanceEvents }) =>
+    "error" in event && event.error instanceof Errors.OperationAbortedError
 });

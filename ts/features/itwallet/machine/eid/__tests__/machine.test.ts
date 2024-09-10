@@ -42,8 +42,8 @@ describe("itwEidIssuanceMachine", () => {
   const closeIssuance = jest.fn();
   const setWalletInstanceToOperational = jest.fn();
   const setWalletInstanceToValid = jest.fn();
-  const disposeWalletAttestation = jest.fn();
   const handleSessionExpired = jest.fn();
+  const abortIdentification = jest.fn();
 
   const createWalletInstance = jest.fn();
   const getWalletAttestation = jest.fn();
@@ -53,6 +53,7 @@ describe("itwEidIssuanceMachine", () => {
   const isNativeAuthSessionClosed = jest.fn();
   const issuedEidMatchesAuthenticatedUser = jest.fn();
   const isSessionExpired = jest.fn();
+  const isOperationAborted = jest.fn();
 
   const mockedMachine = itwEidIssuanceMachine.provide({
     actions: {
@@ -72,8 +73,8 @@ describe("itwEidIssuanceMachine", () => {
       closeIssuance,
       setWalletInstanceToOperational,
       setWalletInstanceToValid,
-      disposeWalletAttestation,
-      handleSessionExpired
+      handleSessionExpired,
+      abortIdentification
     },
     actors: {
       createWalletInstance: fromPromise<string>(createWalletInstance),
@@ -92,7 +93,8 @@ describe("itwEidIssuanceMachine", () => {
     guards: {
       isNativeAuthSessionClosed,
       issuedEidMatchesAuthenticatedUser,
-      isSessionExpired
+      isSessionExpired,
+      isOperationAborted
     }
   });
 
@@ -214,7 +216,6 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Success");
     expect(storeEidCredential).toHaveBeenCalledTimes(1);
     expect(setWalletInstanceToValid).toHaveBeenCalledTimes(1);
-    expect(disposeWalletAttestation).toHaveBeenCalledTimes(1);
     expect(navigateToSuccessScreen).toHaveBeenCalledTimes(1);
 
     /**
@@ -261,7 +262,8 @@ describe("itwEidIssuanceMachine", () => {
       integrityKeyTag: T_INTEGRITY_KEY,
       walletAttestationContext: T_WIA_CONTEXT,
       identification: {
-        mode: "cieId"
+        mode: "cieId",
+        abortController: new AbortController()
       }
     });
     expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
