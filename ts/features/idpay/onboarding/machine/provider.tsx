@@ -10,10 +10,7 @@ import {
 } from "../../../../config";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  bpdTokenSelector,
-  sessionInfoSelector
-} from "../../../../store/reducers/authentication";
+import { bpdTokenSelector } from "../../../../store/reducers/authentication";
 import {
   isPagoPATestEnabledSelector,
   preferredLanguageSelector
