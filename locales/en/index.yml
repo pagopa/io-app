@@ -3148,12 +3148,16 @@ features:
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
         releasedBy: "Rilasciata da"
+        attachments: "Attachments"
         mdl:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
           restrictionConditions: "Codici"
-        attachments: "Attachments"
+      unrecognizedData:
+        title: "Non riconosci alcuni dati?"
+        body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
+        cta: "Chiedi informazioni o segnala errori"
     discovery:
       banner:
         title: "Novità: Documenti su IO"
