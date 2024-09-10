@@ -30,10 +30,11 @@ type Props = {
  */
 const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const [isFlipped, setIsFlipped] = React.useState(false);
+
   const { backgroundColor } = getThemeColorByCredentialType(
     credential.credentialType as CredentialType
   );
-
+        
   const credentialStatus = getCredentialExpireStatus(
     credential.parsedCredential
   );
