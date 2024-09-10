@@ -149,6 +149,7 @@ import { checkAcknowledgedFingerprintSaga } from "./startup/onboarding/biometric
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import {
   checkSession,
+  formatRequestedTokenString,
   watchCheckSessionSaga
 } from "./startup/watchCheckSessionSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
@@ -278,7 +279,12 @@ export function* initializeApplicationSaga(
 
   // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
-    yield* call(checkSession, backendClient.getSession);
+    yield* call(
+      checkSession,
+      backendClient.getSession,
+      formatRequestedTokenString()
+    );
+
   if (checkSessionResponse === 401) {
     // This is the first API call we make to the backend, it may happen that
     // when we're using the previous session token, that session has expired
@@ -429,7 +435,8 @@ export function* initializeApplicationSaga(
   yield* fork(
     watchCheckSessionSaga,
     backendClient.getSession,
-    backendClient.getSupportToken
+    backendClient.getSupportToken,
+    formatRequestedTokenString()
   );
 
   // Start watching for requests of abort the onboarding

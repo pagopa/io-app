@@ -95,7 +95,7 @@ export function* watchCheckSessionSaga(
   yield* takeLatest(getType(checkCurrentSession.success), checkSessionResult);
 
   yield* takeLatest(getType(loadSupportToken.request), function* () {
-    yield* call(handleLoadSupportToken, getSupportToken, fields);
+    yield* call(handleLoadSupportToken, getSupportToken);
   });
 }
 
