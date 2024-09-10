@@ -7,7 +7,6 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
-import { walletUpsertCard } from "../../../newWallet/store/actions/cards";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
@@ -84,17 +83,8 @@ export default (
     CredentialIssuanceEvents
   >) => {
     assert(context.credential, "credential is undefined");
-    assert(context.credentialType, "credentialType is undefined");
 
-    dispatch(itwCredentialsStore(context.credential));
-    dispatch(
-      walletUpsertCard({
-        key: context.credential.keyTag,
-        type: "itw",
-        category: "itw",
-        credentialType: context.credentialType
-      })
-    );
+    dispatch(itwCredentialsStore([context.credential]));
   },
 
   closeIssuance: () => {

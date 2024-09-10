@@ -70,12 +70,12 @@ export const ItwIssuanceEidFailureScreen = () => {
         }
       },
       [IssuanceFailureType.ISSUER_GENERIC]: {
-        title: I18n.t("features.itWallet.issuance.genericError.title"),
-        subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
+        title: I18n.t("features.itWallet.issuance.genericEidError.title"),
+        subtitle: I18n.t("features.itWallet.issuance.genericEidError.body"),
         pictogram: "workInProgress",
         action: {
           label: I18n.t(
-            "features.itWallet.issuance.genericError.primaryAction"
+            "features.itWallet.issuance.genericEidError.primaryAction"
           ),
           onPress: () =>
             closeIssuance({
@@ -88,7 +88,7 @@ export const ItwIssuanceEidFailureScreen = () => {
         },
         secondaryAction: {
           label: I18n.t(
-            "features.itWallet.issuance.genericError.secondaryAction"
+            "features.itWallet.issuance.genericEidError.secondaryAction"
           ),
           onPress: () =>
             closeIssuance({

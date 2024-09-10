@@ -38,6 +38,7 @@ import {
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import {
   selectCredentialTypeOption,
+  selectIsIssuing,
   selectIsLoading,
   selectRequestedCredentialOption
 } from "../../machine/credential/selectors";
@@ -53,9 +54,12 @@ import {
   trackWalletDataShare,
   trackWalletDataShareAccepted
 } from "../../analytics";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
+  const isLoading =
+    ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
   const requestedCredentialOption =
     ItwCredentialIssuanceMachineContext.useSelector(
       selectRequestedCredentialOption
@@ -66,6 +70,12 @@ const ItwIssuanceCredentialTrustIssuerScreen = () => {
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
+
+  if (isLoading) {
+    return (
+      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+    );
+  }
 
   return pipe(
     sequenceS(O.Monad)({
@@ -101,8 +111,8 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   }, [mixPanelCredential]);
 
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
-  const isLoading =
-    ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
+  const isIssuing =
+    ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
 
   const handleContinuePress = () => {
     machineRef.send({ type: "confirm-trust-data" });
@@ -199,7 +209,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           primary: {
             label: I18n.t("global.buttons.continue"),
             onPress: handleContinuePress,
-            loading: isLoading
+            loading: isIssuing
           },
           secondary: {
             label: I18n.t("global.buttons.cancel"),
