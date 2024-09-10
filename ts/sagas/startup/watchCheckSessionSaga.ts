@@ -18,12 +18,13 @@ import { handleSessionExpiredSaga } from "../../features/fastLogin/saga/utils";
 
 // load the support token useful for user assistance
 function* handleLoadSupportToken(
-  getSupportToken: ReturnType<typeof BackendClient>["getSupportToken"]
+  getSupportToken: ReturnType<typeof BackendClient>["getSupportToken"],
+  fields?: string // Params are optional and default to an empty object
 ): SagaIterator {
   try {
     const response: SagaCallReturnType<typeof getSupportToken> = yield* call(
       getSupportToken,
-      {}
+      { fields } // Pass the optional params
     );
     if (E.isLeft(response)) {
       throw Error(readableReport(response.left));
@@ -40,7 +41,8 @@ function* handleLoadSupportToken(
 }
 
 export function* checkSession(
-  getSessionValidity: ReturnType<typeof BackendClient>["getSession"]
+  getSessionValidity: ReturnType<typeof BackendClient>["getSession"],
+  fields?: string // Params are optional and default to an empty object
 ): Generator<
   ReduxSagaEffect,
   TypeOfApiResponseStatus<GetSessionStateT> | undefined,
@@ -49,7 +51,7 @@ export function* checkSession(
   try {
     const response: SagaCallReturnType<typeof getSessionValidity> = yield* call(
       getSessionValidity,
-      {}
+      { fields } // Pass the optional params
     );
     if (E.isLeft(response)) {
       throw Error(readableReport(response.left));
@@ -84,20 +86,50 @@ export function* checkSessionResult(
 // Saga that listen to check session dispatch and returns it's validity
 export function* watchCheckSessionSaga(
   getSessionValidity: ReturnType<typeof BackendClient>["getSession"],
-  getSupportToken: ReturnType<typeof BackendClient>["getSupportToken"]
+  getSupportToken: ReturnType<typeof BackendClient>["getSupportToken"],
+  fields?: string
 ): SagaIterator {
-  yield* takeLatest(
-    getType(checkCurrentSession.request),
-    checkSession,
-    getSessionValidity
-  );
+  yield* takeLatest(getType(checkCurrentSession.request), function* () {
+    yield* call(checkSession, getSessionValidity, fields);
+  });
   yield* takeLatest(getType(checkCurrentSession.success), checkSessionResult);
 
-  yield* takeLatest(
-    getType(loadSupportToken.request),
-    handleLoadSupportToken,
-    getSupportToken
-  );
+  yield* takeLatest(getType(loadSupportToken.request), function* () {
+    yield* call(handleLoadSupportToken, getSupportToken, fields);
+  });
 }
 
 export const testableCheckSession = isTestEnv ? checkSession : undefined;
+
+type TokenType =
+  | "spidLevel"
+  | "walletToken"
+  | "myPortalToken"
+  | "bpdToken"
+  | "zendeskToken"
+  | "fimsToken"
+  | "lollipopAssertionRef";
+
+type DefaultTokenType = Exclude<TokenType, "zendeskToken">;
+
+// Define a function that takes an optional array of TokenType
+export const formatRequestedTokenString = (
+  tokenType?: Array<TokenType>
+): `(${string})` => {
+  // If tokenType is provided and contains values, return the joined tokens
+  if (tokenType && tokenType.length > 0) {
+    return `(${tokenType.join(",")})`;
+  }
+
+  // If tokenType is not provided, return the default list excluding "zendeskToken"
+  const defaultTokens: Array<DefaultTokenType> = [
+    "spidLevel",
+    "walletToken",
+    "myPortalToken",
+    "bpdToken",
+    "fimsToken",
+    "lollipopAssertionRef"
+  ];
+
+  return `(${defaultTokens.join(",")})`;
+};
