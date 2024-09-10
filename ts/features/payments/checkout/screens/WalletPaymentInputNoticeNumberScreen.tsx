@@ -41,6 +41,8 @@ type InputState = {
   noticeNumber: O.Option<PaymentNoticeNumberFromString>;
 };
 
+const MAX_LENGTH_NOTICE_NUMBER = 18;
+
 const WalletPaymentInputNoticeNumberScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const [inputState, setInputState] = React.useState<InputState>({
@@ -100,14 +102,24 @@ const WalletPaymentInputNoticeNumberScreen = () => {
                 )}
                 value={inputState.noticeNumberText}
                 icon="docPaymentCode"
-                onChangeText={value =>
+                onChangeText={value => {
+                  const trimmedValue = value.replace(/\s/g, "");
+                  const limitedValue =
+                    trimmedValue.length > MAX_LENGTH_NOTICE_NUMBER
+                      ? trimmedValue.substring(0, MAX_LENGTH_NOTICE_NUMBER)
+                      : trimmedValue;
+
                   setInputState({
-                    noticeNumberText: value,
-                    noticeNumber: decodePaymentNoticeNumber(value)
-                  })
+                    noticeNumberText: limitedValue,
+                    noticeNumber: decodePaymentNoticeNumber(limitedValue)
+                  });
+                }}
+                counterLimit={
+                  inputState.noticeNumberText.length >= MAX_LENGTH_NOTICE_NUMBER
+                    ? MAX_LENGTH_NOTICE_NUMBER
+                    : undefined
                 }
                 onValidate={validatePaymentNoticeNumber}
-                counterLimit={18}
                 textInputProps={{
                   keyboardType: "number-pad",
                   inputMode: "numeric",
