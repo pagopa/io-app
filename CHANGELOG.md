@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.69.0-rc.8](https://github.com/pagopa/io-app/compare/2.69.0-rc.7...2.69.0-rc.8) (2024-09-06)
+
+
+### Bug Fixes
+
+* [[IOBP-853](https://pagopa.atlassian.net/browse/IOBP-853)] Receipt Share & Save button feature ([#6160](https://github.com/pagopa/io-app/issues/6160)) ([a76528d](https://github.com/pagopa/io-app/commit/a76528dbc9e0a30c2b53c71785f454a7a42f3717))
+
 ## [2.69.0-rc.7](https://github.com/pagopa/io-app/compare/2.69.0-rc.6...2.69.0-rc.7) (2024-09-05)
 
 
