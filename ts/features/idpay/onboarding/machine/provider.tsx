@@ -10,7 +10,10 @@ import {
 } from "../../../../config";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { sessionInfoSelector } from "../../../../store/reducers/authentication";
+import {
+  bpdTokenSelector,
+  sessionInfoSelector
+} from "../../../../store/reducers/authentication";
 import {
   isPagoPATestEnabledSelector,
   preferredLanguageSelector
@@ -33,6 +36,7 @@ export const IdPayOnboardingMachineProvider = ({ children }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
+  const bpdToken = useIOSelector(bpdTokenSelector);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const preferredLanguageOption = useIOSelector(preferredLanguageSelector);
 
@@ -42,15 +46,11 @@ export const IdPayOnboardingMachineProvider = ({ children }: Props) => {
     O.getOrElse(() => PreferredLanguageEnum.it_IT)
   );
 
-  const sessionInfo = useIOSelector(sessionInfoSelector);
-
-  if (O.isNone(sessionInfo)) {
-    throw new Error("Session info is undefined");
+  if (!bpdToken) {
+    throw new Error("BDP token is undefined");
   }
 
-  const { bpdToken } = sessionInfo.value;
-
-  const token = idPayTestToken !== undefined ? idPayTestToken : bpdToken;
+  const token = idPayTestToken ?? bpdToken;
   const client = createIDPayClient(
     isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl
   );

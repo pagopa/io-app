@@ -15,7 +15,10 @@ import {
 } from "../../../../config";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { sessionInfoSelector } from "../../../../store/reducers/authentication";
+import {
+  bpdTokenSelector,
+  walletTokenSelector
+} from "../../../../store/reducers/authentication";
 import {
   isPagoPATestEnabledSelector,
   preferredLanguageSelector
@@ -38,8 +41,10 @@ export const IdPayConfigurationMachineContext = createActorContext(
 
 export const IDPayConfigurationMachineProvider = ({ children }: Props) => {
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
 
-  const sessionInfo = useIOSelector(sessionInfoSelector);
+  const walletToken = useIOSelector(walletTokenSelector);
+  const bpdToken = useIOSelector(bpdTokenSelector);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
 
   const language = pipe(
@@ -48,23 +53,15 @@ export const IDPayConfigurationMachineProvider = ({ children }: Props) => {
     O.getOrElse(() => PreferredLanguageEnum.it_IT)
   );
 
-  const navigation = useIONavigation();
-
-  if (
-    O.isNone(sessionInfo) ||
-    (O.isSome(sessionInfo) &&
-      (sessionInfo.value.walletToken === undefined ||
-        sessionInfo.value.bpdToken === undefined))
-  ) {
-    throw new Error("Session info is undefined");
+  if (!bpdToken) {
+    throw new Error("BDP token is undefined");
   }
 
-  // Here we are sure that walletToken is defined
-  const walletToken = sessionInfo.value.walletToken as string;
-  // Here we are sure that bpdToken is defined
-  const bpdToken = sessionInfo.value.bpdToken as string;
+  if (!walletToken) {
+    throw new Error("Wallet token is undefined");
+  }
 
-  const idPayToken = idPayTestToken !== undefined ? idPayTestToken : bpdToken;
+  const idPayToken = idPayTestToken ?? bpdToken;
 
   const paymentManagerClient = PaymentManagerClient(
     isPagoPATestEnabled ? pagoPaApiUrlPrefixTest : pagoPaApiUrlPrefix,

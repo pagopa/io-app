@@ -1,5 +1,4 @@
 import { createActorContext } from "@xstate/react";
-import * as O from "fp-ts/lib/Option";
 import React from "react";
 import {
   idPayApiBaseUrl,
@@ -8,7 +7,7 @@ import {
 } from "../../../../config";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { sessionInfoSelector } from "../../../../store/reducers/authentication";
+import { bpdTokenSelector } from "../../../../store/reducers/authentication";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { createIDPayClient } from "../../common/api/client";
 import { createActionsImplementation } from "./actions";
@@ -25,14 +24,14 @@ export const IdPayPaymentMachineContext =
 export const IdPayPaymentMachineProvider = (props: Props) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const sessionInfo = useIOSelector(sessionInfoSelector);
+
+  const bpdToken = useIOSelector(bpdTokenSelector);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
 
-  if (O.isNone(sessionInfo)) {
-    throw new Error("Session info is undefined");
+  if (!bpdToken) {
+    throw new Error("BDP token is undefined");
   }
 
-  const { bpdToken } = sessionInfo.value;
   const token = idPayTestToken ?? bpdToken;
 
   const idPayClient = createIDPayClient(
