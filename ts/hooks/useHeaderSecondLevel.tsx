@@ -1,7 +1,7 @@
 import { ActionProp, HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
-import { useLayoutEffect } from "react";
+import { ComponentProps, useLayoutEffect, useMemo } from "react";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
@@ -10,22 +10,24 @@ import I18n from "../i18n";
 import { FAQsCategoriesType } from "../utils/faq";
 import { useStartSupportRequest } from "./useStartSupportRequest";
 
-type ScrollValues = React.ComponentProps<
-  typeof HeaderSecondLevel
->["scrollValues"];
-
-type CommonProps = {
-  title: string;
-  backAccessibilityLabel?: string;
-  backTestID?: string;
-  goBack?: () => void;
+type SpecificHookProps = {
   canGoBack?: boolean;
   headerShown?: boolean;
-  transparent?: boolean;
-  scrollValues?: ScrollValues;
-  variant?: "neutral" | "contrast";
-  backgroundColor?: string;
 };
+
+type HeaderHookManagedProps = Pick<
+  ComponentProps<typeof HeaderSecondLevel>,
+  | "title"
+  | "backAccessibilityLabel"
+  | "backTestID"
+  | "goBack"
+  | "transparent"
+  | "scrollValues"
+  | "variant"
+  | "backgroundColor"
+  | "enableDiscreteTransition"
+  | "animatedRef"
+>;
 
 type NoAdditionalActions = {
   secondAction?: never;
@@ -39,23 +41,25 @@ type WithAdditionalActions =
       thirdAction?: ActionProp;
     };
 
-type PropsWithSupport = CommonProps & {
-  supportRequest: true;
-  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
-  contextualHelp?: ContextualHelpProps;
-  contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
-} & WithAdditionalActions;
+type PropsWithSupport = SpecificHookProps &
+  HeaderHookManagedProps & {
+    supportRequest: true;
+    faqCategories?: ReadonlyArray<FAQsCategoriesType>;
+    contextualHelp?: ContextualHelpProps;
+    contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
+  } & WithAdditionalActions;
 
-type PropsWithoutSupport = CommonProps & {
-  supportRequest?: false;
-  faqCategories?: never;
-  contextualHelp?: never;
-  contextualHelpMarkdown?: never;
-} & NoAdditionalActions;
+type PropsWithoutSupport = SpecificHookProps &
+  HeaderHookManagedProps & {
+    supportRequest?: false;
+    faqCategories?: never;
+    contextualHelp?: never;
+    contextualHelpMarkdown?: never;
+  } & NoAdditionalActions;
 
 export type HeaderSecondLevelHookProps = PropsWithSupport | PropsWithoutSupport;
 
-type HeaderProps = React.ComponentProps<typeof HeaderSecondLevel>;
+type HeaderProps = ComponentProps<typeof HeaderSecondLevel>;
 
 /**
  * A hook to set the header of a second level screen with useLayoutEffect hook
@@ -79,7 +83,9 @@ export const useHeaderSecondLevel = ({
   transparent = false,
   scrollValues,
   variant,
-  backgroundColor
+  backgroundColor,
+  enableDiscreteTransition,
+  animatedRef
 }: HeaderSecondLevelHookProps) => {
   const startSupportRequest = useStartSupportRequest({
     faqCategories,
@@ -88,16 +94,37 @@ export const useHeaderSecondLevel = ({
   });
 
   const navigation = useNavigation();
-  const headerComponentProps: HeaderProps = React.useMemo(() => {
-    const baseProps = canGoBack
+
+  const headerComponentProps: HeaderProps = useMemo(() => {
+    const backProps = canGoBack
       ? {
-          title,
           backAccessibilityLabel:
             backAccessibilityLabel ?? I18n.t("global.buttons.back"),
           backTestID,
           goBack: goBack ?? navigation.goBack
         }
-      : { title };
+      : {};
+
+    const enableDiscreteTransitionProps =
+      enableDiscreteTransition && animatedRef
+        ? {
+            enableDiscreteTransition,
+            animatedRef
+          }
+        : {};
+
+    const graphicProps = {
+      scrollValues,
+      variant,
+      backgroundColor
+    };
+
+    const baseProps = {
+      title,
+      ...graphicProps,
+      ...backProps,
+      ...enableDiscreteTransitionProps
+    };
 
     if (supportRequest) {
       const helpAction = {
@@ -141,11 +168,16 @@ export const useHeaderSecondLevel = ({
     };
   }, [
     canGoBack,
-    title,
     backAccessibilityLabel,
     backTestID,
     goBack,
     navigation.goBack,
+    enableDiscreteTransition,
+    animatedRef,
+    scrollValues,
+    variant,
+    backgroundColor,
+    title,
     supportRequest,
     startSupportRequest,
     secondAction,
@@ -156,11 +188,8 @@ export const useHeaderSecondLevel = ({
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
-          scrollValues={scrollValues}
-          transparent={transparent}
-          variant={variant}
-          backgroundColor={backgroundColor}
           {...headerComponentProps}
+          transparent={transparent}
         />
       ),
       headerShown,
