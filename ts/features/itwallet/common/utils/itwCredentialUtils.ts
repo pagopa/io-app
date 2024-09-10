@@ -1,7 +1,10 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import sha from "sha.js";
+import { decodeBase64 } from "@pagopa/io-react-native-jwt";
 import I18n from "../../../../i18n";
 import { CredentialType } from "./itwMocksUtils";
+import { StoredCredential } from "./itwTypesUtils";
 
 export const itwCredentialNameByCredentialType: {
   [type: string]: string;
@@ -27,3 +30,16 @@ export const getCredentialNameFromType = (
     O.map(type => itwCredentialNameByCredentialType[type]),
     O.getOrElse(() => withDefault)
   );
+
+export const generateTrustmarkUrl = ({ credential }: StoredCredential) => {
+  const [header, body, rest] = credential.split(".");
+  const signature = rest.slice(0, rest.indexOf("~"));
+  const dataHash = sha("sha256").update(`${header}.${body}`).digest("hex");
+  const { kid } = JSON.parse(decodeBase64(header)) as { kid: string };
+  const queryParams = new URLSearchParams({
+    data_hash: dataHash,
+    signature,
+    kid
+  });
+  return `https://verify.eaa.ipzs.it?${queryParams}`;
+};
