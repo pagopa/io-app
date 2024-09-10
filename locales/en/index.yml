@@ -3292,6 +3292,7 @@ features:
             confirm: Sì, rimuovi
         toast:
           removed: Fatto! Hai rimosso {{credentialName}}
+        flipCard: "Show back"
   trialSystem:
     toast:
       subscribed: Done! You will receive a message when the trial period will begin.
