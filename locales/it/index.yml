@@ -463,6 +463,9 @@ profile:
     idpay:
       idpayTest: IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
+    cieID:
+      cieIdTest:
+        title: CieID
     trial:
       titleSection: Partecipa alla sperimentazione
     designSystemEnvironment: Design System sperimentale
@@ -2581,7 +2584,7 @@ bonus:
   active: Attivo
   failed: Fallito
   redeemed: Utilizzato
-  termsAndConditionFooter: 'Premendo "{{ctaText}}" dichiari di aver letto e compreso la [Guida]({{regulationLink}}) e l''[Informativa Privacy]({{tosUrl}})'
+  termsAndConditionFooter: 'Premendo "{{ctaText}}" dichiari di essere in possesso dei requisiti e di aver letto e compreso la [Guida]({{regulationLink}}) e l''[Informativa Privacy]({{tosUrl}})'
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -2671,7 +2674,8 @@ bonus:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
     cta:
-      activeBonus: Richiedi la Carta
+      activeBonus: Attiva Carta Giovani Nazionale
+      back: Non ora
       deactivateBonus: Disattiva Carta Giovani Nazionale
       goToDetail: Usa la Carta
     detail:
@@ -2721,7 +2725,7 @@ bonus:
           body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
       loading:
         caption: "Stiamo attivando la tua Carta Giovani Nazionale"
-        subCaption: "Ti preghiamo di attendere."
+        subCaption: "Attendi qualche secondo..."
       error:
         title: "Il servizio Carta Giovani Nazionale in questo momento non è disponibile."
         body: "Ci dispiace, riprova più tardi."
@@ -3222,6 +3226,11 @@ features:
         title: "Tutti i documenti saranno rimossi da IO"
         subtitle: "Se accedi con una nuova identità, i documenti già presenti nel Portafoglio saranno rimossi e Documenti su IO disattivato."
         action: "Continua con la nuova identità"
+      loading:
+        cieId:
+          title: Connessione con la tua app CieID in corso...
+          subtitle: Autorizza l'accesso nell'app CieID per continuare oppure annulla la connessione
+          cancel: Annulla connessione
     issuance:
       credentialAuth:
         title: "{{credentialName}}: dati necessari"
@@ -3261,9 +3270,14 @@ features:
         body: Non puoi attivare Documenti con un’identità diversa da quella che usi per accedere a IO. Verifica le credenziali di accesso e riprova.
         primaryAction: Ho capito
         secondaryAction: Segnala un problema
-      genericError:
+      genericEidError:
         title: Si è verificato un errore imprevisto
         body: La tua richiesta verso l'ente che emette il documento non è andata a buon fine.
+        primaryAction: Riprova
+        secondaryAction: Chiudi
+      genericCredentialError:
+        title: Documento non disponibile
+        body: Si è verificato un errore oppure potresti non avere diritto al documento. 
         primaryAction: Riprova
         secondaryAction: Chiudi
     unsupportedDevice:
@@ -3949,6 +3963,9 @@ permissionRequest:
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
 FIMS:
+  updateApp:
+    header: "Aggiorna l’app per proseguire"
+    body: "Per continuare a utilizzare tutte le funzionalità, scarica la nuova versione di IO dallo store."
   history:
     errorStates:
       dataUnavailable: "Dati non disponibili"
