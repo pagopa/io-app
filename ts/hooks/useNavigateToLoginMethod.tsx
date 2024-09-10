@@ -49,26 +49,20 @@ const useNavigateToLoginMethod = () => {
   }, [isFastLoginOptInFFEnabled, navigate]);
 
   const navigateToCiePinInsertion = useCallback(() => {
-    if (isCieSupported) {
-      void trackCieLoginSelected(store.getState());
-      dispatch(idpSelected(IdpCIE));
+    dispatch(idpSelected(IdpCIE));
+    void trackCieLoginSelected(store.getState());
 
-      if (isFastLoginOptInFFEnabled) {
-        navigate(ROUTES.AUTHENTICATION, {
-          screen: ROUTES.AUTHENTICATION_OPT_IN,
-          params: { identifier: "CIE" }
-        });
-      } else {
-        navigate(ROUTES.AUTHENTICATION, {
-          screen: ROUTES.CIE_PIN_SCREEN
-        });
-      }
+    if (isFastLoginOptInFFEnabled) {
+      navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTHENTICATION_OPT_IN,
+        params: { identifier: "CIE" }
+      });
     } else {
       navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.CIE_NOT_SUPPORTED
+        screen: ROUTES.CIE_PIN_SCREEN
       });
     }
-  }, [isFastLoginOptInFFEnabled, navigate, store, isCieSupported, dispatch]);
+  }, [isFastLoginOptInFFEnabled, navigate, store, dispatch]);
 
   return { navigateToCiePinInsertion, navigateToIdpSelection, isCieSupported };
 };
