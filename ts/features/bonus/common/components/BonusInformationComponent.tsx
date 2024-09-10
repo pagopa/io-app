@@ -43,7 +43,10 @@ type OwnProps = {
   onConfirm?: () => void;
   onCancel?: () => void;
   primaryCtaText: string;
+  secondaryAction?: SecondaryAction;
 };
+
+type SecondaryAction = { type: "back"; text: string };
 
 type Props = OwnProps &
   Pick<
@@ -125,7 +128,6 @@ const spaceBetweenActions: IOSpacer = 24;
  * A screen to explain how the bonus activation works and how it will be assigned
  */
 const BonusInformationComponent = (props: Props) => {
-  const [isMarkdownLoaded, setMarkdownLoaded] = React.useState(false);
   const { showModal, hideModal } = React.useContext(LightModalContext);
   const bonusType = props.bonus;
   const bonusTypeLocalizedContent: BonusAvailableContent =
@@ -143,14 +145,20 @@ const BonusInformationComponent = (props: Props) => {
     [safeAreaInsets]
   );
 
+  const hasSecondaryButton = props.secondaryAction !== undefined;
+
+  const buttonsSolidHeight = hasSecondaryButton
+    ? buttonSolidHeight * 2
+    : buttonSolidHeight;
+
   const safeBottomAreaHeight: number = React.useMemo(
-    () => bottomMargin + buttonSolidHeight + contentEndMargin,
-    [bottomMargin]
+    () => bottomMargin + buttonsSolidHeight + contentEndMargin,
+    [bottomMargin, buttonsSolidHeight]
   );
 
   const gradientAreaHeight: number = React.useMemo(
-    () => bottomMargin + buttonSolidHeight + gradientSafeArea,
-    [bottomMargin]
+    () => bottomMargin + buttonsSolidHeight + gradientSafeArea,
+    [bottomMargin, buttonsSolidHeight]
   );
 
   useHeaderSecondLevel({
@@ -183,10 +191,14 @@ const BonusInformationComponent = (props: Props) => {
     accessibilityLabel: props.primaryCtaText,
     onPress: props.onConfirm ?? constNull
   };
-
-  const onMarkdownLoaded = () => {
-    setMarkdownLoaded(true);
-  };
+  const backButtonProps = props.secondaryAction
+    ? {
+        label: props.secondaryAction.text,
+        fullWidth: true,
+        accessibilityLabel: props.secondaryAction.text,
+        onPress: props.onBack ?? constNull
+      }
+    : undefined;
 
   const handleModalPress = (tos: string) =>
     showModal(<TosBonusComponent tos_url={tos} onClose={hideModal} />);
@@ -245,18 +257,13 @@ const BonusInformationComponent = (props: Props) => {
         <ContentWrapper>
           <H2 accessibilityRole="header">{bonusTypeLocalizedContent.title}</H2>
           <VSpacer size={16} />
-          {isMarkdownLoaded && (
-            <Body color="bluegreyDark">
-              {bonusTypeLocalizedContent.subtitle}
-            </Body>
-          )}
-
           <Markdown
             cssStyle={CSS_STYLE}
             extraBodyHeight={extraMarkdownBodyHeight}
-            onLoadEnd={onMarkdownLoaded}
           >
-            {bonusTypeLocalizedContent.content}
+            {bonusTypeLocalizedContent.subtitle +
+              "\n" +
+              bonusTypeLocalizedContent.content}
           </Markdown>
           <VSpacer size={40} />
           {getTosFooter(
@@ -271,6 +278,7 @@ const BonusInformationComponent = (props: Props) => {
         primaryActionProps={
           props.onConfirm ? { ...requestButtonProps } : { ...cancelButtonProps }
         }
+        secondaryActionProps={backButtonProps}
         transitionAnimStyle={footerGradientOpacityTransition}
         dimensions={{
           bottomMargin,
