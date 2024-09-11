@@ -1,16 +1,16 @@
 import {
   Caption,
+  H6,
   HSpacer,
   Icon,
+  IOListItemStyles,
+  IOStyles,
   LabelSmall,
-  ListItemNav,
-  PressableListItemBase,
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
 import * as React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { Consent } from "../../../../../definitions/fims/Consent";
@@ -18,7 +18,9 @@ import I18n from "../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../utils/accessibility";
 import { potFoldWithDefault } from "../../../../utils/pot";
 import { useAutoFetchingServiceByIdPot } from "../../common/utils/hooks";
+import { FimsHistorySharedStyles } from "../utils/styles";
 import { LoadingFimsHistoryListItem } from "./FimsHistoryLoaders";
+import { FimsHistoryPressableBase } from "./FimsHistoryPressableBase";
 
 // ------- TYPES
 
@@ -32,23 +34,43 @@ type BaseHistoryListItemProps = {
 
 // --------- LISTITEMS
 
-const SuccessListItem = ({ serviceData, consent }: SuccessListItemProps) => (
-  <ListItemNav
-    onPress={constNull}
-    value={serviceData.organization_name}
-    topElement={{
-      dateValue: dateToAccessibilityReadableFormat(consent.timestamp)
-    }}
-    description={consent.redirect?.display_name}
-    hideChevron
-  />
-);
+const SuccessListItem = ({ serviceData, consent }: SuccessListItemProps) => {
+  const theme = useIOTheme();
+
+  return (
+    <FimsHistoryPressableBase
+      style={defaultListItemStyles}
+      pressableProps={undefined}
+    >
+      <View style={IOStyles.row}>
+        <Icon size={16} name="calendar" />
+        <HSpacer size={4} />
+        <Caption color={theme["textBody-tertiary"]}>
+          {dateToAccessibilityReadableFormat(
+            consent.timestamp,
+            "DD/MM/YYYY, HH:mm"
+          )}
+        </Caption>
+      </View>
+
+      <VSpacer size={8} />
+
+      <H6>{serviceData.organization_name}</H6>
+      <LabelSmall weight="Regular" color="grey-700">
+        {consent.redirect?.display_name}
+      </LabelSmall>
+    </FimsHistoryPressableBase>
+  );
+};
 
 const FailureListItem = ({ item }: BaseHistoryListItemProps) => {
   const theme = useIOTheme();
 
   return (
-    <PressableListItemBase>
+    <FimsHistoryPressableBase
+      contentContainerStyle={styles.errorSpaceBetween}
+      style={defaultListItemStyles}
+    >
       <View
         style={{
           paddingVertical: 15
@@ -63,7 +85,7 @@ const FailureListItem = ({ item }: BaseHistoryListItemProps) => {
           <Icon name="calendar" size={16} color="grey-300" />
           <HSpacer size={4} />
           <Caption color={theme["textBody-tertiary"]}>
-            {dateToAccessibilityReadableFormat(item.timestamp)}
+            {dateToAccessibilityReadableFormat(item.timestamp, "DD,MM,YYYY")}
           </Caption>
         </View>
         <VSpacer size={4} />
@@ -72,7 +94,7 @@ const FailureListItem = ({ item }: BaseHistoryListItemProps) => {
         </LabelSmall>
       </View>
       <Icon name="errorFilled" color="error-600" />
-    </PressableListItemBase>
+    </FimsHistoryPressableBase>
   );
 };
 
@@ -91,3 +113,18 @@ export const FimsHistoryListItem = ({ item }: BaseHistoryListItemProps) => {
     someLoading: data => <SuccessListItem serviceData={data} consent={item} />
   });
 };
+
+// ------------ STYLES
+
+const styles = StyleSheet.create({
+  errorSpaceBetween: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  }
+});
+
+const defaultListItemStyles = [
+  IOListItemStyles.listItem,
+  FimsHistorySharedStyles.fixedHeightListItem
+];
