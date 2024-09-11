@@ -4,6 +4,7 @@ import {
   LabelLink,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
@@ -17,7 +18,7 @@ const CiePinWizard = () => {
   const { navigate } = useIONavigation();
   const { navigateToCiePinInsertion } = useNavigateToLoginMethod();
   const label = I18n.t("authentication.wizards.cie_pin_wizard.title");
-  const { present, bottomSheet } = useIOBottomSheetModal({
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title: I18n.t("authentication.wizards.cie_pin_wizard.bottom_sheet.title"),
     component: (
       <IOMarkdown
@@ -28,6 +29,13 @@ const CiePinWizard = () => {
       />
     ),
     snapPoint: [350]
+  });
+
+  // eslint-disable-next-line arrow-body-style
+  useFocusEffect(() => {
+    return () => {
+      dismiss();
+    };
   });
 
   const getActions = (): IOScrollViewActions => {

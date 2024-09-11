@@ -137,15 +137,20 @@ export const useIOBottomSheetModal = ({
   const insets = useSafeAreaInsets();
   const { dismissAll } = useBottomSheetModal();
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
-  const setBSOpened = useHardwareBackButtonToDismiss(dismissAll);
+  const { onOpen, onClose } = useHardwareBackButtonToDismiss(dismissAll);
   const [screenReaderEnabled, setIsScreenReaderEnabled] =
     useState<boolean>(false);
 
   const bottomSheetProps = bottomSheetContent(component, title, dismissAll);
 
+  const handleDismiss = () => {
+    onDismiss?.();
+    onClose();
+  };
+
   const present = () => {
     bottomSheetModalRef.current?.present();
-    setBSOpened();
+    onOpen();
   };
 
   // // Add opacity fade effect to backdrop
@@ -189,7 +194,7 @@ export const useIOBottomSheetModal = ({
         accessible: false
       }}
       importantForAccessibility={"yes"}
-      onDismiss={onDismiss}
+      onDismiss={handleDismiss}
     >
       {screenReaderEnabled && Platform.OS === "android" ? (
         <Modal>
