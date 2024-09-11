@@ -14,6 +14,7 @@ import { NetworkError } from "../../../../utils/errors";
 import { Action } from "../../../../store/actions/types";
 import {
   getZendeskConfig,
+  zendeskTokenNeedsRefresh,
   zendeskRequestTicketNumber,
   zendeskSelectedCategory,
   zendeskSelectedSubcategory,
@@ -39,6 +40,7 @@ export type ZendeskState = {
   selectedSubcategory?: ZendeskSubCategory;
   ticketNumber: pot.Pot<number, Error>;
   getSessionPollingRunning?: boolean;
+  zendeskTokenNeedsRefresh?: boolean;
 };
 
 const INITIAL_STATE: ZendeskState = {
@@ -51,6 +53,11 @@ const reducer = (
   action: Action
 ): ZendeskState => {
   switch (action.type) {
+    case getType(zendeskTokenNeedsRefresh):
+      return {
+        ...state,
+        zendeskTokenNeedsRefresh: action.payload
+      };
     case getType(zendeskStopPolling):
       return {
         ...state,
@@ -119,6 +126,10 @@ export const zendeskConfigSelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.zendeskConfig],
   (zendeskConfig: ZendeskConfig): ZendeskConfig => zendeskConfig
 );
+
+export const zendeskTokenNeedsRefreshSelector = (state: GlobalState) =>
+  state.assistanceTools.zendesk.zendeskTokenNeedsRefresh ?? false;
+
 export const zendeskSelectedCategorySelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.selectedCategory],
   (zendeskCategory: ZendeskCategory | undefined): ZendeskCategory | undefined =>

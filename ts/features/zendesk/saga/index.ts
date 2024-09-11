@@ -3,6 +3,7 @@ import { takeLatest, select, call, put } from "typed-redux-saga/macro";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import {
   getZendeskConfig,
+  zendeskTokenNeedsRefresh,
   zendeskPollingIteration,
   zendeskRequestTicketNumber,
   zendeskStartPolling,
@@ -38,6 +39,7 @@ function* zendeskGetSessionPollingLoop(
     // check if the current session is still valid
     const checkSessionResponse = yield* call(checkSession, getSession);
     if (checkSessionResponse === 401) {
+      yield* put(zendeskTokenNeedsRefresh(true));
       break;
     }
     zendeskPollingIsRunning = yield* select(

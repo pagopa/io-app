@@ -115,6 +115,8 @@ import {
 import { checkNotificationsPreferencesSaga } from "../features/pushNotifications/sagas/checkNotificationsPreferencesSaga";
 import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
+import { zendeskTokenNeedsRefresh } from "../features/zendesk/store/actions";
+import { zendeskTokenNeedsRefreshSelector } from "../features/zendesk/store/reducers";
 import {
   clearKeychainError,
   keychainError
@@ -278,12 +280,16 @@ export function* initializeApplicationSaga(
   yield* spawn(watchLogoutSaga, backendClient.logout);
 
   // check if the current session is still valid
+  const needRefreshZendeskToken = yield* select(
+    zendeskTokenNeedsRefreshSelector
+  );
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
     yield* call(
       checkSession,
       backendClient.getSession,
-      formatRequestedTokenString()
+      formatRequestedTokenString(needRefreshZendeskToken)
     );
+  yield* put(zendeskTokenNeedsRefresh(false));
 
   if (checkSessionResponse === 401) {
     // This is the first API call we make to the backend, it may happen that
@@ -436,9 +442,9 @@ export function* initializeApplicationSaga(
     watchCheckSessionSaga,
     backendClient.getSession,
     backendClient.getSupportToken,
-    formatRequestedTokenString()
+    formatRequestedTokenString(needRefreshZendeskToken)
   );
-
+  yield* put(zendeskTokenNeedsRefresh(false));
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 

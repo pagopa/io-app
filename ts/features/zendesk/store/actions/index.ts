@@ -77,6 +77,10 @@ export const zendeskSupportFailure = createStandardAction(
   "ZENDESK_SUPPORT_FAILURE"
 )<string>();
 
+export const zendeskTokenNeedsRefresh = createStandardAction(
+  "ZENDESK_TOKEN_NEEDS_REFRESH"
+)<boolean>();
+
 /**
  * Request the zendesk config
  */
@@ -114,6 +118,7 @@ export type ZendeskSupportActions =
   | ActionType<typeof zendeskSupportCancel>
   | ActionType<typeof zendeskSupportBack>
   | ActionType<typeof zendeskSupportFailure>
+  | ActionType<typeof zendeskTokenNeedsRefresh>
   | ActionType<typeof getZendeskConfig>
   | ActionType<typeof zendeskSelectedCategory>
   | ActionType<typeof zendeskRequestTicketNumber>

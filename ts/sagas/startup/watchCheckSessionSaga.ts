@@ -113,12 +113,15 @@ type TokenType =
 type DefaultTokenType = Exclude<TokenType, "zendeskToken">;
 
 // Define a function that takes an optional array of TokenType
-export const formatRequestedTokenString = (
+export function formatRequestedTokenString(
+  refreshZendeskTokenSel: boolean,
   tokenType?: Array<TokenType>
-): `(${string})` => {
+): string {
   // If tokenType is provided and contains values, return the joined tokens
+  // eslint-disable-next-line functional/no-let
+  let tokensArray;
   if (tokenType && tokenType.length > 0) {
-    return `(${tokenType.join(",")})`;
+    tokensArray = tokenType;
   }
 
   // If tokenType is not provided, return the default list excluding "zendeskToken"
@@ -131,5 +134,11 @@ export const formatRequestedTokenString = (
     "lollipopAssertionRef"
   ];
 
-  return `(${defaultTokens.join(",")})`;
-};
+  tokensArray = defaultTokens;
+
+  if (refreshZendeskTokenSel) {
+    return `(${[...tokensArray, "zendeskToken"].join(",")})`;
+  } else {
+    return `(${tokensArray.join(",")})`;
+  }
+}
