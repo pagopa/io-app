@@ -26,6 +26,7 @@ import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlert
 import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection";
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
+import { ItwCredentialTrustmark } from "../components/ItwCredentialTrustmark";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -35,6 +36,12 @@ type Props = IOStackNavigationRouteProps<
   ItwParamsList,
   "ITW_PRESENTATION_CREDENTIAL_DETAIL"
 >;
+
+const trustmarkEnabledCredentials = [
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.EUROPEAN_DISABILITY_CARD,
+  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+];
 
 export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const { credentialType } = route.params;
@@ -77,6 +84,16 @@ const ContentView = ({ credential }: ContentProps) => {
 
   const credentialStatus = getCredentialStatus(credential);
 
+  const renderTrustmark = () =>
+    trustmarkEnabledCredentials.includes(
+      credential.credentialType as CredentialType
+    ) ? (
+      <>
+        <ItwCredentialTrustmark credential={credential} />
+        <VSpacer size={16} />
+      </>
+    ) : null;
+
   return (
     <>
       <FocusAwareStatusBar
@@ -97,6 +114,7 @@ const ContentView = ({ credential }: ContentProps) => {
           <VSpacer size={16} />
           <ItwPresentationAlertsSection credential={credential} />
           <VSpacer size={16} />
+          {renderTrustmark()}
           <ItwPresentationClaimsSection
             title={I18n.t(
               "features.itWallet.presentation.credentialDetails.documentDataTitle"
