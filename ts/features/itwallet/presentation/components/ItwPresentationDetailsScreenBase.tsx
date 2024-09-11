@@ -5,6 +5,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import Animated, {
+  useAnimatedRef,
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
@@ -25,6 +26,7 @@ const ItwPresentationDetailsScreenBase = ({
   credential,
   children
 }: ItwPresentationDetailsScreenBaseProps) => {
+  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const safeAreaInsets = useSafeAreaInsets();
   const scrollTranslationY = useSharedValue(0);
 
@@ -50,6 +52,8 @@ const ItwPresentationDetailsScreenBase = ({
       contentOffsetY: scrollTranslationY
     },
     supportRequest: true,
+    enableDiscreteTransition: true,
+    animatedRef: animatedScrollViewRef,
     ...headerProps
   });
 
