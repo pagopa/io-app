@@ -148,8 +148,7 @@ const TestAuthenticationScreen = () => {
   );
 
   useHeaderSecondLevel({
-    title: "Test login",
-    canGoBack: true
+    title: "Test login"
   });
 
   return (
