@@ -14,8 +14,9 @@ import I18n from "../../../../i18n";
 import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
-import { StoredCredential } from "../utils/itwTypesUtils";
-import { generateTrustmarkUrl } from "../utils/itwCredentialUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { generateTrustmarkUrl } from "../../common/utils/itwCredentialUtils";
+import { itwEaaVerifierBaseUrl } from "../../../../config";
 
 type ItwCredentialTrustmarkProps = WithTestID<{
   credential: StoredCredential;
@@ -88,7 +89,9 @@ export const QrCodeBottomSheetContent = ({
   credential: StoredCredential;
 }) => (
   <View>
-    <QrCodeImage value={generateTrustmarkUrl(credential)} />
+    <QrCodeImage
+      value={generateTrustmarkUrl(credential, itwEaaVerifierBaseUrl)}
+    />
     <VStack space={24}>
       <Body>
         {I18n.t("features.itWallet.presentation.trustmark.usageDescription")}

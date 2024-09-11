@@ -31,7 +31,10 @@ export const getCredentialNameFromType = (
     O.getOrElse(() => withDefault)
   );
 
-export const generateTrustmarkUrl = ({ credential }: StoredCredential) => {
+export const generateTrustmarkUrl = (
+  { credential }: StoredCredential,
+  verifierUrl: string
+) => {
   const [header, body, rest] = credential.split(".");
   const signature = rest.slice(0, rest.indexOf("~"));
   const dataHash = sha("sha256").update(`${header}.${body}`).digest("hex");
@@ -41,5 +44,5 @@ export const generateTrustmarkUrl = ({ credential }: StoredCredential) => {
     signature,
     kid
   });
-  return `https://verify.eaa.ipzs.it?${queryParams}`;
+  return `${verifierUrl}?${queryParams}`;
 };
