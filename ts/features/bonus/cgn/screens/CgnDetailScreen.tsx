@@ -1,39 +1,52 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
-import React, { ComponentProps } from "react";
-import { View } from "react-native";
-import { connect } from "react-redux";
 import {
-  IOToast,
-  VSpacer,
-  IOStyles,
   Alert,
   H4,
-  ButtonSolid,
-  ButtonLink
+  IOStyles,
+  IOToast,
+  VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { View } from "react-native";
+import { connect } from "react-redux";
+import { Card } from "../../../../../definitions/cgn/Card";
 import {
   CardActivated,
   StatusEnum
 } from "../../../../../definitions/cgn/CardActivated";
+import { CardExpired } from "../../../../../definitions/cgn/CardExpired";
+import { CardRevoked } from "../../../../../definitions/cgn/CardRevoked";
+import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
+import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
+import { isLoading } from "../../../../common/model/RemoteValue";
+import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import SectionStatusComponent from "../../../../components/SectionStatus";
+import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { Dispatch } from "../../../../store/actions/types";
+import { useIOSelector } from "../../../../store/hooks";
 import {
   cgnMerchantVersionSelector,
   isCGNEnabledSelector
 } from "../../../../store/reducers/backendStatus";
+import { profileSelector } from "../../../../store/reducers/profile";
 import { GlobalState } from "../../../../store/reducers/types";
+import { formatDateAsShortFormat } from "../../../../utils/dates";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
-import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
+import { openWebUrl } from "../../../../utils/url";
+import { availableBonusTypesSelectorFromId } from "../../common/store/selectors";
 import { ID_CGN_TYPE } from "../../common/utils";
-import { isLoading } from "../../../../common/model/RemoteValue";
+import { CgnAnimatedBackground } from "../components/CgnAnimatedBackground";
+import { CgnCardStatus } from "../components/CgnCardStatus";
 import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
 import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
+import { useCgnUnsubscribe } from "../hooks/useCgnUnsubscribe";
 import { navigateToCgnMerchantsTabs } from "../navigation/actions";
 import { CgnDetailsParamsList } from "../navigation/params";
 import CGN_ROUTES from "../navigation/routes";
@@ -50,23 +63,8 @@ import {
   EycaDetailsState
 } from "../store/reducers/eyca/details";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
-import { canEycaCardBeShown } from "../utils/eyca";
-import { availableBonusTypesSelectorFromId } from "../../common/store/selectors";
-import { openWebUrl } from "../../../../utils/url";
 import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../utils/constants";
-import { CardRevoked } from "../../../../../definitions/cgn/CardRevoked";
-import { CardExpired } from "../../../../../definitions/cgn/CardExpired";
-import { formatDateAsShortFormat } from "../../../../utils/dates";
-import { BonusCardScreenComponent } from "../../../../components/BonusCard";
-import { useIOSelector } from "../../../../store/hooks";
-import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
-import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
-import { profileSelector } from "../../../../store/reducers/profile";
-import { Card } from "../../../../../definitions/cgn/Card";
-import { useCgnUnsubscribe } from "../hooks/useCgnUnsubscribe";
-import { CgnCardStatus } from "../components/CgnCardStatus";
-import { CgnAnimatedBackground } from "../components/CgnAnimatedBackground";
-import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { canEycaCardBeShown } from "../utils/eyca";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
