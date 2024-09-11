@@ -1,6 +1,5 @@
 import React from "react";
-import { Easing, Pressable, StyleSheet, View } from "react-native";
-import { easeGradient } from "react-native-easing-gradient";
+import { Pressable, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {
   WithTestID,
@@ -25,18 +24,11 @@ type ItwCredentialTrustmarkProps = WithTestID<{
 
 const TRUSTMARK_HEIGHT = 48;
 
-const { colors, locations } = easeGradient({
-  colorStops: {
-    0: { color: "#CCCCCC" },
-    "0.3": { color: "#E0E0E0" },
-    "0.7": { color: "#F2F2F2" },
-    1: { color: "#E9E9E9" }
-  },
-  easing: Easing.ease,
-  extraColorStopsPerTransition: 8
-});
-
-const gradientAngleCenter = { x: 0.5, y: 0.7 };
+const linearGradient = {
+  colors: ["#CCCCCC", "#F2F2F2", "#E9E9E9", "#E0E0E0"],
+  locations: [0, 0.35, 0.7, 1],
+  center: { x: 0.5, y: 0.7 }
+};
 
 export const ItwCredentialTrustmark = ({
   testID,
@@ -68,9 +60,9 @@ export const ItwCredentialTrustmark = ({
           <LinearGradient
             useAngle
             angle={1}
-            angleCenter={gradientAngleCenter}
-            locations={locations}
-            colors={colors}
+            angleCenter={linearGradient.center}
+            locations={linearGradient.locations}
+            colors={linearGradient.colors}
             style={styles.gradientView}
           >
             <Caption style={styles.caption}>
