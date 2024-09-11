@@ -12,9 +12,15 @@ import { useStartSupportRequest } from "./useStartSupportRequest";
 
 type SpecificHookProps = {
   canGoBack?: boolean;
+  /* On the surface, this prop seems useless, but it's used
+  to programmatically hide the header.
+  See PR#5795 for more details. */
   headerShown?: boolean;
 };
 
+/* Tried to spread the props of the `HeaderSecondLevel` component,
+but caused some type mismatches, so it's better to pick some specific
+props without manually (re)declaring each prop */
 type HeaderHookManagedProps = Pick<
   ComponentProps<typeof HeaderSecondLevel>,
   | "title"
@@ -27,6 +33,11 @@ type HeaderHookManagedProps = Pick<
   | "backgroundColor"
   | "enableDiscreteTransition"
   | "animatedRef"
+>;
+
+type HeaderActionConfigProps = Pick<
+  React.ComponentProps<typeof HeaderSecondLevel>,
+  "type" | "firstAction" | "secondAction" | "thirdAction"
 >;
 
 type NoAdditionalActions = {
@@ -62,10 +73,14 @@ export type HeaderSecondLevelHookProps = PropsWithSupport | PropsWithoutSupport;
 type HeaderProps = ComponentProps<typeof HeaderSecondLevel>;
 
 /**
- * A hook to set the header of a second level screen with useLayoutEffect hook
- * this hook only handles 2 basic cases of the header, with or without support request
- * rendering only the singleAction scenario of the header, in case of multiple actions it is needed to develop a custom header.
- * @param props
+ * This hook sets the `HeaderSecondLevel` in a screen using the `useLayoutEffect` hook.
+ * It handles two basic use cases:
+ * * With support request: the header is rendered with the (?) icon. You can configure the remaining actions.
+ * * Without support request: the header is rendered just with the `Back` button.
+ *
+ * @param {boolean} [canGoBack=true] - Completely disable `Back` button.
+ * @param {boolean} [headerShown=true] - Hide the header programmatically.
+ * @param props - Props to configure the header. Not all original props are supported.
  */
 export const useHeaderSecondLevel = ({
   title,
@@ -95,16 +110,20 @@ export const useHeaderSecondLevel = ({
 
   const navigation = useNavigation();
 
-  const headerComponentProps: HeaderProps = useMemo(() => {
-    const backProps = canGoBack
-      ? {
-          backAccessibilityLabel:
-            backAccessibilityLabel ?? I18n.t("global.buttons.back"),
-          backTestID,
-          goBack: goBack ?? navigation.goBack
-        }
-      : {};
+  const backProps = useMemo(
+    () =>
+      canGoBack
+        ? {
+            backAccessibilityLabel:
+              backAccessibilityLabel ?? I18n.t("global.buttons.back"),
+            backTestID,
+            goBack: goBack ?? navigation.goBack
+          }
+        : {},
+    [canGoBack, backAccessibilityLabel, backTestID, goBack, navigation.goBack]
+  );
 
+  const graphicProps = useMemo(() => {
     const enableDiscreteTransitionProps =
       enableDiscreteTransition && animatedRef
         ? {
@@ -113,76 +132,70 @@ export const useHeaderSecondLevel = ({
           }
         : {};
 
-    const graphicProps = {
+    return {
       scrollValues,
       variant,
-      backgroundColor
-    };
-
-    const baseProps = {
-      title,
-      ...graphicProps,
-      ...backProps,
+      backgroundColor,
       ...enableDiscreteTransitionProps
     };
-
-    if (supportRequest) {
-      const helpAction = {
-        icon: "help" as ActionProp["icon"],
-        onPress: startSupportRequest,
-        accessibilityLabel: I18n.t(
-          "global.accessibility.contextualHelp.open.label"
-        )
-      };
-      if (secondAction) {
-        if (thirdAction) {
-          // we have 3 actions changes the header props type
-          return {
-            ...baseProps,
-            type: "threeActions",
-            firstAction: helpAction,
-            secondAction,
-            thirdAction
-          };
-        }
-        // we have 2 actions changes the header props type
-        return {
-          ...baseProps,
-          type: "twoActions",
-          firstAction: helpAction,
-          secondAction
-        };
-      }
-      // we only have the support action
-      return {
-        ...baseProps,
-        type: "singleAction",
-        firstAction: helpAction
-      };
-    }
-
-    // no further actions only back button handling
-    return {
-      ...baseProps,
-      type: "base"
-    };
   }, [
-    canGoBack,
-    backAccessibilityLabel,
-    backTestID,
-    goBack,
-    navigation.goBack,
     enableDiscreteTransition,
     animatedRef,
     scrollValues,
     variant,
-    backgroundColor,
-    title,
-    supportRequest,
-    startSupportRequest,
-    secondAction,
-    thirdAction
+    backgroundColor
   ]);
+
+  const helpProps: HeaderActionConfigProps = useMemo(() => {
+    if (!supportRequest) {
+      return {
+        type: "base"
+      };
+    }
+
+    const helpAction: ActionProp = {
+      icon: "help",
+      onPress: startSupportRequest,
+      accessibilityLabel: I18n.t(
+        "global.accessibility.contextualHelp.open.label"
+      )
+    };
+
+    // Three actions
+    if (secondAction && thirdAction) {
+      return {
+        type: "threeActions",
+        firstAction: helpAction,
+        secondAction,
+        thirdAction
+      };
+    }
+
+    // Two actions
+    if (secondAction) {
+      return {
+        type: "twoActions",
+        firstAction: helpAction,
+        secondAction
+      };
+    }
+
+    // Just `Help` action
+    return {
+      type: "singleAction",
+      firstAction: helpAction
+    };
+  }, [supportRequest, startSupportRequest, secondAction, thirdAction]);
+
+  const headerComponentProps = useMemo(
+    () => ({
+      title,
+      ...graphicProps,
+      ...backProps,
+      ...helpProps
+    }),
+    [title, graphicProps, backProps, helpProps]
+  ) as HeaderProps;
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -195,13 +208,5 @@ export const useHeaderSecondLevel = ({
       headerShown,
       headerTransparent: transparent
     });
-  }, [
-    headerComponentProps,
-    headerShown,
-    navigation,
-    transparent,
-    scrollValues,
-    variant,
-    backgroundColor
-  ]);
+  }, [headerComponentProps, headerShown, navigation, transparent]);
 };
