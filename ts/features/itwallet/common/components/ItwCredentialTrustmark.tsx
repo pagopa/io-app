@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View, Image } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {
   WithTestID,
@@ -11,7 +11,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import Animated from "react-native-reanimated";
 import I18n from "../../../../i18n";
-import TrustmarkLogo from "../../../../../img/wallet/trustmark.svg";
 import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
@@ -70,7 +69,11 @@ export const ItwCredentialTrustmark = ({
                 "features.itWallet.presentation.trustmark.cta"
               ).toUpperCase()}
             </Caption>
-            <TrustmarkLogo style={styles.logo} />
+            <Image
+              style={styles.logo}
+              source={require("../../../../../img/features/itWallet/credential/trustmark.png")}
+              accessibilityIgnoresInvertColors
+            />
           </LinearGradient>
         </Animated.View>
       </Pressable>
@@ -116,9 +119,9 @@ const styles = StyleSheet.create({
   logo: {
     zIndex: 1,
     position: "absolute",
-    height: TRUSTMARK_HEIGHT * 2,
-    width: TRUSTMARK_HEIGHT * 2,
-    top: "-40%",
-    right: -TRUSTMARK_HEIGHT / 2
+    height: TRUSTMARK_HEIGHT * 1.65,
+    width: TRUSTMARK_HEIGHT * 1.65,
+    top: "-25%",
+    right: -TRUSTMARK_HEIGHT / 2.7
   }
 });
