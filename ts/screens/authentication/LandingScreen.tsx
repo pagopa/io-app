@@ -25,6 +25,7 @@ import DeviceInfo from "react-native-device-info";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Alert, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import _isEqual from "lodash/isEqual";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../components/SectionStatus";
@@ -123,7 +124,7 @@ export const LandingScreen = () => {
     snapPoint: [400]
   });
 
-  const tosConfig = useIOSelector(tosConfigSelector);
+  const tosConfig = useIOSelector(tosConfigSelector, _isEqual);
   const privacyUrl = tosConfig.tos_url;
 
   const [isRootedOrJailbroken, setIsRootedOrJailbroken] = useState<
