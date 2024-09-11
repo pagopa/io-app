@@ -66,6 +66,7 @@ import { Card } from "../../../../../definitions/cgn/Card";
 import { useCgnUnsubscribe } from "../hooks/useCgnUnsubscribe";
 import { CgnCardStatus } from "../components/CgnCardStatus";
 import { CgnAnimatedBackground } from "../components/CgnAnimatedBackground";
+import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -139,46 +140,43 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     }
   };
 
-  const footerActions = (() => {
+  const footerActions: IOScrollViewActions | undefined = (() => {
     if (showDiscoverCta) {
-      const footerCtaPrimary: Omit<
-        ComponentProps<typeof ButtonSolid>,
-        "fullWidth"
-      > = {
+      const primary = {
         label: canDisplayEycaDetails
           ? I18n.t("bonus.cgn.detail.cta.buyers")
           : I18n.t("bonus.cgn.detail.cta.discover"),
         onPress: onPressShowCgnDiscounts
       };
-      const footerCtaSecondary:
-        | Omit<ComponentProps<typeof ButtonLink>, "color">
-        | undefined = canDisplayEycaDetails
-        ? {
-            label: I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts"),
-            accessibilityLabel: I18n.t(
-              "bonus.cgn.detail.cta.eyca.showEycaDiscounts"
-            ),
-            onPress: () =>
-              openWebUrl(EYCA_WEBSITE_DISCOUNTS_PAGE_URL, () =>
-                IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
-              )
-          }
-        : undefined;
 
-      return { footerCtaPrimary, footerCtaSecondary };
-    }
-    if (CardExpired.is(props.cgnDetails)) {
-      const footerCtaPrimary: Omit<
-        ComponentProps<typeof ButtonSolid>,
-        "fullWidth"
-      > = {
-        color: "danger",
-        label: I18n.t("bonus.cgn.activation.deactivate.expired"),
-        onPress: requestUnsubscription
+      const secondary = {
+        label: I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts"),
+        accessibilityLabel: I18n.t(
+          "bonus.cgn.detail.cta.eyca.showEycaDiscounts"
+        ),
+        onPress: () =>
+          openWebUrl(EYCA_WEBSITE_DISCOUNTS_PAGE_URL, () =>
+            IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
+          )
       };
-      return { footerCtaPrimary };
+
+      return canDisplayEycaDetails
+        ? { type: "TwoButtons", primary, secondary }
+        : { type: "SingleButton", primary };
     }
-    return {};
+
+    if (CardExpired.is(props.cgnDetails)) {
+      return {
+        type: "SingleButton",
+        primary: {
+          color: "danger",
+          label: I18n.t("bonus.cgn.activation.deactivate.expired"),
+          onPress: requestUnsubscription
+        }
+      };
+    }
+
+    return undefined;
   })();
 
   return (
@@ -187,6 +185,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
       name={I18n.t("bonus.cgn.name")}
       organizationName={I18n.t("bonus.cgn.departmentName")}
       cardBackground={<CgnAnimatedBackground />}
+      actions={footerActions}
       status={
         props.cgnDetails ? <CgnCardStatus card={props.cgnDetails} /> : undefined
       }
@@ -203,8 +202,6 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             : ""}
         </H4>
       }
-      footerCtaPrimary={footerActions.footerCtaPrimary}
-      footerCtaSecondary={footerActions.footerCtaSecondary}
     >
       <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
         {CardRevoked.is(props.cgnDetails) && (
