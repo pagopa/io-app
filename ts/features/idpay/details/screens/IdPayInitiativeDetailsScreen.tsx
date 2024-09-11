@@ -1,6 +1,5 @@
 import {
   ButtonSolid,
-  ButtonSolidProps,
   Chip,
   ContentWrapper,
   Pictogram,
@@ -23,14 +22,17 @@ import {
 } from "../../../../../definitions/idpay/InitiativeDTO";
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
+import { BonusStatus } from "../../../../components/BonusCard/type";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
+import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { format } from "../../../../utils/dates";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
 import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
@@ -49,8 +51,6 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
-import { BonusStatus } from "../../../../components/BonusCard/type";
-import { format } from "../../../../utils/dates";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -267,15 +267,15 @@ const IdPayInitiativeDetailsScreen = () => {
 
   const getInitiativeFooterProps = (
     rewardType?: InitiativeRewardTypeEnum
-  ): ButtonSolidProps | undefined => {
+  ): IOScrollViewActions | undefined => {
     switch (rewardType) {
       case InitiativeRewardTypeEnum.DISCOUNT:
         return {
-          label: I18n.t("idpay.initiative.discountDetails.authorizeButton"),
-          accessibilityLabel: I18n.t(
-            "idpay.initiative.discountDetails.authorizeButton"
-          ),
-          onPress: discountBottomSheet.present
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("idpay.initiative.discountDetails.authorizeButton"),
+            onPress: discountBottomSheet.present
+          }
         };
       default:
       case InitiativeRewardTypeEnum.REFUND:
@@ -304,7 +304,7 @@ const IdPayInitiativeDetailsScreen = () => {
       organizationName={organizationName || ""}
       status={<IdPayCardStatus now={new Date()} initiative={initiative} />}
       counters={getInitiativeCounters(initiative)}
-      footerCtaPrimary={getInitiativeFooterProps(initiativeRewardType)}
+      actions={getInitiativeFooterProps(initiativeRewardType)}
     >
       <IdPayInitiativeLastUpdateCounter lastUpdateDate={lastCounterUpdate} />
       {getInitiativeDetailsContent(initiative)}
