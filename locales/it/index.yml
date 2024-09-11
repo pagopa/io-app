@@ -3292,6 +3292,7 @@ features:
             confirm: Sì, rimuovi
         toast:
           removed: Fatto! Hai rimosso {{credentialName}}
+        flipCard: "Mostra retro"
   trialSystem:
     toast:
       subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione
