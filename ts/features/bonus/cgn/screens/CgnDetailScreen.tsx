@@ -128,7 +128,6 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 
   useHeaderSecondLevel({
     title: I18n.t("bonus.cgn.name"),
-    canGoBack: true,
     transparent: true,
     scrollValues: {
       triggerOffset: headerHeight,
