@@ -61,8 +61,7 @@ const IDActivationWizard = () => {
         </H6>
         <VSpacer size={12} />
         <ListItemAction
-          // todo: replace with `cieLetter` icon when it will be available
-          icon="cie"
+          icon="cieLetter"
           label={I18n.t(
             "authentication.wizards.id_activation_wizard.list_items.request_cie.label"
           )}
