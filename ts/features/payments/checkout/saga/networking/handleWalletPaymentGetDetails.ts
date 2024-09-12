@@ -35,6 +35,8 @@ export function* handleWalletPaymentGetDetails(
     if (res.status === 200) {
       yield* put(paymentsGetPaymentDetailsAction.success(res.value));
     } else if (res.status === 400) {
+      // Handling unhandled error from third-party services (GEC) during payment verification.
+      // This is not an internal backend error from pagoPA, but rather a third-party service error and should be handled differently.
       yield* put(
         paymentsGetPaymentDetailsAction.failure({
           ...getGenericError(new Error(`Error: ${res.status}`))
