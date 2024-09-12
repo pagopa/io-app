@@ -63,7 +63,7 @@ const FailureListItem = ({ item }: BaseHistoryListItemProps) => {
   const theme = useIOTheme();
 
   return (
-    <View style={[styles.errorSpaceBetween, defaultListItemStyles]}>
+    <View style={[defaultListItemStyles, styles.errorSpaceBetween]}>
       <View
         style={{
           paddingVertical: 15
