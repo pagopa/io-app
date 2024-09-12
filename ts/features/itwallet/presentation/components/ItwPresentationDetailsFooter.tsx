@@ -1,7 +1,8 @@
 import {
   ContentWrapper,
   ListItemAction,
-  useIOToast
+  useIOToast,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { Alert, Linking } from "react-native";
@@ -61,6 +62,7 @@ const ItwPresentationDetailsFooter = ({
 
   return (
     <ContentWrapper>
+      <VSpacer size={8} />
       <ListItemAction
         variant="primary"
         icon="message"

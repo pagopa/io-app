@@ -1,4 +1,4 @@
-import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -50,15 +50,16 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
 
   return (
     <ItwPresentationDetailsScreenBase credential={credential}>
-      <ItwPresentationDetailsHeader credential={credential} />
-      <VSpacer size={16} />
-      <ContentWrapper>
-        <ItwPresentationAlertsSection credential={credential} />
-        <VSpacer size={16} />
-        <ItwPresentationClaimsSection credential={credential} />
-      </ContentWrapper>
-      <VSpacer size={24} />
-      <ItwPresentationDetailsFooter credential={credential} />
+      <VStack space={16}>
+        <ItwPresentationDetailsHeader credential={credential} />
+        <ContentWrapper>
+          <VStack space={16}>
+            <ItwPresentationAlertsSection credential={credential} />
+            <ItwPresentationClaimsSection credential={credential} />
+          </VStack>
+        </ContentWrapper>
+        <ItwPresentationDetailsFooter credential={credential} />
+      </VStack>
     </ItwPresentationDetailsScreenBase>
   );
 };
