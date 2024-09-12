@@ -34,13 +34,15 @@ export function* handleWalletPaymentGetDetails(
     const res = getPaymentRequestInfoResult.right;
     if (res.status === 200) {
       yield* put(paymentsGetPaymentDetailsAction.success(res.value));
-    } else if (res.status !== 401) {
-      // The 401 status is handled by the withPaymentsSessionToken
+    } else if (res.status === 400) {
       yield* put(
         paymentsGetPaymentDetailsAction.failure({
           ...getGenericError(new Error(`Error: ${res.status}`))
         })
       );
+    } else if (res.status !== 401) {
+      // The 401 status is handled by the withPaymentsSessionToken
+      yield* put(paymentsGetPaymentDetailsAction.failure(res.value));
     }
   } catch (e) {
     yield* put(
