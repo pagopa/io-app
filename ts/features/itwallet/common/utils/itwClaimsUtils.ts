@@ -325,7 +325,8 @@ export const getCredentialExpireDays = (
 };
 
 /**
- * Returns the expire status of a {@see ParsedCredential}
+ * Returns the expire status of a {@link ParsedCredential}, taking into account the **expiration date only**.
+ * Use {@link getCredentialStatus} to also check the status attestation.
  * @param credential the parsed credential claims
  * @param expiringDays the number of days required to mark a credential as "EXPIRING"
  * @returns "VALID" if the credential is valid, "EXPIRING" if there are less than {expiringDays} days left until the expiry day, "EXPIRED" if the expiry date has passed
