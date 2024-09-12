@@ -107,7 +107,8 @@ export const FimsFlowSuccessBody = ({
       contentContainerStyle={[
         IOStyles.horizontalContentPadding,
         {
-          paddingBottom: screenEndMargin
+          paddingBottom: screenEndMargin,
+          minHeight: "100%"
         }
       ]}
     >
@@ -144,7 +145,11 @@ export const FimsFlowSuccessBody = ({
 
         <VSpacer size={32} />
       </View>
-      <>
+      <View
+        style={{
+          marginTop: "auto"
+        }}
+      >
         <ButtonSolid
           fullWidth
           label={I18n.t("global.buttons.consent")}
@@ -168,7 +173,7 @@ export const FimsFlowSuccessBody = ({
             onPress={onAbort}
           />
         </View>
-      </>
+      </View>
       {BottomSheet.bottomSheet}
     </ForceScrollDownView>
   );
