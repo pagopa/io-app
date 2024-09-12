@@ -1,8 +1,14 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import I18n from "i18n-js";
+import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect } from "react";
-import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import I18n from "../../../i18n";
+import {
+  AppParamsList,
+  IOStackNavigationProp,
+  IOStackNavigationRouteProps
+} from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { zendeskTokenSelector } from "../../../store/reducers/authentication";
 import { isStrictSome } from "../../../utils/pot";
@@ -13,14 +19,17 @@ import {
   setUserIdentity,
   showSupportTickets
 } from "../../../utils/supportAssistance";
-import { ZendeskNoTicketsEmptyState } from "../components/ZendeskNoTicketsEmptyState";
 import { ZendeskParamsList } from "../navigation/params";
 import {
   zendeskRequestTicketNumber,
   zendeskStopPolling,
   zendeskSupportCompleted
 } from "../store/actions";
-import { zendeskTicketNumberSelector } from "../store/reducers";
+import {
+  zendeskConfigSelector,
+  zendeskTicketNumberSelector
+} from "../store/reducers";
+import { handleContactSupport } from "../utils";
 
 export type ZendeskSeeReportsRoutersNavigationParams = {
   assistanceForPayment: boolean;
@@ -45,6 +54,8 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   const ticketNumber = useIOSelector(zendeskTicketNumberSelector);
   const { assistanceForPayment, assistanceForCard, assistanceForFci } =
     props.route.params;
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
 
   const dispatchZendeskUiDismissed = useCallback(
     () => dispatch(zendeskStopPolling()),
@@ -66,6 +77,24 @@ const ZendeskSeeReportsRouters = (props: Props) => {
     dispatch(zendeskRequestTicketNumber.request());
   }, [dispatch, zendeskToken]);
 
+  const handleContactSupportPress = React.useCallback(
+    () =>
+      handleContactSupport(
+        navigation,
+        assistanceForPayment,
+        assistanceForCard,
+        assistanceForFci,
+        zendeskRemoteConfig
+      ),
+    [
+      navigation,
+      assistanceForPayment,
+      assistanceForCard,
+      assistanceForFci,
+      zendeskRemoteConfig
+    ]
+  );
+
   useEffect(() => {
     if (isStrictSome(ticketNumber) && ticketNumber.value > 0) {
       showSupportTickets(() => dispatchZendeskUiDismissed());
@@ -73,26 +102,51 @@ const ZendeskSeeReportsRouters = (props: Props) => {
     }
   }, [ticketNumber, dispatch, dispatchZendeskUiDismissed]);
 
-  if (pot.isLoading(ticketNumber) || pot.isError(ticketNumber)) {
+  if (pot.isLoading(ticketNumber)) {
     return (
-      <LoadingErrorComponent
-        isLoading={pot.isLoading(ticketNumber)}
-        loadingCaption={I18n.t("global.remoteStates.loading")}
-        onRetry={() => {
-          dispatch(zendeskRequestTicketNumber.request());
-        }}
-        onAbort={() => props.navigation.goBack()}
+      <LoadingScreenContent
+        contentTitle={I18n.t("global.remoteStates.loading")}
       />
     );
   }
 
-  // if is some and there are 0 tickets show the Empty list component
+  if (pot.isError(ticketNumber)) {
+    return (
+      <OperationResultScreenContent
+        pictogram={"umbrellaNew"}
+        title={I18n.t("global.genericError")}
+        action={{
+          label: I18n.t("global.buttons.retry"),
+          onPress: () => {
+            dispatch(zendeskRequestTicketNumber.request());
+          }
+        }}
+        secondaryAction={{
+          label: I18n.t("global.buttons.back"),
+          onPress: () => props.navigation.goBack()
+        }}
+      />
+    );
+  }
+
+  // if is some and there are 0 tickets show the specific empty state
   if (pot.isNone(ticketNumber) || ticketNumber.value === 0) {
     return (
-      <ZendeskNoTicketsEmptyState
-        assistanceForPayment={assistanceForPayment}
-        assistanceForCard={assistanceForCard}
-        assistanceForFci={assistanceForFci}
+      <OperationResultScreenContent
+        testID={"emptyTicketsComponent"}
+        pictogram={"help"}
+        title={I18n.t("support.ticketList.noTicket.title")}
+        subtitle={I18n.t("support.ticketList.noTicket.body")}
+        action={{
+          label: I18n.t("support.helpCenter.cta.contactSupport"),
+          onPress: handleContactSupportPress,
+          testID: "continueButtonId"
+        }}
+        secondaryAction={{
+          label: I18n.t("global.buttons.back"),
+          onPress: () => navigation.goBack(),
+          testID: "cancelButtonId"
+        }}
       />
     );
   }
