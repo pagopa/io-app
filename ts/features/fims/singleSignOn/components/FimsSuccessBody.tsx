@@ -1,7 +1,6 @@
 import {
   Avatar,
-  ButtonLink,
-  ButtonSolid,
+  Body,
   ButtonText,
   ForceScrollDownView,
   H2,
@@ -21,8 +20,8 @@ import * as O from "fp-ts/Option";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { FooterActions } from "../../../../components/ui/FooterActions";
 import { LoadingSkeleton } from "../../../../components/ui/Markdown/LoadingSkeleton";
-import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -48,7 +47,6 @@ export const FimsFlowSuccessBody = ({
   const dispatch = useIODispatch();
   const store = useIOStore();
   const serviceId = consents.service_id as ServiceId;
-  const { screenEndMargin } = useScreenEndMargin();
 
   const servicePot = useAutoFetchingServiceByIdPot(serviceId);
   const serviceData = pot.toUndefined(servicePot);
@@ -88,14 +86,12 @@ export const FimsFlowSuccessBody = ({
 
   const Subtitle = () =>
     serviceData !== undefined ? (
-      <Label>
-        <Label weight="Regular">{I18n.t("FIMS.consentsScreen.subtitle")}</Label>
-        <Label weight="Bold">{serviceData.organization_name}</Label>
-        <Label weight="Regular">
-          {I18n.t("FIMS.consentsScreen.subtitle2")}
-        </Label>
-        <Label weight="Bold">{consents.redirect.display_name ?? ""}.</Label>
-      </Label>
+      <Body>
+        <Body weight="Regular">{I18n.t("FIMS.consentsScreen.subtitle")}</Body>
+        <Body weight="Bold">{serviceData.organization_name}</Body>
+        <Body weight="Regular">{I18n.t("FIMS.consentsScreen.subtitle2")}</Body>
+        <Body weight="Bold">{consents.redirect.display_name ?? ""}.</Body>
+      </Body>
     ) : (
       <LoadingSkeleton lines={3} />
     );
@@ -104,15 +100,18 @@ export const FimsFlowSuccessBody = ({
     <ForceScrollDownView
       scrollEnabled
       threshold={150}
-      contentContainerStyle={[
-        IOStyles.horizontalContentPadding,
-        {
-          paddingBottom: screenEndMargin,
-          minHeight: "100%"
-        }
-      ]}
+      contentContainerStyle={{
+        minHeight: "100%"
+      }}
     >
-      <View>
+      <View
+        style={[
+          IOStyles.horizontalContentPadding,
+          {
+            flexGrow: 1
+          }
+        ]}
+      >
         <VSpacer size={24} />
         <View style={styles.rowAlignCenter}>
           <View style={styles.outlineContainer}>
@@ -126,6 +125,7 @@ export const FimsFlowSuccessBody = ({
 
         <VSpacer size={24} />
         <H2>{I18n.t("FIMS.consentsScreen.title")}</H2>
+        <VSpacer size={16} />
         <Subtitle />
 
         <VSpacer size={24} />
@@ -145,35 +145,31 @@ export const FimsFlowSuccessBody = ({
 
         <VSpacer size={32} />
       </View>
-      <View
-        style={{
-          marginTop: "auto"
+      <FooterActions
+        fixed={false}
+        actions={{
+          type: "TwoButtons",
+          primary: {
+            label: I18n.t("global.buttons.consent"),
+            icon: "security",
+            iconPosition: "end",
+            onPress: () => {
+              const state = store.getState();
+              computeAndTrackDataShareAccepted(serviceId, state);
+              dispatch(
+                fimsGetRedirectUrlAndOpenIABAction.request(
+                  // eslint-disable-next-line no-underscore-dangle
+                  { acceptUrl: consents._links.consent.href, serviceId }
+                )
+              );
+            }
+          },
+          secondary: {
+            label: I18n.t("global.buttons.cancel"),
+            onPress: onAbort
+          }
         }}
-      >
-        <ButtonSolid
-          fullWidth
-          label={I18n.t("global.buttons.consent")}
-          icon={"security"}
-          iconPosition={"end"}
-          onPress={() => {
-            const state = store.getState();
-            computeAndTrackDataShareAccepted(serviceId, state);
-            dispatch(
-              fimsGetRedirectUrlAndOpenIABAction.request(
-                // eslint-disable-next-line no-underscore-dangle
-                { acceptUrl: consents._links.consent.href, serviceId }
-              )
-            );
-          }}
-        />
-        <View style={IOStyles.selfCenter}>
-          <VSpacer size={16} />
-          <ButtonLink
-            label={I18n.t("global.buttons.cancel")}
-            onPress={onAbort}
-          />
-        </View>
-      </View>
+      />
       {BottomSheet.bottomSheet}
     </ForceScrollDownView>
   );
