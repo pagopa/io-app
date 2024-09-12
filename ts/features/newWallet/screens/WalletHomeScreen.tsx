@@ -22,7 +22,10 @@ import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { selectWalletCards } from "../store/selectors";
-import { trackWalletScreenWallet } from "../analytics/NewWalletAnalytics";
+import {
+  trackWalletAdd,
+  trackWalletScreenWallet
+} from "../analytics/NewWalletAnalytics";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
@@ -65,6 +68,7 @@ const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
   const cards = useIOSelector(selectWalletCards);
 
   const handleAddToWalletButtonPress = () => {
+    trackWalletAdd();
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ONBOARDING
     });

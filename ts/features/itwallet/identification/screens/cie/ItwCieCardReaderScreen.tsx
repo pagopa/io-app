@@ -197,6 +197,7 @@ export const ItwCieCardReaderScreen = () => {
     handleAccessibilityAnnouncement(event);
     // Wait a few seconds before showing the consent web view to display the success message
     if (event === Cie.CieEvent.completed) {
+      trackItWalletCieCardReadingSuccess();
       setTimeout(
         () => {
           setIdentificationStep(IdentificationStep.CONSENT);
@@ -242,7 +243,6 @@ export const ItwCieCardReaderScreen = () => {
   };
 
   const handleCieReadSuccess = (url: string) => {
-    trackItWalletCieCardReadingSuccess();
     setWebViewVisible(false); // Try to hide the error page because the callback url is fake
     machineRef.send({ type: "cie-identification-completed", url });
   };
