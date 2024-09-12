@@ -129,6 +129,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
       testID={"ZendeskAskPermissions"}
       description={I18n.t("support.askPermissions.listBody")}
       actions={buttonConf}
+      ignoreSafeAreaMargin={true}
     >
       <ContentWrapper>
         <ButtonLink
