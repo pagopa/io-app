@@ -2,6 +2,7 @@ import React from "react";
 import {
   ContentWrapper,
   LabelLink,
+  useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -13,20 +14,37 @@ import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import IOMarkdown from "../../../components/IOMarkdown";
 import useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
 import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
+import { openWebUrl } from "../../../utils/url";
+
+const CIE_PIN_LINK =
+  "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/";
 
 const CiePinWizard = () => {
   const { navigate } = useIONavigation();
+  const { error } = useIOToast();
   const { navigateToCiePinInsertion } = useNavigateToLoginMethod();
   const label = I18n.t("authentication.wizards.cie_pin_wizard.title");
+
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title: I18n.t("authentication.wizards.cie_pin_wizard.bottom_sheet.title"),
     component: (
-      <IOMarkdown
-        content={I18n.t(
-          "authentication.wizards.cie_pin_wizard.bottom_sheet.content"
-        )}
-        rules={{ Spacer: ({ key }) => <VSpacer key={key} size={24} /> }}
-      />
+      <>
+        <IOMarkdown
+          content={I18n.t(
+            "authentication.wizards.cie_pin_wizard.bottom_sheet.content"
+          )}
+        />
+        <VSpacer size={24} />
+        <LabelLink
+          onPress={() => {
+            openWebUrl(CIE_PIN_LINK, () => {
+              error(I18n.t("global.jserror.title"));
+            });
+          }}
+        >
+          {I18n.t("authentication.wizards.cie_pin_wizard.bottom_sheet.link")}
+        </LabelLink>
+      </>
     ),
     snapPoint: [350]
   });
@@ -72,7 +90,7 @@ const CiePinWizard = () => {
     >
       <ContentWrapper>
         <VSpacer size={12} />
-        <LabelLink onPress={present}>
+        <LabelLink role="button" accessibilityRole="button" onPress={present}>
           {I18n.t(
             "authentication.wizards.cie_pin_wizard.bottom_sheet.cta.label"
           )}

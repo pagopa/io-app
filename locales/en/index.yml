@@ -666,6 +666,7 @@ authentication:
       bottom_sheet:
         title: Dove trovo il PIN della CIE?
         content: !include authentication/wizards/cie_pin_content.md
+        link: Hai dimenticato il PIN?
         cta:
           label: Dove trovo il PIN della CIE?
     spid_wizard:
