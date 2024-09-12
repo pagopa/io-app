@@ -11,7 +11,7 @@ import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { getCredentialExpireStatus } from "../../common/utils/itwClaimsUtils";
+import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 
 type Props = {
   credential: StoredCredential;
@@ -30,9 +30,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const hasSkeumorphicCard =
     credential.credentialType === CredentialType.DRIVING_LICENSE;
 
-  const credentialStatus = getCredentialExpireStatus(
-    credential.parsedCredential
-  );
+  const credentialStatus = getCredentialStatus(credential);
 
   if (hasSkeumorphicCard) {
     return (
