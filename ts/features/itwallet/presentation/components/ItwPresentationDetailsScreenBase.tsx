@@ -64,6 +64,7 @@ const ItwPresentationDetailsScreenBase = ({
 
   return (
     <Animated.ScrollView
+      ref={animatedScrollViewRef}
       contentContainerStyle={{
         paddingBottom: safeBottomAreaHeight
       }}
