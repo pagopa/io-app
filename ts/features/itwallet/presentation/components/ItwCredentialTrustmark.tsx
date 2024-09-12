@@ -89,10 +89,11 @@ export const QrCodeBottomSheetContent = ({
   credential: StoredCredential;
 }) => (
   <View>
-    <QrCodeImage
-      value={generateTrustmarkUrl(credential, itwEaaVerifierBaseUrl)}
-    />
     <VStack space={24}>
+      <QrCodeImage
+        size={170}
+        value={generateTrustmarkUrl(credential, itwEaaVerifierBaseUrl)}
+      />
       <Body>
         {I18n.t("features.itWallet.presentation.trustmark.usageDescription")}
       </Body>
