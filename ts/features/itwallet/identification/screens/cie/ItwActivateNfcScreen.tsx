@@ -6,11 +6,11 @@ import {
 } from "@pagopa/io-app-design-system";
 import React, { useCallback } from "react";
 import { Alert } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../../i18n";
 import * as cieUtils from "../../../../../utils/cie";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   trackItWalletCieNfcActivation,
   trackItWalletCieNfcGoToSettings
@@ -19,7 +19,7 @@ import {
 export const ItwActivateNfcScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
-  useOnFirstRender(trackItWalletCieNfcActivation);
+  useFocusEffect(trackItWalletCieNfcActivation);
 
   const openSettings = useCallback(async () => {
     trackItWalletCieNfcGoToSettings();

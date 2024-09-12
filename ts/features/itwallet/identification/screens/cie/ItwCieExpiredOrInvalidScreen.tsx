@@ -1,9 +1,9 @@
 import React from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../../i18n";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { useItwPreventNavigationEvent } from "../../../common/hooks/useItwPreventNavigationEvent";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { trackItWalletCieCardVerifyFailure } from "../../../analytics/itWalletAnalytics";
 
 export const ItwCieExpiredOrInvalidScreen = () => {
@@ -11,7 +11,7 @@ export const ItwCieExpiredOrInvalidScreen = () => {
 
   useItwPreventNavigationEvent();
 
-  useOnFirstRender(trackItWalletCieCardVerifyFailure);
+  useFocusEffect(trackItWalletCieCardVerifyFailure);
 
   const handleClose = React.useCallback(() => {
     machineRef.send({ type: "close" });

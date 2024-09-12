@@ -41,7 +41,6 @@ import {
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { itwIdpHintTest } from "../../../../../config";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   trackItWalletCieCardReading,
   trackItWalletCieCardReadingFailure,
@@ -156,7 +155,7 @@ const LoadingSpinner = (
 export const ItwCieCardReaderScreen = () => {
   const navigation = useNavigation<StackNavigationProp<ItwParamsList>>();
 
-  useOnFirstRender(trackItWalletCieCardReading);
+  useFocusEffect(trackItWalletCieCardReading);
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isMachineLoading =

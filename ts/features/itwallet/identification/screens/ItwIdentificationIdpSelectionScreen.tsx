@@ -18,7 +18,6 @@ import {
   trackItWalletSpidIDPSelected,
   trackItWalletSpidIDPSelection
 } from "../../analytics/itWalletAnalytics";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
   const dispatch = useIODispatch();
@@ -30,10 +29,9 @@ export const ItwIdentificationIdpSelectionScreen = () => {
     randomOrderIdps(idpValue)
   );
 
-  useOnFirstRender(trackItWalletSpidIDPSelection);
-
   useFocusEffect(
     React.useCallback(() => {
+      trackItWalletSpidIDPSelection();
       dispatch(loadIdps.request());
     }, [dispatch])
   );

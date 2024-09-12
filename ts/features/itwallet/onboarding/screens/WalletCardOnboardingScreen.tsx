@@ -9,6 +9,7 @@ import {
 import { constFalse, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -32,7 +33,6 @@ import {
   selectIsLoading
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   trackWalletAddListItem,
   trackWalletAddStart
@@ -48,7 +48,7 @@ const WalletCardOnboardingScreen = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
 
-  useOnFirstRender(trackWalletAddListItem);
+  useFocusEffect(trackWalletAddListItem);
 
   const isItwSectionVisible = React.useMemo(
     // IT Wallet credential catalog should be visible if

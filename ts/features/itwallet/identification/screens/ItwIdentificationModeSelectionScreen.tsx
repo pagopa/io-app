@@ -7,6 +7,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
@@ -18,7 +19,6 @@ import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
 } from "../../analytics/itWalletAnalytics";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 
 export const ItwIdentificationModeSelectionScreen = () => {
@@ -33,7 +33,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
     [isCieSupportedPot]
   );
 
-  useOnFirstRender(trackItWalletIDMethod);
+  useFocusEffect(trackItWalletIDMethod);
 
   const handleSpidPress = () => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });

@@ -22,7 +22,6 @@ import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { selectWalletCards } from "../store/selectors";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { trackWalletScreenWallet } from "../analytics/NewWalletAnalytics";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
@@ -31,10 +30,9 @@ const WalletHomeScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
   const isNewElementAdded = React.useRef(route.params?.newMethodAdded || false);
 
-  useOnFirstRender(trackWalletScreenWallet);
-
   useFocusEffect(
     React.useCallback(() => {
+      trackWalletScreenWallet();
       dispatch(walletToggleLoadingState(true));
       dispatch(getPaymentsWalletUserMethods.request());
       dispatch(idPayWalletGet.request());

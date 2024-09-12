@@ -6,6 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -28,7 +29,7 @@ import {
  * with a primary and secondary action.
  */
 const ItwDiscoveryInfoScreen = () => {
-  useOnFirstRender(trackItWalletIntroScreen);
+  useFocusEffect(trackItWalletIntroScreen);
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);

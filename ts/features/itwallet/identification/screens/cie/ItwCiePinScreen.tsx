@@ -28,7 +28,6 @@ import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { openWebUrl } from "../../../../../utils/url";
 import { itwNfcIsEnabled } from "../../store/actions";
@@ -83,8 +82,6 @@ export const ItwCiePinScreen = () => {
     title: I18n.t("bottomSheets.ciePin.title")
   });
 
-  useOnFirstRender(trackItWalletCiePinEnter);
-
   const requestNfcEnabledCheck = useCallback(
     () => dispatch(itwNfcIsEnabled.request()),
     [dispatch]
@@ -99,6 +96,7 @@ export const ItwCiePinScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
+      trackItWalletCiePinEnter();
       setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
       requestNfcEnabledCheck();
     }, [requestNfcEnabledCheck])
