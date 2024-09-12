@@ -7,8 +7,8 @@ import {
 import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useEffect, useMemo } from "react";
-import { useRoute } from "@react-navigation/native";
+import React, { useMemo } from "react";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -89,9 +89,7 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
     [credentialType]
   );
 
-  useEffect(() => {
-    trackCredentialPreview(mixPanelCredential);
-  }, [mixPanelCredential]);
+  useFocusEffect(() => trackCredentialPreview(mixPanelCredential));
 
   const dispatch = useIODispatch();
   const dismissDialog = useItwDismissalDialog(() => {
