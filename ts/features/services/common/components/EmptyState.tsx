@@ -1,8 +1,8 @@
 import {
+  Body,
   H6,
   IOPictograms,
   IOStyles,
-  IOVisualCostants,
   Pictogram,
   VSpacer,
   WithTestID
@@ -11,9 +11,6 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 
 const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: IOVisualCostants.appMarginDefault
-  },
   text: {
     textAlign: "center"
   }
@@ -22,14 +19,26 @@ const styles = StyleSheet.create({
 export type EmptyStateProps = WithTestID<{
   pictogram: IOPictograms;
   title: string;
+  subtitle?: string;
 }>;
 
-export const EmptyState = ({ pictogram, title, testID }: EmptyStateProps) => (
-  <View style={styles.container} testID={testID}>
+export const EmptyState = ({
+  pictogram,
+  title,
+  subtitle,
+  testID
+}: EmptyStateProps) => (
+  <View testID={testID}>
     <View style={IOStyles.alignCenter}>
       <Pictogram name={pictogram} size={120} />
       <VSpacer size={24} />
     </View>
     <H6 style={styles.text}>{title}</H6>
+    {subtitle && (
+      <>
+        <VSpacer size={8} />
+        <Body style={styles.text}>{subtitle}</Body>
+      </>
+    )}
   </View>
 );

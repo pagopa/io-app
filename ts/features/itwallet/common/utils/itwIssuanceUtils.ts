@@ -17,6 +17,7 @@ import {
 } from "../../../../config";
 import { type IdentificationContext } from "../../machine/eid/context";
 import { StoredCredential } from "./itwTypesUtils";
+import { DPOP_EID_KEYTAG, regenerateCryptoKey } from "./itwCryptoContextUtils";
 
 type AccessToken = Awaited<
   ReturnType<typeof Credential.Issuance.authorizeAccess>
@@ -124,20 +125,23 @@ const completeCieAuthFlow = async ({
   const query = Object.fromEntries(new URL(callbackUrl).searchParams);
   const { code } = Credential.Issuance.parseAuthroizationResponse(query);
 
-  const { accessToken, dPoPContext } =
-    await Credential.Issuance.authorizeAccess(
-      issuerConf,
-      code,
-      clientId,
-      CIE_L3_REDIRECT_URI,
-      codeVerifier,
-      {
-        walletInstanceAttestation: walletAttestation,
-        wiaCryptoContext
-      }
-    );
+  await regenerateCryptoKey(DPOP_EID_KEYTAG);
+  const dPopCryptoContext = createCryptoContextFor(DPOP_EID_KEYTAG);
 
-  return { accessToken, dPoPContext };
+  const { accessToken } = await Credential.Issuance.authorizeAccess(
+    issuerConf,
+    code,
+    clientId,
+    CIE_L3_REDIRECT_URI,
+    codeVerifier,
+    {
+      walletInstanceAttestation: walletAttestation,
+      wiaCryptoContext,
+      dPopCryptoContext
+    }
+  );
+
+  return { accessToken, dPoPContext: dPopCryptoContext };
 };
 
 type FullAuthFlowParams = {
@@ -197,25 +201,29 @@ const startAndCompleteFullAuthFlow = async ({
       issuerConf,
       idpHint,
       redirectUri,
-      authorizationContext
+      authorizationContext,
+      identification.abortController?.signal
     );
 
-  const { accessToken, dPoPContext } =
-    await Credential.Issuance.authorizeAccess(
-      issuerConf,
-      code,
-      clientId,
-      redirectUri,
-      codeVerifier,
-      {
-        walletInstanceAttestation: walletAttestation,
-        wiaCryptoContext
-      }
-    );
+  await regenerateCryptoKey(DPOP_EID_KEYTAG);
+  const dPopCryptoContext = createCryptoContextFor(DPOP_EID_KEYTAG);
+
+  const { accessToken } = await Credential.Issuance.authorizeAccess(
+    issuerConf,
+    code,
+    clientId,
+    redirectUri,
+    codeVerifier,
+    {
+      walletInstanceAttestation: walletAttestation,
+      wiaCryptoContext,
+      dPopCryptoContext
+    }
+  );
 
   return {
     accessToken,
-    dPoPContext,
+    dPoPContext: dPopCryptoContext,
     credentialDefinition,
     clientId,
     issuerConf
@@ -253,8 +261,10 @@ const getPid = async ({
     accessToken,
     clientId,
     credentialDefinition,
-    dPoPContext,
-    { credentialCryptoContext }
+    {
+      credentialCryptoContext,
+      dPopCryptoContext: dPoPContext
+    }
   );
 
   const { parsedCredential } =

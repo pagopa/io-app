@@ -13,7 +13,7 @@ import { duplicateSetAndRemove, duplicateSetAndToggle } from "../../utils";
 import { GlobalState } from "../../../../store/reducers/types";
 import { MessageListCategory } from "../../types/messageListCategory";
 
-type ArchivingStatus = "disabled" | "enabled" | "processing";
+export type ArchivingStatus = "disabled" | "enabled" | "processing";
 
 export type ProcessingResult = {
   type: "success" | "warning" | "error";

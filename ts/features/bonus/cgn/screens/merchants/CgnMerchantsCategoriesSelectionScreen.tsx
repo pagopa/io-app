@@ -90,7 +90,6 @@ const CgnTabBar = ({ state, navigation }: MaterialTopTabBarProps) => {
 const CgnMerchantsCategoriesSelectionScreen = () => {
   useHeaderSecondLevel({
     title: "",
-    canGoBack: true,
     supportRequest: true
   });
 

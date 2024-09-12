@@ -6,6 +6,7 @@ import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { FimsHistoryClient } from "../api/client";
 import { fimsHistoryExport } from "../store/actions";
+import { trackExportSucceeded } from "../../common/analytics";
 
 export function* handleExportFimsHistorySaga(
   exportHistory: FimsHistoryClient["exports"],
@@ -30,6 +31,7 @@ export function* handleExportFimsHistorySaga(
         success => {
           switch (success.status) {
             case 202:
+              trackExportSucceeded();
               return fimsHistoryExport.success("SUCCESS");
             case 409:
               return fimsHistoryExport.success("ALREADY_EXPORTING");

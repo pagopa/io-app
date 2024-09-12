@@ -627,6 +627,25 @@ export const messageListForCategorySelector = (
     )
   );
 
+export const messageCountForCategorySelector = (
+  state: GlobalState,
+  shownCategory: MessageListCategory
+) =>
+  pipe(
+    state,
+    messagePagePotFromCategorySelector(shownCategory),
+    foldK(
+      () => 0,
+      () => 0,
+      () => 0,
+      () => 0,
+      messagePage => messagePage.page.length,
+      messagePage => messagePage.page.length,
+      (messagePage, _) => messagePage.page.length,
+      (messagePage, _) => messagePage.page.length
+    )
+  );
+
 export const emptyListReasonSelector = (
   state: GlobalState,
   category: MessageListCategory
