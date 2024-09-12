@@ -20,7 +20,6 @@ import { potFoldWithDefault } from "../../../../utils/pot";
 import { useAutoFetchingServiceByIdPot } from "../../common/utils/hooks";
 import { FimsHistorySharedStyles } from "../utils/styles";
 import { LoadingFimsHistoryListItem } from "./FimsHistoryLoaders";
-import { FimsHistoryPressableBase } from "./FimsHistoryPressableBase";
 
 // ------- TYPES
 
@@ -38,10 +37,7 @@ const SuccessListItem = ({ serviceData, consent }: SuccessListItemProps) => {
   const theme = useIOTheme();
 
   return (
-    <FimsHistoryPressableBase
-      style={defaultListItemStyles}
-      pressableProps={undefined}
-    >
+    <View style={defaultListItemStyles}>
       <View style={IOStyles.row}>
         <Icon size={16} name="calendar" />
         <HSpacer size={4} />
@@ -59,7 +55,7 @@ const SuccessListItem = ({ serviceData, consent }: SuccessListItemProps) => {
       <LabelSmall weight="Regular" color="grey-700">
         {consent.redirect?.display_name}
       </LabelSmall>
-    </FimsHistoryPressableBase>
+    </View>
   );
 };
 
@@ -67,10 +63,7 @@ const FailureListItem = ({ item }: BaseHistoryListItemProps) => {
   const theme = useIOTheme();
 
   return (
-    <FimsHistoryPressableBase
-      contentContainerStyle={styles.errorSpaceBetween}
-      style={defaultListItemStyles}
-    >
+    <View style={[styles.errorSpaceBetween, defaultListItemStyles]}>
       <View
         style={{
           paddingVertical: 15
@@ -94,7 +87,7 @@ const FailureListItem = ({ item }: BaseHistoryListItemProps) => {
         </LabelSmall>
       </View>
       <Icon name="errorFilled" color="error-600" />
-    </FimsHistoryPressableBase>
+    </View>
   );
 };
 
