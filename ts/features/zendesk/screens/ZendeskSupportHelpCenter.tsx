@@ -2,15 +2,11 @@ import {
   AccordionItem,
   Body,
   ButtonLink,
-  ContentWrapper,
   FeatureInfo,
   H4,
   H6,
   HeaderSecondLevel,
   IOToast,
-  IOVisualCostants,
-  IconButton,
-  LabelSmall,
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -18,8 +14,16 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { FlatList, ListRenderItemInfo, ScrollView, View } from "react-native";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState
+} from "react";
+import { FlatList, ListRenderItemInfo } from "react-native";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
+import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import IOMarkdown from "../../../components/IOMarkdown";
 import { ContextualHelpProps } from "../../../components/screens/BaseScreenComponent";
 import {
@@ -27,9 +31,17 @@ import {
   getContextualHelpData,
   reloadContextualHelpDataThreshold
 } from "../../../components/screens/BaseScreenComponent/utils";
+import {
+  IOScrollView,
+  IOScrollViewActions
+} from "../../../components/ui/IOScrollView";
 import { zendeskPrivacyUrl } from "../../../config";
-import { useFooterActionsMeasurements } from "../../../hooks/useFooterActionsMeasurements";
 import I18n from "../../../i18n";
+import { mixpanelTrack } from "../../../mixpanel";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../navigation/params/AppParamsList";
 import { loadContextualHelpData } from "../../../store/actions/content";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
@@ -45,14 +57,16 @@ import {
 } from "../../../utils/supportAssistance";
 import { openWebUrl } from "../../../utils/url";
 import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSignatureRequest";
-import ZendeskSupportActions from "../components/ZendeskSupportActions";
 import { ZendeskParamsList } from "../navigation/params";
+import ZENDESK_ROUTES from "../navigation/routes";
 import {
   ZendeskStartPayload,
   getZendeskConfig,
   zendeskSupportCancel,
   zendeskSupportCompleted
 } from "../store/actions";
+import { zendeskConfigSelector } from "../store/reducers";
+import { handleContactSupport } from "../utils";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -170,7 +184,8 @@ const FaqManager = (props: FaqManagerProps) => {
  * @constructor
  */
 const ZendeskSupportHelpCenter = () => {
-  const theme = useIOTheme();
+  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
+
   const dispatch = useIODispatch();
   const workUnitCancel = () => dispatch(zendeskSupportCancel());
   const workUnitComplete = () => dispatch(zendeskSupportCompleted());
@@ -179,11 +194,12 @@ const ZendeskSupportHelpCenter = () => {
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
   const showRequestSupportContacts = isEmailValidated || !pot.isSome(profile);
 
-  const route = useRoute<RouteProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">>();
+  // Check for Actions to be displayed
+  const maybeProfile: O.Option<InitializedProfile> = pot.toOption(profile);
+  const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  const navigation = useNavigation();
-  const { footerActionsMeasurements, handleFooterActionsMeasurements } =
-    useFooterActionsMeasurements();
+  const route = useRoute<RouteProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">>();
 
   // Navigation prop
   const {
@@ -212,6 +228,73 @@ const ZendeskSupportHelpCenter = () => {
     // }
   );
 
+  /*
+  Check for Actions
+  */
+
+  const handleContactSupportPress = useCallback(
+    () =>
+      handleContactSupport(
+        navigation,
+        assistanceForPayment,
+        assistanceForCard,
+        assistanceForFci,
+        zendeskRemoteConfig
+      ),
+    [
+      navigation,
+      assistanceForPayment,
+      assistanceForCard,
+      assistanceForFci,
+      zendeskRemoteConfig
+    ]
+  );
+
+  const footerActions: IOScrollViewActions = useMemo(
+    () => ({
+      type: "TwoButtons",
+      primary: {
+        testID: "contactSupportButton",
+        label: I18n.t("support.helpCenter.cta.contactSupport"),
+        onPress: handleContactSupportPress
+      },
+      secondary: {
+        testID: "showTicketsButton",
+        label: I18n.t("support.helpCenter.cta.seeReports"),
+        onPress: () => {
+          void mixpanelTrack("ZENDESK_SHOW_TICKETS_STARTS");
+          if (O.isNone(maybeProfile)) {
+            navigation.navigate(ZENDESK_ROUTES.MAIN, {
+              screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
+              params: {
+                assistanceForPayment,
+                assistanceForCard,
+                assistanceForFci
+              }
+            });
+          } else {
+            navigation.navigate(ZENDESK_ROUTES.MAIN, {
+              screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
+              params: {
+                assistanceForPayment,
+                assistanceForCard,
+                assistanceForFci
+              }
+            });
+          }
+        }
+      }
+    }),
+    [
+      handleContactSupportPress,
+      assistanceForPayment,
+      assistanceForCard,
+      assistanceForFci,
+      maybeProfile,
+      navigation
+    ]
+  );
+
   /**
    * as first step request the config (categories + panicmode) that could
      be used in the next steps (possible network error are handled in {@link ZendeskAskPermissions})
@@ -229,84 +312,61 @@ const ZendeskSupportHelpCenter = () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: () => null,
-      headerTitle: () => (
-        <LabelSmall weight={"Regular"} color={theme["textHeading-default"]}>
-          {I18n.t("support.helpCenter.header")}
-        </LabelSmall>
-      ),
-      headerRight: () => (
-        <View style={{ marginRight: IOVisualCostants.appMarginDefault }}>
-          <IconButton
-            icon="closeLarge"
-            color="neutral"
-            onPress={workUnitCancel}
-            accessibilityLabel={I18n.t(
+      header: () => (
+        <HeaderSecondLevel
+          ignoreSafeAreaMargin={true}
+          title={I18n.t("support.helpCenter.header")}
+          transparent={false}
+          type="singleAction"
+          firstAction={{
+            icon: "closeLarge",
+            accessibilityLabel: I18n.t(
               "global.accessibility.contextualHelp.close"
-            )}
-          />
-        </View>
-      ),
-      headerStyle: { height: IOVisualCostants.headerHeight }
+            ),
+            onPress: workUnitCancel
+          }}
+          enableDiscreteTransition={true}
+          animatedRef={animatedScrollViewRef}
+        />
+      )
     });
   });
 
   return (
-    <>
-      <ScrollView
-        contentContainerStyle={{
-          paddingTop: IOVisualCostants.appMarginDefault,
-          paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
-        }}
-        testID={"ZendeskSupportHelpCenterScreen"}
-      >
-        <ContentWrapper>
-          <FaqManager
-            contextualHelpConfig={contextualHelpConfig}
-            faqCategories={faqCategories}
-            // contentLoaded={markdownContentLoaded}
-            startingRoute={startingRoute}
-          />
+    <IOScrollView
+      animatedRef={animatedScrollViewRef}
+      testID={"ZendeskSupportHelpCenterScreen"}
+      actions={showRequestSupportContacts ? footerActions : undefined}
+    >
+      <FaqManager
+        contextualHelpConfig={contextualHelpConfig}
+        faqCategories={faqCategories}
+        startingRoute={startingRoute}
+      />
 
-          {showRequestSupportContacts && (
-            <>
-              <VSpacer size={24} />
-              <H6>{I18n.t("support.helpCenter.supportComponent.title")}</H6>
-              <VSpacer size={8} />
-              <Body>
-                {I18n.t("support.helpCenter.supportComponent.subtitle")}
-              </Body>
-              <VSpacer size={16} />
-              <ButtonLink
-                label={I18n.t("support.askPermissions.privacyLink")}
-                onPress={() => {
-                  openWebUrl(zendeskPrivacyUrl, () =>
-                    IOToast.error(I18n.t("global.jserror.title"))
-                  );
-                }}
-              />
-              <VSpacer size={24} />
-              <FeatureInfo
-                iconName="notice"
-                body={I18n.t(
-                  "support.helpCenter.supportComponent.adviceMessage"
-                )}
-              />
-            </>
-          )}
-        </ContentWrapper>
-      </ScrollView>
       {showRequestSupportContacts && (
-        <ZendeskSupportActions
-          onMeasure={handleFooterActionsMeasurements}
-          assistanceForPayment={assistanceForPayment}
-          assistanceForCard={assistanceForCard}
-          assistanceForFci={
-            assistanceForFci || signatureRequestId !== undefined
-          }
-        />
+        <>
+          <VSpacer size={24} />
+          <H6>{I18n.t("support.helpCenter.supportComponent.title")}</H6>
+          <VSpacer size={8} />
+          <Body>{I18n.t("support.helpCenter.supportComponent.subtitle")}</Body>
+          <VSpacer size={16} />
+          <ButtonLink
+            label={I18n.t("support.askPermissions.privacyLink")}
+            onPress={() => {
+              openWebUrl(zendeskPrivacyUrl, () =>
+                IOToast.error(I18n.t("global.jserror.title"))
+              );
+            }}
+          />
+          <VSpacer size={24} />
+          <FeatureInfo
+            iconName="notice"
+            body={I18n.t("support.helpCenter.supportComponent.adviceMessage")}
+          />
+        </>
       )}
-    </>
+    </IOScrollView>
   );
 };
 

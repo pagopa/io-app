@@ -12,7 +12,7 @@ import {
   getZendeskConfig,
   zendeskRequestTicketNumber
 } from "../../store/actions";
-import ZendeskSupportActions from "../ZendeskSupportActions";
+import ZendeskSupportHelpCenter from "../../screens/ZendeskSupportHelpCenter";
 
 const mockZendeskConfig: Zendesk = {
   panicMode: false
@@ -143,7 +143,7 @@ function renderComponent(
   assistanceForPayment: boolean
 ) {
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    ZendeskSupportActions,
+    ZendeskSupportHelpCenter,
     ROUTES.MAIN,
     { assistanceForPayment },
     store
