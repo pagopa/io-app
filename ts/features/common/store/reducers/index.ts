@@ -8,7 +8,7 @@ import {
 } from "../../../../store/reducers/testLogin";
 import {
   CieLoginState,
-  cieLoginReducer
+  cieLoginPersistor
 } from "../../../cieLogin/store/reducers";
 import {
   EuCovidCertState,
@@ -49,7 +49,7 @@ type LoginFeaturesState = {
   testLogin: TestLoginState;
   nativeLogin: NativeLoginState;
   fastLogin: FastLoginState;
-  cieLogin: CieLoginState;
+  cieLogin: CieLoginState & PersistPartial;
 };
 
 export type FeaturesState = {
@@ -81,7 +81,7 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     testLogin: testLoginReducer,
     nativeLogin: nativeLoginReducer,
     fastLogin: fastLoginReducer,
-    cieLogin: cieLoginReducer
+    cieLogin: cieLoginPersistor
   }),
   wallet: walletReducer,
   fims: fimsReducer,

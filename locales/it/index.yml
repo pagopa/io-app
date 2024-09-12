@@ -463,6 +463,9 @@ profile:
     idpay:
       idpayTest: IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
+    cieID:
+      cieIdTest:
+        title: CieID
     trial:
       titleSection: Partecipa alla sperimentazione
     designSystemEnvironment: Design System sperimentale
@@ -2547,7 +2550,7 @@ bonus:
   active: Attivo
   failed: Fallito
   redeemed: Utilizzato
-  termsAndConditionFooter: 'Premendo "{{ctaText}}" dichiari di aver letto e compreso la [Guida]({{regulationLink}}) e l''[Informativa Privacy]({{tosUrl}})'
+  termsAndConditionFooter: 'Premendo "{{ctaText}}" dichiari di essere in possesso dei requisiti e di aver letto e compreso la [Guida]({{regulationLink}}) e l''[Informativa Privacy]({{tosUrl}})'
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -2637,7 +2640,8 @@ bonus:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
     cta:
-      activeBonus: Richiedi la Carta
+      activeBonus: Attiva Carta Giovani Nazionale
+      back: Non ora
       deactivateBonus: Disattiva Carta Giovani Nazionale
       goToDetail: Usa la Carta
     detail:
@@ -2687,7 +2691,7 @@ bonus:
           body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
       loading:
         caption: "Stiamo attivando la tua Carta Giovani Nazionale"
-        subCaption: "Ti preghiamo di attendere."
+        subCaption: "Attendi qualche secondo..."
       error:
         title: "Il servizio Carta Giovani Nazionale in questo momento non è disponibile."
         body: "Ci dispiace, riprova più tardi."
@@ -3193,6 +3197,11 @@ features:
         title: "Tutti i documenti saranno rimossi da IO"
         subtitle: "Se accedi con una nuova identità, i documenti già presenti nel Portafoglio saranno rimossi e Documenti su IO disattivato."
         action: "Continua con la nuova identità"
+      loading:
+        cieId:
+          title: Connessione con la tua app CieID in corso...
+          subtitle: Autorizza l'accesso nell'app CieID per continuare oppure annulla la connessione
+          cancel: Annulla connessione
     issuance:
       credentialAuth:
         title: "{{credentialName}}: dati necessari"
@@ -3288,6 +3297,7 @@ features:
             confirm: Sì, rimuovi
         toast:
           removed: Fatto! Hai rimosso {{credentialName}}
+        flipCard: "Mostra retro"
   trialSystem:
     toast:
       subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione

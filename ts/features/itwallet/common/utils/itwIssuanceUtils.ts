@@ -201,7 +201,8 @@ const startAndCompleteFullAuthFlow = async ({
       issuerConf,
       idpHint,
       redirectUri,
-      authorizationContext
+      authorizationContext,
+      identification.abortController?.signal
     );
 
   await regenerateCryptoKey(DPOP_EID_KEYTAG);

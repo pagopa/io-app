@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.70.0-rc.0](https://github.com/pagopa/io-app/compare/2.69.0-rc.8...2.70.0-rc.0) (2024-09-11)
+
+
+### Features
+
+* [[IOPID-2133](https://pagopa.atlassian.net/browse/IOPID-2133)] Added CieID Feature Flag ([#6153](https://github.com/pagopa/io-app/issues/6153)) ([2b3e9cf](https://github.com/pagopa/io-app/commit/2b3e9cf3a04c8aeb539831eaf69c3a0a6ab12b13))
+* [[PE-610](https://pagopa.atlassian.net/browse/PE-610)] CGN detail screen new card appearance ([#6097](https://github.com/pagopa/io-app/issues/6097)) ([012a137](https://github.com/pagopa/io-app/commit/012a1374fb3ced91cd02b7ceda0a292fc8d2846a))
+* [[PE-614](https://pagopa.atlassian.net/browse/PE-614)] CGN landing page new copy ([#5989](https://github.com/pagopa/io-app/issues/5989)) ([6b39ee0](https://github.com/pagopa/io-app/commit/6b39ee04034774757b03457c521f7d35c39514cd))
+
+
+### Bug Fixes
+
+* [[IOBP-793](https://pagopa.atlassian.net/browse/IOBP-793)] Unauthorized status mapping from checkout APIs ([#6042](https://github.com/pagopa/io-app/issues/6042)) ([eff0eab](https://github.com/pagopa/io-app/commit/eff0eabe25fef7589744baed97a99502fa388cda))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1447](https://pagopa.atlassian.net/browse/SIW-1447)] Allow user to cancel CieID identification ([#6105](https://github.com/pagopa/io-app/issues/6105)) ([81eb5f4](https://github.com/pagopa/io-app/commit/81eb5f4dae4989cac99633f9fb289faf0f9a7625))
+* **IT Wallet:** [[SIW-1536](https://pagopa.atlassian.net/browse/SIW-1536)] Add skeumorphic card in MDL details screen ([#6144](https://github.com/pagopa/io-app/issues/6144)) ([5002894](https://github.com/pagopa/io-app/commit/50028942b41c4cdd37fa4194744e1eb58b6da107))
+
+## [2.69.0-rc.8](https://github.com/pagopa/io-app/compare/2.69.0-rc.7...2.69.0-rc.8) (2024-09-06)
+
+
+### Bug Fixes
+
+* [[IOBP-853](https://pagopa.atlassian.net/browse/IOBP-853)] Receipt Share & Save button feature ([#6160](https://github.com/pagopa/io-app/issues/6160)) ([a76528d](https://github.com/pagopa/io-app/commit/a76528dbc9e0a30c2b53c71785f454a7a42f3717))
+
 ## [2.69.0-rc.7](https://github.com/pagopa/io-app/compare/2.69.0-rc.6...2.69.0-rc.7) (2024-09-05)
 
 
