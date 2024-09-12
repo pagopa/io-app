@@ -3148,6 +3148,7 @@ features:
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
         releasedBy: "Rilasciata da"
+        attachments: "Attachments"
         mdl:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
