@@ -145,7 +145,6 @@ const CgnMerchantDetailScreen = () => {
 
   useHeaderSecondLevel({
     title: isReady(merchantDetail) ? merchantDetail.value.name : "",
-    canGoBack: true,
     supportRequest: true,
     scrollValues: {
       triggerOffset: scrollTriggerOffsetValue,
