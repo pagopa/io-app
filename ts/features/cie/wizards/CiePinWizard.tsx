@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   ContentWrapper,
   LabelLink,
@@ -6,6 +6,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import { View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
@@ -15,11 +16,13 @@ import IOMarkdown from "../../../components/IOMarkdown";
 import useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
 import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
 import { openWebUrl } from "../../../utils/url";
+import { setAccessibilityFocus } from "../../../utils/accessibility";
 
 const CIE_PIN_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/";
 
 const CiePinWizard = () => {
+  const buttonRef = useRef<View>(null);
   const { navigate } = useIONavigation();
   const { error } = useIOToast();
   const { navigateToCiePinInsertion } = useNavigateToLoginMethod();
@@ -46,7 +49,10 @@ const CiePinWizard = () => {
         </LabelLink>
       </>
     ),
-    snapPoint: [350]
+    snapPoint: [350],
+    onDismiss: () => {
+      setAccessibilityFocus(buttonRef);
+    }
   });
 
   // eslint-disable-next-line arrow-body-style
@@ -90,7 +96,12 @@ const CiePinWizard = () => {
     >
       <ContentWrapper>
         <VSpacer size={12} />
-        <LabelLink role="button" accessibilityRole="button" onPress={present}>
+        <LabelLink
+          ref={buttonRef}
+          role="button"
+          accessibilityRole="button"
+          onPress={present}
+        >
           {I18n.t(
             "authentication.wizards.cie_pin_wizard.bottom_sheet.cta.label"
           )}
