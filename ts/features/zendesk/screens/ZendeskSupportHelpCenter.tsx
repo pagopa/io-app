@@ -142,8 +142,6 @@ const FaqManager = (props: FaqManagerProps) => {
     <AccordionItem
       title={item.title}
       body={<IOMarkdown content={item.content} />}
-      // onLinkClicked={props.onLinkClicked}
-      // shouldHandleLink={props.shouldHandleLink}
     />
   );
 
@@ -211,21 +209,12 @@ const ZendeskSupportHelpCenter = () => {
     assistanceForCard,
     assistanceForFci
   } = route.params;
-
-  // const [markdownContentLoaded, setMarkdownContentLoaded] = useState<boolean>(
   //   !contextualHelpMarkdown
   // );
 
   const contextualHelpConfig = getContextualHelpConfig(
     contextualHelp,
     contextualHelpMarkdown
-    // () => setMarkdownContentLoaded(true),
-    // constNull,
-    // _ => {
-    //   // when a link is clicked in the contextual help, terminate the workunit before the link will be handled (i.e: internal or external navigation)
-    //   workUnitComplete();
-    //   return true;
-    // }
   );
 
   /*
