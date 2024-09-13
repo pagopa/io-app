@@ -2626,16 +2626,16 @@ bonus:
         website: Vai al sito del partner
       categories:
         counting: e altre {{count}}
-        cultureAndEntertainment: Cultura e Tempo Libero
-        health: Salute e Benessere
-        learning: Istruzione e Formazione
+        cultureAndEntertainment: Cultura e tempo libero
+        health: Salute e benessere
+        learning: Istruzione e formazione
         sport: Sport
         home: Casa
-        telco: Telefonia e Internet
-        finance: Servizi Bancari e Finanziari
-        travel: Viaggi e Trasporti
-        mobility: Mobilità Sostenibile
-        job: Lavoro e Tirocini
+        telco: Telefonia e internet
+        finance: Servizi bancari e finanziari
+        travel: Viaggi e trasporti
+        mobility: Mobilità sostenibile
+        job: Lavoro e tirocini
       information:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
