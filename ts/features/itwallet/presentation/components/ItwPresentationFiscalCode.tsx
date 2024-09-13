@@ -6,9 +6,9 @@ import {
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
+import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { selectFiscalCodeFromEid } from "../../credentials/store/selectors";
-import I18n from "../../../../i18n";
 
 const ItwPresentationFiscalCode = () => {
   const fiscalCode = useIOSelector(selectFiscalCodeFromEid);
@@ -28,7 +28,7 @@ const ItwPresentationFiscalCode = () => {
       </Text>
       <Barcode
         value={fiscalCode}
-        width={1.5}
+        width={1.54}
         height={50}
         background={IOColors[theme["appBackground-primary"]]}
         lineColor={IOColors[theme["textBody-default"]]}
