@@ -32,12 +32,6 @@ type Props = IOStackNavigationRouteProps<
   "ITW_PRESENTATION_CREDENTIAL_DETAIL"
 >;
 
-const trustmarkEnabledCredentials = [
-  CredentialType.DRIVING_LICENSE,
-  CredentialType.EUROPEAN_DISABILITY_CARD,
-  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
-];
-
 export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const { credentialType } = route.params;
   const credentialOption = useIOSelector(
@@ -77,16 +71,6 @@ const ContentView = ({ credential }: ContentProps) => {
     )
   });
 
-  const renderTrustmark = () =>
-    trustmarkEnabledCredentials.includes(
-      credential.credentialType as CredentialType
-    ) ? (
-      <>
-        <ItwCredentialTrustmark credential={credential} />
-        <VSpacer size={16} />
-      </>
-    ) : null;
-
   return (
     <>
       <FocusAwareStatusBar
@@ -99,7 +83,7 @@ const ContentView = ({ credential }: ContentProps) => {
           <VSpacer size={16} />
           <ItwPresentationAlertsSection credential={credential} />
           <VSpacer size={16} />
-          {renderTrustmark()}
+          <ItwCredentialTrustmark credential={credential} />
           <ItwPresentationClaimsSection
             title={I18n.t(
               "features.itWallet.presentation.credentialDetails.documentDataTitle"

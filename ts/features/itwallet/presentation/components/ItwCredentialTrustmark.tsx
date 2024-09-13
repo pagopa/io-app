@@ -16,6 +16,8 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bott
 import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { generateTrustmarkUrl } from "../../common/utils/itwCredentialUtils";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 import { itwEaaVerifierBaseUrl } from "../../../../config";
 
 type ItwCredentialTrustmarkProps = WithTestID<{
@@ -30,6 +32,17 @@ const linearGradient = {
   center: { x: 0.5, y: 0.7 }
 };
 
+const trustmarkEnabledCredentials = [
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.EUROPEAN_DISABILITY_CARD,
+  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+];
+
+const shouldDisplayTrustmark = (credential: StoredCredential) =>
+  trustmarkEnabledCredentials.includes(
+    credential.credentialType as CredentialType
+  ) && getCredentialStatus(credential) !== "expired";
+
 export const ItwCredentialTrustmark = ({
   testID,
   credential
@@ -41,6 +54,10 @@ export const ItwCredentialTrustmark = ({
 
   const { onPressIn, onPressOut, animatedScaleStyle } =
     useSpringPressScaleAnimation();
+
+  if (!shouldDisplayTrustmark(credential)) {
+    return null;
+  }
 
   return (
     <>
@@ -79,6 +96,8 @@ export const ItwCredentialTrustmark = ({
         </Animated.View>
       </Pressable>
       {trustmarkBottomSheet.bottomSheet}
+      {/* TODO: remove after merging #6154 */}
+      <VSpacer size={16} />
     </>
   );
 };
