@@ -118,6 +118,10 @@ const DESIGN_SYSTEM_ROUTES = {
     DYNAMIC_BACKGROUND: {
       route: "DS_DYNAMIC_BACKGROUND",
       title: "Dynamic header background"
+    },
+    IRIDESCENT_TRUSTMARK: {
+      route: "DS_IRIDESCENT_TRUSTMARK",
+      title: "Iridescent trustmark"
     }
   },
   LEGACY: {

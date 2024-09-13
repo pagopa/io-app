@@ -12,14 +12,18 @@ import {
 import Animated from "react-native-reanimated";
 import I18n from "../../../../i18n";
 import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+// import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { generateTrustmarkUrl } from "../../common/utils/itwCredentialUtils";
 import { itwEaaVerifierBaseUrl } from "../../../../config";
 
+// type ItwCredentialTrustmarkProps = WithTestID<{
+//   credential: StoredCredential;
+// }>;
+
 type ItwCredentialTrustmarkProps = WithTestID<{
-  credential: StoredCredential;
+  onPress: () => void;
 }>;
 
 const TRUSTMARK_HEIGHT = 48;
@@ -32,12 +36,13 @@ const linearGradient = {
 
 export const ItwCredentialTrustmark = ({
   testID,
-  credential
-}: ItwCredentialTrustmarkProps) => {
-  const trustmarkBottomSheet = useIOBottomSheetAutoresizableModal({
-    title: I18n.t("features.itWallet.presentation.trustmark.title"),
-    component: <QrCodeBottomSheetContent credential={credential} />
-  });
+  onPress
+}: // credential
+ItwCredentialTrustmarkProps) => {
+  // const trustmarkBottomSheet = useIOBottomSheetAutoresizableModal({
+  //   title: I18n.t("features.itWallet.presentation.trustmark.title"),
+  //   component: <QrCodeBottomSheetContent credential={credential} />
+  // });
 
   const { onPressIn, onPressOut, animatedScaleStyle } =
     useSpringPressScaleAnimation();
@@ -45,7 +50,7 @@ export const ItwCredentialTrustmark = ({
   return (
     <>
       <Pressable
-        onPress={trustmarkBottomSheet.present}
+        onPress={onPress}
         testID={testID}
         accessible={true}
         accessibilityLabel={I18n.t(
@@ -78,7 +83,7 @@ export const ItwCredentialTrustmark = ({
           </LinearGradient>
         </Animated.View>
       </Pressable>
-      {trustmarkBottomSheet.bottomSheet}
+      {/* {trustmarkBottomSheet.bottomSheet} */}
     </>
   );
 };

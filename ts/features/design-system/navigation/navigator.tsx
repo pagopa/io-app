@@ -75,6 +75,7 @@ import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
+import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -392,6 +393,17 @@ export const DesignSystemNavigator = () => {
             headerShown: false,
             headerTitle:
               DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_BACKGROUND.title
+          }}
+        />
+
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.IRIDESCENT_TRUSTMARK.route
+          }
+          component={DSIridescentTrustmark}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.IRIDESCENT_TRUSTMARK.title
           }}
         />
 
