@@ -5,14 +5,18 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Fragment, default as React } from "react";
 import { StyleSheet, View } from "react-native";
+import { QrCodeImage } from "../../../../../components/QrCodeImage";
 import { localeDateFormat } from "../../../../../utils/locale";
-import { DrivingPrivilegesClaim } from "../../utils/itwClaimsUtils";
+import {
+  DrivingPrivilegesClaim,
+  StringClaim
+} from "../../utils/itwClaimsUtils";
 import { ParsedCredential, StoredCredential } from "../../utils/itwTypesUtils";
 import {
-  ClaimPosition,
   CardClaim,
   CardClaimContainer,
-  CardClaimRenderer
+  CardClaimRenderer,
+  ClaimPosition
 } from "./CardClaim";
 import { ClaimLabel } from "./ClaimLabel";
 import { CardSide } from "./types";
@@ -36,11 +40,11 @@ const MdlFrontData = ({ claims }: DataComponentProps) => {
         }}
       />
       <CardClaim
-        claim={claims["given_name"]}
+        claim={claims["family_name"]}
         position={{ left: "34.75%", top: `${row + rowStep * 0}%` }}
       />
       <CardClaim
-        claim={claims["family_name"]}
+        claim={claims["given_name"]}
         position={{ left: "34.75%", top: `${row + rowStep * 1}%` }}
       />
       <CardClaim
@@ -54,6 +58,10 @@ const MdlFrontData = ({ claims }: DataComponentProps) => {
       <CardClaim
         claim={claims["issue_date"]}
         position={{ left: "34.75%", top: `${row + rowStep * 3}%` }}
+      />
+      <CardClaim
+        claim={claims["issuing_authority"]}
+        position={{ left: "57%", top: `${row + rowStep * 3}%` }}
       />
       <CardClaim
         claim={claims["expiry_date"]}
@@ -142,11 +150,69 @@ const MdlBackData = ({ claims }: DataComponentProps) => {
   );
 };
 
+const DcFrontData = ({ claims }: DataComponentProps) => {
+  const row = 44.5; // Row padding, defines the first row position
+  const rowStep = 11.4; // Row step, defines the space between each row
+
+  return (
+    <View testID="dcFrontDataTestID" style={styles.container}>
+      <CardClaim
+        claim={claims["portrait"]}
+        position={{ left: "2.55%", bottom: "1.%" }}
+        dimensions={{
+          width: "24.7%",
+          aspectRatio: 73 / 106 // This aspect ration was extracted from the Figma design
+        }}
+      />
+      <CardClaim
+        claim={claims["family_name"]}
+        position={{ right: "3.5%", top: `${row + rowStep * 0}%` }}
+      />
+      <CardClaim
+        claim={claims["given_name"]}
+        position={{ right: "3.5%", top: `${row + rowStep * 1}%` }}
+      />
+      <CardClaim
+        claim={claims["birth_date"]}
+        position={{ right: "3.5%", top: `${row + rowStep * 2}%` }}
+      />
+      <CardClaim
+        claim={claims["document_number"]}
+        position={{ right: "3.5%", top: `${row + rowStep * 3}%` }}
+      />
+      <CardClaim
+        claim={claims["expiry_date"]}
+        position={{ right: "3.5%", top: `${row + rowStep * 4}%` }}
+      />
+    </View>
+  );
+};
+
+const DcBackData = ({ claims }: DataComponentProps) => (
+  <View testID="mdlBackDataTestID" style={styles.container}>
+    <CardClaimRenderer
+      claim={claims["link_qr_code"]}
+      is={StringClaim.is}
+      component={qrCode => (
+        <CardClaimContainer
+          position={{
+            right: `7.5%`,
+            top: `11.5%`
+          }}
+        >
+          <QrCodeImage value={qrCode} size={100} />
+        </CardClaimContainer>
+      )}
+    />
+  </View>
+);
+
 const dataComponentMap: Record<
   string,
   Record<CardSide, React.ElementType<DataComponentProps>>
 > = {
-  MDL: { front: MdlFrontData, back: MdlBackData }
+  MDL: { front: MdlFrontData, back: MdlBackData },
+  EuropeanDisabilityCard: { front: DcFrontData, back: DcBackData }
 };
 
 type CardDataProps = {

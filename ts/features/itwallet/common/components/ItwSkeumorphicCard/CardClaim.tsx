@@ -40,7 +40,7 @@ export type ClaimDimensions = Prettify<
 
 export type CardClaimProps = WithTestID<{
   // A claim that will be used to render its component
-  claim: ParsedCredential[number];
+  claim?: ParsedCredential[number];
   // Absolute position expressed in percentages from top-left corner
   position?: ClaimPosition;
   // Claim dimensions
@@ -55,7 +55,7 @@ const CardClaim = ({ claim, position, dimensions, testID }: CardClaimProps) => {
   const claimContent = React.useMemo(
     () =>
       pipe(
-        claim.value,
+        claim?.value,
         ClaimValue.decode,
         E.fold(constNull, decoded => {
           if (DateFromString.is(decoded)) {
@@ -81,7 +81,7 @@ const CardClaim = ({ claim, position, dimensions, testID }: CardClaimProps) => {
           } else if (PlaceOfBirthClaim.is(decoded)) {
             return <ClaimLabel>{decoded.locality}</ClaimLabel>;
           } else {
-            return <ClaimLabel>{decoded}</ClaimLabel>;
+            return <ClaimLabel>{decoded.toString().toUpperCase()}</ClaimLabel>;
           }
         })
       ),
@@ -105,7 +105,7 @@ const CardClaim = ({ claim, position, dimensions, testID }: CardClaimProps) => {
 
 export type CardClaimRendererProps<T> = {
   // A claim that will be used to render a component
-  claim: ParsedCredential[number];
+  claim?: ParsedCredential[number];
   // Function that check that the proviced claim is of the correct type
   is: (value: unknown) => value is T;
   // Function that renders a component with the decoded provided claim
@@ -122,7 +122,7 @@ const CardClaimRenderer = <T,>({
   component
 }: CardClaimRendererProps<T>) =>
   pipe(
-    claim.value,
+    claim?.value,
     ClaimValue.decode,
     O.fromEither,
     O.filter(is),
