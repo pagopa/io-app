@@ -28,6 +28,7 @@ import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeade
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
 import { TestID } from "../../types/WithTestID";
+import { isScreenReaderEnabled } from "../accessibility";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -167,6 +168,12 @@ export const useIOBottomSheetModal = ({
   );
 
   useEffect(() => {
+    // Check if the screen reader is enabled when the component is mounted
+    isScreenReaderEnabled()
+      .then(setIsScreenReaderEnabled)
+      .catch(_ => setIsScreenReaderEnabled(false));
+    // Subscribe to `screenReaderChanged` to properly update the state.
+    // The method above is necessary because of this event execute the given function only when the screen reader internal state changes; unfortunately its function is not executed on subscription.
     const screenReaderChangedSubscription = AccessibilityInfo.addEventListener(
       "screenReaderChanged",
       setIsScreenReaderEnabled
