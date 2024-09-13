@@ -24,6 +24,7 @@ import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog"
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   selectEidOption,
+  selectIdentification,
   selectIsDisplayingPreview
 } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
@@ -31,6 +32,7 @@ import {
   CREDENTIALS_MAP,
   trackCredentialPreview,
   trackItwExit,
+  trackItwRequestSuccess,
   trackSaveCredentialToWallet
 } from "../../analytics";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
@@ -70,6 +72,8 @@ type ContentViewProps = {
  */
 const ContentView = ({ eid }: ContentViewProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const route = useRoute();
@@ -79,7 +83,10 @@ const ContentView = ({ eid }: ContentViewProps) => {
     [eid.credentialType]
   );
 
-  useFocusEffect(() => trackCredentialPreview(mixPanelCredential));
+  useFocusEffect(() => {
+    trackCredentialPreview(mixPanelCredential);
+    trackItwRequestSuccess(identification?.mode);
+  });
 
   useDebugInfo({
     parsedCredential: eid.parsedCredential

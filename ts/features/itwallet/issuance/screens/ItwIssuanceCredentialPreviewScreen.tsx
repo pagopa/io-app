@@ -89,7 +89,9 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
     [credentialType]
   );
 
-  useFocusEffect(() => trackCredentialPreview(mixPanelCredential));
+  useFocusEffect(() => {
+    trackCredentialPreview(mixPanelCredential);
+  });
 
   const dispatch = useIODispatch();
   const dismissDialog = useItwDismissalDialog(() => {
