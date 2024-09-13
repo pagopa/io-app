@@ -19,3 +19,17 @@ export type AllOrNothing<T extends Record<string, any>> =
 export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & object;
+
+/**
+ * Ensures that a type has all properties of T but none of the properties of U
+ */
+export type Only<T, U> = {
+  [P in keyof T]: T[P];
+} & {
+  [P in keyof U]?: never;
+};
+
+/**
+ * Creates a type that can be either T with none of the properties from U, or U with none of the properties from T
+ */
+export type Either<T, U> = Only<T, U> | Only<U, T>;
