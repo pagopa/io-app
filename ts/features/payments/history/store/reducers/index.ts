@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import * as O from "fp-ts/lib/Option";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
@@ -146,12 +147,17 @@ const reducer = (
         }
       };
     case getType(paymentsCalculatePaymentFeesAction.success):
+      const bundles = action.payload.bundles;
+      const selectedPsp =
+        bundles.length === 1 ? bundles[0].pspBusinessName : undefined;
+      const selectedPspFlag = bundles.length === 1 ? "unique" : undefined;
       return {
         ...state,
         analyticsData: {
           ...state.analyticsData,
-          selectedPsp: undefined,
-          pspList: action.payload.bundles
+          selectedPsp,
+          selectedPspFlag,
+          pspList: bundles
         }
       };
     case getType(selectPaymentPspAction):
