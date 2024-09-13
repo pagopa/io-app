@@ -3248,7 +3248,7 @@ features:
         secondaryAction: Chiudi
       genericCredentialError:
         title: Documento non disponibile
-        body: Si è verificato un errore oppure potresti non avere diritto al documento. 
+        body: Si è verificato un errore oppure potresti non avere diritto al documento.
         primaryAction: Riprova
         secondaryAction: Chiudi
     unsupportedDevice:
@@ -3289,7 +3289,7 @@ features:
           expiring: In scadenza
         actions:
           removeFromWallet: "Rimuovi dal Portafoglio"
-          requestAssistance: "Qualcosa non torna? Contatta {{authSource}}"
+          requestAssistance: "Qualcosa non torna?"
           showClaimValues: "Mostra gli attributi del documento"
           hideClaimValues: "Nascondi gli attributi del documento"
         dialogs:

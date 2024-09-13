@@ -5,7 +5,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Alert, Linking } from "react-native";
+import { Alert } from "react-native";
+import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
@@ -24,6 +25,10 @@ const ItwPresentationDetailsFooter = ({
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const toast = useIOToast();
+
+  const startSupportRequest = useStartSupportRequest({
+    faqCategories: []
+  });
 
   const handleRemoveCredential = () => {
     dispatch(itwCredentialsRemove(credential));
@@ -58,8 +63,6 @@ const ItwPresentationDetailsFooter = ({
       ]
     );
 
-  const { federation_entity } = credential.issuerConf;
-
   return (
     <ContentWrapper>
       <VSpacer size={8} />
@@ -67,16 +70,12 @@ const ItwPresentationDetailsFooter = ({
         variant="primary"
         icon="message"
         label={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.requestAssistance",
-          { authSource: federation_entity.organization_name }
+          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
         )}
         accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.requestAssistance",
-          { authSource: federation_entity.organization_name }
+          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
         )}
-        onPress={() =>
-          Linking.openURL(`mailto:${federation_entity.contacts?.[0]}`)
-        }
+        onPress={() => startSupportRequest()}
       />
       {credential.credentialType !== CredentialType.PID ? (
         <ListItemAction
