@@ -82,7 +82,7 @@ type IOScrollView = WithTestID<
     excludeEndContentMargin?: boolean;
     /* Include page margins */
     includeContentMargins?: boolean;
-    refreshControl?: RefreshControlProps;
+    refreshControlProps?: RefreshControlProps;
   }>
 >;
 
@@ -127,7 +127,7 @@ export const IOScrollView = ({
   excludeEndContentMargin = false,
   includeContentMargins = true,
   debugMode = false,
-  refreshControl,
+  refreshControlProps,
   testID
 }: IOScrollView) => {
   const theme = useIOTheme();
@@ -232,8 +232,8 @@ export const IOScrollView = ({
     }
   }, [headerConfig, navigation, scrollPositionAbsolute, snapOffset]);
 
-  const RefreshControlComponent = refreshControl ? (
-    <RefreshControl {...refreshControl} />
+  const RefreshControlComponent = refreshControlProps ? (
+    <RefreshControl {...refreshControlProps} />
   ) : undefined;
 
   return (

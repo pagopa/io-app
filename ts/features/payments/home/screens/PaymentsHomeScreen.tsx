@@ -88,7 +88,7 @@ const PaymentsHomeScreen = () => {
 
   return (
     <IOScrollView
-      refreshControl={{
+      refreshControlProps={{
         refreshing: isRefreshing,
         onRefresh: handleRefreshPaymentsHome
       }}
