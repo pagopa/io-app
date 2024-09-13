@@ -14,6 +14,7 @@ import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaim
 import { ItwPresentationDetailsFooter } from "../components/ItwPresentationDetailsFooter";
 import { ItwPresentationDetailsHeader } from "../components/ItwPresentationDetailsHeader";
 import { ItwPresentationDetailsScreenBase } from "../components/ItwPresentationDetailsScreenBase";
+import { ItwPresentationAdditionalInfoSection } from "../components/ItwPresentationAdditionalInfoSection";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -54,6 +55,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
         <ItwPresentationDetailsHeader credential={credential} />
         <ContentWrapper>
           <VStack space={16}>
+            <ItwPresentationAdditionalInfoSection credential={credential} />
             <ItwPresentationAlertsSection credential={credential} />
             <ItwPresentationClaimsSection credential={credential} />
           </VStack>

@@ -3300,6 +3300,7 @@ features:
         toast:
           removed: Fatto! Hai rimosso {{credentialName}}
         flipCard: "Show back"
+        fiscalCode: Your Fiscal Code
   trialSystem:
     toast:
       subscribed: Done! You will receive a message when the trial period will begin.

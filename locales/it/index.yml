@@ -3300,6 +3300,7 @@ features:
         toast:
           removed: Fatto! Hai rimosso {{credentialName}}
         flipCard: "Mostra retro"
+        fiscalCode: Il tuo Codice Fiscale
   trialSystem:
     toast:
       subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione
