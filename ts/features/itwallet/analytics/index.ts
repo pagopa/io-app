@@ -208,7 +208,7 @@ export const trackItwRequestSuccess = (ITW_ID_method?: ItwIdMethod) => {
   if (ITW_ID_method) {
     void mixpanelTrack(
       WALLET_EVENTS.ITW_ID_REQUEST_SUCCESS,
-      buildEventProperties("TECH", "error", { ITW_ID_method })
+      buildEventProperties("TECH", "error", { ITW_ID_method, ITW_ID: "L2" })
     );
   }
 };
