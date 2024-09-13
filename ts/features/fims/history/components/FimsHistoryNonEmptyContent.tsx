@@ -1,6 +1,6 @@
 import { Divider, IOStyles } from "@pagopa/io-app-design-system";
+import { FlashList } from "@shopify/flash-list";
 import * as React from "react";
-import { FlatList } from "react-native";
 import { ConsentsResponseDTO } from "../../../../../definitions/fims/ConsentsResponseDTO";
 import * as RemoteValue from "../../../../common/model/RemoteValue";
 import { FooterActions } from "../../../../components/ui/FooterActions";
@@ -32,35 +32,32 @@ export const FimsHistoryNonEmptyContent = ({
   const { footerActionsMeasurements, handleFooterActionsMeasurements } =
     useFooterActionsMeasurements();
 
-  const renderLoadingFooter = () => (
-    <>
-      {isHistoryLoading && (
-        <LoadingFimsHistoryItemsFooter
-          showFirstDivider={(consents?.items.length ?? 0) > 0}
-        />
-      )}
-    </>
-  );
+  const LoadingFooter = () =>
+    isHistoryLoading && (
+      <LoadingFimsHistoryItemsFooter
+        showFirstDivider={(consents?.items.length ?? 0) > 0}
+      />
+    );
   const shouldHideFooter =
     isHistoryLoading && (consents?.items.length ?? 0) === 0;
 
   return (
     <>
-      <FlatList
+      <FlashList
+        estimatedItemSize={117}
         ListHeaderComponent={FimsHistoryHeaderComponent}
         data={consents?.items}
-        contentContainerStyle={[
-          IOStyles.horizontalContentPadding,
-          {
-            paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
-          }
-        ]}
+        contentContainerStyle={{
+          ...IOStyles.horizontalContentPadding,
+          paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
+        }}
         ItemSeparatorComponent={Divider}
         keyExtractor={item => item.id}
         renderItem={item => <FimsHistoryListItem item={item.item} />}
         onEndReached={fetchMore}
-        ListFooterComponent={renderLoadingFooter}
+        ListFooterComponent={LoadingFooter}
       />
+
       {!shouldHideFooter && (
         <FooterActions
           onMeasure={handleFooterActionsMeasurements}
