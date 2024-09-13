@@ -91,7 +91,6 @@ const PaymentsTransactionListScreen = () => {
 
   useHeaderSecondLevel({
     title: I18n.t("features.payments.transactions.legacy.title"),
-    canGoBack: true,
     supportRequest: true,
     scrollValues: {
       contentOffsetY: scrollTranslationY,

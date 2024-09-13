@@ -8,6 +8,7 @@ import {
 import I18n from "../../../../../i18n";
 import { profileSelector } from "../../../../../store/reducers/profile";
 import { useIOSelector } from "../../../../../store/hooks";
+import { capitalize } from "../../../../../utils/strings";
 
 /**
  * Renders the CGN ownership block for detail screen, including Owner's Fiscal Code (The current user logged in)
@@ -20,11 +21,14 @@ const CgnOwnershipInformation = (): React.ReactElement => {
       {pot.isSome(currentProfile) && (
         <>
           <ListItemHeader label={I18n.t("bonus.cgn.detail.ownership")} />
-          <ListItemInfo label="Nome" value={currentProfile.value.name} />
+          <ListItemInfo
+            label="Nome"
+            value={capitalize(currentProfile.value.name)}
+          />
           <Divider />
           <ListItemInfo
             label="Cognome"
-            value={currentProfile.value.family_name}
+            value={capitalize(currentProfile.value.family_name)}
           />
           <Divider />
           <ListItemInfo
