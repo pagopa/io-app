@@ -44,9 +44,7 @@ import LoadingScreenContent from "../../../../../components/screens/LoadingScree
 import { itwIdpHintTest } from "../../../../../config";
 import {
   trackItwIdRequestFailure,
-  trackItwIdRequestTimeout,
-  trackItwRequest,
-  trackItwRequestSuccess
+  trackItwIdRequestTimeout
 } from "../../../analytics";
 
 // This can be any URL, as long as it has http or https as its protocol, otherwise it cannot be managed by the webview.
@@ -233,11 +231,9 @@ export const ItwCieCardReaderScreen = () => {
   const handleCieReadSuccess = (url: string) => {
     setWebViewVisible(false); // Try to hide the error page because the callback url is fake
     machineRef.send({ type: "cie-identification-completed", url });
-    trackItwRequestSuccess(identification?.mode);
   };
 
   if (isMachineLoading) {
-    trackItwRequest(identification?.mode);
     return LoadingSpinner;
   }
 
