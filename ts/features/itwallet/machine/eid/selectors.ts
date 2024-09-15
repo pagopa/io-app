@@ -34,3 +34,10 @@ export const selectCieAuthUrlOption = (snapshot: MachineSnapshot) =>
 
 export const selectIsLoading = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(ItwTags.Loading);
+
+export const selectIsCieIdEidRequest = (snapshot: MachineSnapshot) =>
+  snapshot.context.identification?.mode === "cieId" &&
+  snapshot.matches({ Issuance: "RequestingEid" });
+
+export const selectIsDisplayingPreview = (snapshot: MachineSnapshot) =>
+  snapshot.matches({ Issuance: "DisplayingPreview" });

@@ -1,5 +1,6 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import React from "react";
-import { ImageSourcePropType, StyleSheet } from "react-native";
+import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { AnimatedImage } from "../../../../../components/AnimatedImage";
 import { StoredCredential } from "../../utils/itwTypesUtils";
 import { CardSide } from "./types";
@@ -19,7 +20,11 @@ const CardBackground = ({ credentialType, side }: CardBackgroundProps) => {
     return null;
   }
 
-  return <AnimatedImage source={cardAssets[side]} style={styles.background} />;
+  return (
+    <View style={styles.wrapper}>
+      <AnimatedImage source={cardAssets[side]} style={styles.background} />
+    </View>
+  );
 };
 
 type CardAssets = Record<CardSide, ImageSourcePropType>;
@@ -35,6 +40,10 @@ const assetsMap: Record<string, CardAssets> = {
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    backgroundColor: IOColors["grey-100"],
+    borderRadius: 8
+  },
   background: {
     width: "100%",
     height: "100%"

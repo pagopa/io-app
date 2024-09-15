@@ -2550,7 +2550,7 @@ bonus:
   active: Active
   failed: Failed
   redeemed: Consumed
-  termsAndConditionFooter: 'By pressing "{{ctaText}}" you declare that you have read and understood the [Guide]({{regulationLink}}) and the [Privacy Policy]({{tosUrl}})'
+  termsAndConditionFooter: 'By pressing “{{ctaText}}” you declare that you are in possession of the requirements and have read and understood the [Guide]({{regulationLink}}) and the [Privacy Policy].'
   tos:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -2626,23 +2626,24 @@ bonus:
         website: Go to partner's website
       categories:
         counting: and other {{count}}
-        cultureAndEntertainment: Culture and Entertainment
-        health: Health and Wellness
-        learning: Education and Learning
+        cultureAndEntertainment: Culture and entertainment
+        health: Health and wellness
+        learning: Education and learning
         sport: Sport
         home: Home
-        telco: Telephony and Internet
-        finance: Banking and Financial Services
-        travel: Travels and Transportation
-        mobility: Sustainable Transport
-        job: Jobs and Internships
+        telco: Telephony and internet
+        finance: Banking and financial services
+        travel: Travels and transportation
+        mobility: Sustainable transport
+        job: Jobs and internships
       information:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
     cta:
-      activeBonus: Request your Card
+      activeBonus: Activate Carta Giovani Nazionale
+      back: Not now
       deactivateBonus: Deactivate Carta Giovani Nazionale
-      goToDetail: Use Carta Giovani
+      goToDetail: Use the card
     detail:
       cta:
         buyers: Discover CGN opportunities.
@@ -2690,7 +2691,7 @@ bonus:
           body: "We apologize for the issue.\nWe invite you to retry again later."
       loading:
         caption: "We're activating your Carta Giovani Nazionale"
-        subCaption: "Please wait."
+        subCaption: "Please wait..."
       error:
         title: "The Carta Giovani Nazionale service is not available at the moment."
         body: "Sorry, please try again later."
@@ -3147,6 +3148,7 @@ features:
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
         releasedBy: "Rilasciata da"
+        attachments: "Attachments"
         mdl:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
@@ -3191,6 +3193,11 @@ features:
         title: "Tutti i documenti saranno rimossi da IO"
         subtitle: "Se accedi con una nuova identità, i documenti già presenti nel Portafoglio saranno rimossi e Documenti su IO disattivato."
         action: "Continua con la nuova identità"
+      loading:
+        cieId:
+          title: Connessione con la tua app CieID in corso...
+          subtitle: Autorizza l'accesso nell'app CieID per continuare oppure annulla la connessione
+          cancel: Annulla connessione
     issuance:
       credentialAuth:
         title: "{{credentialName}}: dati necessari"
@@ -3286,6 +3293,7 @@ features:
             confirm: Sì, rimuovi
         toast:
           removed: Fatto! Hai rimosso {{credentialName}}
+        flipCard: "Show back"
   trialSystem:
     toast:
       subscribed: Done! You will receive a message when the trial period will begin.
@@ -3965,7 +3973,7 @@ FIMS:
   consentsScreen:
     errorStates:
       tempErrorBody: "C’è un problema temporaneo, riprova più tardi"
-    title: "Consenti la condivisione dei tuoi dati"
+    title: "Per accedere al servizio, consenti la condivisione dei seguenti dati"
     subtitle: "Autorizza IO a trasmettere a "
     subtitle2: " i dati necessari per la tua autenticazione su "
     requiredData: "Dati richiesti"

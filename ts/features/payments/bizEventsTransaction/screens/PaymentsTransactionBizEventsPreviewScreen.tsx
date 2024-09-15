@@ -36,7 +36,6 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
 
   useHeaderSecondLevel({
     title: "",
-    canGoBack: true,
     supportRequest: true
   });
 
