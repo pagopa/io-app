@@ -22,6 +22,10 @@ import {
   ItwTs
 } from "../features/itwallet/analytics";
 import {
+  itwCredentialsByTypeSelector,
+  itwCredentialsSelector
+} from "../features/itwallet/credentials/store/selectors";
+import {
   MixpanelOptInTrackingType,
   Property,
   PropertyToUpdate,
@@ -65,10 +69,10 @@ export const updateMixpanelProfileProperties = async (
   const TRACKING = mixpanelOptInHandler(state);
   const PAYMENTS_CONFIGURATION = getPaymentsAnalyticsConfiguration(state);
   const ITW_STATUS = walletStatusHandler();
-  const ITW_ID = idStatusHandler();
-  const ITW_PG = pgStatusHandler();
-  const ITW_TS = tsStatusHandler();
-  const ITW_CED = cedStatusHandler();
+  const ITW_ID = idStatusHandler(state);
+  const ITW_PG = pgStatusHandler(state);
+  const ITW_TS = tsStatusHandler(state);
+  const ITW_CED = cedStatusHandler(state);
 
   const profilePropertiesObject: ProfileProperties = {
     LOGIN_SESSION,
@@ -118,7 +122,24 @@ const tosVersionHandler = (state: GlobalState): number | string => {
 
 // TODO [SIW-1438]: Add dynamic profile properties
 const walletStatusHandler = (): ItwStatus => "L2";
-const idStatusHandler = (): ItwId => "valid";
-const pgStatusHandler = (): ItwPg => "valid";
-const tsStatusHandler = (): ItwTs => "valid";
-const cedStatusHandler = (): ItwCed => "valid";
+
+const idStatusHandler = (state: GlobalState): ItwId => {
+  const credentialsState = itwCredentialsSelector(state);
+  const hasEid = O.isSome(credentialsState.eid);
+  return hasEid ? "valid" : "not_available";
+};
+const pgStatusHandler = (state: GlobalState): ItwPg => {
+  const credentialsByType = itwCredentialsByTypeSelector(state);
+  const mdlCard = credentialsByType.MDL;
+  return O.isSome(mdlCard) ? "valid" : "not_available";
+};
+const tsStatusHandler = (state: GlobalState): ItwTs => {
+  const credentialsByType = itwCredentialsByTypeSelector(state);
+  const insuranceCard = credentialsByType.EuropeanHealthInsuranceCard;
+  return O.isSome(insuranceCard) ? "valid" : "not_available";
+};
+const cedStatusHandler = (state: GlobalState): ItwCed => {
+  const credentialsByType = itwCredentialsByTypeSelector(state);
+  const disabilityCard = credentialsByType.EuropeanDisabilityCard;
+  return O.isSome(disabilityCard) ? "valid" : "not_available";
+};

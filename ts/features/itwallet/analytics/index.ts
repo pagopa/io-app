@@ -1,4 +1,6 @@
 import { mixpanelTrack } from "../../../mixpanel";
+import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
 import { CredentialType } from "../common/utils/itwMocksUtils";
 import { IdentificationContext } from "../machine/eid/context";
@@ -35,7 +37,10 @@ export type KoState = {
   cta_id: string;
 };
 
-export type MixPanelCredential = "ITW_ID" | "ITW_PG" | "ITW_CED" | "ITW_TS";
+const mixPanelCredentials = ["ITW_ID", "ITW_PG", "ITW_CED", "ITW_TS"] as const;
+
+type MixPanelCredential = (typeof mixPanelCredentials)[number];
+
 export type OtherMixPanelCredential = "welfare" | "payment_method" | "CGN";
 type NewCredential = MixPanelCredential | OtherMixPanelCredential;
 
@@ -199,7 +204,7 @@ export const trackItwRequest = (ITW_ID_method?: ItwIdMethod) => {
   if (ITW_ID_method) {
     void mixpanelTrack(
       WALLET_EVENTS.ITW_ID_REQUEST,
-      buildEventProperties("TECH", "error", { ITW_ID_method })
+      buildEventProperties("TECH", undefined, { ITW_ID_method })
     );
   }
 };
@@ -208,7 +213,7 @@ export const trackItwRequestSuccess = (ITW_ID_method?: ItwIdMethod) => {
   if (ITW_ID_method) {
     void mixpanelTrack(
       WALLET_EVENTS.ITW_ID_REQUEST_SUCCESS,
-      buildEventProperties("TECH", "error", { ITW_ID_method, ITW_ID: "L2" })
+      buildEventProperties("TECH", undefined, { ITW_ID_method, ITW_ID: "L2" })
     );
   }
 };
@@ -249,6 +254,28 @@ export const trackItwIdNotMatch = () => {
   void mixpanelTrack(
     WALLET_EVENTS.ITW_LOGIN_ID_NOT_MATCH,
     buildEventProperties("KO", "error")
+  );
+};
+
+export const trackCredentialPropertiesSuccess = async (
+  credential: MixPanelCredential,
+  state: GlobalState
+) => {
+  await updateMixpanelProfileProperties(state, {
+    property: credential,
+    value: "valid"
+  });
+};
+
+export const trackAllCredentialProfileProperties = async (
+  state: GlobalState
+) => {
+  mixPanelCredentials.forEach(
+    async credential =>
+      await updateMixpanelProfileProperties(state, {
+        property: credential,
+        value: "valid"
+      })
   );
 };
 
