@@ -173,7 +173,7 @@ export const useIOBottomSheetModal = ({
       .then(setIsScreenReaderEnabled)
       .catch(_ => setIsScreenReaderEnabled(false));
     // Subscribe to `screenReaderChanged` to properly update the state.
-    // The method above is necessary because the event listener is triggered 
+    // The method above is necessary because the event listener is triggered
     // only when the screen reader internal state changes.
     // Unfortunately its function is not executed on subscription.
     const screenReaderChangedSubscription = AccessibilityInfo.addEventListener(
