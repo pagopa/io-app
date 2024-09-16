@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.69.0-rc.8",
+  "version": "2.70.0-rc.0",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v14.3.0-RELEASE/api_backend.yaml",
   "io_session_manager_api": "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/internal.yaml",
   "io_session_manager_public_api": "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/public.yaml",
@@ -22,8 +22,8 @@
   "services_api": "https://raw.githubusercontent.com/pagopa/io-backend/v14.3.0-RELEASE/api_services_app_backend.yaml",
   "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/v14.3.0-RELEASE/api_lollipop_first_consumer.yaml",
   "fast_login_api": "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/fast-login.yaml",
-  "pagopa_api_walletv3": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/pay-wallet-app/api/io-payment-wallet/v1/_openapi.json.tpl",
-  "pagopa_api_ecommerce": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/ecommerce-app/api/ecommerce-io/v2/_openapi.json.tpl",
+  "pagopa_api_walletv3": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.162.2/src/domains/pay-wallet-app/api/io-payment-wallet/v1/_openapi.json.tpl",
+  "pagopa_api_ecommerce": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.162.2/src/domains/ecommerce-app/api/ecommerce-io/v2/_openapi.json.tpl",
   "pagopa_api_biz_events": "https://raw.githubusercontent.com/pagopa/pagopa-biz-events-service/0.1.37/openapi/openapi_io_patch.json",
   "pagopa_api_platform": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/shared-app/api/session-wallet/v1/_openapi.json.tpl",
   "trial_system": "https://raw.githubusercontent.com/pagopa/io-backend/v14.3.0-RELEASE/api_trial_system.yaml",
@@ -106,7 +106,7 @@
   "dependencies": {
     "@babel/plugin-transform-regenerator": "^7.18.6",
     "@gorhom/bottom-sheet": "^4.1.5",
-    "@pagopa/io-app-design-system": "1.45.0",
+    "@pagopa/io-app-design-system": "1.46.0",
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-crypto": "^0.3.0",
     "@pagopa/io-react-native-http-client": "1.0.5",

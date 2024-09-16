@@ -1,7 +1,7 @@
 import {
-  ContentWrapper,
   ForceScrollDownView,
   H2,
+  IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { sequenceS } from "fp-ts/lib/Apply";
@@ -9,6 +9,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useMemo } from "react";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { StyleSheet, View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -129,8 +130,8 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   });
 
   return (
-    <ForceScrollDownView>
-      <ContentWrapper>
+    <ForceScrollDownView contentContainerStyle={styles.scrollView}>
+      <View style={styles.container}>
         <H2>
           {I18n.t("features.itWallet.issuance.credentialPreview.title", {
             credential: getCredentialNameFromType(credentialType)
@@ -138,7 +139,7 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
         </H2>
         <VSpacer size={24} />
         <ItwCredentialClaimsList data={credential} isPreview={true} />
-      </ContentWrapper>
+      </View>
       <FooterActions
         fixed={false}
         actions={{
@@ -162,3 +163,13 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
     </ForceScrollDownView>
   );
 };
+
+const styles = StyleSheet.create({
+  scrollView: {
+    flexGrow: 1
+  },
+  container: {
+    flex: 1,
+    marginHorizontal: IOVisualCostants.appMarginDefault
+  }
+});

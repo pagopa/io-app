@@ -2626,16 +2626,16 @@ bonus:
         website: Vai al sito del partner
       categories:
         counting: e altre {{count}}
-        cultureAndEntertainment: Cultura e Tempo Libero
-        health: Salute e Benessere
-        learning: Istruzione e Formazione
+        cultureAndEntertainment: Cultura e tempo libero
+        health: Salute e benessere
+        learning: Istruzione e formazione
         sport: Sport
         home: Casa
-        telco: Telefonia e Internet
-        finance: Servizi Bancari e Finanziari
-        travel: Viaggi e Trasporti
-        mobility: Mobilità Sostenibile
-        job: Lavoro e Tirocini
+        telco: Telefonia e internet
+        finance: Servizi bancari e finanziari
+        travel: Viaggi e trasporti
+        mobility: Mobilità sostenibile
+        job: Lavoro e tirocini
       information:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
@@ -3148,6 +3148,7 @@ features:
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
         releasedBy: "Rilasciata da"
+        attachments: "Allegati"
         mdl:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
@@ -3292,6 +3293,7 @@ features:
             confirm: Sì, rimuovi
         toast:
           removed: Fatto! Hai rimosso {{credentialName}}
+        flipCard: "Mostra retro"
   trialSystem:
     toast:
       subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione
@@ -3970,7 +3972,7 @@ FIMS:
   consentsScreen:
     errorStates:
       tempErrorBody: "C’è un problema temporaneo, riprova più tardi"
-    title: "Consenti la condivisione dei tuoi dati"
+    title: "Per accedere al servizio, consenti la condivisione dei seguenti dati"
     subtitle: "Autorizza IO a trasmettere a "
     subtitle2: " i dati necessari per la tua autenticazione su "
     requiredData: "Dati richiesti"
