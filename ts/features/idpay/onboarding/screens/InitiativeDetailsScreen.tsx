@@ -84,7 +84,7 @@ export const InitiativeDetailsScreen = () => {
 
   return (
     <ForceScrollDownView
-      threshold={150}
+      threshold={50}
       scrollEnabled={isDescriptionLoaded}
       contentContainerStyle={styles.scrollContainer}
     >
@@ -97,23 +97,22 @@ export const InitiativeDetailsScreen = () => {
         <ItemSeparatorComponent noPadded={true} />
         <VSpacer size={16} />
         {onboardingPrivacyAdvice}
-        <VSpacer size={32} />
-        <FooterActions
-          key={"continue"}
-          actions={{
-            type: "SingleButton",
-            primary: {
-              label: I18n.t("global.buttons.continue"),
-              accessibilityLabel: I18n.t("global.buttons.continue"),
-              onPress: handleContinuePress,
-              testID: "IDPayOnboardingContinue",
-              loading: isLoading,
-              disabled: isLoading
-            }
-          }}
-        />
-        <VSpacer size={48} />
       </View>
+      <FooterActions
+        key={"continue"}
+        fixed={false}
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("global.buttons.continue"),
+            accessibilityLabel: I18n.t("global.buttons.continue"),
+            onPress: handleContinuePress,
+            testID: "IDPayOnboardingContinue",
+            loading: isLoading,
+            disabled: isLoading
+          }
+        }}
+      />
     </ForceScrollDownView>
   );
 };

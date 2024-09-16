@@ -10,7 +10,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { default as React } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -31,32 +31,33 @@ type ListItemProps = {
 
 const MultiValuePrerequisitesScreen = () => {
   const pagerRef = React.useRef<PagerView>(null);
-  const { useSelector } = IdPayOnboardingMachineContext;
 
-  const multiSelfDeclarations = useSelector(multiRequiredCriteriaSelector);
-  const currentPage = useSelector(selectCurrentMultiSelfDeclarationPage);
+  const multiSelfDeclarations = IdPayOnboardingMachineContext.useSelector(
+    multiRequiredCriteriaSelector
+  );
+  const currentPage = IdPayOnboardingMachineContext.useSelector(
+    selectCurrentMultiSelfDeclarationPage
+  );
 
   React.useEffect(() => {
     pagerRef.current?.setPage(currentPage);
   }, [pagerRef, currentPage]);
 
   return (
-    <SafeAreaView style={IOStyles.flex}>
-      <PagerView
-        ref={pagerRef}
-        scrollEnabled={false}
-        style={IOStyles.flex}
-        initialPage={0}
-      >
-        {multiSelfDeclarations.map((selfDelcaration, index) => (
-          <View key={index}>
-            <MultiValuePrerequisiteItemScreenContent
-              selfDeclaration={selfDelcaration}
-            />
-          </View>
-        ))}
-      </PagerView>
-    </SafeAreaView>
+    <PagerView
+      ref={pagerRef}
+      scrollEnabled={false}
+      style={IOStyles.flex}
+      initialPage={0}
+    >
+      {multiSelfDeclarations.map((selfDelcaration, index) => (
+        <View key={index}>
+          <MultiValuePrerequisiteItemScreenContent
+            selfDeclaration={selfDelcaration}
+          />
+        </View>
+      ))}
+    </PagerView>
   );
 };
 
@@ -67,8 +68,7 @@ type MultiValuePrerequisiteItemScreenContentProps = {
 const MultiValuePrerequisiteItemScreenContent = ({
   selfDeclaration
 }: MultiValuePrerequisiteItemScreenContentProps) => {
-  const { useActorRef } = IdPayOnboardingMachineContext;
-  const machine = useActorRef();
+  const machine = IdPayOnboardingMachineContext.useActorRef();
 
   const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>(
     undefined
@@ -101,7 +101,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
           <Link>{I18n.t("idpay.onboarding.multiPrerequisites.link")}</Link>
           <VSpacer size={24} />
           <H4>{selfDeclaration.description}</H4>
-          <ScrollView style={styles.maxHeight}>
+          <ScrollView>
             {selfDeclaration.value.map((answer, index) => (
               <CustomListItem
                 key={index}
@@ -161,10 +161,6 @@ const styles = StyleSheet.create({
   },
   innerListItem: {
     paddingVertical: 4
-  },
-  maxHeight: {
-    flex: 1,
-    height: "100%"
   }
 });
 
