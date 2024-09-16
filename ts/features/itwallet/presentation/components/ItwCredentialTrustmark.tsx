@@ -4,6 +4,7 @@ import {
   Caption,
   FeatureInfo,
   hexToRgba,
+  IOColors,
   VSpacer,
   VStack,
   WithTestID
@@ -18,14 +19,17 @@ import {
   Group as SkiaGroup,
   Image as SkiaImage,
   RadialGradient as SkiaRadialGradient,
+  LinearGradient as SkiaLinearGradient,
   useImage,
   useSVG,
-  vec
+  vec,
+  Rect
 } from "@shopify/react-native-skia";
 import React, { useState } from "react";
 import {
   ColorValue,
   Image,
+  Text,
   LayoutChangeEvent,
   LayoutRectangle,
   Pressable,
@@ -37,11 +41,11 @@ import Animated, {
   Extrapolate,
   interpolate,
   SensorType,
+  useAnimatedProps,
   useAnimatedReaction,
   useAnimatedSensor,
   useDerivedValue,
-  useSharedValue,
-  withSpring
+  useSharedValue
 } from "react-native-reanimated";
 import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
 import I18n from "../../../../i18n";
@@ -76,6 +80,8 @@ const springConfig = {
 /* BUTTON
    Visual parameters */
 const TRUSTMARK_HEIGHT = 48;
+const TRUSTMARK_STAMP_SIZE = TRUSTMARK_HEIGHT * 1.6;
+const TRUSTMARK_GRADIENT_HEIGHT = TRUSTMARK_STAMP_SIZE * 2;
 const buttonBorderRadius = 12;
 const buttonInnerBorderColor: ColorValue = "#CCCCCC";
 const buttonBackgroundGradient = {
@@ -103,7 +109,9 @@ ItwCredentialTrustmarkProps) => {
   //   component: <QrCodeBottomSheetContent credential={credential} />
   // });
 
-  const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
+  const rotationSensor = useAnimatedSensor(SensorType.ROTATION, {
+    adjustToInterfaceOrientation: true
+  });
   const { qx } = rotationSensor.sensor.value;
   const initialQx = useSharedValue(0);
 
@@ -134,23 +142,31 @@ ItwCredentialTrustmarkProps) => {
 
   /* We don't need to consider the whole
     quaternion range, just the 1/10 */
-  const quaternionRange: number = 0.05;
+  const quaternionRange: number = 0.1;
 
   const skiaLightTranslateValues = useDerivedValue(() => {
-    skiaTranslateX.value = withSpring(
-      interpolate(
-        relativeQx.value,
-        [-quaternionRange, quaternionRange],
-        [maxTranslateX, -maxTranslateX],
-        Extrapolate.CLAMP
-      ),
-      springConfig
+    skiaTranslateX.value = interpolate(
+      relativeQx.value,
+      [-quaternionRange, quaternionRange],
+      [maxTranslateX, -maxTranslateX],
+      Extrapolate.CLAMP
     );
 
     return [
       { translateX: skiaTranslateX.value },
       { scale: lightScaleMultiplier }
     ];
+  });
+
+  const skiaGradientRainbowTranslateValues = useDerivedValue(() => {
+    const translateY = interpolate(
+      relativeQx.value,
+      [quaternionRange, -quaternionRange],
+      [-TRUSTMARK_GRADIENT_HEIGHT + TRUSTMARK_STAMP_SIZE, 0],
+      Extrapolate.CLAMP
+    );
+
+    return [{ translateY }];
   });
 
   const ButtonLight = () => (
@@ -225,6 +241,12 @@ ItwCredentialTrustmarkProps) => {
         onPressIn={onPressIn}
         onPressOut={onPressOut}
         onTouchEnd={onPressOut}
+        style={{
+          height: 500,
+          justifyContent: "center",
+          borderWidth: 1,
+          borderColor: IOColors.red
+        }}
       >
         <Animated.View
           style={[styles.container, animatedScaleStyle]}
@@ -254,22 +276,81 @@ ItwCredentialTrustmarkProps) => {
           <Canvas
             style={{
               position: "absolute",
-              height: TRUSTMARK_HEIGHT,
+              height: 500,
               width: "100%"
             }}
           >
-            <RoundedRect
+            {/* <RoundedRect
               x={0}
               y={0}
               width={buttonSize?.width ?? 0}
               height={TRUSTMARK_HEIGHT}
               r={0}
               color="rgba(0, 0, 0, 0)"
-            />
-            {/* <Mask mode="luminance" mask={}>
-              <SkiaCircle cx={0} cy={0} r={20} color="rgba(0, 0, 0, 100)" />
-            </Mask> */}
+            /> */}
+
+            <Rect
+              x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
+              y={0}
+              width={TRUSTMARK_STAMP_SIZE}
+              height={TRUSTMARK_GRADIENT_HEIGHT}
+              transform={skiaGradientRainbowTranslateValues}
+            >
+              <SkiaLinearGradient
+                mode="decal"
+                start={vec(0, 0)}
+                end={vec(0, TRUSTMARK_GRADIENT_HEIGHT)}
+                colors={[
+                  "rgba(255, 119, 115,1)",
+                  "rgba(255, 237, 95, 1)",
+                  "rgba(168, 255, 95, 1)",
+                  "rgba(131, 255, 247,1)",
+                  "rgba(120, 148, 255, 1)",
+                  "rgba(216, 117, 255, 1)",
+                  "rgba(255, 119, 115, 1)"
+                ]}
+                positions={[0, 0.2, 0.4, 0.6, 0.8, 0.9, 1]}
+              />
+            </Rect>
+
             <ButtonLight />
+
+            {/* <Mask
+              mode="alpha"
+              mask={
+                <SkiaGroup blendMode={"luminosity"}>
+                  <Rect
+                    x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
+                    y={0}
+                    width={TRUSTMARK_HEIGHT * 1.6}
+                    height={TRUSTMARK_HEIGHT * 1.6}
+                  >
+                    <SkiaLinearGradient
+                      start={vec(0, TRUSTMARK_HEIGHT)}
+                      end={vec(0, TRUSTMARK_HEIGHT * 3)}
+                      colors={[
+                        "rgb(255, 119, 115)",
+                        "rgba(255, 237, 95, 1)",
+                        "rgba(168, 255, 95, 1)",
+                        "rgba(131, 255, 247,1)",
+                        "rgba(120, 148, 255, 1)",
+                        "rgba(216, 117, 255, 1)",
+                        "rgba(255, 119, 115, 1)"
+                      ]}
+                      positions={[0, 0.2, 0.4, 0.6, 0.8, 0.9, 1]}
+                    />
+                  </Rect>
+                </SkiaGroup>
+              }
+            >
+              <ImageSVG
+                svg={trustMarkStampSVG}
+                x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
+                y={-TRUSTMARK_HEIGHT * 0.28}
+                width={TRUSTMARK_HEIGHT * 1.6}
+                height={TRUSTMARK_HEIGHT * 1.6}
+              />
+            </Mask> */}
 
             {trustMarkStampSVG && (
               <ImageSVG
@@ -324,12 +405,13 @@ export const QrCodeBottomSheetContent = ({
 const styles = StyleSheet.create({
   container: {
     borderCurve: "continuous",
-    borderRadius: buttonBorderRadius,
-    overflow: "hidden"
+    borderRadius: buttonBorderRadius
+    // overflow: "hidden"
   },
   buttonInnerBorder: {
     ...StyleSheet.absoluteFillObject,
     borderRadius: buttonBorderRadius - 1,
+    borderCurve: "continuous",
     borderColor: hexToRgba(buttonInnerBorderColor, 0.5),
     borderWidth: 1
   },
