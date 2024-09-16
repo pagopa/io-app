@@ -119,7 +119,7 @@ export const idPayOnboardingMachine = setup({
             onError: [
               {
                 guard: "isSessionExpired",
-                target: "SessionExpired"
+                target: "#idpay-onboarding.SessionExpired"
               },
               {
                 actions: assign(({ event }) => ({
