@@ -125,21 +125,19 @@ const walletStatusHandler = (): ItwStatus => "L2";
 
 const idStatusHandler = (state: GlobalState): ItwId => {
   const credentialsState = itwCredentialsSelector(state);
-  const hasEid = O.isSome(credentialsState.eid);
-  return hasEid ? "valid" : "not_available";
+  return credentialsState.eid ? "valid" : "not_available";
 };
 const pgStatusHandler = (state: GlobalState): ItwPg => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
-  const mdlCard = credentialsByType.MDL;
-  return O.isSome(mdlCard) ? "valid" : "not_available";
+  return credentialsByType.MDL ? "valid" : "not_available";
 };
 const tsStatusHandler = (state: GlobalState): ItwTs => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
-  const insuranceCard = credentialsByType.EuropeanHealthInsuranceCard;
-  return O.isSome(insuranceCard) ? "valid" : "not_available";
+  return credentialsByType.EuropeanHealthInsuranceCard
+    ? "valid"
+    : "not_available";
 };
 const cedStatusHandler = (state: GlobalState): ItwCed => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
-  const disabilityCard = credentialsByType.EuropeanDisabilityCard;
-  return O.isSome(disabilityCard) ? "valid" : "not_available";
+  return credentialsByType.EuropeanDisabilityCard ? "valid" : "not_available";
 };
