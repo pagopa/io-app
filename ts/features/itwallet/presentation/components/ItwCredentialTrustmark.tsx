@@ -10,10 +10,16 @@ import {
 } from "@pagopa/io-app-design-system";
 import {
   Canvas,
+  ImageSVG,
+  Mask,
   RoundedRect,
+  Skia,
   Circle as SkiaCircle,
   Group as SkiaGroup,
+  Image as SkiaImage,
   RadialGradient as SkiaRadialGradient,
+  useImage,
+  useSVG,
   vec
 } from "@shopify/react-native-skia";
 import React, { useState } from "react";
@@ -128,7 +134,7 @@ ItwCredentialTrustmarkProps) => {
 
   /* We don't need to consider the whole
     quaternion range, just the 1/10 */
-  const quaternionRange: number = 0.1;
+  const quaternionRange: number = 0.05;
 
   const skiaLightTranslateValues = useDerivedValue(() => {
     skiaTranslateX.value = withSpring(
@@ -150,7 +156,7 @@ ItwCredentialTrustmarkProps) => {
   const ButtonLight = () => (
     <SkiaGroup
       opacity={lightSkiaOpacity}
-      blendMode={"hardLight"}
+      blendMode={"colorDodge"}
       origin={vec((buttonSize?.width ?? 0) / 2, (buttonSize?.height ?? 0) / 2)}
     >
       <SkiaCircle
@@ -193,6 +199,19 @@ ItwCredentialTrustmarkProps) => {
   const { onPressIn, onPressOut, animatedScaleStyle } =
     useSpringPressScaleAnimation();
 
+  // const trustMarkStamp = useImage(
+  //   // eslint-disable-next-line @typescript-eslint/no-var-requires
+  //   require("../../../../../img/features/itWallet/credential/trustmark-2x.png")
+  // );
+
+  const trustMarkStampSVG = useSVG(
+    /* We use the `html` extension to avoid the `svg-transformer` used to
+    render local files, as it causes conflicts with the `skia` library.
+    To learn more: https://github.com/Shopify/react-native-skia/issues/1335#issuecomment-2088240523 */
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require("../../../../../img/features/itWallet/credential/trustmark-stamp.svg.html")
+  );
+
   return (
     <>
       <Pressable
@@ -224,11 +243,11 @@ ItwCredentialTrustmarkProps) => {
                 "features.itWallet.presentation.trustmark.cta"
               ).toUpperCase()}
             </Caption>
-            <Image
+            {/* <Image
               style={styles.logo}
               source={require("../../../../../img/features/itWallet/credential/trustmark.png")}
               accessibilityIgnoresInvertColors
-            />
+            /> */}
           </LinearGradient>
           <View style={styles.buttonInnerBorder} />
 
@@ -247,8 +266,30 @@ ItwCredentialTrustmarkProps) => {
               r={0}
               color="rgba(0, 0, 0, 0)"
             />
-
+            {/* <Mask mode="luminance" mask={}>
+              <SkiaCircle cx={0} cy={0} r={20} color="rgba(0, 0, 0, 100)" />
+            </Mask> */}
             <ButtonLight />
+
+            {trustMarkStampSVG && (
+              <ImageSVG
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                svg={trustMarkStampSVG!}
+                x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
+                y={-TRUSTMARK_HEIGHT * 0.28}
+                width={TRUSTMARK_HEIGHT * 1.6}
+                height={TRUSTMARK_HEIGHT * 1.6}
+              />
+            )}
+
+            {/* <SkiaImage
+              image={trustMarkStamp}
+              x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
+              y={-TRUSTMARK_HEIGHT * 0.2}
+              width={TRUSTMARK_HEIGHT}
+              height={TRUSTMARK_HEIGHT}
+              fit="contain"
+            /> */}
           </Canvas>
         </Animated.View>
       </Pressable>
@@ -282,6 +323,7 @@ export const QrCodeBottomSheetContent = ({
 
 const styles = StyleSheet.create({
   container: {
+    borderCurve: "continuous",
     borderRadius: buttonBorderRadius,
     overflow: "hidden"
   },
@@ -299,14 +341,14 @@ const styles = StyleSheet.create({
   },
   caption: {
     zIndex: 10
-  },
-  logo: {
-    zIndex: 1,
-    position: "absolute",
-    height: TRUSTMARK_HEIGHT,
-    width: TRUSTMARK_HEIGHT,
-    transform: [{ scale: 1.5 }],
-    // top: "5%",
-    right: 8
   }
+  // logo: {
+  //   zIndex: 1,
+  //   position: "absolute",
+  //   height: TRUSTMARK_HEIGHT,
+  //   width: TRUSTMARK_HEIGHT,
+  //   transform: [{ scale: 1.5 }],
+  //   top: "5%",
+  //   right: 8
+  // }
 });
