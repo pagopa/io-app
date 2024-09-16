@@ -8,6 +8,12 @@ import { isItwTrialActiveSelector } from "../../../trialSystem/store/reducers";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import {
+  trackItWalletBannerTap,
+  trackItWalletBannerClosure,
+  trackITWalletBannerVisualized
+} from "../../analytics";
 
 type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
@@ -35,14 +41,36 @@ export const ItwDiscoveryBanner = ({
     [isVisible, isItwTrialActive, isItwValid, isItwEnabled]
   );
 
+  const trackBannerProperties = React.useMemo(
+    () => ({
+      banner_id: "itwDiscoveryBannerTestID", // Banner testID prop
+      banner_page:
+        navigation?.getState()?.routes?.[navigation?.getState()?.index]?.name,
+      banner_landing: "ITW_INTRO"
+    }),
+    [navigation]
+  );
+
+  useOnFirstRender(() => {
+    if (!shouldBeHidden) {
+      trackITWalletBannerVisualized(trackBannerProperties);
+    }
+  });
+
   if (shouldBeHidden) {
     return null;
   }
 
   const handleOnPress = () => {
+    trackItWalletBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO
     });
+  };
+
+  const handleOnClose = () => {
+    trackItWalletBannerClosure(trackBannerProperties);
+    setVisible(false);
   };
 
   return (
@@ -60,7 +88,7 @@ export const ItwDiscoveryBanner = ({
         pictogramName="itWallet"
         color="turquoise"
         size="big"
-        onClose={() => setVisible(false)}
+        onClose={handleOnClose}
         labelClose={I18n.t("global.buttons.close")}
         onPress={handleOnPress}
       />

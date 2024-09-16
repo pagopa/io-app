@@ -24,7 +24,8 @@ import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { selectWalletCards } from "../store/selectors";
 import {
   trackAllCredentialProfileProperties,
-  trackOpenWalletScreen
+  trackOpenWalletScreen,
+  trackWalletAdd
 } from "../../itwallet/analytics";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
@@ -41,6 +42,7 @@ const WalletHomeScreen = ({ route }: Props) => {
 
   useFocusEffect(
     React.useCallback(() => {
+      trackOpenWalletScreen();
       dispatch(walletToggleLoadingState(true));
       dispatch(getPaymentsWalletUserMethods.request());
       dispatch(idPayWalletGet.request());
@@ -73,6 +75,7 @@ const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
   const cards = useIOSelector(selectWalletCards);
 
   const handleAddToWalletButtonPress = () => {
+    trackWalletAdd();
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ONBOARDING
     });

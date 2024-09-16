@@ -44,7 +44,11 @@ import LoadingScreenContent from "../../../../../components/screens/LoadingScree
 import { itwIdpHintTest } from "../../../../../config";
 import {
   trackItwIdRequestFailure,
-  trackItwIdRequestTimeout
+  trackItwIdRequestTimeout,
+  trackItWalletCieCardReading,
+  trackItWalletCieCardReadingFailure,
+  trackItWalletCieCardReadingSuccess,
+  trackItWalletErrorCardReading
 } from "../../../analytics";
 
 // This can be any URL, as long as it has http or https as its protocol, otherwise it cannot be managed by the webview.
@@ -135,12 +139,26 @@ const getTextForState = (
   return texts[state];
 };
 
+const getMixpanelHandler = (
+  state: ReadingState
+): ((...args: Array<unknown>) => void) => {
+  const events: Record<ReadingState, (...args: Array<unknown>) => void> = {
+    [ReadingState.waiting_card]: () => null,
+    [ReadingState.reading]: () => null,
+    [ReadingState.completed]: () => null,
+    [ReadingState.error]: trackItWalletErrorCardReading
+  };
+  return events[state];
+};
+
 const LoadingSpinner = (
   <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
 );
 
 export const ItwCieCardReaderScreen = () => {
   const navigation = useNavigation<StackNavigationProp<ItwParamsList>>();
+
+  useFocusEffect(trackItWalletCieCardReading);
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isMachineLoading =
@@ -184,6 +202,7 @@ export const ItwCieCardReaderScreen = () => {
     handleAccessibilityAnnouncement(event);
     // Wait a few seconds before showing the consent web view to display the success message
     if (event === Cie.CieEvent.completed) {
+      trackItWalletCieCardReadingSuccess();
       setTimeout(
         () => {
           setIdentificationStep(IdentificationStep.CONSENT);
@@ -198,6 +217,8 @@ export const ItwCieCardReaderScreen = () => {
   const handleCieReadError = (error: Cie.CieError) => {
     handleAccessibilityAnnouncement(error);
 
+    // TODO Add **trackItWalletCieCardReadingFailure({ reason: "ADPU not supported" })** when ItwADPUnotsupported screen is added
+
     switch (error.type) {
       case Cie.CieErrorType.WEB_VIEW_ERROR:
         break;
@@ -211,6 +232,7 @@ export const ItwCieCardReaderScreen = () => {
         });
         break;
       case Cie.CieErrorType.TAG_NOT_VALID:
+        trackItWalletCieCardReadingFailure({ reason: "unknown card" });
         navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.WRONG_CARD);
         break;
       case Cie.CieErrorType.CERTIFICATE_ERROR:
@@ -223,6 +245,7 @@ export const ItwCieCardReaderScreen = () => {
         trackItwIdRequestFailure(identification?.mode);
         break;
       default:
+        trackItWalletCieCardReadingFailure({ reason: "KO" });
         navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR);
         break;
     }
@@ -260,6 +283,8 @@ export const ItwCieCardReaderScreen = () => {
       readingState,
       isScreenReaderEnabled
     );
+
+    getMixpanelHandler(readingState)();
 
     return (
       <ScrollView

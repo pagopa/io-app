@@ -52,7 +52,7 @@ const WalletCardOnboardingScreen = () => {
   useFocusEffect(() => trackShowCredentialsList());
 
   const isItwSectionVisible = React.useMemo(
-    // IT Wallet cedential catalog should be visible if
+    // IT Wallet credential catalog should be visible if
     () =>
       isItwTrialEnabled && // User is part of the trial
       isItwValid && // An eID has ben obtained and wallet is valid

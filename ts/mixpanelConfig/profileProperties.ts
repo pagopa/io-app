@@ -50,6 +50,7 @@ type ProfileProperties = {
   ITW_PG: ItwPg;
   ITW_TS: ItwTs;
   ITW_CED: ItwCed;
+  ITW_HAS_READ_IPZS_POLICY: boolean;
 };
 
 export const updateMixpanelProfileProperties = async (
@@ -85,11 +86,7 @@ export const updateMixpanelProfileProperties = async (
     SERVICE_CONFIGURATION,
     TRACKING,
     PAYMENTS_CONFIGURATION,
-    ITW_STATUS,
-    ITW_ID,
-    ITW_PG,
-    ITW_TS,
-    ITW_CED
+    ITW_HAS_READ_IPZS_POLICY: false
   };
 
   if (forceUpdateFor) {

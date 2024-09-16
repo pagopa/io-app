@@ -7,34 +7,47 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { itwIsCieSupportedSelector } from "../store/selectors";
+import {
+  trackItWalletIDMethod,
+  trackItWalletIDMethodSelected
+} from "../../analytics";
+import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   const isCieSupportedPot = useIOSelector(itwIsCieSupportedSelector);
 
+  const store = useIOStore();
+
   const isCieSupported = React.useMemo(
     () => cieFlowForDevServerEnabled || pot.getOrElse(isCieSupportedPot, false),
     [isCieSupportedPot]
   );
 
+  useFocusEffect(trackItWalletIDMethod);
+
   const handleSpidPress = () => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "spid" });
   };
 
   const handleCiePinPress = () => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "cie_pin" });
   };
 
   const handleCieIdPress = () => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "cieid" });
   };
 
   return (
@@ -81,7 +94,14 @@ export const ItwIdentificationModeSelectionScreen = () => {
           />
         </VStack>
         <VSpacer size={24} />
-        <ItwMarkdown>
+        <ItwMarkdown
+          onLinkOpen={() =>
+            updateMixpanelProfileProperties(store.getState(), {
+              property: "ITW_HAS_READ_IPZS_POLICY",
+              value: true
+            })
+          }
+        >
           {I18n.t("features.itWallet.identification.mode.privacy")}
         </ItwMarkdown>
       </ContentWrapper>

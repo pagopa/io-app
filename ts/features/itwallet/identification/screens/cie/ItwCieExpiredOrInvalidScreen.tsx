@@ -1,13 +1,17 @@
 import React from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../../i18n";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { useItwPreventNavigationEvent } from "../../../common/hooks/useItwPreventNavigationEvent";
+import { trackItWalletCieCardVerifyFailure } from "../../../analytics";
 
 export const ItwCieExpiredOrInvalidScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   useItwPreventNavigationEvent();
+
+  useFocusEffect(trackItWalletCieCardVerifyFailure);
 
   const handleClose = React.useCallback(() => {
     machineRef.send({ type: "close" });
