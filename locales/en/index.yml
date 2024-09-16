@@ -2716,9 +2716,9 @@ bonus:
         warning: "Attention! "
         revoked: "Attention! This card has been revoked cause {{reason}}"
         expired: "Attention! This card expired on {{date}}"
-      ownership: Who can use this card?
+      ownership: Who can use this Card?
       status:
-        title: Carta Giovani Nazionale (CGN)
+        title: Carta Giovani Nazionale
         eyca: EYCA card
         eycaCircuit: EYCA circuit
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
