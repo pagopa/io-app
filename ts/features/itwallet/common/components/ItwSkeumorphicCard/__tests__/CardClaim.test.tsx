@@ -28,7 +28,7 @@ describe("CardClaim", () => {
       />
     );
 
-    expect(queryByText("Some string")).toBeTruthy();
+    expect(queryByText("SOME STRING")).toBeTruthy();
     expect(queryByTestId("claimTestID")).toBeTruthy();
   });
 });

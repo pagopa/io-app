@@ -189,7 +189,7 @@ const DcFrontData = ({ claims }: DataComponentProps) => {
 };
 
 const DcBackData = ({ claims }: DataComponentProps) => (
-  <View testID="mdlBackDataTestID" style={styles.container}>
+  <View testID="dcBackDataTestID" style={styles.container}>
     <CardClaimRenderer
       claim={claims["link_qr_code"]}
       is={StringClaim.is}

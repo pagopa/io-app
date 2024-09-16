@@ -1,5 +1,122 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`CardData should match snapshot for DC back data 1`] = `
+<View
+  style={
+    {
+      "height": "100%",
+      "position": "absolute",
+      "width": "100%",
+    }
+  }
+  testID="dcBackDataTestID"
+/>
+`;
+
+exports[`CardData should match snapshot for DC front data 1`] = `
+<View
+  style={
+    {
+      "height": "100%",
+      "position": "absolute",
+      "width": "100%",
+    }
+  }
+  testID="dcFrontDataTestID"
+>
+  <View
+    style={
+      [
+        {
+          "position": "absolute",
+        },
+        {
+          "right": "3.5%",
+          "top": "44.5%",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      allowFontScaling={false}
+      color="black"
+      defaultColor="black"
+      defaultWeight="Semibold"
+      font="TitilliumSansPro"
+      fontStyle={
+        {
+          "fontSize": 22.916666666666668,
+        }
+      }
+      lineBreakMode="head"
+      numberOfLines={1}
+      style={
+        [
+          {
+            "fontSize": 22.916666666666668,
+          },
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="Semibold"
+    >
+      SAVOIA
+    </Text>
+  </View>
+  <View
+    style={
+      [
+        {
+          "position": "absolute",
+        },
+        {
+          "right": "3.5%",
+          "top": "55.9%",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      allowFontScaling={false}
+      color="black"
+      defaultColor="black"
+      defaultWeight="Semibold"
+      font="TitilliumSansPro"
+      fontStyle={
+        {
+          "fontSize": 22.916666666666668,
+        }
+      }
+      lineBreakMode="head"
+      numberOfLines={1}
+      style={
+        [
+          {
+            "fontSize": 22.916666666666668,
+          },
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="Semibold"
+    >
+      CASIMIRA
+    </Text>
+  </View>
+</View>
+`;
+
 exports[`CardData should match snapshot for MDL back data 1`] = `
 <View
   style={
@@ -280,7 +397,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       }
       weight="Semibold"
     >
-      FEDIRACA
+      MASTRANU
     </Text>
   </View>
   <View
@@ -325,7 +442,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       }
       weight="Semibold"
     >
-      MASTRANU
+      FEDIRACA
     </Text>
   </View>
   <View
@@ -461,6 +578,51 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       weight="Semibold"
     >
       08/01/2025
+    </Text>
+  </View>
+  <View
+    style={
+      [
+        {
+          "position": "absolute",
+        },
+        {
+          "left": "57%",
+          "top": "36.3%",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      allowFontScaling={false}
+      color="black"
+      defaultColor="black"
+      defaultWeight="Semibold"
+      font="TitilliumSansPro"
+      fontStyle={
+        {
+          "fontSize": 22.916666666666668,
+        }
+      }
+      lineBreakMode="head"
+      numberOfLines={1}
+      style={
+        [
+          {
+            "fontSize": 22.916666666666668,
+          },
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="Semibold"
+    >
+      MC-RM
     </Text>
   </View>
   <View
