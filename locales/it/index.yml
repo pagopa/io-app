@@ -2550,7 +2550,7 @@ bonus:
   active: Attivo
   failed: Fallito
   redeemed: Utilizzato
-  termsAndConditionFooter: 'Premendo "{{ctaText}}" dichiari di aver letto e compreso la [Guida]({{regulationLink}}) e l''[Informativa Privacy]({{tosUrl}})'
+  termsAndConditionFooter: 'Premendo "{{ctaText}}" dichiari di essere in possesso dei requisiti e di aver letto e compreso la [Guida]({{regulationLink}}) e l''[Informativa Privacy]({{tosUrl}})'
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -2626,16 +2626,16 @@ bonus:
         website: Vai al sito del partner
       categories:
         counting: e altre {{count}}
-        cultureAndEntertainment: Cultura e Tempo Libero
-        health: Salute e Benessere
-        learning: Istruzione e Formazione
+        cultureAndEntertainment: Cultura e tempo libero
+        health: Salute e benessere
+        learning: Istruzione e formazione
         sport: Sport
         home: Casa
-        telco: Telefonia e Internet
-        finance: Servizi Bancari e Finanziari
-        travel: Viaggi e Trasporti
-        mobility: Mobilità Sostenibile
-        job: Lavoro e Tirocini
+        telco: Telefonia e internet
+        finance: Servizi bancari e finanziari
+        travel: Viaggi e trasporti
+        mobility: Mobilità sostenibile
+        job: Lavoro e tirocini
       information:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
@@ -2653,7 +2653,8 @@ bonus:
         expired: Codice sconto scaduto!
         copyButton: Copia codice sconto
     cta:
-      activeBonus: Richiedi la Carta
+      activeBonus: Attiva Carta Giovani Nazionale
+      back: Non ora
       deactivateBonus: Disattiva Carta Giovani Nazionale
       goToDetail: Usa la Carta
     detail:
@@ -2703,7 +2704,7 @@ bonus:
           body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
       loading:
         caption: "Stiamo attivando la tua Carta Giovani Nazionale"
-        subCaption: "Ti preghiamo di attendere."
+        subCaption: "Attendi qualche secondo..."
       error:
         title: "Il servizio Carta Giovani Nazionale in questo momento non è disponibile."
         body: "Ci dispiace, riprova più tardi."
@@ -3160,6 +3161,7 @@ features:
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
         releasedBy: "Rilasciata da"
+        attachments: "Allegati"
         mdl:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
@@ -3204,6 +3206,11 @@ features:
         title: "Tutti i documenti saranno rimossi da IO"
         subtitle: "Se accedi con una nuova identità, i documenti già presenti nel Portafoglio saranno rimossi e Documenti su IO disattivato."
         action: "Continua con la nuova identità"
+      loading:
+        cieId:
+          title: Connessione con la tua app CieID in corso...
+          subtitle: Autorizza l'accesso nell'app CieID per continuare oppure annulla la connessione
+          cancel: Annulla connessione
     issuance:
       credentialAuth:
         title: "{{credentialName}}: dati necessari"
@@ -3299,6 +3306,7 @@ features:
             confirm: Sì, rimuovi
         toast:
           removed: Fatto! Hai rimosso {{credentialName}}
+        flipCard: "Mostra retro"
   trialSystem:
     toast:
       subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione
@@ -3977,7 +3985,7 @@ FIMS:
   consentsScreen:
     errorStates:
       tempErrorBody: "C’è un problema temporaneo, riprova più tardi"
-    title: "Consenti la condivisione dei tuoi dati"
+    title: "Per accedere al servizio, consenti la condivisione dei seguenti dati"
     subtitle: "Autorizza IO a trasmettere a "
     subtitle2: " i dati necessari per la tua autenticazione su "
     requiredData: "Dati richiesti"
