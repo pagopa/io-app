@@ -37,3 +37,44 @@ export const handleContactSupport = (
     });
   }
 };
+
+type TokenType =
+  | "spidLevel"
+  | "walletToken"
+  | "myPortalToken"
+  | "bpdToken"
+  | "zendeskToken"
+  | "fimsToken"
+  | "lollipopAssertionRef";
+
+type DefaultTokenType = Exclude<TokenType, "zendeskToken">;
+
+// Define a function that takes an optional array of TokenType
+export function formatRequestedTokenString(
+  refreshZendeskTokenSel: boolean,
+  tokenType?: Array<TokenType>
+): string {
+  // If tokenType is provided and contains values, return the joined tokens
+  // eslint-disable-next-line functional/no-let
+  let tokensArray;
+  if (tokenType && tokenType.length > 0) {
+    tokensArray = tokenType;
+  } else {
+    // If tokenType is not provided, return the default list excluding "zendeskToken"
+    const defaultTokens: Array<DefaultTokenType> = [
+      "spidLevel",
+      "walletToken",
+      "myPortalToken",
+      "bpdToken",
+      "fimsToken",
+      "lollipopAssertionRef"
+    ];
+    tokensArray = defaultTokens;
+  }
+
+  if (refreshZendeskTokenSel && !tokensArray.includes("zendeskToken", 0)) {
+    return `(${[...tokensArray, "zendeskToken"].join(",")})`;
+  } else {
+    return `(${tokensArray.join(",")})`;
+  }
+}

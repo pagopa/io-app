@@ -1,6 +1,8 @@
 // watch for all actions regarding Zendesk
-import { takeLatest, select, call, put } from "typed-redux-saga/macro";
+import { takeLatest, select, call, put, take } from "typed-redux-saga/macro";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as E from "fp-ts/lib/Either";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import {
   getZendeskConfig,
   zendeskTokenNeedsRefresh,
@@ -8,7 +10,8 @@ import {
   zendeskRequestTicketNumber,
   zendeskStartPolling,
   zendeskSupportCompleted,
-  zendeskSupportStart
+  zendeskSupportStart,
+  getZendeskToken
 } from "../store/actions";
 import { ContentClient } from "../../../api/content";
 import { dismissSupport } from "../../../utils/supportAssistance";
@@ -18,6 +21,11 @@ import { startTimer } from "../../../utils/timer";
 import { checkSession } from "../../../sagas/startup/watchCheckSessionSaga";
 import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
 import { BackendClient } from "../../../api/backend";
+import { SagaCallReturnType } from "../../../types/utils";
+import { formatRequestedTokenString } from "../utils";
+import { convertUnknownToError } from "../../../utils/errors";
+import { withRefreshApiCall } from "../../fastLogin/saga/utils";
+import { sessionInformationLoadSuccess } from "../../../store/actions/authentication";
 import { isDevEnv } from "./../../../utils/environment";
 import { zendeskSupport } from "./orchestration";
 import { handleGetZendeskConfig } from "./networking/handleGetZendeskConfig";
@@ -80,4 +88,34 @@ export function* watchZendeskSupportSaga() {
   yield* takeLatest(identificationRequest, () => {
     dismissSupport();
   });
+}
+
+export function* getZendeskTokenSaga(
+  getSession: ReturnType<typeof BackendClient>["getSession"]
+) {
+  yield* take(getZendeskToken.request);
+  try {
+    const fields = formatRequestedTokenString(true);
+
+    const response = (yield* call(
+      withRefreshApiCall,
+      getSession({ fields })
+    )) as unknown as SagaCallReturnType<typeof getSession>;
+
+    if (E.isLeft(response)) {
+      throw Error(readableReport(response.left));
+    } else {
+      if (response.right.status === 200) {
+        yield* put(getZendeskToken.success());
+        yield* put(sessionInformationLoadSuccess(response.right.value));
+      } else {
+        yield* put(getZendeskToken.failure());
+      }
+      return response.right.status;
+    }
+  } catch (e) {
+    const error = convertUnknownToError(e);
+    yield* put(getZendeskToken.failure());
+    return error;
+  }
 }

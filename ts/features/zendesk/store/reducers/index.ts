@@ -20,7 +20,8 @@ import {
   zendeskSelectedSubcategory,
   zendeskStartPolling,
   zendeskStopPolling,
-  zendeskSupportStart
+  zendeskSupportStart,
+  getZendeskToken
 } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
@@ -41,6 +42,7 @@ export type ZendeskState = {
   ticketNumber: pot.Pot<number, Error>;
   getSessionPollingRunning?: boolean;
   zendeskTokenNeedsRefresh?: boolean;
+  getZendeskTokenStatus?: "request" | "success" | "error";
 };
 
 const INITIAL_STATE: ZendeskState = {
@@ -57,6 +59,22 @@ const reducer = (
       return {
         ...state,
         zendeskTokenNeedsRefresh: action.payload
+      };
+    case getType(getZendeskToken.request):
+      return {
+        ...state,
+        getZendeskTokenStatus: "request"
+      };
+
+    case getType(getZendeskToken.success):
+      return {
+        ...state,
+        getZendeskTokenStatus: "success"
+      };
+    case getType(getZendeskToken.failure):
+      return {
+        ...state,
+        getZendeskTokenStatus: "error"
       };
     case getType(zendeskStopPolling):
       return {
@@ -129,6 +147,9 @@ export const zendeskConfigSelector = createSelector(
 
 export const zendeskTokenNeedsRefreshSelector = (state: GlobalState) =>
   state.assistanceTools.zendesk.zendeskTokenNeedsRefresh ?? false;
+
+export const getZendeskTokenStatusSelector = (state: GlobalState) =>
+  state.assistanceTools.zendesk.getZendeskTokenStatus;
 
 export const zendeskSelectedCategorySelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.selectedCategory],

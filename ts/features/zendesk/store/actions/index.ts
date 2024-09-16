@@ -82,6 +82,15 @@ export const zendeskTokenNeedsRefresh = createStandardAction(
 )<boolean>();
 
 /**
+ * Request the zendesk token to getSession
+ */
+export const getZendeskToken = createAsyncAction(
+  "GET_ZENDESK_TOKEN_REQUEST",
+  "GET_ZENDESK_TOKEN_SUCCESS",
+  "GET_ZENDESK_TOKEN_FAILURE"
+)<undefined, undefined, undefined>();
+
+/**
  * Request the zendesk config
  */
 export const getZendeskConfig = createAsyncAction(
@@ -119,6 +128,7 @@ export type ZendeskSupportActions =
   | ActionType<typeof zendeskSupportBack>
   | ActionType<typeof zendeskSupportFailure>
   | ActionType<typeof zendeskTokenNeedsRefresh>
+  | ActionType<typeof getZendeskToken>
   | ActionType<typeof getZendeskConfig>
   | ActionType<typeof zendeskSelectedCategory>
   | ActionType<typeof zendeskRequestTicketNumber>

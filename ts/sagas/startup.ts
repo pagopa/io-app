@@ -51,6 +51,7 @@ import { handleClearAllAttachments } from "../features/messages/saga/handleClear
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import {
+  getZendeskTokenSaga,
   watchZendeskGetSessionSaga,
   watchZendeskSupportSaga
 } from "../features/zendesk/saga";
@@ -117,6 +118,7 @@ import { cancellAllLocalNotifications } from "../features/pushNotifications/util
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
 import { zendeskTokenNeedsRefresh } from "../features/zendesk/store/actions";
 import { zendeskTokenNeedsRefreshSelector } from "../features/zendesk/store/reducers";
+import { formatRequestedTokenString } from "../features/zendesk/utils";
 import {
   clearKeychainError,
   keychainError
@@ -151,7 +153,6 @@ import { checkAcknowledgedFingerprintSaga } from "./startup/onboarding/biometric
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import {
   checkSession,
-  formatRequestedTokenString,
   watchCheckSessionSaga
 } from "./startup/watchCheckSessionSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
@@ -555,6 +556,7 @@ export function* initializeApplicationSaga(
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
   }
 
+  yield* fork(getZendeskTokenSaga, backendClient.getSession);
   // Here we can be sure that the session information is loaded and valid
   const bpdToken = maybeSessionInformation.value.bpdToken as string;
   if (cdcEnabled) {
