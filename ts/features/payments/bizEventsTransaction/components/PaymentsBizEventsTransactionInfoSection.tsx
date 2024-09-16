@@ -3,6 +3,7 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import {
+  Alert,
   Divider,
   IOLogoPaymentType,
   IORadiusScale,
@@ -20,6 +21,7 @@ import TransactionReceiptDivider from "../../../../../img/features/wallet/transa
 import { WalletInfo } from "../../../../../definitions/pagopa/biz-events/WalletInfo";
 import { getPayerInfoLabel } from "../utils";
 import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
+import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 
 type PaymentsBizEventsTransactionInfoSectionProps = {
   transaction?: NoticeDetailResponse;
@@ -173,6 +175,12 @@ const PaymentsBizEventsTransactionInfoSection = ({
             </>
           )}
         </View>
+        {transactionInfo?.origin === OriginEnum.PM && (
+          <Alert
+            variant="info"
+            content="La ricevuta pagoPA non è disponibile. Rivolgiti all’Ente Creditore se hai bisogno della quietanza di pagamento, cioè il documento che attesta di aver saldato un debito."
+          />
+        )}
       </View>
     </>
   );
