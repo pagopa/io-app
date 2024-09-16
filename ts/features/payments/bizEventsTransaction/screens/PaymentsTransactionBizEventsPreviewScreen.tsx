@@ -40,16 +40,23 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
   });
 
   const handleOnShare = async () => {
-    const transactionReceiptFile = pot.toUndefined(transactionReceiptPot);
-    if (!transactionReceiptFile) {
+    const transactionReceiptFileInfo = pot.toUndefined(transactionReceiptPot);
+    if (!transactionReceiptFileInfo) {
       return;
     }
+    // The file name is normalized to remove the .pdf extension on Android devices since it's added by default to the Share module
+    const normalizedFilename =
+      Platform.OS === "ios"
+        ? transactionReceiptFileInfo.filename
+        : transactionReceiptFileInfo.filename?.replace(/.pdf/g, "");
     await Share.open({
       type: "application/pdf",
-      url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptFile}`,
-      filename: `${I18n.t("features.payments.transactions.receipt.title")}${
-        Platform.OS === "ios" ? ".pdf" : ""
-      }`,
+      url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptFileInfo.base64File}`,
+      filename:
+        normalizedFilename ||
+        `${I18n.t("features.payments.transactions.receipt.title")}${
+          Platform.OS === "ios" ? ".pdf" : ""
+        }`,
       failOnCancel: false
     });
   };
@@ -76,7 +83,7 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
             backgroundColor: IOColors["grey-100"]
           }}
           source={{
-            uri: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value}`,
+            uri: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value.base64File}`,
             cache: true
           }}
         />
