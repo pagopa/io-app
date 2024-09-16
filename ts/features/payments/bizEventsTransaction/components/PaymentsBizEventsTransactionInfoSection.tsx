@@ -178,7 +178,7 @@ const PaymentsBizEventsTransactionInfoSection = ({
         {transactionInfo?.origin === OriginEnum.PM && (
           <Alert
             variant="info"
-            content="La ricevuta pagoPA non è disponibile. Rivolgiti all’Ente Creditore se hai bisogno della quietanza di pagamento, cioè il documento che attesta di aver saldato un debito."
+            content={I18n.t("transaction.details.bannerImported.content")}
           />
         )}
       </View>
