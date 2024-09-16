@@ -86,7 +86,12 @@ export const updateMixpanelProfileProperties = async (
     SERVICE_CONFIGURATION,
     TRACKING,
     PAYMENTS_CONFIGURATION,
-    ITW_HAS_READ_IPZS_POLICY: false
+    ITW_HAS_READ_IPZS_POLICY: false,
+    ITW_STATUS,
+    ITW_ID,
+    ITW_PG,
+    ITW_TS,
+    ITW_CED
   };
 
   if (forceUpdateFor) {
