@@ -146,9 +146,9 @@ export const CgnModuleDiscount = ({ onPress, discount }: Props) => {
                   <HSpacer size={8} />
                 </>
               )}
-              {discount.discount && (
+              {discount.discount ? (
                 <Badge variant="purple" outline text={`-${normalizedValue}%`} />
-              )}
+              ) : null}
             </View>
             <VSpacer size={8} />
             <H6>{discount.name}</H6>
