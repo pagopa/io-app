@@ -4,13 +4,13 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";
 import { format } from "../../../../utils/dates";
-import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
 import { getTransactionLogo } from "../../common/utils";
 import { formatAmountText } from "../utils";
 import I18n from "../../../../i18n";
+import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 
 type Props = {
-  transaction: TransactionListItem;
+  transaction: NoticeListItem;
   onPress?: () => void;
 };
 
@@ -28,14 +28,14 @@ const PaymentsBizEventsListItemTransaction = ({
   );
 
   const datetime: string = pipe(
-    transaction.transactionDate,
+    transaction.noticeDate,
     O.fromNullable,
     O.map(transactionDate => format(transactionDate, "DD MMM YYYY, HH:mm")),
     O.getOrElse(() => "")
   );
 
   const accessibleDatetime: string = pipe(
-    transaction.transactionDate,
+    transaction.noticeDate,
     O.fromNullable,
     O.map(transactionDate => format(transactionDate, "DD MMMM YYYY, HH:mm")),
     O.getOrElse(() => "")
