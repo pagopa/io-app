@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     borderRadius: buttonBorderRadius - 1,
     borderCurve: "continuous",
-    borderColor: hexToRgba(buttonInnerBorderColor, 0.5),
+    borderColor: hexToRgba(buttonInnerBorderColor, 0.35),
     borderWidth: 1
   },
   textContainer: {
