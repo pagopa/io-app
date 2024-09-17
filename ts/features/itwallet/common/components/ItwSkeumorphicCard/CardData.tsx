@@ -9,10 +9,10 @@ import { localeDateFormat } from "../../../../../utils/locale";
 import { DrivingPrivilegesClaim } from "../../utils/itwClaimsUtils";
 import { ParsedCredential, StoredCredential } from "../../utils/itwTypesUtils";
 import {
-  ClaimPosition,
   CardClaim,
   CardClaimContainer,
-  CardClaimRenderer
+  CardClaimRenderer,
+  ClaimPosition
 } from "./CardClaim";
 import { ClaimLabel } from "./ClaimLabel";
 import { CardSide } from "./types";
@@ -46,18 +46,25 @@ const MdlFrontData = ({ claims }: DataComponentProps) => {
       <CardClaim
         claim={claims["birth_date"]}
         position={{ left: "34.6%", top: `${row + rowStep * 2}%` }}
+        dateFormat="%d/%m/%y"
       />
       <CardClaim
         claim={claims["place_of_birth"]}
-        position={{ left: "55%", top: `${row + rowStep * 2}%` }}
+        position={{ left: "51%", top: `${row + rowStep * 2}%` }}
       />
       <CardClaim
         claim={claims["issue_date"]}
         position={{ left: "34.6%", top: `${row + rowStep * 3}%` }}
+        labelProps={{ fontWeight: "Bold" }}
+      />
+      <CardClaim
+        claim={claims["issuing_authority"]}
+        position={{ left: "57.5%", top: `${row + rowStep * 3}%` }}
       />
       <CardClaim
         claim={claims["expiry_date"]}
         position={{ left: "34.6%", top: `${row + rowStep * 4}%` }}
+        labelProps={{ fontWeight: "Bold" }}
       />
       <CardClaim
         claim={claims["document_number"]}
@@ -137,6 +144,11 @@ const MdlBackData = ({ claims }: DataComponentProps) => {
             </Fragment>
           ))
         }
+      />
+      <CardClaim
+        claim={claims["restrictions_conditions"]}
+        position={{ left: "8%", bottom: "6.5%" }}
+        labelProps={{ fontSize: 9 }}
       />
     </View>
   );
