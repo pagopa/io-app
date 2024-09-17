@@ -4,7 +4,6 @@ import {
   Caption,
   FeatureInfo,
   hexToRgba,
-  IOColors,
   VSpacer,
   VStack,
   WithTestID
@@ -13,23 +12,17 @@ import {
   Canvas,
   ImageSVG,
   Mask,
-  RoundedRect,
-  Skia,
+  Rect,
   Circle as SkiaCircle,
   Group as SkiaGroup,
-  Image as SkiaImage,
-  RadialGradient as SkiaRadialGradient,
   LinearGradient as SkiaLinearGradient,
-  useImage,
+  RadialGradient as SkiaRadialGradient,
   useSVG,
-  vec,
-  Rect
+  vec
 } from "@shopify/react-native-skia";
 import React, { useState } from "react";
 import {
   ColorValue,
-  Image,
-  Text,
   LayoutChangeEvent,
   LayoutRectangle,
   Pressable,
@@ -38,30 +31,25 @@ import {
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import Animated, {
-  Extrapolate,
+  Extrapolation,
   interpolate,
   SensorType,
-  useAnimatedProps,
   useAnimatedReaction,
   useAnimatedSensor,
   useDerivedValue,
   useSharedValue
 } from "react-native-reanimated";
-import { Trust } from "@pagopa/io-react-native-wallet";
 import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
 import I18n from "../../../../i18n";
 // import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { itwEaaVerifierBaseUrl } from "../../../../config";
+import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { generateTrustmarkUrl } from "../../common/utils/itwCredentialUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
-// type ItwCredentialTrustmarkProps = WithTestID<{
-//   credential: StoredCredential;
-// }>;
-
 type ItwCredentialTrustmarkProps = WithTestID<{
-  onPress: () => void;
+  credential: StoredCredential;
 }>;
 
 type ButtonSize = {
@@ -93,13 +81,12 @@ const visibleLightPercentage = 0.25;
 
 export const ItwCredentialTrustmark = ({
   testID,
-  onPress
-}: // credential
-ItwCredentialTrustmarkProps) => {
-  // const trustmarkBottomSheet = useIOBottomSheetAutoresizableModal({
-  //   title: I18n.t("features.itWallet.presentation.trustmark.title"),
-  //   component: <QrCodeBottomSheetContent credential={credential} />
-  // });
+  credential
+}: ItwCredentialTrustmarkProps) => {
+  const trustmarkBottomSheet = useIOBottomSheetAutoresizableModal({
+    title: I18n.t("features.itWallet.presentation.trustmark.title"),
+    component: <QrCodeBottomSheetContent credential={credential} />
+  });
 
   const rotationSensor = useAnimatedSensor(SensorType.ROTATION, {
     adjustToInterfaceOrientation: true
@@ -141,7 +128,7 @@ ItwCredentialTrustmarkProps) => {
       relativeQx.value,
       [-quaternionRange, quaternionRange],
       [maxTranslateX, -maxTranslateX],
-      Extrapolate.CLAMP
+      Extrapolation.CLAMP
     );
 
     return [
@@ -155,7 +142,7 @@ ItwCredentialTrustmarkProps) => {
       relativeQx.value,
       [quaternionRange, -quaternionRange],
       [-TRUSTMARK_GRADIENT_HEIGHT + TRUSTMARK_STAMP_SIZE, 0],
-      Extrapolate.CLAMP
+      Extrapolation.CLAMP
     );
 
     return [{ translateY }];
@@ -204,7 +191,7 @@ ItwCredentialTrustmarkProps) => {
   );
 
   const TrustmarkRainbowGradient = () => (
-    <SkiaGroup blendMode={"colorDodge"} opacity={0.8}>
+    <SkiaGroup blendMode={"colorDodge"}>
       <Rect
         x={0}
         y={0}
@@ -245,7 +232,7 @@ ItwCredentialTrustmarkProps) => {
   return (
     <>
       <Pressable
-        onPress={onPress}
+        onPress={trustmarkBottomSheet.present}
         testID={testID}
         accessible={true}
         accessibilityLabel={I18n.t(
@@ -255,12 +242,6 @@ ItwCredentialTrustmarkProps) => {
         onPressIn={onPressIn}
         onPressOut={onPressOut}
         onTouchEnd={onPressOut}
-        style={{
-          height: 500,
-          justifyContent: "center",
-          borderWidth: 1,
-          borderColor: IOColors.red
-        }}
       >
         <Animated.View
           style={[styles.container, animatedScaleStyle]}
@@ -274,11 +255,6 @@ ItwCredentialTrustmarkProps) => {
             colors={buttonBackgroundGradient.colors}
             style={styles.gradientView}
           >
-            <Caption style={styles.caption}>
-              {I18n.t(
-                "features.itWallet.presentation.trustmark.cta"
-              ).toUpperCase()}
-            </Caption>
             {/* <Image
               style={styles.logo}
               source={require("../../../../../img/features/itWallet/credential/trustmark.png")}
@@ -286,6 +262,13 @@ ItwCredentialTrustmarkProps) => {
             /> */}
           </LinearGradient>
           <View style={styles.buttonInnerBorder} />
+          <View style={styles.textContainer}>
+            <Caption style={styles.caption}>
+              {I18n.t(
+                "features.itWallet.presentation.trustmark.cta"
+              ).toUpperCase()}
+            </Caption>
+          </View>
 
           <Canvas
             style={{
@@ -294,18 +277,9 @@ ItwCredentialTrustmarkProps) => {
               width: "100%"
             }}
           >
-            {/* <RoundedRect
-              x={0}
-              y={0}
-              width={buttonSize?.width ?? 0}
-              height={TRUSTMARK_HEIGHT}
-              r={0}
-              color="rgba(0, 0, 0, 0)"
-            /> */}
-
             <ButtonLight />
 
-            <SkiaGroup blendMode={"colorBurn"} opacity={0.07}>
+            <SkiaGroup blendMode={"colorBurn"} opacity={0.075}>
               <TrustmarkRainbowGradient />
             </SkiaGroup>
 
@@ -325,29 +299,10 @@ ItwCredentialTrustmarkProps) => {
                 height={TRUSTMARK_STAMP_SIZE}
               />
             </Mask>
-
-            {/* {trustMarkStampSVG && (
-                <ImageSVG
-                  svg={trustMarkStampSVG}
-                  x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
-                  y={-TRUSTMARK_HEIGHT * 0.28}
-                  width={TRUSTMARK_STAMP_SIZE}
-                  height={TRUSTMARK_STAMP_SIZE}
-                />
-            )} */}
-
-            {/* <SkiaImage
-              image={trustMarkStamp}
-              x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
-              y={-TRUSTMARK_HEIGHT * 0.2}
-              width={TRUSTMARK_HEIGHT}
-              height={TRUSTMARK_HEIGHT}
-              fit="contain"
-            /> */}
           </Canvas>
         </Animated.View>
       </Pressable>
-      {/* {trustmarkBottomSheet.bottomSheet} */}
+      {trustmarkBottomSheet.bottomSheet}
     </>
   );
 };
@@ -387,6 +342,12 @@ const styles = StyleSheet.create({
     borderCurve: "continuous",
     borderColor: hexToRgba(buttonInnerBorderColor, 0.5),
     borderWidth: 1
+  },
+  textContainer: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: "center",
+    zIndex: 10,
+    paddingHorizontal: 16
   },
   gradientView: {
     height: TRUSTMARK_HEIGHT,

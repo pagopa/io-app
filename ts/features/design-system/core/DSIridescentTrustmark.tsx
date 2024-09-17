@@ -1,11 +1,11 @@
 import * as React from "react";
 
 import { H4, useIOTheme, VSpacer } from "@pagopa/io-app-design-system";
-import { Alert } from "react-native";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { ItwStoredCredentialsMocks } from "../../itwallet/common/utils/itwMocksUtils";
 import { ItwCredentialTrustmark } from "../../itwallet/presentation/components/ItwCredentialTrustmark";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 export const DSIridescentTrustmark = () => {
   const theme = useIOTheme();
@@ -16,7 +16,7 @@ export const DSIridescentTrustmark = () => {
     >
       <H4 color={theme["textHeading-default"]}>Trustmark</H4>
       <VSpacer />
-      <ItwCredentialTrustmark onPress={() => Alert.alert("QR Code shown")} />
+      <ItwCredentialTrustmark credential={ItwStoredCredentialsMocks.mdl} />
     </DesignSystemScreen>
   );
 };
