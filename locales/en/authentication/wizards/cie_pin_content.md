@@ -1,4 +1,4 @@
-Il codice PIN è composto da 8 cifre ed è diviso in due parti:
-- le prime 4 cifre le hai ricevute all’anagrafe;
-- le ultime 4 cifre le hai ricevute a casa con la CIE. 
-Mettile insieme e inseriscile in quest’ordine.
+The PIN code consists of 8 digits and is divided in two parts:
+- the first 4 digits you received at the registry office;
+- the last 4 digits you received at home with the CIE (Electronic Identification Card). 
+Put them together and enter in this order.
