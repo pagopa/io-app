@@ -1,9 +1,8 @@
-import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
-import I18n from "../../../../i18n";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
@@ -11,8 +10,6 @@ import {
 import { useIOSelector } from "../../../../store/hooks";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { getHumanReadableParsedCredential } from "../../common/utils/debug";
-import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -24,6 +21,11 @@ import {
   CredentialCtaProps,
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase";
+import { ItwPresentationAdditionalInfoSection } from "../components/ItwPresentationAdditionalInfoSection";
+import { ItwCredentialTrustmark } from "../components/ItwCredentialTrustmark";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
+import I18n from "../../../../i18n";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -66,15 +68,18 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
       credential={credential}
       ctaProps={ctaProps}
     >
-      <ItwPresentationDetailsHeader credential={credential} />
-      <VSpacer size={16} />
-      <ContentWrapper>
-        <ItwPresentationAlertsSection credential={credential} />
-        <VSpacer size={16} />
-        <ItwPresentationClaimsSection credential={credential} />
-      </ContentWrapper>
-      <VSpacer size={24} />
-      <ItwPresentationDetailsFooter credential={credential} />
+      <VStack space={16}>
+        <ItwPresentationDetailsHeader credential={credential} />
+        <ContentWrapper>
+          <VStack space={16}>
+            <ItwPresentationAdditionalInfoSection credential={credential} />
+            <ItwPresentationAlertsSection credential={credential} />
+            <ItwCredentialTrustmark credential={credential} />
+            <ItwPresentationClaimsSection credential={credential} />
+          </VStack>
+        </ContentWrapper>
+        <ItwPresentationDetailsFooter credential={credential} />
+      </VStack>
     </ItwPresentationDetailsScreenBase>
   );
 };

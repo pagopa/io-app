@@ -4,11 +4,7 @@ import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { ItwCredentialClaim } from "../../common/components/ItwCredentialClaim";
 import { ItwReleaserName } from "../../common/components/ItwReleaserName";
-import {
-  getCredentialStatus,
-  parseClaims,
-  WellKnownClaim
-} from "../../common/utils/itwClaimsUtils";
+import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
 type ItwCredentialClaimsListProps = {
@@ -23,8 +19,6 @@ type ItwCredentialClaimsListProps = {
 const ItwCredentialPreviewClaimsList = ({
   data
 }: ItwCredentialClaimsListProps) => {
-  const credentialStatus = getCredentialStatus(data);
-
   const claims = parseClaims(data.parsedCredential, {
     exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
   });
@@ -40,12 +34,7 @@ const ItwCredentialPreviewClaimsList = ({
       </View>
       {claims.map((elem, index) => (
         <View key={index}>
-          <ItwCredentialClaim
-            claim={elem}
-            isPreview={true}
-            hidden={false}
-            credentialStatus={credentialStatus}
-          />
+          <ItwCredentialClaim claim={elem} isPreview={true} hidden={false} />
           <Divider />
         </View>
       ))}

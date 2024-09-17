@@ -40,11 +40,11 @@ export enum WellKnownClaim {
   expiry_date = "expiry_date",
   /**
    * Claim used to display a QR Code for the Disability Card. It must be excluded from the common claims list
-   * and rendered using a {@link QRCodeImage}
+   * and rendered using a {@link QRCodeImage} (currently used for the European Disability Card)
    */
   link_qr_code = "link_qr_code",
   /**
-   * Claim used to display the attachments of a credential
+   * Claim used to display the attachments of a credential (currently used for the European Health Insurance Card)
    */
   content = "content"
 }
@@ -329,7 +329,8 @@ export const getCredentialExpireDays = (
 };
 
 /**
- * Returns the expire status of a {@see ParsedCredential}
+ * Returns the expire status of a {@link ParsedCredential}, taking into account the **expiration date only**.
+ * Use {@link getCredentialStatus} to also check the status attestation.
  * @param credential the parsed credential claims
  * @param expiringDays the number of days required to mark a credential as "EXPIRING"
  * @returns "VALID" if the credential is valid, "EXPIRING" if there are less than {expiringDays} days left until the expiry day, "EXPIRED" if the expiry date has passed

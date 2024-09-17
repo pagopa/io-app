@@ -9,6 +9,7 @@ import {
 import React from "react";
 import Animated, {
   Easing,
+  useAnimatedRef,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
@@ -38,6 +39,7 @@ const ItwPresentationDetailsScreenBase = ({
   children,
   ctaProps
 }: ItwPresentationDetailsScreenBaseProps) => {
+  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const safeAreaInsets = useSafeAreaInsets();
 
   const gradientOpacity = useSharedValue(1);
@@ -70,6 +72,8 @@ const ItwPresentationDetailsScreenBase = ({
       contentOffsetY: scrollTranslationY
     },
     supportRequest: true,
+    enableDiscreteTransition: true,
+    animatedRef: animatedScrollViewRef,
     ...headerProps
   });
 
