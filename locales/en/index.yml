@@ -3294,6 +3294,11 @@ features:
         toast:
           removed: Fatto! Hai rimosso {{credentialName}}
         flipCard: "Show back"
+      trustmark:
+        cta: Mostra certificato di autenticità
+        title: Certificato di autenticità
+        usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
+        certifiedLabel: Questo documento è certificato dall'ente emittente.
   trialSystem:
     toast:
       subscribed: Done! You will receive a message when the trial period will begin.
