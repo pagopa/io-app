@@ -285,7 +285,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                 <View
                                   style={
                                     {
-                                      "height": 4,
+                                      "height": 16,
                                     }
                                   }
                                 />
