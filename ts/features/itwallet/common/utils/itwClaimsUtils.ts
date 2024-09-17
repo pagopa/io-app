@@ -40,11 +40,11 @@ export enum WellKnownClaim {
   expiry_date = "expiry_date",
   /**
    * Claim used to display a QR Code for the Disability Card. It must be excluded from the common claims list
-   * and rendered using a {@link QRCodeImage}
+   * and rendered using a {@link QRCodeImage} (currently used for the European Disability Card)
    */
   link_qr_code = "link_qr_code",
   /**
-   * Claim used to display the attachments of a credential
+   * Claim used to display the attachments of a credential (currently used for the European Health Insurance Card)
    */
   content = "content"
 }
