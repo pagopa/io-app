@@ -2659,9 +2659,9 @@ bonus:
         warning: "Attenzione! "
         revoked: "Attenzione! Questa carta è stata revocata per {{reason}}"
         expired: "Attenzione! Questa carta è scaduta il {{date}}"
-      ownership: Chi può usare la carta?
+      ownership: Chi può usare la Carta?
       status:
-        title: Carta Giovani Nazionale (CGN)
+        title: Carta Giovani Nazionale
         eyca: Carta EYCA
         eycaCircuit: Circuito EYCA
         eycaNumber: Numero carta
