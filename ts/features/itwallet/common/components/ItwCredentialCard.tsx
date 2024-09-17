@@ -1,16 +1,11 @@
-import {
-  Badge,
-  Body,
-  HSpacer,
-  IOColors,
-  Tag
-} from "@pagopa/io-app-design-system";
+import { Body, HSpacer, IOColors, Tag } from "@pagopa/io-app-design-system";
 import React from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
 import I18n from "../../../../i18n";
-import { CredentialType } from "../utils/itwMocksUtils";
 import { getCredentialNameFromType } from "../utils/itwCredentialUtils";
+import { CredentialType } from "../utils/itwMocksUtils";
+import { ItwDigitalVersionBadge } from "./ItwDigitalVersionBadge";
 
 export type ItwCredentialStatus = "valid" | "pending" | "expiring" | "expired";
 
@@ -59,7 +54,7 @@ export const ItwCredentialCard = ({
             )}
           </View>
         </View>
-        {!isValid && <DigitalVersionBadge />}
+        <ItwDigitalVersionBadge credentialType={credentialType} />
         <View
           style={[styles.border, { borderColor: borderColorByStatus[status] }]}
         />
@@ -67,16 +62,6 @@ export const ItwCredentialCard = ({
     </View>
   );
 };
-
-const DigitalVersionBadge = () => (
-  <View style={styles.digitalVersionBadge}>
-    <Badge
-      // The space at the end is an hack to have extra padding inside the badge text
-      text={`${I18n.t("features.itWallet.card.digital")}   `}
-      variant="default"
-    />
-  </View>
-);
 
 const credentialCardBackgrounds: {
   [type: string]: [ImageSourcePropType, ImageSourcePropType];
@@ -163,6 +148,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
-  },
-  digitalVersionBadge: { position: "absolute", bottom: 16, right: -10 }
+  }
 });
