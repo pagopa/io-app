@@ -136,8 +136,8 @@ const getAttachmentData = ({
 };
 
 /**
- * Given the filename and the type of the attachment, return the filename with the extension.
- * On Android the extension is added automatically by the OS, on iOS we need to add it manually
+ * Given the filename and the type of the attachment, returns the filename with the extension.
+ * On Android the extension is added automatically by the OS and iOS we need to add it manually
  */
 const getFileNameWithExtension = (
   fileName: string,
