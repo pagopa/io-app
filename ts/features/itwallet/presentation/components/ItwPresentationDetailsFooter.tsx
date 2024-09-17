@@ -4,7 +4,7 @@ import {
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { default as React } from "react";
+import React from "react";
 import { Alert } from "react-native";
 import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import I18n from "../../../../i18n";
