@@ -510,6 +510,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             992,
@@ -3234,6 +3235,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             992,
@@ -5958,6 +5960,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             292,
@@ -6507,6 +6510,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             292,

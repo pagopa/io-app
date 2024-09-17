@@ -21,6 +21,7 @@ import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlert
 import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection";
 import { ItwPresentationCredentialCard } from "../components/ItwPresentationCredentialCard";
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
+import { ItwCredentialTrustmark } from "../components/ItwCredentialTrustmark";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -82,6 +83,7 @@ const ContentView = ({ credential }: ContentProps) => {
           <VSpacer size={16} />
           <ItwPresentationAlertsSection credential={credential} />
           <VSpacer size={16} />
+          <ItwCredentialTrustmark credential={credential} />
           <ItwPresentationClaimsSection
             title={I18n.t(
               "features.itWallet.presentation.credentialDetails.documentDataTitle"
