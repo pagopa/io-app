@@ -2626,16 +2626,16 @@ bonus:
         website: Go to partner's website
       categories:
         counting: and other {{count}}
-        cultureAndEntertainment: Culture and Entertainment
-        health: Health and Wellness
-        learning: Education and Learning
+        cultureAndEntertainment: Culture and entertainment
+        health: Health and wellness
+        learning: Education and learning
         sport: Sport
         home: Home
-        telco: Telephony and Internet
-        finance: Banking and Financial Services
-        travel: Travels and Transportation
-        mobility: Sustainable Transport
-        job: Jobs and Internships
+        telco: Telephony and internet
+        finance: Banking and financial services
+        travel: Travels and transportation
+        mobility: Sustainable transport
+        job: Jobs and internships
       information:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
@@ -2659,9 +2659,9 @@ bonus:
         warning: "Attention! "
         revoked: "Attention! This card has been revoked cause {{reason}}"
         expired: "Attention! This card expired on {{date}}"
-      ownership: Who can use this card?
+      ownership: Who can use this Card?
       status:
-        title: Carta Giovani Nazionale (CGN)
+        title: Carta Giovani Nazionale
         eyca: EYCA card
         eycaCircuit: EYCA circuit
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
@@ -3976,7 +3976,7 @@ FIMS:
   consentsScreen:
     errorStates:
       tempErrorBody: "C’è un problema temporaneo, riprova più tardi"
-    title: "Consenti la condivisione dei tuoi dati"
+    title: "Per accedere al servizio, consenti la condivisione dei seguenti dati"
     subtitle: "Autorizza IO a trasmettere a "
     subtitle2: " i dati necessari per la tua autenticazione su "
     requiredData: "Dati richiesti"
