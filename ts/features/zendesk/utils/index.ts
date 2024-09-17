@@ -6,6 +6,7 @@ import { isPanicModeActive } from "../../../utils/supportAssistance";
 import { isReady } from "../../../common/model/RemoteValue";
 import ZENDESK_ROUTES from "../navigation/routes";
 import { ZendeskConfig } from "../store/reducers";
+import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 
 export const handleContactSupport = (
   navigation: IOStackNavigationProp<AppParamsList>,
@@ -38,22 +39,26 @@ export const handleContactSupport = (
   }
 };
 
-type TokenType =
-  | "spidLevel"
-  | "walletToken"
-  | "myPortalToken"
-  | "bpdToken"
-  | "zendeskToken"
-  | "fimsToken"
-  | "lollipopAssertionRef";
+type TokenType = keyof PublicSession;
 
 type DefaultTokenType = Exclude<TokenType, "zendeskToken">;
 
-// Define a function that takes an optional array of TokenType
-export function formatRequestedTokenString(
-  refreshZendeskTokenSel: boolean,
+/**
+ *
+ * @param needToRefreshZendeskToken a boolean value defining if it is necessary
+ * to add the zendesk token or not (in case it is not contained in tokenType array)
+ * @param tokenType an array containing the tokens that must be transformed into
+ * a string to be passed as a parameter to the getSession(). The tokenType isn't mandatory
+ * @returns a string. In the case where tokenType is passed, then the function returns
+ * a string that contains the elements included in the tokenType array, in the case where
+ * tokenType is not passed it returns a default string. In addition, if the prop
+ * needToRefreshZendeskToken is true and the value ‘zendeskToken’ is not present in the
+ * object, then it will be inserted.
+ */
+export const formatRequestedTokenString = (
+  needToRefreshZendeskToken: boolean,
   tokenType?: Array<TokenType>
-): string {
+): string => {
   // If tokenType is provided and contains values, return the joined tokens
   // eslint-disable-next-line functional/no-let
   let tokensArray;
@@ -72,9 +77,36 @@ export function formatRequestedTokenString(
     tokensArray = defaultTokens;
   }
 
-  if (refreshZendeskTokenSel && !tokensArray.includes("zendeskToken", 0)) {
+  if (needToRefreshZendeskToken && !tokensArray.includes("zendeskToken", 0)) {
     return `(${[...tokensArray, "zendeskToken"].join(",")})`;
   } else {
     return `(${tokensArray.join(",")})`;
   }
-}
+};
+
+/**
+ *
+ * @param newValues are the new values that need to be merged with the existing ones
+ * @param currentValues are the existing values
+ * @returns  an object containing the merge between existing and new values.
+ * If the value already exists, it is replaced with the new value.
+ * If the value is not defined, a new key is added.
+ */
+export const getOnlyNotAlreadyExistentValues = (
+  newValues: PublicSession,
+  currentValues?: PublicSession
+): PublicSession => {
+  const mergedValues: PublicSession = { ...currentValues };
+
+  for (const key in newValues) {
+    if (Object.prototype.hasOwnProperty.call(newValues, key)) {
+      const typedKey = key as keyof PublicSession;
+
+      if (newValues[typedKey] !== undefined) {
+        // eslint-disable-next-line functional/immutable-data
+        (mergedValues as any)[typedKey] = newValues[typedKey];
+      }
+    }
+  }
+  return mergedValues;
+};

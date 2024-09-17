@@ -262,10 +262,10 @@ const ZendeskAskPermissions = () => {
   }, [dispatch, getZendeskTokenStatus, prevGetZendeskTokenStatus]);
 
   useEffect(() => {
-    if (isUserLoggedIn && !zendeskToken) {
+    if (isUserLoggedIn) {
       dispatch(getZendeskToken.request());
     }
-  }, [dispatch, isUserLoggedIn, zendeskToken]);
+  }, [dispatch, isUserLoggedIn]);
 
   const currentVersion = getAppVersion();
 

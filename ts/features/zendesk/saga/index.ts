@@ -2,6 +2,7 @@
 import { takeLatest, select, call, put, take } from "typed-redux-saga/macro";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import {
   getZendeskConfig,
@@ -22,10 +23,14 @@ import { checkSession } from "../../../sagas/startup/watchCheckSessionSaga";
 import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
 import { BackendClient } from "../../../api/backend";
 import { SagaCallReturnType } from "../../../types/utils";
-import { formatRequestedTokenString } from "../utils";
+import {
+  formatRequestedTokenString,
+  getOnlyNotAlreadyExistentValues
+} from "../utils";
 import { convertUnknownToError } from "../../../utils/errors";
 import { withRefreshApiCall } from "../../fastLogin/saga/utils";
 import { sessionInformationLoadSuccess } from "../../../store/actions/authentication";
+import { sessionInfoSelector } from "../../../store/reducers/authentication";
 import { isDevEnv } from "./../../../utils/environment";
 import { zendeskSupport } from "./orchestration";
 import { handleGetZendeskConfig } from "./networking/handleGetZendeskConfig";
@@ -95,7 +100,7 @@ export function* getZendeskTokenSaga(
 ) {
   yield* take(getZendeskToken.request);
   try {
-    const fields = formatRequestedTokenString(true);
+    const fields = formatRequestedTokenString(false, ["zendeskToken"]);
 
     const response = (yield* call(
       withRefreshApiCall,
@@ -107,7 +112,15 @@ export function* getZendeskTokenSaga(
     } else {
       if (response.right.status === 200) {
         yield* put(getZendeskToken.success());
-        yield* put(sessionInformationLoadSuccess(response.right.value));
+        const currentValues = yield* select(sessionInfoSelector);
+        yield* put(
+          sessionInformationLoadSuccess(
+            getOnlyNotAlreadyExistentValues(
+              response.right.value,
+              O.isSome(currentValues) && currentValues.value
+            )
+          )
+        );
       } else {
         yield* put(getZendeskToken.failure());
       }
