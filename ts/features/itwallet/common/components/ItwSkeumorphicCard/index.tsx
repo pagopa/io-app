@@ -5,7 +5,6 @@ import { StoredCredential } from "../../utils/itwTypesUtils";
 import { CardBackground } from "./CardBackground";
 import { CardData } from "./CardData";
 import { FlippableCard } from "./FlippableCard";
-import { DigitalVersionBadge } from "./DigitalVersionBadge";
 
 export type ItwSkeumorphicCardProps = {
   credential: StoredCredential;
@@ -22,7 +21,6 @@ const ItwSkeumorphicCard = ({
     <>
       <CardBackground credentialType={credential.credentialType} side="front" />
       <CardData credential={credential} side="front" />
-      <DigitalVersionBadge credentialType={credential.credentialType} />
     </>
   );
 
