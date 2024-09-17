@@ -38,18 +38,18 @@ export type ClaimDimensions = Prettify<
     Pick<ViewStyle, "aspectRatio">
 >;
 
-export type CardClaimProps = WithTestID<{
-  // A claim that will be used to render its component
-  claim: ParsedCredential[number];
-  // Absolute position expressed in percentages from top-left corner
-  position?: ClaimPosition;
-  // Claim dimensions
-  dimensions?: ClaimDimensions;
-  // Extra props for labels
-  labelProps?: ClaimLabelProps;
-  // Optional format for fates
-  dateFormat?: string;
-}>;
+export type CardClaimProps = Prettify<
+  {
+    // A claim that will be used to render its component
+    claim: ParsedCredential[number];
+    // Absolute position expressed in percentages from top-left corner
+    position?: ClaimPosition;
+    // Claim dimensions
+    dimensions?: ClaimDimensions;
+    // Optional format for dates contained in the claim component
+    dateFormat?: string;
+  } & ClaimLabelProps
+>;
 
 /**
  * Default claim component, it decoded the provided value and renders the corresponging component
@@ -59,10 +59,10 @@ const CardClaim = ({
   claim,
   position,
   dimensions,
-  labelProps,
-  dateFormat,
-  testID
-}: CardClaimProps) => {
+  testID,
+  dateFormat = "%d/%m/%Y",
+  ...labelProps
+}: WithTestID<CardClaimProps>) => {
   const claimContent = React.useMemo(
     () =>
       pipe(
@@ -70,10 +70,7 @@ const CardClaim = ({
         ClaimValue.decode,
         E.fold(constNull, decoded => {
           if (DateFromString.is(decoded)) {
-            const formattedDate = localeDateFormat(
-              decoded,
-              dateFormat ?? "%d/%m/%Y"
-            );
+            const formattedDate = localeDateFormat(decoded, dateFormat);
             return <ClaimLabel {...labelProps}>{formattedDate}</ClaimLabel>;
           } else if (EvidenceClaim.is(decoded)) {
             return (
@@ -101,7 +98,7 @@ const CardClaim = ({
           }
         })
       ),
-    [claim, dateFormat, labelProps]
+    [claim, labelProps, dateFormat]
   );
 
   if (!claimContent) {
