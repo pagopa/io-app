@@ -47,6 +47,7 @@ import Animated, {
   useDerivedValue,
   useSharedValue
 } from "react-native-reanimated";
+import { Trust } from "@pagopa/io-react-native-wallet";
 import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
 import I18n from "../../../../i18n";
 // import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
@@ -68,15 +69,6 @@ type ButtonSize = {
   height: LayoutRectangle["height"];
 };
 
-/* MOVEMENT
-   Spring config for the light movement */
-const springConfig = {
-  mass: 1,
-  damping: 50,
-  stiffness: 200,
-  overshootClamping: false
-};
-
 /* BUTTON
    Visual parameters */
 const TRUSTMARK_HEIGHT = 48;
@@ -94,7 +86,7 @@ const buttonBackgroundGradient = {
    Visual parameters */
 const lightScaleMultiplier = 1;
 const lightSkiaOpacity = 0.7;
-const lightSize: LayoutRectangle["width"] = 200;
+const lightSize: LayoutRectangle["width"] = 250;
 /* Percentage of visible light when it's near
 card boundaries */
 const visibleLightPercentage = 0.25;
@@ -172,7 +164,6 @@ ItwCredentialTrustmarkProps) => {
   const ButtonLight = () => (
     <SkiaGroup
       opacity={lightSkiaOpacity}
-      blendMode={"colorDodge"}
       origin={vec((buttonSize?.width ?? 0) / 2, (buttonSize?.height ?? 0) / 2)}
     >
       <SkiaCircle
@@ -209,6 +200,34 @@ ItwCredentialTrustmarkProps) => {
           ]}
         />
       </SkiaCircle>
+    </SkiaGroup>
+  );
+
+  const TrustmarkRainbowGradient = () => (
+    <SkiaGroup blendMode={"colorDodge"} opacity={0.8}>
+      <Rect
+        x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
+        y={0}
+        width={TRUSTMARK_STAMP_SIZE}
+        height={TRUSTMARK_GRADIENT_HEIGHT}
+        transform={skiaGradientRainbowTranslateValues}
+      >
+        <SkiaLinearGradient
+          mode="decal"
+          start={vec(0, 0)}
+          end={vec(0, TRUSTMARK_GRADIENT_HEIGHT)}
+          colors={[
+            "rgba(255, 119, 115, 1)",
+            "rgba(216, 117, 255, 1)",
+            "rgba(120, 148, 255, 1)",
+            "rgba(131, 255, 247,1)",
+            "rgba(168, 255, 95, 1)",
+            "rgba(255, 237, 95, 1)",
+            "rgba(255, 119, 115,1)"
+          ]}
+          positions={[0, 0.1, 0.2, 0.4, 0.6, 0.8, 1]}
+        />
+      </Rect>
     </SkiaGroup>
   );
 
@@ -289,79 +308,28 @@ ItwCredentialTrustmarkProps) => {
               color="rgba(0, 0, 0, 0)"
             /> */}
 
-            <Rect
-              x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
-              y={0}
-              width={TRUSTMARK_STAMP_SIZE}
-              height={TRUSTMARK_GRADIENT_HEIGHT}
-              transform={skiaGradientRainbowTranslateValues}
-            >
-              <SkiaLinearGradient
-                mode="decal"
-                start={vec(0, 0)}
-                end={vec(0, TRUSTMARK_GRADIENT_HEIGHT)}
-                colors={[
-                  "rgba(255, 119, 115,1)",
-                  "rgba(255, 237, 95, 1)",
-                  "rgba(168, 255, 95, 1)",
-                  "rgba(131, 255, 247,1)",
-                  "rgba(120, 148, 255, 1)",
-                  "rgba(216, 117, 255, 1)",
-                  "rgba(255, 119, 115, 1)"
-                ]}
-                positions={[0, 0.2, 0.4, 0.6, 0.8, 0.9, 1]}
-              />
-            </Rect>
-
             <ButtonLight />
 
-            {/* <Mask
-              mode="alpha"
-              mask={
-                <SkiaGroup blendMode={"luminosity"}>
-                  <Rect
-                    x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
-                    y={0}
-                    width={TRUSTMARK_HEIGHT * 1.6}
-                    height={TRUSTMARK_HEIGHT * 1.6}
-                  >
-                    <SkiaLinearGradient
-                      start={vec(0, TRUSTMARK_HEIGHT)}
-                      end={vec(0, TRUSTMARK_HEIGHT * 3)}
-                      colors={[
-                        "rgb(255, 119, 115)",
-                        "rgba(255, 237, 95, 1)",
-                        "rgba(168, 255, 95, 1)",
-                        "rgba(131, 255, 247,1)",
-                        "rgba(120, 148, 255, 1)",
-                        "rgba(216, 117, 255, 1)",
-                        "rgba(255, 119, 115, 1)"
-                      ]}
-                      positions={[0, 0.2, 0.4, 0.6, 0.8, 0.9, 1]}
-                    />
-                  </Rect>
-                </SkiaGroup>
-              }
-            >
+            {/* <TrustmarkRainbowGradient /> */}
+            <Mask mode="alpha" mask={<TrustmarkRainbowGradient />}>
               <ImageSVG
                 svg={trustMarkStampSVG}
                 x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
                 y={-TRUSTMARK_HEIGHT * 0.28}
-                width={TRUSTMARK_HEIGHT * 1.6}
-                height={TRUSTMARK_HEIGHT * 1.6}
+                width={TRUSTMARK_STAMP_SIZE}
+                height={TRUSTMARK_STAMP_SIZE}
               />
-            </Mask> */}
+            </Mask>
 
-            {trustMarkStampSVG && (
-              <ImageSVG
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                svg={trustMarkStampSVG!}
-                x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
-                y={-TRUSTMARK_HEIGHT * 0.28}
-                width={TRUSTMARK_HEIGHT * 1.6}
-                height={TRUSTMARK_HEIGHT * 1.6}
-              />
-            )}
+            {/* {trustMarkStampSVG && (
+                <ImageSVG
+                  svg={trustMarkStampSVG}
+                  x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
+                  y={-TRUSTMARK_HEIGHT * 0.28}
+                  width={TRUSTMARK_STAMP_SIZE}
+                  height={TRUSTMARK_STAMP_SIZE}
+                />
+            )} */}
 
             {/* <SkiaImage
               image={trustMarkStamp}
@@ -405,8 +373,8 @@ export const QrCodeBottomSheetContent = ({
 const styles = StyleSheet.create({
   container: {
     borderCurve: "continuous",
-    borderRadius: buttonBorderRadius
-    // overflow: "hidden"
+    borderRadius: buttonBorderRadius,
+    overflow: "hidden"
   },
   buttonInnerBorder: {
     ...StyleSheet.absoluteFillObject,
