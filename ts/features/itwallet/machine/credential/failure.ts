@@ -1,7 +1,6 @@
 import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as t from "io-ts";
 import { Errors } from "@pagopa/io-react-native-wallet";
-import { ErrorActorEvent } from "xstate5";
 import { assert } from "../../../../utils/assert";
 import { CredentialIssuanceEvents } from "./events";
 
