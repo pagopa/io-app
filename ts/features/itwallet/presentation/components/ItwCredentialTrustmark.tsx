@@ -47,6 +47,8 @@ import { itwEaaVerifierBaseUrl } from "../../../../config";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { generateTrustmarkUrl } from "../../common/utils/itwCredentialUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 
 type ItwCredentialTrustmarkProps = WithTestID<{
   credential: StoredCredential;
@@ -78,6 +80,17 @@ const lightSize: LayoutRectangle["width"] = 250;
 /* Percentage of visible light when it's near
 card boundaries */
 const visibleLightPercentage = 0.25;
+
+const trustmarkEnabledCredentials = [
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.EUROPEAN_DISABILITY_CARD,
+  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+];
+
+const shouldDisplayTrustmark = (credential: StoredCredential) =>
+  trustmarkEnabledCredentials.includes(
+    credential.credentialType as CredentialType
+  ) && getCredentialStatus(credential) !== "expired";
 
 export const ItwCredentialTrustmark = ({
   testID,
@@ -229,6 +242,10 @@ export const ItwCredentialTrustmark = ({
     require("../../../../../img/features/itWallet/credential/trustmark-stamp.svg.html")
   );
 
+  if (!shouldDisplayTrustmark(credential)) {
+    return null;
+  }
+
   return (
     <>
       <Pressable
@@ -303,6 +320,8 @@ export const ItwCredentialTrustmark = ({
         </Animated.View>
       </Pressable>
       {trustmarkBottomSheet.bottomSheet}
+      {/* TODO: remove after merging #6154 */}
+      <VSpacer size={16} />
     </>
   );
 };
@@ -358,13 +377,4 @@ const styles = StyleSheet.create({
   caption: {
     zIndex: 10
   }
-  // logo: {
-  //   zIndex: 1,
-  //   position: "absolute",
-  //   height: TRUSTMARK_HEIGHT,
-  //   width: TRUSTMARK_HEIGHT,
-  //   transform: [{ scale: 1.5 }],
-  //   top: "5%",
-  //   right: 8
-  // }
 });
