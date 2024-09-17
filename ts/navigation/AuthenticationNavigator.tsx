@@ -26,6 +26,10 @@ import CieWrongCardScreen from "../screens/authentication/cie/CieWrongCardScreen
 import ActivateNfcScreen from "../screens/authentication/cie/ActivateNfcScreen";
 import AuthErrorScreen from "../screens/authentication/AuthErrorScreen";
 import OptInScreen from "../screens/authentication/OptInScreen";
+import CieIdWizard from "../features/cie/wizards/CieIdWizard";
+import CiePinWizard from "../features/cie/wizards/CiePinWizard";
+import SpidWizard from "../features/cie/wizards/SpidWizard";
+import IDActivationWizard from "../features/cie/wizards/IDActivationWizard";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 import CloseButton from "./components/CloseButton";
@@ -55,7 +59,24 @@ const AuthenticationStackNavigator = () => (
         component={RootedDeviceModal}
       />
     </Stack.Group>
-
+    <Stack.Group screenOptions={{ headerShown: true }}>
+      <Stack.Screen
+        name={ROUTES.AUTHENTICATION_CIE_ID_WIZARD}
+        component={CieIdWizard}
+      />
+      <Stack.Screen
+        name={ROUTES.AUTHENTICATION_CIE_PIN_WIZARD}
+        component={CiePinWizard}
+      />
+      <Stack.Screen
+        name={ROUTES.AUTHENTICATION_SPID_WIZARD}
+        component={SpidWizard}
+      />
+      <Stack.Screen
+        name={ROUTES.AUTHENTICATION_ID_ACTIVATION_WIZARD}
+        component={IDActivationWizard}
+      />
+    </Stack.Group>
     <Stack.Screen
       name={ROUTES.AUTHENTICATION_OPT_IN}
       component={OptInScreen}
