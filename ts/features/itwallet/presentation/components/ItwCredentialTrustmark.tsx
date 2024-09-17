@@ -206,9 +206,9 @@ ItwCredentialTrustmarkProps) => {
   const TrustmarkRainbowGradient = () => (
     <SkiaGroup blendMode={"colorDodge"} opacity={0.8}>
       <Rect
-        x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
+        x={0}
         y={0}
-        width={TRUSTMARK_STAMP_SIZE}
+        width={buttonSize?.width ?? 0}
         height={TRUSTMARK_GRADIENT_HEIGHT}
         transform={skiaGradientRainbowTranslateValues}
       >
@@ -217,15 +217,15 @@ ItwCredentialTrustmarkProps) => {
           start={vec(0, 0)}
           end={vec(0, TRUSTMARK_GRADIENT_HEIGHT)}
           colors={[
-            "rgba(255, 119, 115, 1)",
-            "rgba(216, 117, 255, 1)",
-            "rgba(120, 148, 255, 1)",
-            "rgba(131, 255, 247,1)",
-            "rgba(168, 255, 95, 1)",
+            "rgba(255, 119, 115,1)",
             "rgba(255, 237, 95, 1)",
-            "rgba(255, 119, 115,1)"
+            "rgba(168, 255, 95, 1)",
+            "rgba(131, 255, 247,1)",
+            "rgba(120, 148, 255, 1)",
+            "rgba(216, 117, 255, 1)",
+            "rgba(255, 119, 115, 1)"
           ]}
-          positions={[0, 0.1, 0.2, 0.4, 0.6, 0.8, 1]}
+          positions={[0, 0.2, 0.4, 0.6, 0.8, 0.9, 1]}
         />
       </Rect>
     </SkiaGroup>
@@ -233,11 +233,6 @@ ItwCredentialTrustmarkProps) => {
 
   const { onPressIn, onPressOut, animatedScaleStyle } =
     useSpringPressScaleAnimation();
-
-  // const trustMarkStamp = useImage(
-  //   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  //   require("../../../../../img/features/itWallet/credential/trustmark-2x.png")
-  // );
 
   const trustMarkStampSVG = useSVG(
     /* We use the `html` extension to avoid the `svg-transformer` used to
@@ -310,8 +305,18 @@ ItwCredentialTrustmarkProps) => {
 
             <ButtonLight />
 
-            {/* <TrustmarkRainbowGradient /> */}
-            <Mask mode="alpha" mask={<TrustmarkRainbowGradient />}>
+            <SkiaGroup blendMode={"colorBurn"} opacity={0.07}>
+              <TrustmarkRainbowGradient />
+            </SkiaGroup>
+
+            <Mask
+              mode="alpha"
+              mask={
+                <SkiaGroup blendMode={"colorDodge"} opacity={0.8}>
+                  <TrustmarkRainbowGradient />
+                </SkiaGroup>
+              }
+            >
               <ImageSVG
                 svg={trustMarkStampSVG}
                 x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
