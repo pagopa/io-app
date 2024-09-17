@@ -74,6 +74,21 @@ const ContentView = ({ failure }: ContentViewProps) => {
         ),
         onPress: closeIssuance
       }
+    },
+    NOT_ENTITLED: {
+      title: I18n.t(
+        "features.itWallet.issuance.notEntitledCredentialError.title"
+      ),
+      subtitle: I18n.t(
+        "features.itWallet.issuance.notEntitledCredentialError.body"
+      ),
+      pictogram: "accessDenied",
+      action: {
+        label: I18n.t(
+          "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
+        ),
+        onPress: closeIssuance
+      }
     }
   };
 
