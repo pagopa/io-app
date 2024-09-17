@@ -4189,6 +4189,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                           hardwareAccelerated={false}
                           importantForAccessibility="yes"
+                          onDismiss={[Function]}
                           snapPoints={
                             [
                               1,
