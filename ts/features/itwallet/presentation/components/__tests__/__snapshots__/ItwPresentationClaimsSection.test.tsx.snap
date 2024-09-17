@@ -331,173 +331,173 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         }
                       }
                     >
-                      <View
-                        style={
-                          {
-                            "flexDirection": "row",
-                            "justifyContent": "space-between",
-                          }
-                        }
-                      >
-                        <Text
-                          allowFontScaling={false}
-                          color="grey-700"
-                          defaultColor="black"
-                          defaultWeight="Semibold"
-                          dynamicTypeRamp="headline"
-                          font="TitilliumSansPro"
-                          fontStyle={
+                      <View>
+                        <View
+                          style={
                             {
-                              "fontSize": 18,
-                              "lineHeight": 25,
+                              "flexDirection": "row",
+                              "justifyContent": "space-between",
                             }
                           }
-                          maxFontSizeMultiplier={1.25}
-                          style={
-                            [
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
+                            font="TitilliumSansPro"
+                            fontStyle={
                               {
                                 "fontSize": 18,
                                 "lineHeight": 25,
-                              },
-                              {
-                                "color": "#555C70",
-                                "fontFamily": "Titillium Sans Pro",
-                                "fontStyle": "normal",
-                                "fontWeight": "600",
-                              },
-                            ]
-                          }
-                          weight="Semibold"
-                        >
-                          Document data
-                        </Text>
-                        <View
-                          accessibilityLabel="Show claim values"
-                          accessibilityRole="button"
-                          accessibilityState={
-                            {
-                              "busy": undefined,
-                              "checked": undefined,
-                              "disabled": false,
-                              "expanded": undefined,
-                              "selected": undefined,
+                              }
                             }
-                          }
-                          accessibilityValue={
-                            {
-                              "max": undefined,
-                              "min": undefined,
-                              "now": undefined,
-                              "text": undefined,
-                            }
-                          }
-                          accessible={true}
-                          collapsable={false}
-                          focusable={true}
-                          hitSlop={8}
-                          onBlur={[Function]}
-                          onClick={[Function]}
-                          onFocus={[Function]}
-                          onResponderGrant={[Function]}
-                          onResponderMove={[Function]}
-                          onResponderRelease={[Function]}
-                          onResponderTerminate={[Function]}
-                          onResponderTerminationRequest={[Function]}
-                          onStartShouldSetResponder={[Function]}
-                          testID="toggle-claim-visibility"
-                        >
-                          <View
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "height": 24,
-                                  "width": 24,
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
                                 },
                                 {
-                                  "alignItems": "center",
-                                },
-                                {
-                                  "justifyContent": "center",
-                                },
-                                {
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
                                 },
                               ]
                             }
+                            weight="Semibold"
                           >
-                            <RNSVGSvgView
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessible={false}
-                              align="xMidYMid"
-                              animatedProps={
-                                {
-                                  "color": undefined,
-                                }
+                            Document data
+                          </Text>
+                          <View
+                            accessibilityLabel="Show claim values"
+                            accessibilityRole="button"
+                            accessibilityState={
+                              {
+                                "busy": undefined,
+                                "checked": undefined,
+                                "disabled": false,
+                                "expanded": undefined,
+                                "selected": undefined,
                               }
-                              bbHeight={24}
-                              bbWidth={24}
-                              focusable={false}
-                              height={24}
-                              importantForAccessibility="no-hide-descendants"
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
+                            }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
+                              }
+                            }
+                            accessible={true}
+                            collapsable={false}
+                            focusable={true}
+                            hitSlop={8}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
+                            testID="toggle-claim-visibility"
+                          >
+                            <View
                               style={
                                 [
                                   {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  {
-                                    "color": "#0073E6",
-                                  },
-                                  {
-                                    "flex": 0,
                                     "height": 24,
                                     "width": 24,
                                   },
+                                  {
+                                    "alignItems": "center",
+                                  },
+                                  {
+                                    "justifyContent": "center",
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
                                 ]
                               }
-                              tintColor="#0073E6"
-                              vbHeight={24}
-                              vbWidth={24}
-                              width={24}
                             >
-                              <RNSVGGroup
-                                fill={
+                              <RNSVGSvgView
+                                accessibilityElementsHidden={true}
+                                accessibilityLabel=""
+                                accessible={false}
+                                align="xMidYMid"
+                                animatedProps={
                                   {
-                                    "payload": 4278190080,
-                                    "type": 0,
+                                    "color": undefined,
                                   }
                                 }
+                                bbHeight={24}
+                                bbWidth={24}
+                                focusable={false}
+                                height={24}
+                                importantForAccessibility="no-hide-descendants"
+                                meetOrSlice={0}
+                                minX={0}
+                                minY={0}
+                                style={
+                                  [
+                                    {
+                                      "backgroundColor": "transparent",
+                                      "borderWidth": 0,
+                                    },
+                                    {
+                                      "color": "#0073E6",
+                                    },
+                                    {
+                                      "flex": 0,
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                  ]
+                                }
+                                tintColor="#0073E6"
+                                vbHeight={24}
+                                vbWidth={24}
+                                width={24}
                               >
-                                <RNSVGPath
-                                  clipRule={0}
-                                  d="M1.707.293A1 1 0 0 0 .293 1.707l4.483 4.484A13.063 13.063 0 0 0 .63 10.696a2.686 2.686 0 0 0 0 2.609A12.997 12.997 0 0 0 12 20c1.931 0 3.763-.42 5.41-1.176l4.883 4.883a1 1 0 0 0 1.414-1.414l-22-22Zm19.099 16.27c1.02-.939 1.888-2.039 2.566-3.259.45-.812.45-1.797 0-2.609A12.997 12.997 0 0 0 12.001 4c-1.15 0-2.266.15-3.329.43l1.691 1.691a10.997 10.997 0 0 1 11.26 5.545.686.686 0 0 1 0 .667 11.05 11.05 0 0 1-2.233 2.815l1.416 1.416Zm-3.856-3.855a5 5 0 0 0-5.658-5.658l2.804 2.803.05.051 2.804 2.804Zm-14.573-1.04a11.055 11.055 0 0 1 3.846-4.03l1.605 1.605a5 5 0 0 0 6.929 6.929l1.125 1.124A10.977 10.977 0 0 1 12 18a10.997 10.997 0 0 1-9.623-5.666.686.686 0 0 1 0-.667ZM9 12c0-.463.105-.902.292-1.293l4.001 4A3 3 0 0 1 9 12Z"
+                                <RNSVGGroup
                                   fill={
                                     {
-                                      "type": 2,
+                                      "payload": 4278190080,
+                                      "type": 0,
                                     }
                                   }
-                                  fillRule={0}
-                                  propList={
-                                    [
-                                      "fill",
-                                      "fillRule",
-                                    ]
-                                  }
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
+                                >
+                                  <RNSVGPath
+                                    clipRule={0}
+                                    d="M1.707.293A1 1 0 0 0 .293 1.707l4.483 4.484A13.063 13.063 0 0 0 .63 10.696a2.686 2.686 0 0 0 0 2.609A12.997 12.997 0 0 0 12 20c1.931 0 3.763-.42 5.41-1.176l4.883 4.883a1 1 0 0 0 1.414-1.414l-22-22Zm19.099 16.27c1.02-.939 1.888-2.039 2.566-3.259.45-.812.45-1.797 0-2.609A12.997 12.997 0 0 0 12.001 4c-1.15 0-2.266.15-3.329.43l1.691 1.691a10.997 10.997 0 0 1 11.26 5.545.686.686 0 0 1 0 .667 11.05 11.05 0 0 1-2.233 2.815l1.416 1.416Zm-3.856-3.855a5 5 0 0 0-5.658-5.658l2.804 2.803.05.051 2.804 2.804Zm-14.573-1.04a11.055 11.055 0 0 1 3.846-4.03l1.605 1.605a5 5 0 0 0 6.929 6.929l1.125 1.124A10.977 10.977 0 0 1 12 18a10.997 10.997 0 0 1-9.623-5.666.686.686 0 0 1 0-.667ZM9 12c0-.463.105-.902.292-1.293l4.001 4A3 3 0 0 1 9 12Z"
+                                    fill={
+                                      {
+                                        "type": 2,
+                                      }
+                                    }
+                                    fillRule={0}
+                                    propList={
+                                      [
+                                        "fill",
+                                        "fillRule",
+                                      ]
+                                    }
+                                  />
+                                </RNSVGGroup>
+                              </RNSVGSvgView>
+                            </View>
                           </View>
                         </View>
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Place of Birth Hidden"
                           accessible={true}
@@ -605,8 +605,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Institution Number (TEAM) Hidden"
                           accessible={true}
@@ -714,8 +712,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Date of Birth Hidden"
                           accessible={true}
@@ -823,8 +819,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Province Hidden"
                           accessible={true}
@@ -932,8 +926,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Nation Hidden"
                           accessible={true}
@@ -1041,8 +1033,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Sex Hidden"
                           accessible={true}
@@ -1150,8 +1140,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Expiry Date Hidden"
                           accessible={true}
@@ -1259,8 +1247,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Document Number (TEAM) Hidden"
                           accessible={true}
@@ -1368,8 +1354,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="First Name Hidden"
                           accessible={true}
@@ -1477,8 +1461,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Fiscal Code Hidden"
                           accessible={true}
@@ -1586,8 +1568,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Family Name Hidden"
                           accessible={true}
@@ -1695,8 +1675,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="evidence Hidden"
                           accessible={true}
@@ -1804,379 +1782,379 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View
-                        accessibilityLabel="Rilasciata da Istituto Poligrafico e Zecca di Stato"
-                        accessible={false}
-                        style={
-                          {
-                            "marginHorizontal": -24,
-                            "paddingHorizontal": 24,
-                            "paddingVertical": 12,
-                          }
-                        }
-                      >
                         <View
+                          accessibilityLabel="Rilasciata da Istituto Poligrafico e Zecca di Stato"
+                          accessible={false}
                           style={
                             {
-                              "alignItems": "center",
-                              "flexDirection": "row",
-                              "justifyContent": "space-between",
+                              "marginHorizontal": -24,
+                              "paddingHorizontal": 24,
+                              "paddingVertical": 12,
                             }
                           }
                         >
                           <View
                             style={
                               {
-                                "flex": 1,
+                                "alignItems": "center",
+                                "flexDirection": "row",
+                                "justifyContent": "space-between",
                               }
                             }
                           >
                             <View
-                              accessible={true}
-                            >
-                              <Text
-                                allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
-                                dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
-                                  }
+                              style={
+                                {
+                                  "flex": 1,
                                 }
-                                maxFontSizeMultiplier={1.25}
-                                style={
-                                  [
+                              }
+                            >
+                              <View
+                                accessible={true}
+                              >
+                                <Text
+                                  allowFontScaling={false}
+                                  color="grey-700"
+                                  defaultColor="blue"
+                                  defaultWeight="Bold"
+                                  dynamicTypeRamp="footnote"
+                                  font="TitilliumSansPro"
+                                  fontStyle={
                                     {
                                       "fontSize": 14,
                                       "lineHeight": 21,
-                                    },
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                    },
-                                  ]
-                                }
-                                weight="Regular"
-                              >
-                                Rilasciata da
-                              </Text>
-                              <Text
-                                allowFontScaling={false}
-                                color="black"
-                                defaultColor="black"
-                                defaultWeight="Semibold"
-                                dynamicTypeRamp="headline"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 18,
-                                    "lineHeight": 25,
-                                  }
-                                }
-                                maxFontSizeMultiplier={1.25}
-                                numberOfLines={2}
-                                style={
-                                  [
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    },
-                                    {
-                                      "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                    },
-                                  ]
-                                }
-                                weight="Semibold"
-                              >
-                                Istituto Poligrafico e Zecca di Stato
-                              </Text>
-                            </View>
-                          </View>
-                          <View
-                            style={
-                              {
-                                "marginLeft": 16,
-                              }
-                            }
-                          >
-                            <View
-                              accessibilityLabel="test"
-                              accessibilityRole="button"
-                              accessibilityState={
-                                {
-                                  "busy": undefined,
-                                  "checked": undefined,
-                                  "disabled": false,
-                                  "expanded": undefined,
-                                  "selected": undefined,
-                                }
-                              }
-                              accessibilityValue={
-                                {
-                                  "max": undefined,
-                                  "min": undefined,
-                                  "now": undefined,
-                                  "text": undefined,
-                                }
-                              }
-                              accessible={true}
-                              collapsable={false}
-                              focusable={true}
-                              hitSlop={8}
-                              onBlur={[Function]}
-                              onClick={[Function]}
-                              onFocus={[Function]}
-                              onResponderGrant={[Function]}
-                              onResponderMove={[Function]}
-                              onResponderRelease={[Function]}
-                              onResponderTerminate={[Function]}
-                              onResponderTerminationRequest={[Function]}
-                              onStartShouldSetResponder={[Function]}
-                            >
-                              <View
-                                style={
-                                  [
-                                    {
-                                      "height": 24,
-                                      "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
-                                    },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
-                                  ]
-                                }
-                              >
-                                <RNSVGSvgView
-                                  accessibilityElementsHidden={true}
-                                  accessibilityLabel=""
-                                  accessible={false}
-                                  align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
                                     }
                                   }
-                                  bbHeight={24}
-                                  bbWidth={24}
-                                  focusable={false}
-                                  height={24}
-                                  importantForAccessibility="no-hide-descendants"
-                                  meetOrSlice={0}
-                                  minX={0}
-                                  minY={0}
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "transparent",
-                                        "borderWidth": 0,
+                                        "fontSize": 14,
+                                        "lineHeight": 21,
                                       },
                                       {
-                                        "color": "#0073E6",
-                                      },
-                                      {
-                                        "flex": 0,
-                                        "height": 24,
-                                        "width": 24,
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
-                                  vbHeight={24}
-                                  vbWidth={24}
-                                  width={24}
+                                  weight="Regular"
                                 >
-                                  <RNSVGGroup
-                                    fill={
+                                  Rilasciata da
+                                </Text>
+                                <Text
+                                  allowFontScaling={false}
+                                  color="black"
+                                  defaultColor="black"
+                                  defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
+                                  font="TitilliumSansPro"
+                                  fontStyle={
+                                    {
+                                      "fontSize": 18,
+                                      "lineHeight": 25,
+                                    }
+                                  }
+                                  maxFontSizeMultiplier={1.25}
+                                  numberOfLines={2}
+                                  style={
+                                    [
                                       {
-                                        "payload": 4278190080,
-                                        "type": 0,
+                                        "fontSize": 18,
+                                        "lineHeight": 25,
+                                      },
+                                      {
+                                        "color": "#0E0F13",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                      },
+                                    ]
+                                  }
+                                  weight="Semibold"
+                                >
+                                  Istituto Poligrafico e Zecca di Stato
+                                </Text>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "marginLeft": 16,
+                                }
+                              }
+                            >
+                              <View
+                                accessibilityLabel="test"
+                                accessibilityRole="button"
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": false,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
+                                }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                hitSlop={8}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                              >
+                                <View
+                                  style={
+                                    [
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                      {
+                                        "alignItems": "center",
+                                      },
+                                      {
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": undefined,
+                                          },
+                                        ],
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <RNSVGSvgView
+                                    accessibilityElementsHidden={true}
+                                    accessibilityLabel=""
+                                    accessible={false}
+                                    align="xMidYMid"
+                                    animatedProps={
+                                      {
+                                        "color": undefined,
                                       }
                                     }
+                                    bbHeight={24}
+                                    bbWidth={24}
+                                    focusable={false}
+                                    height={24}
+                                    importantForAccessibility="no-hide-descendants"
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
+                                    style={
+                                      [
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        {
+                                          "color": "#0073E6",
+                                        },
+                                        {
+                                          "flex": 0,
+                                          "height": 24,
+                                          "width": 24,
+                                        },
+                                      ]
+                                    }
+                                    tintColor="#0073E6"
+                                    vbHeight={24}
+                                    vbWidth={24}
+                                    width={24}
                                   >
-                                    <RNSVGPath
-                                      clipRule={0}
-                                      d="M0 12C0 5.3726 5.3726 0 12 0s12 5.3726 12 12-5.3726 12-12 12S0 18.6274 0 12Zm2 0C2 6.47717 6.47717 2 12 2c5.5228 0 10 4.47717 10 10 0 5.5228-4.4772 10-10 10-5.52283 0-10-4.4772-10-10Zm10.0281-4.50455c.8439 0 1.5281-.68415 1.5281-1.52809 0-.84394-.6842-1.52809-1.5281-1.52809-.844 0-1.5281.68415-1.5281 1.52809 0 .84394.6841 1.52809 1.5281 1.52809Zm0 1.94382h.0005c.5678 0 1.0281.46029 1.0281 1.02813v8.0045c0 .5678-.4603 1.0281-1.0281 1.0281h-.0005C11.4603 19.5 11 19.0397 11 18.4719v-8.0045c0-.56784.4603-1.02813 1.0281-1.02813Z"
+                                    <RNSVGGroup
                                       fill={
                                         {
-                                          "type": 2,
+                                          "payload": 4278190080,
+                                          "type": 0,
                                         }
                                       }
-                                      fillRule={0}
-                                      propList={
-                                        [
-                                          "fill",
-                                          "fillRule",
-                                        ]
-                                      }
-                                    />
-                                  </RNSVGGroup>
-                                </RNSVGSvgView>
+                                    >
+                                      <RNSVGPath
+                                        clipRule={0}
+                                        d="M0 12C0 5.3726 5.3726 0 12 0s12 5.3726 12 12-5.3726 12-12 12S0 18.6274 0 12Zm2 0C2 6.47717 6.47717 2 12 2c5.5228 0 10 4.47717 10 10 0 5.5228-4.4772 10-10 10-5.52283 0-10-4.4772-10-10Zm10.0281-4.50455c.8439 0 1.5281-.68415 1.5281-1.52809 0-.84394-.6842-1.52809-1.5281-1.52809-.844 0-1.5281.68415-1.5281 1.52809 0 .84394.6841 1.52809 1.5281 1.52809Zm0 1.94382h.0005c.5678 0 1.0281.46029 1.0281 1.02813v8.0045c0 .5678-.4603 1.0281-1.0281 1.0281h-.0005C11.4603 19.5 11 19.0397 11 18.4719v-8.0045c0-.56784.4603-1.02813 1.0281-1.02813Z"
+                                        fill={
+                                          {
+                                            "type": 2,
+                                          }
+                                        }
+                                        fillRule={0}
+                                        propList={
+                                          [
+                                            "fill",
+                                            "fillRule",
+                                          ]
+                                        }
+                                      />
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
+                                </View>
                               </View>
                             </View>
                           </View>
                         </View>
-                      </View>
-                      <Modal
-                        accessibilityPositionChangeAnnouncement=""
-                        accessible={false}
-                        backdropComponent={[Function]}
-                        enableDismissOnClose={true}
-                        footerComponent={[Function]}
-                        handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
-                        hardwareAccelerated={false}
-                        importantForAccessibility="yes"
-                        onDismiss={[Function]}
-                        snapPoints={
-                          [
-                            1,
-                          ]
-                        }
-                        style={
-                          {
-                            "borderCurve": "continuous",
-                            "borderTopLeftRadius": 24,
-                            "borderTopRightRadius": 24,
-                            "overflow": "hidden",
-                          }
-                        }
-                        visible={true}
-                      >
-                        <RCTScrollView
-                          style={
+                        <Modal
+                          accessibilityPositionChangeAnnouncement=""
+                          accessible={false}
+                          backdropComponent={[Function]}
+                          enableDismissOnClose={true}
+                          footerComponent={[Function]}
+                          handleComponent={[Function]}
+                          handleComponentAccessibility={
                             {
-                              "flex": 1,
-                              "paddingHorizontal": 24,
+                              "accessible": false,
                             }
                           }
+                          hardwareAccelerated={false}
+                          importantForAccessibility="yes"
+                          onDismiss={[Function]}
+                          snapPoints={
+                            [
+                              1,
+                            ]
+                          }
+                          style={
+                            {
+                              "borderCurve": "continuous",
+                              "borderTopLeftRadius": 24,
+                              "borderTopRightRadius": 24,
+                              "overflow": "hidden",
+                            }
+                          }
+                          visible={true}
                         >
-                          <View>
-                            <View
-                              onLayout={[Function]}
-                            >
+                          <RCTScrollView
+                            style={
+                              {
+                                "flex": 1,
+                                "paddingHorizontal": 24,
+                              }
+                            }
+                          >
+                            <View>
                               <View
-                                style={
-                                  {
-                                    "flex": 1,
-                                  }
-                                }
+                                onLayout={[Function]}
                               >
-                                <View>
-                                  <Text
-                                    allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
-                                    dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
+                                <View
+                                  style={
+                                    {
+                                      "flex": 1,
                                     }
-                                    maxFontSizeMultiplier={1.25}
-                                    style={
-                                      [
+                                  }
+                                >
+                                  <View>
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="black"
+                                      defaultColor="black"
+                                      defaultWeight="Semibold"
+                                      dynamicTypeRamp="headline"
+                                      font="TitilliumSansPro"
+                                      fontStyle={
                                         {
                                           "fontSize": 18,
                                           "lineHeight": 25,
-                                        },
+                                        }
+                                      }
+                                      maxFontSizeMultiplier={1.25}
+                                      style={
+                                        [
+                                          {
+                                            "fontSize": 18,
+                                            "lineHeight": 25,
+                                          },
+                                          {
+                                            "color": "#0E0F13",
+                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                          },
+                                        ]
+                                      }
+                                      weight="Semibold"
+                                    >
+                                      Chi è?
+                                    </Text>
+                                    <View
+                                      style={
                                         {
-                                          "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                        },
-                                      ]
-                                    }
-                                    weight="Semibold"
-                                  >
-                                    Chi è?
-                                  </Text>
-                                  <View
-                                    style={
-                                      {
-                                        "height": 8,
+                                          "height": 8,
+                                        }
                                       }
-                                    }
-                                  />
-                                  <Text
-                                    allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="bluegrey"
-                                    defaultWeight="Regular"
-                                    dynamicTypeRamp="body"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      }
-                                    }
-                                    maxFontSizeMultiplier={1.25}
-                                    style={
-                                      [
+                                    />
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="bluegrey"
+                                      defaultColor="bluegrey"
+                                      defaultWeight="Regular"
+                                      dynamicTypeRamp="body"
+                                      font="TitilliumSansPro"
+                                      fontStyle={
                                         {
                                           "fontSize": 16,
                                           "lineHeight": 24,
-                                        },
+                                        }
+                                      }
+                                      maxFontSizeMultiplier={1.25}
+                                      style={
+                                        [
+                                          {
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
+                                          },
+                                          {
+                                            "color": "#475A6D",
+                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                          },
+                                        ]
+                                      }
+                                      weight="Regular"
+                                    >
+                                      È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo.
+                                    </Text>
+                                    <View
+                                      style={
                                         {
-                                          "color": "#475A6D",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                        },
-                                      ]
-                                    }
-                                    weight="Regular"
-                                  >
-                                    È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo.
-                                  </Text>
+                                          "height": 16,
+                                        }
+                                      }
+                                    />
+                                  </View>
                                   <View
                                     style={
                                       {
-                                        "height": 16,
+                                        "height": 24,
                                       }
                                     }
                                   />
                                 </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 24,
-                                    }
-                                  }
-                                />
                               </View>
                             </View>
-                          </View>
-                        </RCTScrollView>
-                      </Modal>
+                          </RCTScrollView>
+                        </Modal>
+                      </View>
                     </View>
                   </View>
                 </View>
@@ -2521,173 +2499,173 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         }
                       }
                     >
-                      <View
-                        style={
-                          {
-                            "flexDirection": "row",
-                            "justifyContent": "space-between",
-                          }
-                        }
-                      >
-                        <Text
-                          allowFontScaling={false}
-                          color="grey-700"
-                          defaultColor="black"
-                          defaultWeight="Semibold"
-                          dynamicTypeRamp="headline"
-                          font="TitilliumSansPro"
-                          fontStyle={
+                      <View>
+                        <View
+                          style={
                             {
-                              "fontSize": 18,
-                              "lineHeight": 25,
+                              "flexDirection": "row",
+                              "justifyContent": "space-between",
                             }
                           }
-                          maxFontSizeMultiplier={1.25}
-                          style={
-                            [
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
+                            font="TitilliumSansPro"
+                            fontStyle={
                               {
                                 "fontSize": 18,
                                 "lineHeight": 25,
-                              },
-                              {
-                                "color": "#555C70",
-                                "fontFamily": "Titillium Sans Pro",
-                                "fontStyle": "normal",
-                                "fontWeight": "600",
-                              },
-                            ]
-                          }
-                          weight="Semibold"
-                        >
-                          Document data
-                        </Text>
-                        <View
-                          accessibilityLabel="Hide claim values"
-                          accessibilityRole="button"
-                          accessibilityState={
-                            {
-                              "busy": undefined,
-                              "checked": undefined,
-                              "disabled": false,
-                              "expanded": undefined,
-                              "selected": undefined,
+                              }
                             }
-                          }
-                          accessibilityValue={
-                            {
-                              "max": undefined,
-                              "min": undefined,
-                              "now": undefined,
-                              "text": undefined,
-                            }
-                          }
-                          accessible={true}
-                          collapsable={false}
-                          focusable={true}
-                          hitSlop={8}
-                          onBlur={[Function]}
-                          onClick={[Function]}
-                          onFocus={[Function]}
-                          onResponderGrant={[Function]}
-                          onResponderMove={[Function]}
-                          onResponderRelease={[Function]}
-                          onResponderTerminate={[Function]}
-                          onResponderTerminationRequest={[Function]}
-                          onStartShouldSetResponder={[Function]}
-                          testID="toggle-claim-visibility"
-                        >
-                          <View
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "height": 24,
-                                  "width": 24,
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
                                 },
                                 {
-                                  "alignItems": "center",
-                                },
-                                {
-                                  "justifyContent": "center",
-                                },
-                                {
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
                                 },
                               ]
                             }
+                            weight="Semibold"
                           >
-                            <RNSVGSvgView
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessible={false}
-                              align="xMidYMid"
-                              animatedProps={
-                                {
-                                  "color": undefined,
-                                }
+                            Document data
+                          </Text>
+                          <View
+                            accessibilityLabel="Hide claim values"
+                            accessibilityRole="button"
+                            accessibilityState={
+                              {
+                                "busy": undefined,
+                                "checked": undefined,
+                                "disabled": false,
+                                "expanded": undefined,
+                                "selected": undefined,
                               }
-                              bbHeight={24}
-                              bbWidth={24}
-                              focusable={false}
-                              height={24}
-                              importantForAccessibility="no-hide-descendants"
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
+                            }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
+                              }
+                            }
+                            accessible={true}
+                            collapsable={false}
+                            focusable={true}
+                            hitSlop={8}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
+                            testID="toggle-claim-visibility"
+                          >
+                            <View
                               style={
                                 [
                                   {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  {
-                                    "color": "#0073E6",
-                                  },
-                                  {
-                                    "flex": 0,
                                     "height": 24,
                                     "width": 24,
                                   },
+                                  {
+                                    "alignItems": "center",
+                                  },
+                                  {
+                                    "justifyContent": "center",
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
                                 ]
                               }
-                              tintColor="#0073E6"
-                              vbHeight={24}
-                              vbWidth={24}
-                              width={24}
                             >
-                              <RNSVGGroup
-                                fill={
+                              <RNSVGSvgView
+                                accessibilityElementsHidden={true}
+                                accessibilityLabel=""
+                                accessible={false}
+                                align="xMidYMid"
+                                animatedProps={
                                   {
-                                    "payload": 4278190080,
-                                    "type": 0,
+                                    "color": undefined,
                                   }
                                 }
+                                bbHeight={24}
+                                bbWidth={24}
+                                focusable={false}
+                                height={24}
+                                importantForAccessibility="no-hide-descendants"
+                                meetOrSlice={0}
+                                minX={0}
+                                minY={0}
+                                style={
+                                  [
+                                    {
+                                      "backgroundColor": "transparent",
+                                      "borderWidth": 0,
+                                    },
+                                    {
+                                      "color": "#0073E6",
+                                    },
+                                    {
+                                      "flex": 0,
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                  ]
+                                }
+                                tintColor="#0073E6"
+                                vbHeight={24}
+                                vbWidth={24}
+                                width={24}
                               >
-                                <RNSVGPath
-                                  clipRule={0}
-                                  d="M2.377 11.667A10.997 10.997 0 0 1 12.001 6c4.138 0 7.744 2.285 9.623 5.666a.686.686 0 0 1 0 .667A10.997 10.997 0 0 1 12 18a10.997 10.997 0 0 1-9.623-5.666.686.686 0 0 1 0-.667zM12.001 4A12.997 12.997 0 0 0 .629 10.696a2.686 2.686 0 0 0 0 2.609A12.997 12.997 0 0 0 12 20c4.894 0 9.155-2.705 11.372-6.696.45-.812.45-1.797 0-2.609A12.997 12.997 0 0 0 12.001 4zM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 0a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"
+                                <RNSVGGroup
                                   fill={
                                     {
-                                      "type": 2,
+                                      "payload": 4278190080,
+                                      "type": 0,
                                     }
                                   }
-                                  fillRule={0}
-                                  propList={
-                                    [
-                                      "fill",
-                                      "fillRule",
-                                    ]
-                                  }
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
+                                >
+                                  <RNSVGPath
+                                    clipRule={0}
+                                    d="M2.377 11.667A10.997 10.997 0 0 1 12.001 6c4.138 0 7.744 2.285 9.623 5.666a.686.686 0 0 1 0 .667A10.997 10.997 0 0 1 12 18a10.997 10.997 0 0 1-9.623-5.666.686.686 0 0 1 0-.667zM12.001 4A12.997 12.997 0 0 0 .629 10.696a2.686 2.686 0 0 0 0 2.609A12.997 12.997 0 0 0 12 20c4.894 0 9.155-2.705 11.372-6.696.45-.812.45-1.797 0-2.609A12.997 12.997 0 0 0 12.001 4zM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 0a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"
+                                    fill={
+                                      {
+                                        "type": 2,
+                                      }
+                                    }
+                                    fillRule={0}
+                                    propList={
+                                      [
+                                        "fill",
+                                        "fillRule",
+                                      ]
+                                    }
+                                  />
+                                </RNSVGGroup>
+                              </RNSVGSvgView>
+                            </View>
                           </View>
                         </View>
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Rome (IT)"
                           accessible={true}
@@ -2795,8 +2773,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Institution Number (TEAM) 500001"
                           accessible={true}
@@ -2904,8 +2880,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Date of Birth 06/01/1991"
                           accessible={true}
@@ -3013,8 +2987,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Province Rome"
                           accessible={true}
@@ -3122,8 +3094,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Nation IT"
                           accessible={true}
@@ -3231,8 +3201,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Sex M"
                           accessible={true}
@@ -3340,8 +3308,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Expiry Date 22/02/2025"
                           accessible={false}
@@ -3507,8 +3473,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Document Number (TEAM) 80380000000000000001"
                           accessible={true}
@@ -3616,8 +3580,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="First Name Casimira"
                           accessible={true}
@@ -3725,8 +3687,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Fiscal Code RSSMRA80A10H501A"
                           accessible={true}
@@ -3834,8 +3794,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Family Name Savoia"
                           accessible={true}
@@ -3943,8 +3901,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View>
                         <View
                           accessibilityLabel="Emessa da Ragioneria Generale dello Stato"
                           accessible={false}
@@ -4325,379 +4281,379 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                         />
-                      </View>
-                      <View
-                        accessibilityLabel="Rilasciata da Istituto Poligrafico e Zecca di Stato"
-                        accessible={false}
-                        style={
-                          {
-                            "marginHorizontal": -24,
-                            "paddingHorizontal": 24,
-                            "paddingVertical": 12,
-                          }
-                        }
-                      >
                         <View
+                          accessibilityLabel="Rilasciata da Istituto Poligrafico e Zecca di Stato"
+                          accessible={false}
                           style={
                             {
-                              "alignItems": "center",
-                              "flexDirection": "row",
-                              "justifyContent": "space-between",
+                              "marginHorizontal": -24,
+                              "paddingHorizontal": 24,
+                              "paddingVertical": 12,
                             }
                           }
                         >
                           <View
                             style={
                               {
-                                "flex": 1,
+                                "alignItems": "center",
+                                "flexDirection": "row",
+                                "justifyContent": "space-between",
                               }
                             }
                           >
                             <View
-                              accessible={true}
-                            >
-                              <Text
-                                allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
-                                dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
-                                  }
+                              style={
+                                {
+                                  "flex": 1,
                                 }
-                                maxFontSizeMultiplier={1.25}
-                                style={
-                                  [
+                              }
+                            >
+                              <View
+                                accessible={true}
+                              >
+                                <Text
+                                  allowFontScaling={false}
+                                  color="grey-700"
+                                  defaultColor="blue"
+                                  defaultWeight="Bold"
+                                  dynamicTypeRamp="footnote"
+                                  font="TitilliumSansPro"
+                                  fontStyle={
                                     {
                                       "fontSize": 14,
                                       "lineHeight": 21,
-                                    },
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                    },
-                                  ]
-                                }
-                                weight="Regular"
-                              >
-                                Rilasciata da
-                              </Text>
-                              <Text
-                                allowFontScaling={false}
-                                color="black"
-                                defaultColor="black"
-                                defaultWeight="Semibold"
-                                dynamicTypeRamp="headline"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 18,
-                                    "lineHeight": 25,
-                                  }
-                                }
-                                maxFontSizeMultiplier={1.25}
-                                numberOfLines={2}
-                                style={
-                                  [
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    },
-                                    {
-                                      "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                    },
-                                  ]
-                                }
-                                weight="Semibold"
-                              >
-                                Istituto Poligrafico e Zecca di Stato
-                              </Text>
-                            </View>
-                          </View>
-                          <View
-                            style={
-                              {
-                                "marginLeft": 16,
-                              }
-                            }
-                          >
-                            <View
-                              accessibilityLabel="test"
-                              accessibilityRole="button"
-                              accessibilityState={
-                                {
-                                  "busy": undefined,
-                                  "checked": undefined,
-                                  "disabled": false,
-                                  "expanded": undefined,
-                                  "selected": undefined,
-                                }
-                              }
-                              accessibilityValue={
-                                {
-                                  "max": undefined,
-                                  "min": undefined,
-                                  "now": undefined,
-                                  "text": undefined,
-                                }
-                              }
-                              accessible={true}
-                              collapsable={false}
-                              focusable={true}
-                              hitSlop={8}
-                              onBlur={[Function]}
-                              onClick={[Function]}
-                              onFocus={[Function]}
-                              onResponderGrant={[Function]}
-                              onResponderMove={[Function]}
-                              onResponderRelease={[Function]}
-                              onResponderTerminate={[Function]}
-                              onResponderTerminationRequest={[Function]}
-                              onStartShouldSetResponder={[Function]}
-                            >
-                              <View
-                                style={
-                                  [
-                                    {
-                                      "height": 24,
-                                      "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
-                                    },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
-                                  ]
-                                }
-                              >
-                                <RNSVGSvgView
-                                  accessibilityElementsHidden={true}
-                                  accessibilityLabel=""
-                                  accessible={false}
-                                  align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
                                     }
                                   }
-                                  bbHeight={24}
-                                  bbWidth={24}
-                                  focusable={false}
-                                  height={24}
-                                  importantForAccessibility="no-hide-descendants"
-                                  meetOrSlice={0}
-                                  minX={0}
-                                  minY={0}
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "transparent",
-                                        "borderWidth": 0,
+                                        "fontSize": 14,
+                                        "lineHeight": 21,
                                       },
                                       {
-                                        "color": "#0073E6",
-                                      },
-                                      {
-                                        "flex": 0,
-                                        "height": 24,
-                                        "width": 24,
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
-                                  vbHeight={24}
-                                  vbWidth={24}
-                                  width={24}
+                                  weight="Regular"
                                 >
-                                  <RNSVGGroup
-                                    fill={
+                                  Rilasciata da
+                                </Text>
+                                <Text
+                                  allowFontScaling={false}
+                                  color="black"
+                                  defaultColor="black"
+                                  defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
+                                  font="TitilliumSansPro"
+                                  fontStyle={
+                                    {
+                                      "fontSize": 18,
+                                      "lineHeight": 25,
+                                    }
+                                  }
+                                  maxFontSizeMultiplier={1.25}
+                                  numberOfLines={2}
+                                  style={
+                                    [
                                       {
-                                        "payload": 4278190080,
-                                        "type": 0,
+                                        "fontSize": 18,
+                                        "lineHeight": 25,
+                                      },
+                                      {
+                                        "color": "#0E0F13",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                      },
+                                    ]
+                                  }
+                                  weight="Semibold"
+                                >
+                                  Istituto Poligrafico e Zecca di Stato
+                                </Text>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "marginLeft": 16,
+                                }
+                              }
+                            >
+                              <View
+                                accessibilityLabel="test"
+                                accessibilityRole="button"
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": false,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
+                                }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                hitSlop={8}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                              >
+                                <View
+                                  style={
+                                    [
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                      {
+                                        "alignItems": "center",
+                                      },
+                                      {
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": undefined,
+                                          },
+                                        ],
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <RNSVGSvgView
+                                    accessibilityElementsHidden={true}
+                                    accessibilityLabel=""
+                                    accessible={false}
+                                    align="xMidYMid"
+                                    animatedProps={
+                                      {
+                                        "color": undefined,
                                       }
                                     }
+                                    bbHeight={24}
+                                    bbWidth={24}
+                                    focusable={false}
+                                    height={24}
+                                    importantForAccessibility="no-hide-descendants"
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
+                                    style={
+                                      [
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        {
+                                          "color": "#0073E6",
+                                        },
+                                        {
+                                          "flex": 0,
+                                          "height": 24,
+                                          "width": 24,
+                                        },
+                                      ]
+                                    }
+                                    tintColor="#0073E6"
+                                    vbHeight={24}
+                                    vbWidth={24}
+                                    width={24}
                                   >
-                                    <RNSVGPath
-                                      clipRule={0}
-                                      d="M0 12C0 5.3726 5.3726 0 12 0s12 5.3726 12 12-5.3726 12-12 12S0 18.6274 0 12Zm2 0C2 6.47717 6.47717 2 12 2c5.5228 0 10 4.47717 10 10 0 5.5228-4.4772 10-10 10-5.52283 0-10-4.4772-10-10Zm10.0281-4.50455c.8439 0 1.5281-.68415 1.5281-1.52809 0-.84394-.6842-1.52809-1.5281-1.52809-.844 0-1.5281.68415-1.5281 1.52809 0 .84394.6841 1.52809 1.5281 1.52809Zm0 1.94382h.0005c.5678 0 1.0281.46029 1.0281 1.02813v8.0045c0 .5678-.4603 1.0281-1.0281 1.0281h-.0005C11.4603 19.5 11 19.0397 11 18.4719v-8.0045c0-.56784.4603-1.02813 1.0281-1.02813Z"
+                                    <RNSVGGroup
                                       fill={
                                         {
-                                          "type": 2,
+                                          "payload": 4278190080,
+                                          "type": 0,
                                         }
                                       }
-                                      fillRule={0}
-                                      propList={
-                                        [
-                                          "fill",
-                                          "fillRule",
-                                        ]
-                                      }
-                                    />
-                                  </RNSVGGroup>
-                                </RNSVGSvgView>
+                                    >
+                                      <RNSVGPath
+                                        clipRule={0}
+                                        d="M0 12C0 5.3726 5.3726 0 12 0s12 5.3726 12 12-5.3726 12-12 12S0 18.6274 0 12Zm2 0C2 6.47717 6.47717 2 12 2c5.5228 0 10 4.47717 10 10 0 5.5228-4.4772 10-10 10-5.52283 0-10-4.4772-10-10Zm10.0281-4.50455c.8439 0 1.5281-.68415 1.5281-1.52809 0-.84394-.6842-1.52809-1.5281-1.52809-.844 0-1.5281.68415-1.5281 1.52809 0 .84394.6841 1.52809 1.5281 1.52809Zm0 1.94382h.0005c.5678 0 1.0281.46029 1.0281 1.02813v8.0045c0 .5678-.4603 1.0281-1.0281 1.0281h-.0005C11.4603 19.5 11 19.0397 11 18.4719v-8.0045c0-.56784.4603-1.02813 1.0281-1.02813Z"
+                                        fill={
+                                          {
+                                            "type": 2,
+                                          }
+                                        }
+                                        fillRule={0}
+                                        propList={
+                                          [
+                                            "fill",
+                                            "fillRule",
+                                          ]
+                                        }
+                                      />
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
+                                </View>
                               </View>
                             </View>
                           </View>
                         </View>
-                      </View>
-                      <Modal
-                        accessibilityPositionChangeAnnouncement=""
-                        accessible={false}
-                        backdropComponent={[Function]}
-                        enableDismissOnClose={true}
-                        footerComponent={[Function]}
-                        handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
-                        hardwareAccelerated={false}
-                        importantForAccessibility="yes"
-                        onDismiss={[Function]}
-                        snapPoints={
-                          [
-                            1,
-                          ]
-                        }
-                        style={
-                          {
-                            "borderCurve": "continuous",
-                            "borderTopLeftRadius": 24,
-                            "borderTopRightRadius": 24,
-                            "overflow": "hidden",
-                          }
-                        }
-                        visible={true}
-                      >
-                        <RCTScrollView
-                          style={
+                        <Modal
+                          accessibilityPositionChangeAnnouncement=""
+                          accessible={false}
+                          backdropComponent={[Function]}
+                          enableDismissOnClose={true}
+                          footerComponent={[Function]}
+                          handleComponent={[Function]}
+                          handleComponentAccessibility={
                             {
-                              "flex": 1,
-                              "paddingHorizontal": 24,
+                              "accessible": false,
                             }
                           }
+                          hardwareAccelerated={false}
+                          importantForAccessibility="yes"
+                          onDismiss={[Function]}
+                          snapPoints={
+                            [
+                              1,
+                            ]
+                          }
+                          style={
+                            {
+                              "borderCurve": "continuous",
+                              "borderTopLeftRadius": 24,
+                              "borderTopRightRadius": 24,
+                              "overflow": "hidden",
+                            }
+                          }
+                          visible={true}
                         >
-                          <View>
-                            <View
-                              onLayout={[Function]}
-                            >
+                          <RCTScrollView
+                            style={
+                              {
+                                "flex": 1,
+                                "paddingHorizontal": 24,
+                              }
+                            }
+                          >
+                            <View>
                               <View
-                                style={
-                                  {
-                                    "flex": 1,
-                                  }
-                                }
+                                onLayout={[Function]}
                               >
-                                <View>
-                                  <Text
-                                    allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
-                                    dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
+                                <View
+                                  style={
+                                    {
+                                      "flex": 1,
                                     }
-                                    maxFontSizeMultiplier={1.25}
-                                    style={
-                                      [
+                                  }
+                                >
+                                  <View>
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="black"
+                                      defaultColor="black"
+                                      defaultWeight="Semibold"
+                                      dynamicTypeRamp="headline"
+                                      font="TitilliumSansPro"
+                                      fontStyle={
                                         {
                                           "fontSize": 18,
                                           "lineHeight": 25,
-                                        },
+                                        }
+                                      }
+                                      maxFontSizeMultiplier={1.25}
+                                      style={
+                                        [
+                                          {
+                                            "fontSize": 18,
+                                            "lineHeight": 25,
+                                          },
+                                          {
+                                            "color": "#0E0F13",
+                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                          },
+                                        ]
+                                      }
+                                      weight="Semibold"
+                                    >
+                                      Chi è?
+                                    </Text>
+                                    <View
+                                      style={
                                         {
-                                          "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                        },
-                                      ]
-                                    }
-                                    weight="Semibold"
-                                  >
-                                    Chi è?
-                                  </Text>
-                                  <View
-                                    style={
-                                      {
-                                        "height": 8,
+                                          "height": 8,
+                                        }
                                       }
-                                    }
-                                  />
-                                  <Text
-                                    allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="bluegrey"
-                                    defaultWeight="Regular"
-                                    dynamicTypeRamp="body"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      }
-                                    }
-                                    maxFontSizeMultiplier={1.25}
-                                    style={
-                                      [
+                                    />
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="bluegrey"
+                                      defaultColor="bluegrey"
+                                      defaultWeight="Regular"
+                                      dynamicTypeRamp="body"
+                                      font="TitilliumSansPro"
+                                      fontStyle={
                                         {
                                           "fontSize": 16,
                                           "lineHeight": 24,
-                                        },
+                                        }
+                                      }
+                                      maxFontSizeMultiplier={1.25}
+                                      style={
+                                        [
+                                          {
+                                            "fontSize": 16,
+                                            "lineHeight": 24,
+                                          },
+                                          {
+                                            "color": "#475A6D",
+                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                          },
+                                        ]
+                                      }
+                                      weight="Regular"
+                                    >
+                                      È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo.
+                                    </Text>
+                                    <View
+                                      style={
                                         {
-                                          "color": "#475A6D",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                        },
-                                      ]
-                                    }
-                                    weight="Regular"
-                                  >
-                                    È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo.
-                                  </Text>
+                                          "height": 16,
+                                        }
+                                      }
+                                    />
+                                  </View>
                                   <View
                                     style={
                                       {
-                                        "height": 16,
+                                        "height": 24,
                                       }
                                     }
                                   />
                                 </View>
-                                <View
-                                  style={
-                                    {
-                                      "height": 24,
-                                    }
-                                  }
-                                />
                               </View>
                             </View>
-                          </View>
-                        </RCTScrollView>
-                      </Modal>
+                          </RCTScrollView>
+                        </Modal>
+                      </View>
                     </View>
                   </View>
                 </View>
