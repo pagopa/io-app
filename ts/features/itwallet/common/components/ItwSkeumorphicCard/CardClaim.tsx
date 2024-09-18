@@ -17,7 +17,7 @@ import {
 import { ParsedCredential } from "../../utils/itwTypesUtils";
 import { ClaimLabel, ClaimLabelProps } from "./ClaimLabel";
 
-type PercentPosition = `${number}%`;
+export type PercentPosition = `${number}%`;
 
 // Defines the claim horizontal position using the left OR the right absolute position value
 type HorizontalClaimPosition = Either<
