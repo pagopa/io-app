@@ -880,6 +880,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   292,
@@ -1087,6 +1088,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   1,

@@ -19,6 +19,7 @@ import {
   EvidenceClaim,
   FiscalCodeClaim,
   ImageClaim,
+  PdfClaim,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
   StringClaim,
@@ -228,6 +229,27 @@ const ImageClaimItem = ({ label, claim }: { label: string; claim: string }) => (
 );
 
 /**
+ * Component which renders an attachment claim
+ * @param name - name of the file
+ */
+const AttachmentsClaimItem = ({ name }: { name: string }) => (
+  <ListItemInfo
+    label={I18n.t("features.itWallet.verifiableCredentials.claims.attachments")}
+    value={name}
+    accessibilityLabel={`${I18n.t(
+      "features.itWallet.verifiableCredentials.claims.attachments"
+    )}: ${name}`}
+    endElement={{
+      type: "badge",
+      componentProps: {
+        variant: "default",
+        text: "PDF"
+      }
+    }}
+  />
+);
+
+/**
  * Component which renders a driving privileges type claim.
  * It features a bottom sheet with information about the issued and expiration date of the claim.
  * @param label the label of the claim
@@ -359,6 +381,8 @@ export const ItwCredentialClaim = ({
           );
         } else if (ImageClaim.is(decoded)) {
           return <ImageClaimItem label={claim.label} claim={decoded} />;
+        } else if (PdfClaim.is(decoded)) {
+          return <AttachmentsClaimItem name={claim.label} />;
         } else if (DrivingPrivilegesClaim.is(decoded)) {
           return decoded.map((elem, index) => (
             <React.Fragment

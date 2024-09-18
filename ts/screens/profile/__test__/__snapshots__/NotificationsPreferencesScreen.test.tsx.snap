@@ -253,7 +253,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -889,6 +889,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -1574,7 +1575,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -2210,6 +2211,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -2895,7 +2897,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -3531,6 +3533,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -4216,7 +4219,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -4852,6 +4855,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -5537,7 +5541,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -6173,6 +6177,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -6858,7 +6863,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -7494,6 +7499,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -8179,7 +8185,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -8815,6 +8821,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -9500,7 +9507,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -10136,6 +10143,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -10821,7 +10829,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -11457,6 +11465,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -12142,7 +12151,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -12778,6 +12787,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -13463,7 +13473,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -14099,6 +14109,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -14784,7 +14795,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -15420,6 +15431,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -16105,7 +16117,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -16741,6 +16753,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -17426,7 +17439,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -18062,6 +18075,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -18747,7 +18761,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -19383,6 +19397,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -20068,7 +20083,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -20704,6 +20719,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -21389,7 +21405,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -22025,6 +22041,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -22710,7 +22727,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -23346,6 +23363,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,

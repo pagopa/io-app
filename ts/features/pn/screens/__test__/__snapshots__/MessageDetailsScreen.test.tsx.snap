@@ -1431,6 +1431,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   292,
@@ -1638,6 +1639,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   1,

@@ -126,7 +126,6 @@ const PaymentsTransactionBizEventsListScreen = () => {
 
   useHeaderSecondLevel({
     title: I18n.t("features.payments.transactions.title"),
-    canGoBack: true,
     supportRequest: true,
     scrollValues: {
       contentOffsetY: scrollTranslationY,

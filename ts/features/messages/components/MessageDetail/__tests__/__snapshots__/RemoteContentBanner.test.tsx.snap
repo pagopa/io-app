@@ -754,6 +754,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,

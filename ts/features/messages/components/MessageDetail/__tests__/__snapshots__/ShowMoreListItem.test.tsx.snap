@@ -512,6 +512,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,
@@ -1067,6 +1068,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,
@@ -1681,6 +1683,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,
@@ -2482,6 +2485,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,
@@ -3351,6 +3355,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,
@@ -4347,6 +4352,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,
@@ -5479,6 +5485,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,
@@ -7491,6 +7498,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,

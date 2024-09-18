@@ -1,6 +1,6 @@
 import {
   Avatar,
-  BlockButtons,
+  Body,
   ButtonLink,
   ForceScrollDownView,
   H2,
@@ -18,8 +18,9 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
 import * as React from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { FooterActions } from "../../../../components/ui/FooterActions";
 import { LoadingSkeleton } from "../../../../components/ui/Markdown/LoadingSkeleton";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
@@ -85,88 +86,89 @@ export const FimsFlowSuccessBody = ({
 
   const Subtitle = () =>
     serviceData !== undefined ? (
-      <Label>
-        <Label weight="Regular">{I18n.t("FIMS.consentsScreen.subtitle")}</Label>
-        <Label weight="Bold">{serviceData.organization_name}</Label>
-        <Label weight="Regular">
-          {I18n.t("FIMS.consentsScreen.subtitle2")}
-        </Label>
-        <Label weight="Bold">{consents.redirect.display_name ?? ""}.</Label>
-      </Label>
+      <Body>
+        <Body weight="Regular">{I18n.t("FIMS.consentsScreen.subtitle")}</Body>
+        <Body weight="Bold">{serviceData.organization_name}</Body>
+        <Body weight="Regular">{I18n.t("FIMS.consentsScreen.subtitle2")}</Body>
+        <Body weight="Bold">{consents.redirect.display_name ?? ""}.</Body>
+      </Body>
     ) : (
       <LoadingSkeleton lines={3} />
     );
 
   return (
-    <>
-      <ForceScrollDownView
-        style={IOStyles.horizontalContentPadding}
-        contentContainerStyle={styles.flexSpaceBetween}
+    <ForceScrollDownView
+      scrollEnabled
+      threshold={150}
+      contentContainerStyle={{
+        minHeight: "100%"
+      }}
+    >
+      <View
+        style={[
+          IOStyles.horizontalContentPadding,
+          {
+            flexGrow: 1
+          }
+        ]}
       >
-        <View>
-          <VSpacer size={24} />
-          <View style={styles.rowAlignCenter}>
-            <View style={styles.outlineContainer}>
-              <Icon name="productIOApp" size={30} color="blueIO-500" />
-            </View>
-            <HSpacer size={8} />
-            <Icon name="transactions" color="grey-450" />
-            <HSpacer size={8} />
-            <Avatar logoUri={serviceLogo} size={"small"} />
+        <VSpacer size={24} />
+        <View style={styles.rowAlignCenter}>
+          <View style={styles.outlineContainer}>
+            <Icon name="productIOApp" size={30} color="blueIO-500" />
           </View>
-
-          <VSpacer size={24} />
-          <H2>{I18n.t("FIMS.consentsScreen.title")}</H2>
-          <Subtitle />
-
-          <VSpacer size={24} />
-          <ButtonLink
-            color="primary"
-            label={I18n.t("global.why")}
-            onPress={BottomSheet.present}
-          />
-          <VSpacer size={24} />
-          <ListItemHeader label="Dati richiesti" iconName="security" />
-          <FimsClaimsList claims={consents.user_metadata} />
-          <VSpacer size={24} />
-
-          <FimsPrivacyInfo privacyUrl={privacyUrl} />
-
-          <VSpacer size={32} />
+          <HSpacer size={8} />
+          <Icon name="transactions" color="grey-450" />
+          <HSpacer size={8} />
+          <Avatar logoUri={serviceLogo} size={"small"} />
         </View>
-        <SafeAreaView>
-          <BlockButtons
-            type="TwoButtonsInlineHalf"
-            primary={{
-              type: "Outline",
-              buttonProps: {
-                label: I18n.t("global.buttons.cancel"),
-                onPress: onAbort
-              }
-            }}
-            secondary={{
-              type: "Solid",
-              buttonProps: {
-                label: I18n.t("global.buttons.consent"),
-                icon: "security",
-                iconPosition: "end",
-                onPress: () => {
-                  const state = store.getState();
-                  computeAndTrackDataShareAccepted(serviceId, state);
-                  dispatch(
-                    fimsGetRedirectUrlAndOpenIABAction.request(
-                      // eslint-disable-next-line no-underscore-dangle
-                      { acceptUrl: consents._links.consent.href, serviceId }
-                    )
-                  );
-                }
-              }
-            }}
-          />
-        </SafeAreaView>
-      </ForceScrollDownView>
+
+        <VSpacer size={24} />
+        <H2>{I18n.t("FIMS.consentsScreen.title")}</H2>
+        <VSpacer size={16} />
+        <Subtitle />
+
+        <VSpacer size={24} />
+        <ButtonLink
+          label={I18n.t("global.why")}
+          onPress={BottomSheet.present}
+        />
+        <VSpacer size={24} />
+        <ListItemHeader label="Dati richiesti" iconName="security" />
+        <FimsClaimsList claims={consents.user_metadata} />
+        <VSpacer size={24} />
+
+        <FimsPrivacyInfo privacyUrl={privacyUrl} />
+
+        <VSpacer size={32} />
+      </View>
+      <FooterActions
+        fixed={false}
+        actions={{
+          type: "TwoButtons",
+          primary: {
+            label: I18n.t("global.buttons.consent"),
+            icon: "security",
+            iconPosition: "end",
+            onPress: () => {
+              const state = store.getState();
+              computeAndTrackDataShareAccepted(serviceId, state);
+              dispatch(
+                fimsGetRedirectUrlAndOpenIABAction.request(
+                  // eslint-disable-next-line no-underscore-dangle
+                  { acceptUrl: consents._links.consent.href, serviceId }
+                )
+              );
+            }
+          },
+          secondary: {
+            label: I18n.t("global.buttons.cancel"),
+            onPress: onAbort
+          }
+        }}
+      />
       {BottomSheet.bottomSheet}
-    </>
+    </ForceScrollDownView>
   );
 };
 
@@ -201,10 +203,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     borderColor: hexToRgba(IOColors.black, 0.1)
-  },
-  flexSpaceBetween: {
-    flex: 1,
-    justifyContent: "space-between"
   },
   rowAlignCenter: { flexDirection: "row", alignItems: "center" }
 });
