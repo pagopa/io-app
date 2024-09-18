@@ -33,13 +33,17 @@ const CieIdErrorScreen = () => {
       subtitle={subtitle}
       pictogram="help"
       action={{
+        testID: "cie-id-error-primary-action",
         label: primaryActionLabel,
+        accessibilityLabel: primaryActionLabel,
         onPress: isCieSupported
           ? navigateToCiePinInsertion
           : navigateToIdpSelection
       }}
       secondaryAction={{
+        testID: "cie-id-error-secondary-action",
         label: secondaryActionLabel,
+        accessibilityLabel: secondaryActionLabel,
         onPress: popToTop
       }}
     />
