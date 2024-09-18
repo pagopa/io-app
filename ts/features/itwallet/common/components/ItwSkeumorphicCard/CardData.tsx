@@ -40,11 +40,11 @@ const MdlFrontData = ({ claims }: DataComponentProps) => {
         }}
       />
       <CardClaim
-        claim={claims["family_name"]}
+        claim={claims["given_name"]}
         position={{ left: "34.75%", top: `${row + rowStep * 0}%` }}
       />
       <CardClaim
-        claim={claims["given_name"]}
+        claim={claims["family_name"]}
         position={{ left: "34.75%", top: `${row + rowStep * 1}%` }}
       />
       <CardClaim
@@ -58,10 +58,6 @@ const MdlFrontData = ({ claims }: DataComponentProps) => {
       <CardClaim
         claim={claims["issue_date"]}
         position={{ left: "34.75%", top: `${row + rowStep * 3}%` }}
-      />
-      <CardClaim
-        claim={claims["issuing_authority"]}
-        position={{ left: "57%", top: `${row + rowStep * 3}%` }}
       />
       <CardClaim
         claim={claims["expiry_date"]}
