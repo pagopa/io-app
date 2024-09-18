@@ -30,6 +30,7 @@ import CieIdWizard from "../features/cie/screens/wizards/CieIdWizard";
 import CiePinWizard from "../features/cie/screens/wizards/CiePinWizard";
 import SpidWizard from "../features/cie/screens/wizards/SpidWizard";
 import IDActivationWizard from "../features/cie/screens/wizards/IDActivationWizard";
+import CieIdErrorScreen from "../features/cie/screens/errors/CieIdErrorScreen";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 import CloseButton from "./components/CloseButton";
@@ -168,6 +169,10 @@ const AuthenticationStackNavigator = () => (
       <Stack.Screen
         name={ROUTES.CIE_EXPIRED_SCREEN}
         component={CieExpiredOrInvalidScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.AUTHENTICATION_CIE_ID_ERROR}
+        component={CieIdErrorScreen}
       />
     </Stack.Group>
 
