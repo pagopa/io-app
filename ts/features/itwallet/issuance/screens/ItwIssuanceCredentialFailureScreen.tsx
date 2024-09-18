@@ -24,7 +24,6 @@ import {
   trackAddCredentialTimeout,
   trackWalletCreationFailed
 } from "../../analytics";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -110,8 +109,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
     if (storedCredential) {
       trackAddCredentialTimeout({
         reason: failure.reason as string,
-        credential:
-          CREDENTIALS_MAP[storedCredential.credentialType as CredentialType]
+        credential: CREDENTIALS_MAP[storedCredential.credentialType]
       });
     }
   }, [failure.reason, storedCredential]);

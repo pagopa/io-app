@@ -12,7 +12,6 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { CREDENTIALS_MAP, trackSaveCredentialSuccess } from "../../analytics";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -58,9 +57,7 @@ export default (
       })
     );
     if (context.credentialType) {
-      trackSaveCredentialSuccess(
-        CREDENTIALS_MAP[context.credentialType as CredentialType]
-      );
+      trackSaveCredentialSuccess(CREDENTIALS_MAP[context.credentialType]);
     }
     navigation.reset({
       index: 1,

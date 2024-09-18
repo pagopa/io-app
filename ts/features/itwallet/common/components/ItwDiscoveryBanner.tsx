@@ -1,6 +1,7 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -14,6 +15,7 @@ import {
   trackItWalletBannerClosure,
   trackITWalletBannerVisualized
 } from "../../analytics";
+import { itwTrialId } from "../../../../config";
 
 type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
@@ -40,15 +42,15 @@ export const ItwDiscoveryBanner = ({
       !isItwEnabled, // The IT Wallet features is not enabled
     [isVisible, isItwTrialActive, isItwValid, isItwEnabled]
   );
+  const route = useRoute();
 
   const trackBannerProperties = React.useMemo(
     () => ({
-      banner_id: "itwDiscoveryBannerTestID", // Banner testID prop
-      banner_page:
-        navigation?.getState()?.routes?.[navigation?.getState()?.index]?.name,
+      banner_id: itwTrialId,
+      banner_page: route.name,
       banner_landing: "ITW_INTRO"
     }),
-    [navigation]
+    [route.name]
   );
 
   useOnFirstRender(() => {

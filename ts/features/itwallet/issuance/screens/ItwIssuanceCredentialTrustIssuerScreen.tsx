@@ -12,7 +12,7 @@ import {
 import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useMemo } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
@@ -27,10 +27,7 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import {
-  CredentialType,
-  ISSUER_MOCK_NAME
-} from "../../common/utils/itwMocksUtils";
+import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
 import {
   RequestObject,
   StoredCredential
@@ -101,26 +98,23 @@ type ContentViewProps = {
  */
 const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const route = useRoute();
-  const mixPanelCredential = useMemo(
-    () => CREDENTIALS_MAP[credentialType as CredentialType],
-    [credentialType]
-  );
 
-  useFocusEffect(() => trackWalletDataShare(mixPanelCredential));
+  useFocusEffect(() => trackWalletDataShare(CREDENTIALS_MAP[credentialType]));
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
 
   const handleContinuePress = () => {
     machineRef.send({ type: "confirm-trust-data" });
-    trackWalletDataShareAccepted(
-      CREDENTIALS_MAP[credentialType as CredentialType]
-    );
+    trackWalletDataShareAccepted(CREDENTIALS_MAP[credentialType]);
   };
 
   const dismissDialog = useItwDismissalDialog(() => {
     machineRef.send({ type: "close" });
-    trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+    trackItwExit({
+      exit_page: route.name,
+      credential: CREDENTIALS_MAP[credentialType]
+    });
   });
 
   useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });

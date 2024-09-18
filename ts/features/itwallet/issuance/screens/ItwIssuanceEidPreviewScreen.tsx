@@ -35,7 +35,6 @@ import {
   trackItwRequestSuccess,
   trackSaveCredentialToWallet
 } from "../../analytics";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { ItwIssuanceLoadingScreen } from "../components/ItwIssuanceLoadingScreen";
 
 export const ItwIssuanceEidPreviewScreen = () => {
@@ -79,7 +78,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const route = useRoute();
 
   const mixPanelCredential = useMemo(
-    () => CREDENTIALS_MAP[eid.credentialType as CredentialType],
+    () => CREDENTIALS_MAP[eid.credentialType],
     [eid.credentialType]
   );
 

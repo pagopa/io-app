@@ -36,7 +36,7 @@ const ItwDiscoveryInfoScreen = () => {
 
   const handleContinuePress = () => {
     trackItWalletActivationStart();
-    return machineRef.send({ type: "accept-tos" });
+    machineRef.send({ type: "accept-tos" });
   };
 
   useOnFirstRender(() => {

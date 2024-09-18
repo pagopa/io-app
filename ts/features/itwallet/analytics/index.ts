@@ -2,7 +2,6 @@ import { mixpanelTrack } from "../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
-import { CredentialType } from "../common/utils/itwMocksUtils";
 import { IdentificationContext } from "../machine/eid/context";
 import {
   ITW_ACTIONS_EVENTS,
@@ -26,7 +25,7 @@ type MixPanelCredential = (typeof mixPanelCredentials)[number];
 export type OtherMixPanelCredential = "welfare" | "payment_method" | "CGN";
 type NewCredential = MixPanelCredential | OtherMixPanelCredential;
 
-export const CREDENTIALS_MAP: Record<CredentialType, MixPanelCredential> = {
+export const CREDENTIALS_MAP: Record<string, MixPanelCredential> = {
   PersonIdentificationData: "ITW_ID",
   MDL: "ITW_PG",
   EuropeanDisabilityCard: "ITW_CED",
@@ -80,7 +79,7 @@ export const trackCredentialPreview = (credential: MixPanelCredential) => {
 };
 
 export const trackSaveCredentialToWallet = (currentCredential: string) => {
-  const credential = CREDENTIALS_MAP[currentCredential as CredentialType];
+  const credential = CREDENTIALS_MAP[currentCredential];
   if (credential) {
     void mixpanelTrack(
       ITW_ACTIONS_EVENTS.ITW_UX_CONVERSION,
