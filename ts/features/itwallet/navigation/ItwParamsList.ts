@@ -19,7 +19,6 @@ export type ItwParamsList = {
   [ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.CIE_EXPIRED_SCREEN]: undefined;
   // ISSUANCE
-  [ITW_ROUTES.ISSUANCE.EID_REQUEST]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_PREVIEW]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_RESULT]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_FAILURE]: undefined;
@@ -31,4 +30,5 @@ export type ItwParamsList = {
     .CREDENTIAL_DETAIL]: ItwPresentationCredentialDetailNavigationParams;
   // PLAYGROUNDS
   [ITW_ROUTES.PLAYGROUNDS]: undefined;
+  [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
 };

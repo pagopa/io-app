@@ -1,14 +1,13 @@
 import {
   Banner,
   FeatureInfo,
-  VSpacer,
-  bannerBackgroundColours
+  H4,
+  VStack,
+  bannerBackgroundColours,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Alert, View } from "react-native";
-
-/* Types */
-import { H2 } from "../../../components/core/typography/H2";
+import { Alert } from "react-native";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
@@ -20,83 +19,88 @@ const onClose = () => {
   Alert.alert("Alert", "Component dismissed");
 };
 
-export const DSAdvice = () => (
-  <DesignSystemScreen title={"Advice & Banners"}>
-    {renderFeatureInfo()}
+const sectionTitleMargin = 16;
+const blockMargin = 40;
+const componentMargin = 40;
+const componentInnerMargin = 16;
 
-    <VSpacer size={24} />
-
-    {renderBanner()}
-  </DesignSystemScreen>
-);
-
-const renderFeatureInfo = () => (
-  <>
-    <H2 color={"bluegrey"} weight={"Semibold"} style={{ marginBottom: 16 }}>
-      FeatureInfo
-    </H2>
-    <DSComponentViewerBox name="FeatureInfo · with Icon">
-      <FeatureInfo
-        iconName="info"
-        body={
-          "Dopo questo passaggio non sarà più possibile annullare il pagamento"
-        }
-      />
-      <VSpacer size={24} />
-      <FeatureInfo
-        iconName="gallery"
-        body={
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua"
-        }
-      />
-      <VSpacer size={24} />
-      <FeatureInfo
-        iconName="security"
-        actionLabel="Si applicano i Termini e condizioni d’uso e l’Informativa Privacy di Paytipper"
-        actionOnPress={onLinkPress}
-      />
-    </DSComponentViewerBox>
-    <VSpacer size={16} />
-    <DSComponentViewerBox name="FeatureInfo · with Pictogram">
-      <FeatureInfo
-        pictogramName="followMessage"
-        body={
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
-        }
-      />
-      <VSpacer size={24} />
-      <FeatureInfo
-        pictogramName="manual"
-        body={
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua"
-        }
-      />
-      <VSpacer size={24} />
-      <FeatureInfo
-        pictogramName="followMessage"
-        body={
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
-        }
-        actionLabel="Scopri di più"
-        actionOnPress={onLinkPress}
-      />
-    </DSComponentViewerBox>
-  </>
-);
-
-const renderBanner = () => {
-  const viewRef = React.createRef<View>();
+export const DSAdvice = () => {
+  const theme = useIOTheme();
 
   return (
-    <>
-      <H2 color={"bluegrey"} weight={"Semibold"} style={{ marginBottom: 16 }}>
-        Banner
-      </H2>
-      {bannerBackgroundColours.map(color => (
-        <React.Fragment key={`${color}-block`}>
-          <DSComponentViewerBox name={`Banner · Big size, ${color} variant`}>
+    <DesignSystemScreen title={"Advice & Banners"}>
+      <VStack space={blockMargin}>
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>FeatureInfo</H4>
+          {renderFeatureInfo()}
+        </VStack>
+
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Banner</H4>
+          {renderBanner()}
+        </VStack>
+      </VStack>
+    </DesignSystemScreen>
+  );
+};
+
+const renderFeatureInfo = () => (
+  <VStack space={componentMargin}>
+    <DSComponentViewerBox name="FeatureInfo · with Icon">
+      <VStack space={componentInnerMargin}>
+        <FeatureInfo
+          iconName="info"
+          body={
+            "Dopo questo passaggio non sarà più possibile annullare il pagamento"
+          }
+        />
+        <FeatureInfo
+          iconName="gallery"
+          body={
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua"
+          }
+        />
+        <FeatureInfo
+          iconName="security"
+          actionLabel="Si applicano i Termini e condizioni d’uso e l’Informativa Privacy di Paytipper"
+          actionOnPress={onLinkPress}
+        />
+      </VStack>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="FeatureInfo · with Pictogram">
+      <VStack space={componentInnerMargin}>
+        <FeatureInfo
+          pictogramName="followMessage"
+          body={
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
+          }
+        />
+        <FeatureInfo
+          pictogramName="manual"
+          body={
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua"
+          }
+        />
+        <FeatureInfo
+          pictogramName="followMessage"
+          body={
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
+          }
+          actionLabel="Scopri di più"
+          actionOnPress={onLinkPress}
+        />
+      </VStack>
+    </DSComponentViewerBox>
+  </VStack>
+);
+
+const renderBanner = () => (
+  <VStack space={componentMargin}>
+    {bannerBackgroundColours.map(color => (
+      <VStack space={componentMargin} key={`${color}-block`}>
+        <DSComponentViewerBox name={`Banner · Big size, ${color} variant`}>
+          <VStack space={componentInnerMargin}>
             <Banner
-              viewRef={viewRef}
               color={color}
               size="big"
               title="Banner title"
@@ -104,9 +108,7 @@ const renderBanner = () => {
               action="Action text"
               onPress={onLinkPress}
             />
-            <VSpacer size={24} />
             <Banner
-              viewRef={viewRef}
               color={color}
               size="big"
               content={
@@ -114,9 +116,7 @@ const renderBanner = () => {
               }
               pictogramName="charity"
             />
-            <VSpacer size={24} />
             <Banner
-              viewRef={viewRef}
               color={color}
               size="big"
               content={
@@ -126,9 +126,7 @@ const renderBanner = () => {
               action="Dona anche tu"
               onPress={onLinkPress}
             />
-            <VSpacer size={24} />
             <Banner
-              viewRef={viewRef}
               color={color}
               size="big"
               title="Banner title"
@@ -137,9 +135,7 @@ const renderBanner = () => {
               }
               pictogramName="charity"
             />
-            <VSpacer size={24} />
             <Banner
-              viewRef={viewRef}
               color={color}
               size="big"
               title="Banner title"
@@ -150,12 +146,13 @@ const renderBanner = () => {
               action="Dona anche tu"
               onPress={onLinkPress}
             />
-          </DSComponentViewerBox>
-          <DSComponentViewerBox
-            name={`Banner · Big size, ${color} variant, close action`}
-          >
+          </VStack>
+        </DSComponentViewerBox>
+        <DSComponentViewerBox
+          name={`Banner · Big size, ${color} variant, close action`}
+        >
+          <VStack space={componentInnerMargin}>
             <Banner
-              viewRef={viewRef}
               color={color}
               size="big"
               title="Banner title"
@@ -166,9 +163,7 @@ const renderBanner = () => {
               onClose={onClose}
               labelClose="Nascondi questo banner"
             />
-            <VSpacer size={24} />
             <Banner
-              viewRef={viewRef}
               color={color}
               size="big"
               content={
@@ -180,10 +175,11 @@ const renderBanner = () => {
               onClose={onClose}
               labelClose="Nascondi questo banner"
             />
-          </DSComponentViewerBox>
-          <DSComponentViewerBox name={`Banner · Small size, ${color} variant`}>
+          </VStack>
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name={`Banner · Small size, ${color} variant`}>
+          <VStack space={componentInnerMargin}>
             <Banner
-              viewRef={viewRef}
               color={color}
               size="small"
               title="Banner title"
@@ -194,9 +190,7 @@ const renderBanner = () => {
               action="Dona anche tu"
               onPress={onLinkPress}
             />
-            <VSpacer size={24} />
             <Banner
-              viewRef={viewRef}
               color={color}
               size="small"
               content={
@@ -206,9 +200,7 @@ const renderBanner = () => {
               onPress={onLinkPress}
               pictogramName="charity"
             />
-            <VSpacer size={24} />
             <Banner
-              viewRef={viewRef}
               color={color}
               size="small"
               content={
@@ -216,9 +208,9 @@ const renderBanner = () => {
               }
               pictogramName="charity"
             />
-          </DSComponentViewerBox>
-        </React.Fragment>
-      ))}
-    </>
-  );
-};
+          </VStack>
+        </DSComponentViewerBox>
+      </VStack>
+    ))}
+  </VStack>
+);

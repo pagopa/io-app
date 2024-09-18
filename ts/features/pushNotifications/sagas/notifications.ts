@@ -20,7 +20,7 @@ import {
 } from "../store/reducers/pendingMessage";
 import { isPaymentOngoingSelector } from "../../../store/reducers/wallet/payment";
 import { navigateToMainNavigatorAction } from "../../../store/actions/navigation";
-import { navigateToMessageRouterAction } from "../../messages/store/actions/navigation";
+import { navigateToMessageRouterAction } from "../utils/navigation";
 import NavigationService from "../../../navigation/NavigationService";
 import { UIMessageId } from "../../messages/types";
 import { trackMessageNotificationTap } from "../../messages/analytics";

@@ -8,6 +8,7 @@ import { UIMessageId } from "../../../messages/types";
 import { MessageFooter } from "../MessageFooter";
 import * as standardPayments from "../../../messages/store/reducers/payments";
 import * as payments from "../../store/reducers/payments";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 describe("MessageFooter", () => {
   beforeEach(() => {
@@ -66,6 +67,7 @@ const renderScreen = (
     () => (
       <MessageFooter
         messageId={messageId}
+        serviceId={"01J5ZQFP9Q24CEJK6GJ2105H7C" as ServiceId}
         maxVisiblePaymentCount={maxVisiblePaymentCount}
         isCancelled={isCancelled}
         payments={undefined}

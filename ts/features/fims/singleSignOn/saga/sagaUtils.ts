@@ -5,8 +5,10 @@ import {
 } from "@pagopa/io-react-native-http-client";
 import { pipe } from "fp-ts/lib/function";
 import { URL as PolyfillURL } from "react-native-url-polyfill";
-import { mixpanelTrack } from "../../../../mixpanel";
-import { buildEventProperties } from "../../../../utils/analytics";
+import { call, select } from "typed-redux-saga/macro";
+import { trackAuthenticationError } from "../../common/analytics";
+import { serviceByIdSelector } from "../../../services/details/store/reducers";
+import { relyingPartyServiceIdSelector } from "../store/selectors";
 
 export const buildAbsoluteUrl = (
   redirect: string | undefined = undefined,
@@ -68,12 +70,20 @@ export const formatHttpClientResponseForMixPanel = (
     )
   );
 
-export const logToMixPanel = (toLog: string) => {
-  void mixpanelTrack(
-    "FIMS_TECH_TEMP_ERROR",
-    buildEventProperties("TECH", undefined, { message: toLog })
+export function* computeAndTrackAuthenticationError(reason: string) {
+  const serviceIdOrUndefined = yield* select(relyingPartyServiceIdSelector);
+  const serviceOrUndefined = serviceIdOrUndefined
+    ? yield* select(serviceByIdSelector, serviceIdOrUndefined)
+    : undefined;
+  yield* call(
+    trackAuthenticationError,
+    serviceOrUndefined?.service_id,
+    serviceOrUndefined?.service_name,
+    serviceOrUndefined?.organization_name,
+    serviceOrUndefined?.organization_fiscal_code,
+    reason
   );
-};
+}
 
 export const isRedirect = (statusCode: number) =>
   statusCode >= 300 && statusCode < 400;
@@ -87,3 +97,6 @@ export const isValidRedirectResponse = (
   isRedirect(res.status) &&
   !!res.headers.location &&
   res.headers.location.trim().length > 0;
+
+export const isFastLoginFailure = (res: HttpClientFailureResponse) =>
+  res.code === 401;

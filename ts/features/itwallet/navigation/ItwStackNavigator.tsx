@@ -6,30 +6,30 @@ import * as React from "react";
 import { Platform } from "react-native";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
+import { ItwActivateNfcScreen } from "../identification/screens/cie/ItwActivateNfcScreen";
+import { ItwCieCardReaderScreen } from "../identification/screens/cie/ItwCieCardReaderScreen";
+import { ItwCieExpiredOrInvalidScreen } from "../identification/screens/cie/ItwCieExpiredOrInvalidScreen";
+import { ItwCiePinScreen } from "../identification/screens/cie/ItwCiePinScreen";
+import { ItwCieUnexpectedErrorScreen } from "../identification/screens/cie/ItwCieUnexpectedErrorScreen";
+import { ItwCieWrongCardScreen } from "../identification/screens/cie/ItwCieWrongCardScreen";
+import { ItwCieWrongCiePinScreen } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
 import { ItwIdentificationIdpSelectionScreen } from "../identification/screens/ItwIdentificationIdpSelectionScreen";
 import { ItwIdentificationModeSelectionScreen } from "../identification/screens/ItwIdentificationModeSelectionScreen";
 import { ItwIssuanceCredentialFailureScreen } from "../issuance/screens/ItwIssuanceCredentialFailureScreen";
 import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssuanceCredentialPreviewScreen";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
-import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
-import { ItwIssuanceEidRequestScreen } from "../issuance/screens/ItwIssuanceEidRequestScreen";
-import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import { ItwIssuanceEidFailureScreen } from "../issuance/screens/ItwIssuanceEidFailureScreen";
-import { ItwCiePinScreen } from "../identification/screens/cie/ItwCiePinScreen";
-import { ItwCieCardReaderScreen } from "../identification/screens/cie/ItwCieCardReaderScreen";
-import { ItwCieWrongCiePinScreen } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
-import { ItwCieWrongCardScreen } from "../identification/screens/cie/ItwCieWrongCardScreen";
-import { ItwActivateNfcScreen } from "../identification/screens/cie/ItwActivateNfcScreen";
-import { ItwCieUnexpectedErrorScreen } from "../identification/screens/cie/ItwCieUnexpectedErrorScreen";
-import { ItwCieExpiredOrInvalidScreen } from "../identification/screens/cie/ItwCieExpiredOrInvalidScreen";
-import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
+import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
+import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import {
   ItWalletIssuanceMachineProvider,
   ItwCredentialIssuanceMachineContext,
   ItwEidIssuanceMachineContext
 } from "../machine/provider";
+import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground";
 import { ItwPresentationCredentialDetailScreen } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
+import { ItwIdentityNotMatchingScreen } from "../lifecycle/screens/ItwIdentityNotMatchingScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -123,11 +123,6 @@ const InnerNavigator = () => {
       </Stack.Group>
       {/* ISSUANCE */}
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.EID_REQUEST}
-        component={ItwIssuanceEidRequestScreen}
-        options={hiddenHeader}
-      />
-      <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.EID_PREVIEW}
         component={ItwIssuanceEidPreviewScreen}
         options={hiddenHeader}
@@ -135,6 +130,7 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER}
         component={ItwIssuanceCredentialTrustIssuerScreen}
+        options={hiddenHeader}
       />
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW}
@@ -163,10 +159,15 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL}
         component={ItwPresentationCredentialDetailScreen}
-        options={hiddenHeader}
       />
       {/* PLAYGROUNDS */}
       <Stack.Screen name={ITW_ROUTES.PLAYGROUNDS} component={ItwPlayground} />
+
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN}
+        component={ItwIdentityNotMatchingScreen}
+        options={{ headerShown: false, gestureEnabled: false }}
+      />
     </Stack.Navigator>
   );
 };

@@ -195,7 +195,7 @@ const WalletPaymentDetailContent = ({
                 rptId: paymentDetails?.rptId
               })
             );
-            navigation.replace(
+            navigation.navigate(
               PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR,
               {
                 screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
@@ -318,13 +318,19 @@ const WalletPaymentDetailContent = ({
         endElement={amountEndElement}
       />
       <Divider />
-      <ListItemInfo
-        icon="calendar"
-        label={I18n.t("wallet.firstTransactionSummary.dueDate")}
-        accessibilityLabel={I18n.t("wallet.firstTransactionSummary.dueDate")}
-        value={dueDate}
-      />
-      <Divider />
+      {dueDate && (
+        <>
+          <ListItemInfo
+            icon="calendar"
+            label={I18n.t("wallet.firstTransactionSummary.dueDate")}
+            accessibilityLabel={I18n.t(
+              "wallet.firstTransactionSummary.dueDate"
+            )}
+            value={dueDate}
+          />
+          <Divider />
+        </>
+      )}
       <ListItemInfoCopy
         icon="docPaymentCode"
         label={I18n.t("payment.noticeCode")}

@@ -15,7 +15,7 @@ import RootContainer from "./RootContainer";
 import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
 import { sentryDsn } from "./config";
-import { isLocalEnv } from "./utils/environment";
+import { isDevEnv } from "./utils/environment";
 
 const removeUserFromEvent = (event: ErrorEvent | TransactionEvent) => {
   // console.log(JSON.stringify(event));
@@ -37,7 +37,7 @@ Sentry.init({
   beforeSendTransaction(event) {
     return removeUserFromEvent(event);
   },
-  enabled: !isLocalEnv,
+  enabled: !isDevEnv,
   sampleRate: 0.3
 });
 

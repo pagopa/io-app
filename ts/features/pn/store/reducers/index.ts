@@ -7,7 +7,6 @@ import { pipe } from "fp-ts/lib/function";
 import { Action } from "../../../../store/actions/types";
 import { thirdPartyFromIdSelector } from "../../../messages/store/reducers/thirdPartyById";
 import { toPNMessage } from "../types/transformers";
-import { UIMessageId } from "../../../messages/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { PNMessage } from "../types/types";
 import { getRptIdStringFromPayment } from "../../utils/rptId";
@@ -26,24 +25,6 @@ export const pnMessageFromIdSelector = createSelector(
   thirdPartyFromIdSelector,
   thirdPartyMessage => pot.map(thirdPartyMessage, _ => toPNMessage(_))
 );
-
-export const pnMessageAttachmentSelector =
-  (state: GlobalState) =>
-  (ioMessageId: UIMessageId) =>
-  (pnMessageAttachmentId: string) =>
-    pipe(
-      pnMessageFromIdSelector(state, ioMessageId),
-      pot.toOption,
-      O.flatten,
-      O.chainNullableK(pnMessage => pnMessage.attachments),
-      O.chainNullableK(pnMessageAttachments =>
-        pnMessageAttachments.find(
-          pnMessageAttachment =>
-            pnMessageAttachment.id === pnMessageAttachmentId
-        )
-      ),
-      O.toUndefined
-    );
 
 export const pnUserSelectedPaymentRptIdSelector = (
   state: GlobalState,

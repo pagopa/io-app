@@ -11,6 +11,7 @@ import {
   isStartupLoaded
 } from "../../store/reducers/startup";
 import { handlePendingMessageStateIfAllowedSaga } from "../../features/pushNotifications/sagas/notifications";
+import { areTwoMinElapsedFromLastActivity } from "../../features/fastLogin/store/actions/sessionRefreshActions";
 
 /**
  * Listen to APP_STATE_CHANGE_ACTION and:
@@ -83,10 +84,14 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
             appState: newApplicationState,
             timestamp: Date.now()
           };
-
           if (timeSinceLastStateChange >= backgroundActivityTimeoutMillis) {
+            // this dispatch will be used to determine whether or not to refresh the session
+            yield* put(
+              areTwoMinElapsedFromLastActivity({ hasTwoMinPassed: true })
+            );
             // The app was in background for a long time, request identification
             yield* put(identificationRequest());
+            // refresh session token
           }
         }
       }

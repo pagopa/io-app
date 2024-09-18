@@ -4,8 +4,8 @@ import { call, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { updatePaymentForMessage } from "../../../messages/store/actions";
 import {
-  cancelPaymentStatusTracking,
-  startPaymentStatusTracking
+  cancelPNPaymentStatusTracking,
+  startPNPaymentStatusTracking
 } from "../actions";
 import {
   maxVisiblePaymentCountGenerator,
@@ -22,32 +22,21 @@ import {
   isOngoingPaymentFromDetailV2Enum
 } from "../../../../utils/payment";
 import { TrackPNPaymentStatus, trackPNPaymentStatus } from "../../analytics";
+import {
+  foldPaymentStatus,
+  payablePayment,
+  PaymentStatus,
+  processedPayment
+} from "../../../messages/saga/handlePaymentStatusForAnalyticsTracking";
 
 type PartialTrackPNPaymentStatus = Omit<TrackPNPaymentStatus, "paymentCount">;
 
-type PayablePayment = {
-  kind: "Payable";
-};
-type ProcessedPayment = {
-  kind: "Processed";
-  details: Detail_v2Enum;
-};
-type PaymentStatus = PayablePayment | ProcessedPayment;
-
-const payablePayment: PayablePayment = {
-  kind: "Payable"
-};
-const processedPayment = (details: Detail_v2Enum): ProcessedPayment => ({
-  kind: "Processed",
-  details
-});
-
 export function* watchPaymentStatusForMixpanelTracking(
-  action: ActionType<typeof startPaymentStatusTracking>
+  action: ActionType<typeof startPNPaymentStatusTracking>
 ) {
   yield* race({
     polling: call(trackPaymentUpdates, action.payload.messageId),
-    cancelAction: take(cancelPaymentStatusTracking)
+    cancelAction: take(cancelPNPaymentStatusTracking)
   });
 }
 
@@ -217,8 +206,3 @@ const computeProcessedPaymentStatistics = (
         ...accumulator,
         errorCount: accumulator.errorCount + 1
       };
-
-const foldPaymentStatus =
-  <T>(payable: () => T, processed: (details: Detail_v2Enum) => T) =>
-  (input: PaymentStatus) =>
-    input.kind === "Payable" ? payable() : processed(input.details);

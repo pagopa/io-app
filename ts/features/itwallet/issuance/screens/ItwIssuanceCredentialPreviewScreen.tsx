@@ -1,36 +1,35 @@
 import {
-  ContentWrapper,
   ForceScrollDownView,
   H2,
-  H3,
-  IOStyles,
+  IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { sequenceS } from "fp-ts/lib/Apply";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
-import { SafeAreaView, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { FooterActions } from "../../../../components/ui/FooterActions";
-import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
-import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
-import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
+import { getHumanReadableParsedCredential } from "../../common/utils/debug";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   selectCredentialOption,
   selectCredentialTypeOption,
-  selectIsLoading
+  selectIsIssuing
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
@@ -39,11 +38,20 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialOption
   );
-  const isLoading =
-    ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
+  const isIssuing =
+    ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
 
-  if (isLoading) {
-    return <LoadingView />;
+  useItwDisableGestureNavigation();
+  useAvoidHardwareBackButton();
+
+  if (isIssuing) {
+    return (
+      <LoadingScreenContent
+        contentTitle={I18n.t(
+          "features.itWallet.issuance.credentialPreview.loading"
+        )}
+      />
+    );
   }
 
   return pipe(
@@ -51,12 +59,15 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
       credentialType: credentialTypeOption,
       credential: credentialOption
     }),
-    O.fold(constNull, props => <ContentView {...props} />)
+    O.fold(
+      () => <ItwGenericErrorContent />,
+      props => <ContentView {...props} />
+    )
   );
 };
 
 type ContentViewProps = {
-  credentialType: CredentialType;
+  credentialType: string;
   credential: StoredCredential;
 };
 
@@ -88,25 +99,28 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
     );
   };
 
-  useItwDisbleGestureNavigation();
-  useAvoidHardwareBackButton();
-
   useHeaderSecondLevel({
     title: "",
     goBack: dismissDialog.show
   });
 
+  useDebugInfo({
+    parsedCredential: getHumanReadableParsedCredential(
+      credential.parsedCredential
+    )
+  });
+
   return (
-    <ForceScrollDownView>
-      <ContentWrapper>
+    <ForceScrollDownView contentContainerStyle={styles.scrollView}>
+      <View style={styles.container}>
         <H2>
           {I18n.t("features.itWallet.issuance.credentialPreview.title", {
             credential: getCredentialNameFromType(credentialType)
           })}
         </H2>
         <VSpacer size={24} />
-        <ItwCredentialClaimsList data={credential} isPreview={true} />
-      </ContentWrapper>
+        <ItwCredentialPreviewClaimsList data={credential} />
+      </View>
       <FooterActions
         fixed={false}
         actions={{
@@ -131,29 +145,12 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   );
 };
 
-/**
- * Renders a loading spinner if the credential obtaines takes too long
- */
-const LoadingView = () => {
-  const navigation = useIONavigation();
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false
-    });
-  });
-
-  return (
-    <SafeAreaView style={[IOStyles.flex, IOStyles.centerJustified]}>
-      <ContentWrapper>
-        <View style={IOStyles.alignCenter}>
-          <LoadingIndicator />
-          <VSpacer size={24} />
-          <H3 style={{ textAlign: "center" }}>
-            Attendi ancora qualche secondo, senza uscire dall’app
-          </H3>
-        </View>
-      </ContentWrapper>
-    </SafeAreaView>
-  );
-};
+const styles = StyleSheet.create({
+  scrollView: {
+    flexGrow: 1
+  },
+  container: {
+    flex: 1,
+    marginHorizontal: IOVisualCostants.appMarginDefault
+  }
+});

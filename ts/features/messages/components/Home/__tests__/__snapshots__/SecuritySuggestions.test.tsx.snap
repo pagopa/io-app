@@ -345,6 +345,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,
@@ -631,7 +632,9 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       }
                                     />
                                     <Text
+                                      accessibilityElementsHidden={false}
                                       accessibilityRole="link"
+                                      accessible={true}
                                       allowFontScaling={false}
                                       color="blue"
                                       defaultColor="blue"
@@ -646,6 +649,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           "textDecorationLine": "underline",
                                         }
                                       }
+                                      importantForAccessibility="yes"
                                       maxFontSizeMultiplier={1.25}
                                       onPress={[Function]}
                                       style={
@@ -806,7 +810,9 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       }
                                     />
                                     <Text
+                                      accessibilityElementsHidden={false}
                                       accessibilityRole="link"
+                                      accessible={true}
                                       allowFontScaling={false}
                                       color="blue"
                                       defaultColor="blue"
@@ -821,6 +827,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           "textDecorationLine": "underline",
                                         }
                                       }
+                                      importantForAccessibility="yes"
                                       maxFontSizeMultiplier={1.25}
                                       onPress={[Function]}
                                       style={

@@ -29,7 +29,7 @@ const UnsubscriptionResultScreen = () => {
   const { pictogram, title, content, buttonLabel }: ScreenContentType =
     isFailure
       ? {
-          pictogram: "umbrella",
+          pictogram: "umbrellaNew",
           title: I18n.t("idpay.unsubscription.failure.title"),
           content: I18n.t("idpay.unsubscription.failure.content"),
           buttonLabel: I18n.t("idpay.unsubscription.failure.button")

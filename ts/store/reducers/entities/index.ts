@@ -18,16 +18,12 @@ import { PotTransform } from "../../transforms/potTransform";
 import messagesReducer, {
   MessagesState
 } from "../../../features/messages/store/reducers";
-import messagesStatusReducer, {
-  MessagesStatus
-} from "../../../features/messages/store/reducers/messagesStatus";
 import calendarEventsReducer, { CalendarEventsState } from "./calendarEvents";
 import organizationsReducer, { OrganizationsState } from "./organizations";
 import { paymentByRptIdReducer, PaymentByRptIdState } from "./payments";
 
 export type EntitiesState = Readonly<{
   messages: MessagesState;
-  messagesStatus: MessagesStatus;
   organizations: OrganizationsState;
   paymentByRptId: PaymentByRptIdState;
   calendarEvents: CalendarEventsState;
@@ -35,7 +31,7 @@ export type EntitiesState = Readonly<{
 
 export type PersistedEntitiesState = EntitiesState & PersistPartial;
 
-const CURRENT_REDUX_ENTITIES_STORE_VERSION = 3;
+const CURRENT_REDUX_ENTITIES_STORE_VERSION = 4;
 const migrations: MigrationManifest = {
   // version 0
   // remove "currentSelectedService" section
@@ -63,7 +59,10 @@ const migrations: MigrationManifest = {
   },
   // version 3
   // remove services from persisted entities
-  "3": (state: PersistedState) => _.omit(state, "services")
+  "3": (state: PersistedState) => _.omit(state, "services"),
+  // version 4
+  // remove messagesStatus (messages migration)
+  "4": (state: PersistedState) => _.omit(state, "messagesStatus")
 };
 
 // A custom configuration to avoid persisting messages section
@@ -78,7 +77,6 @@ export const entitiesPersistConfig: PersistConfig = {
 
 const reducer = combineReducers<EntitiesState, Action>({
   messages: messagesReducer,
-  messagesStatus: messagesStatusReducer,
   organizations: organizationsReducer,
   paymentByRptId: paymentByRptIdReducer,
   calendarEvents: calendarEventsReducer

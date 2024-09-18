@@ -3,17 +3,15 @@ import { IOToast } from "@pagopa/io-app-design-system";
 import { ActionArgs } from "xstate5";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../../store/hooks";
 import ROUTES from "../../../../navigation/routes";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { walletUpsertCard } from "../../../newWallet/store/actions/cards";
+import { checkCurrentSession } from "../../../../store/actions/authentication";
+import { useIODispatch } from "../../../../store/hooks";
+import { assert } from "../../../../utils/assert";
+import { itwCredentialsStore } from "../../credentials/store/actions";
+import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwLifecycleStateUpdated } from "../../lifecycle/store/actions";
 import { ItwLifecycleState } from "../../lifecycle/store/reducers";
-import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
-import { itwCredentialsStore } from "../../credentials/store/actions";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { disposeWalletAttestation } from "../../common/utils/itwAttestationUtils";
-import { assert } from "../../../../utils/assert";
+import { ITW_ROUTES } from "../../navigation/routes";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -37,12 +35,6 @@ export const createEidIssuanceActionsImplementation = (
   navigateToIdpSelectionScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.IDP_SELECTION
-    });
-  },
-
-  navigateToEidRequestScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.EID_REQUEST
     });
   },
 
@@ -140,18 +132,17 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assert(context.eid, "eID is undefined");
 
-    dispatch(itwCredentialsStore(context.eid));
-    dispatch(
-      walletUpsertCard({
-        key: context.eid.keyTag,
-        type: "itw",
-        category: "itw",
-        credentialType: CredentialType.PID
-      })
-    );
+    dispatch(itwCredentialsStore([context.eid]));
   },
 
   requestAssistance: () => {},
 
-  disposeWalletAttestation
+  handleSessionExpired: () =>
+    dispatch(checkCurrentSession.success({ isSessionValid: false })),
+
+  abortIdentification: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    context.identification?.abortController?.abort();
+  }
 });

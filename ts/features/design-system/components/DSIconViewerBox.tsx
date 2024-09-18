@@ -7,7 +7,6 @@ export const iconItemGutter = 8;
 const styles = StyleSheet.create({
   iconWrapper: {
     justifyContent: "flex-start",
-    marginBottom: 16,
     paddingHorizontal: iconItemGutter / 2
   },
   iconWrapperSmall: {

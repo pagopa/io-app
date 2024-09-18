@@ -8,7 +8,6 @@ import { Predicate } from "fp-ts/lib/Predicate";
 import { identity, pipe } from "fp-ts/lib/function";
 import FM from "front-matter";
 import { Linking } from "react-native";
-import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
@@ -23,154 +22,50 @@ import { trackMessageCTAFrontMatterDecodingError } from "../analytics";
 import { localeFallback } from "../../../i18n";
 import NavigationService from "../../../navigation/NavigationService";
 import { CTA, CTAS, MessageCTA, MessageCTALocales } from "../types/MessageCTA";
-import { getExpireStatus } from "../../../utils/dates";
 import {
   getInternalRoute,
   handleInternalLink
 } from "../../../utils/internalLink";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
-import { isTextIncludedCaseInsensitive } from "../../../utils/strings";
 import { FIMS_ROUTES } from "../../fims/common/navigation";
 
-export function messageContainsText(
-  message: CreatedMessageWithContentAndAttachments,
-  searchText: string
-) {
-  return (
-    isTextIncludedCaseInsensitive(message.content.subject, searchText) ||
-    isTextIncludedCaseInsensitive(message.content.markdown, searchText)
-  );
-}
+export type CTAActionType =
+  | "io_handled_link"
+  | "io_internal_link"
+  | "fims"
+  | "none";
 
-export function messageNeedsDueDateCTA(
-  message: CreatedMessageWithContentAndAttachments
-): boolean {
-  return message.content.due_date !== undefined;
-}
-
-export function hasMessagePaymentData(
-  message: CreatedMessageWithContentAndAttachments
-): boolean {
-  return message.content.payment_data !== undefined;
-}
-
-export function messageNeedsCTABar(
-  message: CreatedMessageWithContentAndAttachments
-): boolean {
-  return (
-    message.content.eu_covid_cert !== undefined || // eucovid data
-    messageNeedsDueDateCTA(message) ||
-    hasMessagePaymentData(message) ||
-    O.isSome(getMessageCTA(message.content.markdown))
-  );
-}
-
-export const handleCtaAction = (cta: CTA, linkTo: (path: string) => void) => {
+export const handleCtaAction = (
+  cta: CTA,
+  linkTo: (path: string) => void,
+  preActionCallback?: (actionType: CTAActionType) => void
+) => {
   if (isIoInternalLink(cta.action)) {
+    preActionCallback?.("io_internal_link");
     const convertedLink = getInternalRoute(cta.action);
     handleInternalLink(linkTo, `${convertedLink}`);
+    return;
   } else if (isIoFIMSLink(cta.action)) {
+    preActionCallback?.("fims");
     const url = removeFIMSPrefixFromUrl(cta.action);
     NavigationService.navigate(FIMS_ROUTES.MAIN, {
       screen: FIMS_ROUTES.CONSENTS,
       params: {
+        ctaText: cta.text,
         ctaUrl: url
       }
     });
+    return;
   } else {
     const maybeHandledAction = deriveCustomHandledLink(cta.action);
     if (E.isRight(maybeHandledAction)) {
+      preActionCallback?.("io_handled_link");
       Linking.openURL(maybeHandledAction.right.url).catch(() => 0);
+      return;
     }
   }
+  preActionCallback?.("none");
 };
-
-type MessagePaymentUnexpirable = {
-  kind: "UNEXPIRABLE";
-  expireStatus?: ExpireStatus;
-  dueDate?: Date;
-};
-export type ExpireStatus = "VALID" | "EXPIRING" | "EXPIRED";
-type MessagePaymentExpirable = {
-  kind: "EXPIRABLE";
-  expireStatus: ExpireStatus;
-  dueDate: Date;
-};
-
-export type MessagePaymentExpirationInfo =
-  | MessagePaymentUnexpirable
-  | MessagePaymentExpirable;
-
-/**
- * Given a payment data and a due date return an object that specifies if the data are expirable or not.
- * There are 3 cases:
- *  - if the due date is undefined -> the message is unexpirable
- *  - if the due date is defined and the message is valid after the due date -> the message is expirable
- * - if the due date is defined and the message is invalid after the due date -> the message is unexpirable
- * @param paymentData
- * @param dueDate -> optional
- */
-export function getMessagePaymentExpirationInfo(
-  paymentData: NonNullable<
-    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
-  >,
-  dueDate?: Date
-): MessagePaymentExpirationInfo {
-  const { invalid_after_due_date } = paymentData;
-
-  if (dueDate !== undefined) {
-    const expireStatus = getExpireStatus(dueDate);
-
-    return {
-      kind: invalid_after_due_date ? "EXPIRABLE" : "UNEXPIRABLE",
-      expireStatus,
-      dueDate
-    };
-  }
-
-  return {
-    kind: "UNEXPIRABLE"
-  };
-}
-
-/**
- * Given a message return an object of type MessagePaymentExpirationInfo
- * @param message
- */
-export const paymentExpirationInfo = (
-  message: CreatedMessageWithContentAndAttachments
-): O.Option<MessagePaymentExpirationInfo> => {
-  const { payment_data, due_date } = message.content;
-  return pipe(
-    payment_data,
-    O.fromNullable,
-    O.map(paymentData => getMessagePaymentExpirationInfo(paymentData, due_date))
-  );
-};
-
-export const isUnexpirable = (
-  messagePaymentExpirationInfo: MessagePaymentExpirationInfo
-): messagePaymentExpirationInfo is MessagePaymentExpirable =>
-  messagePaymentExpirationInfo.kind === "UNEXPIRABLE";
-
-export const isExpirable = (
-  messagePaymentExpirationInfo: MessagePaymentExpirationInfo
-): messagePaymentExpirationInfo is MessagePaymentExpirable =>
-  messagePaymentExpirationInfo.kind === "EXPIRABLE";
-
-export const isValid = (
-  messagePaymentExpirationInfo: MessagePaymentExpirationInfo
-) =>
-  isExpirable(messagePaymentExpirationInfo) &&
-  messagePaymentExpirationInfo.expireStatus === "VALID";
-
-export const isExpiring = (
-  messagePaymentExpirationInfo: MessagePaymentExpirationInfo
-) => messagePaymentExpirationInfo.expireStatus === "EXPIRING";
-
-export const isExpired = (
-  messagePaymentExpirationInfo: MessagePaymentExpirationInfo
-) => messagePaymentExpirationInfo.expireStatus === "EXPIRED";
 
 const hasMetadataTokenName = (metadata?: ServiceMetadata): boolean =>
   metadata?.token_name !== undefined;
@@ -256,7 +151,7 @@ export const getServiceCTA = (
  * @param cta
  * @param serviceMetadata
  */
-export const isCtaActionValid = (
+const isCtaActionValid = (
   cta: CTA,
   serviceMetadata?: ServiceMetadata
 ): boolean => {
@@ -289,7 +184,7 @@ export const isCtaActionValid = (
  * @param ctas
  * @param serviceMetadata
  */
-export const hasCtaValidActions = (
+const hasCtaValidActions = (
   ctas: CTAS,
   serviceMetadata?: ServiceMetadata
 ): boolean => {
