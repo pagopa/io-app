@@ -74,6 +74,17 @@ const ContentView = ({ failure }: ContentViewProps) => {
         ),
         onPress: closeIssuance
       }
+    },
+    ASYNC_ISSUANCE: {
+      title: I18n.t("features.itWallet.issuance.asyncCredentialError.title"),
+      subtitle: I18n.t("features.itWallet.issuance.asyncCredentialError.body"),
+      pictogram: "pending",
+      action: {
+        label: I18n.t(
+          "features.itWallet.issuance.asyncCredentialError.primaryAction"
+        ),
+        onPress: closeIssuance
+      }
     }
   };
 

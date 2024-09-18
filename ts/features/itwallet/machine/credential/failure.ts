@@ -2,7 +2,8 @@ import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as t from "io-ts";
 
 export enum CredentialIssuanceFailureTypeEnum {
-  GENERIC = "GENERIC"
+  GENERIC = "GENERIC",
+  ASYNC_ISSUANCE = "ASYNC_ISSUANCE"
 }
 
 export const CredentialIssuanceFailureType =

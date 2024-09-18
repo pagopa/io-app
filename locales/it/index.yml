@@ -3308,6 +3308,10 @@ features:
         body: Si è verificato un errore oppure potresti non avere diritto al documento.
         primaryAction: Riprova
         secondaryAction: Chiudi
+      asyncCredentialError:
+        title: La tua richiesta è stata presa in carico
+        body: Riceverai un messaggio in app con l'esito della tua richiesta appena sarà disponibile.
+        primaryAction: Ho capito
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info

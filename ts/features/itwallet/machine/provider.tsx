@@ -6,6 +6,7 @@ import { useIODispatch, useIOStore } from "../../../store/hooks";
 import { itwBypassIdentityMatch } from "../../../config";
 import createCredentialIssuanceActionsImplementation from "./credential/actions";
 import createCredentialIssuanceActorsImplementation from "./credential/actors";
+import { createCredentialIssuanceGuardsImplementation } from "./credential/guards";
 import { itwCredentialIssuanceMachine } from "./credential/machine";
 import { createEidIssuanceActionsImplementation } from "./eid/actions";
 import { createEidIssuanceActorsImplementation } from "./eid/actors";
@@ -43,6 +44,7 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
   });
 
   const credentialIssuanceMachine = itwCredentialIssuanceMachine.provide({
+    guards: createCredentialIssuanceGuardsImplementation(),
     actions: createCredentialIssuanceActionsImplementation(
       navigation,
       dispatch,
