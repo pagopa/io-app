@@ -3336,6 +3336,7 @@ features:
           true: Sì
           false: No
         hiddenClaim: "Nascosto"
+        fiscalCode: Codice fiscale
         status:
           valid: Valida
           expired: Non valida
