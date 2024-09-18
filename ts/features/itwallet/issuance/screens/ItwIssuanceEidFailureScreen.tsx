@@ -29,7 +29,6 @@ import {
   trackItwUnsupportedDevice,
   trackWalletCreationFailed
 } from "../../analytics";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { selectCredential } from "../../machine/credential/selectors";
 
 export const ItwIssuanceEidFailureScreen = () => {
@@ -79,7 +78,7 @@ export const ItwIssuanceEidFailureScreen = () => {
           ),
           onPress: () =>
             closeIssuance({
-              reason: failure.reason as string,
+              reason: failure.type,
               cta_category: "custom_1",
               cta_id: I18n.t(
                 "features.itWallet.issuance.genericEidError.primaryAction"
@@ -92,7 +91,7 @@ export const ItwIssuanceEidFailureScreen = () => {
           ),
           onPress: () =>
             closeIssuance({
-              reason: failure.reason as string,
+              reason: failure.type,
               cta_category: "custom_2",
               cta_id: I18n.t(
                 "features.itWallet.issuance.genericEidError.secondaryAction"
@@ -155,9 +154,8 @@ export const ItwIssuanceEidFailureScreen = () => {
         storedCredential
       ) {
         trackAddCredentialTimeout({
-          reason: failure.reason as string,
-          credential:
-            CREDENTIALS_MAP[storedCredential.credentialType as CredentialType]
+          reason: failure.type,
+          credential: CREDENTIALS_MAP[storedCredential.credentialType]
         });
       }
     }, [failure.reason, failure.type]);

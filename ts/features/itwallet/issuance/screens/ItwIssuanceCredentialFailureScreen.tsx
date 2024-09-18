@@ -58,7 +58,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const closeIssuance = () => {
     machineRef.send({ type: "close" });
     trackWalletCreationFailed({
-      reason: failure.reason as string,
+      reason: failure.type,
       cta_category: "custom_2",
       cta_id: I18n.t(
         "features.itWallet.issuance.genericCredentialError.secondaryAction"
@@ -68,7 +68,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const retryIssuance = () => {
     machineRef.send({ type: "retry" });
     trackWalletCreationFailed({
-      reason: failure.reason as string,
+      reason: failure.type,
       cta_category: "custom_1",
       cta_id: I18n.t(
         "features.itWallet.issuance.genericCredentialError.primaryAction"
@@ -108,11 +108,11 @@ const ContentView = ({ failure }: ContentViewProps) => {
   useEffect(() => {
     if (storedCredential) {
       trackAddCredentialTimeout({
-        reason: failure.reason as string,
+        reason: failure.type,
         credential: CREDENTIALS_MAP[storedCredential.credentialType]
       });
     }
-  }, [failure.reason, storedCredential]);
+  }, [failure.type, storedCredential]);
 
   const resultScreenProps = resultScreensMap[failure.type];
   return <OperationResultScreenContent {...resultScreenProps} />;

@@ -86,7 +86,7 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const route = useRoute();
   const mixPanelCredential = useMemo(
-    () => CREDENTIALS_MAP[credentialType as CredentialType],
+    () => CREDENTIALS_MAP[credentialType],
     [credentialType]
   );
 
