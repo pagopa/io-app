@@ -41,6 +41,7 @@ import * as analytics from "../analytics";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { PaymentAnalyticsSelectedMethodFlag } from "../types/PaymentAnalytics";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -234,15 +235,18 @@ const WalletPaymentPickMethodScreen = () => {
   };
 
   return (
-    <GradientScrollView
-      primaryActionProps={
+    <IOScrollView
+      actions={
         canContinue
           ? {
-              label: I18n.t("global.buttons.continue"),
-              accessibilityLabel: I18n.t("global.buttons.continue"),
-              onPress: handleContinue,
-              disabled: isLoading || isLoadingTransaction,
-              loading: isLoading || isLoadingTransaction
+              type: "SingleButton",
+              primary: {
+                label: I18n.t("global.buttons.continue"),
+                accessibilityLabel: I18n.t("global.buttons.continue"),
+                onPress: handleContinue,
+                disabled: isLoading || isLoadingTransaction,
+                loading: isLoading || isLoadingTransaction
+              }
             }
           : undefined
       }
@@ -254,7 +258,7 @@ const WalletPaymentPickMethodScreen = () => {
       ) : (
         <CheckoutPaymentMethodsList />
       )}
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 
