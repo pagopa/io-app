@@ -2015,7 +2015,7 @@ bonus:
         eycaNumber: "Kartennummer"
         eycaPending: "Wir verknüpfen deine nationale Jugendkarte mit einer EYCA Nummer."
         eycaError: "Wir hatten Probleme mit den EYCA Systemen."
-        eycaBottomSheetTitle: "EYCA Kartennummer"
+        eycaBottomSheetTitle: "Cos’è il circuito EYCA?"
         eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nPuoi usare la Carta presso i partner aderenti, per usufruire delle opportunità disponibili per attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
         badge:
           active: "Aktiv"
