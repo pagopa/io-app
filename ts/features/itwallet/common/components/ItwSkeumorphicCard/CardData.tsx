@@ -150,6 +150,11 @@ const DcFrontData = ({ claims }: DataComponentProps) => {
   const row = 44.5; // Row padding, defines the first row position
   const rowStep = 11.4; // Row step, defines the space between each row
 
+  const rows: ReadonlyArray<number> = Array.from(
+    { length: 5 },
+    (_, i) => row + rowStep * i
+  );
+
   return (
     <View testID="dcFrontDataTestID" style={styles.container}>
       <CardClaim
@@ -162,23 +167,23 @@ const DcFrontData = ({ claims }: DataComponentProps) => {
       />
       <CardClaim
         claim={claims["family_name"]}
-        position={{ right: "3.5%", top: `${row + rowStep * 0}%` }}
+        position={{ right: "3.5%", top: `${rows[0]}%` }}
       />
       <CardClaim
         claim={claims["given_name"]}
-        position={{ right: "3.5%", top: `${row + rowStep * 1}%` }}
+        position={{ right: "3.5%", top: `${rows[1]}%` }}
       />
       <CardClaim
         claim={claims["birth_date"]}
-        position={{ right: "3.5%", top: `${row + rowStep * 2}%` }}
+        position={{ right: "3.5%", top: `${rows[2]}%` }}
       />
       <CardClaim
         claim={claims["document_number"]}
-        position={{ right: "3.5%", top: `${row + rowStep * 3}%` }}
+        position={{ right: "3.5%", top: `${rows[3]}%` }}
       />
       <CardClaim
         claim={claims["expiry_date"]}
-        position={{ right: "3.5%", top: `${row + rowStep * 4}%` }}
+        position={{ right: "3.5%", top: `${rows[4]}%` }}
       />
     </View>
   );
