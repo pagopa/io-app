@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { StoredCredential } from "../../utils/itwTypesUtils";
 import { CardBackground } from "./CardBackground";
 import { CardData } from "./CardData";
@@ -15,8 +14,6 @@ const ItwSkeumorphicCard = ({
   credential,
   isFlipped = false
 }: ItwSkeumorphicCardProps) => {
-  useDebugInfo({ data: credential.parsedCredential });
-
   const FrontSide = (
     <>
       <CardBackground credentialType={credential.credentialType} side="front" />
@@ -43,7 +40,7 @@ const ItwSkeumorphicCard = ({
 
 const styles = StyleSheet.create({
   card: {
-    aspectRatio: 16 / 10
+    aspectRatio: 16 / 10.09
   }
 });
 
