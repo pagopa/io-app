@@ -37,7 +37,6 @@ import {
   trackItwExit,
   trackSaveCredentialToWallet
 } from "../../analytics";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
