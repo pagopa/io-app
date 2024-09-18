@@ -684,7 +684,7 @@ authentication:
         title: How to activate it
         request_cie:
           label: Ask for your CIE
-        activate_cie: 
+        activate_cie:
           title: Activate CIE credentials
         activate_spid:
           title: Ask for your SPID
@@ -2723,7 +2723,7 @@ bonus:
         eycaCircuit: EYCA circuit
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
         eycaError: "We had some issues with EYCA's systems."
-        eycaBottomSheetTitle: "EYCA card number"
+        eycaBottomSheetTitle: "What is EYCA?"
         eycaDescription: "Until 31 years old, your **Carta Giovani Nazionale is a member of the EYCA circuit**(European Youth Card Association).\n\n Use the Card at partners to enjoy cultural activities, shopping, transport, restaurants and accommodation in European countries partecipating in the circuit."
         eycaNumber: Card number
         badge:
@@ -3211,6 +3211,10 @@ features:
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
           restrictionConditions: "Codici"
+      unrecognizedData:
+        title: "Non riconosci alcuni dati?"
+        body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
+        cta: "Chiedi informazioni o segnala errori"
     discovery:
       banner:
         title: "Novità: Documenti su IO"
@@ -3317,6 +3321,8 @@ features:
         mdl:
           content: "In questa fase, la versione digitale della Patente non ha lo stesso valore del documento fisico: dovrai presentarla insieme a un documento di identità valido."
           action: Scopri di più
+        ehc:
+          content: "This document is valid only in Italy. The official copy of the document is in PDF."
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
           action: Aggiorna il documento
@@ -3340,7 +3346,7 @@ features:
           expiring: Expiring
         actions:
           removeFromWallet: "Remove from Wallet"
-          requestAssistance: "Something wrong? Contact {{authSource}}"
+          requestAssistance: "Something wrong?"
           showClaimValues: "Show claim values"
           hideClaimValues: "Hide claim values"
         dialogs:
@@ -3351,6 +3357,7 @@ features:
         toast:
           removed: Fatto! Hai rimosso {{credentialName}}
         flipCard: "Show back"
+        fiscalCode: Your Fiscal Code
       trustmark:
         cta: Mostra certificato di autenticità
         title: Certificato di autenticità
