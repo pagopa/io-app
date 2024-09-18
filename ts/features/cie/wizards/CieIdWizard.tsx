@@ -1,16 +1,16 @@
-import React from "react";
 import {
   ContentWrapper,
-  LabelLink,
+  Label,
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import React from "react";
+import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
-import { openWebUrl } from "../../../utils/url";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
-import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
+import { openWebUrl } from "../../../utils/url";
 
 const CIE_ID_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/cie-id/";
@@ -60,7 +60,8 @@ const CieIdWizard = () => {
     >
       <ContentWrapper>
         <VSpacer size={12} />
-        <LabelLink
+        <Label
+          asLink
           onPress={() => {
             openWebUrl(CIE_ID_LINK, () => {
               error(I18n.t("global.jserror.title"));
@@ -68,7 +69,7 @@ const CieIdWizard = () => {
           }}
         >
           {I18n.t("authentication.wizards.cie_id_wizard.link")}
-        </LabelLink>
+        </Label>
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
   );

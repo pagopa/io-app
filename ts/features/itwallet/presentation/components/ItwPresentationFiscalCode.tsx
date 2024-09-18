@@ -42,14 +42,10 @@ const styles = StyleSheet.create({
     paddingVertical: 12
   },
   label: {
-    ...makeFontStyleObject("Regular", false, "TitilliumSansPro"),
-    fontSize: 14,
-    lineHeight: 21
+    ...makeFontStyleObject(14, "TitilliumSansPro", 21, "Regular")
   },
   value: {
-    ...makeFontStyleObject("Medium", false, "DMMono"),
-    fontSize: 16,
-    lineHeight: 24
+    ...makeFontStyleObject(16, "DMMono", 24, "Regular")
   }
 });
 

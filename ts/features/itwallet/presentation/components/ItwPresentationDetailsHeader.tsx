@@ -95,8 +95,7 @@ const styles = StyleSheet.create({
     position: "absolute"
   },
   headerLabel: {
-    ...makeFontStyleObject("Semibold", false, "ReadexPro"),
-    fontSize: 26
+    ...makeFontStyleObject(26, "ReadexPro", 30, "Semibold")
   }
 });
 

@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
 import {
+  ButtonLink,
   ContentWrapper,
-  LabelLink,
+  Label,
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -38,7 +39,8 @@ const CiePinWizard = () => {
           )}
         />
         <VSpacer size={24} />
-        <LabelLink
+        <Label
+          asLink
           onPress={() => {
             openWebUrl(CIE_PIN_LINK, () => {
               error(I18n.t("global.jserror.title"));
@@ -46,7 +48,7 @@ const CiePinWizard = () => {
           }}
         >
           {I18n.t("authentication.wizards.cie_pin_wizard.bottom_sheet.link")}
-        </LabelLink>
+        </Label>
       </>
     ),
     snapPoint: [350],
@@ -96,16 +98,13 @@ const CiePinWizard = () => {
     >
       <ContentWrapper>
         <VSpacer size={12} />
-        <LabelLink
-          ref={buttonRef}
-          role="button"
-          accessibilityRole="button"
-          onPress={present}
-        >
-          {I18n.t(
+        <ButtonLink
+          label={I18n.t(
             "authentication.wizards.cie_pin_wizard.bottom_sheet.cta.label"
           )}
-        </LabelLink>
+          ref={buttonRef}
+          onPress={present}
+        />
       </ContentWrapper>
       {bottomSheet}
     </IOScrollViewWithLargeHeader>
