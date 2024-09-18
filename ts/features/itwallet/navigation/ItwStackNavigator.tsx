@@ -159,7 +159,6 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL}
         component={ItwPresentationCredentialDetailScreen}
-        options={hiddenHeader}
       />
       {/* PLAYGROUNDS */}
       <Stack.Screen name={ITW_ROUTES.PLAYGROUNDS} component={ItwPlayground} />

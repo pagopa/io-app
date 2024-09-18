@@ -684,7 +684,7 @@ authentication:
         title: Come attivarla
         request_cie:
           label: Richiedi la tua CIE
-        activate_cie: 
+        activate_cie:
           title: Attiva le credenziali CIE
         activate_spid:
           title: Attiva SPID
@@ -2734,7 +2734,7 @@ bonus:
         eycaNumber: Numero carta
         eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
         eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
-        eycaBottomSheetTitle: "Numero di carta EYCA"
+        eycaBottomSheetTitle: "Cos’è il circuito EYCA?"
         eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nPuoi usare la Carta presso i partner aderenti, per usufruire delle opportunità disponibili per attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
         badge:
           active: Attiva
@@ -3221,6 +3221,10 @@ features:
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
           restrictionConditions: "Codici"
+      unrecognizedData:
+        title: "Non riconosci alcuni dati?"
+        body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
+        cta: "Chiedi informazioni o segnala errori"
     discovery:
       banner:
         title: "Novità: Documenti su IO"
@@ -3311,7 +3315,7 @@ features:
         secondaryAction: Chiudi
       genericCredentialError:
         title: Documento non disponibile
-        body: Si è verificato un errore oppure potresti non avere diritto al documento. 
+        body: Si è verificato un errore oppure potresti non avere diritto al documento.
         primaryAction: Riprova
         secondaryAction: Chiudi
     unsupportedDevice:
@@ -3327,6 +3331,8 @@ features:
         mdl:
           content: "In questa fase, la versione digitale della Patente non ha lo stesso valore del documento fisico: dovrai presentarla insieme a un documento di identità valido."
           action: Scopri di più
+        ehc:
+          content: "Questo documento è valido solo in Italia. La copia ufficiale del documento si trova nel PDF."
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
           action: Aggiorna il documento
@@ -3350,7 +3356,7 @@ features:
           expiring: In scadenza
         actions:
           removeFromWallet: "Rimuovi dal Portafoglio"
-          requestAssistance: "Qualcosa non torna? Contatta {{authSource}}"
+          requestAssistance: "Qualcosa non torna?"
           showClaimValues: "Mostra gli attributi del documento"
           hideClaimValues: "Nascondi gli attributi del documento"
         dialogs:
@@ -3361,6 +3367,7 @@ features:
         toast:
           removed: Fatto! Hai rimosso {{credentialName}}
         flipCard: "Mostra retro"
+        fiscalCode: Il tuo Codice Fiscale
       trustmark:
         cta: Mostra certificato di autenticità
         title: Certificato di autenticità
