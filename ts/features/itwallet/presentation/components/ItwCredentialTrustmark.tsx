@@ -4,6 +4,7 @@ import {
   Caption,
   FeatureInfo,
   hexToRgba,
+  useIOExperimentalDesign,
   VSpacer,
   VStack,
   WithTestID
@@ -23,6 +24,7 @@ import {
 import React, { useState } from "react";
 import {
   ColorValue,
+  Image,
   LayoutChangeEvent,
   LayoutRectangle,
   Pressable,
@@ -45,10 +47,10 @@ import I18n from "../../../../i18n";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { itwEaaVerifierBaseUrl } from "../../../../config";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import { generateTrustmarkUrl } from "../../common/utils/itwCredentialUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
+import { generateTrustmarkUrl } from "../../common/utils/itwCredentialUtils";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
 type ItwCredentialTrustmarkProps = WithTestID<{
   credential: StoredCredential;
@@ -58,28 +60,6 @@ type ButtonSize = {
   width: LayoutRectangle["width"];
   height: LayoutRectangle["height"];
 };
-
-/* BUTTON
-   Visual parameters */
-const TRUSTMARK_HEIGHT = 48;
-const TRUSTMARK_STAMP_SIZE = TRUSTMARK_HEIGHT * 1.6;
-const TRUSTMARK_GRADIENT_HEIGHT = TRUSTMARK_STAMP_SIZE * 2;
-const buttonBorderRadius = 12;
-const buttonInnerBorderColor: ColorValue = "#CCCCCC";
-const buttonBackgroundGradient = {
-  colors: ["#CCCCCC", "#F2F2F2", "#E9E9E9", "#E0E0E0"],
-  locations: [0, 0.35, 0.7, 1],
-  center: { x: 0.5, y: 0.7 }
-};
-
-/* LIGHT
-   Visual parameters */
-const lightScaleMultiplier = 1;
-const lightSkiaOpacity = 0.7;
-const lightSize: LayoutRectangle["width"] = 250;
-/* Percentage of visible light when it's near
-card boundaries */
-const visibleLightPercentage = 0.25;
 
 const trustmarkEnabledCredentials = [
   CredentialType.DRIVING_LICENSE,
@@ -92,22 +72,43 @@ const shouldDisplayTrustmark = (credential: StoredCredential) =>
     credential.credentialType as CredentialType
   ) && getCredentialStatus(credential) !== "expired";
 
+/* VISUAL PARAMETERS */
+
+/* Button */
+const TRUSTMARK_HEIGHT = 48;
+const TRUSTMARK_STAMP_SIZE = TRUSTMARK_HEIGHT * 1.75;
+const TRUSTMARK_STAMP_SIZE_RASTER = TRUSTMARK_HEIGHT * 1.5;
+const TRUSTMARK_GRADIENT_HEIGHT = TRUSTMARK_STAMP_SIZE * 2;
+const buttonBorderRadius = 12;
+const buttonInnerBorderColor: ColorValue = "#CCCCCC";
+const buttonBackgroundGradient = {
+  colors: ["#CCCCCC", "#F2F2F2", "#E9E9E9", "#E0E0E0"],
+  locations: [0, 0.35, 0.7, 1],
+  center: { x: 0.5, y: 0.7 }
+};
+
+/* Light */
+const lightScaleMultiplier = 1;
+const lightSkiaOpacity = 0.7;
+const lightSize: LayoutRectangle["width"] = 250;
+const visibleLightPercentage = 0.25; // Visible light when it's near box boundaries
+
 export const ItwCredentialTrustmark = ({
   testID,
   credential
 }: ItwCredentialTrustmarkProps) => {
+  /* Bottom sheet for the QR code */
   const trustmarkBottomSheet = useIOBottomSheetAutoresizableModal({
     title: I18n.t("features.itWallet.presentation.trustmark.title"),
     component: <QrCodeBottomSheetContent credential={credential} />
   });
 
-  const rotationSensor = useAnimatedSensor(SensorType.ROTATION, {
-    adjustToInterfaceOrientation: true
-  });
-  const { qx } = rotationSensor.sensor.value;
-  const initialQx = useSharedValue(0);
+  /* Enable the effect only when the experimental DS is enabled */
+  const { isExperimental: enableIridescence } = useIOExperimentalDesign();
 
-  const skiaTranslateX = useSharedValue(0);
+  const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
+  const initialQx = useSharedValue(0);
+  const { qx } = rotationSensor.sensor.value;
 
   useAnimatedReaction(
     () => rotationSensor.sensor.value,
@@ -120,7 +121,7 @@ export const ItwCredentialTrustmark = ({
     not an absolute one  */
   const relativeQx = useDerivedValue(() => qx - initialQx.value);
 
-  /* Get both card and light sizes to set the basic boundaries */
+  /* Get button size to set the basic boundaries */
   const [buttonSize, setButtonSize] = useState<ButtonSize>();
 
   const getButtonSize = (event: LayoutChangeEvent) => {
@@ -128,38 +129,35 @@ export const ItwCredentialTrustmark = ({
     setButtonSize({ width, height });
   };
 
-  /* Set translate boundaries */
+  /* Set translate boundaries for the main light */
   const maxTranslateX =
     ((buttonSize?.width ?? 0) - (lightSize ?? 0) * visibleLightPercentage) / 2;
 
-  /* We don't need to consider the whole
-    quaternion range, just the 1/10 */
+  /* We don't need to look at the whole quaternion range,
+  just a very small part of it. */
   const quaternionRange: number = 0.1;
 
-  const skiaLightTranslateValues = useDerivedValue(() => {
-    skiaTranslateX.value = interpolate(
+  const skiaLightTranslateX = useDerivedValue(() => {
+    const translateX = interpolate(
       relativeQx.value,
       [-quaternionRange, quaternionRange],
       [maxTranslateX, -maxTranslateX],
       Extrapolation.CLAMP
     );
 
-    return [
-      { translateX: skiaTranslateX.value },
-      { scale: lightScaleMultiplier }
-    ];
+    return [{ translateX }, { scale: lightScaleMultiplier }];
   });
 
-  const skiaGradientRainbowTranslateValues = useDerivedValue(() => {
-    const translateY = interpolate(
-      relativeQx.value,
-      [quaternionRange, -quaternionRange],
-      [-TRUSTMARK_GRADIENT_HEIGHT + TRUSTMARK_STAMP_SIZE, 0],
-      Extrapolation.CLAMP
-    );
-
-    return [{ translateY }];
-  });
+  const skiaGradientRainbowTranslateY = useDerivedValue(() => [
+    {
+      translateY: interpolate(
+        relativeQx.value,
+        [quaternionRange, -quaternionRange],
+        [-TRUSTMARK_GRADIENT_HEIGHT + TRUSTMARK_STAMP_SIZE, 0],
+        Extrapolation.CLAMP
+      )
+    }
+  ]);
 
   const ButtonLight = () => (
     <SkiaGroup
@@ -170,7 +168,7 @@ export const ItwCredentialTrustmark = ({
         cx={(buttonSize?.width ?? 0) / 2}
         cy={(buttonSize?.height ?? 0) / 2}
         r={lightSize / 2}
-        transform={skiaLightTranslateValues}
+        transform={skiaLightTranslateX}
       >
         <SkiaRadialGradient
           c={vec((buttonSize?.width ?? 0) / 2, (buttonSize?.height ?? 0) / 2)}
@@ -210,7 +208,7 @@ export const ItwCredentialTrustmark = ({
         y={0}
         width={buttonSize?.width ?? 0}
         height={TRUSTMARK_GRADIENT_HEIGHT}
-        transform={skiaGradientRainbowTranslateValues}
+        transform={skiaGradientRainbowTranslateY}
       >
         <SkiaLinearGradient
           mode="decal"
@@ -231,16 +229,49 @@ export const ItwCredentialTrustmark = ({
     </SkiaGroup>
   );
 
-  const { onPressIn, onPressOut, animatedScaleStyle } =
-    useSpringPressScaleAnimation();
-
   const trustMarkStampSVG = useSVG(
-    /* We use the `html` extension to avoid the `svg-transformer` used to
-    render local files, as it causes conflicts with the `skia` library.
+    /* We use the `html` extension to avoid the `svg-transformer` to render
+    local SVG files, as it causes conflicts with the `skia` library.
     To learn more: https://github.com/Shopify/react-native-skia/issues/1335#issuecomment-2088240523 */
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     require("../../../../../img/features/itWallet/credential/trustmark-stamp.svg.html")
   );
+
+  const SkiaIridescentTrustmark = () => (
+    <Canvas
+      style={{
+        position: "absolute",
+        height: TRUSTMARK_HEIGHT,
+        width: "100%"
+      }}
+    >
+      <ButtonLight />
+
+      <SkiaGroup blendMode={"colorBurn"} opacity={0.05}>
+        <TrustmarkRainbowGradient />
+      </SkiaGroup>
+
+      <Mask
+        mode="alpha"
+        mask={
+          <SkiaGroup blendMode={"colorDodge"} opacity={0.8}>
+            <TrustmarkRainbowGradient />
+          </SkiaGroup>
+        }
+      >
+        <ImageSVG
+          svg={trustMarkStampSVG}
+          x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
+          y={-TRUSTMARK_STAMP_SIZE * 0.18}
+          width={TRUSTMARK_STAMP_SIZE}
+          height={TRUSTMARK_STAMP_SIZE}
+        />
+      </Mask>
+    </Canvas>
+  );
+
+  const { onPressIn, onPressOut, animatedScaleStyle } =
+    useSpringPressScaleAnimation();
 
   if (!shouldDisplayTrustmark(credential)) {
     return null;
@@ -271,52 +302,23 @@ export const ItwCredentialTrustmark = ({
             locations={buttonBackgroundGradient.locations}
             colors={buttonBackgroundGradient.colors}
             style={styles.gradientView}
-          >
-            {/* <Image
-              style={styles.logo}
-              source={require("../../../../../img/features/itWallet/credential/trustmark.png")}
-              accessibilityIgnoresInvertColors
-            /> */}
-          </LinearGradient>
+          />
           <View style={styles.buttonInnerBorder} />
-          <View style={styles.textContainer}>
-            <Caption style={styles.caption}>
+          <View style={styles.content}>
+            <Caption>
               {I18n.t(
                 "features.itWallet.presentation.trustmark.cta"
               ).toUpperCase()}
             </Caption>
-          </View>
-
-          <Canvas
-            style={{
-              position: "absolute",
-              height: 500,
-              width: "100%"
-            }}
-          >
-            <ButtonLight />
-
-            <SkiaGroup blendMode={"colorBurn"} opacity={0.075}>
-              <TrustmarkRainbowGradient />
-            </SkiaGroup>
-
-            <Mask
-              mode="alpha"
-              mask={
-                <SkiaGroup blendMode={"colorDodge"} opacity={0.8}>
-                  <TrustmarkRainbowGradient />
-                </SkiaGroup>
-              }
-            >
-              <ImageSVG
-                svg={trustMarkStampSVG}
-                x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
-                y={-TRUSTMARK_HEIGHT * 0.28}
-                width={TRUSTMARK_STAMP_SIZE}
-                height={TRUSTMARK_STAMP_SIZE}
+            {!enableIridescence && (
+              <Image
+                style={styles.trustmarkAsset}
+                source={require("../../../../../img/features/itWallet/credential/trustmark.png")}
+                accessibilityIgnoresInvertColors
               />
-            </Mask>
-          </Canvas>
+            )}
+          </View>
+          {enableIridescence && <SkiaIridescentTrustmark />}
         </Animated.View>
       </Pressable>
       {trustmarkBottomSheet.bottomSheet}
@@ -351,9 +353,13 @@ export const QrCodeBottomSheetContent = ({
 
 const styles = StyleSheet.create({
   container: {
+    height: TRUSTMARK_HEIGHT,
     borderCurve: "continuous",
     borderRadius: buttonBorderRadius,
     overflow: "hidden"
+  },
+  gradientView: {
+    ...StyleSheet.absoluteFillObject
   },
   buttonInnerBorder: {
     ...StyleSheet.absoluteFillObject,
@@ -362,19 +368,18 @@ const styles = StyleSheet.create({
     borderColor: hexToRgba(buttonInnerBorderColor, 0.35),
     borderWidth: 1
   },
-  textContainer: {
+  content: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: "center",
     zIndex: 10,
     paddingHorizontal: 16
   },
-  gradientView: {
-    height: TRUSTMARK_HEIGHT,
-    justifyContent: "center",
-    paddingHorizontal: 16,
-    position: "relative"
-  },
-  caption: {
-    zIndex: 10
+  trustmarkAsset: {
+    height: TRUSTMARK_STAMP_SIZE_RASTER,
+    width: TRUSTMARK_STAMP_SIZE_RASTER,
+    position: "absolute",
+    top: "-20%",
+    right: -8,
+    zIndex: 1
   }
 });
