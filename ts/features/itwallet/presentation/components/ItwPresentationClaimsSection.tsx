@@ -45,7 +45,7 @@ export const ItwPresentationClaimsSection = ({
   );
 
   return (
-    <>
+    <View>
       {
         // If do not have claims, we should not render the title and the toggle
         claims.length > 0 && (
@@ -69,18 +69,19 @@ export const ItwPresentationClaimsSection = ({
         }
 
         return (
-          <View key={index}>
+          <React.Fragment key={index}>
+            {index !== 0 && <Divider />}
             <ItwCredentialClaim
               claim={claim}
               isPreview={false}
               hidden={valuesHidden}
               credentialStatus={credentialStatus}
             />
-            <Divider />
-          </View>
+          </React.Fragment>
         );
       })}
+      <Divider />
       <ItwReleaserName credential={credential} isPreview={false} />
-    </>
+    </View>
   );
 };
