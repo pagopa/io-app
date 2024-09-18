@@ -19,6 +19,13 @@ import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
+/**
+ * Credentials that should display a skeumorphic card
+ */
+const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
+  CredentialType.DRIVING_LICENSE
+];
+
 type Props = {
   credential: StoredCredential;
 };
@@ -29,26 +36,27 @@ type Props = {
  */
 const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const [isFlipped, setIsFlipped] = React.useState(false);
-  const themeColor = getThemeColorByCredentialType(
-    credential.credentialType as CredentialType
+
+  const { backgroundColor } = getThemeColorByCredentialType(
+    credential.credentialType
   );
-
-  const hasSkeumorphicCard =
-    credential.credentialType === CredentialType.DRIVING_LICENSE;
-
   const credentialStatus = getCredentialStatus(credential);
 
-  const flipGesture = Gesture.Fling()
-    .direction(Directions.LEFT + Directions.RIGHT)
-    .onEnd(() => runOnJS(setIsFlipped)(!isFlipped));
+  const hasSkeumorphicCard = credentialsWithSkeumorphicCard.includes(
+    credential.credentialType
+  );
 
   if (hasSkeumorphicCard) {
+    const flipGesture = Gesture.Fling()
+      .direction(Directions.LEFT + Directions.RIGHT)
+      .onEnd(() => runOnJS(setIsFlipped)(!isFlipped));
+
     return (
       <VStack space={8}>
         <GestureDetector gesture={flipGesture}>
-          <Wrapper backgroundColor={themeColor}>
+          <CardContainer backgroundColor={backgroundColor}>
             <ItwSkeumorphicCard credential={credential} isFlipped={isFlipped} />
-          </Wrapper>
+          </CardContainer>
         </GestureDetector>
         <View style={styles.flipButton}>
           <ButtonLink
@@ -65,21 +73,23 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   }
 
   return (
-    <Wrapper backgroundColor={themeColor}>
+    <CardContainer backgroundColor={backgroundColor}>
       <ItwCredentialCard
         credentialType={credential.credentialType}
         status={credentialStatus}
       />
-    </Wrapper>
+    </CardContainer>
   );
 };
 
-type WrapperProps = {
-  children: React.ReactNode;
+type CardContainerProps = {
   backgroundColor: string;
 };
 
-const Wrapper = ({ children, backgroundColor }: WrapperProps) => (
+const CardContainer = ({
+  children,
+  backgroundColor
+}: React.PropsWithChildren<CardContainerProps>) => (
   <View style={styles.cardContainer}>
     {children}
     <View style={[styles.cardBackdrop, { backgroundColor }]} />

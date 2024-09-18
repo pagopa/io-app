@@ -1,10 +1,16 @@
-import { Body, HSpacer, IOColors, Tag } from "@pagopa/io-app-design-system";
+import {
+  HStack,
+  IOColors,
+  makeFontStyleObject,
+  Tag
+} from "@pagopa/io-app-design-system";
 import React from "react";
-import { ImageSourcePropType, StyleSheet, View } from "react-native";
+import { ImageSourcePropType, StyleSheet, Text, View } from "react-native";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
 import I18n from "../../../../i18n";
 import { getCredentialNameFromType } from "../utils/itwCredentialUtils";
 import { CredentialType } from "../utils/itwMocksUtils";
+import { getThemeColorByCredentialType } from "../utils/itwStyleUtils";
 import { ItwDigitalVersionBadge } from "./ItwDigitalVersionBadge";
 
 export type ItwCredentialStatus = "valid" | "pending" | "expiring" | "expired";
@@ -21,7 +27,8 @@ export const ItwCredentialCard = ({
   isPreview = false
 }: ItwCredentialCard) => {
   const isValid = status === "valid";
-  const labelColor: IOColors = isValid ? "bluegreyDark" : "grey-700";
+  const theme = getThemeColorByCredentialType(credentialType);
+  const labelColor = isValid ? theme.textColor : IOColors["grey-700"];
 
   const cardBackgroundSource =
     credentialCardBackgrounds[credentialType][isValid ? 0 : 1];
@@ -36,23 +43,13 @@ export const ItwCredentialCard = ({
             style={styles.cardBackground}
           />
         </View>
-        <View style={styles.infoContainer}>
-          <View style={styles.header}>
-            <Body
-              color={labelColor}
-              weight="Semibold"
-              numberOfLines={2}
-              style={{ flex: 1 }}
-            >
+        <View style={styles.header}>
+          <HStack space={16}>
+            <Text style={[styles.label, { color: labelColor }]}>
               {getCredentialNameFromType(credentialType, "").toUpperCase()}
-            </Body>
-            {statusTagProps && (
-              <>
-                <HSpacer size={16} />
-                <Tag {...statusTagProps} />
-              </>
-            )}
-          </View>
+            </Text>
+            {statusTagProps && <Tag {...statusTagProps} />}
+          </HStack>
         </View>
         <ItwDigitalVersionBadge credentialType={credentialType} />
         <View
@@ -139,14 +136,17 @@ const styles = StyleSheet.create({
     borderLeftWidth: 9,
     borderColor: transparentBorderColor
   },
-  infoContainer: {
-    paddingHorizontal: 16,
-    paddingTop: 14
+  label: {
+    flex: 1,
+    ...makeFontStyleObject("Semibold", false, "TitilliumSansPro"),
+    fontSize: 16
   },
   header: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingTop: 14
   }
 });

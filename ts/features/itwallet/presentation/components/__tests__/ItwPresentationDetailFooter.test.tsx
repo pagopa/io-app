@@ -10,7 +10,7 @@ import {
 } from "../../../common/utils/itwMocksUtils";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwPresentationDetailFooter } from "../ItwPresentationDetailFooter";
+import { ItwPresentationDetailsFooter } from "../ItwPresentationDetailsFooter";
 
 describe("ItwPresentationAlertsSection", () => {
   test.each([
@@ -38,7 +38,7 @@ const renderComponent = (credentialType: CredentialType) => {
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwCredentialIssuanceMachineContext.Provider>
-        <ItwPresentationDetailFooter
+        <ItwPresentationDetailsFooter
           credential={{
             ...ItwStoredCredentialsMocks.dc,
             credentialType
