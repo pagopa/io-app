@@ -5,13 +5,19 @@ import {
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import {
+  Directions,
+  Gesture,
+  GestureDetector
+} from "react-native-gesture-handler";
+import { runOnJS } from "react-native-reanimated";
 import I18n from "../../../../i18n";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
+import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 
 type Props = {
   credential: StoredCredential;
@@ -32,12 +38,18 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
 
   const credentialStatus = getCredentialStatus(credential);
 
+  const flipGesture = Gesture.Fling()
+    .direction(Directions.LEFT + Directions.RIGHT)
+    .onEnd(() => runOnJS(setIsFlipped)(!isFlipped));
+
   if (hasSkeumorphicCard) {
     return (
       <VStack space={8}>
-        <Wrapper backgroundColor={themeColor}>
-          <ItwSkeumorphicCard credential={credential} isFlipped={isFlipped} />
-        </Wrapper>
+        <GestureDetector gesture={flipGesture}>
+          <Wrapper backgroundColor={themeColor}>
+            <ItwSkeumorphicCard credential={credential} isFlipped={isFlipped} />
+          </Wrapper>
+        </GestureDetector>
         <View style={styles.flipButton}>
           <ButtonLink
             label={I18n.t(
