@@ -34,13 +34,17 @@ export function* handleWalletPaymentGetDetails(
     const res = getPaymentRequestInfoResult.right;
     if (res.status === 200) {
       yield* put(paymentsGetPaymentDetailsAction.success(res.value));
-    } else if (res.status !== 401) {
-      // The 401 status is handled by the withPaymentsSessionToken
+    } else if (res.status === 400) {
+      // Handling unhandled error from third-party services (GEC) during payment verification.
+      // This is not an internal backend error from pagoPA, but rather a third-party service error and should be handled differently.
       yield* put(
         paymentsGetPaymentDetailsAction.failure({
           ...getGenericError(new Error(`Error: ${res.status}`))
         })
       );
+    } else if (res.status !== 401) {
+      // The 401 status is handled by the withPaymentsSessionToken
+      yield* put(paymentsGetPaymentDetailsAction.failure(res.value));
     }
   } catch (e) {
     yield* put(
