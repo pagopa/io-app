@@ -322,8 +322,6 @@ export const ItwCredentialTrustmark = ({
         </Animated.View>
       </Pressable>
       {trustmarkBottomSheet.bottomSheet}
-      {/* TODO: remove after merging #6154 */}
-      <VSpacer size={16} />
     </>
   );
 };
