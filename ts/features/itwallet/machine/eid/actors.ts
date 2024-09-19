@@ -13,10 +13,7 @@ import {
 import { useIOStore } from "../../../../store/hooks";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
-import {
-  itwLifecycleStoresReset,
-  itwLifecycleWalletReset
-} from "../../lifecycle/store/actions";
+import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import type {
   WalletAttestationContext,
   IdentificationContext,
