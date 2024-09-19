@@ -1,16 +1,21 @@
 import { getType } from "typesafe-actions";
 import { PersistConfig, persistReducer } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { setShowProfileBanner } from "../actions";
+import {
+  setHasUserAcknowledgedSettingsBanner,
+  setShowProfileBanner
+} from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { differentProfileLoggedIn } from "../../../../store/actions/crossSessions";
 
 export type ProfileSettingsState = {
   showProfileBanner: boolean;
+  hasUserAcknowledgedSettingsBanner: boolean;
 };
 
 export const profileSettingsReducerInitialState = {
-  showProfileBanner: true
+  showProfileBanner: true,
+  hasUserAcknowledgedSettingsBanner: false
 };
 
 const profileSettingsReducer = (
@@ -27,6 +32,12 @@ const profileSettingsReducer = (
     case getType(differentProfileLoggedIn): {
       return profileSettingsReducerInitialState;
     }
+    case getType(setHasUserAcknowledgedSettingsBanner): {
+      return {
+        ...state,
+        hasUserAcknowledgedSettingsBanner: action.payload
+      };
+    }
     default:
       return state;
   }
@@ -38,7 +49,7 @@ const persistConfig: PersistConfig = {
   key: "profileSettings",
   storage: AsyncStorage,
   version: CURRENT_REDUX_PROFILE_SETTINGS_STORE_VERSION,
-  whitelist: ["showProfileBanner"]
+  whitelist: ["showProfileBanner", "hasUserAcknowledgedSettingsBanner"]
 };
 
 export const profileSettingsReducerPersistor = persistReducer(
