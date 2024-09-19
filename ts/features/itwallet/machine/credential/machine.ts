@@ -11,7 +11,7 @@ import {
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { CredentialIssuanceEvents } from "./events";
-import { CredentialIssuanceFailureTypeEnum } from "./failure";
+import { mapEventToFailure } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -29,13 +29,7 @@ export const itwCredentialIssuanceMachine = setup({
     navigateToWallet: notImplemented,
     storeCredential: notImplemented,
     closeIssuance: notImplemented,
-    setFailure: assign(({ event }) => ({
-      failure: {
-        // TODO add error mapping
-        type: CredentialIssuanceFailureTypeEnum.GENERIC,
-        reason: (event as any).error
-      }
-    })),
+    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     handleSessionExpired: notImplemented
   },
   actors: {
