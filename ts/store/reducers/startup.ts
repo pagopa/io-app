@@ -12,7 +12,8 @@ export enum StartupStatusEnum {
   INITIAL = "initial",
   ONBOARDING = "onboarding",
   NOT_AUTHENTICATED = "notAuthenticated",
-  AUTHENTICATED = "authenticated"
+  AUTHENTICATED = "authenticated",
+  NOT_CONNECTED = "notConnected"
 }
 
 type StartupTransientErrorNotSet = {

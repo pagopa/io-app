@@ -263,6 +263,9 @@ startup:
     cta_2: Ignora
   contextualHelp:
     title: Problemi di inizializzazione?
+  connection_lost:
+    title: Non hai una connessione a internet attiva
+    description: Controlla la tua connessione e riavvia l’app
 login:
   expiration_info: Per ragioni di sicurezza, dovrai entrare con SPID o CIE ogni 30 giorni.
   expiration_info_FL: Per ragioni di sicurezza, dovrai entrare con SPID o CIE una volta all’anno.

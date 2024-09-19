@@ -263,6 +263,9 @@ startup:
     cta_2: Discard
   contextualHelp:
     title: Startup problems?
+  connection_lost:
+    title: Non hai una connessione a internet attiva
+    description: Controlla la tua connessione e riavvia l’app
 login:
   expiration_info: For security reasons, you’ll need to sign in again with CIE or SPID every 30 days.
   expiration_info_FL: For security reasons, you’ll need to sign in using SPID or CIE once a year.

@@ -115,6 +115,7 @@ import {
 import { checkNotificationsPreferencesSaga } from "../features/pushNotifications/sagas/checkNotificationsPreferencesSaga";
 import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
+import { getIsNetworkAvailable } from "../utils/networkInfo";
 import {
   clearKeychainError,
   keychainError
@@ -174,6 +175,12 @@ export function* initializeApplicationSaga(
   );
   const showIdentificationModal =
     startupAction?.payload?.showIdentificationModalAtStartup ?? true;
+  const isConnected = yield* call(getIsNetworkAvailable);
+
+  if (!isConnected) {
+    yield* put(startupLoadSuccess(StartupStatusEnum.NOT_CONNECTED));
+    return;
+  }
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
