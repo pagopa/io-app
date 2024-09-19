@@ -606,6 +606,17 @@ authentication:
       os_problem: An Android 6.0 or iOS 13 or higher operating system is required.
       nfc_alert: Your device does not have NFC.
       os_alert: The device's operating system is not up-to-date.
+    cie_bottom_sheet:
+      title: How do you want to login?
+      module_cie_pin:
+        title: Login with CIE + PIN
+        subtitle: Use Electronic Identity Card and PIN
+      module_cie_id:
+        title: Login with CieID
+        subtitle: Use the CieID app
+      help_banner:
+        title: Not sure what to choose?
+        action: We give you a hand
     contentTitleCie: Don't have SPID or CIE?
     cie_information_request: !include cie.md
     spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
@@ -634,6 +645,52 @@ authentication:
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
     expiredCardHelp: How to renew your Electronic Identity Card?
+  wizards:
+    cie_id_wizard:
+      title: Do you have the CieID app?
+      description: If you have the CieID app on your device, log in to IO by entering the app's credentials. You can also use your face or fingerprint, or the code you set up for the CieID app.
+      actions:
+        primary:
+          label: Yes, log in with CieID
+        secondary:
+          label: I don't have CieID
+      link: What is CieID?
+    cie_pin_wizard:
+      title: Do you have your Electronic Identity Card and PIN?
+      description: If you have your Electronic Identity Card at hand, you can access IO by entering the card's PIN and bringing it close to the device to allow the data to be read.
+      actions:
+        primary:
+          label: Yes, enter with CIE + PIN
+        secondary:
+          label: I don't have a CIE and PIN
+      bottom_sheet:
+        title: Where can I find the CIE PIN?
+        content: !include authentication/wizards/cie_pin_content.md
+        link: Forgotten your PIN?
+        cta:
+          label: Where can I find the CIE PIN?
+    spid_wizard:
+      title: Do you have SPID?
+      description: If you have SPID, log in to IO by entering your credentials, using your face or fingerprint, or via your SPID provider's app.
+      actions:
+        primary:
+          label: Yes, login with SPID
+        secondary:
+          label: I don't have SPID
+    id_activation_wizard:
+      title: Activate your digital identity!
+      description: You must have an active SPID or CIE (Electronic Identity Card) digital identity to use IO.
+      list_items:
+        title: How to activate it
+        request_cie:
+          label: Ask for your CIE
+        activate_cie:
+          title: Activate CIE credentials
+        activate_spid:
+          title: Ask for your SPID
+      actions:
+        primary:
+          label: Close
   auth_errors:
     error_19:
       title: You’ve made too many access attempts
@@ -2550,7 +2607,7 @@ bonus:
   active: Active
   failed: Failed
   redeemed: Consumed
-  termsAndConditionFooter: 'By pressing “{{ctaText}}” you declare that you are in possession of the requirements and have read and understood the [Guide]({{regulationLink}}) and the [Privacy Policy].'
+  termsAndConditionFooter: "By pressing “{{ctaText}}” you declare that you are in possession of the requirements and have read and understood the [Guide]({{regulationLink}}) and the [Privacy Policy]."
   tos:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -2626,16 +2683,16 @@ bonus:
         website: Go to partner's website
       categories:
         counting: and other {{count}}
-        cultureAndEntertainment: Culture and Entertainment
-        health: Health and Wellness
-        learning: Education and Learning
+        cultureAndEntertainment: Culture and entertainment
+        health: Health and wellness
+        learning: Education and learning
         sport: Sport
         home: Home
-        telco: Telephony and Internet
-        finance: Banking and Financial Services
-        travel: Travels and Transportation
-        mobility: Sustainable Transport
-        job: Jobs and Internships
+        telco: Telephony and internet
+        finance: Banking and financial services
+        travel: Travels and transportation
+        mobility: Sustainable transport
+        job: Jobs and internships
       information:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
@@ -2659,14 +2716,14 @@ bonus:
         warning: "Attention! "
         revoked: "Attention! This card has been revoked cause {{reason}}"
         expired: "Attention! This card expired on {{date}}"
-      ownership: Who can use this card?
+      ownership: Who can use this Card?
       status:
-        title: Carta Giovani Nazionale (CGN)
+        title: Carta Giovani Nazionale
         eyca: EYCA card
         eycaCircuit: EYCA circuit
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
         eycaError: "We had some issues with EYCA's systems."
-        eycaBottomSheetTitle: "EYCA card number"
+        eycaBottomSheetTitle: "What is EYCA?"
         eycaDescription: "Until 31 years old, your **Carta Giovani Nazionale is a member of the EYCA circuit**(European Youth Card Association).\n\n Use the Card at partners to enjoy cultural activities, shopping, transport, restaurants and accommodation in European countries partecipating in the circuit."
         eycaNumber: Card number
         badge:
@@ -3154,6 +3211,10 @@ features:
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
           restrictionConditions: "Codici"
+      unrecognizedData:
+        title: "Non riconosci alcuni dati?"
+        body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
+        cta: "Chiedi informazioni o segnala errori"
     discovery:
       banner:
         title: "Novità: Documenti su IO"
@@ -3237,16 +3298,15 @@ features:
         body: Non puoi attivare Documenti con un’identità diversa da quella che usi per accedere a IO. Verifica le credenziali di accesso e riprova.
         primaryAction: Ho capito
         secondaryAction: Segnala un problema
-      genericEidError:
+      genericError:
         title: Si è verificato un errore imprevisto
         body: La tua richiesta verso l'ente che emette il documento non è andata a buon fine.
         primaryAction: Riprova
         secondaryAction: Chiudi
-      genericCredentialError:
-        title: Documento non disponibile
-        body: Si è verificato un errore oppure potresti non avere diritto al documento. 
-        primaryAction: Riprova
-        secondaryAction: Chiudi
+      notEntitledCredentialError: 
+        title: Non è possibile aggiungere il documento
+        body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
+        primaryAction: Ho capito
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
@@ -3260,6 +3320,8 @@ features:
         mdl:
           content: "In questa fase, la versione digitale della Patente non ha lo stesso valore del documento fisico: dovrai presentarla insieme a un documento di identità valido."
           action: Scopri di più
+        ehc:
+          content: "This document is valid only in Italy. The official copy of the document is in PDF."
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
           action: Aggiorna il documento
@@ -3283,7 +3345,7 @@ features:
           expiring: Expiring
         actions:
           removeFromWallet: "Remove from Wallet"
-          requestAssistance: "Something wrong? Contact {{authSource}}"
+          requestAssistance: "Something wrong?"
           showClaimValues: "Show claim values"
           hideClaimValues: "Hide claim values"
         dialogs:
@@ -3294,6 +3356,12 @@ features:
         toast:
           removed: Fatto! Hai rimosso {{credentialName}}
         flipCard: "Show back"
+        fiscalCode: Your Fiscal Code
+      trustmark:
+        cta: Mostra certificato di autenticità
+        title: Certificato di autenticità
+        usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
+        certifiedLabel: Questo documento è certificato dall'ente emittente.
   trialSystem:
     toast:
       subscribed: Done! You will receive a message when the trial period will begin.
