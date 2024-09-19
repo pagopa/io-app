@@ -14,6 +14,7 @@ import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator"
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
+import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { IngressScreen } from "../screens/ingress/IngressScreen";
 import { startApplicationInitialization } from "../store/actions/application";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
@@ -135,6 +136,12 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
                 activate: activate => activate === "true"
               }
             }
+          }
+        },
+        [ITW_ROUTES.MAIN]: {
+          path: "itw",
+          screens: {
+            [ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER]: "credential/issuance"
           }
         },
         ...fciLinkingOptions,
