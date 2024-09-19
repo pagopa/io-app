@@ -102,7 +102,8 @@ const ItwCredentialOnboardingSection = () => {
   // List of available credentials to show to the user
   const availableCredentials = [
     CredentialType.DRIVING_LICENSE,
-    CredentialType.EUROPEAN_DISABILITY_CARD
+    CredentialType.EUROPEAN_DISABILITY_CARD,
+    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
   ] as const;
 
   const credentialIconByType: Record<
@@ -110,7 +111,8 @@ const ItwCredentialOnboardingSection = () => {
     IOIcons
   > = {
     [CredentialType.DRIVING_LICENSE]: "car",
-    [CredentialType.EUROPEAN_DISABILITY_CARD]: "accessibility"
+    [CredentialType.EUROPEAN_DISABILITY_CARD]: "accessibility",
+    [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: "healthCard"
   };
 
   return (
