@@ -214,7 +214,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
         }
         weight="Semibold"
       >
-        Non riesci a entrare con CieID?
+        Can't log in with CieID?
       </Text>
       <View
         style={
@@ -256,7 +256,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
         }
         weight="Regular"
       >
-        Se hai SPID, entra su IO inserendo le tue credenziali. Puoi usare anche il tuo volto o l’impronta o il codice impostato per l’app del tuo fornitore di SPID.
+        If you have SPID, log in to IO by entering your credentials. You can also use your face or fingerprint or the code set for your SPID provider's app.
       </Text>
       <View
         style={
@@ -274,7 +274,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
         />
         <View>
           <View
-            accessibilityLabel="Entra con SPID"
+            accessibilityLabel="Login with SPID"
             accessibilityRole="button"
             accessibilityState={
               {
@@ -392,7 +392,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                   }
                   weight="Bold"
                 >
-                  Entra con SPID
+                  Login with SPID
                 </Text>
               </View>
             </View>
@@ -415,7 +415,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
         />
         <View>
           <View
-            accessibilityLabel="Chiudi"
+            accessibilityLabel="Close"
             accessibilityRole="button"
             accessibilityState={
               {
@@ -509,7 +509,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                   ]
                 }
               >
-                Chiudi
+                Close
               </Text>
             </View>
           </View>
@@ -734,7 +734,7 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
         }
         weight="Semibold"
       >
-        Non riesci a entrare con CieID?
+        Can't log in with CieID?
       </Text>
       <View
         style={
@@ -776,9 +776,9 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
         }
         weight="Regular"
       >
-        Se hai la tua Carta di Identità Elettronica a portata di mano, usala per accedere a IO.
+        If you have your Electronic Identity Card handy, use it to access IO.
 
-Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura dei dati.
+Insert the CIE PIN and bring it close to the device to allow the data to be read.
       </Text>
       <View
         style={
@@ -796,7 +796,7 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
         />
         <View>
           <View
-            accessibilityLabel="Entra con CIE + PIN"
+            accessibilityLabel="Login with CIE + PIN"
             accessibilityRole="button"
             accessibilityState={
               {
@@ -914,7 +914,7 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
                   }
                   weight="Bold"
                 >
-                  Entra con CIE + PIN
+                  Login with CIE + PIN
                 </Text>
               </View>
             </View>
@@ -937,7 +937,7 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
         />
         <View>
           <View
-            accessibilityLabel="Chiudi"
+            accessibilityLabel="Close"
             accessibilityRole="button"
             accessibilityState={
               {
@@ -1031,7 +1031,7 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
                   ]
                 }
               >
-                Chiudi
+                Close
               </Text>
             </View>
           </View>
