@@ -13,6 +13,7 @@ import {
 import { useIOStore } from "../../../../store/hooks";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
+import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import type {
   WalletAttestationContext,
   IdentificationContext,
@@ -53,6 +54,8 @@ export const createEidIssuanceActorsImplementation = (
       return storedIntegrityKeyTag.value;
     }
 
+    // Reset the wallet store to prevent having dirty state before registering a new wallet instance
+    store.dispatch(itwLifecycleStoresReset());
     const hardwareKeyTag = await getIntegrityHardwareKeyTag();
     await registerWalletInstance(hardwareKeyTag, sessionToken);
 
