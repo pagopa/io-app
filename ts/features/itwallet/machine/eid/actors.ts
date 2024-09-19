@@ -14,6 +14,7 @@ import { useIOStore } from "../../../../store/hooks";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
+import { trackItwRequest } from "../../analytics";
 import type {
   WalletAttestationContext,
   IdentificationContext,
