@@ -17,7 +17,6 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
@@ -35,6 +34,7 @@ import {
   trackItwRequestSuccess,
   trackSaveCredentialToWallet
 } from "../../analytics";
+import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 import { ItwIssuanceLoadingScreen } from "../components/ItwIssuanceLoadingScreen";
 
 export const ItwIssuanceEidPreviewScreen = () => {
@@ -140,7 +140,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
       <View style={styles.contentWrapper}>
         <H2>{I18n.t("features.itWallet.issuance.eidPreview.title")}</H2>
         <VSpacer size={24} />
-        <ItwCredentialClaimsList data={eid} isPreview={true} />
+        <ItwCredentialPreviewClaimsList data={eid} />
         <VSpacer size={24} />
       </View>
       <FooterActions

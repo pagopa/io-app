@@ -18,7 +18,6 @@ import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
@@ -37,6 +36,7 @@ import {
   trackItwExit,
   trackSaveCredentialToWallet
 } from "../../analytics";
+import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
@@ -137,7 +137,7 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
           })}
         </H2>
         <VSpacer size={24} />
-        <ItwCredentialClaimsList data={credential} isPreview={true} />
+        <ItwCredentialPreviewClaimsList data={credential} />
       </View>
       <FooterActions
         fixed={false}
