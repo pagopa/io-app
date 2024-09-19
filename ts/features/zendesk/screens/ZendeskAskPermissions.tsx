@@ -63,7 +63,6 @@ import ZendeskItemPermissionComponent, {
 } from "../components/ZendeskItemPermissionComponent";
 import { ZendeskParamsList } from "../navigation/params";
 import {
-  getZendeskToken,
   zendeskStopPolling,
   zendeskSupportCompleted,
   zendeskSupportFailure
@@ -260,12 +259,6 @@ const ZendeskAskPermissions = () => {
       IOToast.error("toast error");
     }
   }, [dispatch, getZendeskTokenStatus, prevGetZendeskTokenStatus]);
-
-  useEffect(() => {
-    if (isUserLoggedIn) {
-      dispatch(getZendeskToken.request());
-    }
-  }, [dispatch, isUserLoggedIn]);
 
   const currentVersion = getAppVersion();
 
