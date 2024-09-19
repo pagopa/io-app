@@ -62,8 +62,7 @@ import ZENDESK_ROUTES from "../navigation/routes";
 import {
   ZendeskStartPayload,
   getZendeskConfig,
-  zendeskSupportCancel,
-  zendeskSupportCompleted
+  zendeskSupportCancel
 } from "../store/actions";
 import { zendeskConfigSelector } from "../store/reducers";
 import { handleContactSupport } from "../utils";
@@ -92,7 +91,7 @@ export type ZendeskSupportHelpCenterNavigationParams = ZendeskStartPayload;
  */
 const FaqManager = (props: FaqManagerProps) => {
   const dispatch = useIODispatch();
-  const workUnitComplete = () => dispatch(zendeskSupportCompleted());
+  // const workUnitComplete = () => dispatch(zendeskSupportCompleted());
   const potContextualData = useIOSelector(
     getContextualHelpDataFromRouteSelector(props.startingRoute)
   );
@@ -186,7 +185,7 @@ const ZendeskSupportHelpCenter = () => {
 
   const dispatch = useIODispatch();
   const workUnitCancel = () => dispatch(zendeskSupportCancel());
-  const workUnitComplete = () => dispatch(zendeskSupportCompleted());
+  // const workUnitComplete = () => dispatch(zendeskSupportCompleted());
   const profile = useIOSelector(profileSelector);
   const signatureRequestId = useIOSelector(fciSignatureRequestIdSelector);
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
