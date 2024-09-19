@@ -115,6 +115,7 @@ const ItwPresentationDetailsScreenBase = ({
   return (
     <React.Fragment>
       <Animated.ScrollView
+        ref={animatedScrollViewRef}
         contentContainerStyle={{
           paddingBottom: safeBottomAreaHeight
         }}
