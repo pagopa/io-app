@@ -126,11 +126,12 @@ const ContentView = ({ failure }: ContentViewProps) => {
   useEffect(() => {
     if (storedCredential) {
       trackAddCredentialTimeout({
-        reason: failure.type,
+        reason: failure.reason,
+        type: failure.type,
         credential: CREDENTIALS_MAP[storedCredential.credentialType]
       });
     }
-  }, [failure.type, storedCredential]);
+  }, [failure, storedCredential]);
 
   const resultScreenProps = resultScreensMap[failure.type];
   return <OperationResultScreenContent {...resultScreenProps} />;

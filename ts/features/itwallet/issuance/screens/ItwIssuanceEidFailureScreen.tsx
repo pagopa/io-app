@@ -154,11 +154,12 @@ export const ItwIssuanceEidFailureScreen = () => {
         storedCredential
       ) {
         trackAddCredentialTimeout({
-          reason: failure.type,
+          reason: failure.reason,
+          type: failure.type,
           credential: CREDENTIALS_MAP[storedCredential.credentialType]
         });
       }
-    }, [failure.reason, failure.type]);
+    }, [failure]);
 
     const resultScreenProps =
       resultScreensMap[failure.type] ?? resultScreensMap.GENERIC;

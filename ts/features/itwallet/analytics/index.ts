@@ -44,7 +44,8 @@ type ItwExit = {
 
 type AddCredentialFailure = {
   credential: MixPanelCredential;
-  reason: string;
+  reason: unknown;
+  type: string;
 };
 
 type ItwIdMethod = IdentificationContext["mode"];
@@ -179,11 +180,12 @@ export const trackOpenItwTos = () => {
 
 export const trackAddCredentialTimeout = ({
   credential,
-  reason
+  reason,
+  type
 }: AddCredentialFailure) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_TIMEOUT,
-    buildEventProperties("KO", "error", { credential, reason })
+    buildEventProperties("KO", "error", { credential, reason, type })
   );
 };
 
