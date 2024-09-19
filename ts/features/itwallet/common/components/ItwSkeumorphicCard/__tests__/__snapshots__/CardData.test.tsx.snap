@@ -135,8 +135,8 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
           "position": "absolute",
         },
         {
-          "left": "37%",
-          "top": "7.74%",
+          "left": "41.5%",
+          "top": "6.8%",
         },
         undefined,
       ]
@@ -150,7 +150,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 22.916666666666668,
+          "fontSize": 18.75,
         }
       }
       lineBreakMode="head"
@@ -158,7 +158,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       style={
         [
           {
-            "fontSize": 22.916666666666668,
+            "fontSize": 18.75,
           },
           {
             "color": "#0E0F13",
@@ -180,8 +180,8 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
           "position": "absolute",
         },
         {
-          "left": "53%",
-          "top": "7.74%",
+          "left": "55%",
+          "top": "6.8%",
         },
         undefined,
       ]
@@ -195,7 +195,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 22.916666666666668,
+          "fontSize": 18.75,
         }
       }
       lineBreakMode="head"
@@ -203,7 +203,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       style={
         [
           {
-            "fontSize": 22.916666666666668,
+            "fontSize": 18.75,
           },
           {
             "color": "#0E0F13",
@@ -225,8 +225,8 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
           "position": "absolute",
         },
         {
-          "left": "37%",
-          "top": "33.690000000000005%",
+          "left": "41.5%",
+          "top": "30.3%",
         },
         undefined,
       ]
@@ -240,7 +240,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 22.916666666666668,
+          "fontSize": 18.75,
         }
       }
       lineBreakMode="head"
@@ -248,7 +248,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       style={
         [
           {
-            "fontSize": 22.916666666666668,
+            "fontSize": 18.75,
           },
           {
             "color": "#0E0F13",
@@ -270,8 +270,8 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
           "position": "absolute",
         },
         {
-          "left": "53%",
-          "top": "33.690000000000005%",
+          "left": "55%",
+          "top": "30.3%",
         },
         undefined,
       ]
@@ -285,7 +285,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       font="TitilliumSansPro"
       fontStyle={
         {
-          "fontSize": 22.916666666666668,
+          "fontSize": 18.75,
         }
       }
       lineBreakMode="head"
@@ -293,7 +293,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       style={
         [
           {
-            "fontSize": 22.916666666666668,
+            "fontSize": 18.75,
           },
           {
             "color": "#0E0F13",
@@ -306,6 +306,51 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       weight="Semibold"
     >
       16/02/35
+    </Text>
+  </View>
+  <View
+    style={
+      [
+        {
+          "position": "absolute",
+        },
+        {
+          "bottom": "6.5%",
+          "left": "8%",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      allowFontScaling={false}
+      color="black"
+      defaultColor="black"
+      defaultWeight="Semibold"
+      font="TitilliumSansPro"
+      fontStyle={
+        {
+          "fontSize": 18.75,
+        }
+      }
+      lineBreakMode="head"
+      numberOfLines={1}
+      style={
+        [
+          {
+            "fontSize": 18.75,
+          },
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="Semibold"
+    >
+      71 MS5118113X
     </Text>
   </View>
 </View>
@@ -329,12 +374,12 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           "position": "absolute",
         },
         {
-          "left": "4.35%",
-          "top": "30.5%",
+          "left": "4%",
+          "top": "30%",
         },
         {
           "aspectRatio": 0.8279569892473119,
-          "width": "23.5%",
+          "width": "22.5%",
         },
       ]
     }
@@ -362,53 +407,8 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           "position": "absolute",
         },
         {
-          "left": "34.75%",
-          "top": "14.4%",
-        },
-        undefined,
-      ]
-    }
-  >
-    <Text
-      allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 22.916666666666668,
-        }
-      }
-      lineBreakMode="head"
-      numberOfLines={1}
-      style={
-        [
-          {
-            "fontSize": 22.916666666666668,
-          },
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontStyle": "normal",
-            "fontWeight": "600",
-          },
-        ]
-      }
-      weight="Semibold"
-    >
-      MASTRANU
-    </Text>
-  </View>
-  <View
-    style={
-      [
-        {
-          "position": "absolute",
-        },
-        {
-          "left": "34.75%",
-          "top": "21.7%",
+          "left": "34%",
+          "top": "11.6%",
         },
         undefined,
       ]
@@ -452,8 +452,8 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           "position": "absolute",
         },
         {
-          "left": "34.75%",
-          "top": "29%",
+          "left": "34%",
+          "top": "18.5%",
         },
         undefined,
       ]
@@ -487,7 +487,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       }
       weight="Semibold"
     >
-      22/09/1992
+      FEDIRACA
     </Text>
   </View>
   <View
@@ -497,8 +497,53 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           "position": "absolute",
         },
         {
-          "left": "57%",
-          "top": "29%",
+          "left": "34%",
+          "top": "25.4%",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      allowFontScaling={false}
+      color="black"
+      defaultColor="black"
+      defaultWeight="Semibold"
+      font="TitilliumSansPro"
+      fontStyle={
+        {
+          "fontSize": 22.916666666666668,
+        }
+      }
+      lineBreakMode="head"
+      numberOfLines={1}
+      style={
+        [
+          {
+            "fontSize": 22.916666666666668,
+          },
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="Semibold"
+    >
+      22/09/92
+    </Text>
+  </View>
+  <View
+    style={
+      [
+        {
+          "position": "absolute",
+        },
+        {
+          "left": "51%",
+          "top": "25.4%",
         },
         undefined,
       ]
@@ -542,8 +587,8 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           "position": "absolute",
         },
         {
-          "left": "34.75%",
-          "top": "36.3%",
+          "left": "34%",
+          "top": "32.300000000000004%",
         },
         undefined,
       ]
@@ -553,7 +598,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       allowFontScaling={false}
       color="black"
       defaultColor="black"
-      defaultWeight="Semibold"
+      defaultWeight="Bold"
       font="TitilliumSansPro"
       fontStyle={
         {
@@ -571,11 +616,11 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
-            "fontWeight": "600",
+            "fontWeight": "700",
           },
         ]
       }
-      weight="Semibold"
+      weight="Bold"
     >
       08/01/2025
     </Text>
@@ -587,8 +632,8 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           "position": "absolute",
         },
         {
-          "left": "57%",
-          "top": "36.3%",
+          "left": "57.5%",
+          "top": "32.300000000000004%",
         },
         undefined,
       ]
@@ -632,8 +677,8 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           "position": "absolute",
         },
         {
-          "left": "34.75%",
-          "top": "43.6%",
+          "left": "34%",
+          "top": "39.2%",
         },
         undefined,
       ]
@@ -643,7 +688,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       allowFontScaling={false}
       color="black"
       defaultColor="black"
-      defaultWeight="Semibold"
+      defaultWeight="Bold"
       font="TitilliumSansPro"
       fontStyle={
         {
@@ -661,11 +706,11 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
-            "fontWeight": "600",
+            "fontWeight": "700",
           },
         ]
       }
-      weight="Semibold"
+      weight="Bold"
     >
       16/02/2035
     </Text>
@@ -677,8 +722,8 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           "position": "absolute",
         },
         {
-          "left": "34.75%",
-          "top": "50.9%",
+          "left": "34%",
+          "top": "46.1%",
         },
         undefined,
       ]
@@ -722,8 +767,8 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
           "position": "absolute",
         },
         {
-          "left": "8.85%",
-          "top": "77.8%",
+          "bottom": "17.9%",
+          "left": "8%",
         },
         undefined,
       ]
@@ -757,7 +802,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       }
       weight="Semibold"
     >
-      AM, B
+      AM B
     </Text>
   </View>
 </View>
