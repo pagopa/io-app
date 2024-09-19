@@ -58,9 +58,9 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "WIZARD_SCREEN",
       title: "Wizard Screen"
     },
-    LIST_ITEM_SCREEN: {
-      route: "LIST_ITEM_SCREEN",
-      title: "List Item Screen"
+    IOSCROLLVIEW_WITH_LIST_ITEMS: {
+      route: "IOSCROLLVIEW_WITH_LIST_ITEMS",
+      title: "IOScrollView w/ List Items"
     },
     BONUS_CARD_SCREEN: {
       route: "BONUS_CARD_SCREEN",

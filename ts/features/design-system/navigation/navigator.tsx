@@ -41,6 +41,7 @@ import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevel
 import { DSIOMarkdown } from "../core/DSIOMarkdown";
 import { DSIOScrollView } from "../core/DSIOScrollView";
 import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithLargeHeader";
+import { DSIOScrollViewWithListItems } from "../core/DSIOScrollViewWithListItems";
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
 import { DSIcons } from "../core/DSIcons";
 import { DSLayout } from "../core/DSLayout";
@@ -54,7 +55,6 @@ import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
 import { DSLegacySelection } from "../core/DSLegacySelection";
 import { DSLegacyTextFields } from "../core/DSLegacyTextFields";
 import { DSLegacyTypography } from "../core/DSLegacyTypography";
-import DSListItemScreen from "../core/DSListItemScreen";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSLogos } from "../core/DSLogos";
@@ -418,8 +418,8 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.LIST_ITEM_SCREEN.route}
-          component={DSListItemScreen}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WITH_LIST_ITEMS.route}
+          component={DSIOScrollViewWithListItems}
           options={{ headerShown: true }}
         />
 
