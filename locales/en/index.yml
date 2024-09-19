@@ -718,14 +718,14 @@ authentication:
       subtitle: A problem occurred while logging in. Please try again in a few minutes.
   cie_id:
     error_screen:
-      title: Non riesci a entrare con CieID?
+      title: Can't log in with CieID?
       cie_pin_supported:
-        description: "Se hai la tua Carta di Identità Elettronica a portata di mano, usala per accedere a IO.\n\nInserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura dei dati."
-        primary_action_label: Entra con CIE + PIN
+        description: "If you have your Electronic Identity Card handy, use it to access IO.\n\Insert the CIE PIN and bring it close to the device to allow the data to be read."
+        primary_action_label: Login with CIE + PIN
       cie_pin_not_supported:
-        description: Se hai SPID, entra su IO inserendo le tue credenziali. Puoi usare anche il tuo volto o l’impronta o il codice impostato per l’app del tuo fornitore di SPID.
-        primary_action_label: Entra con SPID
-      secondary_action_label: Chiudi
+        description: If you have SPID, log in to IO by entering your credentials. You can also use your face or fingerprint or the code set for your SPID provider's app.
+        primary_action_label: Login with SPID
+      secondary_action_label: Close
   cie:
     genericTitle: Login with CIE
     cie: CIE
