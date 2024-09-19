@@ -273,8 +273,8 @@ inbox:
   enableCallToActionDescription: Enable the inbox to view messages
 settings: 
   informativeBanner: 
-    content: Cerchi il Profilo? Lo abbiamo spostato, ora è in alto a destra!
-    action: Vai alle Impostazioni
+    content: Looking for your profile? We have moved it, it is now in the top right corner!
+    action: Go to Settings
 profile:
   fiscalCode:
     accessibility:
