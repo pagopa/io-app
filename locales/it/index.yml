@@ -463,6 +463,9 @@ profile:
     idpay:
       idpayTest: IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
+    cieID:
+      cieIdTest:
+        title: CieID
     trial:
       titleSection: Partecipa alla sperimentazione
     designSystemEnvironment: Design System sperimentale
@@ -603,6 +606,17 @@ authentication:
       os_problem: È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori.
       nfc_alert: Il tuo dispositivo non ha l'NFC.
       os_alert: Il sistema operativo del dispositivo non è aggiornato.
+    cie_bottom_sheet:
+      title: Come vuoi entrare?
+      module_cie_pin:
+        title: Entra con CIE + PIN
+        subtitle: Usa Carta di Identità Elettronica e PIN
+      module_cie_id:
+        title: Entra con CieID
+        subtitle: Usa l'app CieID
+      help_banner:
+        title: Non sai cosa scegliere?
+        action: Ti diamo una mano
     contentTitleCie: Non hai SPID o la CIE?
     cie_information_request: !include cie.md
     spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
@@ -631,6 +645,52 @@ authentication:
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
+  wizards:
+    cie_id_wizard:
+      title: Hai l'app CieID?
+      description: Se hai l’app CieID sul tuo dispositivo, accedi a IO inserendo le credenziali dell’app. Puoi usare anche il tuo volto o l’impronta, oppure il codice che hai impostato per l’app CieID.
+      actions:
+        primary:
+          label: Sì, entra con CieID
+        secondary:
+          label: Non ho CieID
+      link: Cos'è CieID?
+    cie_pin_wizard:
+      title: Hai la Carta di Identità Elettronica e il PIN?
+      description: Se hai la tua Carta di Identità Elettronica a portata di mano, puoi accedere a IO inserendo il PIN della carta e avvicinandola al dispositivo per consentire la lettura dei dati.
+      actions:
+        primary:
+          label: Sì, entra con CIE + PIN
+        secondary:
+          label: Non ho la CIE e il PIN
+      bottom_sheet:
+        title: Dove trovo il PIN della CIE?
+        content: !include authentication/wizards/cie_pin_content.md
+        link: Hai dimenticato il PIN?
+        cta:
+          label: Dove trovo il PIN della CIE?
+    spid_wizard:
+      title: Hai SPID?
+      description: Se hai SPID, entra su IO inserendo le tue credenziali, usando il tuo volto o l’impronta, oppure tramite l’app del tuo fornitore di SPID.
+      actions:
+        primary:
+          label: Sì, entra con SPID
+        secondary:
+          label: Non ho SPID
+    id_activation_wizard:
+      title: Attiva la tua identità digitale!
+      description: Devi avere un’identità digitale SPID o CIE (Carta di Identità Elettronica) attiva per usare IO.
+      list_items:
+        title: Come attivarla
+        request_cie:
+          label: Richiedi la tua CIE
+        activate_cie:
+          title: Attiva le credenziali CIE
+        activate_spid:
+          title: Attiva SPID
+      actions:
+        primary:
+          label: Chiudi
   auth_errors:
     error_19:
       title: Hai effettuato troppi tentativi di accesso
@@ -2547,7 +2607,7 @@ bonus:
   active: Attivo
   failed: Fallito
   redeemed: Utilizzato
-  termsAndConditionFooter: 'Premendo "{{ctaText}}" dichiari di aver letto e compreso la [Guida]({{regulationLink}}) e l''[Informativa Privacy]({{tosUrl}})'
+  termsAndConditionFooter: 'Premendo "{{ctaText}}" dichiari di essere in possesso dei requisiti e di aver letto e compreso la [Guida]({{regulationLink}}) e l''[Informativa Privacy]({{tosUrl}})'
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -2623,21 +2683,22 @@ bonus:
         website: Vai al sito del partner
       categories:
         counting: e altre {{count}}
-        cultureAndEntertainment: Cultura e Tempo Libero
-        health: Salute e Benessere
-        learning: Istruzione e Formazione
+        cultureAndEntertainment: Cultura e tempo libero
+        health: Salute e benessere
+        learning: Istruzione e formazione
         sport: Sport
         home: Casa
-        telco: Telefonia e Internet
-        finance: Servizi Bancari e Finanziari
-        travel: Viaggi e Trasporti
-        mobility: Mobilità Sostenibile
-        job: Lavoro e Tirocini
+        telco: Telefonia e internet
+        finance: Servizi bancari e finanziari
+        travel: Viaggi e trasporti
+        mobility: Mobilità sostenibile
+        job: Lavoro e tirocini
       information:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
     cta:
-      activeBonus: Richiedi la Carta
+      activeBonus: Attiva Carta Giovani Nazionale
+      back: Non ora
       deactivateBonus: Disattiva Carta Giovani Nazionale
       goToDetail: Usa la Carta
     detail:
@@ -2655,15 +2716,15 @@ bonus:
         warning: "Attenzione! "
         revoked: "Attenzione! Questa carta è stata revocata per {{reason}}"
         expired: "Attenzione! Questa carta è scaduta il {{date}}"
-      ownership: Chi può usare la carta?
+      ownership: Chi può usare la Carta?
       status:
-        title: Carta Giovani Nazionale (CGN)
+        title: Carta Giovani Nazionale
         eyca: Carta EYCA
         eycaCircuit: Circuito EYCA
         eycaNumber: Numero carta
         eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
         eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
-        eycaBottomSheetTitle: "Numero di carta EYCA"
+        eycaBottomSheetTitle: "Cos’è il circuito EYCA?"
         eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nPuoi usare la Carta presso i partner aderenti, per usufruire delle opportunità disponibili per attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
         badge:
           active: Attiva
@@ -2687,7 +2748,7 @@ bonus:
           body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
       loading:
         caption: "Stiamo attivando la tua Carta Giovani Nazionale"
-        subCaption: "Ti preghiamo di attendere."
+        subCaption: "Attendi qualche secondo..."
       error:
         title: "Il servizio Carta Giovani Nazionale in questo momento non è disponibile."
         body: "Ci dispiace, riprova più tardi."
@@ -3144,11 +3205,16 @@ features:
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
         releasedBy: "Rilasciata da"
+        attachments: "Allegati"
         mdl:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
           restrictionConditions: "Codici"
+      unrecognizedData:
+        title: "Non riconosci alcuni dati?"
+        body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
+        cta: "Chiedi informazioni o segnala errori"
     discovery:
       banner:
         title: "Novità: Documenti su IO"
@@ -3188,6 +3254,11 @@ features:
         title: "Tutti i documenti saranno rimossi da IO"
         subtitle: "Se accedi con una nuova identità, i documenti già presenti nel Portafoglio saranno rimossi e Documenti su IO disattivato."
         action: "Continua con la nuova identità"
+      loading:
+        cieId:
+          title: Connessione con la tua app CieID in corso...
+          subtitle: Autorizza l'accesso nell'app CieID per continuare oppure annulla la connessione
+          cancel: Annulla connessione
     issuance:
       credentialAuth:
         title: "{{credentialName}}: dati necessari"
@@ -3232,6 +3303,10 @@ features:
         body: La tua richiesta verso l'ente che emette il documento non è andata a buon fine.
         primaryAction: Riprova
         secondaryAction: Chiudi
+      notEntitledCredentialError: 
+        title: Non è possibile aggiungere il documento
+        body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
+        primaryAction: Ho capito
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
@@ -3245,6 +3320,8 @@ features:
         mdl:
           content: "In questa fase, la versione digitale della Patente non ha lo stesso valore del documento fisico: dovrai presentarla insieme a un documento di identità valido."
           action: Scopri di più
+        ehc:
+          content: "Questo documento è valido solo in Italia. La copia ufficiale del documento si trova nel PDF."
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
           action: Aggiorna il documento
@@ -3268,7 +3345,7 @@ features:
           expiring: In scadenza
         actions:
           removeFromWallet: "Rimuovi dal Portafoglio"
-          requestAssistance: "Qualcosa non torna? Contatta {{authSource}}"
+          requestAssistance: "Qualcosa non torna?"
           showClaimValues: "Mostra gli attributi del documento"
           hideClaimValues: "Nascondi gli attributi del documento"
         dialogs:
@@ -3278,6 +3355,13 @@ features:
             confirm: Sì, rimuovi
         toast:
           removed: Fatto! Hai rimosso {{credentialName}}
+        flipCard: "Mostra retro"
+        fiscalCode: Il tuo Codice Fiscale
+      trustmark:
+        cta: Mostra certificato di autenticità
+        title: Certificato di autenticità
+        usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
+        certifiedLabel: Questo documento è certificato dall'ente emittente.
   trialSystem:
     toast:
       subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione
@@ -3956,7 +4040,7 @@ FIMS:
   consentsScreen:
     errorStates:
       tempErrorBody: "C’è un problema temporaneo, riprova più tardi"
-    title: "Consenti la condivisione dei tuoi dati"
+    title: "Per accedere al servizio, consenti la condivisione dei seguenti dati"
     subtitle: "Autorizza IO a trasmettere a "
     subtitle2: " i dati necessari per la tua autenticazione su "
     requiredData: "Dati richiesti"

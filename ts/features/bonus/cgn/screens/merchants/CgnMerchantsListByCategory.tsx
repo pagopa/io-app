@@ -142,7 +142,6 @@ const CgnMerchantsListByCategory = () => {
       triggerOffset: titleHeight
     },
     transparent: true,
-    canGoBack: true,
     supportRequest: true
   });
 
