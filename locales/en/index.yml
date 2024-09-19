@@ -720,7 +720,7 @@ authentication:
     error_screen:
       title: Can't log in with CieID?
       cie_pin_supported:
-        description: "If you have your Electronic Identity Card handy, use it to access IO.\n\Insert the CIE PIN and bring it close to the device to allow the data to be read."
+        description: "If you have your Electronic Identity Card handy, use it to access IO.\n\nInsert the CIE PIN and bring it close to the device to allow the data to be read."
         primary_action_label: Login with CIE + PIN
       cie_pin_not_supported:
         description: If you have SPID, log in to IO by entering your credentials. You can also use your face or fingerprint or the code set for your SPID provider's app.
