@@ -162,12 +162,10 @@ export const itwCredentialIssuanceMachine = setup({
                 credential: event.output.credential
               }))
             },
-            onError: [
-              {
-                target: "#itwCredentialIssuanceMachine.Failure",
-                actions: "setFailure"
-              }
-            ]
+            onError: {
+              target: "#itwCredentialIssuanceMachine.Failure",
+              actions: "setFailure"
+            }
           }
         },
         ObtainingStatusAttestation: {
