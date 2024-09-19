@@ -684,7 +684,7 @@ authentication:
         title: How to activate it
         request_cie:
           label: Ask for your CIE
-        activate_cie: 
+        activate_cie:
           title: Activate CIE credentials
         activate_spid:
           title: Ask for your SPID
@@ -2607,7 +2607,7 @@ bonus:
   active: Active
   failed: Failed
   redeemed: Consumed
-  termsAndConditionFooter: 'By pressing “{{ctaText}}” you declare that you are in possession of the requirements and have read and understood the [Guide]({{regulationLink}}) and the [Privacy Policy].'
+  termsAndConditionFooter: "By pressing “{{ctaText}}” you declare that you are in possession of the requirements and have read and understood the [Guide]({{regulationLink}}) and the [Privacy Policy]."
   tos:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -2723,7 +2723,7 @@ bonus:
         eycaCircuit: EYCA circuit
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
         eycaError: "We had some issues with EYCA's systems."
-        eycaBottomSheetTitle: "EYCA card number"
+        eycaBottomSheetTitle: "What is EYCA?"
         eycaDescription: "Until 31 years old, your **Carta Giovani Nazionale is a member of the EYCA circuit**(European Youth Card Association).\n\n Use the Card at partners to enjoy cultural activities, shopping, transport, restaurants and accommodation in European countries partecipating in the circuit."
         eycaNumber: Card number
         badge:
@@ -3294,16 +3294,15 @@ features:
         body: Non puoi attivare Documenti con un’identità diversa da quella che usi per accedere a IO. Verifica le credenziali di accesso e riprova.
         primaryAction: Ho capito
         secondaryAction: Segnala un problema
-      genericEidError:
+      genericError:
         title: Si è verificato un errore imprevisto
         body: La tua richiesta verso l'ente che emette il documento non è andata a buon fine.
         primaryAction: Riprova
         secondaryAction: Chiudi
-      genericCredentialError:
-        title: Documento non disponibile
-        body: Si è verificato un errore oppure potresti non avere diritto al documento. 
-        primaryAction: Riprova
-        secondaryAction: Chiudi
+      notEntitledCredentialError: 
+        title: Non è possibile aggiungere il documento
+        body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
+        primaryAction: Ho capito
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
@@ -3317,6 +3316,8 @@ features:
         mdl:
           content: "In questa fase, la versione digitale della Patente non ha lo stesso valore del documento fisico: dovrai presentarla insieme a un documento di identità valido."
           action: Scopri di più
+        ehc:
+          content: "This document is valid only in Italy. The official copy of the document is in PDF."
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
           action: Aggiorna il documento
@@ -3327,6 +3328,7 @@ features:
           title: "Patente: contesti di verifica"
           content: "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Carta di Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valore legale del documento fisico.**"
       credentialDetails:
+        flipCard: "Show back"
         personalDataTitle: "Personal data"
         documentDataTitle: "Document data"
         lastUpdated: "Last updated on {{lastUpdateTime}}"
@@ -3334,13 +3336,14 @@ features:
           true: Sì
           false: No
         hiddenClaim: "Hidden"
+        fiscalCode: Fiscal code
         status:
           valid: Valid
           expired: Not valid
           expiring: Expiring
         actions:
           removeFromWallet: "Remove from Wallet"
-          requestAssistance: "Something wrong? Contact {{authSource}}"
+          requestAssistance: "Something wrong?"
           showClaimValues: "Show claim values"
           hideClaimValues: "Hide claim values"
         dialogs:
@@ -3350,7 +3353,10 @@ features:
             confirm: Sì, rimuovi
         toast:
           removed: Fatto! Hai rimosso {{credentialName}}
-        flipCard: "Show back"
+      ctas:
+        openPdf: "Open PDF document"
+        shareButton: Save or share
+        fiscalCode: Your Fiscal Code
       trustmark:
         cta: Mostra certificato di autenticità
         title: Certificato di autenticità
