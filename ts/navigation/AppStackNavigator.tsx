@@ -34,8 +34,6 @@ import {
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import { OperationResultScreenContent } from "../components/screens/OperationResultScreenContent";
-import I18n from "../i18n";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
@@ -75,15 +73,6 @@ export const AppStackNavigator = (): React.ReactElement => {
 
   if (startupStatus === StartupStatusEnum.INITIAL) {
     return <IngressScreen />;
-  }
-  if (startupStatus === StartupStatusEnum.NOT_CONNECTED) {
-    return (
-      <OperationResultScreenContent
-        pictogram="lostConnection"
-        title={I18n.t("startup.connection_lost.title")}
-        subtitle={I18n.t("startup.connection_lost.description")}
-      />
-    );
   }
 
   return <AuthenticatedStackNavigator />;
