@@ -11,19 +11,19 @@ const defaultProps: WizardScreenProps = {
   title: "This is a title",
   description: "This is a description",
   pictogram: "success",
-  primaryButton: {
-    label: "primaryButton",
-    accessibilityLabel: "accessible primaryButton",
-    testID: "primaryButtonTestId",
-    onPress: () => undefined
-  },
-  actionButton: {
-    label: "actionButton",
-    accessibilityLabel: "accessible actionButton",
-    testID: "actionButtonTestId",
-    onPress: () => undefined
-  },
-  goBack: () => undefined
+  actions: {
+    type: "TwoButtons",
+    primary: {
+      label: "primaryButton",
+      testID: "primaryButtonTestId",
+      onPress: () => undefined
+    },
+    secondary: {
+      label: "actionButton",
+      testID: "actionButtonTestId",
+      onPress: () => undefined
+    }
+  }
 };
 
 describe("WizardScreen", () => {

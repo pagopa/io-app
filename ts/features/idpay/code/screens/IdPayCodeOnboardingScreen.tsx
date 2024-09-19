@@ -90,19 +90,22 @@ const IdPayCodeOnboardingScreen = () => {
         pictogram="cie"
         title={I18n.t("idpay.code.onboarding.title")}
         description={I18n.t("idpay.code.onboarding.description")}
-        primaryButton={{
-          label: I18n.t("idpay.code.onboarding.buttons.start"),
-          accessibilityLabel: I18n.t("idpay.code.onboarding.buttons.start"),
-          onPress: handleContinue,
-          testID: "wizardPrimaryButtonTestID"
-        }}
-        actionButton={{
-          label: I18n.t("idpay.code.onboarding.buttons.howItWorks"),
-          accessibilityLabel: I18n.t(
-            "idpay.code.onboarding.buttons.howItWorks"
-          ),
-          onPress: presentCieBottomSheet,
-          testID: "wizardActionButtonTestID"
+        actions={{
+          type: "TwoButtons",
+          primary: {
+            label: I18n.t("idpay.code.onboarding.buttons.start"),
+            accessibilityLabel: I18n.t("idpay.code.onboarding.buttons.start"),
+            onPress: handleContinue,
+            testID: "wizardPrimaryButtonTestID"
+          },
+          secondary: {
+            label: I18n.t("idpay.code.onboarding.buttons.howItWorks"),
+            accessibilityLabel: I18n.t(
+              "idpay.code.onboarding.buttons.howItWorks"
+            ),
+            onPress: presentCieBottomSheet,
+            testID: "wizardActionButtonTestID"
+          }
         }}
       />
       {bottomSheet}
