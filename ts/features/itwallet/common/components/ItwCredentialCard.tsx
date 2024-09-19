@@ -1,5 +1,4 @@
 import {
-  Badge,
   HStack,
   IOColors,
   makeFontStyleObject,
@@ -12,6 +11,7 @@ import I18n from "../../../../i18n";
 import { getCredentialNameFromType } from "../utils/itwCredentialUtils";
 import { CredentialType } from "../utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../utils/itwStyleUtils";
+import { ItwDigitalVersionBadge } from "./ItwDigitalVersionBadge";
 
 export type ItwCredentialStatus = "valid" | "pending" | "expiring" | "expired";
 
@@ -51,7 +51,7 @@ export const ItwCredentialCard = ({
             {statusTagProps && <Tag {...statusTagProps} />}
           </HStack>
         </View>
-        {!isValid && <DigitalVersionBadge />}
+        <ItwDigitalVersionBadge credentialType={credentialType} />
         <View
           style={[styles.border, { borderColor: borderColorByStatus[status] }]}
         />
@@ -59,16 +59,6 @@ export const ItwCredentialCard = ({
     </View>
   );
 };
-
-const DigitalVersionBadge = () => (
-  <View style={styles.digitalVersionBadge}>
-    <Badge
-      // The space at the end is an hack to have extra padding inside the badge text
-      text={`${I18n.t("features.itWallet.card.digital")}   `}
-      variant="default"
-    />
-  </View>
-);
 
 const credentialCardBackgrounds: {
   [type: string]: [ImageSourcePropType, ImageSourcePropType];
@@ -157,6 +147,5 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingTop: 14
-  },
-  digitalVersionBadge: { position: "absolute", bottom: 16, right: -10 }
+  }
 });
