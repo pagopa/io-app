@@ -57,20 +57,31 @@ const ContentView = ({ failure }: ContentViewProps) => {
     OperationResultScreenContentProps
   > = {
     GENERIC: {
-      title: I18n.t("features.itWallet.issuance.genericCredentialError.title"),
-      subtitle: I18n.t(
-        "features.itWallet.issuance.genericCredentialError.body"
-      ),
+      title: I18n.t("features.itWallet.issuance.genericError.title"),
+      subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
       pictogram: "workInProgress",
       action: {
-        label: I18n.t(
-          "features.itWallet.issuance.genericCredentialError.primaryAction"
-        ),
+        label: I18n.t("features.itWallet.issuance.genericError.primaryAction"),
         onPress: retryIssuance
       },
       secondaryAction: {
         label: I18n.t(
-          "features.itWallet.issuance.genericCredentialError.secondaryAction"
+          "features.itWallet.issuance.genericError.secondaryAction"
+        ),
+        onPress: closeIssuance
+      }
+    },
+    NOT_ENTITLED: {
+      title: I18n.t(
+        "features.itWallet.issuance.notEntitledCredentialError.title"
+      ),
+      subtitle: I18n.t(
+        "features.itWallet.issuance.notEntitledCredentialError.body"
+      ),
+      pictogram: "accessDenied",
+      action: {
+        label: I18n.t(
+          "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
         ),
         onPress: closeIssuance
       }
