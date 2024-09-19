@@ -55,20 +55,20 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const storedCredential =
     ItwCredentialIssuanceMachineContext.useSelector(selectCredential);
 
-  const closeIssuance = () => {
+  const closeIssuance = (cta_id: string) => {
     machineRef.send({ type: "close" });
     trackWalletCreationFailed({
       reason: failure.type,
       cta_category: "custom_2",
-      cta_id: I18n.t("features.itWallet.issuance.genericError.secondaryAction")
+      cta_id
     });
   };
-  const retryIssuance = () => {
+  const retryIssuance = (cta_id: string) => {
     machineRef.send({ type: "retry" });
     trackWalletCreationFailed({
       reason: failure.type,
       cta_category: "custom_1",
-      cta_id: I18n.t("features.itWallet.issuance.genericError.primaryAction")
+      cta_id
     });
   };
 
@@ -86,13 +86,19 @@ const ContentView = ({ failure }: ContentViewProps) => {
       pictogram: "workInProgress",
       action: {
         label: I18n.t("features.itWallet.issuance.genericError.primaryAction"),
-        onPress: retryIssuance
+        onPress: () =>
+          retryIssuance(
+            I18n.t("features.itWallet.issuance.genericError.primaryAction")
+          )
       },
       secondaryAction: {
         label: I18n.t(
           "features.itWallet.issuance.genericError.secondaryAction"
         ),
-        onPress: closeIssuance
+        onPress: () =>
+          closeIssuance(
+            I18n.t("features.itWallet.issuance.genericError.secondaryAction")
+          )
       }
     },
     NOT_ENTITLED: {
@@ -107,7 +113,12 @@ const ContentView = ({ failure }: ContentViewProps) => {
         label: I18n.t(
           "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
         ),
-        onPress: closeIssuance
+        onPress: () =>
+          closeIssuance(
+            I18n.t(
+              "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
+            )
+          )
       }
     }
   };
