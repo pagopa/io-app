@@ -54,12 +54,18 @@ export const mapEventToFailure = (
         type: CredentialIssuanceFailureTypeEnum.NOT_ENTITLED,
         reason: error
       };
-    } else {
+    }
+    // @ts-expect-error udpdate io-react-native-wallet
+    if (error instanceof Errors.CredentialIssuingNotSynchronousError) {
       return {
-        type: CredentialIssuanceFailureTypeEnum.GENERIC,
+        type: CredentialIssuanceFailureTypeEnum.ASYNC_ISSUANCE,
         reason: error
       };
     }
+    return {
+      type: CredentialIssuanceFailureTypeEnum.GENERIC,
+      reason: error
+    };
   } catch (e) {
     return {
       type: CredentialIssuanceFailureTypeEnum.GENERIC,
