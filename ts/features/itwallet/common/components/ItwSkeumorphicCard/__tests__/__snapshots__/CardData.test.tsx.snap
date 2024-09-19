@@ -47,6 +47,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       fontStyle={
         {
           "fontSize": 22.916666666666668,
+          "textTransform": "uppercase",
         }
       }
       lineBreakMode="head"
@@ -55,6 +56,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
         [
           {
             "fontSize": 22.916666666666668,
+            "textTransform": "uppercase",
           },
           {
             "color": "#0E0F13",
@@ -66,7 +68,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       }
       weight="Semibold"
     >
-      SAVOIA
+      Savoia
     </Text>
   </View>
   <View
@@ -92,6 +94,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       fontStyle={
         {
           "fontSize": 22.916666666666668,
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -100,6 +103,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
         [
           {
             "fontSize": 22.916666666666668,
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",
@@ -111,7 +115,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       }
       weight="Semibold"
     >
-      CASIMIRA
+      Casimira
     </Text>
   </View>
 </View>
@@ -151,6 +155,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       fontStyle={
         {
           "fontSize": 18.75,
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -159,6 +164,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         [
           {
             "fontSize": 18.75,
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",
@@ -196,6 +202,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       fontStyle={
         {
           "fontSize": 18.75,
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -204,6 +211,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         [
           {
             "fontSize": 18.75,
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",
@@ -241,6 +249,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       fontStyle={
         {
           "fontSize": 18.75,
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -249,6 +258,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         [
           {
             "fontSize": 18.75,
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",
@@ -286,6 +296,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       fontStyle={
         {
           "fontSize": 18.75,
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -294,6 +305,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         [
           {
             "fontSize": 18.75,
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",
@@ -331,6 +343,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       fontStyle={
         {
           "fontSize": 18.75,
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -339,6 +352,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         [
           {
             "fontSize": 18.75,
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",
@@ -423,6 +437,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       fontStyle={
         {
           "fontSize": 22.916666666666668,
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -431,6 +446,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         [
           {
             "fontSize": 22.916666666666668,
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",
@@ -442,7 +458,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       }
       weight="Semibold"
     >
-      FEDIRACA
+      MASTRANU
     </Text>
   </View>
   <View
@@ -468,6 +484,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       fontStyle={
         {
           "fontSize": 22.916666666666668,
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -476,6 +493,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         [
           {
             "fontSize": 22.916666666666668,
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",
@@ -513,6 +531,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       fontStyle={
         {
           "fontSize": 22.916666666666668,
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -521,6 +540,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         [
           {
             "fontSize": 22.916666666666668,
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",
@@ -558,6 +578,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       fontStyle={
         {
           "fontSize": 22.916666666666668,
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -566,6 +587,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         [
           {
             "fontSize": 22.916666666666668,
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",
@@ -603,6 +625,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       fontStyle={
         {
           "fontSize": 22.916666666666668,
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -611,6 +634,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         [
           {
             "fontSize": 22.916666666666668,
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",
@@ -648,6 +672,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       fontStyle={
         {
           "fontSize": 22.916666666666668,
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -656,6 +681,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         [
           {
             "fontSize": 22.916666666666668,
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",
@@ -693,6 +719,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       fontStyle={
         {
           "fontSize": 22.916666666666668,
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -701,6 +728,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         [
           {
             "fontSize": 22.916666666666668,
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",
@@ -738,6 +766,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       fontStyle={
         {
           "fontSize": 22.916666666666668,
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -746,6 +775,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         [
           {
             "fontSize": 22.916666666666668,
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",
@@ -783,6 +813,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       fontStyle={
         {
           "fontSize": 22.916666666666668,
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -791,6 +822,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         [
           {
             "fontSize": 22.916666666666668,
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",

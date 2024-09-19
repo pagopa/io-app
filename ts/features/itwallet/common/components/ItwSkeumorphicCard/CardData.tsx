@@ -173,10 +173,12 @@ const DcFrontData = ({ claims }: DataComponentProps) => {
           width: "24.7%",
           aspectRatio: 73 / 106 // This aspect ration was extracted from the Figma design
         }}
+        textTransform="uppercase"
       />
       <CardClaim
         claim={claims["family_name"]}
         position={{ right: "3.5%", top: `${rows[0]}%` }}
+        textTransform="uppercase"
       />
       <CardClaim
         claim={claims["given_name"]}
