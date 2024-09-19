@@ -1,7 +1,8 @@
 import {
   ContentWrapper,
   IOVisualCostants,
-  makeFontStyleObject
+  makeFontStyleObject,
+  useIOExperimentalDesign
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { ImageSourcePropType, StyleSheet, Text, View } from "react-native";
@@ -40,6 +41,7 @@ const ItwPresentationDetailsHeader = ({
   credential
 }: ItwPresentationDetailsHeaderProps) => {
   const safeAreaInsets = useSafeAreaInsets();
+  const { isExperimental } = useIOExperimentalDesign();
 
   const { backgroundColor, textColor, statusBarStyle } =
     getThemeColorByCredentialType(credential.credentialType as CredentialType);
@@ -66,13 +68,20 @@ const ItwPresentationDetailsHeader = ({
           style={styles.headerImage}
         />
         <ContentWrapper>
-          <Text style={[styles.headerLabel, { color: textColor }]}>
+          <Text
+            style={[
+              isExperimental
+                ? styles.headerLabelExperimental
+                : styles.headerLabel,
+              { color: textColor }
+            ]}
+          >
             {getCredentialNameFromType(credential.credentialType)}
           </Text>
         </ContentWrapper>
       </View>
     );
-  }, [credential, backgroundColor, textColor, headerHeight]);
+  }, [credential, backgroundColor, textColor, headerHeight, isExperimental]);
 
   return (
     <View
@@ -95,6 +104,9 @@ const styles = StyleSheet.create({
     position: "absolute"
   },
   headerLabel: {
+    ...makeFontStyleObject(26, "TitilliumSansPro", 30, "Semibold")
+  },
+  headerLabelExperimental: {
     ...makeFontStyleObject(26, "ReadexPro", 30, "Semibold")
   }
 });
