@@ -24,6 +24,8 @@ import {
   ColorValue,
   LayoutChangeEvent,
   LayoutRectangle,
+  RefreshControl,
+  RefreshControlProps,
   StyleSheet,
   View
 } from "react-native";
@@ -82,6 +84,7 @@ type IOScrollView = WithTestID<
     excludeEndContentMargin?: boolean;
     /* Include page margins */
     includeContentMargins?: boolean;
+    refreshControlProps?: RefreshControlProps;
   }>
 >;
 
@@ -127,6 +130,7 @@ export const IOScrollView = ({
   includeContentMargins = true,
   animatedRef,
   debugMode = false,
+  refreshControlProps,
   testID
 }: IOScrollView) => {
   const theme = useIOTheme();
@@ -231,6 +235,10 @@ export const IOScrollView = ({
     }
   }, [headerConfig, navigation, scrollPositionAbsolute, snapOffset]);
 
+  const RefreshControlComponent = refreshControlProps ? (
+    <RefreshControl {...refreshControlProps} />
+  ) : undefined;
+
   return (
     <Fragment>
       <Animated.ScrollView
@@ -241,6 +249,7 @@ export const IOScrollView = ({
         snapToOffsets={[0, snapOffset || 0]}
         snapToEnd={false}
         decelerationRate="normal"
+        refreshControl={RefreshControlComponent}
         contentContainerStyle={{
           paddingBottom: excludeEndContentMargin
             ? 0

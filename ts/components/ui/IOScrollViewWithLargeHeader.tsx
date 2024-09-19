@@ -34,7 +34,7 @@ export type LargeHeaderTitleProps = {
 
 type Props = WithTestID<
   {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     actions?: ComponentProps<typeof IOScrollView>["actions"];
     title: LargeHeaderTitleProps;
     description?: string | Array<BodyProps>;
@@ -135,7 +135,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
 
         {description && (
           <ContentWrapper>
-            <VSpacer size={4} />
+            <VSpacer size={16} />
             {typeof description === "string" ? (
               <Body color={theme["textBody-tertiary"]}>{description}</Body>
             ) : (
@@ -143,9 +143,12 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
             )}
           </ContentWrapper>
         )}
-        <VSpacer size={16} />
-
-        {children}
+        {children && (
+          <>
+            <VSpacer size={16} />
+            {children}
+          </>
+        )}
       </IOScrollView>
     );
   }
