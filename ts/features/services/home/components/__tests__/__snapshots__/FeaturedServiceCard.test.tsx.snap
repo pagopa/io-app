@@ -1017,7 +1017,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                     [
                                       {},
                                       {
-                                        "color": "#1A0744",
+                                        "color": "#5517E3",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 12,
                                         "fontStyle": "normal",

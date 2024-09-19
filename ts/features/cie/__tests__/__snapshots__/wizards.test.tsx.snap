@@ -36,33 +36,21 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
           accessibilityLabel="Do you have the CieID app?"
           accessibilityRole="header"
           allowFontScaling={false}
-          color="black"
-          defaultColor="black"
-          defaultWeight="Semibold"
           dynamicTypeRamp="title1"
-          font="TitilliumSansPro"
-          fontStyle={
-            {
-              "fontSize": 28,
-              "lineHeight": 40,
-            }
-          }
           maxFontSizeMultiplier={1.25}
           style={
             [
-              {
-                "fontSize": 28,
-                "lineHeight": 40,
-              },
+              {},
               {
                 "color": "#0E0F13",
                 "fontFamily": "Titillium Sans Pro",
+                "fontSize": 28,
                 "fontStyle": "normal",
                 "fontWeight": "600",
+                "lineHeight": 40,
               },
             ]
           }
-          weight="Semibold"
         >
           Do you have the CieID app?
         </Text>
@@ -83,33 +71,21 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
         />
         <Text
           allowFontScaling={false}
-          color="grey-700"
-          defaultColor="bluegrey"
-          defaultWeight="Regular"
           dynamicTypeRamp="body"
-          font="TitilliumSansPro"
-          fontStyle={
-            {
-              "fontSize": 16,
-              "lineHeight": 24,
-            }
-          }
           maxFontSizeMultiplier={1.25}
           style={
             [
-              {
-                "fontSize": 16,
-                "lineHeight": 24,
-              },
+              {},
               {
                 "color": "#555C70",
                 "fontFamily": "Titillium Sans Pro",
+                "fontSize": 16,
                 "fontStyle": "normal",
                 "fontWeight": "400",
+                "lineHeight": 24,
               },
             ]
           }
-          weight="Regular"
         >
           If you have the CieID app on your device, log in to IO by entering the app's credentials. You can also use your face or fingerprint, or the code you set up for the CieID app.
         </Text>
@@ -138,36 +114,23 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
         <Text
           accessibilityRole="link"
           allowFontScaling={false}
-          color="blue"
-          defaultColor="blue"
-          defaultWeight="Semibold"
-          dynamicTypeRamp="footnote"
-          font="TitilliumSansPro"
-          fontStyle={
-            {
-              "fontSize": 16,
-              "lineHeight": 24,
-              "textDecorationLine": "underline",
-            }
-          }
           maxFontSizeMultiplier={1.25}
           onPress={[Function]}
           style={
             [
               {
-                "fontSize": 16,
-                "lineHeight": 24,
                 "textDecorationLine": "underline",
               },
               {
-                "color": "#0073E6",
+                "color": "#0B3EE3",
                 "fontFamily": "Titillium Sans Pro",
+                "fontSize": 16,
                 "fontStyle": "normal",
                 "fontWeight": "600",
+                "lineHeight": 24,
               },
             ]
           }
-          weight="Semibold"
         >
           What is CieID?
         </Text>
@@ -392,36 +355,26 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
               accessibilityElementsHidden={true}
               accessible={false}
               allowFontScaling={false}
-              color="white"
-              defaultColor="white"
-              defaultWeight="Bold"
               ellipsizeMode="tail"
-              font="TitilliumSansPro"
-              fontStyle={
-                {
-                  "fontSize": 16,
-                }
-              }
               importantForAccessibility="no-hide-descendants"
               maxFontSizeMultiplier={1.25}
               numberOfLines={1}
               style={
                 [
-                  {
-                    "alignSelf": "center",
-                  },
-                  {
-                    "fontSize": 16,
-                  },
+                  {},
                   {
                     "color": "#FFFFFF",
                     "fontFamily": "Titillium Sans Pro",
+                    "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "700",
+                    "lineHeight": 20,
+                  },
+                  {
+                    "alignSelf": "center",
                   },
                 ]
               }
-              weight="Bold"
             >
               Yes, log in with CieID
             </Text>
@@ -518,18 +471,18 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
               allowFontScaling={false}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.3}
+              maxFontSizeMultiplier={1.25}
               numberOfLines={1}
               style={
                 [
+                  {},
                   {
+                    "color": "#0E0F13",
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "700",
-                  },
-                  {
-                    "color": "#0073E6",
+                    "lineHeight": undefined,
                   },
                   {
                     "color": undefined,
@@ -583,33 +536,21 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           accessibilityLabel="Do you have your Electronic Identity Card and PIN?"
           accessibilityRole="header"
           allowFontScaling={false}
-          color="black"
-          defaultColor="black"
-          defaultWeight="Semibold"
           dynamicTypeRamp="title1"
-          font="TitilliumSansPro"
-          fontStyle={
-            {
-              "fontSize": 28,
-              "lineHeight": 40,
-            }
-          }
           maxFontSizeMultiplier={1.25}
           style={
             [
-              {
-                "fontSize": 28,
-                "lineHeight": 40,
-              },
+              {},
               {
                 "color": "#0E0F13",
                 "fontFamily": "Titillium Sans Pro",
+                "fontSize": 28,
                 "fontStyle": "normal",
                 "fontWeight": "600",
+                "lineHeight": 40,
               },
             ]
           }
-          weight="Semibold"
         >
           Do you have your Electronic Identity Card and PIN?
         </Text>
@@ -630,33 +571,21 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
         />
         <Text
           allowFontScaling={false}
-          color="grey-700"
-          defaultColor="bluegrey"
-          defaultWeight="Regular"
           dynamicTypeRamp="body"
-          font="TitilliumSansPro"
-          fontStyle={
-            {
-              "fontSize": 16,
-              "lineHeight": 24,
-            }
-          }
           maxFontSizeMultiplier={1.25}
           style={
             [
-              {
-                "fontSize": 16,
-                "lineHeight": 24,
-              },
+              {},
               {
                 "color": "#555C70",
                 "fontFamily": "Titillium Sans Pro",
+                "fontSize": 16,
                 "fontStyle": "normal",
                 "fontWeight": "400",
+                "lineHeight": 24,
               },
             ]
           }
-          weight="Regular"
         >
           If you have your Electronic Identity Card at hand, you can access IO by entering the card's PIN and bringing it close to the device to allow the data to be read.
         </Text>
@@ -682,43 +611,104 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             }
           }
         />
-        <Text
+        <View
+          accessibilityLabel="Where can I find the CIE PIN?"
           accessibilityRole="button"
-          allowFontScaling={false}
-          color="blue"
-          defaultColor="blue"
-          defaultWeight="Semibold"
-          dynamicTypeRamp="footnote"
-          font="TitilliumSansPro"
-          fontStyle={
+          accessibilityState={
             {
-              "fontSize": 16,
-              "lineHeight": 24,
-              "textDecorationLine": "underline",
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
             }
           }
-          maxFontSizeMultiplier={1.25}
-          onPress={[Function]}
-          role="button"
-          style={
-            [
-              {
-                "fontSize": 16,
-                "lineHeight": 24,
-                "textDecorationLine": "underline",
-              },
-              {
-                "color": "#0073E6",
-                "fontFamily": "Titillium Sans Pro",
-                "fontStyle": "normal",
-                "fontWeight": "600",
-              },
-            ]
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
           }
-          weight="Semibold"
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            {
+              "bottom": 14,
+              "left": 24,
+              "right": 24,
+              "top": 14,
+            }
+          }
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          onTouchEnd={[Function]}
+          style={
+            {
+              "alignSelf": "flex-start",
+            }
+          }
         >
-          Where can I find the CIE PIN?
-        </Text>
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "elevation": 0,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "textAlignVertical": "center",
+                },
+                false,
+                {},
+                {
+                  "transform": [
+                    {
+                      "scale": undefined,
+                    },
+                  ],
+                },
+              ]
+            }
+          >
+            <Text
+              accessibilityElementsHidden={true}
+              accessible={false}
+              allowFontScaling={false}
+              ellipsizeMode="tail"
+              importantForAccessibility="no-hide-descendants"
+              maxFontSizeMultiplier={1.25}
+              numberOfLines={1}
+              style={
+                [
+                  {},
+                  {
+                    "color": "#0E0F13",
+                    "fontFamily": "Titillium Sans Pro",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "700",
+                    "lineHeight": undefined,
+                  },
+                  {
+                    "color": undefined,
+                  },
+                ]
+              }
+            >
+              Where can I find the CIE PIN?
+            </Text>
+          </View>
+        </View>
       </View>
       <Modal
         accessibilityPositionChangeAnnouncement=""
@@ -762,33 +752,21 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             <View>
               <Text
                 allowFontScaling={false}
-                color="bluegrey"
-                defaultColor="bluegrey"
-                defaultWeight="Regular"
                 dynamicTypeRamp="body"
-                font="TitilliumSansPro"
-                fontStyle={
-                  {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  }
-                }
                 maxFontSizeMultiplier={1.25}
                 style={
                   [
+                    {},
                     {
-                      "fontSize": 16,
-                      "lineHeight": 24,
-                    },
-                    {
-                      "color": "#475A6D",
+                      "color": "#555C70",
                       "fontFamily": "Titillium Sans Pro",
+                      "fontSize": 16,
                       "fontStyle": "normal",
                       "fontWeight": "400",
+                      "lineHeight": 24,
                     },
                   ]
                 }
-                weight="Regular"
               >
                 The PIN code consists of 8 digits and is divided in two parts:
               </Text>
@@ -838,33 +816,21 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     >
                       <Text
                         allowFontScaling={false}
-                        color="bluegrey"
-                        defaultColor="bluegrey"
-                        defaultWeight="Regular"
                         dynamicTypeRamp="body"
-                        font="TitilliumSansPro"
-                        fontStyle={
-                          {
-                            "fontSize": 16,
-                            "lineHeight": 24,
-                          }
-                        }
                         maxFontSizeMultiplier={1.25}
                         style={
                           [
+                            {},
                             {
-                              "fontSize": 16,
-                              "lineHeight": 24,
-                            },
-                            {
-                              "color": "#475A6D",
+                              "color": "#555C70",
                               "fontFamily": "Titillium Sans Pro",
+                              "fontSize": 16,
                               "fontStyle": "normal",
                               "fontWeight": "400",
+                              "lineHeight": 24,
                             },
                           ]
                         }
-                        weight="Regular"
                       >
                         •
                       </Text>
@@ -890,33 +856,21 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                       >
                         <Text
                           allowFontScaling={false}
-                          color="bluegrey"
-                          defaultColor="bluegrey"
-                          defaultWeight="Regular"
                           dynamicTypeRamp="body"
-                          font="TitilliumSansPro"
-                          fontStyle={
-                            {
-                              "fontSize": 16,
-                              "lineHeight": 24,
-                            }
-                          }
                           maxFontSizeMultiplier={1.25}
                           style={
                             [
+                              {},
                               {
-                                "fontSize": 16,
-                                "lineHeight": 24,
-                              },
-                              {
-                                "color": "#475A6D",
+                                "color": "#555C70",
                                 "fontFamily": "Titillium Sans Pro",
+                                "fontSize": 16,
                                 "fontStyle": "normal",
                                 "fontWeight": "400",
+                                "lineHeight": 24,
                               },
                             ]
                           }
-                          weight="Regular"
                         >
                           the first 4 digits you received at the registry office;
                         </Text>
@@ -932,33 +886,21 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     >
                       <Text
                         allowFontScaling={false}
-                        color="bluegrey"
-                        defaultColor="bluegrey"
-                        defaultWeight="Regular"
                         dynamicTypeRamp="body"
-                        font="TitilliumSansPro"
-                        fontStyle={
-                          {
-                            "fontSize": 16,
-                            "lineHeight": 24,
-                          }
-                        }
                         maxFontSizeMultiplier={1.25}
                         style={
                           [
+                            {},
                             {
-                              "fontSize": 16,
-                              "lineHeight": 24,
-                            },
-                            {
-                              "color": "#475A6D",
+                              "color": "#555C70",
                               "fontFamily": "Titillium Sans Pro",
+                              "fontSize": 16,
                               "fontStyle": "normal",
                               "fontWeight": "400",
+                              "lineHeight": 24,
                             },
                           ]
                         }
-                        weight="Regular"
                       >
                         •
                       </Text>
@@ -984,33 +926,21 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                       >
                         <Text
                           allowFontScaling={false}
-                          color="bluegrey"
-                          defaultColor="bluegrey"
-                          defaultWeight="Regular"
                           dynamicTypeRamp="body"
-                          font="TitilliumSansPro"
-                          fontStyle={
-                            {
-                              "fontSize": 16,
-                              "lineHeight": 24,
-                            }
-                          }
                           maxFontSizeMultiplier={1.25}
                           style={
                             [
+                              {},
                               {
-                                "fontSize": 16,
-                                "lineHeight": 24,
-                              },
-                              {
-                                "color": "#475A6D",
+                                "color": "#555C70",
                                 "fontFamily": "Titillium Sans Pro",
+                                "fontSize": 16,
                                 "fontStyle": "normal",
                                 "fontWeight": "400",
+                                "lineHeight": 24,
                               },
                             ]
                           }
-                          weight="Regular"
                         >
                           the last 4 digits you received at home with the CIE (Electronic Identification Card).
                         </Text>
@@ -1028,33 +958,21 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               </View>
               <Text
                 allowFontScaling={false}
-                color="bluegrey"
-                defaultColor="bluegrey"
-                defaultWeight="Regular"
                 dynamicTypeRamp="body"
-                font="TitilliumSansPro"
-                fontStyle={
-                  {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  }
-                }
                 maxFontSizeMultiplier={1.25}
                 style={
                   [
+                    {},
                     {
-                      "fontSize": 16,
-                      "lineHeight": 24,
-                    },
-                    {
-                      "color": "#475A6D",
+                      "color": "#555C70",
                       "fontFamily": "Titillium Sans Pro",
+                      "fontSize": 16,
                       "fontStyle": "normal",
                       "fontWeight": "400",
+                      "lineHeight": 24,
                     },
                   ]
                 }
-                weight="Regular"
               >
                 Put them together and enter in this order.
               </Text>
@@ -1069,36 +987,23 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             <Text
               accessibilityRole="link"
               allowFontScaling={false}
-              color="blue"
-              defaultColor="blue"
-              defaultWeight="Semibold"
-              dynamicTypeRamp="footnote"
-              font="TitilliumSansPro"
-              fontStyle={
-                {
-                  "fontSize": 16,
-                  "lineHeight": 24,
-                  "textDecorationLine": "underline",
-                }
-              }
               maxFontSizeMultiplier={1.25}
               onPress={[Function]}
               style={
                 [
                   {
-                    "fontSize": 16,
-                    "lineHeight": 24,
                     "textDecorationLine": "underline",
                   },
                   {
-                    "color": "#0073E6",
+                    "color": "#0B3EE3",
                     "fontFamily": "Titillium Sans Pro",
+                    "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
+                    "lineHeight": 24,
                   },
                 ]
               }
-              weight="Semibold"
             >
               Forgotten your PIN?
             </Text>
@@ -1325,36 +1230,26 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               accessibilityElementsHidden={true}
               accessible={false}
               allowFontScaling={false}
-              color="white"
-              defaultColor="white"
-              defaultWeight="Bold"
               ellipsizeMode="tail"
-              font="TitilliumSansPro"
-              fontStyle={
-                {
-                  "fontSize": 16,
-                }
-              }
               importantForAccessibility="no-hide-descendants"
               maxFontSizeMultiplier={1.25}
               numberOfLines={1}
               style={
                 [
-                  {
-                    "alignSelf": "center",
-                  },
-                  {
-                    "fontSize": 16,
-                  },
+                  {},
                   {
                     "color": "#FFFFFF",
                     "fontFamily": "Titillium Sans Pro",
+                    "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "700",
+                    "lineHeight": 20,
+                  },
+                  {
+                    "alignSelf": "center",
                   },
                 ]
               }
-              weight="Bold"
             >
               Yes, enter with CIE + PIN
             </Text>
@@ -1451,18 +1346,18 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               allowFontScaling={false}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.3}
+              maxFontSizeMultiplier={1.25}
               numberOfLines={1}
               style={
                 [
+                  {},
                   {
+                    "color": "#0E0F13",
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "700",
-                  },
-                  {
-                    "color": "#0073E6",
+                    "lineHeight": undefined,
                   },
                   {
                     "color": undefined,
@@ -1516,33 +1411,21 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
           accessibilityLabel="Activate your digital identity!"
           accessibilityRole="header"
           allowFontScaling={false}
-          color="black"
-          defaultColor="black"
-          defaultWeight="Semibold"
           dynamicTypeRamp="title1"
-          font="TitilliumSansPro"
-          fontStyle={
-            {
-              "fontSize": 28,
-              "lineHeight": 40,
-            }
-          }
           maxFontSizeMultiplier={1.25}
           style={
             [
-              {
-                "fontSize": 28,
-                "lineHeight": 40,
-              },
+              {},
               {
                 "color": "#0E0F13",
                 "fontFamily": "Titillium Sans Pro",
+                "fontSize": 28,
                 "fontStyle": "normal",
                 "fontWeight": "600",
+                "lineHeight": 40,
               },
             ]
           }
-          weight="Semibold"
         >
           Activate your digital identity!
         </Text>
@@ -1563,33 +1446,21 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
         />
         <Text
           allowFontScaling={false}
-          color="grey-700"
-          defaultColor="bluegrey"
-          defaultWeight="Regular"
           dynamicTypeRamp="body"
-          font="TitilliumSansPro"
-          fontStyle={
-            {
-              "fontSize": 16,
-              "lineHeight": 24,
-            }
-          }
           maxFontSizeMultiplier={1.25}
           style={
             [
-              {
-                "fontSize": 16,
-                "lineHeight": 24,
-              },
+              {},
               {
                 "color": "#555C70",
                 "fontFamily": "Titillium Sans Pro",
+                "fontSize": 16,
                 "fontStyle": "normal",
                 "fontWeight": "400",
+                "lineHeight": 24,
               },
             ]
           }
-          weight="Regular"
         >
           You must have an active SPID or CIE (Electronic Identity Card) digital identity to use IO.
         </Text>
@@ -1617,33 +1488,21 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
         />
         <Text
           allowFontScaling={false}
-          color="black"
-          defaultColor="black"
-          defaultWeight="Semibold"
           dynamicTypeRamp="headline"
-          font="TitilliumSansPro"
-          fontStyle={
-            {
-              "fontSize": 18,
-              "lineHeight": 25,
-            }
-          }
           maxFontSizeMultiplier={1.25}
           style={
             [
-              {
-                "fontSize": 18,
-                "lineHeight": 25,
-              },
+              {},
               {
                 "color": "#0E0F13",
                 "fontFamily": "Titillium Sans Pro",
+                "fontSize": 18,
                 "fontStyle": "normal",
                 "fontWeight": "600",
+                "lineHeight": 25,
               },
             ]
           }
-          weight="Semibold"
         >
           How to activate it
         </Text>
@@ -1749,7 +1608,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                         "borderWidth": 0,
                       },
                       {
-                        "color": "#0073E6",
+                        "color": "#0B3EE3",
                       },
                       {
                         "flex": 0,
@@ -1758,7 +1617,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                       },
                     ]
                   }
-                  tintColor="#0073E6"
+                  tintColor="#0B3EE3"
                   vbHeight={24}
                   vbWidth={24}
                   width={24}
@@ -1793,22 +1652,23 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
               <View
                 style={
                   {
-                    "flex": 1,
+                    "flexGrow": 1,
                   }
                 }
               >
                 <Text
+                  allowFontScaling={false}
+                  maxFontSizeMultiplier={1.25}
                   style={
                     [
+                      {},
                       {
+                        "color": "#0B3EE3",
                         "fontFamily": "Titillium Sans Pro",
                         "fontSize": 16,
                         "fontStyle": "normal",
-                        "fontWeight": "600",
+                        "fontWeight": "700",
                         "lineHeight": 20,
-                      },
-                      {
-                        "color": "#0073E6",
                       },
                     ]
                   }
@@ -1914,7 +1774,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                         "borderWidth": 0,
                       },
                       {
-                        "color": "#0073E6",
+                        "color": "#0B3EE3",
                       },
                       {
                         "flex": 0,
@@ -1923,7 +1783,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                       },
                     ]
                   }
-                  tintColor="#0073E6"
+                  tintColor="#0B3EE3"
                   vbHeight={24}
                   vbWidth={24}
                   width={24}
@@ -2000,22 +1860,23 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
               <View
                 style={
                   {
-                    "flex": 1,
+                    "flexGrow": 1,
                   }
                 }
               >
                 <Text
+                  allowFontScaling={false}
+                  maxFontSizeMultiplier={1.25}
                   style={
                     [
+                      {},
                       {
+                        "color": "#0B3EE3",
                         "fontFamily": "Titillium Sans Pro",
                         "fontSize": 16,
                         "fontStyle": "normal",
-                        "fontWeight": "600",
+                        "fontWeight": "700",
                         "lineHeight": 20,
-                      },
-                      {
-                        "color": "#0073E6",
                       },
                     ]
                   }
@@ -2121,7 +1982,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                         "borderWidth": 0,
                       },
                       {
-                        "color": "#0073E6",
+                        "color": "#0B3EE3",
                       },
                       {
                         "flex": 0,
@@ -2130,7 +1991,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                       },
                     ]
                   }
-                  tintColor="#0073E6"
+                  tintColor="#0B3EE3"
                   vbHeight={24}
                   vbWidth={24}
                   width={24}
@@ -2165,22 +2026,23 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
               <View
                 style={
                   {
-                    "flex": 1,
+                    "flexGrow": 1,
                   }
                 }
               >
                 <Text
+                  allowFontScaling={false}
+                  maxFontSizeMultiplier={1.25}
                   style={
                     [
+                      {},
                       {
+                        "color": "#0B3EE3",
                         "fontFamily": "Titillium Sans Pro",
                         "fontSize": 16,
                         "fontStyle": "normal",
-                        "fontWeight": "600",
+                        "fontWeight": "700",
                         "lineHeight": 20,
-                      },
-                      {
-                        "color": "#0073E6",
                       },
                     ]
                   }
@@ -2412,36 +2274,26 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
               accessibilityElementsHidden={true}
               accessible={false}
               allowFontScaling={false}
-              color="white"
-              defaultColor="white"
-              defaultWeight="Bold"
               ellipsizeMode="tail"
-              font="TitilliumSansPro"
-              fontStyle={
-                {
-                  "fontSize": 16,
-                }
-              }
               importantForAccessibility="no-hide-descendants"
               maxFontSizeMultiplier={1.25}
               numberOfLines={1}
               style={
                 [
-                  {
-                    "alignSelf": "center",
-                  },
-                  {
-                    "fontSize": 16,
-                  },
+                  {},
                   {
                     "color": "#FFFFFF",
                     "fontFamily": "Titillium Sans Pro",
+                    "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "700",
+                    "lineHeight": 20,
+                  },
+                  {
+                    "alignSelf": "center",
                   },
                 ]
               }
-              weight="Bold"
             >
               Close
             </Text>
