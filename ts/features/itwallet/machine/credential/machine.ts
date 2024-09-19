@@ -1,5 +1,6 @@
 import { assign, fromPromise, setup } from "xstate5";
 import { ItwTags } from "../tags";
+import { ItwSessionExpiredError } from "../../api/client";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   InitializeWalletActorOutput,
@@ -48,8 +49,8 @@ export const itwCredentialIssuanceMachine = setup({
     >(notImplemented)
   },
   guards: {
-    isSessionExpired: notImplemented,
-    isAsyncCredentialFlow: notImplemented
+    isSessionExpired: ({ event }: { event: CredentialIssuanceEvents }) =>
+      "error" in event && event.error instanceof ItwSessionExpiredError
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
@@ -162,15 +163,6 @@ export const itwCredentialIssuanceMachine = setup({
               }))
             },
             onError: [
-              {
-                guard: "isAsyncCredentialFlow",
-                target: "#itwCredentialIssuanceMachine.Failure",
-                actions: assign(() => ({
-                  failure: {
-                    type: CredentialIssuanceFailureTypeEnum.ASYNC_ISSUANCE
-                  }
-                }))
-              },
               {
                 target: "#itwCredentialIssuanceMachine.Failure",
                 actions: "setFailure"
