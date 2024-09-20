@@ -120,8 +120,8 @@ const getTransactionOperationProps = (
     businessName,
     brand,
     status,
-    amount,
-    accrued
+    amountCents,
+    accruedCents
   } = operation;
 
   const isQRCode = channel === ChannelEnum.QRCODE;
@@ -149,13 +149,13 @@ const getTransactionOperationProps = (
 
   const subtitle = getOperationSubtitleWithAmount(
     operationDate,
-    amount,
+    amountCents,
     isReversal
   );
 
   const getAccruedString = () => {
     const signString = isReversal ? "" : "-";
-    const accruedString = `${formatAbsNumberAmountOrDefault(accrued)} €`;
+    const accruedString = `${formatAbsNumberAmountOrDefault(accruedCents)} €`;
 
     return `${signString}${accruedString}`;
   };
@@ -279,7 +279,7 @@ const getOnboardingOperationProps = (
 const getRefundOperationProps = (
   operation: RefundOperationDTO
 ): ListItemTransaction => {
-  const { operationDate, operationType, amount } = operation;
+  const { operationDate, operationType, amountCents } = operation;
   const isRejected = operationType === RefundOperationTypeEnum.REJECTED_REFUND;
 
   const paymentLogoIcon = (
@@ -305,7 +305,7 @@ const getRefundOperationProps = (
     subtitle,
     paymentLogoIcon,
     transactionStatus: "success",
-    transactionAmount: `${formatAbsNumberAmountOrDefault(amount)} €`
+    transactionAmount: `${formatAbsNumberAmountOrDefault(amountCents)} €`
   };
 };
 

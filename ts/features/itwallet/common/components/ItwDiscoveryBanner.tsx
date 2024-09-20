@@ -1,5 +1,5 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
-import React from "react";
+import React, { ReactElement } from "react";
 import { StyleSheet, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import I18n from "../../../../i18n";
@@ -20,11 +20,13 @@ import { itwTrialId } from "../../../../config";
 type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
   ignoreMargins?: boolean;
+  fallbackComponent?: ReactElement;
 };
 
 export const ItwDiscoveryBanner = ({
   withTitle = true,
-  ignoreMargins = false
+  ignoreMargins = false,
+  fallbackComponent
 }: ItwDiscoveryBannerProps) => {
   const bannerRef = React.createRef<View>();
   const navigation = useIONavigation();
@@ -60,6 +62,9 @@ export const ItwDiscoveryBanner = ({
   });
 
   if (shouldBeHidden) {
+    if (fallbackComponent) {
+      return fallbackComponent;
+    }
     return null;
   }
 

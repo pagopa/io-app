@@ -149,7 +149,9 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             // in DISCOUNT initiatives, the spent amount is held in the accrued field,
             // while the refunded amount is always 0
             label: I18n.t("idpay.initiative.beneficiaryDetails.spentUntilNow"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.accrued),
+            value: formatNumberCurrencyOrDefault(
+              initiativeDetails.accruedCents
+            ),
             testID: "accruedTestID"
           }
         ];
@@ -157,12 +159,16 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
         return [
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.toBeRefunded"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.accrued),
+            value: formatNumberCurrencyOrDefault(
+              initiativeDetails.accruedCents
+            ),
             testID: "accruedTestID"
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.refunded"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.refunded),
+            value: formatNumberCurrencyOrDefault(
+              initiativeDetails.refundedCents
+            ),
             testID: "refundedTestID"
           }
         ];
@@ -208,7 +214,7 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.amount"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.amount),
+            value: formatNumberCurrencyOrDefault(initiativeDetails.amountCents),
             testID: "amountTestID"
           },
           ...getTypeDependantTableRows()
