@@ -5,7 +5,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { View } from "react-native";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
@@ -20,6 +19,7 @@ import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
 import { paymentsWalletUserMethodsSelector } from "../../wallet/store/selectors";
 import { paymentsSetAddMethodsBannerVisible } from "../store/actions";
 import { isAddMethodsBannerVisibleSelector } from "../store/selectors";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   PaymentCardsCarousel,
   PaymentCardsCarouselSkeleton
@@ -41,14 +41,16 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   const paymentMethodsPot = useIOSelector(paymentsWalletUserMethodsSelector);
   const paymentMethods = pot.getOrElse(paymentMethodsPot, []);
 
-  const isLoading = pot.isLoading(paymentMethodsPot) || enforcedLoadingState;
+  const isLoading =
+    (!pot.isSome(paymentMethodsPot) && pot.isLoading(paymentMethodsPot)) ||
+    enforcedLoadingState;
   const isEmpty = paymentMethods.length === 0;
 
-  useFocusEffect(
-    React.useCallback(() => {
+  useOnFirstRender(() => {
+    if (pot.isNone(paymentMethodsPot)) {
       dispatch(getPaymentsWalletUserMethods.request());
-    }, [dispatch])
-  );
+    }
+  });
 
   const handleOnMethodPress = (walletId: string) => () => {
     navigation.navigate(

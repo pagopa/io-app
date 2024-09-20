@@ -15,9 +15,9 @@ import {
   PlaceOfBirthClaim
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential } from "../../utils/itwTypesUtils";
-import { ClaimLabel } from "./ClaimLabel";
+import { ClaimLabel, ClaimLabelProps } from "./ClaimLabel";
 
-type PercentPosition = `${number}%`;
+export type PercentPosition = `${number}%`;
 
 // Defines the claim horizontal position using the left OR the right absolute position value
 type HorizontalClaimPosition = Either<
@@ -38,20 +38,31 @@ export type ClaimDimensions = Prettify<
     Pick<ViewStyle, "aspectRatio">
 >;
 
-export type CardClaimProps = WithTestID<{
-  // A claim that will be used to render its component
-  claim: ParsedCredential[number];
-  // Absolute position expressed in percentages from top-left corner
-  position?: ClaimPosition;
-  // Claim dimensions
-  dimensions?: ClaimDimensions;
-}>;
+export type CardClaimProps = Prettify<
+  {
+    // A claim that will be used to render its component
+    claim: ParsedCredential[number];
+    // Absolute position expressed in percentages from top-left corner
+    position?: ClaimPosition;
+    // Claim dimensions
+    dimensions?: ClaimDimensions;
+    // Optional format for dates contained in the claim component
+    dateFormat?: string;
+  } & ClaimLabelProps
+>;
 
 /**
  * Default claim component, it decoded the provided value and renders the corresponging component
  * @returns The corresponding component if a value is correctly decoded, otherwise null
  */
-const CardClaim = ({ claim, position, dimensions, testID }: CardClaimProps) => {
+const CardClaim = ({
+  claim,
+  position,
+  dimensions,
+  testID,
+  dateFormat = "%d/%m/%Y",
+  ...labelProps
+}: WithTestID<CardClaimProps>) => {
   const claimContent = React.useMemo(
     () =>
       pipe(
@@ -59,10 +70,12 @@ const CardClaim = ({ claim, position, dimensions, testID }: CardClaimProps) => {
         ClaimValue.decode,
         E.fold(constNull, decoded => {
           if (DateFromString.is(decoded)) {
-            const formattedDate = localeDateFormat(decoded, "%d/%m/%Y");
-            return <ClaimLabel>{formattedDate}</ClaimLabel>;
+            const formattedDate = localeDateFormat(decoded, dateFormat);
+            return <ClaimLabel {...labelProps}>{formattedDate}</ClaimLabel>;
           } else if (EvidenceClaim.is(decoded)) {
-            return <ClaimLabel>{JSON.stringify(decoded)}</ClaimLabel>;
+            return (
+              <ClaimLabel {...labelProps}>{JSON.stringify(decoded)}</ClaimLabel>
+            );
           } else if (ImageClaim.is(decoded)) {
             return (
               <Image
@@ -76,16 +89,16 @@ const CardClaim = ({ claim, position, dimensions, testID }: CardClaimProps) => {
               />
             );
           } else if (DrivingPrivilegesClaim.is(decoded)) {
-            const privileges = decoded.map(p => p.driving_privilege).join(", ");
-            return <ClaimLabel>{privileges}</ClaimLabel>;
+            const privileges = decoded.map(p => p.driving_privilege).join(" ");
+            return <ClaimLabel {...labelProps}>{privileges}</ClaimLabel>;
           } else if (PlaceOfBirthClaim.is(decoded)) {
-            return <ClaimLabel>{decoded.locality}</ClaimLabel>;
+            return <ClaimLabel {...labelProps}>{decoded.locality}</ClaimLabel>;
           } else {
-            return <ClaimLabel>{decoded}</ClaimLabel>;
+            return <ClaimLabel {...labelProps}>{decoded}</ClaimLabel>;
           }
         })
       ),
-    [claim]
+    [claim, labelProps, dateFormat]
   );
 
   if (!claimContent) {

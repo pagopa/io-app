@@ -40,9 +40,13 @@ export enum WellKnownClaim {
   expiry_date = "expiry_date",
   /**
    * Claim used to display a QR Code for the Disability Card. It must be excluded from the common claims list
-   * and rendered using a {@link QRCodeImage}
+   * and rendered using a {@link QRCodeImage} (currently used for the European Disability Card)
    */
-  link_qr_code = "link_qr_code"
+  link_qr_code = "link_qr_code",
+  /**
+   * Claim used to display the attachments of a credential (currently used for the European Health Insurance Card)
+   */
+  content = "content"
 }
 
 /**
@@ -138,6 +142,11 @@ const DATE_FORMAT_REGEX = "^\\d{4}-\\d{2}-\\d{2}$";
  * Regex for the picture URL format which is used to validate the image claim as a base64 encoded png image.
  */
 const PICTURE_URL_REGEX = "^data:image\\/(png|jpg|jpeg|bmp);base64,";
+
+/**
+ * Regex for the PDF data format which is used to validate the PDF file claim as a base64 encoded PDF.
+ */
+const PDF_DATA_REGEX = "^data:application/pdf;base64,";
 
 /**
  * Regex for a generic URL
@@ -242,6 +251,8 @@ export const StringClaim = NonEmptyString;
  */
 export const ImageClaim = PatternString(PICTURE_URL_REGEX);
 
+export const PdfClaim = PatternString(PDF_DATA_REGEX);
+
 /**
  * Decoder type for the claim field of the credential.
  * It includes all the possible types of claims and fallbacks to string.
@@ -259,6 +270,8 @@ export const ClaimValue = t.union([
   DateClaim,
   // Otherwise parse an image
   ImageClaim,
+  // Otherwise parse a PDF
+  PdfClaim,
   // Otherwise parse a fiscal code
   FiscalCodeClaim,
   // Otherwise parse bool value
@@ -316,7 +329,8 @@ export const getCredentialExpireDays = (
 };
 
 /**
- * Returns the expire status of a {@see ParsedCredential}
+ * Returns the expire status of a {@link ParsedCredential}, taking into account the **expiration date only**.
+ * Use {@link getCredentialStatus} to also check the status attestation.
  * @param credential the parsed credential claims
  * @param expiringDays the number of days required to mark a credential as "EXPIRING"
  * @returns "VALID" if the credential is valid, "EXPIRING" if there are less than {expiringDays} days left until the expiry day, "EXPIRED" if the expiry date has passed

@@ -1,29 +1,40 @@
-import { ListItemAction, useIOToast } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  ListItemAction,
+  useIOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import React from "react";
-import { Alert, Linking, View } from "react-native";
+import { Alert } from "react-native";
+import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
-import { itwCredentialNameByCredentialType } from "../../common/utils/itwCredentialUtils";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsRemove } from "../../credentials/store/actions";
 
-type Props = {
+type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
 };
 
-export const ItwPresentationDetailFooter = ({ credential }: Props) => {
+const ItwPresentationDetailsFooter = ({
+  credential
+}: ItwPresentationDetailFooterProps) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const toast = useIOToast();
+
+  const startSupportRequest = useStartSupportRequest({
+    faqCategories: []
+  });
 
   const handleRemoveCredential = () => {
     dispatch(itwCredentialsRemove(credential));
     toast.success(
       I18n.t("features.itWallet.presentation.credentialDetails.toast.removed", {
-        credentialName:
-          itwCredentialNameByCredentialType[credential.credentialType]
+        credentialName: getCredentialNameFromType(credential.credentialType)
       })
     );
     navigation.pop();
@@ -52,24 +63,19 @@ export const ItwPresentationDetailFooter = ({ credential }: Props) => {
       ]
     );
 
-  const { federation_entity } = credential.issuerConf;
-
   return (
-    <View>
+    <ContentWrapper>
+      <VSpacer size={8} />
       <ListItemAction
         variant="primary"
         icon="message"
         label={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.requestAssistance",
-          { authSource: federation_entity.organization_name }
+          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
         )}
         accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.requestAssistance",
-          { authSource: federation_entity.organization_name }
+          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
         )}
-        onPress={() =>
-          Linking.openURL(`mailto:${federation_entity.contacts?.[0]}`)
-        }
+        onPress={() => startSupportRequest()}
       />
       {credential.credentialType !== CredentialType.PID ? (
         <ListItemAction
@@ -85,6 +91,12 @@ export const ItwPresentationDetailFooter = ({ credential }: Props) => {
           onPress={showRemoveCredentialDialog}
         />
       ) : null}
-    </View>
+    </ContentWrapper>
   );
 };
+
+const MemoizedItwPresentationDetailsFooter = React.memo(
+  ItwPresentationDetailsFooter
+);
+
+export { MemoizedItwPresentationDetailsFooter as ItwPresentationDetailsFooter };
