@@ -274,6 +274,10 @@ inbox:
   enableButton: Abilita Inbox
   disableButton: Disabilita Inbox
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
+settings: 
+  informativeBanner: 
+    content: Cerchi il Profilo? Lo abbiamo spostato, ora è in alto a destra!
+    action: Vai alle Impostazioni
 profile:
   fiscalCode:
     accessibility:

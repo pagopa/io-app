@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.70.0-rc.1",
+  "version": "2.70.0-rc.2",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v14.3.0-RELEASE/api_backend.yaml",
   "io_session_manager_api": "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/internal.yaml",
   "io_session_manager_public_api": "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/public.yaml",
@@ -18,7 +18,7 @@
   "pagopa_api_walletv2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.40/bonus/specs/bpd/pm/walletv2.json",
   "pagopa_cobadge_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.40/pagopa/cobadge/abi_definitions.yml",
   "pagopa_privative_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.40/pagopa/privative/definitions.yml",
-  "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v6.9.1/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
+  "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v8.25.1/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
   "services_api": "https://raw.githubusercontent.com/pagopa/io-backend/v14.3.0-RELEASE/api_services_app_backend.yaml",
   "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/v14.3.0-RELEASE/api_lollipop_first_consumer.yaml",
   "fast_login_api": "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/fast-login.yaml",
