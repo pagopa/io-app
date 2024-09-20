@@ -334,10 +334,13 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 24,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 24,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -1318,10 +1321,13 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 24,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 24,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -1972,10 +1978,13 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 24,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 24,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}

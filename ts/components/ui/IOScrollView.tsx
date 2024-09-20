@@ -135,7 +135,7 @@ export const IOScrollView = ({
   excludeEndContentMargin = false,
   includeContentMargins = true,
   debugMode = false,
-  centerContent = false,
+  centerContent,
   refreshControlProps,
   testID
 }: IOScrollView) => {
@@ -269,7 +269,7 @@ export const IOScrollView = ({
           },
           /* Apply the same logic used in the
           `OperationResultScreenContent` component */
-          centerContent ? styles.centerContentWrapper : undefined
+          centerContent ? styles.centerContentWrapper : {}
         ]}
       >
         {children}
