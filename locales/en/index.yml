@@ -1426,9 +1426,9 @@ wallet:
   add: add
   delete:
     ios:
-      confirm: Rimuovi metodo
+      confirm: Delete method
     android:
-      confirm: Rimuovi
+      confirm: Delete
     successful: Method removed!
     failed: The method could not be removed from your Wallet
   newPaymentMethod:
