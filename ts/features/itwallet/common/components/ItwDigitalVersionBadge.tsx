@@ -2,12 +2,13 @@ import {
   IOBadgeHSpacing,
   IOBadgeRadius,
   IOBadgeVSpacing,
+  IOColors,
   IOVisualCostants,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import I18n from "../../../../../i18n";
+import I18n from "../../../../i18n";
 
 type DigitalVersionBadgeProps = {
   credentialType: string;
@@ -18,7 +19,9 @@ type CredentialTypesProps = {
   foreground: string;
 };
 
-const DigitalVersionBadge = ({ credentialType }: DigitalVersionBadgeProps) => {
+const ItwDigitalVersionBadge = ({
+  credentialType
+}: DigitalVersionBadgeProps) => {
   const mapCredentialTypes: Record<
     NonNullable<string>,
     CredentialTypesProps
@@ -26,13 +29,21 @@ const DigitalVersionBadge = ({ credentialType }: DigitalVersionBadgeProps) => {
     MDL: {
       foreground: "#5E303E",
       background: "#FADCF5"
+    },
+    EuropeanDisabilityCard: {
+      foreground: "#01527F",
+      background: "#E8EEF4"
+    },
+    EuropeanHealthInsuranceCard: {
+      foreground: "#032D5C",
+      background: "#ABD8F2"
     }
   };
 
-  const colorProps = mapCredentialTypes[credentialType];
-  if (!colorProps) {
-    return null;
-  }
+  const colorProps = mapCredentialTypes[credentialType] || {
+    foreground: IOColors["grey-850"],
+    background: IOColors["grey-100"]
+  };
 
   const { background, foreground } = colorProps;
 
@@ -91,6 +102,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedDigitalVersionBadge = React.memo(DigitalVersionBadge);
+const MemoizedItwDigitalVersionBadge = React.memo(ItwDigitalVersionBadge);
 
-export { MemoizedDigitalVersionBadge as DigitalVersionBadge };
+export { MemoizedItwDigitalVersionBadge as ItwDigitalVersionBadge };
