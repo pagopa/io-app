@@ -7,8 +7,10 @@ import {
   StatusEnum
 } from "../../../../../../definitions/idpay/OnboardingStatusDTO";
 import { RequiredCriteriaDTO } from "../../../../../../definitions/idpay/RequiredCriteriaDTO";
-import { _typeEnum as BoolTypeEnum } from "../../../../../../definitions/idpay/SelfConsentBoolDTO";
-import { SelfConsentDTO } from "../../../../../../definitions/idpay/SelfConsentDTO";
+import {
+  _typeEnum as BoolTypeEnum,
+  SelfConsentBoolDTO
+} from "../../../../../../definitions/idpay/SelfConsentBoolDTO";
 import {
   SelfConsentMultiDTO,
   _typeEnum as MultiTypeEnum
@@ -90,14 +92,14 @@ const T_MULTI_CONSENTS_ANSWERS: Record<number, SelfConsentMultiDTO> = {
   }
 };
 
-const T_ACCEPTED_SELF_DECLARATION_LIST: Array<SelfConsentDTO> = [
+const T_ACCEPTED_SELF_DECLARATION_LIST: Array<SelfConsentBoolDTO> = [
   {
     _type: BoolTypeEnum.boolean,
     code: "3",
     accepted: true
   },
   ...Object.values(T_MULTI_CONSENTS_ANSWERS)
-] as Array<SelfConsentDTO>;
+] as Array<SelfConsentBoolDTO>;
 
 describe("IDPay Onboarding machine services", () => {
   const services = createServicesImplementation(
