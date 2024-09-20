@@ -2,7 +2,6 @@ import {
   IOBadgeHSpacing,
   IOBadgeRadius,
   IOBadgeVSpacing,
-  IOColors,
   IOVisualCostants,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
@@ -40,10 +39,10 @@ const ItwDigitalVersionBadge = ({
     }
   };
 
-  const colorProps = mapCredentialTypes[credentialType] || {
-    foreground: IOColors["grey-850"],
-    background: IOColors["grey-100"]
-  };
+  const colorProps = mapCredentialTypes[credentialType];
+  if (!colorProps) {
+    return null;
+  }
 
   const { background, foreground } = colorProps;
 
