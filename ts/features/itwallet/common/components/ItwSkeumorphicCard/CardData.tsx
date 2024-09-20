@@ -8,12 +8,7 @@ import { StyleSheet, View } from "react-native";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { DrivingPrivilegesClaim } from "../../utils/itwClaimsUtils";
 import { ParsedCredential, StoredCredential } from "../../utils/itwTypesUtils";
-import {
-  ClaimPosition,
-  CardClaim,
-  CardClaimContainer,
-  CardClaimRenderer
-} from "./CardClaim";
+import { CardClaim, CardClaimContainer, CardClaimRenderer } from "./CardClaim";
 import { ClaimLabel } from "./ClaimLabel";
 import { CardSide } from "./types";
 
@@ -22,50 +17,62 @@ type DataComponentProps = {
 };
 
 const MdlFrontData = ({ claims }: DataComponentProps) => {
-  const row = 14.4; // Row padding, defines the first row position
-  const rowStep = 7.3; // Row step, defines the space between each row
+  const row = 11.6; // Row padding, defines the first row position
+  const rowStep = 6.9; // Row step, defines the space between each row
+  const rows: ReadonlyArray<number> = Array.from(
+    { length: 6 },
+    (_, i) => row + rowStep * i
+  );
+  const cols: ReadonlyArray<number> = [34, 57.5];
 
   return (
     <View testID="mdlFrontDataTestID" style={styles.container}>
       <CardClaim
         claim={claims["portrait"]}
-        position={{ left: "4.35%", top: "30.5%" }}
+        position={{ left: "4%", top: "30%" }}
         dimensions={{
-          width: "23.5%",
+          width: "22.5%",
           aspectRatio: 77 / 93 // This aspect ration was extracted from the Figma design
         }}
       />
       <CardClaim
-        claim={claims["given_name"]}
-        position={{ left: "34.75%", top: `${row + rowStep * 0}%` }}
+        claim={claims["family_name"]}
+        position={{ left: `${cols[0]}%`, top: `${rows[0]}%` }}
       />
       <CardClaim
-        claim={claims["family_name"]}
-        position={{ left: "34.75%", top: `${row + rowStep * 1}%` }}
+        claim={claims["given_name"]}
+        position={{ left: `${cols[0]}%`, top: `${rows[1]}%` }}
       />
       <CardClaim
         claim={claims["birth_date"]}
-        position={{ left: "34.75%", top: `${row + rowStep * 2}%` }}
+        position={{ left: `${cols[0]}%`, top: `${rows[2]}%` }}
+        dateFormat="%d/%m/%y"
       />
       <CardClaim
         claim={claims["place_of_birth"]}
-        position={{ left: "57%", top: `${row + rowStep * 2}%` }}
+        position={{ left: `${cols[0] + 17}%`, top: `${rows[2]}%` }}
       />
       <CardClaim
         claim={claims["issue_date"]}
-        position={{ left: "34.75%", top: `${row + rowStep * 3}%` }}
+        position={{ left: `${cols[0]}%`, top: `${rows[3]}%` }}
+        fontWeight={"Bold"}
+      />
+      <CardClaim
+        claim={claims["issuing_authority"]}
+        position={{ left: `${cols[1]}%`, top: `${rows[3]}%` }}
       />
       <CardClaim
         claim={claims["expiry_date"]}
-        position={{ left: "34.75%", top: `${row + rowStep * 4}%` }}
+        position={{ left: `${cols[0]}%`, top: `${rows[4]}%` }}
+        fontWeight={"Bold"}
       />
       <CardClaim
         claim={claims["document_number"]}
-        position={{ left: "34.75%", top: `${row + rowStep * 5}%` }}
+        position={{ left: `${cols[0]}%`, top: `${rows[5]}%` }}
       />
       <CardClaim
         claim={claims["driving_privileges_details"]}
-        position={{ left: "8.85%", top: "77.8%" }}
+        position={{ left: "8%", bottom: "17.9%" }}
       />
     </View>
   );
@@ -91,19 +98,16 @@ const MdlBackData = ({ claims }: DataComponentProps) => {
     "DE"
   ] as const;
 
+  const row = 6.8; // Row padding, defines the first row position
+  const rowStep = 4.7; // Row step, defines the space between each row
   // This object definies the rows of the driving privileges table, specifing the "y" coordinate for each item
-  const privilegesTableRows: Record<string, ClaimPosition["top"]> =
-    drivingPrivileges.reduce(
-      (acc, privilege, index) => ({
-        ...acc,
-        [privilege]: `${
-          7.74 + // Row padding, defines the first row position
-          5.19 * // Row step, defines the space between each row
-            index
-        }%`
-      }),
-      {} as Record<string, ClaimPosition["top"]>
-    );
+  const privilegesTableRows: Record<string, number> = drivingPrivileges.reduce(
+    (acc, privilege, index) => ({
+      ...acc,
+      [privilege]: row + rowStep * index
+    }),
+    {} as Record<string, number>
+  );
 
   return (
     <View testID="mdlBackDataTestID" style={styles.container}>
@@ -115,28 +119,33 @@ const MdlBackData = ({ claims }: DataComponentProps) => {
             <Fragment key={`driving_privilege_row_${driving_privilege}`}>
               <CardClaimContainer
                 position={{
-                  left: `37%`,
-                  top: privilegesTableRows[driving_privilege] || `0%`
+                  left: `41.5%`,
+                  top: `${privilegesTableRows[driving_privilege] || 0}%`
                 }}
               >
-                <ClaimLabel>
+                <ClaimLabel fontSize={9}>
                   {localeDateFormat(parse(issue_date), "%d/%m/%y")}
                 </ClaimLabel>
               </CardClaimContainer>
               <CardClaimContainer
                 key={`driving_privilege_${driving_privilege}`}
                 position={{
-                  left: `53%`,
-                  top: privilegesTableRows[driving_privilege] || `0%`
+                  left: `55%`,
+                  top: `${privilegesTableRows[driving_privilege] || 0}%`
                 }}
               >
-                <ClaimLabel>
+                <ClaimLabel fontSize={9}>
                   {localeDateFormat(parse(expiry_date), "%d/%m/%y")}
                 </ClaimLabel>
               </CardClaimContainer>
             </Fragment>
           ))
         }
+      />
+      <CardClaim
+        claim={claims["restrictions_conditions"]}
+        position={{ left: "8%", bottom: "6.5%" }}
+        fontSize={9}
       />
     </View>
   );
