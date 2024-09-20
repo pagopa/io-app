@@ -31,7 +31,7 @@ describe("IOScrollViewCentredContent", () => {
     const component = renderComponent(defaultProps);
 
     expect(component.queryByText(defaultProps.title));
-    expect(component.queryByText(defaultProps.description!));
+    expect(component.queryByText(defaultProps.description! as string));
     expect(component.queryByTestId("primaryButtonTestId"));
     expect(component.queryByTestId("actionButtonTestId"));
   });
