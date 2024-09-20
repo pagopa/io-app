@@ -10,11 +10,13 @@ import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
+import { trackWalletAdd } from "../../itwallet/analytics";
 
 const WalletEmptyScreenContent = () => {
   const navigation = useIONavigation();
 
   const handleAddToWalletButtonPress = () => {
+    trackWalletAdd();
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ONBOARDING
     });
