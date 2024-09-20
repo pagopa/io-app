@@ -14,6 +14,7 @@ import { useIOStore } from "../../../../store/hooks";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
+import { trackItwRequest } from "../../analytics";
 import type {
   WalletAttestationContext,
   IdentificationContext,
@@ -92,6 +93,7 @@ export const createEidIssuanceActorsImplementation = (
           ...input.cieAuthContext,
           ...input.walletAttestationContext
         });
+        trackItwRequest("ciePin");
         return issuanceUtils.getPid({
           ...authParams,
           ...input.cieAuthContext
@@ -103,6 +105,9 @@ export const createEidIssuanceActorsImplementation = (
         identification: input.identification,
         ...input.walletAttestationContext
       });
+
+      trackItwRequest(input.identification.mode);
+
       return issuanceUtils.getPid(authParams);
     }
   ),
