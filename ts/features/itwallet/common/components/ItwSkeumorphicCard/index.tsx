@@ -1,11 +1,9 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { StoredCredential } from "../../utils/itwTypesUtils";
 import { CardBackground } from "./CardBackground";
 import { CardData } from "./CardData";
 import { FlippableCard } from "./FlippableCard";
-import { DigitalVersionBadge } from "./DigitalVersionBadge";
 
 export type ItwSkeumorphicCardProps = {
   credential: StoredCredential;
@@ -16,13 +14,10 @@ const ItwSkeumorphicCard = ({
   credential,
   isFlipped = false
 }: ItwSkeumorphicCardProps) => {
-  useDebugInfo({ data: credential.parsedCredential });
-
   const FrontSide = (
     <>
       <CardBackground credentialType={credential.credentialType} side="front" />
       <CardData credential={credential} side="front" />
-      <DigitalVersionBadge credentialType={credential.credentialType} />
     </>
   );
 
@@ -45,7 +40,7 @@ const ItwSkeumorphicCard = ({
 
 const styles = StyleSheet.create({
   card: {
-    aspectRatio: 16 / 10
+    aspectRatio: 16 / 10.09
   }
 });
 

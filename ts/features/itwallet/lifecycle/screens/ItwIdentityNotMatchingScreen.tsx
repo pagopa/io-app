@@ -1,4 +1,5 @@
 import React from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import {
   itwLifecycleIdentityCheckCompleted,
@@ -8,9 +9,12 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { logoutRequest } from "../../../../store/actions/authentication";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useIODispatch } from "../../../../store/hooks";
+import { trackItwIdNotMatch } from "../../analytics";
 
 export const ItwIdentityNotMatchingScreen = () => {
   useAvoidHardwareBackButton();
+
+  useFocusEffect(trackItwIdNotMatch);
 
   const dispatch = useIODispatch();
 
