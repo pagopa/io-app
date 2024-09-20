@@ -11,6 +11,10 @@ export const DSIOScrollViewCentredContent = () => (
     pictogram="cie"
     title="Titolo del wizard"
     description="Descrizione del wizard che può essere più lunga e occupare più righe."
+    additionalLink={{
+      label: "Pulsante facoltativo",
+      onPress: onButtonPress
+    }}
     actions={{
       type: "TwoButtons",
       primary: {
