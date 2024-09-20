@@ -438,22 +438,9 @@ const migrations: MigrationManifest = {
         isNewScanSectionEnabled: false
       }
     }),
-  "36": (state: PersistedState) => {
-    // Remove isNewScanSectionEnabled from persistedPreferences
-    const newState = omit(
-      state,
-      "persistedPreferences.isNewScanSectionEnabled"
-    );
-
-    // Add hasUserAcknowledgedSettingsBanner in features.profileSettings
-    return merge(newState, {
-      features: {
-        profileSettings: {
-          hasUserAcknowledgedSettingsBanner: false
-        }
-      }
-    });
-  }
+  // Remove isNewScanSectionEnabled from persistedPreferences
+  "36": (state: PersistedState) =>
+    omit(state, "persistedPreferences.isNewScanSectionEnabled")
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
