@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+/* eslint-disable functional/immutable-data */
 import { BackHandler } from "react-native";
-import * as React from "react";
+import { useEffect, useRef } from "react";
 
 export const useHardwareBackButton = (handler: () => boolean) => {
   useEffect(() => {
@@ -23,13 +23,22 @@ export const useHardwareBackButton = (handler: () => boolean) => {
  * @return a function to call when the component is opened
  */
 export const useHardwareBackButtonToDismiss = (onDismiss: () => void) => {
-  const [isComponentOpened, setIsComponentOpened] = React.useState(false);
+  const isComponentOpened = useRef(false);
+
   useHardwareBackButton(() => {
-    const isOpen = isComponentOpened;
+    const isOpen = isComponentOpened.current;
     onDismiss();
-    setIsComponentOpened(false);
+    isComponentOpened.current = false;
     // true only if we handle the back
     return isOpen;
   });
-  return () => setIsComponentOpened(true);
+
+  return {
+    onOpen: () => {
+      isComponentOpened.current = true;
+    },
+    onClose: () => {
+      isComponentOpened.current = false;
+    }
+  };
 };

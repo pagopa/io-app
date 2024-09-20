@@ -62,6 +62,8 @@ export function* handleWalletPaymentCreateTransaction(
         )
       );
     } else if (status === 400) {
+      // Handling unhandled error from third-party services (GEC) during payment verification.
+      // This is not an internal backend error from pagoPA, but rather a third-party service error and should be handled differently.
       handleError(paymentAnalyticsData, action.payload.onError);
       yield* put(
         paymentsCreateTransactionAction.failure({
@@ -70,7 +72,8 @@ export function* handleWalletPaymentCreateTransaction(
           )
         })
       );
-    } else {
+    } else if (status !== 401) {
+      // The 401 status is handled by the withPaymentsSessionToken
       yield* put(
         paymentsCreateTransactionAction.failure(
           newTransactionResult.right.value

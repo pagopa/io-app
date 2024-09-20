@@ -5,7 +5,6 @@ import {
   ListItemTransaction
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { View } from "react-native";
 import Animated, { Layout } from "react-native-reanimated";
@@ -16,6 +15,7 @@ import { walletLatestTransactionsBizEventsListPotSelector } from "../../bizEvent
 import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
 import { PaymentsBizEventsListItemTransaction } from "../../bizEventsTransaction/components/PaymentsBizEventsListItemTransaction";
 import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { PaymentsTransactionBizEventsRoutes } from "../../bizEventsTransaction/navigation/routes";
 import { PaymentsHomeEmptyScreenContent } from "./PaymentsHomeEmptyScreenContent";
@@ -33,14 +33,16 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   );
 
   const isLoading =
-    pot.isLoading(latestTransactionsPot) || enforcedLoadingState;
+    (!pot.isSome(latestTransactionsPot) &&
+      pot.isLoading(latestTransactionsPot)) ||
+    enforcedLoadingState;
   const isEmpty = useIOSelector(isPaymentsLatestTransactionsEmptySelector);
 
-  useFocusEffect(
-    React.useCallback(() => {
+  useOnFirstRender(() => {
+    if (pot.isNone(latestTransactionsPot)) {
       dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
-    }, [dispatch])
-  );
+    }
+  });
 
   const handleNavigateToTransactionDetails = (
     transaction: TransactionListItem
