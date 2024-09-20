@@ -14,6 +14,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -43,6 +44,13 @@ import {
   ItwRequestedClaimsList,
   RequiredClaim
 } from "../components/ItwRequiredClaimsList";
+import {
+  CREDENTIALS_MAP,
+  trackItwExit,
+  trackOpenItwTos,
+  trackWalletDataShare,
+  trackWalletDataShareAccepted
+} from "../../analytics";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
@@ -89,17 +97,25 @@ type ContentViewProps = {
  * Renders the content of the screen
  */
 const ContentView = ({ credentialType, eid }: ContentViewProps) => {
+  const route = useRoute();
+
+  useFocusEffect(() => trackWalletDataShare(CREDENTIALS_MAP[credentialType]));
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
 
   const handleContinuePress = () => {
     machineRef.send({ type: "confirm-trust-data" });
+    trackWalletDataShareAccepted(CREDENTIALS_MAP[credentialType]);
   };
 
-  const dismissDialog = useItwDismissalDialog(() =>
-    machineRef.send({ type: "close" })
-  );
+  const dismissDialog = useItwDismissalDialog(() => {
+    machineRef.send({ type: "close" });
+    trackItwExit({
+      exit_page: route.name,
+      credential: CREDENTIALS_MAP[credentialType]
+    });
+  });
 
   useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });
 
@@ -170,7 +186,10 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           )}
         />
         <VSpacer size={32} />
-        <ItwMarkdown styles={{ body: { fontSize: 14 } }}>
+        <ItwMarkdown
+          styles={{ body: { fontSize: 14 } }}
+          onLinkOpen={trackOpenItwTos}
+        >
           {I18n.t("features.itWallet.issuance.credentialAuth.tos")}
         </ItwMarkdown>
       </ContentWrapper>
