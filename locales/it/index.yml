@@ -3224,10 +3224,6 @@ features:
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
           restrictionConditions: "Codici"
-      unrecognizedData:
-        title: "Non riconosci alcuni dati?"
-        body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
-        cta: "Chiedi informazioni o segnala errori"
     discovery:
       banner:
         title: "Novità: Documenti su IO"
@@ -3311,16 +3307,15 @@ features:
         body: Non puoi attivare Documenti con un’identità diversa da quella che usi per accedere a IO. Verifica le credenziali di accesso e riprova.
         primaryAction: Ho capito
         secondaryAction: Segnala un problema
-      genericEidError:
+      genericError:
         title: Si è verificato un errore imprevisto
         body: La tua richiesta verso l'ente che emette il documento non è andata a buon fine.
         primaryAction: Riprova
         secondaryAction: Chiudi
-      genericCredentialError:
-        title: Documento non disponibile
-        body: Si è verificato un errore oppure potresti non avere diritto al documento.
-        primaryAction: Riprova
-        secondaryAction: Chiudi
+      notEntitledCredentialError: 
+        title: Non è possibile aggiungere il documento
+        body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
+        primaryAction: Ho capito
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
@@ -3346,6 +3341,7 @@ features:
           title: "Patente: contesti di verifica"
           content: "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Carta di Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valore legale del documento fisico.**"
       credentialDetails:
+        flipCard: "Mostra retro"
         personalDataTitle: "Dati personali"
         documentDataTitle: "Dati documento"
         lastUpdated: "Dati aggiornati al {{lastUpdateTime}}"
@@ -3353,6 +3349,7 @@ features:
           true: Sì
           false: No
         hiddenClaim: "Nascosto"
+        fiscalCode: Codice fiscale
         status:
           valid: Valida
           expired: Non valida
@@ -3369,7 +3366,9 @@ features:
             confirm: Sì, rimuovi
         toast:
           removed: Fatto! Hai rimosso {{credentialName}}
-        flipCard: "Mostra retro"
+      ctas:
+        openPdf: "Apri documento PDF"
+        shareButton: Salva o condividi
         fiscalCode: Il tuo Codice Fiscale
       trustmark:
         cta: Mostra certificato di autenticità
