@@ -1,4 +1,4 @@
-import { GradientScrollView, H2, VSpacer } from "@pagopa/io-app-design-system";
+import { H2, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import { sequenceT } from "fp-ts/lib/Apply";
