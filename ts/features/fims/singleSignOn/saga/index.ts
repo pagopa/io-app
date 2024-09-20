@@ -5,7 +5,10 @@ import {
   fimsGetConsentsListAction,
   fimsGetRedirectUrlAndOpenIABAction
 } from "../store/actions";
-import { fimsRelyingPartyUrlIfFastLoginSelector } from "../store/selectors";
+import {
+  fimsCtaTextSelector,
+  fimsRelyingPartyUrlIfFastLoginSelector
+} from "../store/selectors";
 import { handleFimsAbortOrCancel } from "./handleFimsAbortOrCancel";
 import { handleFimsGetConsentsList } from "./handleFimsGetConsentsList";
 import { handleFimsGetRedirectUrlAndOpenIAB } from "./handleFimsGetRedirectUrlAndOpenIAB";
@@ -21,12 +24,16 @@ export function* watchFimsSSOSaga(): SagaIterator {
   );
   yield* takeLatest(fimsCancelOrAbortAction, handleFimsAbortOrCancel);
 
+  const fimsCtaText = yield* select(fimsCtaTextSelector);
   const fimsRelyingPartyUrl = yield* select(
     fimsRelyingPartyUrlIfFastLoginSelector
   );
-  if (fimsRelyingPartyUrl) {
+  if (fimsCtaText && fimsRelyingPartyUrl) {
     yield* put(
-      fimsGetConsentsListAction.request({ ctaUrl: fimsRelyingPartyUrl })
+      fimsGetConsentsListAction.request({
+        ctaText: fimsCtaText,
+        ctaUrl: fimsRelyingPartyUrl
+      })
     );
   }
 }
