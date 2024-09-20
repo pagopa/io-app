@@ -27,9 +27,10 @@ import { openWebUrl } from "../../../../utils/url";
 type ItwMarkdownProps = {
   // We can provide styles to override the default ones
   styles?: Partial<typeof styles>;
+  onLinkOpen?: () => void;
 };
 
-const rules = {
+const getRules = (onLinkOpen?: ItwMarkdownProps["onLinkOpen"]) => ({
   heading1: (node: ASTNode, children: Array<ReactNode>) => (
     <React.Fragment key={node.key}>
       <H1>{children}</H1>
@@ -81,17 +82,18 @@ const rules = {
     <Label
       asLink
       key={node.key}
-      onPress={() =>
+      onPress={() => {
         openWebUrl(node.attributes.href, () =>
           IOToast.error(I18n.t("global.jserror.title"))
-        )
-      }
+        );
+        onLinkOpen?.();
+      }}
       numberOfLines={1}
     >
       {children}
     </Label>
   )
-};
+});
 
 /* eslint-disable react-native/no-unused-styles */
 const styles = StyleSheet.create({
@@ -125,7 +127,10 @@ const styles = StyleSheet.create({
  * @param content - contains the text to be converted in react elements.
  */
 const ItwMarkdown = (props: React.PropsWithChildren<ItwMarkdownProps>) => (
-  <Markdown style={_.merge(styles, props.styles)} rules={rules}>
+  <Markdown
+    style={_.merge(styles, props.styles)}
+    rules={getRules(props.onLinkOpen)}
+  >
     {props.children}
   </Markdown>
 );
