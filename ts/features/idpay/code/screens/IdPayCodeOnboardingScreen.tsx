@@ -13,7 +13,7 @@ import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomShee
 import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../../../config";
-import { WizardScreen } from "../../../../components/screens/WizardScreen";
+import { IOScrollViewCentredContent } from "../../../../components/ui/IOScrollViewCentredContent";
 
 type IdPayCodeOnboardingRouteParams = {
   initiativeId?: string;
@@ -86,7 +86,7 @@ const IdPayCodeOnboardingScreen = () => {
 
   return (
     <>
-      <WizardScreen
+      <IOScrollViewCentredContent
         pictogram="cie"
         title={I18n.t("idpay.code.onboarding.title")}
         description={I18n.t("idpay.code.onboarding.description")}

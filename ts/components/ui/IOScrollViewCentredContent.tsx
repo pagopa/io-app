@@ -8,24 +8,25 @@ import {
 import * as React from "react";
 import { View } from "react-native";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
-import { IOScrollView, IOScrollViewActions } from "../ui/IOScrollView";
+import { IOScrollView, IOScrollViewActions } from "./IOScrollView";
 
-export type WizardScreenProps = {
+export type IOScrollViewCentredContent = {
+  pictogram: IOPictograms;
   title: string;
   description?: string;
-  pictogram: IOPictograms;
   actions: IOScrollViewActions;
 };
 
 /**
- * A common screen used in a wizard flow to show a pictogram, a title, a description and one or two buttons.
+ * Istance of `IOScrollView` where the main content is centred and the
+ * action(s) is/are placed at the bottom of the page.
  */
-export const WizardScreen = ({
+export const IOScrollViewCentredContent = ({
   title,
   description,
   pictogram,
   actions
-}: WizardScreenProps) => {
+}: IOScrollViewCentredContent) => {
   useHeaderSecondLevel({
     canGoBack: true,
     title: ""
