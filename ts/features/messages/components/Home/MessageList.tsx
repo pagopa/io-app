@@ -19,6 +19,7 @@ import {
 import { UIMessage } from "../../types";
 import { ItwDiscoveryBanner } from "../../../itwallet/common/components/ItwDiscoveryBanner";
 import { trackPullToRefresh } from "../../analytics";
+import { SettingsDiscoveryBanner } from "../../../../screens/profile/components/SettingsDiscoveryBanner";
 import {
   generateMessageListLayoutInfo,
   getLoadNextPageMessagesActionIfAllowed,
@@ -121,7 +122,11 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         ListEmptyComponent={<EmptyList category={category} />}
         ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
         ListHeaderComponent={
-          category === "INBOX" ? <ItwDiscoveryBanner /> : undefined
+          category === "INBOX" ? (
+            <ItwDiscoveryBanner
+              fallbackComponent={<SettingsDiscoveryBanner />}
+            />
+          ) : undefined
         }
         getItemLayout={getItemLayoutCallback}
         renderItem={({ index, item }) => {

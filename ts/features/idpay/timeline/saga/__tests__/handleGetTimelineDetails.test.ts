@@ -13,13 +13,13 @@ const mockResponseSuccess: OperationDTO = {
   operationType: TransactionOperationType.TRANSACTION,
   brand: "VISA",
   operationDate: new Date(),
-  amount: 100.34,
+  amountCents: 100.34,
   brandLogo:
     "https://uat.wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_visa.png",
   circuitType: "01",
   maskedPan: "1234",
   operationId: "1",
-  accrued: 100.0,
+  accruedCents: 100.0,
   idTrxAcquirer: "1",
   idTrxIssuer: "1",
   status: StatusEnum.AUTHORIZED
