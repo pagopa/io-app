@@ -7,11 +7,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapp
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 
-jest.mock("@react-native-community/netinfo", () => ({
-  __esModule: true,
-  fetch: jest.fn().mockResolvedValue({ isConnected: true })
-}));
-
 describe(IngressScreen, () => {
   it("Should be defined", () => {
     const component = renderComponent();
