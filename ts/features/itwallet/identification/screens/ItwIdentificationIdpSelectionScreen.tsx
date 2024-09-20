@@ -14,6 +14,10 @@ import {
   idps as idpsFallback
 } from "../../../../utils/idps";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import {
+  trackItWalletSpidIDPSelected,
+  trackItWalletSpidIDPSelection
+} from "../../analytics";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
   const dispatch = useIODispatch();
@@ -27,11 +31,13 @@ export const ItwIdentificationIdpSelectionScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
+      trackItWalletSpidIDPSelection();
       dispatch(loadIdps.request());
     }, [dispatch])
   );
 
   const onIdpSelected = (idp: LocalIdpsFallback) => {
+    trackItWalletSpidIDPSelected({ idp: idp.name });
     machineRef.send({ type: "select-spid-idp", idp });
   };
 

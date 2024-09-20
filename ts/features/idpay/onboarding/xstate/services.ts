@@ -7,7 +7,7 @@ import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDa
 import { CodeEnum as OnboardingErrorCodeEnum } from "../../../../../definitions/idpay/OnboardingErrorDTO";
 import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
-import { SelfConsentDTO } from "../../../../../definitions/idpay/SelfConsentDTO";
+import { SelfConsentBoolDTO } from "../../../../../definitions/idpay/SelfConsentBoolDTO";
 import { IDPayClient } from "../../common/api/client";
 import {
   OnboardingFailure,
@@ -238,7 +238,7 @@ const createServicesImplementation = (
         accepted: true
       })),
       ...Object.values(multiConsentsAnswers)
-    ] as Array<SelfConsentDTO>;
+    ] as Array<SelfConsentBoolDTO>;
 
     const response = await client.consentOnboarding({
       ...clientOptions,
