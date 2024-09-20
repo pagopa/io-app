@@ -41,6 +41,7 @@ const ItwDigitalVersionBadge = ({
 
   const colorProps = mapCredentialTypes[credentialType];
   if (!colorProps) {
+    // If a credential does not have the color configuration means that we should not display the badge
     return null;
   }
 
