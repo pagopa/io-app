@@ -24,6 +24,7 @@ export const IngressScreen = () => {
   if (netInfo && !netInfo.isConnected) {
     return (
       <OperationResultScreenContent
+        testID="device-connection-lost-id"
         pictogram="lostConnection"
         title={I18n.t("startup.connection_lost.title")}
         subtitle={I18n.t("startup.connection_lost.description")}
@@ -32,7 +33,10 @@ export const IngressScreen = () => {
   }
 
   return (
-    <LoadingScreenContent contentTitle={contentTitle}>
+    <LoadingScreenContent
+      testID="ingress-screen-loader-id"
+      contentTitle={contentTitle}
+    >
       <SectionStatusComponent sectionKey={"ingress"} />
     </LoadingScreenContent>
   );
