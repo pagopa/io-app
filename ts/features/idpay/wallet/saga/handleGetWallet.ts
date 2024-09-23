@@ -45,7 +45,7 @@ export function* handleGetIDPayWallet(
               key: `idpay_${initiative.initiativeId}`,
               initiativeId: initiative.initiativeId,
               name: initiative.initiativeName || "",
-              amount: initiative.amount || 0,
+              amount: initiative.amountCents || 0,
               avatarSource: {
                 uri: initiative.logoURL
               },
