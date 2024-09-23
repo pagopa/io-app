@@ -18,6 +18,7 @@ import {
 import { cgnActivationStart } from "../../store/actions/activation";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -47,6 +48,18 @@ const CgnCTAStartOnboardingComponent: React.FC<Props> = (props: Props) => {
     canGoBack: true,
     transparent: true
   });
+
+  if (props.hasError) {
+    return (
+      <OperationResultScreenContent
+        title={I18n.t("global.genericError")}
+        action={{
+          label: I18n.t("global.buttons.retry"),
+          onPress: props.loadAvailableBonus
+        }}
+      />
+    );
+  }
 
   return (
     <LoadingScreenContent
