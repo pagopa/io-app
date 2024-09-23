@@ -271,6 +271,10 @@ inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
   enableCallToActionDescription: Enable the inbox to view messages
+settings: 
+  informativeBanner: 
+    content: Looking for your profile? We have moved it, it is now in the top right corner!
+    action: Go to Settings
 profile:
   fiscalCode:
     accessibility:
@@ -1416,9 +1420,9 @@ wallet:
   add: add
   delete:
     ios:
-      confirm: Rimuovi metodo
+      confirm: Delete method
     android:
-      confirm: Rimuovi
+      confirm: Delete
     successful: Method removed!
     failed: The method could not be removed from your Wallet
   newPaymentMethod:

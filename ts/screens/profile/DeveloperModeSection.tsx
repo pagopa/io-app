@@ -36,7 +36,6 @@ import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
-  preferencesNewScanSectionSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
@@ -49,7 +48,6 @@ import {
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
   isIdPayTestEnabledSelector,
-  isNewScanSectionLocallyEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -309,24 +307,12 @@ const DesignSystemSection = () => {
     isAutomaticSessionRefreshToggleActiveSelector
   );
 
-  const isNewScanSectionLocallyEnabled = useIOSelector(
-    isNewScanSectionLocallyEnabledSelector
-  );
-
   const dispatchAutomaticSessionRefresh = React.useCallback(
     (enabled: boolean) => {
       dispatch(setAutomaticSessionRefresh({ enabled }));
     },
     [dispatch]
   );
-
-  const onNewScanSectionToggle = (enabled: boolean) => {
-    dispatch(
-      preferencesNewScanSectionSetEnabled({
-        isNewScanSectionEnabled: enabled
-      })
-    );
-  };
 
   return (
     <ContentWrapper>
@@ -352,11 +338,6 @@ const DesignSystemSection = () => {
         }
       />
       <Divider />
-      <ListItemSwitch
-        label={I18n.t("profile.main.newScanSection")}
-        value={isNewScanSectionLocallyEnabled}
-        onSwitchValueChange={onNewScanSectionToggle}
-      />
       <ListItemSwitch
         label={I18n.t("profile.main.sessionRefresh")}
         value={isAutomaticSessionRefreshToggleActive}
