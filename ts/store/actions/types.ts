@@ -32,6 +32,7 @@ import { FimsActions } from "../../features/fims/common/store/actions";
 import { ItwActions } from "../../features/itwallet/common/store/actions";
 import { TrialSystemActions } from "../../features/trialSystem/store/actions";
 import { ProfileSettingsActions } from "../../features/profileSettings/store/actions";
+import { IngressScreenActions } from "../../features/ingress/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -107,7 +108,8 @@ export type Action =
   | FimsActions
   | ItwActions
   | TrialSystemActions
-  | ProfileSettingsActions;
+  | ProfileSettingsActions
+  | IngressScreenActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

@@ -8,19 +8,21 @@ import {
   NetInfoState
 } from "@react-native-community/netinfo";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import I18n from "../../i18n";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { trackIngressScreen } from "../profile/analytics";
-import SectionStatusComponent from "../../components/SectionStatus";
-import LoadingScreenContent from "../../components/screens/LoadingScreenContent";
-import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
-import { useIOSelector } from "../../store/hooks";
-import { isBackendStatusLoadedSelector } from "../../store/reducers/backendStatus";
+import I18n from "../../../i18n";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { trackIngressScreen } from "../../../screens/profile/analytics";
+import SectionStatusComponent from "../../../components/SectionStatus";
+import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { isBackendStatusLoadedSelector } from "../../../store/reducers/backendStatus";
+import { setIsBlockingScreen } from "../store/actions";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
 
 export const IngressScreen = () => {
+  const dispatch = useIODispatch();
   const isBackendStatusLoaded = useIOSelector(isBackendStatusLoadedSelector);
   const [netInfo, setNetInfo] = useState<NetInfoState>();
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
@@ -40,6 +42,7 @@ export const IngressScreen = () => {
     timeouts.push(
       setTimeout(() => {
         setShowBlockingScreen(true);
+        dispatch(setIsBlockingScreen());
         timeouts.shift();
       }, TIMEOUT_BLOCKING_SCREEN)
     );
@@ -55,7 +58,7 @@ export const IngressScreen = () => {
     return () => {
       timeouts?.forEach(clearTimeout);
     };
-  }, []);
+  }, [dispatch]);
 
   if (netInfo && !netInfo.isConnected) {
     return (

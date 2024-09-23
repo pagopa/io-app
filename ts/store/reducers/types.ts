@@ -6,6 +6,7 @@ import { PersistedFeaturesState } from "../../features/common/store/reducers";
 import { PersistedLollipopState } from "../../features/lollipop/store";
 import { TrialSystemState } from "../../features/trialSystem/store/reducers";
 import { NotificationsState } from "../../features/pushNotifications/store/reducers";
+import { IngressScreenState } from "../../features/ingress/store/reducer";
 import { AppState } from "./appState";
 import { AssistanceToolsState } from "./assistanceTools";
 import { PersistedAuthenticationState } from "./authentication";
@@ -60,6 +61,7 @@ export type GlobalState = Readonly<{
   startup: StartupState;
   lollipop: PersistedLollipopState;
   trialSystem: TrialSystemState;
+  ingress: IngressScreenState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;

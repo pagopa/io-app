@@ -2,7 +2,7 @@
 import { createStore } from "redux";
 import * as netInfo from "@react-native-community/netinfo";
 import { waitFor } from "@testing-library/react-native";
-import { IngressScreen } from "../IngressScreen";
+import { IngressScreen } from "../screens/IngressScreen";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
