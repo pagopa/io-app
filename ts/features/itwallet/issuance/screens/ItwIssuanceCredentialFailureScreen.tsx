@@ -1,6 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -12,10 +12,18 @@ import {
   CredentialIssuanceFailureType,
   CredentialIssuanceFailureTypeEnum
 } from "../../machine/credential/failure";
-import { selectFailureOption } from "../../machine/credential/selectors";
+import {
+  selectCredential,
+  selectFailureOption
+} from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import {
+  CREDENTIALS_MAP,
+  trackAddCredentialTimeout,
+  trackWalletCreationFailed
+} from "../../analytics";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -44,9 +52,25 @@ type ContentViewProps = { failure: CredentialIssuanceFailure };
  */
 const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const storedCredential =
+    ItwCredentialIssuanceMachineContext.useSelector(selectCredential);
 
-  const closeIssuance = () => machineRef.send({ type: "close" });
-  const retryIssuance = () => machineRef.send({ type: "retry" });
+  const closeIssuance = (cta_id: string) => {
+    machineRef.send({ type: "close" });
+    trackWalletCreationFailed({
+      reason: failure.type,
+      cta_category: "custom_2",
+      cta_id
+    });
+  };
+  const retryIssuance = (cta_id: string) => {
+    machineRef.send({ type: "retry" });
+    trackWalletCreationFailed({
+      reason: failure.type,
+      cta_category: "custom_1",
+      cta_id
+    });
+  };
 
   useDebugInfo({
     failure
@@ -62,13 +86,19 @@ const ContentView = ({ failure }: ContentViewProps) => {
       pictogram: "workInProgress",
       action: {
         label: I18n.t("features.itWallet.issuance.genericError.primaryAction"),
-        onPress: retryIssuance
+        onPress: () =>
+          retryIssuance(
+            I18n.t("features.itWallet.issuance.genericError.primaryAction")
+          )
       },
       secondaryAction: {
         label: I18n.t(
           "features.itWallet.issuance.genericError.secondaryAction"
         ),
-        onPress: closeIssuance
+        onPress: () =>
+          closeIssuance(
+            I18n.t("features.itWallet.issuance.genericError.secondaryAction")
+          )
       }
     },
     NOT_ENTITLED: {
@@ -83,7 +113,12 @@ const ContentView = ({ failure }: ContentViewProps) => {
         label: I18n.t(
           "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
         ),
-        onPress: closeIssuance
+        onPress: () =>
+          closeIssuance(
+            I18n.t(
+              "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
+            )
+          )
       }
     },
     ASYNC_ISSUANCE: {
@@ -98,6 +133,16 @@ const ContentView = ({ failure }: ContentViewProps) => {
       }
     }
   };
+
+  useEffect(() => {
+    if (storedCredential) {
+      trackAddCredentialTimeout({
+        reason: failure.reason,
+        type: failure.type,
+        credential: CREDENTIALS_MAP[storedCredential.credentialType]
+      });
+    }
+  }, [failure, storedCredential]);
 
   const resultScreenProps = resultScreensMap[failure.type];
   return <OperationResultScreenContent {...resultScreenProps} />;
