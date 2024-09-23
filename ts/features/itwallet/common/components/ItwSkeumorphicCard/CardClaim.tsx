@@ -41,6 +41,7 @@ export type ClaimDimensions = Prettify<
 export type CardClaimProps = Prettify<
   {
     // A claim that will be used to render its component
+    // Since we are passing this value by accessing the claims object by key, the value could be undefined
     claim?: ParsedCredential[number];
     // Absolute position expressed in percentages from top-left corner
     position?: ClaimPosition;
@@ -118,6 +119,7 @@ const CardClaim = ({
 
 export type CardClaimRendererProps<T> = {
   // A claim that will be used to render a component
+  // Since we are passing this value by accessing the claims object by key, the value could be undefined
   claim?: ParsedCredential[number];
   // Function that check that the proviced claim is of the correct type
   is: (value: unknown) => value is T;
