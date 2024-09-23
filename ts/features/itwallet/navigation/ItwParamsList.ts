@@ -1,4 +1,5 @@
 import { ItwCieWrongCiePinScreenNavigationParams } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
+import { ItwPresentationCredentialAttachmentNavigationParams } from "../presentation/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwIssuanceCredentialTrustIssuerScreenRouteParams } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
 import { ITW_ROUTES } from "./routes";
@@ -30,6 +31,8 @@ export type ItwParamsList = {
   // PRESENTATION
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_DETAIL]: ItwPresentationCredentialDetailNavigationParams;
+  [ITW_ROUTES.PRESENTATION
+    .CREDENTIAL_ATTACHMENT]: ItwPresentationCredentialAttachmentNavigationParams;
   // PLAYGROUNDS
   [ITW_ROUTES.PLAYGROUNDS]: undefined;
   [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
