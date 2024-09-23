@@ -3307,6 +3307,10 @@ features:
         title: Non è possibile aggiungere il documento
         body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
         primaryAction: Ho capito
+      credentialAlreadyAdded:
+        title: Hai già questo documento
+        body: La versione digitale del documento è già presente nel tuo Portafoglio.
+        primaryAction: Vai al documento
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info

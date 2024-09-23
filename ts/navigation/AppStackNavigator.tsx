@@ -141,7 +141,8 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
         [ITW_ROUTES.MAIN]: {
           path: "itw",
           screens: {
-            [ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER]: "credential/issuance"
+            [ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION]:
+              "credential/issuance"
           }
         },
         ...fciLinkingOptions,

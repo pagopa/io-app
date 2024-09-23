@@ -52,26 +52,8 @@ import {
   trackWalletDataShareAccepted
 } from "../../analytics";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { useItwResumeAsyncCredentialIssuance } from "../../common/hooks/useItwResumeAsyncCredentialIssuance";
 
-export type ItwIssuanceCredentialTrustIssuerScreenRouteParams =
-  | { credentialType: string } // Navigation through deep linking for async issuance
-  | undefined; // Standard navigation from the credential selection screen
-
-type ItwIssuanceCredentialTrustIssuerScreenProps = IOStackNavigationRouteProps<
-  ItwParamsList,
-  "ITW_ISSUANCE_CREDENTIAL_TRUST_ISSUER"
->;
-
-const ItwIssuanceCredentialTrustIssuerScreen = ({
-  route
-}: ItwIssuanceCredentialTrustIssuerScreenProps) => {
-  const { isRehydrating } = useItwResumeAsyncCredentialIssuance(
-    route.params?.credentialType
-  );
-
+const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
@@ -86,7 +68,7 @@ const ItwIssuanceCredentialTrustIssuerScreen = ({
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  if (isLoading || isRehydrating) {
+  if (isLoading) {
     return (
       <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
     );
