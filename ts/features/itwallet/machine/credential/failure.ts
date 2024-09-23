@@ -55,7 +55,6 @@ export const mapEventToFailure = (
         reason: error
       };
     }
-    // @ts-expect-error udpdate io-react-native-wallet
     if (error instanceof Errors.CredentialIssuingNotSynchronousError) {
       return {
         type: CredentialIssuanceFailureTypeEnum.ASYNC_ISSUANCE,
