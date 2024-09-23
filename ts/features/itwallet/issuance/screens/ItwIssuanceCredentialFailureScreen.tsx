@@ -129,7 +129,12 @@ const ContentView = ({ failure }: ContentViewProps) => {
         label: I18n.t(
           "features.itWallet.issuance.asyncCredentialError.primaryAction"
         ),
-        onPress: closeIssuance
+        onPress: () =>
+          closeIssuance(
+            I18n.t(
+              "features.itWallet.issuance.asyncCredentialError.primaryAction"
+            )
+          )
       }
     }
   };
