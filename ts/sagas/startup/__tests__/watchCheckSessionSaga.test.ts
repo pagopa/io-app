@@ -26,9 +26,12 @@ describe("checkSession", () => {
       status: 200,
       value: responseValue
     });
-    testSaga(testableCheckSession!, getSessionValidity)
+
+    const fields = "(zendeskToken,walletToken,lollipopAssertionRef)"; // Simuliamo il parametro opzionale
+
+    testSaga(testableCheckSession!, getSessionValidity, fields)
       .next()
-      .call(getSessionValidity, {})
+      .call(getSessionValidity, { fields }) // Verifichiamo che `fields` venga passato
       .next(responseOK)
       .put(
         checkCurrentSession.success({
@@ -43,9 +46,12 @@ describe("checkSession", () => {
 
   it("if response is 401 the session is invalid", () => {
     const responseUnauthorized = E.right({ status: 401 });
-    testSaga(testableCheckSession!, getSessionValidity)
+
+    const fields = "(zendeskToken,walletToken,lollipopAssertionRef)";
+
+    testSaga(testableCheckSession!, getSessionValidity, fields)
       .next()
-      .call(getSessionValidity, {})
+      .call(getSessionValidity, { fields })
       .next(responseUnauthorized)
       .put(
         checkCurrentSession.success({
@@ -58,9 +64,12 @@ describe("checkSession", () => {
 
   it("if response is 500 the session is valid", () => {
     const response500 = E.right({ status: 500 });
-    testSaga(testableCheckSession!, getSessionValidity)
+
+    const fields = undefined; // Nessun campo specificato, il parametro può essere `undefined`
+
+    testSaga(testableCheckSession!, getSessionValidity, fields)
       .next()
-      .call(getSessionValidity, {})
+      .call(getSessionValidity, { fields })
       .next(response500)
       .put(
         checkCurrentSession.success({
@@ -76,11 +85,14 @@ describe("checkSession", () => {
       value: "some error occurred",
       context: [{ key: "", type: t.string }]
     };
-    const responeLeft = E.left([validatorError]);
-    testSaga(testableCheckSession!, getSessionValidity)
+    const responseLeft = E.left([validatorError]);
+
+    const fields = "(zendeskToken,walletToken,lollipopAssertionRef)";
+
+    testSaga(testableCheckSession!, getSessionValidity, fields)
       .next()
-      .call(getSessionValidity, {})
-      .next(responeLeft)
+      .call(getSessionValidity, { fields })
+      .next(responseLeft)
       .put(
         checkCurrentSession.failure(
           new Error(
@@ -103,6 +115,7 @@ describe("checkSessionResult", () => {
     };
     testSaga(checkSessionResult, sessionValidAction).next().isDone();
   });
+
   it("if session is invalid call session expired", () => {
     const sessionInvalidAction: ReturnType<
       (typeof checkCurrentSession)["success"]
