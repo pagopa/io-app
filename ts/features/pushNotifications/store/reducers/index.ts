@@ -3,49 +3,42 @@
  */
 
 import { combineReducers } from "redux";
-import { PersistPartial } from "redux-persist";
+import { PersistConfig, PersistPartial, persistReducer } from "redux-persist";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Action } from "../../../../store/actions/types";
 import { InstallationState, installationReducer } from "./installation";
 import { PendingMessageState, pendingMessageReducer } from "./pendingMessage";
+import {
+  NotificationsPermissionsState,
+  permissionsReducer
+} from "./permissions";
+
+export const NOTIFICATIONS_STORE_VERSION = -1;
 
 export type PersistedNotificationsState = NotificationsState & PersistPartial;
-
-type A = {
-  enabled: boolean;
-};
-
-type B = {
-  data: string;
-};
 
 export type NotificationsState = {
   installation: InstallationState;
   pendingMessage: PendingMessageState;
-  nonPersistedProp: A;
-  persistedProp: B;
+  permissions: NotificationsPermissionsState;
+};
+
+export const notificationsPersistConfig: PersistConfig = {
+  key: "notifications",
+  storage: AsyncStorage,
+  version: NOTIFICATIONS_STORE_VERSION,
+  whitelist: ["installation", "pendingMessage"]
 };
 
 export const notificationsReducer = combineReducers<NotificationsState, Action>(
   {
     installation: installationReducer,
     pendingMessage: pendingMessageReducer,
-    nonPersistedProp: (state = { enabled: false }, _action) => {
-      if (_action.type === "IDENTIFICATION_SUCCESS") {
-        return {
-          ...state,
-          enabled: true
-        };
-      }
-      return state;
-    },
-    persistedProp: (state = { data: "a" }, _action) => {
-      if (_action.type === "IDENTIFICATION_SUCCESS") {
-        return {
-          ...state,
-          data: "identification"
-        };
-      }
-      return state;
-    }
+    permissions: permissionsReducer
   }
 );
+
+export const persistedNotificationsReducer = persistReducer<
+  NotificationsState,
+  Action
+>(notificationsPersistConfig, notificationsReducer);

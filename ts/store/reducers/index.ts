@@ -31,10 +31,7 @@ import { whatsNewInitialState } from "../../features/whatsnew/store/reducers";
 import { fastLoginOptInInitialState } from "../../features/fastLogin/store/reducers/optInReducer";
 import { isDevEnv } from "../../utils/environment";
 import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
-import {
-  notificationsReducer,
-  NotificationsState
-} from "../../features/pushNotifications/store/reducers";
+import { persistedNotificationsReducer } from "../../features/pushNotifications/store/reducers";
 import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
 import { itwIdentificationInitialState } from "../../features/itwallet/identification/store/reducers";
 import { cieLoginInitialState } from "../../features/cieLogin/store/reducers";
@@ -77,32 +74,6 @@ import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
 import walletReducer from "./wallet";
 import { WALLETS_INITIAL_STATE as walletsInitialState } from "./wallet/wallets";
-
-export const P_VERSION = 2;
-
-export const notificationsPersistConfig: PersistConfig = {
-  key: "notifications",
-  migrate: createMigrate(
-    {
-      "0": (state: PersistedState) => {
-        console.log(`=== 0 state is ${JSON.stringify(state)}`);
-        return state;
-      },
-      "1": (state: PersistedState) => {
-        console.log(`=== 1 state is ${JSON.stringify(state)}`);
-        return state;
-      },
-      "2": (state: PersistedState) => {
-        console.log(`=== 2 state is ${JSON.stringify(state)}`);
-        return state;
-      }
-    },
-    { debug: isDevEnv }
-  ),
-  storage: AsyncStorage,
-  version: P_VERSION,
-  whitelist: ["installation", "pendingMessage", "persistedProp"]
-};
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -183,10 +154,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   ),
   features: featuresPersistor,
   onboarding: onboardingReducer,
-  notifications: persistReducer<NotificationsState, Action>(
-    notificationsPersistConfig,
-    notificationsReducer
-  ),
+  notifications: persistedNotificationsReducer,
   profile: profileReducer,
   userDataProcessing: userDataProcessingReducer,
   entities: persistReducer<EntitiesState, Action>(

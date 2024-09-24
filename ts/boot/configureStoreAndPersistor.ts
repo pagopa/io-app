@@ -33,8 +33,7 @@ import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
 import {
   authenticationPersistConfig,
-  createRootReducer,
-  P_VERSION
+  createRootReducer
 } from "../store/reducers";
 import { ContentState } from "../store/reducers/content";
 import { entitiesPersistConfig } from "../store/reducers/entities";
@@ -42,7 +41,10 @@ import {
   INSTALLATION_INITIAL_STATE,
   InstallationState
 } from "../store/reducers/installation";
-import { NotificationsState } from "../features/pushNotifications/store/reducers";
+import {
+  NOTIFICATIONS_STORE_VERSION,
+  NotificationsState
+} from "../features/pushNotifications/store/reducers";
 import { getInitialState as getInstallationInitialState } from "../features/pushNotifications/store/reducers/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { walletsPersistConfig } from "../store/reducers/wallet";
@@ -442,15 +444,15 @@ const migrations: MigrationManifest = {
   // Remove isNewScanSectionEnabled from persistedPreferences
   "36": (state: PersistedState) =>
     omit(state, "persistedPreferences.isNewScanSectionEnabled"),
+  // Move 'notifications' from root persistor to its own
   "37": (state: PersistedState) => {
     const typedState = state as GlobalState;
-    console.log(`=== mig 37 ${JSON.stringify(typedState.notifications)}`);
     return {
       ...state,
       notifications: {
         ...typedState.notifications,
         _persist: {
-          version: P_VERSION,
+          version: NOTIFICATIONS_STORE_VERSION,
           rehydrated: true
         }
       }
