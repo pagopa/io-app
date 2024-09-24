@@ -68,11 +68,9 @@ import {
   zendeskSupportFailure
 } from "../store/actions";
 import {
-  getZendeskTokenStatusSelector,
   zendeskSelectedCategorySelector,
   zendeskSelectedSubcategorySelector
 } from "../store/reducers";
-import { usePrevious } from "../../../utils/hooks/usePrevious";
 
 /**
  * Transform an array of string into a Zendesk
@@ -213,8 +211,6 @@ const ZendeskAskPermissions = () => {
   );
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
   const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
-  const getZendeskTokenStatus = useIOSelector(getZendeskTokenStatusSelector);
-  const prevGetZendeskTokenStatus = usePrevious(getZendeskTokenStatus);
   const identityProvider = pipe(
     useIOSelector(idpSelector),
     O.map(idp => idp.name),
@@ -250,15 +246,6 @@ const ZendeskAskPermissions = () => {
     const zendeskIdentity = getZendeskIdentity(zendeskToken);
     setUserIdentity(zendeskIdentity);
   }, [dispatch, zendeskToken]);
-
-  useEffect(() => {
-    if (
-      prevGetZendeskTokenStatus === "request" &&
-      getZendeskTokenStatus === "error"
-    ) {
-      IOToast.error("toast error");
-    }
-  }, [dispatch, getZendeskTokenStatus, prevGetZendeskTokenStatus]);
 
   const currentVersion = getAppVersion();
 

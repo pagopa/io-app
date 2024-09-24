@@ -35,6 +35,12 @@ type ZendeskValue = {
 };
 export type ZendeskConfig = RemoteValue<ZendeskValue, NetworkError>;
 
+export enum ZendeskTokenStatus {
+  SUCCESS = "success",
+  ERROR = "error",
+  REQUEST = "request"
+}
+
 export type ZendeskState = {
   zendeskConfig: ZendeskConfig;
   selectedCategory?: ZendeskCategory;
@@ -42,7 +48,7 @@ export type ZendeskState = {
   ticketNumber: pot.Pot<number, Error>;
   getSessionPollingRunning?: boolean;
   zendeskTokenNeedsRefresh?: boolean;
-  getZendeskTokenStatus?: "request" | "success" | "error";
+  getZendeskTokenStatus?: ZendeskTokenStatus;
 };
 
 const INITIAL_STATE: ZendeskState = {
@@ -63,18 +69,18 @@ const reducer = (
     case getType(getZendeskToken.request):
       return {
         ...state,
-        getZendeskTokenStatus: "request"
+        getZendeskTokenStatus: ZendeskTokenStatus.REQUEST
       };
 
     case getType(getZendeskToken.success):
       return {
         ...state,
-        getZendeskTokenStatus: "success"
+        getZendeskTokenStatus: ZendeskTokenStatus.SUCCESS
       };
     case getType(getZendeskToken.failure):
       return {
         ...state,
-        getZendeskTokenStatus: "error"
+        getZendeskTokenStatus: ZendeskTokenStatus.ERROR
       };
     case getType(zendeskStopPolling):
       return {
