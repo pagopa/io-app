@@ -456,7 +456,6 @@ const rootPersistConfig: PersistConfig = {
   // Sections of the store that must be persisted and rehydrated with this storage.
   whitelist: [
     "onboarding",
-    "notifications",
     "profile",
     "persistedPreferences",
     "installation",
