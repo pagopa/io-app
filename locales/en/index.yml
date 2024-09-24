@@ -3290,6 +3290,7 @@ features:
           toast: Fatto!
           actions:
             continue: Aggiungi primo documento
+            continueAlt: Aggiungi documento
             close: Continua più tardi
       credentialResult:
         toast: Fatto! Hai aggiunto {{credentialName}}

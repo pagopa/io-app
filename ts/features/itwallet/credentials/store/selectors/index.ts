@@ -49,3 +49,8 @@ export const selectFiscalCodeFromEid = createSelector(
       O.getOrElse(() => "")
     )
 );
+
+export const itwIsWalletEmptySelector = createSelector(
+  itwCredentialsSelector,
+  ({ credentials }) => credentials.length === 0
+);

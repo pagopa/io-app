@@ -14,6 +14,7 @@ import {
   selectWalletItwCards,
   selectWalletOtherCards
 } from "../store/selectors";
+import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import {
   WalletCardsCategoryContainer,
@@ -67,23 +68,24 @@ const ItwCardsContainer = ({
     return null;
   }
 
-  const endElement: ListItemHeader["endElement"] = isItwValid
-    ? {
-        type: "badge",
+  const getHeader = (): ListItemHeader | undefined => {
+    if (!isItwValid) {
+      return undefined;
+    }
+    return {
+      iconName: "legalValue",
+      iconColor: "blueIO-500",
+      label: I18n.t("features.wallet.cards.categories.itw"),
+      endElement: {
+        type: "buttonLink",
         componentProps: {
-          text: I18n.t("features.itWallet.wallet.active"),
-          variant: "blue",
+          label: "Cos'è?",
+          onPress: () => null,
           testID: "walletCardsCategoryItwActiveBadgeTestID"
         }
       }
-    : {
-        type: "badge",
-        componentProps: {
-          text: I18n.t("features.itWallet.wallet.inactive"),
-          variant: "default",
-          testID: "walletCardsCategoryItwInactiveBadgeTestID"
-        }
-      };
+    };
+  };
 
   return (
     <WalletCardsCategoryContainer
@@ -91,11 +93,13 @@ const ItwCardsContainer = ({
       testID={`walletCardsCategoryTestID_itw`}
       cards={cards}
       isStacked={isStacked}
-      header={{
-        label: I18n.t("features.wallet.cards.categories.itw"),
-        endElement
-      }}
-      footer={<ItwDiscoveryBanner ignoreMargins={true} />}
+      header={getHeader()}
+      footer={
+        <>
+          <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
+          <ItwWalletReadyBanner />
+        </>
+      }
     />
   );
 };
@@ -106,6 +110,7 @@ const OtherCardsContainer = ({
   const cards = useIOSelector(selectWalletOtherCards);
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
+  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
 
   if (cards.length === 0) {
     return null;
@@ -118,7 +123,7 @@ const OtherCardsContainer = ({
       cards={cards}
       isStacked={isStacked}
       header={
-        isItwTrialEnabled && isItwEnabled
+        isItwTrialEnabled && isItwEnabled && isItwValid
           ? {
               label: I18n.t("features.wallet.cards.categories.other")
             }
