@@ -33,7 +33,8 @@ import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
 import {
   authenticationPersistConfig,
-  createRootReducer
+  createRootReducer,
+  P_VERSION
 } from "../store/reducers";
 import { ContentState } from "../store/reducers/content";
 import { entitiesPersistConfig } from "../store/reducers/entities";
@@ -53,7 +54,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 36;
+const CURRENT_REDUX_STORE_VERSION = 37;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -440,7 +441,21 @@ const migrations: MigrationManifest = {
     }),
   // Remove isNewScanSectionEnabled from persistedPreferences
   "36": (state: PersistedState) =>
-    omit(state, "persistedPreferences.isNewScanSectionEnabled")
+    omit(state, "persistedPreferences.isNewScanSectionEnabled"),
+  "37": (state: PersistedState) => {
+    const typedState = state as GlobalState;
+    console.log(`=== mig 37 ${JSON.stringify(typedState.notifications)}`);
+    return {
+      ...state,
+      notifications: {
+        ...typedState.notifications,
+        _persist: {
+          version: P_VERSION,
+          rehydrated: true
+        }
+      }
+    };
+  }
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;

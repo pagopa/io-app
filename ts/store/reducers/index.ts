@@ -78,10 +78,30 @@ import userDataProcessingReducer from "./userDataProcessing";
 import walletReducer from "./wallet";
 import { WALLETS_INITIAL_STATE as walletsInitialState } from "./wallet/wallets";
 
+export const P_VERSION = 2;
+
 export const notificationsPersistConfig: PersistConfig = {
   key: "notifications",
+  migrate: createMigrate(
+    {
+      "0": (state: PersistedState) => {
+        console.log(`=== 0 state is ${JSON.stringify(state)}`);
+        return state;
+      },
+      "1": (state: PersistedState) => {
+        console.log(`=== 1 state is ${JSON.stringify(state)}`);
+        return state;
+      },
+      "2": (state: PersistedState) => {
+        console.log(`=== 2 state is ${JSON.stringify(state)}`);
+        return state;
+      }
+    },
+    { debug: isDevEnv }
+  ),
   storage: AsyncStorage,
-  whitelist: ["installation", "pendingMessage"]
+  version: P_VERSION,
+  whitelist: ["installation", "pendingMessage", "persistedProp"]
 };
 
 // A custom configuration to store the authentication into the Keychain
