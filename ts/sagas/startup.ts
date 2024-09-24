@@ -51,7 +51,7 @@ import { handleClearAllAttachments } from "../features/messages/saga/handleClear
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import {
-  getZendeskTokenSaga,
+  watchGetZendeskTokenSaga,
   watchZendeskGetSessionSaga,
   watchZendeskSupportSaga
 } from "../features/zendesk/saga";
@@ -553,10 +553,10 @@ export function* initializeApplicationSaga(
   yield* fork(watchNewWalletSaga);
 
   if (zendeskEnabled) {
+    yield* fork(watchGetZendeskTokenSaga, backendClient.getSession);
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
   }
 
-  yield* fork(getZendeskTokenSaga, backendClient.getSession);
   // Here we can be sure that the session information is loaded and valid
   const bpdToken = maybeSessionInformation.value.bpdToken as string;
   if (cdcEnabled) {

@@ -1,5 +1,11 @@
 // watch for all actions regarding Zendesk
-import { takeLatest, select, call, put, take } from "typed-redux-saga/macro";
+import {
+  takeLatest,
+  select,
+  call,
+  put,
+  takeEvery
+} from "typed-redux-saga/macro";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
@@ -95,10 +101,9 @@ export function* watchZendeskSupportSaga() {
   });
 }
 
-export function* getZendeskTokenSaga(
+function* getZendeskTokenSaga(
   getSession: ReturnType<typeof BackendClient>["getSession"]
 ) {
-  yield* take(getZendeskToken.request);
   try {
     const fields = formatRequestedTokenString(false, ["zendeskToken"]);
 
@@ -131,4 +136,10 @@ export function* getZendeskTokenSaga(
     yield* put(getZendeskToken.failure());
     return error;
   }
+}
+
+export function* watchGetZendeskTokenSaga(
+  getSession: ReturnType<typeof BackendClient>["getSession"]
+) {
+  yield* takeEvery(getZendeskToken.request, getZendeskTokenSaga, getSession);
 }
