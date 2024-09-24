@@ -80,21 +80,6 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
     );
   });
 
-  // useOnFirstRender(
-  //   () => {
-  //     analytics.trackPaymentsOpenReceipt({
-  //       organization_name: paymentAnalyticsData?.receiptOrganizationName,
-  //       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
-  //       user:
-  //         userFiscalCode === paymentAnalyticsData?.receiptPayerFiscalCode
-  //           ? "payer"
-  //           : "payee"
-  //     });
-  //   },
-  //   () =>
-  //     !pot.isLoading(transactionDetailsPot) && pot.isSome(transactionDetailsPot)
-  // );
-
   // eslint-disable-next-line sonarjs/no-identical-functions
   const handleOnRetry = () => {
     dispatch(
