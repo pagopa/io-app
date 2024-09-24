@@ -69,7 +69,6 @@ export const formatRequestedTokenString = (
     const defaultTokens: Array<DefaultTokenType> = [
       "spidLevel",
       "walletToken",
-      "myPortalToken",
       "bpdToken",
       "fimsToken",
       "lollipopAssertionRef"
