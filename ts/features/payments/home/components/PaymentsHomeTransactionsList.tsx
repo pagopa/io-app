@@ -8,6 +8,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { View } from "react-native";
 import Animated, { Layout } from "react-native-reanimated";
+import * as analytics from "../analytics";
 import { default as I18n } from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isPaymentsLatestTransactionsEmptySelector } from "../store/selectors";
@@ -63,6 +64,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   };
 
   const handleNavigateToTransactionList = () => {
+    analytics.trackPaymentsOpenReceiptListing();
     navigation.navigate(
       PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR,
       {

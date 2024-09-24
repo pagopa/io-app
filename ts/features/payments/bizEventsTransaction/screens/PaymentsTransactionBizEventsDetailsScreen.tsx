@@ -23,6 +23,9 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
+import * as analytics from "../analytics";
+import { profileFiscalCodeSelector } from "../../../../store/reducers/profile";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 export type PaymentsTransactionBizEventsDetailsScreenParams = {
   transactionId: string;
@@ -56,6 +59,8 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   const navigation = useIONavigation();
   const route = useRoute<PaymentsTransactionBizEventsDetailsScreenProps>();
   const { transactionId } = route.params;
+  const userFiscalCode = useIOSelector(profileFiscalCodeSelector);
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const transactionDetailsPot = useIOSelector(
     walletTransactionBizEventsDetailsPotSelector
   );
@@ -75,6 +80,21 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
     );
   });
 
+  // useOnFirstRender(
+  //   () => {
+  //     analytics.trackPaymentsOpenReceipt({
+  //       organization_name: paymentAnalyticsData?.receiptOrganizationName,
+  //       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
+  //       user:
+  //         userFiscalCode === paymentAnalyticsData?.receiptPayerFiscalCode
+  //           ? "payer"
+  //           : "payee"
+  //     });
+  //   },
+  //   () =>
+  //     !pot.isLoading(transactionDetailsPot) && pot.isSome(transactionDetailsPot)
+  // );
+
   // eslint-disable-next-line sonarjs/no-identical-functions
   const handleOnRetry = () => {
     dispatch(
@@ -83,6 +103,14 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   };
 
   const handleOnDownloadPdfReceiptError = () => {
+    analytics.trackPaymentsDownloadReceiptError({
+      organization_name: paymentAnalyticsData?.receiptOrganizationName,
+      first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
+      user:
+        userFiscalCode === paymentAnalyticsData?.receiptPayerFiscalCode
+          ? "payer"
+          : "payee"
+    });
     toast.error(I18n.t("features.payments.transactions.receipt.error"));
   };
 
@@ -97,6 +125,14 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   };
 
   const handleDownloadPdfReceipt = () => {
+    analytics.trackPaymentsDownloadReceiptAction({
+      organization_name: paymentAnalyticsData?.receiptOrganizationName,
+      first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
+      user:
+        userFiscalCode === paymentAnalyticsData?.receiptPayerFiscalCode
+          ? "payer"
+          : "payee"
+    });
     dispatch(
       getPaymentsBizEventsReceiptAction.request({
         transactionId,
