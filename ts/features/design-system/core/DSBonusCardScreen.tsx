@@ -39,10 +39,13 @@ const DSBonusCardScreen = () => (
       },
       accessibilityLabel: "info"
     }}
-    footerCtaPrimary={{
-      label: "Autorizza una transazione",
-      accessibilityLabel: "Autorizza una transazione",
-      onPress: () => Alert.alert("Autorizzata!")
+    actions={{
+      type: "SingleButton",
+      primary: {
+        label: "Autorizza una transazione",
+        accessibilityLabel: "Autorizza una transazione",
+        onPress: () => Alert.alert("Autorizzata!")
+      }
     }}
   >
     <VSpacer size={16} />
