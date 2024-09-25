@@ -6,11 +6,10 @@ import {
   getRptIdStringFromPaymentData,
   initializeAndNavigateToWalletForPayment
 } from "..";
-import { PaymentData, UIMessageId } from "../../types";
+import { PaymentData } from "../../types";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import { addUserSelectedPaymentRptId } from "../../store/actions";
-import { PaymentAmount } from "../../../../../definitions/backend/PaymentAmount";
 
 describe("getRptIdStringFromPaymentData", () => {
   it("should properly format the RptID", () => {
@@ -39,11 +38,8 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const prenavigationCallback = jest.fn();
     const analyticsCallback = jest.fn();
     initializeAndNavigateToWalletForPayment(
-      false,
-      "01HRA60BRYF6BCHF17SMXG8PP2" as UIMessageId,
       paymentId,
       false,
-      undefined,
       true,
       {} as Dispatch<any>,
       analyticsCallback,
@@ -62,11 +58,8 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const prenavigationCallback = jest.fn();
     const analyticsCallback = jest.fn();
     initializeAndNavigateToWalletForPayment(
-      false,
-      "01HRA60BRYF6BCHF17SMXG8PP2" as UIMessageId,
       paymentId,
       false,
-      undefined,
       false,
       {} as Dispatch<any>,
       analyticsCallback,
@@ -90,7 +83,6 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const iuv13 = "3333333333333";
     const checkDigit = "44";
 
-    const messageId = "01HRA60BRYF6BCHF17SMXG8PP2" as UIMessageId;
     const paymentId = `${organizationFiscalCode}${auxDigit}${applicationCode}${iuv13}${checkDigit}`;
 
     const dispatch = jest.fn();
@@ -99,11 +91,8 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const analyticsCallback = jest.fn();
 
     initializeAndNavigateToWalletForPayment(
-      false,
-      messageId,
       paymentId,
       false,
-      undefined,
       true,
       dispatch,
       analyticsCallback,
@@ -125,7 +114,6 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const iuv13 = "3333333333333";
     const checkDigit = "44";
 
-    const messageId = "01HRA60BRYF6BCHF17SMXG8PP2" as UIMessageId;
     const paymentId = `${organizationFiscalCode}${auxDigit}${applicationCode}${iuv13}${checkDigit}`;
 
     const dispatch = jest.fn();
@@ -133,11 +121,8 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const analyticsCallback = jest.fn();
 
     initializeAndNavigateToWalletForPayment(
-      false,
-      messageId,
       paymentId,
       false,
-      undefined,
       true,
       dispatch,
       analyticsCallback,
@@ -157,9 +142,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const iuv13 = "3333333333333";
     const checkDigit = "44";
 
-    const messageId = "01HRA60BRYF6BCHF17SMXG8PP2" as UIMessageId;
     const paymentId = `${organizationFiscalCode}${auxDigit}${applicationCode}${iuv13}${checkDigit}`;
-    const paymentAmount = 199 as PaymentAmount;
 
     const dispatch = jest.fn();
     const decodeErrorCallback = jest.fn();
@@ -167,11 +150,8 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const analyticsCallback = jest.fn();
 
     initializeAndNavigateToWalletForPayment(
-      false,
-      messageId,
       paymentId,
       false,
-      paymentAmount,
       true,
       dispatch,
       analyticsCallback,
@@ -182,42 +162,6 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     expect(prenavigationCallback).toHaveBeenCalledTimes(1);
     expect(dispatch.mock.calls).toHaveLength(2);
     expect(analyticsCallback).toHaveBeenCalledTimes(1);
-    expect(dispatch.mock.calls[0][0]).toStrictEqual(
-      addUserSelectedPaymentRptId(paymentId)
-    );
-  });
-  it("should navigate to Payment Transaction Summary with given amount", () => {
-    const organizationFiscalCode = "11111111111";
-    const auxDigit = "0";
-    const applicationCode = "22";
-    const iuv13 = "3333333333333";
-    const checkDigit = "44";
-
-    const messageId = "01HRA60BRYF6BCHF17SMXG8PP2" as UIMessageId;
-    const paymentId = `${organizationFiscalCode}${auxDigit}${applicationCode}${iuv13}${checkDigit}`;
-    const paymentAmount = 199 as PaymentAmount;
-
-    const dispatch = jest.fn();
-    const decodeErrorCallback = jest.fn();
-    const prenavigationCallback = jest.fn();
-    const analyticsCallback = jest.fn();
-
-    initializeAndNavigateToWalletForPayment(
-      false,
-      messageId,
-      paymentId,
-      false,
-      paymentAmount,
-      true,
-      dispatch,
-      analyticsCallback,
-      decodeErrorCallback,
-      prenavigationCallback
-    );
-    expect(decodeErrorCallback).not.toHaveBeenCalled();
-    expect(prenavigationCallback).toHaveBeenCalledTimes(1);
-    expect(analyticsCallback).toHaveBeenCalledTimes(1);
-    expect(dispatch.mock.calls).toHaveLength(2);
     expect(dispatch.mock.calls[0][0]).toStrictEqual(
       addUserSelectedPaymentRptId(paymentId)
     );
@@ -229,9 +173,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const iuv13 = "3333333333333";
     const checkDigit = "44";
 
-    const messageId = "01HRA60BRYF6BCHF17SMXG8PP2" as UIMessageId;
     const paymentId = `${organizationFiscalCode}${auxDigit}${applicationCode}${iuv13}${checkDigit}`;
-    const paymentAmount = 199 as PaymentAmount;
 
     const dispatch = jest.fn();
     const decodeErrorCallback = jest.fn();
@@ -239,11 +181,8 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const analyticsCallback = jest.fn();
 
     initializeAndNavigateToWalletForPayment(
-      false,
-      messageId,
       paymentId,
       true,
-      paymentAmount,
       true,
       dispatch,
       analyticsCallback,

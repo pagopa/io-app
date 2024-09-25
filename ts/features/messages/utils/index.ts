@@ -4,9 +4,8 @@ import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Dispatch } from "redux";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
-import { PaymentData, UIMessage, UIMessageId } from "../types";
+import { PaymentData, UIMessage } from "../types";
 import { NetworkError, getNetworkError } from "../../../utils/errors";
-import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { addUserSelectedPaymentRptId } from "../store/actions";
 import { Action } from "../../../store/actions/types";
 import { startPaymentFlowWithRptIdWorkaround } from "../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
@@ -26,11 +25,8 @@ export const getRptIdStringFromPaymentData = (
 ): string => `${paymentData.payee.fiscalCode}${paymentData.noticeNumber}`;
 
 export const initializeAndNavigateToWalletForPayment = (
-  isNewWalletSectionEnabled: boolean,
-  messageId: UIMessageId,
   paymentId: string,
   isPaidOrHasAnError: boolean,
-  paymentAmount: PaymentAmount | undefined,
   canNavigateToPayment: boolean,
   dispatch: Dispatch<Action>,
   analyticsCallback: (() => void) | undefined,
