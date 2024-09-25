@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import * as p from "@pagopa/ts-commons/lib/pot";
 import { IOToast } from "@pagopa/io-app-design-system";
 import { createActionsImplementation } from "../actions";
@@ -8,11 +7,11 @@ import {
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
 import { IDPayConfigurationRoutes } from "../../navigation/navigator";
-import ROUTES from "../../../../../navigation/routes";
 import { IDPayDetailsRoutes } from "../../../details/navigation";
 import { InitiativeFailureType } from "../failure";
 import I18n from "../../../../../i18n";
 import { refreshSessionToken } from "../../../../fastLogin/store/actions/tokenRefreshActions";
+import { PaymentsOnboardingRoutes } from "../../../../payments/onboarding/navigation/routes";
 
 const navigation: Partial<IOStackNavigationProp<AppParamsList>> = {
   navigate: jest.fn(),
@@ -149,10 +148,12 @@ describe("IDPay Configuration machine actions", () => {
   describe("navigateToAddPaymentMethodScreen", () => {
     it("should navigate to screen", async () => {
       actions.navigateToAddPaymentMethodScreen(T_CONTEXT, T_NO_EVENT);
-      expect(navigation.replace).toHaveBeenCalledWith(ROUTES.WALLET_NAVIGATOR, {
-        screen: ROUTES.WALLET_ADD_PAYMENT_METHOD,
-        params: { inPayment: O.none }
-      });
+      expect(navigation.replace).toHaveBeenCalledWith(
+        PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
+        {
+          screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
+        }
+      );
     });
 
     it("should not navigate to screen if BACK event with skipNavigation set to true", async () => {

@@ -118,14 +118,6 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
             [ROUTES.PROFILE_PRIVACY_MAIN]: "privacy-main"
           }
         },
-        [ROUTES.WALLET_NAVIGATOR]: {
-          path: "wallet",
-          screens: {
-            [ROUTES.PAYMENTS_HISTORY_SCREEN]: "payments-history",
-            [ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPTS_SCREEN]:
-              "card-onboarding-attempts"
-          }
-        },
         [SERVICES_ROUTES.SERVICES_NAVIGATOR]: {
           path: "services",
           screens: {
