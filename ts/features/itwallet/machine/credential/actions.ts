@@ -1,7 +1,7 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ActionArgs } from "xstate5";
+import { ActionArgs, assertEvent } from "xstate5";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
@@ -84,8 +84,20 @@ export default (
     dispatch(itwCredentialsStore([context.credential]));
   },
 
-  closeIssuance: () => {
-    navigation.popToTop();
+  closeIssuance: ({
+    event
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
+    assertEvent(event, "close");
+
+    if (event.navigateTo) {
+      navigation.replace(...event.navigateTo);
+    } else {
+      navigation.popToTop();
+    }
   },
 
   handleSessionExpired: () =>
