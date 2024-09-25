@@ -158,7 +158,6 @@ const computeFooterData = (
 };
 
 const renderPaymentWithDoubleCTA = (
-  messageId: UIMessageId,
   serviceId: ServiceId,
   paymentData: PaymentData,
   canNavigateToPayment: boolean,
@@ -171,7 +170,6 @@ const renderPaymentWithDoubleCTA = (
 ) => (
   <>
     <MessageDetailsPaymentButton
-      messageId={messageId}
       serviceId={serviceId}
       paymentData={paymentData}
       canNavigateToPayment={canNavigateToPayment}
@@ -195,7 +193,6 @@ const renderPaymentWithDoubleCTA = (
   </>
 );
 const renderPaymentWithCTA = (
-  messageId: UIMessageId,
   serviceId: ServiceId,
   paymentData: PaymentData,
   canNavigateToPayment: boolean,
@@ -206,7 +203,6 @@ const renderPaymentWithCTA = (
 ) => (
   <>
     <MessageDetailsPaymentButton
-      messageId={messageId}
       serviceId={serviceId}
       paymentData={paymentData}
       canNavigateToPayment={canNavigateToPayment}
@@ -247,14 +243,12 @@ const renderDoubleCTA = (
   </>
 );
 const renderPayment = (
-  messageId: UIMessageId,
   serviceId: ServiceId,
   paymentData: PaymentData,
   canNavigateToPayment: boolean,
   isLoadingPayment: boolean
 ) => (
   <MessageDetailsPaymentButton
-    messageId={messageId}
     serviceId={serviceId}
     paymentData={paymentData}
     canNavigateToPayment={canNavigateToPayment}
@@ -332,7 +326,6 @@ export const MessageDetailsStickyFooter = ({
         footerData,
         paymentWithDoubleCTA =>
           renderPaymentWithDoubleCTA(
-            messageId,
             serviceId,
             paymentWithDoubleCTA.paymentData,
             canNavigateToPayment,
@@ -345,7 +338,6 @@ export const MessageDetailsStickyFooter = ({
           ),
         paymentWithCTA =>
           renderPaymentWithCTA(
-            messageId,
             serviceId,
             paymentWithCTA.paymentData,
             canNavigateToPayment,
@@ -364,7 +356,6 @@ export const MessageDetailsStickyFooter = ({
           ),
         payment =>
           renderPayment(
-            messageId,
             serviceId,
             payment.paymentData,
             canNavigateToPayment,

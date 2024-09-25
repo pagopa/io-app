@@ -40,7 +40,6 @@ export const MessageDetailsPayment = ({
         messageId={messageId}
         noSpaceOnTop
         noticeNumber={paymentData.noticeNumber}
-        paymentAmount={paymentData.amount}
         rptId={rptId}
         serviceId={serviceId}
       />

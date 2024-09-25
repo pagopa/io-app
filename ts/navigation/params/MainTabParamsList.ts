@@ -1,7 +1,7 @@
-import { WalletHomeNavigationParams } from "../../screens/wallet/WalletHomeScreen";
 import ROUTES from "../routes";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
+import { WalletHomeNavigationParams } from "../../features/newWallet/screens/WalletHomeScreen";
 
 export type MainTabParamsList = {
   [MESSAGES_ROUTES.MESSAGES_HOME]: undefined;

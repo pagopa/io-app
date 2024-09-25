@@ -2,8 +2,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { getPaymentsTransactionDetailsAction } from "../store/actions";
-import { getTransactions } from "../../../../store/reducers/wallet/transactions";
 import { getGenericError } from "../../../../utils/errors";
+import { getTransactions } from "../store/selectors";
 
 /**
  * Handle the remote call to get the transaction details
@@ -18,8 +18,8 @@ export function* handleGetTransactionDetails(
   // TODO: Add the whole logic here to call the BIZ Event API as soon as it will be available and replace the following code
   const transactions = yield* select(getTransactions);
   const transactionDetails = pot.toUndefined(
-    pot.map(transactions, transactions =>
-      transactions.find(trx => trx.id === action.payload.transactionId)
+    pot.map(transactions, legacyTansactions =>
+      legacyTansactions.find(trx => trx.id === action.payload.transactionId)
     )
   );
   if (transactionDetails) {

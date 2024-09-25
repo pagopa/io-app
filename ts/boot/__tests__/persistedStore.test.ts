@@ -31,9 +31,6 @@ describe("Check the addition for new fields to the persisted store. If one of th
   it("Freeze 'installation' state", () => {
     expect(globalState.installation).toMatchSnapshot();
   });
-  it("Freeze 'payments' state", () => {
-    expect(globalState.payments).toMatchSnapshot();
-  });
   it("Freeze 'content' state", () => {
     expect(globalState.content).toMatchSnapshot();
   });
@@ -49,9 +46,6 @@ describe("Check the addition for new fields to the persisted store. If one of th
   });
   it("Freeze 'identification' state", () => {
     expect(globalState.identification).toMatchSnapshot();
-  });
-  it("Freeze 'wallet.wallets.walletById' state", () => {
-    expect(globalState.wallet.wallets.walletById).toMatchSnapshot();
   });
 
   it("Freeze 'installation.appVersionHistory' state", () => {

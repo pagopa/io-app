@@ -28,6 +28,11 @@ import {
   trackWalletAdd
 } from "../../itwallet/analytics";
 
+export type WalletHomeNavigationParams = Readonly<{
+  newMethodAdded: boolean;
+  keyFrom?: string;
+}>;
+
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
 const WalletHomeScreen = ({ route }: Props) => {

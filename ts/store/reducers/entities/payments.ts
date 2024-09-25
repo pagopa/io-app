@@ -4,9 +4,7 @@
  * are managed by different global reducers.
  */
 import { getType } from "typesafe-actions";
-import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Action } from "../../actions/types";
-import { paymentCompletedSuccess as legacyPaymentCompletedSuccess } from "../../actions/wallet/payment";
 import { paymentCompletedSuccess } from "../../../features/payments/checkout/store/actions/orchestration";
 import { GlobalState } from "../types";
 import { differentProfileLoggedIn } from "../../actions/crossSessions";
@@ -37,22 +35,6 @@ export const paymentByRptIdReducer = (
   action: Action
 ): PaymentByRptIdState => {
   switch (action.type) {
-    case getType(legacyPaymentCompletedSuccess):
-      // Use the ID as object key
-      const rptIdString: string = RptIdFromString.encode(action.payload.rptId);
-      return {
-        ...state,
-        [rptIdString]:
-          action.payload.kind === "COMPLETED"
-            ? {
-                kind: "COMPLETED",
-                transactionId: action.payload.transaction?.id
-              }
-            : {
-                kind: "DUPLICATED"
-              }
-      };
-    // New payment flow completed
     case getType(paymentCompletedSuccess):
       return {
         ...state,

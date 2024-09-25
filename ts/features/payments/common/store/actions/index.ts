@@ -15,6 +15,7 @@ import { PaymentsTransactionBizEventsActions } from "../../../bizEventsTransacti
 import { NetworkError } from "../../../../../utils/errors";
 import { SessionTokenResponse } from "../../../../../../definitions/pagopa/platform/SessionTokenResponse";
 import { Action } from "../../../../../store/actions/types";
+import { LegacyTransactionsActions } from "../../../transaction/store/actions/legacyTransactionsActions";
 
 export const paymentsGetPagoPaPlatformSessionTokenAction = createAsyncAction(
   "PAYMENTS_GET_NEW_SESSION_TOKEN_REQUEST",
@@ -46,4 +47,5 @@ export type PaymentsActions =
   | PaymentsHistoryActions
   | PaymentsHomeActions
   | PaymentsWalletActions
+  | LegacyTransactionsActions
   | PaymentsTransactionBizEventsActions;

@@ -6,7 +6,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
+import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
 import { useIODispatch } from "../../../../store/hooks";
 import { guardedNavigationAction } from "../../../../xstate/helpers/guardedNavigationAction";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
@@ -65,9 +65,8 @@ const createActionsImplementation = (
   );
 
   const navigateToAddPaymentMethodScreen = guardedNavigationAction(() =>
-    navigation.replace(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_ADD_PAYMENT_METHOD,
-      params: { inPayment: O.none }
+    navigation.replace(PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR, {
+      screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
     })
   );
 

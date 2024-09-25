@@ -43,8 +43,8 @@ import {
 } from "./handleUpsertMessageStatusAttributes";
 import { handleMessagePrecondition } from "./handleMessagePrecondition";
 import { handleThirdPartyMessage } from "./handleThirdPartyMessage";
-import { handlePaymentUpdateRequests } from "./handlePaymentUpdateRequests";
 import { handlePaymentStatusForAnalyticsTracking } from "./handlePaymentStatusForAnalyticsTracking";
+import { handlePaymentUpdateRequests } from "./handlePaymentUpdateRequests";
 
 /**
  * Handle messages requests

@@ -21,13 +21,11 @@ import { PersistedIdentificationState } from "./identification";
 import { InstallationState } from "./installation";
 import { NavigationState } from "./navigation";
 import { OnboardingState } from "./onboarding";
-import { PaymentsState } from "./payments";
 import { PersistedPreferencesState } from "./persistedPreferences";
 import { PreferencesState } from "./preferences";
 import { ProfileState } from "./profile";
 import { SearchState } from "./search";
 import { UserDataProcessingState } from "./userDataProcessing";
-import { WalletState } from "./wallet";
 import { StartupState } from "./startup";
 
 export type GlobalState = Readonly<{
@@ -42,7 +40,6 @@ export type GlobalState = Readonly<{
   onboarding: OnboardingState;
   profile: ProfileState;
   userDataProcessing: UserDataProcessingState;
-  wallet: WalletState;
   preferences: PreferencesState;
   persistedPreferences: PersistedPreferencesState;
   content: ContentState;
@@ -50,7 +47,6 @@ export type GlobalState = Readonly<{
   installation: InstallationState;
   debug: PersistedDebugState;
   search: SearchState;
-  payments: PaymentsState;
   emailValidation: EmailValidationState;
   cie: CieState;
   bonus: BonusState;

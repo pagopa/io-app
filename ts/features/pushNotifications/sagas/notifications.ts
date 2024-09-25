@@ -18,7 +18,6 @@ import {
   PendingMessageState,
   pendingMessageStateSelector
 } from "../store/reducers/pendingMessage";
-import { isPaymentOngoingSelector } from "../../../store/reducers/wallet/payment";
 import { navigateToMainNavigatorAction } from "../../../store/actions/navigation";
 import { navigateToMessageRouterAction } from "../utils/navigation";
 import NavigationService from "../../../navigation/NavigationService";
@@ -109,11 +108,7 @@ export function* handlePendingMessageStateIfAllowedSaga(
   // the application was killed and the push notification is tapped)
   yield* call(trackMessageNotificationTapIfNeeded, pendingMessageState);
 
-  // Check if there is a payment ongoing
-  const isPaymentOngoing: ReturnType<typeof isPaymentOngoingSelector> =
-    yield* select(isPaymentOngoingSelector);
-
-  if (!isPaymentOngoing && pendingMessageState) {
+  if (pendingMessageState) {
     // We have a pending notification message to handle
     const messageId = pendingMessageState.id;
 

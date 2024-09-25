@@ -17,12 +17,6 @@ import {
 import { PspData } from "../../definitions/pagopa/PspData";
 import I18n from "../i18n";
 import {
-  paymentAttiva,
-  paymentIdPolling,
-  paymentVerifica
-} from "../store/actions/wallet/payment";
-import { PaymentHistory } from "../store/reducers/payments/history";
-import {
   OutcomeCode,
   OutcomeCodes,
   OutcomeCodesKey
@@ -34,7 +28,6 @@ import {
   Transaction,
   Wallet
 } from "../types/pagopa";
-import { PayloadForAction } from "../types/utils";
 import { getTranslatedShortNumericMonthYear } from "./dates";
 import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
@@ -323,9 +316,6 @@ export const getErrorDescriptionV2 = (
   });
 };
 
-export const getPaymentHistoryDetails = (payment: PaymentHistory): string =>
-  JSON.stringify({ payment });
-
 // return the transaction fee it transaction is defined and its fee property too
 export const getTransactionFee = (
   transaction?: Transaction,
@@ -456,24 +446,6 @@ export const getPickPaymentMethodDescription = (
         O.getOrElse(() => defaultHolder)
       );
 };
-
-export const isDuplicatedPayment = (
-  error: O.Option<
-    PayloadForAction<
-      | (typeof paymentVerifica)["failure"]
-      | (typeof paymentAttiva)["failure"]
-      | (typeof paymentIdPolling)["failure"]
-    >
-  >
-) =>
-  pipe(
-    error,
-    O.exists(
-      detail =>
-        detail === "PAA_PAGAMENTO_DUPLICATO" ||
-        detail === "PPT_PAGAMENTO_DUPLICATO"
-    )
-  );
 
 export const isPaidPaymentFromDetailV2Enum = (details: Detail_v2Enum) =>
   details === Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO ||

@@ -1,4 +1,4 @@
-import ROUTES from "../../../navigation/routes";
+/* eslint-disable eslint-comments/no-unlimited-disable */
 import { applicationChangeState } from "../../actions/application";
 import { setDebugModeEnabled } from "../../actions/debug";
 import {
@@ -18,10 +18,6 @@ jest.mock("react-native-share", () => ({
 
 describe("allowed Snapshot Screens Selector test", () => {
   it("Test high level composition", () => {
-    // with a blacklisted screen, expected false
-    expect(
-      isAllowedSnapshotCurrentScreen.resultFunc(ROUTES.WALLET_ADD_CARD, false)
-    ).toBeFalsy();
     // with the debug mode enabled, expected true
     expect(
       isAllowedSnapshotCurrentScreen.resultFunc(

@@ -1,9 +1,11 @@
 import { createSelector } from "reselect";
-import ROUTES from "../../navigation/routes";
+import { PaymentsOnboardingRoutes } from "../../features/payments/onboarding/navigation/routes";
 import { isDebugModeEnabledSelector } from "./debug";
 import { currentRouteSelector } from "./navigation";
 
-export const screenBlackList = new Set([ROUTES.WALLET_ADD_CARD as string]);
+export const screenBlackList = new Set([
+  PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD as string
+]);
 
 /**
  * Return {true} if a snapshot can be taken in the current screen (android only).

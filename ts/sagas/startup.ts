@@ -99,7 +99,6 @@ import {
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
-import { walletPaymentHandlersInitialized } from "../store/actions/wallet/payment";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { deletePin, getPin } from "../utils/keychain";
 import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingSaga";
@@ -115,6 +114,7 @@ import {
 import { checkNotificationsPreferencesSaga } from "../features/pushNotifications/sagas/checkNotificationsPreferencesSaga";
 import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
+import { watchLegacyTransactionSaga } from "../features/payments/transaction/store/saga";
 import {
   clearKeychainError,
   keychainError
@@ -155,7 +155,6 @@ import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import { checkItWalletIdentitySaga } from "./startup/checkItWalletIdentitySaga";
 import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
-import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
 export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
@@ -589,8 +588,7 @@ export function* initializeApplicationSaga(
     yield* select(isPagoPATestEnabledSelector);
 
   yield* fork(
-    watchWalletSaga,
-    sessionToken,
+    watchLegacyTransactionSaga,
     walletToken,
     isPagoPATestEnabled ? pagoPaApiUrlPrefixTest : pagoPaApiUrlPrefix
   );
@@ -673,7 +671,7 @@ export function* initializeApplicationSaga(
 
   yield* put(
     applicationInitialized({
-      actionsToWaitFor: [walletPaymentHandlersInitialized]
+      actionsToWaitFor: []
     })
   );
 }
