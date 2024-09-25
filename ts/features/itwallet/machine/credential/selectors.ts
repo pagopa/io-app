@@ -28,6 +28,3 @@ export const selectFailureOption = (snapshot: MachineSnapshot) =>
 
 export const selectCredential = (snapshot: MachineSnapshot) =>
   snapshot.context.credential;
-
-export const selectIsIdle = (snapshot: MachineSnapshot) =>
-  snapshot.matches("Idle");
