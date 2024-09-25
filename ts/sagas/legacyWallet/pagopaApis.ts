@@ -18,7 +18,7 @@ export function* commonPaymentVerificationProcedure<A extends Action>(
   rptId: RptId,
   successActionProvider: (paymentData: PaymentRequestsGetResponse) => A,
   failureActionProvider: (details: Detail_v2Enum) => A,
-  action?: ActionType<(typeof paymentVerifica)["request"]>
+  action?: ActionType<typeof paymentVerifica.request>
 ) {
   try {
     const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> =
@@ -28,11 +28,11 @@ export function* commonPaymentVerificationProcedure<A extends Action>(
       rptId: RptIdFromString.encode(rptId),
       test: isPagoPATestEnabled
     });
-    const response: SagaCallReturnType<typeof getVerificaRpt> = (yield* call(
+    const response = (yield* call(
       withRefreshApiCall,
       request,
-      action
-    )) as unknown as SagaCallReturnType<typeof getVerificaRpt>;
+      action as any
+    )) as SagaCallReturnType<typeof getVerificaRpt>;
     if (E.isRight(response)) {
       if (response.right.status === 200) {
         // Verifica succeeded
