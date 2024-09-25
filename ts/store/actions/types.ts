@@ -42,7 +42,6 @@ import { InstallationActions } from "./installation";
 import { MixpanelActions } from "./mixpanel";
 import { OnboardingActions } from "./onboarding";
 import { OrganizationsActions } from "./organizations";
-import { PaymentsActions } from "./payments";
 import { PersistedPreferencesActions } from "./persistedPreferences";
 import { PinSetActions } from "./pinset";
 import { PreferencesActions } from "./preferences";
@@ -74,7 +73,6 @@ export type Action =
   | DebugActions
   | CalendarEventsActions
   | SearchActions
-  | PaymentsActions
   | OrganizationsActions
   | UserDataProcessingActions
   | ProfileEmailValidationAction
