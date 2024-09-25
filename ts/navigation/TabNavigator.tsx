@@ -13,7 +13,6 @@ import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHo
 import { useBottomTabNavigatorStyle } from "../hooks/useBottomTabNavigatorStyle";
 import I18n from "../i18n";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
-import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
 import {
   isNewPaymentSectionEnabledSelector,
@@ -92,9 +91,7 @@ export const MainTabNavigator = () => {
         />
         <Tab.Screen
           name={ROUTES.WALLET_HOME}
-          component={
-            isNewWalletSectionEnabled ? NewWalletHomeScreen : WalletHomeScreen
-          }
+          component={NewWalletHomeScreen}
           options={{
             title: I18n.t("global.navigator.wallet"),
             tabBarIcon: ({ color, focused }) => (

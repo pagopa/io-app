@@ -1,13 +1,6 @@
 import { FooterWithButtons, IOToast } from "@pagopa/io-app-design-system";
-import {
-  AmountInEuroCents,
-  PaymentNoticeNumber,
-  PaymentNoticeNumberFromString,
-  RptId
-} from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
-import * as E from "fp-ts/lib/Either";
+import { constVoid } from "fp-ts/lib/function";
 import React, { useEffect, useState } from "react";
 import {
   Linking,
@@ -17,7 +10,6 @@ import {
   View
 } from "react-native";
 import WebView from "react-native-webview";
-import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 import dataErrorImage from "../../../../img/pictograms/doubt.png";
 import genericErrorImage from "../../../../img/wallet/errors/generic-error-icon.png";
@@ -27,20 +19,15 @@ import { renderInfoRasterImage } from "../../../components/infoScreen/imageRende
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
 import I18n from "../../../i18n";
-import { mixpanelTrack } from "../../../mixpanel";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
-import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import { useIODispatch } from "../../../store/hooks";
 import { checkoutUADonationsUrl } from "../../../urls";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
-import { isHttp, openWebUrl } from "../../../utils/url";
+import { isHttp } from "../../../utils/url";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
-import { UADonationWebViewMessage } from "../types";
 
 export type UAWebviewScreenNavigationParams = Readonly<{
   urlToLoad: string;
@@ -88,87 +75,6 @@ const renderLoading = () => (
   </View>
 );
 
-/**
- * show a toast to inform about the occurred error
- */
-const handleError = () => IOToast.error(I18n.t("global.genericError"));
-
-/**
- * parse the messages coming from the webview
- * if some messages are recognized as valid, it handles the relative action
- * @param event
- * @param onPaymentPayload
- */
-const handleOnMessage = (
-  event: WebViewMessageEvent,
-  onPaymentPayload: (rptID: RptId, amount: AmountInEuroCents) => void
-) => {
-  const maybeMessage = UADonationWebViewMessage.decode(
-    JSON.parse(event.nativeEvent.data)
-  );
-  if (E.isLeft(maybeMessage)) {
-    void mixpanelTrack("UADONATIONS_WEBVIEW_DECODE_ERROR", {
-      reason: `decoding error: ${readableReport(maybeMessage.left)}`
-    });
-    handleError();
-    return;
-  }
-  switch (maybeMessage.right.kind) {
-    case "webUrl":
-      const webUrl = maybeMessage.right.payload;
-      void mixpanelTrack("UADONATIONS_WEBVIEW_OPEN_WEBURL_REQUEST", {
-        url: webUrl
-      });
-      openWebUrl(webUrl, () => {
-        void mixpanelTrack("UADONATIONS_WEBVIEW_OPEN_WEBURL_ERROR", {
-          url: maybeMessage.right.payload
-        });
-        handleError();
-      });
-      break;
-    case "payment":
-      const { nav, cf, amount } = maybeMessage.right.payload;
-      void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DECODE_REQUEST", {
-        organizationFiscalCode: cf,
-        paymentNoticeNumber: PaymentNoticeNumberFromString.encode(nav),
-        amount
-      });
-      const maybeRptId = RptId.decode({
-        paymentNoticeNumber: nav,
-        organizationFiscalCode: cf
-      });
-      const maybeAmount = AmountInEuroCents.decode(amount.toString());
-      if (E.isLeft(maybeRptId) || E.isLeft(maybeAmount)) {
-        const reason = E.isLeft(maybeRptId)
-          ? maybeRptId.left
-          : E.isLeft(maybeAmount)
-          ? maybeAmount.left
-          : maybeAmount.right;
-        void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DECODE_ERROR", {
-          reason
-        });
-        handleError();
-        return;
-      }
-      void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DECODE_SUCCESS", {
-        organizationFiscalCode: maybeRptId.right.organizationFiscalCode,
-        paymentNoticeNumber: PaymentNoticeNumber.encode(
-          maybeRptId.right.paymentNoticeNumber
-        ),
-        amount: maybeAmount.right
-      });
-      onPaymentPayload(maybeRptId.right, maybeAmount.right);
-      break;
-    case "error":
-      const error = maybeMessage.right.payload;
-      void mixpanelTrack("UADONATIONS_WEBVIEW_REPORT_ERROR", {
-        reason: error
-      });
-      handleError();
-      break;
-  }
-};
-
 const injectedJavascript = closeInjectedScript(AVOID_ZOOM_JS);
 
 /**
@@ -182,7 +88,6 @@ export const UAWebViewScreen = () => {
     useRoute<
       Route<"UADONATION_ROUTES_WEBVIEW", UAWebviewScreenNavigationParams>
     >();
-  const dispatch = useIODispatch();
   const uri = route.params.urlToLoad;
   const ref = React.createRef<WebView>();
   /**
@@ -210,19 +115,6 @@ export const UAWebViewScreen = () => {
       }
     }
   }, [uri, navigation]);
-
-  // trigger the payment flow within the given data
-  const startDonationPayment = (
-    rptId: RptId,
-    initialAmount: AmountInEuroCents
-  ) => {
-    dispatch(paymentInitializeState());
-    navigateToPaymentTransactionSummaryScreen({
-      rptId,
-      initialAmount,
-      paymentStartOrigin: "donation"
-    });
-  };
 
   // inject JS to avoid the user can zoom the web page content
   const injectJS = () => {
@@ -282,7 +174,7 @@ export const UAWebViewScreen = () => {
             androidMicrophoneAccessDisabled={true}
             onError={onError}
             onHttpError={onError}
-            onMessage={e => handleOnMessage(e, startDonationPayment)}
+            onMessage={_ => constVoid}
             startInLoadingState={true}
             renderLoading={renderLoading}
             javaScriptEnabled={true}

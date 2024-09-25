@@ -2,11 +2,8 @@ import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { InfoBox } from "../../../components/box/InfoBox";
-import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
-import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 
 /* Types */
-import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import AdviceComponent from "../../../components/AdviceComponent";
 import { Body } from "../../../components/core/typography/Body";
 import { H5 } from "../../../components/core/typography/H5";
@@ -61,14 +58,6 @@ export const DSLegacyAdvice = () => (
         </Body>
       }
     />
-    <VSpacer size={16} />
-    <DSFullWidthComponent>
-      <PaymentBannerComponent
-        paymentReason={"Pagamento buoni pasto mensa scuola"}
-        fee={100 as ImportoEuroCents}
-        currentAmount={30000 as ImportoEuroCents}
-      />
-    </DSFullWidthComponent>
     <VSpacer size={24} />
     <View style={[styles.content, IOStyles.horizontalContentPadding]}>
       <InfoBox iconName="profile" iconColor="bluegrey">

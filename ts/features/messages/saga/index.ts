@@ -1,11 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import {
-  fork,
-  put,
-  select,
-  takeEvery,
-  takeLatest
-} from "typed-redux-saga/macro";
+import { put, select, takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { SessionToken } from "../../../types/SessionToken";
 import { clearCache } from "../../../store/actions/profile";
 import { logoutSuccess } from "../../../store/actions/authentication";
@@ -43,7 +37,6 @@ import {
 } from "./handleUpsertMessageStatusAttributes";
 import { handleMessagePrecondition } from "./handleMessagePrecondition";
 import { handleThirdPartyMessage } from "./handleThirdPartyMessage";
-import { handlePaymentUpdateRequests } from "./handlePaymentUpdateRequests";
 import { handlePaymentStatusForAnalyticsTracking } from "./handlePaymentStatusForAnalyticsTracking";
 
 /**
@@ -115,9 +108,6 @@ export function* watchMessagesSaga(
     handleDownloadAttachment,
     bearerToken
   );
-
-  // handle the request for updating a message's payment
-  yield* fork(handlePaymentUpdateRequests, backendClient.getVerificaRpt);
 
   // handle the request for removing a downloaded attachment
   yield* takeEvery(removeCachedAttachment, handleClearAttachment);

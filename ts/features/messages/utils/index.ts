@@ -1,18 +1,12 @@
 import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
-import {
-  AmountInEuroCents,
-  RptIdFromString
-} from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Dispatch } from "redux";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
-import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { PaymentData, UIMessage, UIMessageId } from "../types";
 import { NetworkError, getNetworkError } from "../../../utils/errors";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
-import { getAmountFromPaymentAmount } from "../../../utils/payment";
 import { addUserSelectedPaymentRptId } from "../store/actions";
 import { Action } from "../../../store/actions/types";
 import { startPaymentFlowWithRptIdWorkaround } from "../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
@@ -69,34 +63,12 @@ export const initializeAndNavigateToWalletForPayment = (
     dispatch(addUserSelectedPaymentRptId(paymentId));
   }
 
-  if (isNewWalletSectionEnabled) {
-    startPaymentFlowWithRptIdWorkaround(
-      eitherRptId.right,
-      dispatch,
-      NavigationService.navigate,
-      { startOrigin: "message" }
-    );
-  } else {
-    dispatch(paymentInitializeState());
-
-    const initialAmount = pipe(
-      paymentAmount,
-      O.fromNullable,
-      O.map(getAmountFromPaymentAmount),
-      O.flatten,
-      O.getOrElse(() => "0000" as AmountInEuroCents)
-    );
-
-    NavigationService.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-      params: {
-        rptId: eitherRptId.right,
-        paymentStartOrigin: "message",
-        initialAmount,
-        messageId
-      }
-    });
-  }
+  startPaymentFlowWithRptIdWorkaround(
+    eitherRptId.right,
+    dispatch,
+    NavigationService.navigate,
+    { startOrigin: "message" }
+  );
 };
 
 export const duplicateSetAndAdd = <T>(inputSet: Set<T>, item: T) => {

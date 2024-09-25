@@ -29,7 +29,6 @@ import {
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
 import { notificationsInstallationSelector } from "../../features/pushNotifications/store/reducers/installation";
-import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
@@ -348,14 +347,8 @@ const DesignSystemSection = () => {
 };
 
 const PlaygroundsSection = () => {
-  const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
-  const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
-
-  const onAddTestCard = () => {
-    dispatch(walletAddCoBadgeStart(undefined));
-  };
 
   const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
     {
@@ -415,11 +408,6 @@ const PlaygroundsSection = () => {
         navigation.navigate(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.PLAYGROUNDS
         })
-    },
-    {
-      condition: isPagoPATestEnabled,
-      value: I18n.t("profile.main.addTestCard.title"),
-      onPress: onAddTestCard
     }
   ];
 
