@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.70.0-rc.2](https://github.com/pagopa/io-app/compare/2.70.0-rc.1...2.70.0-rc.2) (2024-09-20)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1594](https://pagopa.atlassian.net/browse/SIW-1594)] Add official Driving License credential assets ([#6191](https://github.com/pagopa/io-app/issues/6191)) ([a7cffdc](https://github.com/pagopa/io-app/commit/a7cffdc87034ffb6b7f4469c59974f75d55825c5))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1658](https://pagopa.atlassian.net/browse/SIW-1658)] Remove digital version badge from eID card ([#6202](https://github.com/pagopa/io-app/issues/6202)) ([6489529](https://github.com/pagopa/io-app/commit/64895299e25d5c159f841112e1624fdacd1f5bec))
+* [[IABT-1527](https://pagopa.atlassian.net/browse/IABT-1527),[IOBP-877](https://pagopa.atlassian.net/browse/IOBP-877)] Translated "Rimuovi" into delete payment method button in english ([#6201](https://github.com/pagopa/io-app/issues/6201)) ([c179722](https://github.com/pagopa/io-app/commit/c1797220a5c8e2619afdaf2eb503cf1e975b15d6))
+* [[IOBP-839](https://pagopa.atlassian.net/browse/IOBP-839)] Hide gradient if no payment method selected ([#6194](https://github.com/pagopa/io-app/issues/6194)) ([bcc7e1c](https://github.com/pagopa/io-app/commit/bcc7e1c9521ccf851c256628a5f179042d3126cb))
+* **IT Wallet:** [[SIW-1609](https://pagopa.atlassian.net/browse/SIW-1609)] Persisted credentials after uninstalling app on iOS ([#6197](https://github.com/pagopa/io-app/issues/6197)) ([ff2c790](https://github.com/pagopa/io-app/commit/ff2c790b01ce786fd18994c961177900b4c47e4f))
+
+
+### Chores
+
+* [[IOBP-553](https://pagopa.atlassian.net/browse/IOBP-553)] IDPay definitions adaption ([#5926](https://github.com/pagopa/io-app/issues/5926)) ([1b33ed4](https://github.com/pagopa/io-app/commit/1b33ed47ba2f185c1edbfae0bccc0107ecf0ffb8))
+* [[IOPID-2275](https://pagopa.atlassian.net/browse/IOPID-2275)] Settings Section Communication Banner & delete locale FF to activate new scan and settings sections ([#6198](https://github.com/pagopa/io-app/issues/6198)) ([b757031](https://github.com/pagopa/io-app/commit/b7570310886ebc73a7d31dcc4e621a4c926b4b2d)), closes [/github.com/pagopa/io-dev-api-server/blob/f368eb22c588c2c7cfe8c7c995f447e167a59a51/src/payloads/backend.ts#L153](https://github.com/pagopa//github.com/pagopa/io-dev-api-server/blob/f368eb22c588c2c7cfe8c7c995f447e167a59a51/src/payloads/backend.ts/issues/L153)
+* **IT Wallet:** [[SIW-1438](https://pagopa.atlassian.net/browse/SIW-1438),[SIW-1147](https://pagopa.atlassian.net/browse/SIW-1147)] Add Mixpanel event tracking ([#6186](https://github.com/pagopa/io-app/issues/6186)) ([b98cf89](https://github.com/pagopa/io-app/commit/b98cf89a1948a4d887816c7ef4f786c26366d15f))
+* **IT Wallet:** [[SIW-1510](https://pagopa.atlassian.net/browse/SIW-1510)] Add European Health Insurance Card to the credential list ([#6163](https://github.com/pagopa/io-app/issues/6163)) ([648459e](https://github.com/pagopa/io-app/commit/648459ea29ed79f8e632f9ae44ae2654e05eda12))
+* **IT Wallet:** [[SIW-1550](https://pagopa.atlassian.net/browse/SIW-1550)] Add CTA to view/download PDF in the European Health Insurance card's details screen ([#6161](https://github.com/pagopa/io-app/issues/6161)) ([fa33f4b](https://github.com/pagopa/io-app/commit/fa33f4bc17773dcc69179bae2eb9af82dc8e979e))
+* **IT Wallet:** [[SIW-1567](https://pagopa.atlassian.net/browse/SIW-1567)] Not entitled credential error ([#6190](https://github.com/pagopa/io-app/issues/6190)) ([d2588bf](https://github.com/pagopa/io-app/commit/d2588bffc47a0f20a3b32f1bb7c34716ee84d688))
+* **IT Wallet:** [[SIW-1657](https://pagopa.atlassian.net/browse/SIW-1657)] Change trustmark verifier base URL ([#6195](https://github.com/pagopa/io-app/issues/6195)) ([d87d2cc](https://github.com/pagopa/io-app/commit/d87d2ccce57fc0f7991158c67678385362d8025f))
+* [[PE-684](https://pagopa.atlassian.net/browse/PE-684)] CGN update eyca label ([#6182](https://github.com/pagopa/io-app/issues/6182)) ([78aa2e9](https://github.com/pagopa/io-app/commit/78aa2e971ba8d2108b1e860141bedf9f22cf7bcc))
+
 ## [2.70.0-rc.1](https://github.com/pagopa/io-app/compare/2.70.0-rc.0...2.70.0-rc.1) (2024-09-17)
 
 

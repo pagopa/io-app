@@ -1,6 +1,7 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
-import React from "react";
+import React, { ReactElement } from "react";
 import { StyleSheet, View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -8,15 +9,24 @@ import { isItwTrialActiveSelector } from "../../../trialSystem/store/reducers";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import {
+  trackItWalletBannerTap,
+  trackItWalletBannerClosure,
+  trackITWalletBannerVisualized
+} from "../../analytics";
+import { itwTrialId } from "../../../../config";
 
 type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
   ignoreMargins?: boolean;
+  fallbackComponent?: ReactElement;
 };
 
 export const ItwDiscoveryBanner = ({
   withTitle = true,
-  ignoreMargins = false
+  ignoreMargins = false,
+  fallbackComponent
 }: ItwDiscoveryBannerProps) => {
   const bannerRef = React.createRef<View>();
   const navigation = useIONavigation();
@@ -34,15 +44,40 @@ export const ItwDiscoveryBanner = ({
       !isItwEnabled, // The IT Wallet features is not enabled
     [isVisible, isItwTrialActive, isItwValid, isItwEnabled]
   );
+  const route = useRoute();
+
+  const trackBannerProperties = React.useMemo(
+    () => ({
+      banner_id: itwTrialId,
+      banner_page: route.name,
+      banner_landing: "ITW_INTRO"
+    }),
+    [route.name]
+  );
+
+  useOnFirstRender(() => {
+    if (!shouldBeHidden) {
+      trackITWalletBannerVisualized(trackBannerProperties);
+    }
+  });
 
   if (shouldBeHidden) {
+    if (fallbackComponent) {
+      return fallbackComponent;
+    }
     return null;
   }
 
   const handleOnPress = () => {
+    trackItWalletBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO
     });
+  };
+
+  const handleOnClose = () => {
+    trackItWalletBannerClosure(trackBannerProperties);
+    setVisible(false);
   };
 
   return (
@@ -60,7 +95,7 @@ export const ItwDiscoveryBanner = ({
         pictogramName="itWallet"
         color="turquoise"
         size="big"
-        onClose={() => setVisible(false)}
+        onClose={handleOnClose}
         labelClose={I18n.t("global.buttons.close")}
         onPress={handleOnPress}
       />
