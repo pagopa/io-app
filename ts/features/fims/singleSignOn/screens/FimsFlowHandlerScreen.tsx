@@ -1,4 +1,4 @@
-import { IOStyles, LabelSmall } from "@pagopa/io-app-design-system";
+import { Body, IOStyles } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
@@ -6,24 +6,30 @@ import * as React from "react";
 import { View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
+import { trackAuthenticationError } from "../../common/analytics";
+import { FimsUpdateAppAlert } from "../../common/components/FimsUpdateAppAlert";
+import { FimsParamsList } from "../../common/navigation";
+import { FimsFlowSuccessBody } from "../components/FimsSuccessBody";
 import {
   fimsCancelOrAbortAction,
   fimsGetConsentsListAction
 } from "../store/actions/";
-import { FimsFlowSuccessBody } from "../components/FimsSuccessBody";
-import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
-import { FimsParamsList } from "../../common/navigation";
 import {
   fimsConsentsDataSelector,
   fimsErrorStateSelector,
   fimsLoadingStateSelector
 } from "../store/selectors";
 
-export type FimsFlowHandlerScreenRouteParams = { ctaUrl: string };
+export type FimsFlowHandlerScreenRouteParams = {
+  ctaText: string;
+  ctaUrl: string;
+};
 
 type FimsFlowHandlerScreenRouteProps = IOStackNavigationRouteProps<
   FimsParamsList,
@@ -33,9 +39,10 @@ type FimsFlowHandlerScreenRouteProps = IOStackNavigationRouteProps<
 export const FimsFlowHandlerScreen = (
   props: FimsFlowHandlerScreenRouteProps
 ) => {
-  const { ctaUrl } = props.route.params;
+  const { ctaText, ctaUrl } = props.route.params;
   const dispatch = useIODispatch();
 
+  const requiresAppUpdate = useIOSelector(fimsRequiresAppUpdateSelector);
   const loadingState = useIOSelector(fimsLoadingStateSelector);
   const consentsPot = useIOSelector(fimsConsentsDataSelector);
   const errorState = useIOSelector(fimsErrorStateSelector);
@@ -58,10 +65,22 @@ export const FimsFlowHandlerScreen = (
   });
 
   React.useEffect(() => {
-    if (ctaUrl) {
-      dispatch(fimsGetConsentsListAction.request({ ctaUrl }));
+    if (ctaUrl && !requiresAppUpdate) {
+      dispatch(fimsGetConsentsListAction.request({ ctaText, ctaUrl }));
+    } else if (requiresAppUpdate) {
+      trackAuthenticationError(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        "update_required"
+      );
     }
-  }, [ctaUrl, dispatch]);
+  }, [ctaText, ctaUrl, dispatch, requiresAppUpdate]);
+
+  if (requiresAppUpdate) {
+    return <FimsUpdateAppAlert />;
+  }
 
   if (errorState !== undefined) {
     return <FimsErrorBody title={errorState} />;
@@ -70,9 +89,7 @@ export const FimsFlowHandlerScreen = (
     const subtitle =
       loadingState === "in-app-browser-loading" || loadingState === "abort" ? (
         <View style={IOStyles.alignCenter}>
-          <LabelSmall color="grey-650" weight="Regular">
-            {I18n.t("FIMS.loadingScreen.in-app-browser-loading.subtitle")}
-          </LabelSmall>
+          <Body color="grey-650">{I18n.t(`FIMS.loadingScreen.subtitle`)}</Body>
         </View>
       ) : (
         <></>

@@ -18,11 +18,14 @@ import {
 } from "../../store/reducers/allPaginated";
 import { UIMessage } from "../../types";
 import { ItwDiscoveryBanner } from "../../../itwallet/common/components/ItwDiscoveryBanner";
+import { trackPullToRefresh } from "../../analytics";
+import { SettingsDiscoveryBanner } from "../../../../screens/profile/components/SettingsDiscoveryBanner";
 import {
   generateMessageListLayoutInfo,
   getLoadNextPageMessagesActionIfAllowed,
   getReloadAllMessagesActionForRefreshIfAllowed,
-  LayoutInfo
+  LayoutInfo,
+  trackMessageListEndReachedIfAllowed
 } from "./homeUtils";
 import { WrappedMessageListItem } from "./WrappedMessageListItem";
 import {
@@ -85,6 +88,7 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
     );
 
     const onRefreshCallback = useCallback(() => {
+      trackPullToRefresh(category);
       const state = store.getState();
       const reloadAllMessagesAction =
         getReloadAllMessagesActionForRefreshIfAllowed(state, category);
@@ -98,6 +102,11 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         state,
         category,
         new Date()
+      );
+      trackMessageListEndReachedIfAllowed(
+        category,
+        !!loadNextPageMessages,
+        state
       );
       if (loadNextPageMessages) {
         dispatch(loadNextPageMessages);
@@ -113,7 +122,11 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         ListEmptyComponent={<EmptyList category={category} />}
         ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
         ListHeaderComponent={
-          category === "INBOX" ? <ItwDiscoveryBanner /> : undefined
+          category === "INBOX" ? (
+            <ItwDiscoveryBanner
+              fallbackComponent={<SettingsDiscoveryBanner />}
+            />
+          ) : undefined
         }
         getItemLayout={getItemLayoutCallback}
         renderItem={({ index, item }) => {
@@ -126,9 +139,9 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
           } else {
             return (
               <WrappedMessageListItem
-                archiveRestoreSourceCategory={category}
                 index={index}
                 message={item}
+                source={category}
               />
             );
           }

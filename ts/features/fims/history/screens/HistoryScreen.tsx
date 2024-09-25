@@ -1,76 +1,99 @@
-import { Body, Divider, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
+/* eslint-disable functional/immutable-data */
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { FlatList, SafeAreaView, View } from "react-native";
-import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { FimsHistoryListItem } from "../components/FimsHistoryListItem";
-import { LoadingFimsHistoryItemsFooter } from "../components/FimsHistoryLoaders";
-import { fimsHistoryGet } from "../store/actions";
+import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
 import {
+  trackHistoryFailure,
+  trackHistoryScreen
+} from "../../common/analytics";
+import { FimsUpdateAppAlert } from "../../common/components/FimsUpdateAppAlert";
+import { FimsHistoryEmptyContent } from "../components/FimsHistoryEmptyContent";
+import { FimsHistoryKoScreen } from "../components/FimsHistoryKoScreen";
+import { FimsHistoryNonEmptyContent } from "../components/FimsHistoryNonEmptyContent";
+import { fimsHistoryGet, resetFimsHistoryState } from "../store/actions";
+import {
+  fimsHistoryErrorSelector,
   fimsHistoryToUndefinedSelector,
   isFimsHistoryLoadingSelector
 } from "../store/selectors";
 
 export const FimsHistoryScreen = () => {
   const dispatch = useIODispatch();
-  const isLoading = useIOSelector(isFimsHistoryLoadingSelector);
+
+  const requiresAppUpdate = useIOSelector(fimsRequiresAppUpdateSelector);
   const consents = useIOSelector(fimsHistoryToUndefinedSelector);
+  const historyErrorState = useIOSelector(fimsHistoryErrorSelector);
+  const isHistoryLoading = useIOSelector(isFimsHistoryLoadingSelector);
+
+  const lastErrorToastDate = React.useRef<number | null>(null);
+
+  const shouldShowErrorToast = historyErrorState === "ALERT_ONLY";
+  // ---------- HOOKS
+
+  useHeaderSecondLevel({
+    title: I18n.t("FIMS.history.historyScreen.header"),
+    supportRequest: true
+  });
 
   React.useEffect(() => {
-    dispatch(fimsHistoryGet.request({ shouldReloadFromScratch: true }));
-  }, [dispatch]);
+    if (!requiresAppUpdate) {
+      trackHistoryScreen();
+      dispatch(fimsHistoryGet.request({ shouldReloadFromScratch: true }));
+    } else {
+      trackHistoryFailure("update_required");
+    }
+    return () => {
+      // full reset in order to avoid wonky error toast behaviour
+      dispatch(resetFimsHistoryState());
+    };
+  }, [dispatch, requiresAppUpdate]);
 
-  const fetchMore = React.useCallback(() => {
-    if (consents?.continuationToken) {
+  React.useEffect(() => {
+    if (shouldShowErrorToast) {
+      // needed to avoid multiple state changes simultaneously
+      lastErrorToastDate.current = Date.now();
+      IOToast.error(I18n.t("FIMS.history.errorStates.toast"));
+    }
+  }, [shouldShowErrorToast]);
+
+  const fetchMoreHistoryItems = React.useCallback(() => {
+    const hasErrorTimeoutExpired = lastErrorToastDate.current
+      ? Date.now() - lastErrorToastDate.current >= 500
+      : true;
+
+    if (hasErrorTimeoutExpired && consents?.continuationToken) {
       dispatch(
         fimsHistoryGet.request({
           continuationToken: consents.continuationToken
         })
       );
     }
-  }, [consents?.continuationToken, dispatch]);
+  }, [consents, dispatch]);
 
-  const renderLoadingFooter = () =>
-    isLoading ? (
-      <LoadingFimsHistoryItemsFooter
-        showFirstDivider={(consents?.items.length ?? 0) > 0}
-      />
-    ) : null;
-  useHeaderSecondLevel({
-    title: I18n.t("FIMS.history.historyScreen.header"),
-    supportRequest: true
-  });
-  return (
-    <>
-      <SafeAreaView>
-        <View style={IOStyles.horizontalContentPadding}>
-          <Body>{I18n.t("FIMS.history.historyScreen.body")}</Body>
-        </View>
+  // ---------- FAILURE CASES
 
-        <VSpacer size={16} />
+  if (requiresAppUpdate) {
+    return <FimsUpdateAppAlert />;
+  }
 
-        <FlatList
-          data={consents?.items}
-          contentContainerStyle={IOStyles.horizontalContentPadding}
-          ItemSeparatorComponent={Divider}
-          keyExtractor={item => item.id}
-          renderItem={item => <FimsHistoryListItem item={item.item} />}
-          onEndReached={fetchMore}
-          ListFooterComponent={renderLoadingFooter}
-        />
-      </SafeAreaView>
-      <FooterActions
-        actions={{
-          type: "SingleButton",
-          primary: {
-            label: I18n.t("FIMS.history.exportData.CTA"),
-            onPress: constNull // full export functionality coming soon
-          }
-        }}
-      />
-    </>
+  if (historyErrorState === "FULL_KO") {
+    return <FimsHistoryKoScreen />;
+  }
+
+  // ---------- SUCCESS
+
+  const shouldShowEmptyContent =
+    !isHistoryLoading && (consents?.items ?? []).length === 0;
+
+  return shouldShowEmptyContent ? (
+    <FimsHistoryEmptyContent />
+  ) : (
+    <FimsHistoryNonEmptyContent
+      consents={consents}
+      fetchMore={fetchMoreHistoryItems}
+    />
   );
 };

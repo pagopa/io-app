@@ -27,10 +27,6 @@ export type AddNewCredential = {
   type: "add-new-credential";
 };
 
-export type RequestAssistance = {
-  type: "request-assistance";
-};
-
 export type SelectIdentificationMode = {
   type: "select-identification-mode";
   mode: IdentificationMode;
@@ -68,6 +64,10 @@ export type NfcEnabled = {
   type: "nfc-enabled";
 };
 
+export type Abort = {
+  type: "abort";
+};
+
 export type EidIssuanceEvents =
   | Reset
   | Start
@@ -79,9 +79,9 @@ export type EidIssuanceEvents =
   | AddToWallet
   | GoToWallet
   | AddNewCredential
-  | RequestAssistance
   | Retry
   | Back
   | Close
   | NfcEnabled
+  | Abort
   | ErrorActorEvent;

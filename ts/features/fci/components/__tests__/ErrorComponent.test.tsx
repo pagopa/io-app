@@ -21,7 +21,7 @@ describe("Test ErrorComponent", () => {
     const props: Props = {
       title: "title",
       subTitle: "subTitle",
-      pictogram: "airBaloon",
+      pictogram: "attention",
       onPress: constNull
     };
     const component = renderComponent({ ...props });
@@ -31,7 +31,7 @@ describe("Test ErrorComponent", () => {
     const props: Props = {
       title: "title",
       subTitle: "subTitle",
-      pictogram: "airBaloon",
+      pictogram: "attention",
       onPress: constNull
     };
     const component = renderComponent({ ...props });
@@ -43,7 +43,7 @@ describe("Test ErrorComponent", () => {
     const props: Props = {
       title: "title",
       subTitle: "subTitle",
-      pictogram: "airBaloon",
+      pictogram: "attention",
       onPress: constNull
     };
     const component = renderComponent({ ...props });
@@ -55,7 +55,7 @@ describe("Test ErrorComponent", () => {
     const props: Props = {
       title: "title",
       subTitle: "subTitle",
-      pictogram: "airBaloon",
+      pictogram: "attention",
       retry: true,
       onPress: constNull
     };
@@ -68,7 +68,7 @@ describe("Test ErrorComponent", () => {
     const props: Props = {
       title: "title",
       subTitle: "subTitle",
-      pictogram: "airBaloon",
+      pictogram: "attention",
       retry: true,
       assistance: true,
       onPress: constNull
@@ -82,7 +82,7 @@ describe("Test ErrorComponent", () => {
     const props: Props = {
       title: "title",
       subTitle: "subTitle",
-      pictogram: "airBaloon",
+      pictogram: "attention",
       assistance: true,
       onPress: constNull
     };

@@ -13,6 +13,7 @@ import { UIMessageId } from "../../types";
 export type MessageGetStatusFailurePhaseType =
   | "none"
   | "paginatedMessage"
+  | "serviceDetails"
   | "messageDetails"
   | "preconditions"
   | "thirdPartyMessageDetails"

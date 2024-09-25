@@ -8,6 +8,9 @@ type MachineSnapshot = StateFrom<ItwCredentialIssuanceMachine>;
 export const selectIsLoading = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(ItwTags.Loading);
 
+export const selectIsIssuing = (snapshot: MachineSnapshot) =>
+  snapshot.hasTag(ItwTags.Issuing);
+
 export const selectCredentialTypeOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.credentialType);
 
@@ -22,3 +25,6 @@ export const selectCredentialOption = (snapshot: MachineSnapshot) =>
 
 export const selectFailureOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.failure);
+
+export const selectCredential = (snapshot: MachineSnapshot) =>
+  snapshot.context.credential;

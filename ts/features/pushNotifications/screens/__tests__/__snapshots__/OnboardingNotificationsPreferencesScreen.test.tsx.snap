@@ -643,9 +643,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     accessibilityState={
                                       {
                                         "checked": true,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -869,9 +870,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     accessibilityState={
                                       {
                                         "checked": true,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -1123,6 +1125,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -2229,9 +2232,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -2455,9 +2459,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -2709,6 +2714,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -3816,9 +3822,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -4042,9 +4049,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     accessibilityState={
                                       {
                                         "checked": true,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -4296,6 +4304,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -5403,9 +5412,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     accessibilityState={
                                       {
                                         "checked": true,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -5629,9 +5639,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     accessibilityState={
                                       {
                                         "checked": false,
-                                        "disabled": undefined,
+                                        "disabled": false,
                                       }
                                     }
+                                    disabled={false}
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
@@ -5883,6 +5894,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -7764,6 +7776,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,

@@ -1,13 +1,14 @@
 import { ErrorActorEvent } from "xstate5";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { type useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 export type Reset = {
   type: "reset";
 };
 
-export type SelecteCredential = {
+export type SelectCredential = {
   type: "select-credential";
-  credentialType: CredentialType;
+  credentialType: string;
+  skipNavigation: boolean;
 };
 
 export type ConfirmTrustData = {
@@ -28,11 +29,12 @@ export type Back = {
 
 export type Close = {
   type: "close";
+  navigateTo?: Parameters<ReturnType<typeof useIONavigation>["replace"]>;
 };
 
 export type CredentialIssuanceEvents =
   | Reset
-  | SelecteCredential
+  | SelectCredential
   | ConfirmTrustData
   | AddToWallet
   | Retry
