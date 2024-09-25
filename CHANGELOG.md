@@ -2,6 +2,85 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.70.0-rc.2](https://github.com/pagopa/io-app/compare/2.70.0-rc.1...2.70.0-rc.2) (2024-09-20)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1594](https://pagopa.atlassian.net/browse/SIW-1594)] Add official Driving License credential assets ([#6191](https://github.com/pagopa/io-app/issues/6191)) ([a7cffdc](https://github.com/pagopa/io-app/commit/a7cffdc87034ffb6b7f4469c59974f75d55825c5))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1658](https://pagopa.atlassian.net/browse/SIW-1658)] Remove digital version badge from eID card ([#6202](https://github.com/pagopa/io-app/issues/6202)) ([6489529](https://github.com/pagopa/io-app/commit/64895299e25d5c159f841112e1624fdacd1f5bec))
+* [[IABT-1527](https://pagopa.atlassian.net/browse/IABT-1527),[IOBP-877](https://pagopa.atlassian.net/browse/IOBP-877)] Translated "Rimuovi" into delete payment method button in english ([#6201](https://github.com/pagopa/io-app/issues/6201)) ([c179722](https://github.com/pagopa/io-app/commit/c1797220a5c8e2619afdaf2eb503cf1e975b15d6))
+* [[IOBP-839](https://pagopa.atlassian.net/browse/IOBP-839)] Hide gradient if no payment method selected ([#6194](https://github.com/pagopa/io-app/issues/6194)) ([bcc7e1c](https://github.com/pagopa/io-app/commit/bcc7e1c9521ccf851c256628a5f179042d3126cb))
+* **IT Wallet:** [[SIW-1609](https://pagopa.atlassian.net/browse/SIW-1609)] Persisted credentials after uninstalling app on iOS ([#6197](https://github.com/pagopa/io-app/issues/6197)) ([ff2c790](https://github.com/pagopa/io-app/commit/ff2c790b01ce786fd18994c961177900b4c47e4f))
+
+
+### Chores
+
+* [[IOBP-553](https://pagopa.atlassian.net/browse/IOBP-553)] IDPay definitions adaption ([#5926](https://github.com/pagopa/io-app/issues/5926)) ([1b33ed4](https://github.com/pagopa/io-app/commit/1b33ed47ba2f185c1edbfae0bccc0107ecf0ffb8))
+* [[IOPID-2275](https://pagopa.atlassian.net/browse/IOPID-2275)] Settings Section Communication Banner & delete locale FF to activate new scan and settings sections ([#6198](https://github.com/pagopa/io-app/issues/6198)) ([b757031](https://github.com/pagopa/io-app/commit/b7570310886ebc73a7d31dcc4e621a4c926b4b2d)), closes [/github.com/pagopa/io-dev-api-server/blob/f368eb22c588c2c7cfe8c7c995f447e167a59a51/src/payloads/backend.ts#L153](https://github.com/pagopa//github.com/pagopa/io-dev-api-server/blob/f368eb22c588c2c7cfe8c7c995f447e167a59a51/src/payloads/backend.ts/issues/L153)
+* **IT Wallet:** [[SIW-1438](https://pagopa.atlassian.net/browse/SIW-1438),[SIW-1147](https://pagopa.atlassian.net/browse/SIW-1147)] Add Mixpanel event tracking ([#6186](https://github.com/pagopa/io-app/issues/6186)) ([b98cf89](https://github.com/pagopa/io-app/commit/b98cf89a1948a4d887816c7ef4f786c26366d15f))
+* **IT Wallet:** [[SIW-1510](https://pagopa.atlassian.net/browse/SIW-1510)] Add European Health Insurance Card to the credential list ([#6163](https://github.com/pagopa/io-app/issues/6163)) ([648459e](https://github.com/pagopa/io-app/commit/648459ea29ed79f8e632f9ae44ae2654e05eda12))
+* **IT Wallet:** [[SIW-1550](https://pagopa.atlassian.net/browse/SIW-1550)] Add CTA to view/download PDF in the European Health Insurance card's details screen ([#6161](https://github.com/pagopa/io-app/issues/6161)) ([fa33f4b](https://github.com/pagopa/io-app/commit/fa33f4bc17773dcc69179bae2eb9af82dc8e979e))
+* **IT Wallet:** [[SIW-1567](https://pagopa.atlassian.net/browse/SIW-1567)] Not entitled credential error ([#6190](https://github.com/pagopa/io-app/issues/6190)) ([d2588bf](https://github.com/pagopa/io-app/commit/d2588bffc47a0f20a3b32f1bb7c34716ee84d688))
+* **IT Wallet:** [[SIW-1657](https://pagopa.atlassian.net/browse/SIW-1657)] Change trustmark verifier base URL ([#6195](https://github.com/pagopa/io-app/issues/6195)) ([d87d2cc](https://github.com/pagopa/io-app/commit/d87d2ccce57fc0f7991158c67678385362d8025f))
+* [[PE-684](https://pagopa.atlassian.net/browse/PE-684)] CGN update eyca label ([#6182](https://github.com/pagopa/io-app/issues/6182)) ([78aa2e9](https://github.com/pagopa/io-app/commit/78aa2e971ba8d2108b1e860141bedf9f22cf7bcc))
+
+## [2.70.0-rc.1](https://github.com/pagopa/io-app/compare/2.70.0-rc.0...2.70.0-rc.1) (2024-09-17)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1522](https://pagopa.atlassian.net/browse/SIW-1522)] Get credential status attestation after issuance ([#6162](https://github.com/pagopa/io-app/issues/6162)) ([97797da](https://github.com/pagopa/io-app/commit/97797daff2d9f20454b2de008b8e49ff4af7f94a))
+* [[IOPID-2138](https://pagopa.atlassian.net/browse/IOPID-2138)] Implementation new CieID login flow wizards ([#6166](https://github.com/pagopa/io-app/issues/6166)) ([691a59e](https://github.com/pagopa/io-app/commit/691a59e2b52ae792bf5fd06493ddca2fb30e6ab9))
+* **IT Wallet:** [[SIW-1473](https://pagopa.atlassian.net/browse/SIW-1473)] Add credential trustmark ([#6176](https://github.com/pagopa/io-app/issues/6176)) ([37efff3](https://github.com/pagopa/io-app/commit/37efff34a7b4018f25b16d3922f6766cbac3bff1))
+* [[IOBP-634](https://pagopa.atlassian.net/browse/IOBP-634)] Add pull to refresh in payments home screen ([#6108](https://github.com/pagopa/io-app/issues/6108)) ([a937730](https://github.com/pagopa/io-app/commit/a937730238b3e44f23aea19ad9d0ee96b736b89d))
+
+
+### Bug Fixes
+
+* [[IOBP-836](https://pagopa.atlassian.net/browse/IOBP-836)] Remove assistance for FCI into payments zendesk modal ([#6165](https://github.com/pagopa/io-app/issues/6165)) ([9dae1e7](https://github.com/pagopa/io-app/commit/9dae1e7e05f712de9fa2ebf2b2e4a1092583cf13))
+* [[IOBP-867](https://pagopa.atlassian.net/browse/IOBP-867)] Regression of generic error page into verify payment screen ([#6175](https://github.com/pagopa/io-app/issues/6175)) ([33379a6](https://github.com/pagopa/io-app/commit/33379a6a9541bc50b82520d741a29ad4896f430a))
+* [[IOCOM-1617](https://pagopa.atlassian.net/browse/IOCOM-1617),[IOCOM-1613](https://pagopa.atlassian.net/browse/IOCOM-1613)] FIMS auth consents list fixes ([#6169](https://github.com/pagopa/io-app/issues/6169)) ([6aba87f](https://github.com/pagopa/io-app/commit/6aba87f7b4466688f7f566989e0e3caa7d40f072))
+* [[PE-588](https://pagopa.atlassian.net/browse/PE-588)] Cgn card detail capitalize user name surname ([#6172](https://github.com/pagopa/io-app/issues/6172)) ([cf39755](https://github.com/pagopa/io-app/commit/cf397556b5ecb54b863c2616a5face8228b2a7fa))
+* [[PE-679](https://pagopa.atlassian.net/browse/PE-679)] CGN categories list uncapitalize labels ([#6178](https://github.com/pagopa/io-app/issues/6178)) ([8fcb820](https://github.com/pagopa/io-app/commit/8fcb820d2c658504ff0799a68a35a1a4bc58e934))
+* [[PE-681](https://pagopa.atlassian.net/browse/PE-681)] CGN hide discount badge if 0  ([#6185](https://github.com/pagopa/io-app/issues/6185)) ([26a05a6](https://github.com/pagopa/io-app/commit/26a05a6c1cc5557d939602c7f4cb5f8788c8d8a2)), closes [/github.com/pagopa/io-dev-api-server/blob/f368eb22c588c2c7cfe8c7c995f447e167a59a51/src/payloads/features/cgn/merchants.ts#L165](https://github.com/pagopa//github.com/pagopa/io-dev-api-server/blob/f368eb22c588c2c7cfe8c7c995f447e167a59a51/src/payloads/features/cgn/merchants.ts/issues/L165)
+* **IT Wallet:** [[SIW-1587](https://pagopa.atlassian.net/browse/SIW-1587)] Use the status attestation info to get the status in `ItwPresentationCredentialCard` ([#6173](https://github.com/pagopa/io-app/issues/6173)) ([827aa2a](https://github.com/pagopa/io-app/commit/827aa2a5f4091daeabaeb34921220b9e478f60d0))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1518](https://pagopa.atlassian.net/browse/SIW-1518)] Add Health Insurance card details screen ([#6154](https://github.com/pagopa/io-app/issues/6154)) ([7be6f02](https://github.com/pagopa/io-app/commit/7be6f021de76221e5845794b74e0cb4d3b54d31a))
+* [[IOBP-860](https://pagopa.atlassian.net/browse/IOBP-860)] Preserve `flow` in custom properties for Mixpanel event tracking ([#6189](https://github.com/pagopa/io-app/issues/6189)) ([485a3ad](https://github.com/pagopa/io-app/commit/485a3ad9a3da0a8210a4cdfbf96363f165ed2786)), closes [/github.com/pagopa/io-app/blob/33b2c8f749c1ce944df05d1262d6dba0570cbab8/ts/features/barcode/analytics/index.ts#L98](https://github.com/pagopa//github.com/pagopa/io-app/blob/33b2c8f749c1ce944df05d1262d6dba0570cbab8/ts/features/barcode/analytics/index.ts/issues/L98)
+* [[IOCOM-1625](https://pagopa.atlassian.net/browse/IOCOM-1625)] FIMS history screen UI revamp ([#6174](https://github.com/pagopa/io-app/issues/6174)) ([884c0dd](https://github.com/pagopa/io-app/commit/884c0dda37ff618972ef685caf24bb7f87f4a817))
+* [[IOCOM-1691](https://pagopa.atlassian.net/browse/IOCOM-1691)] Update I18n in Fims auth screen ([#6177](https://github.com/pagopa/io-app/issues/6177)) ([b3c2231](https://github.com/pagopa/io-app/commit/b3c2231db2b5c4355ad97a94d0e9286bbc49e382))
+* [[PE-683](https://pagopa.atlassian.net/browse/PE-683)] CGN detail screen change labels ([#6181](https://github.com/pagopa/io-app/issues/6181)) ([5dcd569](https://github.com/pagopa/io-app/commit/5dcd569d400cb71713714c9a3a736aa21bb3dc53))
+* **Cross:** [[IOAPPX-369](https://pagopa.atlassian.net/browse/IOAPPX-369)] Add support for `enableDiscreteTransition` to the `useHeaderSecondLevel` hook ([#6170](https://github.com/pagopa/io-app/issues/6170)) ([ef70398](https://github.com/pagopa/io-app/commit/ef703986fdfe4bd3003bf97a7992fbc7fa1d2dd6))
+* **IT Wallet:** [[SIW-1509](https://pagopa.atlassian.net/browse/SIW-1509)] Add European Health Insurance Card credential issuance ([#6139](https://github.com/pagopa/io-app/issues/6139)) ([c69e5a4](https://github.com/pagopa/io-app/commit/c69e5a4131665dc841af97a9cb8b47e104c03696))
+
+## [2.70.0-rc.0](https://github.com/pagopa/io-app/compare/2.69.0-rc.8...2.70.0-rc.0) (2024-09-11)
+
+
+### Features
+
+* [[IOPID-2133](https://pagopa.atlassian.net/browse/IOPID-2133)] Added CieID Feature Flag ([#6153](https://github.com/pagopa/io-app/issues/6153)) ([2b3e9cf](https://github.com/pagopa/io-app/commit/2b3e9cf3a04c8aeb539831eaf69c3a0a6ab12b13))
+* [[PE-610](https://pagopa.atlassian.net/browse/PE-610)] CGN detail screen new card appearance ([#6097](https://github.com/pagopa/io-app/issues/6097)) ([012a137](https://github.com/pagopa/io-app/commit/012a1374fb3ced91cd02b7ceda0a292fc8d2846a))
+* [[PE-614](https://pagopa.atlassian.net/browse/PE-614)] CGN landing page new copy ([#5989](https://github.com/pagopa/io-app/issues/5989)) ([6b39ee0](https://github.com/pagopa/io-app/commit/6b39ee04034774757b03457c521f7d35c39514cd))
+
+
+### Bug Fixes
+
+* [[IOBP-793](https://pagopa.atlassian.net/browse/IOBP-793)] Unauthorized status mapping from checkout APIs ([#6042](https://github.com/pagopa/io-app/issues/6042)) ([eff0eab](https://github.com/pagopa/io-app/commit/eff0eabe25fef7589744baed97a99502fa388cda))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1447](https://pagopa.atlassian.net/browse/SIW-1447)] Allow user to cancel CieID identification ([#6105](https://github.com/pagopa/io-app/issues/6105)) ([81eb5f4](https://github.com/pagopa/io-app/commit/81eb5f4dae4989cac99633f9fb289faf0f9a7625))
+* **IT Wallet:** [[SIW-1536](https://pagopa.atlassian.net/browse/SIW-1536)] Add skeumorphic card in MDL details screen ([#6144](https://github.com/pagopa/io-app/issues/6144)) ([5002894](https://github.com/pagopa/io-app/commit/50028942b41c4cdd37fa4194744e1eb58b6da107))
+
 ## [2.69.0-rc.8](https://github.com/pagopa/io-app/compare/2.69.0-rc.7...2.69.0-rc.8) (2024-09-06)
 
 

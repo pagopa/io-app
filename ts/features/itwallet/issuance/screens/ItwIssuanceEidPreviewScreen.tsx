@@ -7,8 +7,9 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
@@ -16,16 +17,24 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   selectEidOption,
+  selectIdentification,
   selectIsDisplayingPreview
 } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import {
+  CREDENTIALS_MAP,
+  trackCredentialPreview,
+  trackItwExit,
+  trackItwRequestSuccess,
+  trackSaveCredentialToWallet
+} from "../../analytics";
+import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 import { ItwIssuanceLoadingScreen } from "../components/ItwIssuanceLoadingScreen";
 
 export const ItwIssuanceEidPreviewScreen = () => {
@@ -62,22 +71,37 @@ type ContentViewProps = {
  */
 const ContentView = ({ eid }: ContentViewProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
+  const route = useRoute();
+
+  const mixPanelCredential = useMemo(
+    () => CREDENTIALS_MAP[eid.credentialType],
+    [eid.credentialType]
+  );
+
+  useFocusEffect(() => {
+    trackCredentialPreview(mixPanelCredential);
+    trackItwRequestSuccess(identification?.mode);
+  });
 
   useDebugInfo({
     parsedCredential: eid.parsedCredential
   });
 
-  const dismissDialog = useItwDismissalDialog(() =>
-    machineRef.send({ type: "close" })
-  );
+  const dismissDialog = useItwDismissalDialog(() => {
+    machineRef.send({ type: "close" });
+    trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+  });
 
   const handleStoreEidSuccess = () => {
     machineRef.send({ type: "add-to-wallet" });
   };
 
   const handleSaveToWallet = () => {
+    trackSaveCredentialToWallet(eid.credentialType);
     dispatch(
       identificationRequest(
         false,
@@ -116,7 +140,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
       <View style={styles.contentWrapper}>
         <H2>{I18n.t("features.itWallet.issuance.eidPreview.title")}</H2>
         <VSpacer size={24} />
-        <ItwCredentialClaimsList data={eid} isPreview={true} />
+        <ItwCredentialPreviewClaimsList data={eid} />
         <VSpacer size={24} />
       </View>
       <FooterActions
