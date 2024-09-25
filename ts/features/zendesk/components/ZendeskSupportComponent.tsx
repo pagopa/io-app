@@ -21,18 +21,33 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { profileSelector } from "../../../store/reducers/profile";
 import { openWebUrl } from "../../../utils/url";
 import ZENDESK_ROUTES from "../navigation/routes";
-import { zendeskConfigSelector } from "../store/reducers";
+import {
+  getZendeskTokenStatusSelector,
+  zendeskConfigSelector,
+  ZendeskTokenStatus
+} from "../store/reducers";
 import { handleContactSupport } from "../utils";
+import { getZendeskToken } from "../store/actions";
+import { isLoggedIn } from "../../../store/reducers/authentication";
+import { usePrevious } from "../../../utils/hooks/usePrevious";
 
 type Props = {
   assistanceForPayment: boolean;
   assistanceForCard: boolean;
   assistanceForFci: boolean;
 };
+enum ButtonPressed {
+  "ON_GOING_REQUEST" = "ON_GOING_REQUEST",
+  "OPEN_NEW_REQUEST" = "OPEN_NEW_REQUEST"
+}
+
+/**
+ * this development is temporary. When design unlocks the task, this screen may be reverted or modified.
+ */
 
 /**
  * This component represents the entry point for the Zendesk workflow.
@@ -50,23 +65,100 @@ const ZendeskSupportComponent = ({
   const profile = useIOSelector(profileSelector);
   const maybeProfile: O.Option<InitializedProfile> = pot.toOption(profile);
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
+  const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
+  const getZendeskTokenStatus = useIOSelector(getZendeskTokenStatusSelector);
+  const prevGetZendeskTokenStatus = usePrevious(getZendeskTokenStatus);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const dispatch = useIODispatch();
+  const [pressedButton, setPressedButton] = React.useState<ButtonPressed>();
 
-  const handleContactSupportPress = React.useCallback(
-    () =>
-      handleContactSupport(
-        navigation,
-        assistanceForPayment,
-        assistanceForCard,
-        assistanceForFci,
-        zendeskRemoteConfig
-      ),
-    [
+  const handleOnGoingRequest = React.useCallback(() => {
+    void mixpanelTrack("ZENDESK_SHOW_TICKETS_STARTS");
+    if (O.isNone(maybeProfile)) {
+      navigation.navigate(ZENDESK_ROUTES.MAIN, {
+        screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
+        params: {
+          assistanceForPayment,
+          assistanceForCard,
+          assistanceForFci
+        }
+      });
+    } else {
+      navigation.navigate(ZENDESK_ROUTES.MAIN, {
+        screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
+        params: {
+          assistanceForPayment,
+          assistanceForCard,
+          assistanceForFci
+        }
+      });
+    }
+  }, [
+    assistanceForCard,
+    assistanceForFci,
+    assistanceForPayment,
+    maybeProfile,
+    navigation
+  ]);
+
+  const handleOpenNewRequest = React.useCallback(() => {
+    handleContactSupport(
       navigation,
       assistanceForPayment,
       assistanceForCard,
       assistanceForFci,
       zendeskRemoteConfig
+    );
+  }, [
+    assistanceForCard,
+    assistanceForFci,
+    assistanceForPayment,
+    navigation,
+    zendeskRemoteConfig
+  ]);
+  React.useEffect(() => {
+    if (
+      prevGetZendeskTokenStatus === ZendeskTokenStatus.REQUEST &&
+      getZendeskTokenStatus === ZendeskTokenStatus.SUCCESS
+    ) {
+      if (pressedButton === ButtonPressed.ON_GOING_REQUEST) {
+        handleOnGoingRequest();
+      } else if (pressedButton === ButtonPressed.OPEN_NEW_REQUEST) {
+        handleOpenNewRequest();
+      }
+    } else if (
+      prevGetZendeskTokenStatus === ZendeskTokenStatus.REQUEST &&
+      getZendeskTokenStatus === ZendeskTokenStatus.ERROR
+    ) {
+      IOToast.error("errore");
+    }
+  }, [
+    getZendeskTokenStatus,
+    handleOnGoingRequest,
+    handleOpenNewRequest,
+    pressedButton,
+    prevGetZendeskTokenStatus
+  ]);
+
+  const handleButtonPress = React.useCallback(
+    (value: ButtonPressed) => {
+      setPressedButton(value);
+      if (isUserLoggedIn) {
+        dispatch(getZendeskToken.request());
+      } else {
+        if (pressedButton === ButtonPressed.ON_GOING_REQUEST) {
+          handleOnGoingRequest();
+        } else if (pressedButton === ButtonPressed.OPEN_NEW_REQUEST) {
+          handleOpenNewRequest();
+        }
+      }
+    },
+    [
+      dispatch,
+      handleOnGoingRequest,
+      handleOpenNewRequest,
+      isUserLoggedIn,
+      pressedButton
     ]
   );
 
@@ -96,28 +188,7 @@ const ZendeskSupportComponent = ({
 
       <ButtonOutline
         fullWidth
-        onPress={() => {
-          void mixpanelTrack("ZENDESK_SHOW_TICKETS_STARTS");
-          if (O.isNone(maybeProfile)) {
-            navigation.navigate(ZENDESK_ROUTES.MAIN, {
-              screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
-              params: {
-                assistanceForPayment,
-                assistanceForCard,
-                assistanceForFci
-              }
-            });
-          } else {
-            navigation.navigate(ZENDESK_ROUTES.MAIN, {
-              screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
-              params: {
-                assistanceForPayment,
-                assistanceForCard,
-                assistanceForFci
-              }
-            });
-          }
-        }}
+        onPress={() => handleButtonPress(ButtonPressed.ON_GOING_REQUEST)}
         testID={"showTicketsButton"}
         label={I18n.t("support.helpCenter.cta.seeReports")}
         accessibilityLabel={I18n.t("support.helpCenter.cta.seeReports")}
@@ -127,8 +198,12 @@ const ZendeskSupportComponent = ({
         fullWidth
         label={I18n.t("support.helpCenter.cta.contactSupport")}
         accessibilityLabel={I18n.t("support.helpCenter.cta.contactSupport")}
-        onPress={handleContactSupportPress}
+        onPress={() => handleButtonPress(ButtonPressed.OPEN_NEW_REQUEST)}
         testID={"contactSupportButton"}
+        loading={
+          getZendeskTokenStatus === ZendeskTokenStatus.REQUEST &&
+          pressedButton === ButtonPressed.OPEN_NEW_REQUEST
+        }
       />
     </>
   );
