@@ -1,10 +1,10 @@
 import React from "react";
-import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../i18n";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import ROUTES from "../../../navigation/routes";
-import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
-import useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
+import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import useNavigateToLoginMethod from "../../../../hooks/useNavigateToLoginMethod";
 
 const SpidWizard = () => {
   const { navigate } = useIONavigation();
