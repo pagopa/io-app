@@ -32,6 +32,7 @@ import {
 import { easeGradient } from "react-native-easing-gradient";
 import LinearGradient from "react-native-linear-gradient";
 import Animated, {
+  AnimatedRef,
   Easing,
   Extrapolate,
   interpolate,
@@ -75,6 +76,7 @@ type IOScrollView = WithTestID<
     headerConfig?: ComponentProps<typeof HeaderSecondLevel>;
     actions?: IOScrollViewActions;
     debugMode?: boolean;
+    animatedRef?: AnimatedRef<Animated.ScrollView>;
     snapOffset?: number;
     /* Don't include safe area insets */
     excludeSafeAreaMargins?: boolean;
@@ -118,11 +120,27 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * The main scrollable container component.
+ * It includes full support for custom headers and actions.
+ *
+ * @param [headerConfig] Configuration for the header component. Use this only if you need to configure a custom header from scratch.
+ * If you need the predefined configuration with default `Back (<)` and `Help (?)` buttons, use `useHeaderSecondLevel`
+ * @param {IOScrollViewActions} [actions] Actions to be rendered at the bottom of the `ScrollView`
+ * @param [animatedRef] Ref generated through `useAnimatedRef` (used by `useScrollViewOffset` to get the scroll position)
+ * @param {number} [snapOffset] Offset when you need to add a snap point
+ * @param {boolean} [excludeSafeAreaMargins=false] Exclude safe area margins at the bottom of the `ScrollView`
+ * This is useful if you have a screen with a tab bar at the bottom, or if the bottom margin is already being managed
+ * @param {boolean} [excludeEndContentMargin=false] Exclude the end content margin
+ * @param {boolean} [includeContentMargins=true] Include horizontal screen margins
+ * @param {boolean} [debugMode=false] Enable debug mode. Only for testing purposes
+ */
 export const IOScrollView = ({
   headerConfig,
   children,
   actions,
   snapOffset,
+  animatedRef,
   excludeSafeAreaMargins = false,
   excludeEndContentMargin = false,
   includeContentMargins = true,
@@ -239,6 +257,7 @@ export const IOScrollView = ({
   return (
     <Fragment>
       <Animated.ScrollView
+        ref={animatedRef}
         testID={testID}
         onScroll={handleScroll}
         scrollEventThrottle={8}
