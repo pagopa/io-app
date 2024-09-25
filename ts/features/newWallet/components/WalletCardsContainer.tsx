@@ -15,12 +15,19 @@ import {
   selectWalletOtherCards
 } from "../store/selectors";
 import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
+import {
+  ItwEidInfoBottomSheetContent,
+  ItwEidInfoBottomSheetTitle
+} from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
+import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import {
   WalletCardsCategoryContainer,
   WalletCardsCategoryContainerProps
 } from "./WalletCardsCategoryContainer";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
+
+const EID_INFO_BOTTOM_PADDING = 128;
 
 const WalletCardsContainer = () => {
   const isLoading = useIOSelector(selectIsWalletCardsLoading);
@@ -64,6 +71,14 @@ const ItwCardsContainer = ({
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
 
+  const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
+    {
+      title: <ItwEidInfoBottomSheetTitle />,
+      component: <ItwEidInfoBottomSheetContent />
+    },
+    EID_INFO_BOTTOM_PADDING
+  );
+
   if (!isItwTrialEnabled || !isItwEnabled) {
     return null;
   }
@@ -79,8 +94,10 @@ const ItwCardsContainer = ({
       endElement: {
         type: "buttonLink",
         componentProps: {
-          label: "Cos'è?",
-          onPress: () => null,
+          label: I18n.t(
+            "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
+          ),
+          onPress: eidInfoBottomSheet.present,
           testID: "walletCardsCategoryItwActiveBadgeTestID"
         }
       }
@@ -88,19 +105,22 @@ const ItwCardsContainer = ({
   };
 
   return (
-    <WalletCardsCategoryContainer
-      key={`cards_category_itw`}
-      testID={`walletCardsCategoryTestID_itw`}
-      cards={cards}
-      isStacked={isStacked}
-      header={getHeader()}
-      footer={
-        <>
-          <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
-          <ItwWalletReadyBanner />
-        </>
-      }
-    />
+    <>
+      <WalletCardsCategoryContainer
+        key={`cards_category_itw`}
+        testID={`walletCardsCategoryTestID_itw`}
+        cards={cards}
+        isStacked={isStacked}
+        header={getHeader()}
+        footer={
+          <>
+            <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
+            <ItwWalletReadyBanner />
+          </>
+        }
+      />
+      {isItwValid && eidInfoBottomSheet.bottomSheet}
+    </>
   );
 };
 
