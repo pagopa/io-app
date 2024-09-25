@@ -26,6 +26,7 @@ import { ServicesActions } from "../../features/services/common/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { NotificationsActions } from "../../features/pushNotifications/store/actions/notifications";
+import { NotificationPermissionsActions } from "../../features/pushNotifications/store/actions/permissions";
 import { GlobalState } from "../reducers/types";
 import { CieLoginConfigActions } from "../../features/cieLogin/store/actions";
 import { FimsActions } from "../../features/fims/common/store/actions";
@@ -68,6 +69,7 @@ export type Action =
   | MessagesActions
   | MixpanelActions
   | NotificationsActions
+  | NotificationPermissionsActions
   | PinSetActions
   | OnboardingActions
   | PreferencesActions

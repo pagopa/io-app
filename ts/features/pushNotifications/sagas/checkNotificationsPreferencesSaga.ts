@@ -1,5 +1,5 @@
 import { CommonActions, StackActions } from "@react-navigation/native";
-import { call, select, take } from "typed-redux-saga/macro";
+import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import NavigationService from "../../../navigation/NavigationService";
@@ -19,6 +19,7 @@ import { notificationsInfoScreenConsent } from "../store/actions/notifications";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../store/reducers/types";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { updateSystemNotificationsEnabled } from "../store/actions/permissions";
 
 export function* checkNotificationsPreferencesSaga(
   userProfile: InitializedProfile
@@ -60,11 +61,17 @@ export function* checkNotificationsPreferencesSaga(
     typeof checkNotificationPermissions
   > = yield* call(checkNotificationPermissions);
 
+  yield* put(updateSystemNotificationsEnabled(hasNotificationPermission));
+
   if (!hasNotificationPermission) {
     // Ask the user for notification permission
     const userHasGivenNotificationPermission: SagaCallReturnType<
       typeof requestNotificationPermissions
     > = yield* call(requestNotificationPermissions);
+
+    yield* put(
+      updateSystemNotificationsEnabled(userHasGivenNotificationPermission)
+    );
 
     if (!userHasGivenNotificationPermission && profileMissedPushSettings) {
       // Show how to enable notification permission from the settings
