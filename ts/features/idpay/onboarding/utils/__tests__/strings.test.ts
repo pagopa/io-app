@@ -6,7 +6,7 @@ describe("getPDNDCriteriaValueString", () => {
   it("returns correct string for ISEE value", () => {
     const tAmountCents = 1000;
     const tAmountDecimal = tAmountCents / 100;
-    const tString = I18n.toCurrency(tAmountCents, {
+    const tString = I18n.toCurrency(tAmountDecimal, {
       precision: 2,
       delimiter: I18n.t("global.localization.delimiterSeparator"),
       separator: I18n.t("global.localization.decimalSeparator"),
@@ -14,7 +14,7 @@ describe("getPDNDCriteriaValueString", () => {
     });
     const result = getPDNDCriteriaValueString(
       CodeEnum.ISEE,
-      tAmountDecimal.toString()
+      tAmountCents.toString()
     );
     expect(result).toStrictEqual(tString);
   });
