@@ -29,7 +29,7 @@ import {
   CreditCardPan
 } from "../../utils/input";
 import { SessionManager } from "../../utils/SessionManager";
-import { testableWalletsSaga } from "../wallet";
+import { testableWalletsSaga } from "../legacyWallet";
 import { runDeleteActivePaymentSaga } from "../../store/actions/wallet/payment";
 
 jest.mock("react-native-background-timer", () => ({
