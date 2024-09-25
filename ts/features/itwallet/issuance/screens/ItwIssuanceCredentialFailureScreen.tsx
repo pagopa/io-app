@@ -24,6 +24,8 @@ import {
   trackAddCredentialTimeout,
   trackWalletCreationFailed
 } from "../../analytics";
+import ROUTES from "../../../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -69,6 +71,12 @@ const ContentView = ({ failure }: ContentViewProps) => {
       reason: failure.type,
       cta_category: "custom_1",
       cta_id
+    });
+  };
+  const closeAsyncIssuance = () => {
+    machineRef.send({
+      type: "close",
+      navigateTo: [ROUTES.MAIN, { screen: MESSAGES_ROUTES.MESSAGES_HOME }]
     });
   };
 
@@ -119,6 +127,17 @@ const ContentView = ({ failure }: ContentViewProps) => {
               "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
             )
           )
+      }
+    },
+    ASYNC_ISSUANCE: {
+      title: I18n.t("features.itWallet.issuance.asyncCredentialError.title"),
+      subtitle: I18n.t("features.itWallet.issuance.asyncCredentialError.body"),
+      pictogram: "pending",
+      action: {
+        label: I18n.t(
+          "features.itWallet.issuance.asyncCredentialError.primaryAction"
+        ),
+        onPress: closeAsyncIssuance
       }
     }
   };
