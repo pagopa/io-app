@@ -48,7 +48,7 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
   );
 
   const formattedAmount = pipe(
-    transaction.amount,
+    transaction.amountCents,
     O.fromNullable,
     O.map(amount => formatNumberAmount(amount, true)),
     O.getOrElse(() => "-")
@@ -79,7 +79,7 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
           )}
         </Body>
         <Body weight="Semibold">
-          {formatNumberAmount(transaction.accrued, true)}
+          {formatNumberAmount(transaction.accruedCents, true)}
         </Body>
       </View>
       <ItemSeparatorComponent noPadded={true} />

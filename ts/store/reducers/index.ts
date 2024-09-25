@@ -250,6 +250,9 @@ export function createRootReducer(
                 ...profileSettingsReducerInitialState,
                 showProfileBanner:
                   state.features.profileSettings.showProfileBanner,
+                hasUserAcknowledgedSettingsBanner:
+                  state.features.profileSettings
+                    .hasUserAcknowledgedSettingsBanner,
                 _persist: state.features.profileSettings._persist
               },
               _persist: state.features._persist,

@@ -7,16 +7,16 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { View } from "react-native";
-import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../i18n";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import ROUTES from "../../../navigation/routes";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import IOMarkdown from "../../../components/IOMarkdown";
-import useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
-import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
-import { openWebUrl } from "../../../utils/url";
-import { setAccessibilityFocus } from "../../../utils/accessibility";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import IOMarkdown from "../../../../components/IOMarkdown";
+import useNavigateToLoginMethod from "../../../../hooks/useNavigateToLoginMethod";
+import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { openWebUrl } from "../../../../utils/url";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
 
 const CIE_PIN_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/";
