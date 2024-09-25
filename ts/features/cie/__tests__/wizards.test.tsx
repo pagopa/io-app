@@ -1,9 +1,9 @@
 import { render } from "@testing-library/react-native";
 import React = require("react");
-import CieIdWizard from "../wizards/CieIdWizard";
-import CiePinWizard from "../wizards/CiePinWizard";
-import SpidWizard from "../wizards/SpidWizard";
-import IDActivationWizard from "../wizards/IDActivationWizard";
+import CieIdWizard from "../screens/wizards/CieIdWizard";
+import CiePinWizard from "../screens/wizards/CiePinWizard";
+import SpidWizard from "../screens/wizards/SpidWizard";
+import IDActivationWizard from "../screens/wizards/IDActivationWizard";
 
 jest.mock("@react-navigation/native", () => ({
   useNavigation: () => ({
