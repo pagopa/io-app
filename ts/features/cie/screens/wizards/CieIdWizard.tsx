@@ -5,12 +5,12 @@ import {
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
-import { openWebUrl } from "../../../utils/url";
-import I18n from "../../../i18n";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import ROUTES from "../../../navigation/routes";
-import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { openWebUrl } from "../../../../utils/url";
+import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
+import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 
 const CIE_ID_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/cie-id/";

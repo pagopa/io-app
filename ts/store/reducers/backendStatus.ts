@@ -31,10 +31,7 @@ import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 
-import {
-  isIdPayTestEnabledSelector,
-  isNewScanSectionLocallyEnabledSelector
-} from "./persistedPreferences";
+import { isIdPayTestEnabledSelector } from "./persistedPreferences";
 import { GlobalState } from "./types";
 import { isPropertyWithMinAppVersionEnabled } from "./featureFlagWithMinAppVersionStatus";
 
@@ -468,21 +465,24 @@ export const isNewPaymentSectionEnabledSelector = createSelector(
       O.getOrElse(() => false)
     )
 );
+/*
+This selector checks that both the new wallet section and the
+new document scan section are included in the tab bar.
+In this case, the navigation to the profile section in the tab bar
+is replaced with the 'settings' section accessed by clicking
+on the icon in the headers of the top-level screens.
+It will be possible to delete this control and all the code it carries
+it carries when isNewPaymentSectionEnabledSelector and
+isNewScanSectionLocallyEnabled will be deleted.
 
-// This selector checks that both the new wallet section and the
-// new document scan section are included in the tab bar.
-// In this case, the navigation to the profile section in the tab bar
-// is replaced with the 'settings' section accessed by clicking
-// on the icon in the headers of the top-level screens.
-// It will be possible to delete this control and all the code it carries
-// it carries when isNewPaymentSectionEnabledSelector and
-// isNewScanSectionLocallyEnabled will be deleted
-export const isSettingsVisibleAndHideProfileSelector = createSelector(
-  isNewPaymentSectionEnabledSelector,
-  isNewScanSectionLocallyEnabledSelector,
-  (isNewPaymentSectionEnabled, isNewScanSectionLocallyEnabled) =>
-    isNewPaymentSectionEnabled && isNewScanSectionLocallyEnabled
-);
+NOTE: Since there is a lot of logic attached to this selector,
+this reassignment of its value has been done for the moment,
+but as soon as the FF can be eliminated, all the logic on which
+it depends and both selectors will also be eliminated.
+ */
+export const isSettingsVisibleAndHideProfileSelector =
+  isNewPaymentSectionEnabledSelector;
+
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
 export const DEAD_COUNTER_THRESHOLD = 2;
 
