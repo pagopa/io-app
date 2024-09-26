@@ -27,7 +27,8 @@ import {
   RefreshControl,
   RefreshControlProps,
   StyleSheet,
-  View
+  View,
+  ViewStyle
 } from "react-native";
 import { easeGradient } from "react-native-easing-gradient";
 import LinearGradient from "react-native-linear-gradient";
@@ -85,6 +86,7 @@ type IOScrollView = WithTestID<
     /* Include page margins */
     includeContentMargins?: boolean;
     refreshControlProps?: RefreshControlProps;
+    contentContainerStyle?: ViewStyle;
   }>
 >;
 
@@ -146,6 +148,7 @@ export const IOScrollView = ({
   includeContentMargins = true,
   debugMode = false,
   refreshControlProps,
+  contentContainerStyle,
   testID
 }: IOScrollView) => {
   const theme = useIOTheme();
@@ -273,7 +276,8 @@ export const IOScrollView = ({
             : bottomMargin + contentEndMargin,
           paddingHorizontal: includeContentMargins
             ? IOVisualCostants.appMarginDefault
-            : 0
+            : 0,
+          ...contentContainerStyle
         }}
       >
         {children}
