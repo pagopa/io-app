@@ -94,7 +94,7 @@ export const IngressScreen = () => {
 
   return (
     <>
-      <ModalSectionStatusComponent sectionKey="ingress" />
+      <ModalSectionStatusComponent sectionKey="ingress" sticky />
       <LoadingScreenContent
         testID="ingress-screen-loader-id"
         contentTitle={contentTitle}
