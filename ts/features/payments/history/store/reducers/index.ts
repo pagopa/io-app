@@ -162,12 +162,17 @@ const reducer = (
         }
       };
     case getType(paymentsCalculatePaymentFeesAction.success):
+      const bundles = action.payload.bundles;
+      const selectedPsp =
+        bundles.length === 1 ? bundles[0].pspBusinessName : undefined;
+      const selectedPspFlag = bundles.length === 1 ? "unique" : undefined;
       return {
         ...state,
         analyticsData: {
           ...state.analyticsData,
-          selectedPsp: undefined,
-          pspList: action.payload.bundles
+          selectedPsp,
+          selectedPspFlag,
+          pspList: bundles
         }
       };
     case getType(selectPaymentPspAction):
