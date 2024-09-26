@@ -35,6 +35,7 @@ import {
 } from "../../common/utils/validation";
 import * as analytics from "../analytics";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
+import { trimAndLimitValue } from "../utils";
 
 type InputState = {
   noticeNumberText: string;
@@ -103,15 +104,14 @@ const WalletPaymentInputNoticeNumberScreen = () => {
                 value={inputState.noticeNumberText}
                 icon="docPaymentCode"
                 onChangeText={value => {
-                  const trimmedValue = value.replace(/\s/g, "");
-                  const limitedValue =
-                    trimmedValue.length > MAX_LENGTH_NOTICE_NUMBER
-                      ? trimmedValue.substring(0, MAX_LENGTH_NOTICE_NUMBER)
-                      : trimmedValue;
+                  const normalizedValue = trimAndLimitValue(
+                    value,
+                    MAX_LENGTH_NOTICE_NUMBER
+                  );
 
                   setInputState({
-                    noticeNumberText: limitedValue,
-                    noticeNumber: decodePaymentNoticeNumber(limitedValue)
+                    noticeNumberText: normalizedValue,
+                    noticeNumber: decodePaymentNoticeNumber(normalizedValue)
                   });
                 }}
                 counterLimit={
