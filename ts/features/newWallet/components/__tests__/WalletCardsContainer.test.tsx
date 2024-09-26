@@ -27,6 +27,7 @@ type RenderOptions = {
   isItwTrial?: boolean;
   isItwEnabled?: boolean;
   isItwValid?: boolean;
+  isWalletEmpty?: boolean;
 };
 
 jest.mock("react-native-reanimated", () => ({
@@ -163,6 +164,28 @@ describe("WalletCardsContainer", () => {
       expect(queryByTestId(`walletCardTestID_itw_itw_4`)).toBeNull();
     }
   );
+
+  it("should render the wallet ready banner when the wallet instance is valid and the wallet is empty", () => {
+    const { queryByTestId } = renderComponent({
+      isItwValid: true,
+      cards: T_CARDS
+    });
+    expect(queryByTestId("itwWalletReadyBannerTestID")).not.toBeNull();
+  });
+
+  test.each([
+    { isItwValid: false },
+    { isItwValid: true, isWalletEmpty: false }
+  ] as ReadonlyArray<RenderOptions>)(
+    "should not render the wallet ready banner when %p",
+    options => {
+      const { queryByTestId } = renderComponent({
+        ...options,
+        cards: T_CARDS
+      });
+      expect(queryByTestId("itwWalletReadyBannerTestID")).toBeNull();
+    }
+  );
 });
 
 const renderComponent = ({
@@ -170,7 +193,8 @@ const renderComponent = ({
   isItwEnabled = true,
   isItwTrial = true,
   isItwValid = true,
-  isLoading = false
+  isLoading = false,
+  isWalletEmpty = true
 }: RenderOptions) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
@@ -188,6 +212,17 @@ const renderComponent = ({
           placeholders: { isLoading }
         },
         itWallet: {
+          ...(isItwValid && {
+            issuance: {
+              integrityKeyTag: O.some("key-tag")
+            },
+            credentials: {
+              eid: O.some({ parsedCredential: {} }),
+              credentials: isWalletEmpty
+                ? []
+                : [O.some({ parsedCredential: {} })]
+            }
+          }),
           lifecycle: isItwValid
             ? ItwLifecycleState.ITW_LIFECYCLE_VALID
             : ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
