@@ -1,5 +1,5 @@
 import React, { ComponentProps, useCallback, useEffect, useRef } from "react";
-import { View } from "react-native";
+import { AccessibilityInfo, View } from "react-native";
 import { Alert, IOColors } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
@@ -85,6 +85,14 @@ const ModalSectionStatusComponent = ({
     navigation?.addListener("focus", invokeSessionRefCallback);
     return () => navigation?.removeListener("focus", invokeSessionRefCallback);
   }, [invokeSessionRefCallback, isSectionVisible, navigation, viewRef]);
+
+  useEffect(() => {
+    if (isSectionVisible && message) {
+      AccessibilityInfo.announceForAccessibilityWithOptions(message, {
+        queue: true
+      });
+    }
+  }, [isSectionVisible, message]);
 
   if (!isSectionVisible) {
     return null;
