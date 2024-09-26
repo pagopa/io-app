@@ -224,7 +224,8 @@ const WalletPaymentOutcomeScreen = () => {
         amount: paymentAnalyticsData?.formattedAmount,
         expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
         payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
-        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        saved_payment_method:
+          paymentAnalyticsData?.savedPaymentMethods?.length || 0,
         selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
         data_entry: paymentAnalyticsData?.startOrigin
       });
