@@ -510,7 +510,8 @@ export function* initializeApplicationSaga(
 
   userProfile = (yield* call(checkEmailSaga)) ?? userProfile;
 
-  // check if the user must set preferences for push notifications (e.g. reminders)
+  // Check for both profile notifications permissions (anonymous
+  // content && reminder) and system notifications permissions.
   yield* call(profileAndSystemNotificationsPermissions, userProfile);
 
   const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
@@ -526,7 +527,7 @@ export function* initializeApplicationSaga(
 
   // Start the notification installation update as early as
   // possible to begin receiving push notifications
-  yield* call(
+  yield* fork(
     pushNotificationTokenUpload,
     backendClient.createOrUpdateInstallation
   );

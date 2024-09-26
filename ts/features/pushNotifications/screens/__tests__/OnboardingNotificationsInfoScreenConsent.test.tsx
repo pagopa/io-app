@@ -6,7 +6,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { OnboardingNotificationsInfoScreenConsent } from "../OnboardingNotificationsInfoScreenConsent";
-import * as notificationsActions from "../../store/actions/notifications";
+import * as profileNotificationPermissions from "../../store/actions/profileNotificationPermissions";
 import * as notification from "../../utils";
 import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 
@@ -16,7 +16,7 @@ const checkNotificationPermissions = jest.spyOn(
 );
 
 const notificationsInfoScreenConsentSpy = jest.spyOn(
-  notificationsActions,
+  profileNotificationPermissions,
   "notificationsInfoScreenConsent"
 );
 

@@ -20,7 +20,7 @@ import {
   pushNotificationPreviewEnabledSelector,
   pushNotificationRemindersEnabledSelector
 } from "../../../store/reducers/profile";
-import { notificationsInfoScreenConsent } from "../store/actions/notifications";
+import { notificationsInfoScreenConsent } from "../store/actions/profileNotificationPermissions";
 import {
   trackNotificationsOptInOpenSettings,
   trackNotificationsOptInReminderOnPermissionsOff,

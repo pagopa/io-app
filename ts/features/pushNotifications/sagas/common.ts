@@ -10,7 +10,7 @@ import {
   pendingMessageStateSelector
 } from "../store/reducers/pendingMessage";
 import { isPaymentOngoingSelector } from "../../../store/reducers/wallet/payment";
-import { clearNotificationPendingMessage } from "../store/actions/notifications";
+import { clearNotificationPendingMessage } from "../store/actions/pendingMessage";
 import { navigateToMainNavigatorAction } from "../../../store/actions/navigation";
 import { isArchivingDisabledSelector } from "../../messages/store/reducers/archiving";
 import { resetMessageArchivingAction } from "../../messages/store/actions/archiving";

@@ -11,10 +11,10 @@ import {
   trackNotificationsOptInPreviewStatus,
   trackNotificationsOptInReminderStatus
 } from "../analytics";
-import { notificationsInfoScreenConsent } from "../store/actions/notifications";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../store/reducers/types";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { notificationsInfoScreenConsent } from "../store/actions/profileNotificationPermissions";
 import {
   checkAndUpdateNotificationPermissionsIfNeeded,
   updateNotificationPermissionsIfNeeded
@@ -83,9 +83,7 @@ export function* profileAndSystemNotificationsPermissions(
         })
       );
 
-      yield* take<ActionType<typeof notificationsInfoScreenConsent>>(
-        notificationsInfoScreenConsent
-      );
+      yield* take(notificationsInfoScreenConsent);
 
       // Make sure to dismiss the modal
       yield* call(

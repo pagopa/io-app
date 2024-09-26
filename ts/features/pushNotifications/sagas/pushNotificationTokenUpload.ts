@@ -1,21 +1,22 @@
-/**
- * A saga to manage notifications
- */
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { Platform } from "react-native";
 import { SagaIterator } from "redux-saga";
-import { call, put, select } from "typed-redux-saga/macro";
+import { call, put, select, take } from "typed-redux-saga/macro";
 import { PlatformEnum } from "../../../../definitions/backend/Platform";
 import { BackendClient } from "../../../api/backend";
 import { notificationsInstallationSelector } from "../store/reducers/installation";
 import { SagaCallReturnType } from "../../../types/utils";
 import { convertUnknownToError } from "../../../utils/errors";
-import { trackNotificationInstallationTokenNotChanged } from "../analytics";
 import {
-  notificationsInstallationTokenRegistered,
-  updateNotificationInstallationFailure
-} from "../store/actions/notifications";
+  trackNotificationInstallationTokenNotChanged,
+  trackPushNotificationTokenUploadFailure,
+  trackPushNotificationTokenUploadSucceeded
+} from "../analytics";
+import {
+  newPushNotificationsToken,
+  pushNotificationsTokenUploaded
+} from "../store/actions/installation";
 
 export const notificationsPlatform: PlatformEnum =
   Platform.select<PlatformEnum>({
@@ -32,14 +33,8 @@ export function* pushNotificationTokenUpload(
     typeof BackendClient
   >["createOrUpdateInstallation"]
 ): SagaIterator {
-  // Get the notifications installation data from the store
-  const notificationsInstallation: ReturnType<
-    typeof notificationsInstallationSelector
-  > = yield* select(notificationsInstallationSelector);
-  // Check if the notification server token is available (non available on iOS simulator)
-  if (notificationsInstallation.token === undefined) {
-    return undefined;
-  }
+  // Await for a notification token
+  const notificationsInstallation = yield* call(awaitForPushNotificationToken);
   // Check if the notification token is changed from the one registered in the backend
   if (
     notificationsInstallation.token ===
@@ -58,26 +53,46 @@ export function* pushNotificationTokenUpload(
           pushChannel: notificationsInstallation.token
         }
       });
-    /**
-     * If the response isLeft (got an error) dispatch a failure action
-     */
+    // Decoding failure
     if (E.isLeft(response)) {
-      throw Error(readableReport(response.left));
-    }
-    if (response.right.status === 200) {
-      yield* put(
-        notificationsInstallationTokenRegistered(
-          notificationsInstallation.token
-        )
+      yield* call(
+        trackPushNotificationTokenUploadFailure,
+        readableReport(response.left)
       );
-    } else {
-      yield* put(
-        updateNotificationInstallationFailure(
-          new Error(`response status code ${response.right.status}`)
-        )
-      );
+      return;
     }
+    // Unexpected response code
+    if (response.right.status !== 200) {
+      yield* call(
+        trackPushNotificationTokenUploadFailure,
+        `response status code ${response.right.status}`
+      );
+      return;
+    }
+
+    // Success
+    yield* put(pushNotificationsTokenUploaded(notificationsInstallation.token));
+    yield* call(trackPushNotificationTokenUploadSucceeded);
   } catch (e) {
-    yield* put(updateNotificationInstallationFailure(convertUnknownToError(e)));
+    // Unknwon error
+    yield* call(
+      trackPushNotificationTokenUploadFailure,
+      `${convertUnknownToError(e)}`
+    );
   }
+}
+
+export function* awaitForPushNotificationToken() {
+  do {
+    const notificationsInstallation = yield* select(
+      notificationsInstallationSelector
+    );
+    if (notificationsInstallation.token) {
+      return {
+        ...notificationsInstallation,
+        token: notificationsInstallation.token
+      };
+    }
+    yield* take(newPushNotificationsToken);
+  } while (true);
 }

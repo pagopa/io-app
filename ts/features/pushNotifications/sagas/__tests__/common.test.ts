@@ -13,7 +13,7 @@ import {
 import { isPaymentOngoingSelector } from "../../../../store/reducers/wallet/payment";
 import { navigateToMessageRouterAction } from "../../utils/navigation";
 import { UIMessageId } from "../../../messages/types";
-import { clearNotificationPendingMessage } from "../../store/actions/notifications";
+import { clearNotificationPendingMessage } from "../../store/actions/pendingMessage";
 import { isArchivingDisabledSelector } from "../../../messages/store/reducers/archiving";
 import NavigationService from "../../../../navigation/NavigationService";
 import { navigateToMainNavigatorAction } from "../../../../store/actions/navigation";

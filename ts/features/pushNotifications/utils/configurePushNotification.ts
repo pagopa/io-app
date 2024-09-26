@@ -11,7 +11,6 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Platform } from "react-native";
 import PushNotification from "react-native-push-notification";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-
 import { maximumItemsFromAPI, pageSize } from "../../../config";
 import {
   loadPreviousPageMessages,
@@ -23,13 +22,12 @@ import {
   trackMessageNotificationTap
 } from "../../messages/analytics";
 import { store } from "../../../boot/configureStoreAndPersistor";
-import {
-  updateNotificationsInstallationToken,
-  updateNotificationsPendingMessage
-} from "../store/actions/notifications";
+import { newPushNotificationsToken } from "../store/actions/installation";
+import { updateNotificationsPendingMessage } from "../store/actions/pendingMessage";
 import { isLoadingOrUpdating } from "../../../utils/pot";
 import { isArchivingInProcessingModeSelector } from "../../messages/store/reducers/archiving";
 import { GlobalState } from "../../../store/reducers/types";
+import { trackNewPushNotificationsTokenGenerated } from "../analytics";
 
 /**
  * Helper type used to validate the notification payload.
@@ -107,7 +105,8 @@ function configurePushNotifications() {
     // Called when token is generated
     onRegister: token => {
       // Dispatch an action to save the token in the store
-      store.dispatch(updateNotificationsInstallationToken(token.token));
+      store.dispatch(newPushNotificationsToken(token.token));
+      trackNewPushNotificationsTokenGenerated();
     },
 
     // Called when a remote or local notification is opened or received

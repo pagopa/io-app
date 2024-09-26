@@ -3,7 +3,7 @@ import { testSaga } from "redux-saga-test-plan";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import { requestNotificationPermissions } from "../../utils";
-import { notificationsInfoScreenConsent } from "../../store/actions/notifications";
+import { notificationsInfoScreenConsent } from "../../store/actions/profileNotificationPermissions";
 import { profileAndSystemNotificationsPermissions } from "../profileAndSystemNotificationsPermissions";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";

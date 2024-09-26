@@ -14,9 +14,9 @@ import {
   sessionInvalid
 } from "../../../../store/actions/authentication";
 import {
-  notificationsInstallationTokenRegistered,
-  updateNotificationsInstallationToken
-} from "../../store/actions/notifications";
+  newPushNotificationsToken,
+  pushNotificationsTokenUploaded
+} from "../../store/actions/installation";
 
 const installationId = "installationId";
 jest.mock("../../utils/index", () => ({
@@ -44,7 +44,7 @@ describe("pushNotificationTokenUpload", () => {
     const pushNotificationToken = "googleOrApplePushNotificationToken";
     const globalState = updateState([
       applicationChangeState("active"),
-      updateNotificationsInstallationToken(pushNotificationToken)
+      newPushNotificationsToken(pushNotificationToken)
     ]);
     describe("and no previous token is been sent to the backend", () => {
       const createOrUpdateInstallation = jest.fn();
@@ -65,7 +65,7 @@ describe("pushNotificationTokenUpload", () => {
               pushChannel: pushNotificationToken
             }
           })
-          .put(notificationsInstallationTokenRegistered(pushNotificationToken))
+          .put(pushNotificationsTokenUploaded(pushNotificationToken))
           .run());
     });
   });
@@ -74,14 +74,14 @@ describe("pushNotificationTokenUpload", () => {
     const pushNotificationToken = "googleOrApplePushNotificationToken";
     const globalState = updateState([
       applicationChangeState("active"),
-      updateNotificationsInstallationToken(pushNotificationToken),
-      notificationsInstallationTokenRegistered(pushNotificationToken)
+      newPushNotificationsToken(pushNotificationToken),
+      pushNotificationsTokenUploaded(pushNotificationToken)
     ]);
 
     describe("and it doesn't change", () => {
       it("the it should not send the push notification token to the backend", () => {
         const localState = updateState(
-          [notificationsInstallationTokenRegistered(pushNotificationToken)],
+          [pushNotificationsTokenUploaded(pushNotificationToken)],
           globalState
         );
         const createOrUpdateInstallation = jest.fn();
@@ -99,7 +99,7 @@ describe("pushNotificationTokenUpload", () => {
       const newPushNotificationToken = "newGoogleOrApplePushNotificationToken";
       it("should send the push notification token to the backend", () => {
         const localState = updateState(
-          [updateNotificationsInstallationToken(newPushNotificationToken)],
+          [newPushNotificationsToken(newPushNotificationToken)],
           globalState
         );
         const createOrUpdateInstallation = jest.fn();
@@ -121,9 +121,7 @@ describe("pushNotificationTokenUpload", () => {
               pushChannel: newPushNotificationToken
             }
           })
-          .put(
-            notificationsInstallationTokenRegistered(newPushNotificationToken)
-          )
+          .put(pushNotificationsTokenUploaded(newPushNotificationToken))
           .run();
       });
     });
@@ -153,7 +151,7 @@ describe("pushNotificationTokenUpload", () => {
               pushChannel: pushNotificationToken
             }
           })
-          .put(notificationsInstallationTokenRegistered(pushNotificationToken))
+          .put(pushNotificationsTokenUploaded(pushNotificationToken))
           .run();
       });
     });
@@ -180,7 +178,7 @@ describe("pushNotificationTokenUpload", () => {
               pushChannel: pushNotificationToken
             }
           })
-          .put(notificationsInstallationTokenRegistered(pushNotificationToken))
+          .put(pushNotificationsTokenUploaded(pushNotificationToken))
           .run();
       });
     });
@@ -191,10 +189,8 @@ describe("pushNotificationTokenUpload", () => {
           "newGoogleOrApplePushNotificationToken";
         const anotherGlobalState = updateState([
           applicationChangeState("active"),
-          updateNotificationsInstallationToken(anotherPushNotificationToken),
-          notificationsInstallationTokenRegistered(
-            anotherPushNotificationToken
-          ),
+          newPushNotificationsToken(anotherPushNotificationToken),
+          pushNotificationsTokenUploaded(anotherPushNotificationToken),
           sessionInvalid()
         ]);
         const createOrUpdateInstallation = jest.fn();
@@ -216,11 +212,7 @@ describe("pushNotificationTokenUpload", () => {
               pushChannel: anotherPushNotificationToken
             }
           })
-          .put(
-            notificationsInstallationTokenRegistered(
-              anotherPushNotificationToken
-            )
-          )
+          .put(pushNotificationsTokenUploaded(anotherPushNotificationToken))
           .run();
       });
     });
