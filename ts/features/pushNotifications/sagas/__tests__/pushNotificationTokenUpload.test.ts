@@ -1,220 +1,202 @@
 import * as E from "fp-ts/lib/Either";
-import { Action } from "redux";
-import { expectSaga } from "redux-saga-test-plan";
-import * as matchers from "redux-saga-test-plan/matchers";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
+import { testSaga } from "redux-saga-test-plan";
 import {
+  awaitForPushNotificationToken,
   notificationsPlatform,
   pushNotificationTokenUpload
 } from "../pushNotificationTokenUpload";
 import {
-  logoutRequest,
-  sessionExpired,
-  sessionInvalid
-} from "../../../../store/actions/authentication";
-import {
   newPushNotificationsToken,
   pushNotificationsTokenUploaded
 } from "../../store/actions/installation";
-
-const installationId = "installationId";
-jest.mock("../../utils/index", () => ({
-  generateInstallationId: () => installationId
-}));
+import {
+  InstallationState,
+  notificationsInstallationSelector
+} from "../../store/reducers/installation";
+import {
+  trackNotificationInstallationTokenNotChanged,
+  trackPushNotificationTokenUploadFailure,
+  trackPushNotificationTokenUploadSucceeded
+} from "../../analytics";
 
 describe("pushNotificationTokenUpload", () => {
-  const updateState = (
-    actions: ReadonlyArray<Action>,
-    currentState: ReturnType<typeof appReducer> | undefined = undefined
-  ) => actions.reduce((acc, curr) => appReducer(acc, curr), currentState);
-
-  describe("when the store is empty and the push notification token is not stored yet", () => {
-    it("then it should check and do nothing", () => {
-      const globalState = updateState([applicationChangeState("active")]);
-      const createOrUpdateInstallation = jest.fn();
-      void expectSaga(pushNotificationTokenUpload, createOrUpdateInstallation)
-        .withState(globalState)
-        .returns(undefined)
-        .run();
-    });
+  it("when the push token is available and not yet registered, it should invoke the backend API and, upon success, dispatch 'pushNotificationsTokenUploaded(token)' and call 'trackPushNotificationTokenUploadSucceeded'", () => {
+    const backendAPI = jest.fn();
+    const installation = {
+      id: "001abe9de70768541f2ad76d62636797f4f",
+      token: "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad"
+    };
+    testSaga(pushNotificationTokenUpload, backendAPI)
+      .next()
+      .call(awaitForPushNotificationToken)
+      .next(installation)
+      .call(backendAPI, {
+        installationID: installation.id,
+        body: {
+          platform: notificationsPlatform,
+          pushChannel: installation.token
+        }
+      })
+      .next(
+        E.right({
+          status: 200
+        })
+      )
+      .put(pushNotificationsTokenUploaded(installation.token))
+      .next()
+      .call(trackPushNotificationTokenUploadSucceeded)
+      .next()
+      .isDone();
   });
-
-  describe("when push notification token is available and saved in the store", () => {
-    const pushNotificationToken = "googleOrApplePushNotificationToken";
-    const globalState = updateState([
-      applicationChangeState("active"),
-      newPushNotificationsToken(pushNotificationToken)
-    ]);
-    describe("and no previous token is been sent to the backend", () => {
-      const createOrUpdateInstallation = jest.fn();
-
-      it("then it should send it to the backend", () =>
-        expectSaga(pushNotificationTokenUpload, createOrUpdateInstallation)
-          .withState(globalState)
-          .provide([
-            [
-              matchers.call.fn(createOrUpdateInstallation),
-              E.right({ status: 200 })
-            ]
-          ])
-          .call(createOrUpdateInstallation, {
-            installationID: installationId,
-            body: {
-              platform: notificationsPlatform,
-              pushChannel: pushNotificationToken
-            }
-          })
-          .put(pushNotificationsTokenUploaded(pushNotificationToken))
-          .run());
-    });
+  it("when the push token is available and registered, it should call 'trackNotificationInstallationTokenNotChanged' and end", () => {
+    const backendAPI = jest.fn();
+    const installation = {
+      id: "001abe9de70768541f2ad76d62636797f4f",
+      token: "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad",
+      registeredToken:
+        "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad"
+    };
+    testSaga(pushNotificationTokenUpload, backendAPI)
+      .next()
+      .call(awaitForPushNotificationToken)
+      .next(installation)
+      .call(trackNotificationInstallationTokenNotChanged)
+      .next()
+      .isDone();
   });
-
-  describe("when push notification token is available and saved in the store and it is already sent to the backend", () => {
-    const pushNotificationToken = "googleOrApplePushNotificationToken";
-    const globalState = updateState([
-      applicationChangeState("active"),
-      newPushNotificationsToken(pushNotificationToken),
-      pushNotificationsTokenUploaded(pushNotificationToken)
-    ]);
-
-    describe("and it doesn't change", () => {
-      it("the it should not send the push notification token to the backend", () => {
-        const localState = updateState(
-          [pushNotificationsTokenUploaded(pushNotificationToken)],
-          globalState
-        );
-        const createOrUpdateInstallation = jest.fn();
-        return expectSaga(
-          pushNotificationTokenUpload,
-          createOrUpdateInstallation
-        )
-          .withState(localState)
-          .returns(undefined)
-          .run();
-      });
-    });
-
-    describe("and it changes", () => {
-      const newPushNotificationToken = "newGoogleOrApplePushNotificationToken";
-      it("should send the push notification token to the backend", () => {
-        const localState = updateState(
-          [newPushNotificationsToken(newPushNotificationToken)],
-          globalState
-        );
-        const createOrUpdateInstallation = jest.fn();
-        return expectSaga(
-          pushNotificationTokenUpload,
-          createOrUpdateInstallation
-        )
-          .withState(localState)
-          .provide([
-            [
-              matchers.call.fn(createOrUpdateInstallation),
-              E.right({ status: 200 })
-            ]
-          ])
-          .call(createOrUpdateInstallation, {
-            installationID: installationId,
-            body: {
-              platform: notificationsPlatform,
-              pushChannel: newPushNotificationToken
-            }
+  it("when the push token is available and not yet registered, it should invoke the backend API but, upon response decoding failure, it should call 'trackPushNotificationTokenUploadFailure' and end", () => {
+    const backendAPI = jest.fn();
+    const installation = {
+      id: "001abe9de70768541f2ad76d62636797f4f",
+      token: "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad"
+    };
+    testSaga(pushNotificationTokenUpload, backendAPI)
+      .next()
+      .call(awaitForPushNotificationToken)
+      .next(installation)
+      .call(backendAPI, {
+        installationID: installation.id,
+        body: {
+          platform: "apns",
+          pushChannel: installation.token
+        }
+      })
+      .next(E.left({}))
+      .call(
+        trackPushNotificationTokenUploadFailure,
+        "TypeError: es.map is not a function"
+      )
+      .next()
+      .isDone();
+  });
+  it("when the push token is available and not yet registered, it should invoke the backend API but, upon HTTP response code different than 200, it should call 'trackPushNotificationTokenUploadFailure' and end", () => {
+    const backendAPI = jest.fn();
+    const installation = {
+      id: "001abe9de70768541f2ad76d62636797f4f",
+      token: "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad"
+    };
+    [
+      100, 101, 102, 103, 201, 202, 203, 204, 205, 206, 207, 208, 226, 300, 301,
+      302, 303, 304, 305, 306, 307, 308, 400, 401, 402, 403, 404, 405, 406, 407,
+      408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 421, 422, 423, 424,
+      425, 426, 428, 429, 431, 451, 500, 501, 502, 503, 504, 505, 506, 507, 508,
+      510, 511
+    ].forEach(httpStatusCode =>
+      testSaga(pushNotificationTokenUpload, backendAPI)
+        .next()
+        .call(awaitForPushNotificationToken)
+        .next(installation)
+        .call(backendAPI, {
+          installationID: installation.id,
+          body: {
+            platform: "apns",
+            pushChannel: installation.token
+          }
+        })
+        .next(
+          E.right({
+            status: httpStatusCode
           })
-          .put(pushNotificationsTokenUploaded(newPushNotificationToken))
-          .run();
-      });
-    });
-
-    describe("and the user did logout", () => {
-      it("should send the push notification token", () => {
-        const localState = updateState(
-          [logoutRequest({ withApiCall: true })],
-          globalState
-        );
-        const createOrUpdateInstallation = jest.fn();
-        return expectSaga(
-          pushNotificationTokenUpload,
-          createOrUpdateInstallation
         )
-          .withState(localState)
-          .provide([
-            [
-              matchers.call.fn(createOrUpdateInstallation),
-              E.right({ status: 200 })
-            ]
-          ])
-          .call(createOrUpdateInstallation, {
-            installationID: installationId,
-            body: {
-              platform: notificationsPlatform,
-              pushChannel: pushNotificationToken
-            }
-          })
-          .put(pushNotificationsTokenUploaded(pushNotificationToken))
-          .run();
-      });
-    });
-
-    describe("and the session expires", () => {
-      it("should send the push notification token", () => {
-        const localState = updateState([sessionExpired()], globalState);
-        const createOrUpdateInstallation = jest.fn();
-        return expectSaga(
-          pushNotificationTokenUpload,
-          createOrUpdateInstallation
+        .call(
+          trackPushNotificationTokenUploadFailure,
+          `response status code ${httpStatusCode}`
         )
-          .withState(localState)
-          .provide([
-            [
-              matchers.call.fn(createOrUpdateInstallation),
-              E.right({ status: 200 })
-            ]
-          ])
-          .call(createOrUpdateInstallation, {
-            installationID: installationId,
-            body: {
-              platform: notificationsPlatform,
-              pushChannel: pushNotificationToken
-            }
-          })
-          .put(pushNotificationsTokenUploaded(pushNotificationToken))
-          .run();
-      });
-    });
+        .next()
+        .isDone()
+    );
+  });
+  it("when the push token is available and not yet registered, it should invoke the backend API but, upon exception, it should call 'trackPushNotificationTokenUploadFailure' and end", () => {
+    const backendAPI = jest.fn();
+    const installation = {
+      id: "001abe9de70768541f2ad76d62636797f4f",
+      token: "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad"
+    };
+    const error = new Error("An unknown error occourred");
+    testSaga(pushNotificationTokenUpload, backendAPI)
+      .next()
+      .call(awaitForPushNotificationToken)
+      .next(installation)
+      .call(backendAPI, {
+        installationID: installation.id,
+        body: {
+          platform: "apns",
+          pushChannel: installation.token
+        }
+      })
+      .throw(error)
+      .call(trackPushNotificationTokenUploadFailure, `${error}`)
+      .next()
+      .isDone();
+  });
+});
 
-    describe("and the session becomes invalid", () => {
-      it("should send the push notification token", () => {
-        const anotherPushNotificationToken =
-          "newGoogleOrApplePushNotificationToken";
-        const anotherGlobalState = updateState([
-          applicationChangeState("active"),
-          newPushNotificationsToken(anotherPushNotificationToken),
-          pushNotificationsTokenUploaded(anotherPushNotificationToken),
-          sessionInvalid()
-        ]);
-        const createOrUpdateInstallation = jest.fn();
-        return expectSaga(
-          pushNotificationTokenUpload,
-          createOrUpdateInstallation
-        )
-          .withState(anotherGlobalState)
-          .provide([
-            [
-              matchers.call.fn(createOrUpdateInstallation),
-              E.right({ status: 200 })
-            ]
-          ])
-          .call(createOrUpdateInstallation, {
-            installationID: installationId,
-            body: {
-              platform: notificationsPlatform,
-              pushChannel: anotherPushNotificationToken
-            }
-          })
-          .put(pushNotificationsTokenUploaded(anotherPushNotificationToken))
-          .run();
-      });
-    });
+describe("awaitForPushNotificationToken", () => {
+  it("should return the 'installation' instance when 'token' is defined", () => {
+    const installation: InstallationState = {
+      id: "001abe9de70768541f2ad76d62636797f4f",
+      token: "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad"
+    };
+    testSaga(awaitForPushNotificationToken)
+      .next()
+      .select(notificationsInstallationSelector)
+      .next(installation)
+      .returns(installation)
+      .next()
+      .isDone();
+  });
+  it("should wait for 'newPushNotificationToken' dispatch when no 'token' is available and return the new installation", () => {
+    const installationNoToken: InstallationState = {
+      id: "001plh9de70768541f2ad76d62636797f4f"
+    };
+    const installationWithToken: InstallationState = {
+      id: "001oki9de70768541f2ad76d62636797f4f",
+      token: "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad"
+    };
+    testSaga(awaitForPushNotificationToken)
+      .next()
+      .select(notificationsInstallationSelector)
+      .next(installationNoToken)
+      .take(newPushNotificationsToken)
+      .next()
+      .select(notificationsInstallationSelector)
+      .next(installationWithToken)
+      .returns(installationWithToken)
+      .next()
+      .isDone();
+  });
+  it("should wait for 'newPushNotificationToken' dispatch when no 'token' is available and wait for it again if, for some reason, the token is still not available", () => {
+    const installationNoToken: InstallationState = {
+      id: "001okj9de70768541f2ad76d62636797f4f"
+    };
+    testSaga(awaitForPushNotificationToken)
+      .next()
+      .select(notificationsInstallationSelector)
+      .next(installationNoToken)
+      .take(newPushNotificationsToken)
+      .next()
+      .select(notificationsInstallationSelector)
+      .next(installationNoToken)
+      .take(newPushNotificationsToken);
   });
 });

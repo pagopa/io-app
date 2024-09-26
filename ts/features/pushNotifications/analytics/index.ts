@@ -3,9 +3,11 @@ import { ReminderStatusEnum } from "../../../../definitions/backend/ReminderStat
 import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
 
-export const trackNotificationInstallationTokenNotChanged = () => {
-  void mixpanelTrack("NOTIFICATIONS_INSTALLATION_TOKEN_NOT_CHANGED");
-};
+export const trackNotificationInstallationTokenNotChanged = () =>
+  void mixpanelTrack(
+    "NOTIFICATIONS_INSTALLATION_TOKEN_NOT_CHANGED",
+    buildEventProperties("TECH", undefined)
+  );
 
 export const trackNotificationsOptInPreviewStatus = (
   contentType: PushNotificationsContentTypeEnum
@@ -45,23 +47,20 @@ export const trackNotificationsOptInSkipSystemPermissions = () =>
     buildEventProperties("UX", "action")
   );
 
-export const trackNewPushNotificationsTokenGenerated = () => {
+export const trackNewPushNotificationsTokenGenerated = () =>
   void mixpanelTrack(
     "NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE",
     buildEventProperties("TECH", undefined)
   );
-};
 
-export const trackPushNotificationTokenUploadSucceeded = () => {
+export const trackPushNotificationTokenUploadSucceeded = () =>
   void mixpanelTrack(
     "NOTIFICATIONS_INSTALLATION_TOKEN_REGISTERED",
     buildEventProperties("TECH", undefined)
   );
-};
 
-export const trackPushNotificationTokenUploadFailure = (reason: string) => {
+export const trackPushNotificationTokenUploadFailure = (reason: string) =>
   void mixpanelTrack(
     "NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE",
     buildEventProperties("KO", "error", { reason })
   );
-};

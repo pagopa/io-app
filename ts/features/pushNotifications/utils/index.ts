@@ -9,9 +9,6 @@ import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
 import { isIos } from "../../../utils/platform";
 
-// DO NOT CHANGE THIS UNLESS YOU KNOW WHAT YOU ARE DOING
-const UUID_VERSION_PREFIX = "001";
-
 export enum AuthorizationStatus {
   NotDetermined = 0,
   StatusDenied = 1,
@@ -121,14 +118,11 @@ export const cancellAllLocalNotifications = () =>
   PushNotification.cancelAllLocalNotifications();
 
 /**
- * Generates a new random installation ID with the following format:
- *
- * <VERSION_PREFIX><UUID>
- *
- * Where:
- *   VERSION_PREFIX is \d{3}
- *   UUID is [a-z0-9]{32}
+ * This is a legacy code that was used to generate a unique Id
+ * from client side. It is still used because the backend API
+ * requires it as part of the URL's path but it is later not
+ * used in any way.
+ * When the backend API spec will remove it, it can also be
+ * unlinked and deleted here
  */
-export function generateInstallationId(): string {
-  return `${UUID_VERSION_PREFIX}${uuid().replace(/-/g, "")}`;
-}
+export const generateInstallationId = () => `001${uuid().replace(/-/g, "")}`;

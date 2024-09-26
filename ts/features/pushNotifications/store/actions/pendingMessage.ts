@@ -7,7 +7,7 @@ export const updateNotificationsPendingMessage = createStandardAction(
 
 export const clearNotificationPendingMessage = createStandardAction(
   "NOTIFICATIONS_PENDING_MESSAGE_CLEAR"
-)();
+)<void>();
 
 export type PendingMessageActions =
   | ActionType<typeof updateNotificationsPendingMessage>

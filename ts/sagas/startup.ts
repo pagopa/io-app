@@ -525,8 +525,10 @@ export function* initializeApplicationSaga(
   // Stop the watchAbortOnboardingSaga
   yield* cancel(watchAbortOnboardingSagaTask);
 
-  // Start the notification installation update as early as
-  // possible to begin receiving push notifications
+  // Fork the saga that uploads the push notification token to the backend.
+  // At this moment, the push notification token may not be available yet but
+  // the saga handles it internally. Make sure to fork it and not call it using
+  // a blocking call, since the saga will just hang, waiting for the token
   yield* fork(
     pushNotificationTokenUpload,
     backendClient.createOrUpdateInstallation
