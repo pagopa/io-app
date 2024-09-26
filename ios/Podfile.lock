@@ -621,9 +621,11 @@ PODS:
   - Sentry/HybridSDK (8.36.0)
   - SocketRocket (0.6.1)
   - SwiftCBOR (0.4.7)
-  - VisionCamera (3.9.2):
-    - React
-    - React-callinvoker
+  - VisionCamera (4.3.1):
+    - VisionCamera/Core (= 4.3.1)
+    - VisionCamera/React (= 4.3.1)
+  - VisionCamera/Core (4.3.1)
+  - VisionCamera/React (4.3.1):
     - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -988,7 +990,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
-  boost: 7dcd2de282d72e344012f7d6564d024930a6a440
+  boost: 9fa78656d705f55b1220151d997e57e2a3f2cde0
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
@@ -1018,7 +1020,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-jwt: 662d4e722715996758b079774abea1996b057467
   pagopa-io-react-native-login-utils: c7e8a4908c1239ce834fe1d16dd22ccc7c7f5536
   pagopa-react-native-zendesk: 60a26f8a8072234789c34bb7c8a769c156eb57dc
-  RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
+  RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: 264adaca1d8b1a9c078761891898d4142df05313
   RCTTypeSafety: 279a89da7058a69899778a127be73fab38b84499
   React: 725b4e11f6ffb43d6f9b14e82879073623db4071
@@ -1093,7 +1095,7 @@ SPEC CHECKSUMS:
   Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   SwiftCBOR: 465775bed0e8bac7bfb8160bcf7b95d7f75971e4
-  VisionCamera: 36c460338692788a0d377dce7d32f8ba049fb4f2
+  VisionCamera: 58d2120e6e23c155b25f4702b7912dc2b1e5e8c2
   Yoga: c32e0be1a17f8f1f0e633a3122f7666441f52c82
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   ZendeskAnswerBotProvidersSDK: a024260282886870a15e7a986bf5286c23fd9311
@@ -1111,4 +1113,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: c81fe8fa67af4bf6e27653958d177ac176ab0293
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2
