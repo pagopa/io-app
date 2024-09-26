@@ -720,6 +720,16 @@ authentication:
     generic:
       title: Non è stato possibile accedere
       subtitle: Si è verificato un problema durante l’accesso. Riprova tra qualche minuto.
+  cie_id:
+    error_screen:
+      title: Non riesci a entrare con CieID?
+      cie_pin_supported:
+        description: "Se hai la tua Carta di Identità Elettronica a portata di mano, usala per accedere a IO.\n\nInserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura dei dati."
+        primary_action_label: Entra con CIE + PIN
+      cie_pin_not_supported:
+        description: Se hai SPID, entra su IO inserendo le tue credenziali. Puoi usare anche il tuo volto o l’impronta o il codice impostato per l’app del tuo fornitore di SPID.
+        primary_action_label: Entra con SPID
+      secondary_action_label: Chiudi
   cie:
     genericTitle: Entra con CIE
     cie: CIE
@@ -3307,6 +3317,10 @@ features:
         title: Non è possibile aggiungere il documento
         body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
         primaryAction: Ho capito
+      asyncCredentialError:
+        title: La tua richiesta è stata presa in carico
+        body: Riceverai un messaggio in app con l'esito della tua richiesta appena sarà disponibile.
+        primaryAction: Ho capito
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
@@ -3731,6 +3745,7 @@ idpay:
       INSTRUMENTS_LIST_LOAD_FAILURE: "Errore nel caricamento della lista strumenti"
       INSTRUMENT_ENROLL_FAILURE: "Errore durante l'aggiunta del metodo di pagamento"
       INSTRUMENT_DELETE_FAILURE: "Errore durante la rimozione del metodo di pagamento"
+      SESSION_EXPIRED: "C'è stato un problema, riprova"
     headerTitle: "Configura l'iniziativa"
     intro:
       title: "Ci siamo quasi"
