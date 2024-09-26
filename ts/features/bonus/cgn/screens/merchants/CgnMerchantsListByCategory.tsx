@@ -273,6 +273,7 @@ function useAdjustedRefreshingValue(isRefreshing: boolean): boolean {
       }, DO_NOT_SHOW_BEFORE_MILLIS);
       return () => clearTimeout(timeout);
     }
+    return () => undefined;
   }, [isRefreshing]);
   React.useEffect(() => {
     if (!isRefreshing) {
@@ -287,6 +288,7 @@ function useAdjustedRefreshingValue(isRefreshing: boolean): boolean {
       );
       return () => clearTimeout(timeout);
     }
+    return () => undefined;
   }, [isRefrescingSince, isRefreshing]);
   return adjustedIsRefreshing;
 }
