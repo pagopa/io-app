@@ -52,6 +52,7 @@ const PaymentsTransactionBizEventsListScreen = () => {
 
   const scrollTranslationY = useSharedValue(0);
   const [titleHeight, setTitleHeight] = React.useState(0);
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
   const [continuationToken, setContinuationToken] = React.useState<
     string | undefined
   >();
@@ -101,8 +102,19 @@ const PaymentsTransactionBizEventsListScreen = () => {
     setTitleHeight(height);
   };
 
-  const handleOnSuccess = (continuationToken?: string) => {
-    setContinuationToken(continuationToken);
+  const handleOnSuccess = (paginationToken?: string) => {
+    setContinuationToken(paginationToken);
+    setIsRefreshing(false);
+  };
+
+  const handleOnRefreshTransactionsList = () => {
+    setIsRefreshing(true);
+    dispatch(
+      getPaymentsBizEventsTransactionsAction.request({
+        firstLoad: true,
+        onSuccess: handleOnSuccess
+      })
+    );
   };
 
   useOnFirstRender(
@@ -188,7 +200,8 @@ const PaymentsTransactionBizEventsListScreen = () => {
 
   return (
     <AnimatedSectionList
-      // snapToEnd={false}
+      refreshing={isRefreshing}
+      onRefresh={handleOnRefreshTransactionsList}
       scrollIndicatorInsets={{ right: 0 }}
       contentContainerStyle={{
         ...IOStyles.horizontalContentPadding,
