@@ -6,11 +6,11 @@ import {
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../i18n";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
-import { openWebUrl } from "../../../utils/url";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { openWebUrl } from "../../../../utils/url";
 
 const REQUEST_CIE_URL = "https://www.cartaidentita.interno.gov.it/richiedi/";
 const ACTIVATE_CIE_URL = "https://www.cartaidentita.interno.gov.it/attiva/";

@@ -2105,10 +2105,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.5.tgz#02179a4cbeed17376b028a5ce506bdbf0b1b6e39"
   integrity sha512-vtVH42V+1TydYDv4M7RpbTKbD/SOQx7HS7woaQ++UOwgoG+H28SmszK5O7AVIR4lkpiPgF75rq0HOkdNonReHA==
 
-"@pagopa/io-react-native-wallet@^0.16.3":
-  version "0.16.3"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.16.3.tgz#17cbda300f06418abd93310729dd3d334a51b51c"
-  integrity sha512-P2RNumOm13/1nS1LugxHtWm8qc3a4djWfZk3pQFr2S7zgX5FOhwpopscFuE4F3Fx0TBC+xNpDjRqevHfCys4Cw==
+"@pagopa/io-react-native-wallet@^0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.17.0.tgz#ac3bbc5a3f26f662690cfb64b60cd677b9357d65"
+  integrity sha512-leYFlFyUTTvnO5W8fP9cSrS+825iIjguVYYejxDqsofDofenAcI8WenmByodgur3abjCODvekIc2x+4wF7/9Cw==
   dependencies:
     js-sha256 "^0.9.0"
     parse-url "^9.2.0"
@@ -16553,7 +16553,7 @@ xss@1.0.10:
     commander "^2.20.3"
     cssfilter "0.0.10"
 
-"xstate5@npm:xstate@5", xstate@^5.13.0:
+"xstate5@npm:xstate@5":
   version "5.13.0"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.13.0.tgz#7f7092d813a89d94024b083fe23a86b6cf4a323a"
   integrity sha512-Z0om784N5u8sAzUvQJBa32jiTCIGGF/2ZsmKkerQEqeeUktAeOMK20FIHFUMywC4GcAkNksSvaeX7lwoRNXPEQ==
@@ -16562,6 +16562,11 @@ xstate@^4.29.0, xstate@^4.33.6:
   version "4.35.4"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.35.4.tgz#87b2a45b6c7e84d820f56378408c6531ca5c4662"
   integrity sha512-mqRBYHhljP1xIItI4xnSQNHEv6CKslSM1cOGmvhmxeoDPAZgNbhSUYAL5N6DZIxRfpYY+M+bSm3mUFHD63iuvg==
+
+xstate@^5.13.0:
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.13.0.tgz#7f7092d813a89d94024b083fe23a86b6cf4a323a"
+  integrity sha512-Z0om784N5u8sAzUvQJBa32jiTCIGGF/2ZsmKkerQEqeeUktAeOMK20FIHFUMywC4GcAkNksSvaeX7lwoRNXPEQ==
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.2"
