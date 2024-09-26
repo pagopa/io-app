@@ -136,6 +136,8 @@ const OtherCardsContainer = ({
     return null;
   }
 
+  const displayHeader = isItwTrialEnabled && isItwEnabled && isItwValid;
+
   return (
     <WalletCardsCategoryContainer
       key={`cards_category_other`}
@@ -143,7 +145,7 @@ const OtherCardsContainer = ({
       cards={cards}
       isStacked={isStacked}
       header={
-        isItwTrialEnabled && isItwEnabled && isItwValid
+        displayHeader
           ? {
               label: I18n.t("features.wallet.cards.categories.other")
             }
