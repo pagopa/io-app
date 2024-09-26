@@ -2,7 +2,7 @@ import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInf
 import { WalletInfo as EcommerceWalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
-import { PaymentStartOrigin } from ".";
+import { PaymentStartOrigin } from "../../checkout/types";
 
 export type PaymentAnalyticsData = {
   savedPaymentMethods?: ReadonlyArray<WalletInfo | EcommerceWalletInfo>;
@@ -18,7 +18,25 @@ export type PaymentAnalyticsData = {
   startOrigin?: PaymentStartOrigin;
   verifiedData?: PaymentRequestsGetResponse;
   attempt?: number;
+  paymentsHomeStatus?: PaymentsAnalyticsHomeStatus;
+  transactionsHomeLength?: number;
+  receiptUser?: PaymentsAnalyticsReceiptUser;
+  receiptFirstTimeOpening?: boolean;
+  receiptOrganizationName?: string;
+  receiptPayerFiscalCode?: string;
 };
+
+export type PaymentsAnalyticsReceiptUser = "payee" | "payer";
+
+export type PaymentsAnalyticsHomeAddWalletEntryPoint =
+  | "wallet_home"
+  | "payments_home";
+
+export type PaymentsAnalyticsHomeStatus =
+  | "empty"
+  | "empty receipts"
+  | "empty method"
+  | "complete";
 
 export type PaymentAnalyticsSelectedMethodFlag = "none" | "last_used" | "saved";
 
