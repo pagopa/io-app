@@ -1,7 +1,6 @@
 import React from "react";
 import { View } from "react-native";
 import {
-  Alert,
   Divider,
   HStack,
   Icon,
@@ -55,10 +54,6 @@ export const ItwEidInfoBottomSheetContent = () => {
           content={I18n.t(
             "features.itWallet.presentation.bottomSheets.eidInfo.contentBottom"
           )}
-        />
-        <Alert
-          variant="success"
-          content="L'ultima verifica con CIE è del 19/07/2024."
         />
       </VStack>
     );
