@@ -55,13 +55,15 @@ export function* profileAndSystemNotificationsPermissions(
     }
   }
 
-  // check if the user has given system notification permissions
+  // Check if the user has given system notification permissions
+  // and update the in-memory redux value if needed
   const hasNotificationPermission = yield* call(
     checkAndUpdateNotificationPermissionsIfNeeded
   );
 
   if (!hasNotificationPermission) {
-    // Ask the user for notification permission
+    // Ask the user for notification permission and update
+    // the in-memory redux value if needed
     const userHasGivenNotificationPermission = yield* call(
       requestNotificationPermissions
     );

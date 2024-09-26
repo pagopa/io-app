@@ -20,9 +20,11 @@ import { UIMessageId } from "../../messages/types";
 import { trackMessageNotificationTap } from "../../messages/analytics";
 
 export function* checkAndUpdateNotificationPermissionsIfNeeded() {
+  // Retrieve system notification receival permission
   const systemNotificationPermissions = yield* call(
     checkNotificationPermissions
   );
+  // Update the in-memory redux value if needed
   yield* call(
     updateNotificationPermissionsIfNeeded,
     systemNotificationPermissions
@@ -33,10 +35,14 @@ export function* checkAndUpdateNotificationPermissionsIfNeeded() {
 export function* updateNotificationPermissionsIfNeeded(
   systemNotificationPermissions: boolean
 ) {
+  // Retrieve the in-memory redux value of the
+  // notification receival permission
   const storedNotificationPermissions = yield* select(
     areNotificationPermissionsEnabled
   );
+  // If it is different, compared to the input one
   if (systemNotificationPermissions !== storedNotificationPermissions) {
+    // Update the in-memory redux value
     yield* put(updateSystemNotificationsEnabled(systemNotificationPermissions));
   }
 }
