@@ -21,7 +21,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     issuerConf: {} as StoredCredential["issuerConf"]
   };
 
-  it("rehydrates the eID when the wallet is valid", () => {
+  it("should not rehydrate the eID when the wallet is valid", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
@@ -37,7 +37,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
 
     return expectSaga(handleWalletCredentialsRehydration)
       .withState(store)
-      .put(
+      .not.put(
         walletAddCards([
           {
             key: `ITW_${CredentialType.PID}`,
@@ -85,13 +85,6 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
       .withState(store)
       .put(
         walletAddCards([
-          {
-            key: `ITW_${CredentialType.PID}`,
-            type: "itw",
-            category: "itw",
-            credentialType: CredentialType.PID,
-            status: "valid"
-          },
           {
             key: `ITW_${CredentialType.DRIVING_LICENSE}`,
             type: "itw",
