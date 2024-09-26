@@ -1,5 +1,5 @@
 import * as O from "fp-ts/lib/Option";
-import { fromPromise } from "xstate5";
+import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
