@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable complexity */
 import * as O from "fp-ts/lib/Option";
 import * as A from "fp-ts/lib/Array";
@@ -35,16 +36,27 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../../utils/stringBuilder";
-import { PaymentAnalyticsData } from "../../../checkout/types/PaymentAnalytics";
+import {
+  PaymentAnalyticsData,
+  PaymentsAnalyticsHomeStatus
+} from "../../../common/types/PaymentAnalytics";
+import {
+  getPaymentsBizEventsTransactionDetailsAction,
+  getPaymentsLatestBizEventsTransactionsAction
+} from "../../../bizEventsTransaction/store/actions";
+import * as bizEventAnalytics from "../../../bizEventsTransaction/analytics";
+import { createSetTransform } from "../../../../../store/transforms/setTransform";
 
 export type PaymentsHistoryState = {
   analyticsData?: PaymentAnalyticsData;
   ongoingPayment?: PaymentHistory;
   archive: ReadonlyArray<PaymentHistory>;
+  receiptsOpened: Set<string>;
 };
 
 const INITIAL_STATE: PaymentsHistoryState = {
-  archive: []
+  archive: [],
+  receiptsOpened: new Set()
 };
 
 export const ARCHIVE_SIZE = 15;
@@ -143,7 +155,11 @@ const reducer = (
         analyticsData: {
           ...state.analyticsData,
           savedPaymentMethods: action.payload.wallets,
-          savedPaymentMethodsUnavailable: unavailablePaymentMethods
+          savedPaymentMethodsUnavailable: unavailablePaymentMethods,
+          paymentsHomeStatus: getPaymentsHomeStatus(
+            action.payload.wallets?.length ?? 0,
+            state.analyticsData?.transactionsHomeLength ?? 0
+          )
         }
       };
     case getType(paymentsCalculatePaymentFeesAction.success):
@@ -172,11 +188,68 @@ const reducer = (
           )
         }
       };
+    case getType(getPaymentsLatestBizEventsTransactionsAction.success):
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          transactionsHomeLength: action.payload.transactions?.length ?? 0,
+          paymentsHomeStatus: getPaymentsHomeStatus(
+            state.analyticsData?.savedPaymentMethods?.length ?? 0,
+            action.payload.transactions?.length ?? 0
+          )
+        }
+      };
+    case getType(getPaymentsBizEventsTransactionDetailsAction.request):
+      const isFirstTimeOpening = !state.receiptsOpened.has(
+        action.payload.transactionId
+      );
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          receiptFirstTimeOpening: isFirstTimeOpening,
+          receiptUser: action.payload.isPayer ? "payer" : "payee"
+        },
+        receiptsOpened: new Set(state.receiptsOpened).add(
+          action.payload.transactionId
+        )
+      };
+    case getType(getPaymentsBizEventsTransactionDetailsAction.success):
+      bizEventAnalytics.trackPaymentsOpenReceipt({
+        organization_name: action.payload.carts?.[0]?.payee?.name,
+        first_time_opening: state.analyticsData?.receiptFirstTimeOpening,
+        user: state.analyticsData?.receiptUser
+      });
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          receiptOrganizationName: action.payload.carts?.[0]?.payee?.name,
+          receiptPayerFiscalCode: action.payload.infoTransaction?.payer?.taxCode
+        }
+      };
     case getType(differentProfileLoggedIn):
     case getType(clearCache):
       return INITIAL_STATE;
   }
   return state;
+};
+
+const getPaymentsHomeStatus = (
+  savedPaymentMethods: number,
+  transactions: number
+): PaymentsAnalyticsHomeStatus => {
+  if (savedPaymentMethods === 0 && transactions === 0) {
+    return "empty";
+  }
+  if (savedPaymentMethods === 0 && transactions > 0) {
+    return "empty method";
+  }
+  if (savedPaymentMethods > 0 && transactions === 0) {
+    return "empty receipts";
+  }
+  return "complete";
 };
 
 const getPaymentAttemptByRptId = (state: PaymentsHistoryState, rptId: RptId) =>
@@ -217,14 +290,16 @@ const updatePaymentHistory = (
     return {
       analyticsData: state.analyticsData,
       ongoingPayment: updatedOngoingPaymentHistory,
-      archive: appendItemToArchive(state.archive, updatedOngoingPaymentHistory)
+      archive: appendItemToArchive(state.archive, updatedOngoingPaymentHistory),
+      receiptsOpened: state.receiptsOpened
     };
   }
 
   return {
     analyticsData: state.analyticsData,
     ongoingPayment: updatedOngoingPaymentHistory,
-    archive: [..._.dropRight(state.archive), updatedOngoingPaymentHistory]
+    archive: [..._.dropRight(state.archive), updatedOngoingPaymentHistory],
+    receiptsOpened: state.receiptsOpened
   };
 };
 
@@ -234,7 +309,8 @@ const persistConfig: PersistConfig = {
   key: "paymentHistory",
   storage: AsyncStorage,
   version: CURRENT_REDUX_PAYMENT_HISTORY_STORE_VERSION,
-  whitelist: ["archive"]
+  whitelist: ["archive", "receiptsOpened"],
+  transforms: [createSetTransform(["receiptsOpened"])]
 };
 
 export const walletPaymentHistoryPersistor = persistReducer<
