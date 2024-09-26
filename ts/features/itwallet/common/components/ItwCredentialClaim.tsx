@@ -109,8 +109,11 @@ const DateClaimItem = ({
   claim: Date;
   status?: ItwCredentialStatus;
 }) => {
+  // Remove the timezone offset to display the date in its original format
+  const userTimezoneOffset = claim.getTimezoneOffset() * 60000;
+  const fixedDate = new Date(claim.getTime() + userTimezoneOffset);
   const value = localeDateFormat(
-    claim,
+    fixedDate,
     I18n.t("global.dateFormats.shortFormat")
   );
 
