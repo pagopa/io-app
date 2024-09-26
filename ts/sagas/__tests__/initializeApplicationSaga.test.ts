@@ -50,10 +50,6 @@ jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
 }));
 
-// jest.mock("../../features/ingress/store/selectors", () => ({
-//   isBlockingScreenSelector: () => false
-// }));
-
 jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
