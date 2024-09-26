@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable complexity */
 import * as O from "fp-ts/lib/Option";
 import * as A from "fp-ts/lib/Array";
@@ -207,7 +208,8 @@ const reducer = (
         ...state,
         analyticsData: {
           ...state.analyticsData,
-          receiptFirstTimeOpening: isFirstTimeOpening
+          receiptFirstTimeOpening: isFirstTimeOpening,
+          receiptUser: action.payload.isPayer ? "payer" : "payee"
         },
         receiptsOpened: new Set(state.receiptsOpened).add(
           action.payload.transactionId

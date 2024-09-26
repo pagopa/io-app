@@ -74,15 +74,15 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   const transactionDetails = pot.toUndefined(transactionDetailsPot);
 
   useOnFirstRender(() => {
-    dispatch(
-      getPaymentsBizEventsTransactionDetailsAction.request({ transactionId })
-    );
+    fetchTransactionDetails();
   });
 
-  // eslint-disable-next-line sonarjs/no-identical-functions
-  const handleOnRetry = () => {
+  const fetchTransactionDetails = () => {
     dispatch(
-      getPaymentsBizEventsTransactionDetailsAction.request({ transactionId })
+      getPaymentsBizEventsTransactionDetailsAction.request({
+        transactionId,
+        isPayer
+      })
     );
   };
 
@@ -90,7 +90,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
     analytics.trackPaymentsDownloadReceiptError({
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
-      user: isPayer ? "payer" : "payee"
+      user: paymentAnalyticsData?.receiptUser
     });
     toast.error(I18n.t("features.payments.transactions.receipt.error"));
   };
@@ -109,7 +109,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
     analytics.trackPaymentsDownloadReceiptAction({
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
-      user: isPayer ? "payer" : "payee"
+      user: paymentAnalyticsData?.receiptUser
     });
     dispatch(
       getPaymentsBizEventsReceiptAction.request({
@@ -128,7 +128,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
         action={{
           label: I18n.t("global.buttons.retry"),
           accessibilityLabel: I18n.t("global.buttons.retry"),
-          onPress: handleOnRetry
+          onPress: fetchTransactionDetails
         }}
         secondaryAction={{
           label: I18n.t("global.buttons.back"),
