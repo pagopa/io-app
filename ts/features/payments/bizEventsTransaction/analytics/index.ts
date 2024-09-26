@@ -31,7 +31,7 @@ export const trackPaymentsOpenReceipt = (
   props: Partial<PaymentReceiptAnalyticsProps>
 ) => {
   void mixpanelTrack(
-    "OPEN_RECEIPT_OLD_LISTING",
+    "OPEN_RECEIPT",
     buildEventProperties("UX", "screen_view", {
       ...props
     })
