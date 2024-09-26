@@ -51,6 +51,7 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
+import { ConfigurationMode } from "../../configuration/types";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
