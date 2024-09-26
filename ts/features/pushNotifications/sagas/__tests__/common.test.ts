@@ -5,8 +5,10 @@ import {
 } from "../../store/reducers/pendingMessage";
 import * as Analytics from "../../../messages/analytics";
 import {
+  checkAndUpdateNotificationPermissionsIfNeeded,
   handlePendingMessageStateIfAllowed,
-  trackMessageNotificationTapIfNeeded
+  trackMessageNotificationTapIfNeeded,
+  updateNotificationPermissionsIfNeeded
 } from "../common";
 import { isPaymentOngoingSelector } from "../../../../store/reducers/wallet/payment";
 import { navigateToMessageRouterAction } from "../../utils/navigation";
@@ -16,6 +18,9 @@ import { isArchivingDisabledSelector } from "../../../messages/store/reducers/ar
 import NavigationService from "../../../../navigation/NavigationService";
 import { navigateToMainNavigatorAction } from "../../../../store/actions/navigation";
 import { resetMessageArchivingAction } from "../../../messages/store/actions/archiving";
+import { areNotificationPermissionsEnabled } from "../../store/reducers/permissions";
+import { updateSystemNotificationsEnabled } from "../../store/actions/permissions";
+import { checkNotificationPermissions } from "../../utils";
 
 describe("handlePendingMessageStateIfAllowed", () => {
   const mockedPendingMessageState: PendingMessageState = {
@@ -185,5 +190,67 @@ describe("trackMessageNotificationTapIfNeeded", () => {
       .mockImplementation(jest.fn());
     trackMessageNotificationTapIfNeeded();
     expect(spiedTrackMessageNotificationTap).not.toHaveBeenCalled();
+  });
+});
+
+describe("updateNotificationPermissionsIfNeeded", () => {
+  it("should not dispatch 'updateSystemNotificationsEnabled' when system permissions are 'false' and in-memory data are 'false'", () => {
+    testSaga(updateNotificationPermissionsIfNeeded, false)
+      .next()
+      .select(areNotificationPermissionsEnabled)
+      .next(false)
+      .isDone();
+  });
+  it("should dispatch 'updateSystemNotificationsEnabled(false)' when system permissions are 'false' and in-memory data are 'true'", () => {
+    testSaga(updateNotificationPermissionsIfNeeded, false)
+      .next()
+      .select(areNotificationPermissionsEnabled)
+      .next(true)
+      .put(updateSystemNotificationsEnabled(false))
+      .next()
+      .isDone();
+  });
+  it("should dispatch 'updateSystemNotificationsEnabled(true)' when system permissions are 'true' and in-memory data are 'false'", () => {
+    testSaga(updateNotificationPermissionsIfNeeded, true)
+      .next()
+      .select(areNotificationPermissionsEnabled)
+      .next(false)
+      .put(updateSystemNotificationsEnabled(true))
+      .next()
+      .isDone();
+  });
+  it("should not dispatch 'updateSystemNotificationsEnabled' when system permissions are 'true' and in-memory data are 'true'", () => {
+    testSaga(updateNotificationPermissionsIfNeeded, true)
+      .next()
+      .select(areNotificationPermissionsEnabled)
+      .next(true)
+      .isDone();
+  });
+});
+
+describe("checkAndUpdateNotificationPermissionsIfNeeded", () => {
+  it("when 'checkNotificationPermissions' returns 'false', should call 'updateNotificationPermissionsIfNeeded' with 'false' and return 'false'", () => {
+    const systemPermissionsEnabled = false;
+    testSaga(checkAndUpdateNotificationPermissionsIfNeeded)
+      .next()
+      .call(checkNotificationPermissions)
+      .next(systemPermissionsEnabled)
+      .call(updateNotificationPermissionsIfNeeded, systemPermissionsEnabled)
+      .next()
+      .returns(systemPermissionsEnabled)
+      .next()
+      .isDone();
+  });
+  it("when 'checkNotificationPermissions' returns 'true', should call 'updateNotificationPermissionsIfNeeded' with 'true' and return 'true'", () => {
+    const systemPermissionsEnabled = true;
+    testSaga(checkAndUpdateNotificationPermissionsIfNeeded)
+      .next()
+      .call(checkNotificationPermissions)
+      .next(systemPermissionsEnabled)
+      .call(updateNotificationPermissionsIfNeeded, systemPermissionsEnabled)
+      .next()
+      .returns(systemPermissionsEnabled)
+      .next()
+      .isDone();
   });
 });
