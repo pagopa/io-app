@@ -24,11 +24,11 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
 import * as analytics from "../analytics";
-import { profileFiscalCodeSelector } from "../../../../store/reducers/profile";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 export type PaymentsTransactionBizEventsDetailsScreenParams = {
   transactionId: string;
+  isPayer?: boolean;
 };
 
 export type PaymentsTransactionBizEventsDetailsScreenProps = RouteProp<
@@ -58,8 +58,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const route = useRoute<PaymentsTransactionBizEventsDetailsScreenProps>();
-  const { transactionId } = route.params;
-  const userFiscalCode = useIOSelector(profileFiscalCodeSelector);
+  const { transactionId, isPayer } = route.params;
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const transactionDetailsPot = useIOSelector(
     walletTransactionBizEventsDetailsPotSelector
@@ -91,10 +90,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
     analytics.trackPaymentsDownloadReceiptError({
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
-      user:
-        userFiscalCode === paymentAnalyticsData?.receiptPayerFiscalCode
-          ? "payer"
-          : "payee"
+      user: isPayer ? "payer" : "payee"
     });
     toast.error(I18n.t("features.payments.transactions.receipt.error"));
   };
@@ -113,10 +109,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
     analytics.trackPaymentsDownloadReceiptAction({
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
-      user:
-        userFiscalCode === paymentAnalyticsData?.receiptPayerFiscalCode
-          ? "payer"
-          : "payee"
+      user: isPayer ? "payer" : "payee"
     });
     dispatch(
       getPaymentsBizEventsReceiptAction.request({

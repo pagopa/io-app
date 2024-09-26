@@ -57,7 +57,8 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
         screen:
           PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_DETAILS,
         params: {
-          transactionId: transaction.transactionId
+          transactionId: transaction.transactionId,
+          isPayer: transaction.isPayer
         }
       }
     );
