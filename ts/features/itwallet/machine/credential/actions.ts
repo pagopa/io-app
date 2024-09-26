@@ -1,7 +1,7 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ActionArgs, assertEvent } from "xstate5";
+import { ActionArgs, assertEvent } from "xstate";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
