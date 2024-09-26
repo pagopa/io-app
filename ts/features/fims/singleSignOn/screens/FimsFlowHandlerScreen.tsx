@@ -5,7 +5,6 @@ import * as O from "fp-ts/Option";
 import * as React from "react";
 import { View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -15,6 +14,7 @@ import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backen
 import { trackAuthenticationError } from "../../common/analytics";
 import { FimsUpdateAppAlert } from "../../common/components/FimsUpdateAppAlert";
 import { FimsParamsList } from "../../common/navigation";
+import { FimsSSOErrorScreen } from "../components/FimsErrorScreens";
 import { FimsFlowSuccessBody } from "../components/FimsSuccessBody";
 import {
   fimsCancelOrAbortAction,
@@ -22,7 +22,7 @@ import {
 } from "../store/actions/";
 import {
   fimsConsentsDataSelector,
-  fimsErrorStateSelector,
+  fimsErrorTagSelector,
   fimsLoadingStateSelector
 } from "../store/selectors";
 
@@ -45,7 +45,7 @@ export const FimsFlowHandlerScreen = (
   const requiresAppUpdate = useIOSelector(fimsRequiresAppUpdateSelector);
   const loadingState = useIOSelector(fimsLoadingStateSelector);
   const consentsPot = useIOSelector(fimsConsentsDataSelector);
-  const errorState = useIOSelector(fimsErrorStateSelector);
+  const errorTag = useIOSelector(fimsErrorTagSelector);
 
   const handleCancelOrAbort = React.useCallback(() => {
     if (loadingState !== "abort") {
@@ -82,8 +82,8 @@ export const FimsFlowHandlerScreen = (
     return <FimsUpdateAppAlert />;
   }
 
-  if (errorState !== undefined) {
-    return <FimsErrorBody title={errorState} />;
+  if (errorTag !== undefined) {
+    return <FimsSSOErrorScreen errorTag={errorTag} />;
   }
   if (loadingState !== undefined) {
     const subtitle =
@@ -107,7 +107,7 @@ export const FimsFlowHandlerScreen = (
     consentsPot,
     pot.toOption,
     O.fold(
-      () => <FimsErrorBody title={I18n.t("global.genericError")} />,
+      () => <FimsSSOErrorScreen errorTag="GENERIC" />,
       consents => (
         <FimsFlowSuccessBody
           consents={consents}
@@ -117,12 +117,3 @@ export const FimsFlowHandlerScreen = (
     )
   );
 };
-
-type FimsErrorBodyProps = { title: string };
-const FimsErrorBody = ({ title }: FimsErrorBodyProps) => (
-  <OperationResultScreenContent
-    pictogram="umbrellaNew"
-    title={title}
-    isHeaderVisible={true}
-  />
-);
