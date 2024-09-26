@@ -112,7 +112,7 @@ const ItwCardsContainer = ({
         cards={cards}
         isStacked={isStacked}
         header={getHeader()}
-        footer={
+        topElement={
           <>
             <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
             <ItwWalletReadyBanner />
