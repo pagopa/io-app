@@ -81,3 +81,10 @@ export const getPaymentPhaseFromStep = (
       return "pagamento";
   }
 };
+
+export const trimAndLimitValue = (value: string, maxLength: number): string => {
+  const trimmedValue = value.replace(/\s/g, "");
+  return trimmedValue.length > maxLength
+    ? trimmedValue.substring(0, maxLength)
+    : trimmedValue;
+};

@@ -1,6 +1,5 @@
 import { mixpanelTrack, mixpanel } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { PaymentsTrackingConfiguration } from "../../common/analytics";
 import {
   PaymentAnalyticsEditingType,
   PaymentAnalyticsPhase,
@@ -254,9 +253,7 @@ export const trackPaymentConversion = (
 export const trackPaymentOutcomeSuccess = (
   props: Partial<PaymentAnalyticsProps>
 ) => {
-  mixpanel
-    ?.getPeople()
-    .increment("paymentsCompleted" as keyof PaymentsTrackingConfiguration, 1);
+  mixpanel?.getPeople().increment("PAYMENT_COMPLETED", 1);
   void mixpanelTrack(
     "PAYMENT_UX_SUCCESS",
     buildEventProperties("UX", "screen_view", {
