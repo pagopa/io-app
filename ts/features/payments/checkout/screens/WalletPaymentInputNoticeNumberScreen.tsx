@@ -35,11 +35,14 @@ import {
 } from "../../common/utils/validation";
 import * as analytics from "../analytics";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
+import { trimAndLimitValue } from "../utils";
 
 type InputState = {
   noticeNumberText: string;
   noticeNumber: O.Option<PaymentNoticeNumberFromString>;
 };
+
+const MAX_LENGTH_NOTICE_NUMBER = 18;
 
 const WalletPaymentInputNoticeNumberScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -100,14 +103,23 @@ const WalletPaymentInputNoticeNumberScreen = () => {
                 )}
                 value={inputState.noticeNumberText}
                 icon="docPaymentCode"
-                onChangeText={value =>
+                onChangeText={value => {
+                  const normalizedValue = trimAndLimitValue(
+                    value,
+                    MAX_LENGTH_NOTICE_NUMBER
+                  );
+
                   setInputState({
-                    noticeNumberText: value,
-                    noticeNumber: decodePaymentNoticeNumber(value)
-                  })
+                    noticeNumberText: normalizedValue,
+                    noticeNumber: decodePaymentNoticeNumber(normalizedValue)
+                  });
+                }}
+                counterLimit={
+                  inputState.noticeNumberText.length >= MAX_LENGTH_NOTICE_NUMBER
+                    ? MAX_LENGTH_NOTICE_NUMBER
+                    : undefined
                 }
                 onValidate={validatePaymentNoticeNumber}
-                counterLimit={18}
                 textInputProps={{
                   keyboardType: "number-pad",
                   inputMode: "numeric",
