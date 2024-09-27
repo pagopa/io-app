@@ -125,7 +125,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
           )}
           <H2
             color={theme["textHeading-default"]}
-            testID={title.testID}
+            testID={title?.testID}
             accessibilityLabel={title.accessibilityLabel ?? title.label}
             accessibilityRole="header"
           >
