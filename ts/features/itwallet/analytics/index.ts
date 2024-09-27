@@ -599,3 +599,46 @@ export const trackItwRequestSuccess = (ITW_ID_method?: ItwIdMethod) => {
   }
 };
 // #endregion TECH
+
+// #region PROFILE AND SUPER PROPERTIES UPDATE
+
+// export const updateItwProfileProperties = async (
+//   state: GlobalState,
+//   properties: UpdateItwProfileProperties
+// ) => {
+//   mixPanelCredentials.forEach(async property => {
+//     if (property === "ITW_ID") {
+//       // ITW_ID value type generates a typescript problem due to type infer of {property, value} object requested by updateMixpanelProfileProperties
+//       await updateMixpanelProfileProperties(state, {
+//         property,
+//         value: properties.ITW_ID
+//       });
+//       return;
+//     }
+//     await updateMixpanelProfileProperties(state, {
+//       property,
+//       value: properties[property]
+//     });
+//   });
+// };
+
+// export const updateItwSuperProperties = async (
+//   state: GlobalState,
+//   properties: UpdateItwProfileProperties
+// ) => {
+//   mixPanelCredentials.forEach(async property => {
+//     if (property === "ITW_ID") {
+//       // ITW_ID value type generates a typescript problem due to type infer of {property, value} object requested by updateMixpanelProfileProperties
+//       await updateMixpanelSuperProperties(state, {
+//         property,
+//         value: properties.ITW_ID
+//       });
+//       return;
+//     }
+//     await updateMixpanelSuperProperties(state, {
+//       property,
+//       value: properties[property]
+//     });
+//   });
+// };
+// #endregion PROFILE AND SUPER PROPERTIES UPDATE

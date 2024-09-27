@@ -39,13 +39,8 @@ import {
 } from "../features/fastLogin/store/selectors";
 import { watchFciSaga } from "../features/fci/saga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
-import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
-import {
-  checkLollipopSessionAssertionAndInvalidateIfNeeded,
-  generateLollipopKeySaga,
-  getKeyInfo
-} from "../features/lollipop/saga";
-import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
+import { generateLollipopKeySaga, getKeyInfo } from "../features/lollipop/saga";
+// import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
 import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
@@ -365,7 +360,7 @@ export function* initializeApplicationSaga(
     }
   }
 
-  const publicKey = yield* select(lollipopPublicKeySelector);
+  // const publicKey = yield* select(lollipopPublicKeySelector);
 
   // const isAssertionRefValid = yield* call(
   //   checkLollipopSessionAssertionAndInvalidateIfNeeded,

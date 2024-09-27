@@ -84,6 +84,7 @@ export const updateMixpanelProfileProperties = async (
       getNotificationPermissionType(notificationsEnabled),
     SERVICE_CONFIGURATION,
     TRACKING,
+    // TODO check this property
     ITW_HAS_READ_IPZS_POLICY: false,
     ITW_STATUS,
     ITW_ID,
@@ -134,6 +135,8 @@ const pgStatusHandler = (state: GlobalState): ItwPg => {
 };
 const tsStatusHandler = (state: GlobalState): ItwTs => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
+  // TODO check if this is the correct value
+  // console.log("🚀 ~ tsStatusHandler ~ credentialsByType:", credentialsByType);
   return credentialsByType.EuropeanHealthInsuranceCard
     ? "valid"
     : "not_available";

@@ -10,6 +10,9 @@ import {
   trackBackToWallet,
   trackSaveCredentialSuccess
 } from "../../analytics";
+import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
+import { useIOStore } from "../../../../store/hooks";
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 
 const ITW_CREDENTIAL = "ITW_ID";
 
@@ -20,6 +23,8 @@ export const ItwIssuanceEidResultScreen = () => {
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
+  const store = useIOStore();
+
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
@@ -28,9 +33,11 @@ export const ItwIssuanceEidResultScreen = () => {
     trackAddFirstCredential();
   };
 
-  const handleClose = () => {
+  const handleClose = async () => {
     machineRef.send({ type: "go-to-wallet" });
     trackBackToWallet({ exit_page: route.name, credential: ITW_CREDENTIAL });
+    void updateMixpanelProfileProperties(store.getState());
+    void updateMixpanelSuperProperties(store.getState());
   };
 
   return (

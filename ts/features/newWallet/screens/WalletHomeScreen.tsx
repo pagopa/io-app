@@ -42,7 +42,6 @@ const WalletHomeScreen = ({ route }: Props) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      trackOpenWalletScreen();
       dispatch(walletToggleLoadingState(true));
       dispatch(getPaymentsWalletUserMethods.request());
       dispatch(idPayWalletGet.request());
