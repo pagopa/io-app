@@ -2,7 +2,6 @@ import { constNull, constUndefined } from "fp-ts/lib/function";
 import PushNotification from "react-native-push-notification";
 import { Platform } from "react-native";
 import configurePushNotifications from "../configurePushNotification";
-import { AndroidNotificationChannelId } from "..";
 
 jest.mock("../../../../boot/configureStoreAndPersistor", () => ({
   get store() {
@@ -25,7 +24,7 @@ describe("configurePushNotifications", () => {
 
     expect(createChannelSpy.mock.calls.length).toBe(1);
     expect(createChannelSpy.mock.calls[0][0]).toEqual({
-      channelId: AndroidNotificationChannelId,
+      channelId: "io_default_notification_channel",
       channelName: "IO default notification channel",
       playSound: true,
       soundName: "default",
