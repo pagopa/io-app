@@ -39,9 +39,6 @@ export const handleOnLinkClicked = (hideHelp: () => void) => (url: string) => {
 export const getContextualHelpConfig = (
   contextualHelp: ContextualHelpProps | undefined,
   contextualHelpMarkdown: ContextualHelpPropsMarkdown | undefined
-  // onLoadEnd: () => void,
-  // onLinkClicked: (url: string) => void,
-  // shouldHandleLink?: (url: string) => boolean
 ): ContextualHelpProps | undefined =>
   contextualHelp
     ? { body: contextualHelp.body, title: contextualHelp.title }

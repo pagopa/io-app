@@ -27,7 +27,6 @@ import { IdpData } from "../../../definitions/content/IdpData";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomContextualHelpContent";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/utils/login";
@@ -59,6 +58,7 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
+import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -180,20 +180,15 @@ export const AuthSessionPage = () => {
 
   const maybeKeyTag = useMemo(() => lollipopKeyTagSelector(state), [state]);
 
-  const contextualHelp = useMemo(
-    () =>
-      pipe(
-        selectedIdpTextData,
-        O.fold(
-          () => ({
-            title: I18n.t("authentication.idp_login.contextualHelpTitle"),
-            body: I18n.t("authentication.idp_login.contextualHelpContent")
-          }),
-          idpTextData => IdpCustomContextualHelpContent(idpTextData)
-        )
-      ),
-    [selectedIdpTextData]
-  );
+  const contextualHelp = useMemo(() => {
+    if (O.isNone(selectedIdpTextData)) {
+      return {
+        title: I18n.t("authentication.idp_login.contextualHelpTitle"),
+        body: I18n.t("authentication.idp_login.contextualHelpContent")
+      };
+    }
+    return emptyContextualHelp;
+  }, [selectedIdpTextData]);
 
   const handleLoginFailure = useCallback(
     (code?: string) => {

@@ -78,7 +78,6 @@ type IOScrollView = WithTestID<
     debugMode?: boolean;
     animatedRef?: AnimatedRef<Animated.ScrollView>;
     snapOffset?: number;
-    animatedRef?: AnimatedRef<Animated.ScrollView>;
     /* Don't include safe area insets */
     excludeSafeAreaMargins?: boolean;
     /* Don't include end content margin */
@@ -141,7 +140,6 @@ export const IOScrollView = ({
   children,
   actions,
   snapOffset,
-  animatedRef,
   excludeSafeAreaMargins = false,
   excludeEndContentMargin = false,
   includeContentMargins = true,
