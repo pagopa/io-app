@@ -8,7 +8,7 @@ import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import itwCreateSecureStorage from "../../../common/store/storages/itwSecureStorage";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { itwWiaStore } from "../actions";
+import { itwWalletInstanceAttestationStore } from "../actions";
 
 export type ItwWiaState = {
   attestation: O.Option<string>;
@@ -25,7 +25,7 @@ const reducer = (
   action: Action
 ): ItwWiaState => {
   switch (action.type) {
-    case getType(itwWiaStore): {
+    case getType(itwWalletInstanceAttestationStore): {
       return {
         attestation: O.some(action.payload)
       };
