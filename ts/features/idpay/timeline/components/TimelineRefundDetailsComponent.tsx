@@ -17,7 +17,7 @@ import NavigationService from "../../../../navigation/NavigationService";
 import { useIOSelector } from "../../../../store/hooks";
 import themeVariables from "../../../../theme/variables";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
-import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
+import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 import { idpayInitiativeIdSelector } from "../../details/store";
 import { getRefundPeriodDateString } from "../utils/strings";
 
@@ -39,9 +39,9 @@ const TimelineRefundDetailsComponent = (props: Props) => {
     // would result in an error.
     NavigationService.dispatchNavigationAction(
       CommonActions.navigate(
-        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN,
+        IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
         {
-          screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
+          screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
           params: {
             initiativeId
           }
