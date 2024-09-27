@@ -1,20 +1,20 @@
 import { PathConfigMap } from "@react-navigation/native";
 import { IDPayDetailsRoutes } from "../../details/navigation";
-import { IDPayOnboardingRoutes } from "../../onboarding/navigation/navigator";
-import { IDPayPaymentRoutes } from "../../payment/navigation/navigator";
+import { IdPayPaymentRoutes } from "../../payment/navigation/routes";
 import { AppParamsList } from "../../../../navigation/params/AppParamsList";
+import { IdPayOnboardingRoutes } from "../../onboarding/navigation/routes";
 
 export const idPayLinkingOptions: PathConfigMap<AppParamsList> = {
   /**
    * IDPay initiative onboarding
    */
-  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: {
+  [IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: {
     path: "idpay/onboarding",
     screens: {
       /**
        * Handles ioit://idpay/onboarding/{initiativeId}
        */
-      [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]: "/:serviceId"
+      [IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]: "/:serviceId"
     }
   },
   /**
@@ -32,13 +32,13 @@ export const idPayLinkingOptions: PathConfigMap<AppParamsList> = {
   /**
    * IDPay payment authorization
    */
-  [IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN]: {
+  [IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN]: {
     path: "idpay/auth",
     screens: {
       /**
        * Handles ioit://idpay/auth/{trxCode}
        */
-      [IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION]: "/:trxCode"
+      [IdPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION]: "/:trxCode"
     }
   }
 };
