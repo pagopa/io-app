@@ -11,6 +11,7 @@ import { isItwTrialActiveSelector } from "../../trialSystem/store/reducers";
 import {
   selectIsWalletCardsLoading,
   selectSortedWalletCards,
+  selectWalletCategoryFilter,
   selectWalletItwCards,
   selectWalletOtherCards
 } from "../store/selectors";
@@ -20,6 +21,7 @@ import {
   ItwEidInfoBottomSheetTitle
 } from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { WalletCardCategoryFilter } from "../types";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import {
   WalletCardsCategoryContainer,
@@ -32,6 +34,8 @@ const EID_INFO_BOTTOM_PADDING = 128;
 const WalletCardsContainer = () => {
   const isLoading = useIOSelector(selectIsWalletCardsLoading);
   const cards = useIOSelector(selectSortedWalletCards);
+  const selectedCategory = useIOSelector(selectWalletCategoryFilter);
+
   const stackCards = cards.length > 4;
 
   if (isLoading && cards.length === 0) {
@@ -50,14 +54,19 @@ const WalletCardsContainer = () => {
     return <WalletEmptyScreenContent />;
   }
 
+  const shouldRender = (filter: WalletCardCategoryFilter) =>
+    selectedCategory ? selectedCategory === filter : true;
+
   return (
     <Animated.View
       style={IOStyles.flex}
       layout={LinearTransition.duration(200)}
     >
       <View testID="walletCardsContainerTestID">
-        <ItwCardsContainer isStacked={stackCards} />
-        <OtherCardsContainer isStacked={stackCards} />
+        {shouldRender("itw") && <ItwCardsContainer isStacked={stackCards} />}
+        {shouldRender("other") && (
+          <OtherCardsContainer isStacked={stackCards} />
+        )}
       </View>
     </Animated.View>
   );
