@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.71.0-rc.0](https://github.com/pagopa/io-app/compare/2.70.0-rc.2...2.71.0-rc.0) (2024-09-26)
+
+
+### Features
+
+* [[IOBP-766](https://pagopa.atlassian.net/browse/IOBP-766)] Add payments section mixpanel events ([#6208](https://github.com/pagopa/io-app/issues/6208)) ([25701ba](https://github.com/pagopa/io-app/commit/25701bafe2d1fdab604d286adfa61cf45e4137af))
+* [[IOPID-2263](https://pagopa.atlassian.net/browse/IOPID-2263)] Cie ID Error screens ([#6192](https://github.com/pagopa/io-app/issues/6192)) ([4d5733c](https://github.com/pagopa/io-app/commit/4d5733c4acfdf26606df7c3c75d22c9b80c1ac5c))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1681](https://pagopa.atlassian.net/browse/SIW-1681)] Authorization with CIE L3 to obtain an eID ([#6219](https://github.com/pagopa/io-app/issues/6219)) ([4407a73](https://github.com/pagopa/io-app/commit/4407a73ec046f0735a03d041f2bbdb41de0a6ae0))
+* [[IOBP-808](https://pagopa.atlassian.net/browse/IOBP-808)] Add trim notice code workaround if pasted ([#6167](https://github.com/pagopa/io-app/issues/6167)) ([253d138](https://github.com/pagopa/io-app/commit/253d13860eb2905aee70d3294f39f61da4f59f5a))
+
+
+### Chores
+
+* [[IOBP-726](https://pagopa.atlassian.net/browse/IOBP-726)] Migrate IdPay machines to XState V5 ([#6135](https://github.com/pagopa/io-app/issues/6135)) ([8dbf986](https://github.com/pagopa/io-app/commit/8dbf986be63619309d8fe327237e03fbb18c3079))
+* [[IOBP-841](https://pagopa.atlassian.net/browse/IOBP-841),[IOBP-842](https://pagopa.atlassian.net/browse/IOBP-842)] Edit new payment flow mixpanel property values ([#6152](https://github.com/pagopa/io-app/issues/6152)) ([21c3d3a](https://github.com/pagopa/io-app/commit/21c3d3a7e7d2f88c930418ae9a81e204982e2fdf))
+* [[IOBP-854](https://pagopa.atlassian.net/browse/IOBP-854)] Add payment mixpanel event property for the `selected_psp_flag` ([#6180](https://github.com/pagopa/io-app/issues/6180)) ([c1d0664](https://github.com/pagopa/io-app/commit/c1d0664529ff391a79f8a5599e407f6d0ff9a54a))
+* **Cross:** [[IOAPPX-370](https://pagopa.atlassian.net/browse/IOAPPX-370)] Enable discrete transition in the `BonusCardScreenComponent` ([#6171](https://github.com/pagopa/io-app/issues/6171)) ([523ee40](https://github.com/pagopa/io-app/commit/523ee4098c8dd2e880e2767bdfb50ef8e03c89cc))
+* **Cross:** [[IOAPPX-373](https://pagopa.atlassian.net/browse/IOAPPX-373)] Update Sentry dependencies to support Xcode 16 ([#6193](https://github.com/pagopa/io-app/issues/6193)) ([529ea6c](https://github.com/pagopa/io-app/commit/529ea6c546a05f544c20253a90548024123340a2))
+* **IT Wallet:** [[SIW-1636](https://pagopa.atlassian.net/browse/SIW-1636)] Handle the initial phase of async credential issuance ([#6200](https://github.com/pagopa/io-app/issues/6200)) ([d606ffc](https://github.com/pagopa/io-app/commit/d606ffc6fde34c83c92f25d89529c74e52ce24e7))
+
 ## [2.70.0-rc.2](https://github.com/pagopa/io-app/compare/2.70.0-rc.1...2.70.0-rc.2) (2024-09-20)
 
 
