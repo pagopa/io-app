@@ -7,6 +7,7 @@ describe("openSystemNotificationSettingsScreen", () => {
       .spyOn(NotificationsUtils, "openSettings")
       .mockImplementation(_channelId => undefined);
     openSystemNotificationSettingsScreen();
-    expect(openSettingsSpy.mock.calls.length).toBe(0);
+    expect(openSettingsSpy.mock.calls.length).toBe(1);
+    expect(openSettingsSpy.mock.calls[0].length).toBe(0);
   });
 });
