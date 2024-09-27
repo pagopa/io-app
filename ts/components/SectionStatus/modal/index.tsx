@@ -19,6 +19,7 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 type Props = {
   sectionKey: SectionStatusKey;
   onSectionRef?: (ref: React.RefObject<View>) => void;
+  trackingAction?: () => void;
   sticky?: boolean;
 };
 
@@ -46,7 +47,8 @@ const statusVariantMap: Record<
 const ModalSectionStatusComponent = ({
   sectionKey,
   sticky,
-  onSectionRef
+  onSectionRef,
+  trackingAction
 }: Props) => {
   const { top } = useSafeAreaInsets();
   const viewRef = useRef<View>(null);
@@ -76,6 +78,12 @@ const ModalSectionStatusComponent = ({
       onSectionRef?.(viewRef);
     }
   }, [onSectionRef, viewRef]);
+
+  useEffect(() => {
+    if (isSectionVisible) {
+      trackingAction?.();
+    }
+  }, [isSectionVisible, trackingAction]);
 
   useEffect(() => {
     if (!isSectionVisible) {

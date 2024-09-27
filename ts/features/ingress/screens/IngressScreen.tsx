@@ -18,7 +18,11 @@ import { isBackendStatusLoadedSelector } from "../../../store/reducers/backendSt
 import { setIsBlockingScreen } from "../store/actions";
 import ModalSectionStatusComponent from "../../../components/SectionStatus/modal";
 import { isMixpanelInitializedSelector } from "../../mixpanel/store/selectors";
-import { trackIngressCdnSystemError, trackIngressTimeout } from "../analytics";
+import {
+  trackIngressCdnSystemError,
+  trackIngressServicesSlowDown,
+  trackIngressTimeout
+} from "../analytics";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
@@ -84,7 +88,11 @@ export const IngressScreen = () => {
 
   return (
     <>
-      <ModalSectionStatusComponent sectionKey="ingress" sticky />
+      <ModalSectionStatusComponent
+        sectionKey="ingress"
+        sticky
+        trackingAction={trackIngressServicesSlowDown}
+      />
       <LoadingScreenContent
         testID="ingress-screen-loader-id"
         contentTitle={contentTitle}
