@@ -4,9 +4,6 @@ import { getDeviceId } from "./utils/device";
 import { GlobalState } from "./store/reducers/types";
 import { updateMixpanelSuperProperties } from "./mixpanelConfig/superProperties";
 import { updateMixpanelProfileProperties } from "./mixpanelConfig/profileProperties";
-import { store } from "./boot/configureStoreAndPersistor";
-import { setIsMixpanelInitialized } from "./features/mixpanel/store/actions";
-
 // eslint-disable-next-line functional/no-let
 export let mixpanel: Mixpanel | undefined;
 
@@ -24,7 +21,6 @@ export const initializeMixPanel = async (state: GlobalState) => {
   // On app first open
   // On profile page, when user opt-in
   await setupMixpanel(mixpanel, state);
-  store.dispatch(setIsMixpanelInitialized(true));
 };
 
 const setupMixpanel = async (mp: Mixpanel, state: GlobalState) => {
