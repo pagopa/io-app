@@ -27,7 +27,6 @@ import {
   isExpirationDateClaim,
   getSafeText
 } from "../utils/itwClaimsUtils";
-import { removeTimezoneFromDate } from "../../../../utils/dates";
 import { ItwCredentialStatus } from "./ItwCredentialCard";
 
 const HIDDEN_CLAIM = "******";
@@ -113,7 +112,7 @@ export const DateClaimItem = ({
   // Remove the timezone offset to display the date in its original format
 
   const value = localeDateFormat(
-    removeTimezoneFromDate(claim),
+    claim,
     I18n.t("global.dateFormats.shortFormat")
   );
 
