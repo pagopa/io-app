@@ -100,7 +100,7 @@ const PlainTextClaimItem = ({
  * @param label - the label of the claim
  * @param claim - the value of the claim
  */
-export const DateClaimItem = ({
+const DateClaimItem = ({
   label,
   claim,
   status
