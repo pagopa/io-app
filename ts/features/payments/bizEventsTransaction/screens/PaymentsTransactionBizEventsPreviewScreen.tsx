@@ -17,6 +17,7 @@ import {
   FooterActions,
   FooterActionsMeasurements
 } from "../../../../components/ui/FooterActions";
+import * as analytics from "../analytics";
 
 export type PaymentsTransactionBizEventsPreviewScreenProps = RouteProp<
   PaymentsTransactionBizEventsParamsList,
@@ -44,6 +45,7 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
     if (!transactionReceiptFile) {
       return;
     }
+    analytics.trackPaymentsSaveAndShareReceipt();
     await Share.open({
       type: "application/pdf",
       url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptFile}`,
