@@ -7,8 +7,8 @@ import { v4 as uuid } from "uuid";
 import { Platform, PermissionsAndroid } from "react-native";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
-import { isIos } from "../../../utils/platform";
 import NotificationsUtils from "react-native-notifications-utils";
+import { isIos } from "../../../utils/platform";
 import { AndroidNotificationChannelId } from "./configurePushNotification";
 
 export enum AuthorizationStatus {
