@@ -1,65 +1,64 @@
 /* eslint-disable import/order */
-import { pipe } from "fp-ts/lib/function";
-import I18n from "../../i18n";
-import * as React from "react";
 import {
   LoginUtilsError,
-  openAuthenticationSession,
-  Error as LoginUtilsErrorType
+  Error as LoginUtilsErrorType,
+  openAuthenticationSession
 } from "@pagopa/io-react-native-login-utils";
+import { CommonActions, useFocusEffect } from "@react-navigation/native";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
-import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
-import { CommonActions, useFocusEffect } from "@react-navigation/native";
+import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { AppState, SafeAreaView, View, StyleSheet } from "react-native";
+import { AppState, SafeAreaView, StyleSheet, View } from "react-native";
 import { H3 } from "../../components/core/typography/H3";
+import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 
-import {
-  extractLoginResult,
-  getEitherLoginResult,
-  getIdpLoginUri
-} from "../../utils/login";
-import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
-import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
-import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomContextualHelpContent";
-import NavigationService from "../../navigation/NavigationService";
-import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
-import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
-import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
-import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/utils/login";
-import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
-import {
-  assistanceToolRemoteConfig,
-  handleSendAssistanceLog
-} from "../../utils/supportAssistance";
-import {
-  disableNativeAuthentication,
-  loginFailure,
-  loginSuccess
-} from "../../store/actions/authentication";
-import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
-import { SessionToken } from "../../types/SessionToken";
-import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import {
   Body,
   ButtonSolid,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import themeVariables from "../../theme/variables";
-import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
-import { selectedIdentityProviderSelector } from "../../store/reducers/authentication";
 import { IdpData } from "../../../definitions/content/IdpData";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
-import ROUTES from "../../navigation/routes";
-import { useIONavigation } from "../../navigation/params/AppParamsList";
+import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
+import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/utils/login";
+import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import NavigationService from "../../navigation/NavigationService";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
+import ROUTES from "../../navigation/routes";
+import {
+  disableNativeAuthentication,
+  loginFailure,
+  loginSuccess
+} from "../../store/actions/authentication";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
+import { selectedIdentityProviderSelector } from "../../store/reducers/authentication";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
+import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
+import themeVariables from "../../theme/variables";
+import { SessionToken } from "../../types/SessionToken";
+import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
+import {
+  extractLoginResult,
+  getEitherLoginResult,
+  getIdpLoginUri
+} from "../../utils/login";
+import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
+import {
+  assistanceToolRemoteConfig,
+  handleSendAssistanceLog
+} from "../../utils/supportAssistance";
+import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -181,24 +180,15 @@ export const AuthSessionPage = () => {
 
   const maybeKeyTag = useMemo(() => lollipopKeyTagSelector(state), [state]);
 
-  const contextualHelp = useMemo(
-    () =>
-      pipe(
-        selectedIdpTextData,
-        O.fold(
-          () => ({
-            title: I18n.t("authentication.idp_login.contextualHelpTitle"),
-            body: (
-              <LegacyMarkdown>
-                {I18n.t("authentication.idp_login.contextualHelpContent")}
-              </LegacyMarkdown>
-            )
-          }),
-          idpTextData => IdpCustomContextualHelpContent(idpTextData)
-        )
-      ),
-    [selectedIdpTextData]
-  );
+  const contextualHelp = useMemo(() => {
+    if (O.isNone(selectedIdpTextData)) {
+      return {
+        title: I18n.t("authentication.idp_login.contextualHelpTitle"),
+        body: I18n.t("authentication.idp_login.contextualHelpContent")
+      };
+    }
+    return emptyContextualHelp;
+  }, [selectedIdpTextData]);
 
   const handleLoginFailure = useCallback(
     (code?: string) => {
