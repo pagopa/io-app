@@ -1,10 +1,20 @@
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import {
+  createMigrate,
+  MigrationManifest,
+  PersistConfig,
+  PersistPartial,
+  persistReducer
+} from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { isDevEnv } from "../../../../../utils/environment";
+import itwCreateSecureStorage from "../../../common/store/storages/itwSecureStorage";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
+import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
 
 export type ItwCredentialsState = {
   eid: O.Option<StoredCredential>;
@@ -14,6 +24,29 @@ export type ItwCredentialsState = {
 export const itwCredentialsInitialState: ItwCredentialsState = {
   eid: O.none,
   credentials: []
+};
+
+const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 0;
+
+export const itwCredentialsStateMigrations: MigrationManifest = {
+  "0": (state): ItwCredentialsState & PersistPartial => {
+    // Version 0
+    // Add optional `storedStatusAttestation` field
+    const addStoredStatusAttestation = (
+      credential: StoredCredential
+    ): StoredCredential => ({
+      ...credential,
+      storedStatusAttestation: undefined
+    });
+    const prevState = state as ItwCredentialsState & PersistPartial;
+    return {
+      ...prevState,
+      eid: pipe(prevState.eid, O.map(addStoredStatusAttestation)),
+      credentials: prevState.credentials.map(credential =>
+        pipe(credential, O.map(addStoredStatusAttestation))
+      )
+    };
+  }
 };
 
 const reducer = (
@@ -63,6 +96,15 @@ const reducer = (
   }
 };
 
+const itwCredentialsPersistConfig: PersistConfig = {
+  key: "itWalletCredentials",
+  storage: itwCreateSecureStorage(),
+  version: CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION,
+  migrate: createMigrate(itwCredentialsStateMigrations, { debug: isDevEnv })
+};
+
+const persistedReducer = persistReducer(itwCredentialsPersistConfig, reducer);
+
 /**
  * Get the new list of credentials overwriting those of the same type, if present.
  */
@@ -86,4 +128,4 @@ const getUpsertedCredentials = (
   );
 };
 
-export default reducer;
+export default persistedReducer;
