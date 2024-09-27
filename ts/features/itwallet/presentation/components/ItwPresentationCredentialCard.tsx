@@ -3,7 +3,7 @@ import {
   IOSpacingScale,
   VStack
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import {
   Directions,
@@ -18,6 +18,7 @@ import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { trackWalletShowBack } from "../../analytics";
 
 /**
  * Credentials that should display a skeumorphic card
@@ -36,6 +37,11 @@ type Props = {
  */
 const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const [isFlipped, setIsFlipped] = React.useState(false);
+
+  const handleOnPress = useCallback(() => {
+    trackWalletShowBack(credential.credential);
+    setIsFlipped(_ => !_);
+  }, [credential.credential]);
 
   const { backgroundColor } = getThemeColorByCredentialType(
     credential.credentialType
@@ -63,7 +69,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
             label={I18n.t(
               "features.itWallet.presentation.credentialDetails.flipCard"
             )}
-            onPress={() => setIsFlipped(_ => !_)}
+            onPress={handleOnPress}
             icon="switchCard"
             iconPosition="end"
           />

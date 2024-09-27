@@ -22,6 +22,7 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 import {
   CREDENTIALS_MAP,
   trackAddCredentialTimeout,
+  trackItWalletDeferredIssuing,
   trackWalletCreationFailed
 } from "../../analytics";
 import ROUTES from "../../../../navigation/routes";
@@ -144,6 +145,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   useEffect(() => {
     if (storedCredential) {
+      if (failure.type === CredentialIssuanceFailureTypeEnum.ASYNC_ISSUANCE) {
+        trackItWalletDeferredIssuing(storedCredential.credentialType);
+        return;
+      }
       trackAddCredentialTimeout({
         reason: failure.reason,
         type: failure.type,

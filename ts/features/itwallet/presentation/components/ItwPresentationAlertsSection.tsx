@@ -1,5 +1,5 @@
 import { Alert, VStack } from "@pagopa/io-app-design-system";
-import React from "react";
+import React, { useCallback } from "react";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import {
@@ -10,6 +10,7 @@ import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import I18n from "../../../../i18n";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import { trackWalletPgValidityInfo } from "../../analytics";
 
 type Props = {
   credential: StoredCredential;
@@ -44,6 +45,16 @@ export const ItwPresentationAlertsSection = ({ credential }: Props) => {
   const isExpired = expireStatus === "expired";
   const isExpiring = expireStatus === "expiring";
 
+  const onPressWithMixpanelEvent = useCallback(
+    (callback: () => void) => {
+      if (isMdl) {
+        trackWalletPgValidityInfo();
+      }
+      return callback;
+    },
+    [isMdl]
+  );
+
   if (isExpired) {
     return (
       <Alert
@@ -53,7 +64,7 @@ export const ItwPresentationAlertsSection = ({ credential }: Props) => {
         )}
         variant="error"
         action={I18n.t("features.itWallet.presentation.alerts.expired.action")}
-        onPress={beginCredentialIssuance}
+        onPress={onPressWithMixpanelEvent(beginCredentialIssuance)}
       />
     );
   }
@@ -81,7 +92,7 @@ export const ItwPresentationAlertsSection = ({ credential }: Props) => {
             )}
             variant="info"
             action={I18n.t("features.itWallet.presentation.alerts.mdl.action")}
-            onPress={mdlDisclaimerBottomSheet.present}
+            onPress={onPressWithMixpanelEvent(mdlDisclaimerBottomSheet.present)}
           />
           {mdlDisclaimerBottomSheet.bottomSheet}
         </>

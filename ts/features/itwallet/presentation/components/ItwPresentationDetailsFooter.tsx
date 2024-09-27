@@ -14,6 +14,10 @@ import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsRemove } from "../../credentials/store/actions";
+import {
+  trackItwCredentialDelete,
+  trackWalletCredentialSupport
+} from "../../analytics";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
@@ -40,8 +44,10 @@ const ItwPresentationDetailsFooter = ({
     navigation.pop();
   };
 
-  const showRemoveCredentialDialog = () =>
-    Alert.alert(
+  const showRemoveCredentialDialog = () => {
+    trackItwCredentialDelete(credential.credential);
+    // TODO update profile and super properties
+    return Alert.alert(
       I18n.t(
         "features.itWallet.presentation.credentialDetails.dialogs.remove.title"
       ),
@@ -62,6 +68,12 @@ const ItwPresentationDetailsFooter = ({
         }
       ]
     );
+  };
+
+  const startAndTrackSupportRequest = () => {
+    trackWalletCredentialSupport(credential.credential);
+    startSupportRequest();
+  };
 
   return (
     <ContentWrapper>
@@ -75,7 +87,7 @@ const ItwPresentationDetailsFooter = ({
         accessibilityLabel={I18n.t(
           "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
         )}
-        onPress={() => startSupportRequest()}
+        onPress={startAndTrackSupportRequest}
       />
       {credential.credentialType !== CredentialType.PID ? (
         <ListItemAction
