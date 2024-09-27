@@ -107,6 +107,7 @@ const IngressScreenBlockingError = memo(() => {
 
   useEffect(() => {
     // It's not necessary to check if mixpanel is initialized since this screen is shown after 10 seconds.
+    // If mixpanel is not initialized at that time, we have an issue spanning, system-wide.
     if (isMixpanelEnabled !== false) {
       if (isBackendStatusLoaded) {
         void trackIngressTimeout();
