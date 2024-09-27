@@ -221,11 +221,9 @@ const renderComponent = ({
               credentials: isWalletEmpty
                 ? []
                 : [O.some({ parsedCredential: {} })]
-            }
-          }),
-          lifecycle: isItwValid
-            ? ItwLifecycleState.ITW_LIFECYCLE_VALID
-            : ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
+            },
+            lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID
+          })
         }
       },
       backendStatus: {
