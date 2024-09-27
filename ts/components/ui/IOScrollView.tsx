@@ -148,10 +148,10 @@ export const IOScrollView = ({
   children,
   actions,
   snapOffset,
-  animatedRef,
   excludeSafeAreaMargins = false,
   excludeEndContentMargin = false,
   includeContentMargins = true,
+  animatedRef,
   debugMode = false,
   centerContent,
   refreshControlProps,
@@ -302,8 +302,8 @@ export const IOScrollView = ({
               paddingBottom: bottomMargin
             }
           ]}
-          testID={testID}
           pointerEvents="box-none"
+          {...(testID && { testID: `${testID}-actions` })}
         >
           <Animated.View
             style={[
