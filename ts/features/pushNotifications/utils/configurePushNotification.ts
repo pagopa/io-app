@@ -25,7 +25,6 @@ import { isLoadingOrUpdating } from "../../../utils/pot";
 import { isArchivingInProcessingModeSelector } from "../../messages/store/reducers/archiving";
 import { GlobalState } from "../../../store/reducers/types";
 import { trackNewPushNotificationsTokenGenerated } from "../analytics";
-import { AndroidNotificationChannelId } from ".";
 
 /**
  * Helper type used to validate the notification payload.
@@ -89,7 +88,7 @@ function configurePushNotifications() {
   // Create the default channel used for notifications, the callback return false if the channel already exists
   PushNotification.createChannel(
     {
-      channelId: AndroidNotificationChannelId,
+      channelId: "io_default_notification_channel",
       channelName: "IO default notification channel",
       playSound: true,
       soundName: "default",
