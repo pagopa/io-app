@@ -8,6 +8,8 @@ import { Platform, PermissionsAndroid } from "react-native";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
 import { isIos } from "../../../utils/platform";
+import NotificationsUtils from "react-native-notifications-utils";
+import { AndroidNotificationChannelId } from "./configurePushNotification";
 
 export enum AuthorizationStatus {
   NotDetermined = 0,
@@ -126,3 +128,6 @@ export const cancellAllLocalNotifications = () =>
  * unlinked and deleted here
  */
 export const generateInstallationId = () => `001${uuid().replace(/-/g, "")}`;
+
+export const openSystemNotificationSettingsScreen = () =>
+  NotificationsUtils.openSettings(AndroidNotificationChannelId);

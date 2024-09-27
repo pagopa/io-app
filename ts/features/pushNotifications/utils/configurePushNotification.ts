@@ -29,6 +29,8 @@ import { isArchivingInProcessingModeSelector } from "../../messages/store/reduce
 import { GlobalState } from "../../../store/reducers/types";
 import { trackNewPushNotificationsTokenGenerated } from "../analytics";
 
+export const AndroidNotificationChannelId = "io_default_notification_channel";
+
 /**
  * Helper type used to validate the notification payload.
  * The message_id can be in different places depending on the platform.
@@ -91,7 +93,7 @@ function configurePushNotifications() {
   // Create the default channel used for notifications, the callback return false if the channel already exists
   PushNotification.createChannel(
     {
-      channelId: "io_default_notification_channel",
+      channelId: AndroidNotificationChannelId,
       channelName: "IO default notification channel",
       playSound: true,
       soundName: "default",

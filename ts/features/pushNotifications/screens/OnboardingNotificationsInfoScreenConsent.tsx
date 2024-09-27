@@ -13,9 +13,11 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
-import { openAppSettings } from "../../../utils/appSettings";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { checkNotificationPermissions } from "../utils";
+import {
+  checkNotificationPermissions,
+  openSystemNotificationSettingsScreen
+} from "../utils";
 import {
   pushNotificationPreviewEnabledSelector,
   pushNotificationRemindersEnabledSelector
@@ -161,7 +163,7 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
 
   const openSettings = useCallback(() => {
     trackNotificationsOptInOpenSettings();
-    openAppSettings();
+    openSystemNotificationSettingsScreen();
   }, []);
 
   const ListHeader = (

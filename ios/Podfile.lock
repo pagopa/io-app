@@ -435,6 +435,8 @@ PODS:
     - React-Core
   - react-native-image-picker (4.10.3):
     - React-Core
+  - react-native-notifications-utils (0.3.0):
+    - React-Core
   - react-native-pager-view (6.2.3):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -720,6 +722,7 @@ DEPENDENCIES:
   - react-native-flipper (from `../node_modules/react-native-flipper`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-notifications-utils (from `../node_modules/react-native-notifications-utils`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-pdf-thumbnail (from `../node_modules/react-native-pdf-thumbnail`)
@@ -887,6 +890,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-get-random-values"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-notifications-utils:
+    :path: "../node_modules/react-native-notifications-utils"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-pdf:
@@ -1043,6 +1048,7 @@ SPEC CHECKSUMS:
   react-native-flipper: 97d537d855e0e7f6ac26a065e01bf1aecc8ba41c
   react-native-get-random-values: 21325b2244dfa6b58878f51f9aa42821e7ba3d06
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
+  react-native-notifications-utils: f083307d1261f34444a89ca2f9b69f920c9b81e7
   react-native-pager-view: 948dc00b6545d82b53e5f99cafef4a8521c60dd4
   react-native-pdf: 79aa75e39a80c1d45ffe58aa500f3cf08f267a2e
   react-native-pdf-thumbnail: a042fffdab7a49f0f9df0e11da0a90beebfd4241

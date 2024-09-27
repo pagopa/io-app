@@ -13442,6 +13442,11 @@ react-native-masked-text@^1.13.0:
     date-and-time "0.9.0"
     tinymask "1.0.2"
 
+react-native-notifications-utils@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-notifications-utils/-/react-native-notifications-utils-0.3.0.tgz#a26ceabef2161dc8e9052badf36f09f6b3954832"
+  integrity sha512-URKVdNeDxlZopZ+F2X3qi9x6pjn+o+JXzSR82E9OfGlYfPKq4oMrYEYRSptIBQwwnloc4amMERcBH8x7DFIqdA==
+
 react-native-pager-view@^6.2.3:
   version "6.2.3"
   resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.2.3.tgz#698f6387fdf06cecc3d8d4792604419cb89cb775"
