@@ -27,6 +27,7 @@ import {
   isExpirationDateClaim,
   getSafeText
 } from "../utils/itwClaimsUtils";
+import { removeTimezoneFromDate } from "../../../../utils/dates";
 import { ItwCredentialStatus } from "./ItwCredentialCard";
 
 const HIDDEN_CLAIM = "******";
@@ -110,10 +111,9 @@ export const DateClaimItem = ({
   status?: ItwCredentialStatus;
 }) => {
   // Remove the timezone offset to display the date in its original format
-  const userTimezoneOffset = claim.getTimezoneOffset() * 60000;
-  const fixedDate = new Date(claim.getTime() + userTimezoneOffset);
+
   const value = localeDateFormat(
-    fixedDate,
+    removeTimezoneFromDate(claim),
     I18n.t("global.dateFormats.shortFormat")
   );
 
@@ -270,11 +270,11 @@ const DrivingPrivilegesClaimItem = ({
   detailsButtonVisible?: boolean;
 }) => {
   const localExpiryDate = localeDateFormat(
-    new Date(claim.expiry_date),
+    claim.expiry_date,
     I18n.t("global.dateFormats.shortFormat")
   );
   const localIssueDate = localeDateFormat(
-    new Date(claim.issue_date),
+    claim.issue_date,
     I18n.t("global.dateFormats.shortFormat")
   );
   const privilegeBottomSheet = useIOBottomSheetAutoresizableModal({

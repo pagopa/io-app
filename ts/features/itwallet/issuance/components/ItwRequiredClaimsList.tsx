@@ -16,7 +16,7 @@ import { localeDateFormat } from "../../../../utils/locale";
 import {
   ClaimDisplayFormat,
   ClaimValue,
-  DateClaim,
+  DateWithoutTimezoneClaim,
   DrivingPrivilegesClaim,
   EmptyStringClaim,
   EvidenceClaim,
@@ -94,7 +94,7 @@ export const getClaimDisplayValue = (
       decoded => {
         if (PlaceOfBirthClaim.is(decoded)) {
           return `${decoded.locality} (${decoded.country})`;
-        } else if (DateClaim.is(decoded)) {
+        } else if (DateWithoutTimezoneClaim.is(decoded)) {
           return localeDateFormat(
             decoded,
             I18n.t("global.dateFormats.shortFormat")
