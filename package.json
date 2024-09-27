@@ -93,8 +93,7 @@
     "generate:payments": "npm-run-all generate:pagopa-walletv3-api generate:pagopa-ecommerce-api generate:pagopa-biz-events-api generate:pagopa-platform-api",
     "generate": "npm-run-all generate:*",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
-    "remove_unused_locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/remove-unused-locales.ts",
-    "generate:xstate-types": "xstate typegen \"ts/**/*.ts?(x)\"",
+    "remove_unused_locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/remove-unused-locales.ts",    
     "lollipop_checks:comment": "./scripts/toggle-comments-on-lollipop-checks.sh comment ./ts/sagas/startup.ts",
     "lollipop_checks:uncomment": "./scripts/toggle-comments-on-lollipop-checks.sh uncomment ./ts/sagas/startup.ts",
     "prepare": "husky install"
