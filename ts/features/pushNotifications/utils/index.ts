@@ -9,7 +9,8 @@ import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
 import NotificationsUtils from "react-native-notifications-utils";
 import { isIos } from "../../../utils/platform";
-import { AndroidNotificationChannelId } from "./configurePushNotification";
+
+export const AndroidNotificationChannelId = "io_default_notification_channel";
 
 export enum AuthorizationStatus {
   NotDetermined = 0,

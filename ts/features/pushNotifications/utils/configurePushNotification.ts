@@ -28,8 +28,7 @@ import { isLoadingOrUpdating } from "../../../utils/pot";
 import { isArchivingInProcessingModeSelector } from "../../messages/store/reducers/archiving";
 import { GlobalState } from "../../../store/reducers/types";
 import { trackNewPushNotificationsTokenGenerated } from "../analytics";
-
-export const AndroidNotificationChannelId = "io_default_notification_channel";
+import { AndroidNotificationChannelId } from ".";
 
 /**
  * Helper type used to validate the notification payload.
