@@ -34,7 +34,8 @@ const useWalletPaymentGoBackHandler = () => {
     const handleConfirmAbort = () => {
       analytics.trackPaymentMethodSelectionBackExit({
         attempt: paymentAnalyticsData?.attempt,
-        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        saved_payment_method:
+          paymentAnalyticsData?.savedPaymentMethods?.length || 0,
         saved_payment_method_unavailable:
           paymentAnalyticsData?.savedPaymentMethodsUnavailable?.length,
         expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
@@ -51,7 +52,8 @@ const useWalletPaymentGoBackHandler = () => {
     const handleCancel = () => {
       analytics.trackPaymentMethodSelectionBackContinue({
         attempt: paymentAnalyticsData?.attempt,
-        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        saved_payment_method:
+          paymentAnalyticsData?.savedPaymentMethods?.length || 0,
         saved_payment_method_unavailable:
           paymentAnalyticsData?.savedPaymentMethodsUnavailable?.length,
         expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
