@@ -1,6 +1,3 @@
-/**
- * Set the basic PushNotification configuration
- */
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";

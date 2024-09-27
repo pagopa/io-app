@@ -205,7 +205,8 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
             type: "Solid",
             buttonProps: {
               label: I18n.t("onboarding.infoConsent.openSettings"),
-              onPress: openSettings
+              onPress: openSettings,
+              testID: "settings-btn"
             }
           }}
           type="SingleButton"
