@@ -2,14 +2,14 @@
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import {
   fetch as fetchNetInfo,
   NetInfoState
 } from "@react-native-community/netinfo";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "../../../i18n";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { trackIngressScreen } from "../../../screens/profile/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
@@ -17,19 +17,26 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isBackendStatusLoadedSelector } from "../../../store/reducers/backendStatus";
 import { setIsBlockingScreen } from "../store/actions";
 import ModalSectionStatusComponent from "../../../components/SectionStatus/modal";
+import { isMixpanelInitializedSelector } from "../../mixpanel/store/selectors";
+import { trackIngressCdnSystemError, trackIngressTimeout } from "../analytics";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
 
 export const IngressScreen = () => {
+  const isMixpanelInitialized = useIOSelector(isMixpanelInitializedSelector);
+  const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
   const dispatch = useIODispatch();
-  const isBackendStatusLoaded = useIOSelector(isBackendStatusLoadedSelector);
   const [netInfo, setNetInfo] = useState<NetInfoState>();
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
   const [contentTitle, setContentTitle] = useState(I18n.t("startup.title"));
-  useOnFirstRender(() => {
-    trackIngressScreen();
-  });
+
+  useEffect(() => {
+    // `isMixpanelEnabled` mustn't be `false`
+    if (isMixpanelInitialized && isMixpanelEnabled !== false) {
+      trackIngressScreen();
+    }
+  }, [isMixpanelInitialized, isMixpanelEnabled]);
 
   useEffect(() => {
     const timeouts: Array<number> = [];
@@ -72,24 +79,7 @@ export const IngressScreen = () => {
   }
 
   if (showBlockingScreen) {
-    return (
-      <OperationResultScreenContent
-        testID="device-blocking-screen-id"
-        {...(isBackendStatusLoaded
-          ? {
-              pictogram: "time",
-              title: I18n.t("startup.slowdowns_results_screen.title"),
-              subtitle: I18n.t("startup.slowdowns_results_screen.subtitle")
-            }
-          : {
-              pictogram: "umbrellaNew",
-              title: I18n.t("startup.cdn_unreachable_results_screen.title"),
-              subtitle: I18n.t(
-                "startup.cdn_unreachable_results_screen.subtitle"
-              )
-            })}
-      />
-    );
+    return <IngressScreenBlockingError />;
   }
 
   return (
@@ -102,3 +92,36 @@ export const IngressScreen = () => {
     </>
   );
 };
+
+const IngressScreenBlockingError = memo(() => {
+  const isBackendStatusLoaded = useIOSelector(isBackendStatusLoadedSelector);
+  const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
+
+  useEffect(() => {
+    // It's not necessary to check if mixpanel is initialized since this screen is shown after 10 seconds.
+    if (isMixpanelEnabled !== false) {
+      if (isBackendStatusLoaded) {
+        void trackIngressTimeout();
+      } else {
+        void trackIngressCdnSystemError();
+      }
+    }
+  }, [isBackendStatusLoaded, isMixpanelEnabled]);
+
+  return (
+    <OperationResultScreenContent
+      testID="device-blocking-screen-id"
+      {...(isBackendStatusLoaded
+        ? {
+            pictogram: "time",
+            title: I18n.t("startup.slowdowns_results_screen.title"),
+            subtitle: I18n.t("startup.slowdowns_results_screen.subtitle")
+          }
+        : {
+            pictogram: "umbrellaNew",
+            title: I18n.t("startup.cdn_unreachable_results_screen.title"),
+            subtitle: I18n.t("startup.cdn_unreachable_results_screen.subtitle")
+          })}
+    />
+  );
+});
