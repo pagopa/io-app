@@ -155,6 +155,7 @@ global:
   markdown:
     decodeError: "Die Nachricht kann nicht entschlüsselt werden"
   buttons:
+    consent: "Zulassen"
     deny: "Verweigern"
     share: "Teilen"
     delete: "Löschen"
@@ -253,6 +254,10 @@ startup:
   profileEnabled: "Benutzerprofil aktiviert"
   userDeletePendingAlert:
     title: "Profil wird gelöscht"
+    messageLegacy: "Wenn du deine Meinung geändert hast, kannst du deine Anfrage im Abschnitt Datenschutz deines Profils löschen."
+    message: "Wenn du deine Meinung geändert hast, kannst du deine Anfrage im Abschnitt Datenschutz in den Einstellungen löschen."
+    cta_1_legacy: "Geh zum Profil"
+    cta_1: "Geh zu den Einstellungen"
     cta_2: "Ignorieren"
   contextualHelp:
     title: "Initialisierungsprobleme?"
@@ -264,13 +269,21 @@ inbox:
   enableButton: "Posteingang aktivieren"
   disableButton: "Posteingang deaktivieren"
   enableCallToActionDescription: "Aktiviere den Posteingang, um Mitteilungen anzusehen"
+settings: 
+  informativeBanner: 
+    content: "Suchst du dein Profil? Wir haben es verschoben, es befindet sich jetzt in der oberen rechten Ecke!"
+    action: "Geh zu den Einstellungen"
 profile:
   fiscalCode:
     accessibility:
+      fiscalCodeHint: "Bild des Strichcodes deiner Steuernummer"
       unavailable: "Nicht verfügbar"
     title: "Deine persönlichen Dokumente"
     fiscalCode: "Steuernummer"
+    description: "Verwende den Strichcode, um deine Steuernummer mitzuteilen, wenn du dazu aufgefordert wirst."
     facSimile: "Faksimile"
+    copyCode: "Steuernummer kopieren"
+    codeCopied: "Steuernummer kopiert"
   sections:
     spid: "SPID PROFIL"
   unknown: "Unbekannt"
@@ -278,6 +291,7 @@ profile:
     menulabel: "IO beenden"
     alertTitle: "Möchtest du wirklich beenden?"
     alertMessage: "Wenn du dich das nächste Mal anmeldest, musst du dich erneut mit CIE oder SPID authentifizieren."
+    loading: "IO wird beendet"
     exit: "Beenden"
   errors:
     load: "Fehler beim Laden des Profils"
@@ -288,6 +302,7 @@ profile:
     forgetCurrentSession: "Aktuelle Sitzung löschen"
     clearAsyncStorage: "Inhalt von AsyncStorage löschen"
     dumpAsyncStorage: "AsyncStorage-Inhalt herunterladen"
+    sentryTestEvent: "Teile Fehler"
     contextualHelpTitle: "Was du in deinem Profil machen kannst"
     developerModeOn: "Entwicklermodus aktiviert"
     cache:
@@ -306,20 +321,67 @@ profile:
     privacy:
       title: "Datenschutz und Nutzungsbedingungen"
       description: "Deine Rechte und Pflichten bei der Nutzung der IO-App"
+      subtitle: "Hier findest du Informationen über deine Rechte und Pflichten sowie über die Verarbeitung personenbezogener Daten."
       loading: "Warte ein paar Sekunden, wir überprüfen dein Profil..."
       removeAccount:
+        title: "Dein Profil löschen"
+        description: "Dein Profil und deine persönlichen Daten löschen"
         error: "Bei der Anfrage zur Kontolöschung ist ein Fehler aufgetreten. Bitte versuche es erneut."
         alert:
+          activeBonusTitle: "Dein Profil löschen"
+          activeBonusDescription: "Es scheint, dass du einigen Initiativen auf IO beigetreten bist. Wenn du dein Profil löschst, werden die Initiativen, denen du beigetreten bist, nicht beendet.\n\nUm sie zu verwalten, geh zum Abschnitt „Konto“, andernfalls wähle „Löschen“."
+          oldRequest: "Du hast bereits beantragt, dass dein Profil gelöscht wird"
+          oldRequestSubtitle: "Wir bearbeiten deine Anfrage.\n\nWenn du deine Meinung geändert hast oder versehentlich die Löschung beantragt hast, drücke bitte auf „Löschung abbrechen“."
           cta:
+            manageBonus: "Geh zum Konto"
+            continue: "Profil löschen"
             return: "Zurück"
+            cancel: "Löschung abbrechen"
+        info:
+          title: "Dein Profil löschen"
+          description: "Du kannst jederzeit von deinem Recht Gebrauch machen, dein IO-Profil zu löschen."
+          banner: "Dein Profil wird innerhalb von 30 Tagen nach deinem Antrag endgültig gelöscht."
+          body:
+            p1: "Wenn du dich entscheidest fortzufahren, kannst du die Nachrichten oder Einstellungen, die du in der App festgelegt hast, nicht mehr abrufen."
+            p2:
+              firstPart: "Alle Boni oder Rabatte, die du über die IO-App erhalten hast, "
+              lastPart: "sind nicht mehr verfügbar."
+            p3: "Du kannst jederzeit wieder in die IO-App einsteigen, indem du dich über SPID oder CIE erneut anmeldest."
+          cta: "Mit der Löschung fortfahren"
         details:
+          title: "Warum möchtest du dein Profil bei IO löschen?"
+          body: "Wir würden gerne wissen, warum du dein Profil löschst, damit wir uns in Zukunft verbessern können. Wenn du den Grund nicht mitteilen möchtest, überspringe bitte diesen Schritt und klicke auf „Profil löschen“.
+          question: "Was ist der Grund dafür?"
           answer_1: "Ich halte IO nicht mehr für nützlich"
           answer_2: "Ich fühle mich in IO nicht sicher"
           answer_3: "Ich habe die App nie benutzt"
           answer_4: "Keiner der oben genannten Punkte"
+          labelOpenAnswer: "Schreib deinen Grund"
+          cta: "Dein Profil löschen"
+        success:
+          title: "Wir haben deine Anfrage erhalten"
+          body: "Dein Profil wird innerhalb von 30 Tagen gelöscht. Du kannst jederzeit wieder zu IO zurückkehren, indem du dich mit SPID oder CIE anmeldest."
+          cta: "Schließen"
       exportData:
+        cta: "Eine Kopie der Daten anfordern"
         title: "Zugriff auf deine Daten"
+        subtitle: "Du kannst die wichtigsten Daten deines IO-Profils jederzeit herunterladen."
         description: "Du erhältst eine Kopie der mit deinem IO-Profil verbundenen Daten"
+        detail:
+          bulletList:
+            title: "Deine Daten sind:"
+            item1: "deine Steuernummer;"
+            item2: "die von dir angegebene E-Mail-Adresse und ggf. eine Bestätigung ihrer Validierung;"
+            item3: "den Text der Mitteilungen, die du erhalten hast;"
+            item4: "deine Benachrichtigungseinstellungen."
+          paragraph1: "Die Informationen werden im YAML-Format heruntergeladen, einem Standardformat, das in der Datenverarbeitung den Austausch von Daten zwischen verschiedenen Anwendungen ermöglicht."
+          paragraph2:
+            part1: "Du erhältst eine "
+            part2: "Mitteilung in IO "
+            part3: "mit einem Link und einem 15 Tage lang gültigen Passwort."
+          paragraph3:
+            part1: "Weitere Informationen findest du in der"
+            link: "IO-Datenschutzrichtlinie."
         alert:
           requestTitle: "Möchtest du wirklich all deine Daten exportieren?"
           oldRequest: "Wir bearbeiten bereits eine Anfrage zum Datenexport"
@@ -339,29 +401,62 @@ profile:
           title: "Freigabe von Nutzungsdaten"
           description: "Unterstütze das IO-Team bei der Überwachung der Funktionsweise der App"
         screen:
+          title: "Deine Daten auf IO"
+          description: "Wenn du deine Daten weitergibst, hilfst du uns, dein IO-Erlebnis zu verbessern und dir gezielte Unterstützung zu bieten."
+          why:
+            description:
+              one: "Wir verwenden "
+              two: "nur die Daten, die notwendig sind, "
+              three: "um das Funktionieren der App zu überwachen und die angebotenen Dienste zu verbessern."
+            cta: "Warum wir Daten erfassen"
+          security:
+            description:
+              one: "Wir ergreifen Sicherheitsmaßnahmen "
+              two: "zum Schutz "
+              three: "deiner Daten."
+            cta: "Wie wir die Daten schützen"
+          gdpr:
+            description:
+              one: "Wir arbeiten nur mit Lieferanten zusammen, die Daten "
+              two: "transparent und sicher verarbeiten."
+            cta: "Wer sind die Lieferanten?"
+          additionalInformation:
+            description: "Für weitere Informationen lies bitte die "
+            cta: "Datenschutzerklärung und die Nutzungsbedingungen"
+          profileSettings: "Du kannst deine Wahl jederzeit unter {{pageName}} > Datenschutz und Nutzungsbedingungen ändern"
           cta:
             shareData: "Daten freigeben"
+            dontShareData: "Daten nicht freigeben"
+            dontShare: "Jetzt nicht"
           confirmToast: "Einstellungen aktualisiert!"
+        alert:
+          title: "Du hast entschieden, deine Daten \nnicht weiterzugeben"
+          body: "Wenn du dies bestätigst, können wir dir nicht gezielt helfen, da uns möglicherweise die notwendigen Daten zur Lösung des Problems fehlen."
+        whyBottomSheet:
+          title: "Warum wir Daten erfassen"
+          body: "Wir sammeln keine Daten für Marketingzwecke. \n\nWir verwenden Tools, die es uns ermöglichen, Daten darüber aufzuzeichnen, wie du die App nutzt, um **dir einen besseren Service zu bieten** und **dich bei Bedarf zu unterstützen**."        
         securityBottomSheet:
           title: "Was ist eine Pseudonymisierung?"
           body: "Sie ist die Verarbeitung personenbezogener Daten in einer Weise, dass die personenbezogener Daten ohne Hinzuziehung zusätzlicher Informationen nicht mehr einer bestimmten betroffenen Person zugeordnet werden können, sofern diese zusätzlichen Informationen gesondert aufbewahrt werden und technischen und organisatorischen Maßnahmen unterliegen, die gewährleisten, dass diese personenbezogener Daten nicht einer identifizierten oder identifizierbaren natürlichen Person zugewiesen werden können."
     appInfo:
       title: "Über IO"
       description: "Erfahren mehr über die IO-App"
+      subtitle: "Hier findest du weitere Einzelheiten über die IO-App und erfahre mehr über ihre Einsatzmöglichkeiten."
+      paragraphTitle: "Was ist IO?"
+      paragraphBody1: "IO, die App für öffentliche Dienste, "
+      paragraphBody2: "bietet dir einen einzigen Kanal für die einfache Interaktion mit lokalen und nationalen Behörden (Gemeinden, Regionen, Zentralbehörden) direkt von deinem Gerät aus. Dank IO treten die einzelnen Verwaltungen rechtzeitig und individuell mit dir in Kontakt und ermöglichen dir, Verfahren im Zusammenhang mit einer bestimmten Dienstleistung - wie Bescheide, Zahlungen, Fristen und Benachrichtigungen - einfach und sicher zu verwalten."
+      bannerBody: "Möchtest du mehr erfahren?"
+      bannerButton: "Geh zur IO-Website"
     developersSectionHeader: "Entwickler"
     testEnvironmentSectionHeader: "Testumgebung"
-    pagoPaEnvironment:
-      pagoPaEnv: "pagoPA Testumgebung"
-      pagoPAEnvAlert: "Diese Änderung erfordert einen Neustart der App"
-      alertConfirmTitle: "Möchtest du die pagoPA Testumgebung nutzen?"
-      alertConfirmMessage: "Wenn du die pagoPA Testumgebung aktivierst, siehst du deine Transaktionshistorie und deine gespeicherten Zahlungsmethoden nicht mehr und kannst nur noch eigens dafür angelegte Zahlungsmethoden nutzen. Wenn dir nicht klar ist, was dies bedeutet, solltest du diese Funktion nicht aktivieren."
-      alertMessage: "Die App muss neu gestartet werden, damit die Änderungen wirksam werden."
-    pnEnvironment:
-      pnEnv: "PN-Testumgebung"
     appVersion: "Version"
     backendVersion: "Backend-Version"
     debugMode: "Debug-Modus"
     designSystem: "Design System"
+    banner:
+      title: "Möchtest du deine Steuernummer anzeigen?"
+      action: "Geh zum Abschnitt „Deine Daten“."
+      close: "Schließe das Banner und zeige es nicht mehr an."
   data:
     title: "Deine Daten"
     subtitle: "Hier findest du deine anagrafischen Daten und Kontaktdaten, die von IO verwendet werden"
@@ -369,6 +464,7 @@ profile:
       email: "E-Mail-Adresse"
       need_validate: "Noch zu bestätigen"
       nameSurname: "Vor- und Nachname"
+      fiscalCode: "Steuernummer"
   security:
     title: "Sicherheit"
     subtitle: "Verwalte die Authentifizierungsmethoden in der App"
