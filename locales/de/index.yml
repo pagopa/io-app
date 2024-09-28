@@ -697,16 +697,38 @@ authentication:
     cie: "CIE"
     noDataTitle: "Um IO zu verwenden, musst du das Senden von Daten zulassen"
     nfc:
+      apduNotSupported: "Das Betriebssystem unterstützt das Lesen der elektronischen Identitätskarte nicht. Versuche, SPID zu verwenden, um dich in der App anzumelden."
       retry: "Erneut versuchen"
       noNfcConnectionTitle: "Hast du die Karte berührt?"
+      title: "Aktiviere NFC um fortzufahren"
+      subtitle: "Um IO das Lesen deiner CIE zu erlauben, aktiviere NFC in den Einstellungen deines Geräts."
+      listItemTitle: "Wie geht's:"
+      action: "Öffne Einstellungen"
+      listItemLabel1: "Schritt 1"
+      listItemValue1: "Rufe die Einstellungen deines Geräts auf"
+      listItemLabel2: "Schritt 2
+      listItemValue2: "Suche nach “NFC”"
+      listItemLabel3: "Schritt 3"
+      listItemValue3: "Aktiviere NFC"
+      activeNfcAlert: "Aktiviere NFC, damit IO dein CIE lesen kann!"
+      activeNFCAlertButton: "Aktiviere NFC"
     pin:
       accessibility:
         placeholderLabel: "PIN der elektronischen Identitätskarte"
         label: "Eingabefeld für die PIN der elektronischen Identitätskarte"
         hint: "Gib in diesem Feld die 8-stellige PIN deiner elektronischen Identitätskarte ein."
+        deleteLabel: "Du hast {{number}} gelöscht"
       pinCardTitle: "Gib die PIN deiner Identitätskarte ein"
       pinCardHeader: "Anmeldung mit CIE"
       pinCardContent: "Der PIN-Code besteht aus 8 Ziffern. Vier Ziffern wurden dir beim Meldeamt ausgehändigt und weitere vier Ziffern wurden dir mit der Karte nach Hause geschickt. Setze diese in dieser Reihenfolge zusammen und trage sie bitte hier ein."
+      incorrectCiePinTitle1: "Die PIN ist nicht korrekt"
+      incorrectCiePinTitle2: "Du hast 2 mal eine falsche PIN eingegeben"
+      lockedCiePinTitle: "Du hast zu oft eine falsche PIN eingegeben"
+      incorrectCiePinContent1: "Du hast noch 2 Versuche übrig, überprüfe und versuche es erneut."
+      incorrectCiePinContent2: "Nach dem dritten falschen Versuch wird die PIN gesperrt. Um sie zu entsperren und eine neue einzustellen, musst du den PUK-Code in der CieID-App eingeben."
+      incorrectCiePinSecondaryActionLabel2: "Hast du deine PIN vergessen?"
+      lockedCiePinContent: "Die PIN deiner CIE wurde gesperrt. Um sie zu entsperren und eine neue einzustellen, musst du den PUK-Code in der CieID-App eingeben."
+      lockedSecondaryActionLabel: "Hast du deinen PUK vergessen?"
       alert: "Möchtest du wirklich zurückgehen?"
       subtitleHelp: "Die PIN ist ein 8-stelliger Code."
       subtitleCTA: "Wo finde ich ihn?"
@@ -716,22 +738,36 @@ authentication:
     pinTempLocked:
       title: "Karte vorübergehend gesperrt"
     card:
-      layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, bewege die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."
+      title: "Halte die CIE auf die Rückseite des Geräts"
+      titleiOS: "Halte die CIE oben auf das Gerät"
+      layCardMessageHeader: "Wenn die Karte nicht gelesen wird, halte sie an eine andere Stelle und warte ein paar Sekunden, bis du eine Vibration spürst."
+      layCardMessageHeaderiOS: "Wenn die Karte nicht gelesen wird, halte sie an eine andere Stelle und warte einige Sekunden."
+      layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, halte die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."
+      cieCardValid: "Lesen abgeschlossen!"
+      readerCardTitle: "Halte sie einige Sekunden lang still."
       readerCardHeader: "Wir lesen die Daten deiner Identitätskarte ein und überprüfen deren Gültigkeit."
       readerCardFooter: "Halte die Karte noch ein paar Sekunden in dieser Position"
       iosAlert:
-        readingInstructions: "Lege deine elektronische Identitätskarte oben auf das Telefon."
+        readingInstructions: "Halte deine elektronische Identitätskarte oben auf das Telefon."
         moreTags: "Es wurden mehrere Karten identifiziert. Bitte lege eine Karte nach der anderen an."
         readingInProgress: "WIRD GELESEN \nHalte die Karte einige Sekunden lang still..."
+        readingSuccess: "Lesen abgeschlossen!"
         invalidCard: "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein."
         tagLost: "Du hast die Karte zu früh entfernt."
+        cardLocked: "Die PIN der CIE ist gesperrt"
+        wrongPin1AttemptLeft: "Du hast zweimal eine falsche PIN eingegeben"
+        wrongPin2AttemptLeft: "Die PIN ist nicht korrekt"
         genericError: "Es ist ein unerwarteter Fehler aufgetreten. Bitte versuche es erneut."
       error:
+        readerCardLostTitle: "Du hast die Karte zu früh entfernt"
+        onTagLost: "Halte die Karte wieder auf die Rückseite des Geräts."
         tryAgain: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Es handelt sich wahrscheinlich um einen temporäres Problem, bitte versuche es erneut!"
         generic: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Wenn du das Problem nicht lösen kannst, teile uns dies bitte über das Symbol '?' in der oberen rechten Ecke mit. Danke!"
         unknownCardTitle: "Unbekannte Karte"
         unknownCardContent: "Die verwendete Karte scheint keine elektronische Identitätskarte zu sein."
         unknownCardHelpLink: "Was ist eine elektronische Identitätskarte?"
+        genericErrorTitle: "Wir konnten die Daten nicht von der Karte abrufen"
+        genericErrorSubtitle: "Wenn das Problem mehrmals auftritt, warte ein paar Minuten und versuche es erneut."
   spid: "SPID"
   spid_information_request:
     headerTitle: "Du hast keinen SPID?"
@@ -889,6 +925,7 @@ onboarding:
   tos:
     headerTitle: "IO einrichten"
     accept: "Akzeptieren"
+    error: "Wir konnten die Datenschutzrichtlinie und die Allgemeinen Geschäftsbedingungen nicht abrufen"
     alert:
       title: "Achtung"
       message: "Bitte lies den vollständigen Inhalt der Nutzungsbedingungen und der Datenschutzbestimmungen um fortzufahren"
@@ -897,24 +934,70 @@ onboarding:
     contextualHelpTitle: "Wie lautet dein Entsperrcode?"
   pin:
     headerTitle: "IO einrichten"
+    title: "Entsprerrcode erstellen"
+    subTitle: "Dies ist der 6-stellige Code für den Zugriff auf IO und die Autorisierung bestimmter Vorgänge in der App."
     pinLabel: "Lege einen Entsperrcode fest"
     pinConfirmationLabel: "Wiederhole den Entsperrcode"
     errors:
+      invalid:
+        title: "Zu einfach!"
+        description: "Wähle einen Code, der schwer zu erraten ist und weder eine einzelne, sich wiederholende Zahl (z. B. 000000) noch eine Liste von geordneten Zahlen (z. B. 123456 oder 654321) enthält."
+        cta: "Erstelle einen anderen Code"
       match: "Der Code stimmt nicht überein"
+    policy:
+      title: "Wie wähle ich den Code aus?"
+      description: "Der Entsperrcode besteht aus 6 Ziffern und du benötigst ihn, um auf IO zuzugreifen und bestimmte Vorgänge in der App zu autorisieren."
+      bulletListTitle: "Wähle einen Code, der schwer zu erraten ist und nicht folgenden Inhalt hat:"
+      firstItem: "eine sich wiederholende Zahl (z.B. 000000)"
+      secondItem: "eine Liste von geordneten Zahlen (z.B. 123456 oder 654321)"
+    success:
+      message: "Du hast den Code geändert!"
+  pinConfirmation:
+    title: "Bestätige den Entsperrcode"
+    errors:
+      match:
+        title: "Der eingegebene Code ist anders als der erste"
+        cta: "Erneut versuchen"
   alert:
     title: "Möchtest du dich wirklich abmelden?"
     description: "Du musst dich erneut anmelden, um die App wieder zu verwenden"
+  exitAlert:
+    title: "Möchtest du dich von IO abmelden?"
+    description: "Du musst dich erneut mit SPID oder CIE anmelden um die App zu benutzen."
   biometric:
     headerTitle: "IO einrichten"
     available:
       title: "Biometrische Erkennung aktiveren"
+      settings: "Du kannst deine Wahl jederzeit unter {{pageName}} > Sicherheit ändern"
       body:
+        text: "Du kannst dein Gesicht oder deinen Fingerabdruck anstelle des Entsperrcodes verwenden. Damit kannst du schneller und sicherer auf die App zugreifen und Transaktionen und Zahlungen autorisieren."
         infoStart: "Du kannst die biometrische Erkennung anstelle des Entsperrcodes verwenden. Sie ermöglicht dir den Zugriff auf die App und die Bestätigung von Transaktionen und Zahlungen"
         biometricType: "mit deinem Gesicht oder Fingerabdruck"
         infoEnd: "auf schnellere und sicherere Weise."
         enrolledText: "Die biometrischen Daten werden im Speicher deines Telefons gespeichert und werden in keiner Weise an IO-Systeme weitergegeben oder von anderen Parteien gespeichert."
+        notEnrolled:
+          text: "Dazu musst du die biometrische Erkennung zuerst in den Systemeinstellungen deines Geräts konfigurieren."
+          label: "Wie geht's?"
+          step1:
+            label: "Schritt 1"
+            value: "Rufe die Einstellungen deines Geräts auf"
+          step2:
+            label: "Schritt 2"
+            value: "Konfiguriere dein Gesicht oder deinen Fingerabdruck"
+          step3:
+            label: "Schritt 3"
+            value: "Aktiviere sie in IO unter {{pageName}} > Sicherheit"
     unavailable:
       title: "Schütze dein Gerät"
+      subtitle: "IO sendet dir Mitteilungen, die dich persönlich betreffen. Stelle sicher, dass nur du auf die App zugreifen kannst, indem du einen Code oder ein Zeichen zum Entsperren des Geräts festlegst."
+      body:
+        label: "Wie geht's?"
+        step1:
+          label: "Schritt 1"
+          value: "Rufe die Einstellungen deines Geräts auf"
+        step2:
+          label: "Schritt 2"
+          value: "Erstelle einen Code oder Zeiche zum Entsperren des Geräts"
   shareData:
     title: "IO einrichten"
   thankYouPage:
