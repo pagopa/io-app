@@ -474,10 +474,21 @@ profile:
         needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
   preferences:
     title: "Einstellungen"
+    subtitle: "Mit diesen Einstellungen kannst du dein IO-Erlebnis individuell gestalten."
+    genericToastTitle: "Einstellungen aktualisiert!"
     contextualHelpTitle: "Deine Einstellungen"
     list:
       wip: "In Bearbeitung"
       digitalDomicile: "Digitales Domizil"
+      service_contact:
+        title: "Dienste verwalten"
+        subtitle: "Wähle, wer dich kontaktieren kann"
+      send_email_messages:
+        title: "Weiterleitung von Mitteilungen per E-Mail"
+        subtitle: "Vorschau der Mitteilung erhalten"
+      language:
+        title: "Sprache"
+        subtitle: "Wähle die Sprache"
       preferred_calendar:
         title: "Bevorzugter Kalender"
       preferred_language:
@@ -486,7 +497,12 @@ profile:
         alert:
           title: "Möchtest du die Sprache ändern in"
           subtitle: "Du musst die App neu starten, um die Änderung zu übernehmen"
+        toast:
+          success:
+            title: "Sprache geändert"
         not_selected: "Nicht ausgewählt"
+        banner:
+          button: "Mehr erfahren"
       notifications:
         title: "Push-Benachrichtigungen"
         subtitle: "Vorschau und Erinnerung zulassen"
@@ -559,6 +575,17 @@ authentication:
       os_problem: "Ein Betriebssystem mit Android 6.0 oder iOS 13 oder höher ist erforderlich."
       nfc_alert: "Dein Gerät verfügt nicht über NFC."
       os_alert: "Das Betriebssystem des Geräts ist nicht auf dem neuesten Stand."
+    cie_bottom_sheet:
+      title: "Wie willst du dich anmelden?"
+      module_cie_pin:
+        title: "Anmeldung mit CIE + PIN"
+        subtitle: "Benutze die elektronische Identitätskarte und die PIN"
+      module_cie_id:
+        title: "Anmeldung mit CieID"
+        subtitle: "Benutze die App CieID"
+      help_banner:
+        title: "Nicht sicher, was du wählen solltest?"
+        action: "Wir helfen dir"
     contentTitleCie: "Du hast keinen SPID oder CIE?"
     spid_or_cie: "Um IO nutzen zu können, musst du über eine dieser digitalen Werkzeuge verfügen, die deine Identität in sicherer Weise bestätigen."
     request_cie: "CIE anfordern"
@@ -581,8 +608,90 @@ authentication:
     card5-title: "Willkommen in IO!"
     card5-content: "Lass uns gemeinsam herausfinden, was du machen kannst"
     card5-content-accessibility: "Wähle das vorherige Element, um einen Chat mit dem IO-Team zu beginnen, wenn etwas nicht so funktioniert, wie es sollte."
+    expiredCardTitle: "CIE-Verifizierung fehlgeschlagen"
     expiredCardHeaderTitle: "Anmeldung mit CIE"
+    expiredCardContent: "Die verwendete Karte ist möglicherweise abgelaufen oder nicht mehr gültig. Versuche dich mit SPID bei der App anzumelden."
     expiredCardHelp: "Wie erneuert man seine elektronische Identitätskarte?"
+  wizards:
+    cie_id_wizard:
+      title: "Hast du die CieID-App?"
+      description: "Wenn du die CieID-App auf deinem Gerät hast, melde dich bei IO an, indem du die Anmeldedaten der App eingibst. Du kannst auch dein Gesicht oder deinen Fingerabdruck oder den Code, den du für die CieID-App eingerichtet hast, verwenden."
+      actions:
+        primary:
+          label: "Ja, mit CieID anmelden"
+        secondary:
+          label: "Ich habe CieID nicht"
+      link: "Was ist CieID?"
+    cie_pin_wizard:
+      title: "Hast du deine elektronische Identitätskarte und deine PIN?"
+      description: "Wenn du deine elektronischen Identitätskarte zur Hand hast, kannst du dich bei IO anmelden, indem du die PIN der Karte eingibst und sie in die Nähe des Geräts hältst, damit die Daten gelesen werden können."
+      actions:
+        primary:
+          label: "Ja, mit CIE + PIN anmelden"
+        secondary:
+          label: "Ich habe keine CIE und PIN"
+      bottom_sheet:
+        title: "Wo kann ich die PIN der CIE finden?"
+        link: "Hast du deine PIN vergessen?"
+        cta:
+          label: "Wo kann ich die PIN der CIE finden?"
+    spid_wizard:
+      title: "Hast du SPID?"
+      description: "Wenn du einen SPID hast, kannst du dich bei IO anmelden, indem du deine Anmeldedaten eingibst, dein Gesicht oder deinen Fingerabdruck verwendest oder über die App deines SPID-Anbieters."
+      actions:
+        primary:
+          label: "Ja, mit SPID anmelden"
+        secondary:
+          label: "Ich habe keinen SPID"
+    id_activation_wizard:
+      title: "Aktiviere deine digitale Identität!"
+      description: "Du musst einen aktiven SPID oder eine CIE (elektronische Identitätskarte) haben, um IO nutzen zu können."
+      list_items:
+        title: "Wie aktivieren?"
+        request_cie:
+          label: "Deine CIE beantragen"
+        activate_cie:
+          title: "CIE-Zugangsdaten aktivieren"
+        activate_spid:
+          title: "SPID aktivieren"
+      actions:
+        primary:
+          label: "Schließen"
+  auth_errors:
+    error_19:
+      title: "Du hast zu viele Anmeldeversuche gemacht"
+      subtitle: "Du hast zu oft einen falschen Benutzernamen oder ein falsches Passwort eingegeben. Bitte überprüfe deine Anmeldedaten und versuche es in ein paar Minuten noch einmal, oder wende dich an deinen SPID-Identitätsanbieter, um deine Anmeldedaten zu ändern."
+    error_20:
+      title: "Es war nicht möglich dich anzumelden"
+      subtitle: "Aus Sicherheitsgründen musst du eine Identität mit einer höheren Sicherheitsstufe verwenden. Weitere Informationen erhältst du von deinem SPID-Identitätsanbieter."
+    error_21:
+      title: "Es ist zu viel Zeit vergangen"
+      subtitle: "Es ist zu viel Zeit vergangen, seit du mit dem Anmelden begonnen hast: Fang noch einmal von vorne an."
+    error_22:
+      title: "Du hast der Übermittlung von Daten nicht zugestimmt"
+      subtitle: "Um Zugang zu erhalten, ist es erforderlich, der Übermittlung bestimmter Daten zuzustimmen."
+    error_23:
+      title: "Identität gesperrt oder widerrufen"
+      subtitle: "Deine SPID-Identität wurde gesperrt oder widerrufen. Für weitere Informationen wende dich bitte an deinen SPID-Identitätsanbieter."
+    error_25:
+      title: "Du hast den Vorgang abgebrochen"
+      subtitle: "Um einzusteigen, versuche es einfach noch einmal, wann immer du willst."
+    error_1001:
+      title: "Du hast das erforderliche Mindestalter nicht erreicht"
+      subtitle: "Um dich anzumelden, musst du mindestens 18 Jahre alt sein."
+    generic:
+      title: "Es war nicht möglich dich anzumelden"
+      subtitle: "Beim Anmelden ist ein Problem aufgetreten. Bitte versuche es in ein paar Minuten erneut."
+  cie_id:
+    error_screen:
+      title: "Du kannst dich nicht mit CieID anmelden?"
+      cie_pin_supported:
+        description: "Wenn du deine elektronische Identitätskarte zur Hand hast, verwende sie für den Zugang zu IO.\n\nGib die CIE-PIN ein und halte sie in die Nähe des Geräts, damit die Daten gelesen werden können."
+        primary_action_label: "Mit CIE + PIN anmelden"
+      cie_pin_not_supported:
+        description: "Wenn du einen SPID hast, melde dich bei IO an, indem du deine Anmeldedaten eingibst, dein Gesicht oder deinen Fingerabdruck verwendest oder über die App deines SPID-Anbieters."
+        primary_action_label: "Mit SPID anmelden"
+      secondary_action_label: "Schließen"
   cie:
     genericTitle: "Anmeldung mit CIE"
     cie: "CIE"
