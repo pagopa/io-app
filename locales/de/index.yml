@@ -342,7 +342,7 @@ profile:
           description: "Du kannst jederzeit von deinem Recht Gebrauch machen, dein IO-Profil zu löschen."
           banner: "Dein Profil wird innerhalb von 30 Tagen nach deinem Antrag endgültig gelöscht."
           body:
-            p1: "Wenn du dich entscheidest fortzufahren, kannst du die Nachrichten oder Einstellungen, die du in der App festgelegt hast, nicht mehr abrufen."
+            p1: "Wenn du dich entscheidest fortzufahren, kannst du die Mitteilungen oder Einstellungen, die du in der App festgelegt hast, nicht mehr abrufen."
             p2:
               firstPart: "Alle Boni oder Rabatte, die du über die IO-App erhalten hast, "
               lastPart: "sind nicht mehr verfügbar."
@@ -350,7 +350,7 @@ profile:
           cta: "Mit der Löschung fortfahren"
         details:
           title: "Warum möchtest du dein Profil bei IO löschen?"
-          body: "Wir würden gerne wissen, warum du dein Profil löschst, damit wir uns in Zukunft verbessern können. Wenn du den Grund nicht mitteilen möchtest, überspringe bitte diesen Schritt und klicke auf „Profil löschen“.
+          body: "Wir würden gerne wissen, warum du dein Profil löschst, damit wir uns in Zukunft verbessern können. Wenn du den Grund nicht mitteilen möchtest, überspringe bitte diesen Schritt und klicke auf „Profil löschen“."
           question: "Was ist der Grund dafür?"
           answer_1: "Ich halte IO nicht mehr für nützlich"
           answer_2: "Ich fühle mich in IO nicht sicher"
