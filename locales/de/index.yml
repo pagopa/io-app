@@ -710,7 +710,7 @@ authentication:
       listItemValue2: "Suche nach “NFC”"
       listItemLabel3: "Schritt 3"
       listItemValue3: "Aktiviere NFC"
-      activeNfcAlert: "Aktiviere NFC, damit IO dein CIE lesen kann!"
+      activeNfcAlert: "Aktiviere NFC, damit IO deine CIE lesen kann!"
       activeNFCAlertButton: "Aktiviere NFC"
     pin:
       accessibility:
