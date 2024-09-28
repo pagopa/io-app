@@ -706,7 +706,7 @@ authentication:
       action: "Öffne Einstellungen"
       listItemLabel1: "Schritt 1"
       listItemValue1: "Rufe die Einstellungen deines Geräts auf"
-      listItemLabel2: "Schritt 2
+      listItemLabel2: "Schritt 2"
       listItemValue2: "Suche nach “NFC”"
       listItemLabel3: "Schritt 3"
       listItemValue3: "Aktiviere NFC"
