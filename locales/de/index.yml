@@ -2566,7 +2566,7 @@ features:
       legacy:
         empty:
           title: "Keine Quittung gefunden"
-          body: "Wenn du eine Quittung für eine pagoPA-Zahlungsaufforderung suchst, den du in der Vergangenheit bezahlt hast, wende dich an den Gläubiger."
+          body: "Wenn du eine Quittung für eine pagoPA-Zahlungsaufforderung suchst, die du in der Vergangenheit bezahlt hast, wende dich an den Gläubiger."
         banner:
           content: "Wir generieren Quittungen im PDF-Format: Wenn du Duplikate in dieser Liste findest, ignoriere diese bitte!"
           action: "Mehr erfahren"
@@ -2574,7 +2574,7 @@ features:
         bottomSheet:
           title: "Wo finde ich die Zahlungsquittung?"
           noticeHeading: "Kürzlich bezahlte Aufforderungen"
-          noticeBody: "Wir sind gerade dabei, unsere Systeme zu aktualisieren: Sobald sie fertig sind, findest du die Quittungen im PDF-Format im Abschnitt Zahlungen."
+          noticeBody: "Wir sind gerade dabei, unsere Systeme zu aktualisieren: Sobald sie abgeschlossen ist, findest du die Quittungen im PDF-Format im Abschnitt Zahlungen."
           allNoticesHeading: "Alle anderen Aufforderungen"
           allNoticesBody: "Für Transaktionen, die vor dem 1. April 2023 getätigt wurden, wende dich bitte an den Gläubiger."
       multiplePayment: "Mehrfache Zahlung"
@@ -2598,12 +2598,12 @@ features:
       payPal:
         banner:
           title: "Möchtest du in 3 Raten zahlen?"
-          content: "Verwende diese Methode nicht. Wähle bei der Bezahlung „PayPal (auch in 3 Raten)“."
+          content: "Verwende nicht diese Methode. Wähle bei der Bezahlung „PayPal (auch in 3 Raten)“."
       pspAlert:
         description: "Für diese Methode ist die Expresszahlung mit dem Anbieter {{pspBusinessName}} aktiv."
         action: "Was bedeutet das?"
         title: "Was bedeutet das?"
-        explainationContent: "Wenn du diese Methode gespeichert hast, hast du {{pspBusinessName}} autorisiert, Transaktionen über „PayPal-Expresszahlung“ abzuwickeln.\n\nWenn du einen anderen Anbieter verwenden möchtest, füge die Methode erneut zu deinem Konto hinzu.\n\Um die Autorisierung zu widerrufen, entferne die Methode aus deinem Konto.\n\nVerwende die PayPal-App, um die Karte oder das Bankkonto zu ändern, von der/dem du die Gebühren abbuchen möchtest."
+        explainationContent: "Wenn du diese Methode gespeichert hast, hast du {{pspBusinessName}} autorisiert, Transaktionen über „PayPal-Expresszahlung“ abzuwickeln.\n\nWenn du einen anderen Anbieter verwenden möchtest, füge die Methode erneut zu deinem Konto hinzu.\n\nUm die Autorisierung zu widerrufen, entferne die Methode aus deinem Konto.\n\nVerwende die PayPal-App, um die Karte oder das Bankkonto zu ändern, von der/dem du die Gebühren abbuchen möchtest."
     errors:
       transactionCreationError: "Es gibt ein Problem mit den Bezahlsystemen."
 support:
@@ -2756,7 +2756,7 @@ transaction:
       debtor: "Schuldner"
       iuv: "IUV"
       subject: "Zahlungsgrund"
-      noticeCode: "Zahlungsaufforderungskodex"
+      noticeCode: "Kodex der Zahlungsaufforderung"
       taxCode: "Steuernummer Körperschaft
 permissionRequest:
   gallery:
