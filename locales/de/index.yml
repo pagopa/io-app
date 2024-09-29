@@ -2056,6 +2056,7 @@ services:
         title: "Einstellungen gespeichert!"
         body: "Du kannst die Liste der verfügbaren Dienste jederzeit im Abschnitt Dienste einsehen."
         cta: "Verfügbare Dienste anzeigen"
+      banner: "Du kannst deine Wahl jederzeit unter {{pageName}} > Einstellungen ändern"
       oldUsersBadge: "Aktuelle Einstellungen"
       choiceLabel: "Deine Wahl:"
       unavailable: "Nicht ausgewählt"
@@ -2081,7 +2082,43 @@ services:
           body: "Bei einer manuellen Konfiguration können dir weder aktuelle noch zukünftige IO-Dienste Mitteilungen senden. Damit Dienste, an denen du interessiert bist, dich kontaktieren können, musst du sie einzeln konfigurieren, indem du den Punkt “In der App kontaktieren” auf jeder Registerkarte des Dienstes aktivierst."
   title: "Dienste"
   contextualHelpTitle: "Was du in deinen Diensten machen kannst"
+  new: "Neu"
   home:
+    bottomSheet:
+      content:
+        servicesPreferences:
+          value: "Wer kann dir schreiben?"
+          description: "Wähle, wer dich kontaktieren kann"
+        settings:
+          value: "Alle Einstellungen"
+          description: "Verwalte deine Daten und Nutzungseinstellungen"
+    featured:
+      services:
+        title: "Im Vordergrund"
+      institutions:
+        title: "Hervorgehobene Körperschaften"
+      searchLink: "Suche nach allen verfügbaren lokalen Diensten"
+  institution:
+    failure:
+      title: "Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut"
+      subtitle: "Dienste werden geladen"
+      back: "Zurück"
+      retry: "Erneut versuchen"
+    header:
+      subtitlePlural: "{{count}} Dienste verfügbar"
+      subtitleSingular: "{{count}} Dienst verfügbar"
+  search:
+    input:
+      placeholder: "Suche nach einer nationalen oder lokalen Körperschaft"
+      placeholderShort: "Suche eine Körperschaft"
+      cancel: "Abbrechen"
+      clear: "Löschen"
+    emptyState:
+      invalidQuery:
+        title: "Gib den Namen einer Körpferschaft ein, \nnational oder lokal."
+      noResults:
+        title: "Kein Dienst gefunden"
+        subtitle: "Gib den Namen einer bestehenden nationalen oder lokalen Körperschaft ein."
     institutions:
       title: "National"
   details:
@@ -2502,8 +2539,9 @@ features:
         all: "Alle"
         bonus: "Initiativen für das Gemeinwohl"
         cgn: "Nationale Jugendkarte"
-        itw: Documenti
+        itw: "Dokumente"
         payment: "Zahlungsmethoden"
+        other: "Mehr"
     onboarding:
       title: "Was möchtest du deinem Konto hinzufügen?"
       options:
@@ -2513,6 +2551,8 @@ features:
   payments:
     title: "Zahlungen"
     cta: "Aufforderung bezahlen"
+    remoteAlert:
+      cta: "Mehr erfahren"
     methods:
       title: "Zahlungsmethoden"
       button: "Hinzufügen"
@@ -2522,6 +2562,22 @@ features:
       status:
         expired: "Abgelaufen"
     transactions:
+      showLegacyTransactions: "Vorherige anzeigen"
+      legacy:
+        empty:
+          title: "Keine Quittung gefunden"
+          body: "Wenn du eine Quittung für eine pagoPA-Zahlungsaufforderung suchst, den du in der Vergangenheit bezahlt hast, wende dich an den Gläubiger."
+        banner:
+          content: "Wir generieren Quittungen im PDF-Format: Wenn du Duplikate in dieser Liste findest, ignoriere diese bitte!"
+          action: "Mehr erfahren"
+        title: "Vorherige Transaktionen"
+        bottomSheet:
+          title: "Wo finde ich die Zahlungsquittung?"
+          noticeHeading: "Kürzlich bezahlte Aufforderungen"
+          noticeBody: "Wir sind gerade dabei, unsere Systeme zu aktualisieren: Sobald sie fertig sind, findest du die Quittungen im PDF-Format im Abschnitt Zahlungen."
+          allNoticesHeading: "Alle anderen Aufforderungen"
+          allNoticesBody: "Für Transaktionen, die vor dem 1. April 2023 getätigt wurden, wende dich bitte an den Gläubiger."
+      multiplePayment: "Mehrfache Zahlung"
       title: "Transaktionsverlauf"
       button: "Alle anzeigen"
       empty:
@@ -2530,6 +2586,26 @@ features:
       status:
         failure: "FEHLGESCHLAGEN"
         success: ""
+      receipt:
+        title: "pagoPA-Quittung"
+        shareButton: "Speichern oder teilen"
+        error: "Die Quittung konnte nicht abgerufen werden."
+        download: "Quittung erhalten"
+      details:
+        totalFeeUnknown: "Der Gesamtbetrag enthält keine Provisionskosten: du findest diese in dem Dokument, das du von {{pspName}} erhalten hast."
+        totalFeeUnknownPsp: "Die Gesamtsumme enthält keine Provisionskosten: du findest diese in dem Dokument, das du vom Zahlungsdienstleister (PSP) erhalten hast."
+    details:
+      payPal:
+        banner:
+          title: "Möchtest du in 3 Raten zahlen?"
+          content: "Verwende diese Methode nicht. Wähle bei der Bezahlung „PayPal (auch in 3 Raten)“."
+      pspAlert:
+        description: "Für diese Methode ist die Expresszahlung mit dem Anbieter {{pspBusinessName}} aktiv."
+        action: "Was bedeutet das?"
+        title: "Was bedeutet das?"
+        explainationContent: "Wenn du diese Methode gespeichert hast, hast du {{pspBusinessName}} autorisiert, Transaktionen über „PayPal-Expresszahlung“ abzuwickeln.\n\nWenn du einen anderen Anbieter verwenden möchtest, füge die Methode erneut zu deinem Konto hinzu.\n\Um die Autorisierung zu widerrufen, entferne die Methode aus deinem Konto.\n\nVerwende die PayPal-App, um die Karte oder das Bankkonto zu ändern, von der/dem du die Gebühren abbuchen möchtest."
+    errors:
+      transactionCreationError: "Es gibt ein Problem mit den Bezahlsystemen."
 support:
   ticketList:
     noTicket:
@@ -2655,6 +2731,8 @@ bonusCard:
   removed: "Entfernt"
 transaction:
   details:
+    error:
+      title: "Wir konnten die Quittung nicht abrufen"
     title: "Details zur Transaktion"
     totalAmount: "Insgesamt"
     totalFee: "Der Gesamtbetrag umfasst "
@@ -2665,12 +2743,21 @@ transaction:
       pspName: "Zahlungsdienstleister (PSP)"
       dateAndHour: "Datum und Uhrzeit"
       transactionId: "Transaktions-ID"
+      paymentMethod: "Zahlungsmethode"
+      authCode: "Autorisierungscode"
+      rrn: "RRN"
+      executedBy: "Ausgeführt von"
+      headedTo: "Zahlungsmethode, ausgestellt auf"
+      alert:
+        content: "Wende dich an den Gläubiger, wenn du die Quittung benötigst."
     operation:
       amount: "Betrag"
       creditor: "Gläubiger"
       debtor: "Schuldner"
       iuv: "IUV"
       subject: "Zahlungsgrund"
+      noticeCode: "Zahlungsaufforderungskodex"
+      taxCode: "Steuernummer Körperschaft
 permissionRequest:
   gallery:
     title: "Erlaube IO den Zugriff auf deine Fotos"
