@@ -61,5 +61,7 @@ export type StoredCredential = {
   parsedCredential: ParsedCredential;
   credentialType: string;
   issuerConf: IssuerConfiguration;
+  issuedAt: string;
+  expiration: string;
   storedStatusAttestation?: StoredStatusAttestation;
 };
