@@ -407,5 +407,5 @@ export const getSafeISODate = (date: Date): string =>
     date,
     O.fromPredicate(isValid),
     O.map(d => d.toISOString()),
-    O.getOrElse(() => "")
+    O.getOrElse(() => new Date().toISOString())
   );
