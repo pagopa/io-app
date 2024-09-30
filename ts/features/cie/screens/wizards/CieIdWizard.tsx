@@ -20,34 +20,28 @@ const CieIdWizard = () => {
   const { navigate } = useIONavigation();
   const label = I18n.t("authentication.wizards.cie_id_wizard.title");
 
-  const getActions = (): IOScrollViewActions => {
-    const primaryLabel = I18n.t(
-      "authentication.wizards.cie_id_wizard.actions.primary.label"
-    );
-    const secondaryLabel = I18n.t(
-      "authentication.wizards.cie_id_wizard.actions.secondary.label"
-    );
-    return {
-      type: "TwoButtons",
-      primary: {
-        label: primaryLabel,
-        accessibilityLabel: primaryLabel,
-        onPress: () => {
-          // Depends on https://pagopa.atlassian.net/browse/IOPID-2134
-          // TODO: navigate to CieID login
-          info("Not implemented yet...");
-        }
-      },
-      secondary: {
-        label: secondaryLabel,
-        accessibilityLabel: secondaryLabel,
-        onPress: () =>
-          navigate(ROUTES.AUTHENTICATION, {
-            screen: ROUTES.AUTHENTICATION_CIE_PIN_WIZARD
-          })
+  const screenActions = (): IOScrollViewActions => ({
+    type: "TwoButtons",
+    primary: {
+      label: I18n.t(
+        "authentication.wizards.cie_id_wizard.actions.primary.label"
+      ),
+      onPress: () => {
+        // Depends on https://pagopa.atlassian.net/browse/IOPID-2134
+        // TODO: navigate to CieID login
+        info("Not implemented yet...");
       }
-    };
-  };
+    },
+    secondary: {
+      label: I18n.t(
+        "authentication.wizards.cie_id_wizard.actions.secondary.label"
+      ),
+      onPress: () =>
+        navigate(ROUTES.AUTHENTICATION, {
+          screen: ROUTES.AUTHENTICATION_CIE_PIN_WIZARD
+        })
+    }
+  });
 
   return (
     <IOScrollViewWithLargeHeader
@@ -56,7 +50,7 @@ const CieIdWizard = () => {
         accessibilityLabel: label
       }}
       description={I18n.t("authentication.wizards.cie_id_wizard.description")}
-      actions={getActions()}
+      actions={screenActions()}
     >
       <ContentWrapper>
         <VSpacer size={12} />
