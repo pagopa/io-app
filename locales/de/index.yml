@@ -2097,7 +2097,9 @@ services:
         title: "Im Vordergrund"
       institutions:
         title: "Hervorgehobene Körperschaften"
-      searchLink: "Suche nach allen verfügbaren lokalen Diensten"
+    institutions:
+      title: "National"
+    searchLink: "Suche nach allen verfügbaren lokalen Diensten"
   institution:
     failure:
       title: "Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut"
@@ -2119,8 +2121,6 @@ services:
       noResults:
         title: "Kein Dienst gefunden"
         subtitle: "Gib den Namen einer bestehenden nationalen oder lokalen Körperschaft ein."
-    institutions:
-      title: "National"
   details:
     failure:
       title: "Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut"
