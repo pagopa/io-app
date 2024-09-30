@@ -6,7 +6,7 @@ import {
   extractFiscalCode,
   getCredentialExpireDate,
   getCredentialExpireDays,
-  getCredentialExpireStatus,
+  getCredentialStatus,
   getFiscalCodeFromCredential,
   ImageClaim
 } from "../itwClaimsUtils";
@@ -85,9 +85,11 @@ describe("getCredentialExpireDays", () => {
   );
 });
 
-describe("getCredentialExpireStatus", () => {
+describe("getCredentialStatus", () => {
   it("should return undefined", () => {
-    const expireStatus = getCredentialExpireStatus({});
+    const expireStatus = getCredentialStatus({
+      parsedCredential: {}
+    } as unknown as StoredCredential);
     expect(expireStatus).toBeUndefined();
   });
 
@@ -99,12 +101,14 @@ describe("getCredentialExpireStatus", () => {
     MockDate.set(new Date(2000, 0, 10, 23, 59));
     expect(new Date()).toStrictEqual(new Date(2000, 0, 10, 23, 59));
 
-    const status = getCredentialExpireStatus({
-      expiry_date: {
-        name: "",
-        value: format(expiryDate, "YYYY-MM-DD")
+    const status = getCredentialStatus({
+      parsedCredential: {
+        expiry_date: {
+          name: "",
+          value: format(expiryDate, "YYYY-MM-DD")
+        }
       }
-    });
+    } as unknown as StoredCredential);
     expect(status).toStrictEqual(expectedStatus);
     MockDate.reset();
   });
