@@ -8,8 +8,6 @@ import {
   isExpiredDate,
   removeTimezoneFromDate
 } from "../dates";
-import { localeDateFormat } from "../locale";
-import I18n from "../../i18n";
 
 describe("getExpireStatus", () => {
   it("should be VALID", () => {
