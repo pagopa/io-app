@@ -12,7 +12,7 @@ import {
   getZendeskConfig,
   zendeskRequestTicketNumber
 } from "../../store/actions";
-import ZendeskSupportComponent from "../ZendeskSupportComponent";
+import ZendeskSupportHelpCenter from "../../screens/ZendeskSupportHelpCenter";
 
 const mockZendeskConfig: Zendesk = {
   panicMode: false
@@ -22,6 +22,7 @@ const mockZendeskPanicModeConfig: Zendesk = {
 };
 
 const mockedNavigation = jest.fn();
+const mockedSetOptions = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
@@ -29,7 +30,8 @@ jest.mock("@react-navigation/native", () => {
     ...actualNav,
     useNavigation: () => ({
       navigate: mockedNavigation,
-      dispatch: jest.fn()
+      dispatch: jest.fn(),
+      setOptions: mockedSetOptions
     })
   };
 });
@@ -59,7 +61,11 @@ describe("the ZendeskSupportComponent", () => {
         fireEvent(zendeskButton, "onPress");
         expect(mockedNavigation).toHaveBeenCalledTimes(1);
         expect(mockedNavigation).toHaveBeenCalledWith("ZENDESK_MAIN", {
-          params: { assistanceForPayment: undefined },
+          params: {
+            assistanceForPayment: true,
+            assistanceForCard: undefined,
+            assistanceForFci: undefined
+          },
           screen: ZENDESK_ROUTES.ASK_PERMISSIONS
         });
       });
@@ -71,14 +77,22 @@ describe("the ZendeskSupportComponent", () => {
         fireEvent(zendeskButton, "onPress");
         expect(mockedNavigation).toHaveBeenCalledTimes(1);
         expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
-          params: { assistanceForPayment: undefined },
+          params: {
+            assistanceForPayment: false,
+            assistanceForCard: undefined,
+            assistanceForFci: undefined
+          },
           screen: ZENDESK_ROUTES.ASK_PERMISSIONS
         });
         store.dispatch(getZendeskConfig.request());
         fireEvent(zendeskButton, "onPress");
         expect(mockedNavigation).toHaveBeenCalledTimes(2);
         expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
-          params: { assistanceForPayment: undefined },
+          params: {
+            assistanceForPayment: false,
+            assistanceForCard: undefined,
+            assistanceForFci: undefined
+          },
           screen: ZENDESK_ROUTES.ASK_PERMISSIONS
         });
         store.dispatch(
@@ -87,7 +101,11 @@ describe("the ZendeskSupportComponent", () => {
         fireEvent(zendeskButton, "onPress");
         expect(mockedNavigation).toHaveBeenCalledTimes(3);
         expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
-          params: { assistanceForPayment: undefined },
+          params: {
+            assistanceForPayment: false,
+            assistanceForCard: undefined,
+            assistanceForFci: undefined
+          },
           screen: ZENDESK_ROUTES.ASK_PERMISSIONS
         });
       });
@@ -101,7 +119,11 @@ describe("the ZendeskSupportComponent", () => {
             fireEvent(zendeskButton, "onPress");
             expect(mockedNavigation).toHaveBeenCalledTimes(1);
             expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
-              params: { assistanceForPayment: undefined },
+              params: {
+                assistanceForPayment: false,
+                assistanceForCard: undefined,
+                assistanceForFci: undefined
+              },
               screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS
             });
           });
@@ -117,7 +139,11 @@ describe("the ZendeskSupportComponent", () => {
         fireEvent(zendeskButton, "onPress");
         expect(mockedNavigation).toHaveBeenCalledTimes(1);
         expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
-          params: { assistanceForPayment: undefined },
+          params: {
+            assistanceForPayment: false,
+            assistanceForCard: undefined,
+            assistanceForFci: undefined
+          },
           screen: ZENDESK_ROUTES.CHOOSE_CATEGORY
         });
       });
@@ -143,7 +169,7 @@ function renderComponent(
   assistanceForPayment: boolean
 ) {
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    ZendeskSupportComponent,
+    ZendeskSupportHelpCenter,
     ROUTES.MAIN,
     { assistanceForPayment },
     store

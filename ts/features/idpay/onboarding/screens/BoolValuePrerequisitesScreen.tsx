@@ -1,5 +1,4 @@
 import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
-import { useSelector } from "@xstate/react";
 import React from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -10,53 +9,43 @@ import { H1 } from "../../../../components/core/typography/H1";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
-import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { dpr28Dec2000Url } from "../../../../urls";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../../../utils/url";
-import { useOnboardingMachineService } from "../xstate/provider";
+import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   areAllSelfDeclarationsToggledSelector,
   boolRequiredCriteriaSelector,
-  isLoadingSelector,
   selectSelfDeclarationBoolAnswers
-} from "../xstate/selectors";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+} from "../machine/selectors";
+import { isLoadingSelector } from "../../common/machine/selectors";
 
 const InitiativeSelfDeclarationsScreen = () => {
-  const machine = useOnboardingMachineService();
+  const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
+  const machine = useActorRef();
 
-  const isLoading = useSelector(machine, isLoadingSelector);
+  const isLoading = useSelector(isLoadingSelector);
 
-  const selfCriteriaBool = useSelector(machine, boolRequiredCriteriaSelector);
-  const selfCriteriaBoolAnswers = useSelector(
-    machine,
-    selectSelfDeclarationBoolAnswers
-  );
+  const selfCriteriaBool = useSelector(boolRequiredCriteriaSelector);
+  const selfCriteriaBoolAnswers = useSelector(selectSelfDeclarationBoolAnswers);
   const areAllSelfCriteriaBoolAccepted = useSelector(
-    machine,
     areAllSelfDeclarationsToggledSelector
   );
 
-  const continueOnPress = () =>
-    machine.send({ type: "ACCEPT_REQUIRED_BOOL_CRITERIA" });
-
-  const goBackOnPress = () => machine.send({ type: "BACK" });
+  const continueOnPress = () => machine.send({ type: "next" });
+  const goBackOnPress = () => machine.send({ type: "back" });
 
   const toggleCriteria =
     (criteria: SelfDeclarationBoolDTO) => (value: boolean) =>
       machine.send({
-        type: "TOGGLE_BOOL_CRITERIA",
+        type: "toggle-bool-criteria",
         criteria: { ...criteria, value }
       });
 
   const getSelfCriteriaBoolAnswer = (criteria: SelfDeclarationBoolDTO) =>
     selfCriteriaBoolAnswers[criteria.code] ?? false;
-
-  useNavigationSwipeBackListener(() => {
-    machine.send({ type: "BACK", skipNavigation: true });
-  });
 
   useHeaderSecondLevel({
     title: I18n.t("idpay.onboarding.navigation.header"),
