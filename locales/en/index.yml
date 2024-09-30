@@ -720,6 +720,16 @@ authentication:
     generic:
       title: Sorry, access was not available.
       subtitle: A problem occurred while logging in. Please try again in a few minutes.
+  cie_id:
+    error_screen:
+      title: Can't log in with CieID?
+      cie_pin_supported:
+        description: "If you have your Electronic Identity Card handy, use it to access IO.\n\nInsert the CIE PIN and bring it close to the device to allow the data to be read."
+        primary_action_label: Login with CIE + PIN
+      cie_pin_not_supported:
+        description: If you have SPID, log in to IO by entering your credentials. You can also use your face or fingerprint or the code set for your SPID provider's app.
+        primary_action_label: Login with SPID
+      secondary_action_label: Close
   cie:
     genericTitle: Login with CIE
     cie: CIE
@@ -3307,6 +3317,10 @@ features:
         title: Non è possibile aggiungere il documento
         body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
         primaryAction: Ho capito
+      asyncCredentialError:
+        title: La tua richiesta è stata presa in carico
+        body: Riceverai un messaggio in app con l'esito della tua richiesta appena sarà disponibile.
+        primaryAction: Ho capito
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
@@ -3731,6 +3745,7 @@ idpay:
       INSTRUMENTS_LIST_LOAD_FAILURE: "Errore nel caricamento della lista strumenti"
       INSTRUMENT_ENROLL_FAILURE: "Errore durante l'aggiunta del metodo di pagamento"
       INSTRUMENT_DELETE_FAILURE: "Errore durante la rimozione del metodo di pagamento"
+      SESSION_EXPIRED: "C'è stato un problema, riprova"
     headerTitle: "Configure the initiative"
     intro:
       title: "We are almost there"

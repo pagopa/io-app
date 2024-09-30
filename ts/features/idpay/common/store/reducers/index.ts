@@ -13,6 +13,9 @@ import configurationReducer, {
   IdPayInitiativeConfigurationState
 } from "../../../configuration/store";
 import barcodeReducer, { IdPayBarcodeState } from "../../../barcode/store";
+import unsubscriptionReducer, {
+  IdPayUnsubscriptionState
+} from "../../../unsubscription/store/reducers";
 
 export type IDPayState = {
   wallet: IdPayWalletState;
@@ -21,6 +24,7 @@ export type IDPayState = {
   configuration: IdPayInitiativeConfigurationState;
   code: IdPayCodeState & PersistPartial;
   barcode: IdPayBarcodeState;
+  unsubscription: IdPayUnsubscriptionState;
 };
 
 const idPayReducer = combineReducers({
@@ -29,7 +33,8 @@ const idPayReducer = combineReducers({
   timeline: timelineReducer,
   code: codePersistor,
   configuration: configurationReducer,
-  barcode: barcodeReducer
+  barcode: barcodeReducer,
+  unsubscription: unsubscriptionReducer
 });
 
 export default idPayReducer;

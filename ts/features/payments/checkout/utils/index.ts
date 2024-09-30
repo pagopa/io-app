@@ -12,7 +12,7 @@ import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import {
   PaymentAnalyticsPhase,
   PaymentAnalyticsSelectedPspFlag
-} from "../types/PaymentAnalytics";
+} from "../../common/types/PaymentAnalytics";
 
 export const WALLET_PAYMENT_FEEDBACK_URL =
   "https://io.italia.it/diccilatua/ces-pagamento";
@@ -80,4 +80,11 @@ export const getPaymentPhaseFromStep = (
     default:
       return "pagamento";
   }
+};
+
+export const trimAndLimitValue = (value: string, maxLength: number): string => {
+  const trimmedValue = value.replace(/\s/g, "");
+  return trimmedValue.length > maxLength
+    ? trimmedValue.substring(0, maxLength)
+    : trimmedValue;
 };
