@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useCallback, useMemo, useState, useEffect, memo } from "react";
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import {
@@ -11,18 +11,26 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 
 import _isEqual from "lodash/isEqual";
+import { IdpData } from "../../../definitions/content/IdpData";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
+import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
+import { apiUrlPrefix } from "../../config";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
+import {
+  HeaderSecondLevelHookProps,
+  useHeaderSecondLevel
+} from "../../hooks/useHeaderSecondLevel";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
+import ROUTES from "../../navigation/routes";
 import {
   idpLoginUrlChanged,
   loginFailure,
   loginSuccess
 } from "../../store/actions/authentication";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
   loggedInAuthSelector,
   loggedOutWithIdpAuthSelector,
@@ -31,6 +39,8 @@ import {
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
 import { SessionToken } from "../../types/SessionToken";
+import { trackSpidLoginError } from "../../utils/analytics";
+import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import {
   getIdpLoginUri,
   getIntentFallbackUrl,
@@ -42,17 +52,6 @@ import {
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import { getUrlBasepath } from "../../utils/url";
-import { IdpData } from "../../../definitions/content/IdpData";
-import { trackSpidLoginError } from "../../utils/analytics";
-import { apiUrlPrefix } from "../../config";
-import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
-import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
-import ROUTES from "../../navigation/routes";
-import {
-  HeaderSecondLevelHookProps,
-  useHeaderSecondLevel
-} from "../../hooks/useHeaderSecondLevel";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 enum ErrorType {
@@ -278,11 +277,7 @@ const IdpLoginScreen = () => {
     if (O.isNone(selectedIdpTextData)) {
       return {
         title: I18n.t("authentication.idp_login.contextualHelpTitle"),
-        body: (
-          <LegacyMarkdown>
-            {I18n.t("authentication.idp_login.contextualHelpContent")}
-          </LegacyMarkdown>
-        )
+        body: I18n.t("authentication.idp_login.contextualHelpContent")
       };
     }
     return emptyContextualHelp;
@@ -290,7 +285,8 @@ const IdpLoginScreen = () => {
 
   const hasError = pot.isError(requestState);
 
-  // Wrapped with `useMemo` to prevent unnecessary executions of `useLayoutEffect` inside `useHeaderSecondLevel`, it seemed to cause bugs when opening certain Idps.
+  /* Wrapped with `useMemo` to prevent unnecessary executions of `useLayoutEffect`
+  inside`useHeaderSecondLevel`, it seemed to cause bugs when opening certain Idps. */
   const headerProps: HeaderSecondLevelHookProps = useMemo(
     () =>
       !loggedInAuth
