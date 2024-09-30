@@ -17,9 +17,9 @@ import NavigationService from "../../../../navigation/NavigationService";
 import { useIOSelector } from "../../../../store/hooks";
 import themeVariables from "../../../../theme/variables";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
-import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import { idpayInitiativeIdSelector } from "../../details/store";
 import { getRefundPeriodDateString } from "../utils/strings";
+import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 
 type Props = {
   refund: RefundDetailDTO;
