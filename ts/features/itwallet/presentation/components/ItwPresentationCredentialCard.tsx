@@ -5,13 +5,26 @@ import {
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import {
+  Directions,
+  Gesture,
+  GestureDetector
+} from "react-native-gesture-handler";
+import { runOnJS } from "react-native-reanimated";
 import I18n from "../../../../i18n";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
+import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
+
+/**
+ * Credentials that should display a skeumorphic card
+ */
+const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
+  CredentialType.DRIVING_LICENSE
+];
 
 type Props = {
   credential: StoredCredential;
@@ -23,21 +36,28 @@ type Props = {
  */
 const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const [isFlipped, setIsFlipped] = React.useState(false);
-  const themeColor = getThemeColorByCredentialType(
-    credential.credentialType as CredentialType
+
+  const { backgroundColor } = getThemeColorByCredentialType(
+    credential.credentialType
   );
-
-  const hasSkeumorphicCard =
-    credential.credentialType === CredentialType.DRIVING_LICENSE;
-
   const credentialStatus = getCredentialStatus(credential);
 
+  const hasSkeumorphicCard = credentialsWithSkeumorphicCard.includes(
+    credential.credentialType
+  );
+
   if (hasSkeumorphicCard) {
+    const flipGesture = Gesture.Fling()
+      .direction(Directions.LEFT + Directions.RIGHT)
+      .onEnd(() => runOnJS(setIsFlipped)(!isFlipped));
+
     return (
       <VStack space={8}>
-        <Wrapper backgroundColor={themeColor}>
-          <ItwSkeumorphicCard credential={credential} isFlipped={isFlipped} />
-        </Wrapper>
+        <GestureDetector gesture={flipGesture}>
+          <CardContainer backgroundColor={backgroundColor}>
+            <ItwSkeumorphicCard credential={credential} isFlipped={isFlipped} />
+          </CardContainer>
+        </GestureDetector>
         <View style={styles.flipButton}>
           <ButtonLink
             label={I18n.t(
@@ -53,21 +73,23 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   }
 
   return (
-    <Wrapper backgroundColor={themeColor}>
+    <CardContainer backgroundColor={backgroundColor}>
       <ItwCredentialCard
         credentialType={credential.credentialType}
         status={credentialStatus}
       />
-    </Wrapper>
+    </CardContainer>
   );
 };
 
-type WrapperProps = {
-  children: React.ReactNode;
+type CardContainerProps = {
   backgroundColor: string;
 };
 
-const Wrapper = ({ children, backgroundColor }: WrapperProps) => (
+const CardContainer = ({
+  children,
+  backgroundColor
+}: React.PropsWithChildren<CardContainerProps>) => (
   <View style={styles.cardContainer}>
     {children}
     <View style={[styles.cardBackdrop, { backgroundColor }]} />

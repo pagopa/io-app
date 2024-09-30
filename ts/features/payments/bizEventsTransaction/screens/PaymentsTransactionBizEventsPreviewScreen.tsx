@@ -17,6 +17,7 @@ import {
   FooterActions,
   FooterActionsMeasurements
 } from "../../../../components/ui/FooterActions";
+import * as analytics from "../analytics";
 
 export type PaymentsTransactionBizEventsPreviewScreenProps = RouteProp<
   PaymentsTransactionBizEventsParamsList,
@@ -44,6 +45,7 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
     if (!transactionReceiptFileInfo) {
       return;
     }
+    analytics.trackPaymentsSaveAndShareReceipt();
     // The file name is normalized to remove the .pdf extension on Android devices since it's added by default to the Share module
     const normalizedFilename =
       Platform.OS === "ios"

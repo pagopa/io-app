@@ -21,12 +21,15 @@ import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../../components/ui/IOScrollView";
+import * as analytics from "../analytics";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
   const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const isLoadingFirstTime = useIOSelector(
     isPaymentsSectionLoadingFirstTimeSelector
   );
@@ -37,6 +40,11 @@ const PaymentsHomeScreen = () => {
   const [isRefreshing, setIsRefreshing] = React.useState(false);
 
   const handleOnPayNoticedPress = () => {
+    analytics.trackPaymentStartDataEntry({
+      payments_home_status: paymentAnalyticsData?.paymentsHomeStatus,
+      saved_payment_method:
+        paymentAnalyticsData?.savedPaymentMethods?.length ?? 0
+    });
     navigation.navigate(PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR, {
       screen: PaymentsBarcodeRoutes.PAYMENT_BARCODE_SCAN
     });
@@ -45,8 +53,13 @@ const PaymentsHomeScreen = () => {
   React.useEffect(() => {
     if (!isLoading) {
       setIsRefreshing(false);
+      analytics.trackPaymentsHome({
+        saved_payment_method:
+          paymentAnalyticsData?.savedPaymentMethods?.length ?? 0,
+        payments_home_status: paymentAnalyticsData?.paymentsHomeStatus
+      });
     }
-  }, [isLoading]);
+  }, [isLoading, paymentAnalyticsData]);
 
   const handleRefreshPaymentsHome = () => {
     setIsRefreshing(true);

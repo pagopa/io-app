@@ -7,7 +7,8 @@ import {
 import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
+import React, { useMemo } from "react";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { FooterActions } from "../../../../components/ui/FooterActions";
@@ -17,7 +18,6 @@ import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
@@ -30,6 +30,13 @@ import {
   selectIsIssuing
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import {
+  CREDENTIALS_MAP,
+  trackCredentialPreview,
+  trackItwExit,
+  trackSaveCredentialToWallet
+} from "../../analytics";
+import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
@@ -76,13 +83,24 @@ type ContentViewProps = {
  */
 const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
-
-  const dispatch = useIODispatch();
-  const dismissDialog = useItwDismissalDialog(() =>
-    machineRef.send({ type: "close" })
+  const route = useRoute();
+  const mixPanelCredential = useMemo(
+    () => CREDENTIALS_MAP[credentialType],
+    [credentialType]
   );
 
+  useFocusEffect(() => {
+    trackCredentialPreview(mixPanelCredential);
+  });
+
+  const dispatch = useIODispatch();
+  const dismissDialog = useItwDismissalDialog(() => {
+    machineRef.send({ type: "close" });
+    trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+  });
+
   const handleSaveToWallet = () => {
+    trackSaveCredentialToWallet(credential.credentialType);
     dispatch(
       identificationRequest(
         false,
@@ -119,7 +137,7 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
           })}
         </H2>
         <VSpacer size={24} />
-        <ItwCredentialClaimsList data={credential} isPreview={true} />
+        <ItwCredentialPreviewClaimsList data={credential} />
       </View>
       <FooterActions
         fixed={false}
