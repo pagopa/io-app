@@ -1,39 +1,47 @@
-import { fromPromise } from "xstate";
+import { CryptoContext } from "@pagopa/io-react-native-jwt";
+import { createCryptoContextFor } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
-import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { fromPromise } from "xstate";
+import { useIOStore } from "../../../../store/hooks";
+import { sessionTokenSelector } from "../../../../store/reducers/authentication";
 import { assert } from "../../../../utils/assert";
-import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUtils";
+import { trackItwRequest } from "../../analytics";
 import {
   getAttestation,
   getIntegrityHardwareKeyTag,
   registerWalletInstance,
   WalletAttestationResult
 } from "../../common/utils/itwAttestationUtils";
-import { useIOStore } from "../../../../store/hooks";
+import { WIA_KEYTAG } from "../../common/utils/itwCryptoContextUtils";
+import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUtils";
+import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { sessionTokenSelector } from "../../../../store/reducers/authentication";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { trackItwRequest } from "../../analytics";
-import type {
-  WalletAttestationContext,
-  IdentificationContext,
-  CieAuthContext
-} from "./context";
+import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
+import type { CieAuthContext, IdentificationContext } from "./context";
+
+export type InitializeWalletActorOutput = {
+  wiaCryptoContext: CryptoContext;
+  walletInstanceAttestation: string | undefined;
+};
 
 export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
-  walletAttestationContext: WalletAttestationContext | undefined;
+  wiaCryptoContext: CryptoContext | undefined;
+  walletInstanceAttestation: string | undefined;
   cieAuthContext: CieAuthContext | undefined;
 };
 
 export type StartCieAuthFlowActorParams = {
-  walletAttestationContext: WalletAttestationContext | undefined;
+  wiaCryptoContext: CryptoContext | undefined;
+  walletInstanceAttestation: string | undefined;
 };
 
 export type CompleteCieAuthFlowActorParams = {
   cieAuthContext: CieAuthContext | undefined;
-  walletAttestationContext: WalletAttestationContext | undefined;
+  wiaCryptoContext: CryptoContext | undefined;
+  walletInstanceAttestation: string | undefined;
 };
 
 export type GetWalletAttestationActorParams = {
@@ -43,6 +51,17 @@ export type GetWalletAttestationActorParams = {
 export const createEidIssuanceActorsImplementation = (
   store: ReturnType<typeof useIOStore>
 ) => ({
+  initializeWallet: fromPromise<InitializeWalletActorOutput>(async () => {
+    const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
+    const walletInstanceAttestation = itwWalletInstanceAttestationSelector(
+      store.getState()
+    );
+
+    return {
+      wiaCryptoContext,
+      walletInstanceAttestation
+    };
+  }),
   createWalletInstance: fromPromise<string>(async () => {
     const sessionToken = sessionTokenSelector(store.getState());
     assert(sessionToken, "sessionToken is undefined");
@@ -77,9 +96,10 @@ export const createEidIssuanceActorsImplementation = (
   requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
     async ({ input }) => {
       assert(input.identification, "identification is undefined");
+      assert(input.wiaCryptoContext, "wiaCryptoContext is undefined");
       assert(
-        input.walletAttestationContext,
-        "walletAttestationContext is undefined"
+        input.walletInstanceAttestation,
+        "walletInstanceAttestation is undefined"
       );
 
       // When using CIE + PIN the authorization flow was already started, we just need to complete it
@@ -91,7 +111,8 @@ export const createEidIssuanceActorsImplementation = (
 
         const authParams = await issuanceUtils.completeCieAuthFlow({
           ...input.cieAuthContext,
-          ...input.walletAttestationContext
+          walletAttestation: input.walletInstanceAttestation,
+          wiaCryptoContext: input.wiaCryptoContext
         });
         trackItwRequest("ciePin");
         return issuanceUtils.getPid({
@@ -103,7 +124,8 @@ export const createEidIssuanceActorsImplementation = (
       // SPID & CieID flow
       const authParams = await issuanceUtils.startAndCompleteFullAuthFlow({
         identification: input.identification,
-        ...input.walletAttestationContext
+        walletAttestation: input.walletInstanceAttestation,
+        wiaCryptoContext: input.wiaCryptoContext
       });
 
       trackItwRequest(input.identification.mode);
@@ -114,14 +136,16 @@ export const createEidIssuanceActorsImplementation = (
 
   startCieAuthFlow: fromPromise<CieAuthContext, StartCieAuthFlowActorParams>(
     async ({ input }) => {
+      assert(input.wiaCryptoContext, "wiaCryptoContext is undefined");
       assert(
-        input.walletAttestationContext,
-        "walletAttestationContext is undefined"
+        input.walletInstanceAttestation,
+        "walletInstanceAttestation is undefined"
       );
 
-      const cieAuthContext = await issuanceUtils.startCieAuthFlow(
-        input.walletAttestationContext
-      );
+      const cieAuthContext = await issuanceUtils.startCieAuthFlow({
+        walletAttestation: input.walletInstanceAttestation,
+        wiaCryptoContext: input.wiaCryptoContext
+      });
 
       return {
         ...cieAuthContext,

@@ -1,4 +1,5 @@
 /* eslint-disable sonarjs/no-identical-functions */
+import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import { AuthorizationDetail } from "@pagopa/io-react-native-wallet";
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
@@ -8,7 +9,6 @@ import {
   StateFrom,
   waitFor as waitForActor
 } from "xstate";
-import { WalletAttestationResult } from "../../../common/utils/itwAttestationUtils";
 import {
   ItwStatusAttestationMocks,
   ItwStoredCredentialsMocks
@@ -28,20 +28,18 @@ import {
   RequestCredentialActorOutput
 } from "../actors";
 import { Context, InitialContext } from "../context";
+import { CredentialIssuanceFailureTypeEnum } from "../failure";
 import {
   ItwCredentialIssuanceMachine,
   itwCredentialIssuanceMachine
 } from "../machine";
-import { CredentialIssuanceFailureTypeEnum } from "../failure";
 
 type MachineSnapshot = StateFrom<ItwCredentialIssuanceMachine>;
 
-const T_WIA_CONTEXT: WalletAttestationResult = {
-  walletAttestation: "abcdefg",
-  wiaCryptoContext: {
-    getPublicKey: async () => null,
-    getSignature: async () => ""
-  }
+const T_WIA: string = "abcdefg";
+const T_WIA_CRYPTO_CONTEXT: CryptoContext = {
+  getPublicKey: async () => null,
+  getSignature: async () => ""
 };
 
 const T_CLIENT_ID = "clientId";
@@ -173,8 +171,8 @@ describe("itwCredentialIssuanceMachine", () => {
 
     initializeWallet.mockImplementation(() =>
       Promise.resolve({
-        walletInstanceAttestation: T_WIA_CONTEXT.walletAttestation,
-        wiaCryptoContext: T_WIA_CONTEXT.wiaCryptoContext
+        walletInstanceAttestation: T_WIA,
+        wiaCryptoContext: T_WIA_CRYPTO_CONTEXT
       })
     );
 
@@ -205,8 +203,7 @@ describe("itwCredentialIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual("DisplayingTrustIssuer");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      walletInstanceAttestation: T_WIA_CONTEXT.walletAttestation,
-      wiaCryptoContext: T_WIA_CONTEXT.wiaCryptoContext,
+      walletInstanceAttestation: T_WIA,
       clientId: T_CLIENT_ID,
       codeVerifier: T_CODE_VERIFIER,
       credentialDefinition: T_CREDENTIAL_DEFINITION,
@@ -384,8 +381,8 @@ describe("itwCredentialIssuanceMachine", () => {
 
     initializeWallet.mockImplementation(() =>
       Promise.resolve({
-        walletInstanceAttestation: T_WIA_CONTEXT.walletAttestation,
-        wiaCryptoContext: T_WIA_CONTEXT.wiaCryptoContext
+        walletInstanceAttestation: T_WIA,
+        wiaCryptoContext: T_WIA_CRYPTO_CONTEXT
       })
     );
 
@@ -503,8 +500,8 @@ describe("itwCredentialIssuanceMachine", () => {
 
     initializeWallet.mockImplementation(() =>
       Promise.resolve({
-        walletInstanceAttestation: T_WIA_CONTEXT.walletAttestation,
-        wiaCryptoContext: T_WIA_CONTEXT.wiaCryptoContext
+        walletInstanceAttestation: T_WIA,
+        wiaCryptoContext: T_WIA_CRYPTO_CONTEXT
       })
     );
 

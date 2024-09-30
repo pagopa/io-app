@@ -12,6 +12,7 @@ import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwLifecycleStateUpdated } from "../../lifecycle/store/actions";
 import { ItwLifecycleState } from "../../lifecycle/store/reducers";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -125,6 +126,18 @@ export const createEidIssuanceActionsImplementation = (
 
   storeIntegrityKeyTag: (_: unknown, params: { keyTag: string }) => {
     dispatch(itwStoreIntegrityKeyTag(params.keyTag));
+  },
+
+  storeWalletInstanceAttestation: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(
+      context.walletInstanceAttestation,
+      "walletInstanceAttestation is undefined"
+    );
+    dispatch(
+      itwWalletInstanceAttestationStore(context.walletInstanceAttestation)
+    );
   },
 
   storeEidCredential: ({

@@ -5,13 +5,14 @@ import { ActionArgs, assertEvent } from "xstate";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
+import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { useIODispatch } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
+import { CREDENTIALS_MAP, trackSaveCredentialSuccess } from "../../analytics";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { checkCurrentSession } from "../../../../store/actions/authentication";
-import { CREDENTIALS_MAP, trackSaveCredentialSuccess } from "../../analytics";
+import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -70,6 +71,22 @@ export default (
         }
       ]
     });
+  },
+
+  storeWalletInstanceAttestation: ({
+    context
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
+    assert(
+      context.walletInstanceAttestation,
+      "walletInstanceAttestation is undefined"
+    );
+    dispatch(
+      itwWalletInstanceAttestationStore(context.walletInstanceAttestation)
+    );
   },
 
   storeCredential: ({

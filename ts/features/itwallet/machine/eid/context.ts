@@ -1,7 +1,7 @@
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
-  type Credential,
-  type AuthorizationDetail
+  type AuthorizationDetail,
+  type Credential
 } from "@pagopa/io-react-native-wallet";
 import { type StoredCredential } from "../../common/utils/itwTypesUtils";
 import { IssuanceFailure } from "./failure";
@@ -28,14 +28,10 @@ export type CieAuthContext = {
   callbackUrl: string;
 };
 
-export type WalletAttestationContext = {
-  walletAttestation: string;
-  wiaCryptoContext: CryptoContext;
-};
-
 export type Context = {
+  wiaCryptoContext: CryptoContext | undefined;
+  walletInstanceAttestation: string | undefined;
   integrityKeyTag: string | undefined;
-  walletAttestationContext: WalletAttestationContext | undefined;
   identification: IdentificationContext | undefined;
   cieAuthContext: CieAuthContext | undefined;
   eid: StoredCredential | undefined;
@@ -43,8 +39,9 @@ export type Context = {
 };
 
 export const InitialContext: Context = {
+  wiaCryptoContext: undefined,
+  walletInstanceAttestation: undefined,
   integrityKeyTag: undefined,
-  walletAttestationContext: undefined,
   identification: undefined,
   cieAuthContext: undefined,
   eid: undefined,

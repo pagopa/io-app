@@ -17,7 +17,7 @@ import {
 } from "../../../../config";
 import { type IdentificationContext } from "../../machine/eid/context";
 import { StoredCredential } from "./itwTypesUtils";
-import { DPOP_EID_KEYTAG, regenerateCryptoKey } from "./itwCryptoContextUtils";
+import { DPOP_KEYTAG, regenerateCryptoKey } from "./itwCryptoContextUtils";
 
 type AccessToken = Awaited<
   ReturnType<typeof Credential.Issuance.authorizeAccess>
@@ -125,8 +125,8 @@ const completeCieAuthFlow = async ({
   const query = Object.fromEntries(new URL(callbackUrl).searchParams);
   const { code } = Credential.Issuance.parseAuthroizationResponse(query);
 
-  await regenerateCryptoKey(DPOP_EID_KEYTAG);
-  const dPopCryptoContext = createCryptoContextFor(DPOP_EID_KEYTAG);
+  await regenerateCryptoKey(DPOP_KEYTAG);
+  const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
 
   const { accessToken } = await Credential.Issuance.authorizeAccess(
     issuerConf,
@@ -205,8 +205,8 @@ const startAndCompleteFullAuthFlow = async ({
       identification.abortController?.signal
     );
 
-  await regenerateCryptoKey(DPOP_EID_KEYTAG);
-  const dPopCryptoContext = createCryptoContextFor(DPOP_EID_KEYTAG);
+  await regenerateCryptoKey(DPOP_KEYTAG);
+  const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
 
   const { accessToken } = await Credential.Issuance.authorizeAccess(
     issuerConf,

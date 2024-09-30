@@ -1,15 +1,21 @@
-import { assign, fromPromise, setup, or } from "xstate";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { WalletAttestationResult } from "../../common/utils/itwAttestationUtils";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { assign, fromPromise, not, or, setup } from "xstate";
 import { assert } from "../../../../utils/assert";
+import {
+  isWalletInstanceAttestationValid,
+  WalletAttestationResult
+} from "../../common/utils/itwAttestationUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
-import { CieAuthContext, Context, InitialContext } from "./context";
-import { EidIssuanceEvents } from "./events";
 import {
   GetWalletAttestationActorParams,
+  InitializeWalletActorOutput,
   StartCieAuthFlowActorParams,
   type RequestEidActorParams
 } from "./actors";
+import { CieAuthContext, Context, InitialContext } from "./context";
+import { EidIssuanceEvents } from "./events";
 import { IssuanceFailureType } from "./failure";
 
 const notImplemented = () => {
@@ -41,6 +47,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToNfcInstructionsScreen: notImplemented,
     storeIntegrityKeyTag: (_ctx, _params: { keyTag: string }) =>
       notImplemented(),
+    storeWalletInstanceAttestation: notImplemented,
     storeEidCredential: notImplemented,
     closeIssuance: notImplemented,
     setWalletInstanceToOperational: notImplemented,
@@ -49,6 +56,7 @@ export const itwEidIssuanceMachine = setup({
     abortIdentification: notImplemented
   },
   actors: {
+    initializeWallet: fromPromise<InitializeWalletActorOutput>(notImplemented),
     createWalletInstance: fromPromise<string>(notImplemented),
     getWalletAttestation: fromPromise<
       WalletAttestationResult,
@@ -65,15 +73,34 @@ export const itwEidIssuanceMachine = setup({
     isNativeAuthSessionClosed: notImplemented,
     issuedEidMatchesAuthenticatedUser: notImplemented,
     isSessionExpired: notImplemented,
-    isOperationAborted: notImplemented
+    isOperationAborted: notImplemented,
+    hasValidWalletInstanceAttestation: ({ context }) =>
+      pipe(
+        O.fromNullable(context.walletInstanceAttestation),
+        O.map(isWalletInstanceAttestationValid),
+        O.getOrElse(() => false)
+      )
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
   context: InitialContext,
-  initial: "Idle",
+  initial: "Init",
   states: {
-    Idle: {
+    Init: {
+      description: "Initializes and prepares the machine context",
       entry: assign(() => InitialContext),
+      invoke: {
+        src: "initializeWallet",
+        onDone: {
+          actions: assign(({ event }) => ({
+            wiaCryptoContext: event.output.wiaCryptoContext,
+            walletInstanceAttestation: event.output.walletInstanceAttestation
+          })),
+          target: "Idle"
+        }
+      }
+    },
+    Idle: {
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
@@ -92,7 +119,7 @@ export const itwEidIssuanceMachine = setup({
             target: "WalletInstanceCreation"
           },
           {
-            guard: ({ context }) => !context.walletAttestationContext,
+            guard: not("hasValidWalletInstanceAttestation"),
             target: "WalletInstanceAttestationObtainment"
           },
           {
@@ -140,9 +167,12 @@ export const itwEidIssuanceMachine = setup({
         src: "getWalletAttestation",
         input: ({ context }) => ({ integrityKeyTag: context.integrityKeyTag }),
         onDone: {
-          actions: assign(({ event }) => ({
-            walletAttestationContext: event.output
-          })),
+          actions: [
+            assign(({ event }) => ({
+              walletInstanceAttestation: event.output.walletAttestation
+            })),
+            "storeWalletInstanceAttestation"
+          ],
           target: "UserIdentification"
         },
         onError: [
@@ -253,7 +283,8 @@ export const itwEidIssuanceMachine = setup({
               invoke: {
                 src: "startCieAuthFlow",
                 input: ({ context }) => ({
-                  walletAttestationContext: context.walletAttestationContext
+                  walletInstanceAttestation: context.walletInstanceAttestation,
+                  wiaCryptoContext: context.wiaCryptoContext
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
@@ -329,7 +360,8 @@ export const itwEidIssuanceMachine = setup({
             input: ({ context }) => ({
               identification: context.identification,
               cieAuthContext: context.cieAuthContext,
-              walletAttestationContext: context.walletAttestationContext
+              walletInstanceAttestation: context.walletInstanceAttestation,
+              wiaCryptoContext: context.wiaCryptoContext
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),
@@ -387,7 +419,7 @@ export const itwEidIssuanceMachine = setup({
           actions: "navigateToWallet"
         },
         reset: {
-          target: "Idle"
+          target: "Init"
         }
       }
     },
@@ -398,7 +430,7 @@ export const itwEidIssuanceMachine = setup({
           actions: ["closeIssuance"]
         },
         reset: {
-          target: "Idle"
+          target: "Init"
         }
       }
     },

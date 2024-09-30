@@ -1,8 +1,12 @@
-import { assign, fromPromise, setup } from "xstate";
-import { ItwTags } from "../tags";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { assign, fromPromise, not, setup } from "xstate";
 import { ItwSessionExpiredError } from "../../api/client";
+import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { ItwTags } from "../tags";
 import {
+  GetWalletAttestationActorOutput,
   InitializeWalletActorOutput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
@@ -28,6 +32,7 @@ export const itwCredentialIssuanceMachine = setup({
     navigateToCredentialPreviewScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
+    storeWalletInstanceAttestation: notImplemented,
     storeCredential: notImplemented,
     closeIssuance: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
@@ -35,6 +40,8 @@ export const itwCredentialIssuanceMachine = setup({
   },
   actors: {
     initializeWallet: fromPromise<InitializeWalletActorOutput>(notImplemented),
+    getWalletAttestation:
+      fromPromise<GetWalletAttestationActorOutput>(notImplemented),
     requestCredential: fromPromise<
       RequestCredentialActorOutput,
       RequestCredentialActorInput
@@ -50,20 +57,41 @@ export const itwCredentialIssuanceMachine = setup({
   },
   guards: {
     isSessionExpired: ({ event }: { event: CredentialIssuanceEvents }) =>
-      "error" in event && event.error instanceof ItwSessionExpiredError
+      "error" in event && event.error instanceof ItwSessionExpiredError,
+    hasValidWalletInstanceAttestation: ({ context }) =>
+      pipe(
+        O.fromNullable(context.walletInstanceAttestation),
+        O.map(isWalletInstanceAttestationValid),
+        O.getOrElse(() => false)
+      )
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
   context: InitialContext,
-  initial: "Idle",
+  initial: "Init",
   states: {
-    Idle: {
+    Init: {
+      description: "Initializes and prepares the machine context",
       entry: assign(() => InitialContext),
+      invoke: {
+        src: "initializeWallet",
+        onDone: {
+          actions: assign(({ event }) => ({
+            wiaCryptoContext: event.output.wiaCryptoContext,
+            walletInstanceAttestation: event.output.walletInstanceAttestation
+          })),
+          target: "Idle"
+        }
+      }
+    },
+    Idle: {
+      description:
+        "Waits for a credential selection in order to proceed with the issuance",
       on: {
         "select-credential": [
           {
             guard: ({ event }) => !event.skipNavigation,
-            target: "WalletInitialization",
+            target: "CheckingWalletInstanceAttestation",
             actions: [
               assign(({ event }) => ({
                 credentialType: event.credentialType
@@ -72,7 +100,7 @@ export const itwCredentialIssuanceMachine = setup({
             ]
           },
           {
-            target: "WalletInitialization",
+            target: "CheckingWalletInstanceAttestation",
             actions: assign(({ event }) => ({
               credentialType: event.credentialType
             }))
@@ -80,16 +108,33 @@ export const itwCredentialIssuanceMachine = setup({
         ]
       }
     },
-    WalletInitialization: {
+    CheckingWalletInstanceAttestation: {
+      description:
+        "This is a state with the only purpose of checking the WIA and decide weather to get a new one or not",
+      always: [
+        {
+          guard: not("hasValidWalletInstanceAttestation"),
+          target: "ObtainingWalletInstanceAttestation"
+        },
+        {
+          target: "RequestingCredential"
+        }
+      ]
+    },
+    ObtainingWalletInstanceAttestation: {
+      description:
+        "This state obtains the wallet instance attestation and stores it in the context for later use in the issuance flow.",
       tags: [ItwTags.Loading],
       invoke: {
-        src: "initializeWallet",
+        src: "getWalletAttestation",
         onDone: {
           target: "RequestingCredential",
-          actions: assign(({ event }) => ({
-            walletInstanceAttestation: event.output.walletInstanceAttestation,
-            wiaCryptoContext: event.output.wiaCryptoContext
-          }))
+          actions: [
+            assign(({ event }) => ({
+              walletInstanceAttestation: event.output.walletAttestation
+            })),
+            "storeWalletInstanceAttestation"
+          ]
         },
         onError: [
           {
@@ -109,8 +154,7 @@ export const itwCredentialIssuanceMachine = setup({
         src: "requestCredential",
         input: ({ context }) => ({
           credentialType: context.credentialType,
-          walletInstanceAttestation: context.walletInstanceAttestation,
-          wiaCryptoContext: context.wiaCryptoContext
+          walletInstanceAttestation: context.walletInstanceAttestation
         }),
         onDone: {
           target: "DisplayingTrustIssuer",
@@ -149,7 +193,6 @@ export const itwCredentialIssuanceMachine = setup({
             input: ({ context }) => ({
               credentialType: context.credentialType,
               walletInstanceAttestation: context.walletInstanceAttestation,
-              wiaCryptoContext: context.wiaCryptoContext,
               clientId: context.clientId,
               codeVerifier: context.codeVerifier,
               credentialDefinition: context.credentialDefinition,
@@ -216,7 +259,7 @@ export const itwCredentialIssuanceMachine = setup({
           actions: ["closeIssuance"]
         },
         reset: {
-          target: "Idle"
+          target: "Init"
         },
         retry: {
           target: "#itwCredentialIssuanceMachine.RequestingCredential"
@@ -226,7 +269,7 @@ export const itwCredentialIssuanceMachine = setup({
     SessionExpired: {
       entry: ["handleSessionExpired"],
       // Since the refresh token request does not change the current screen, restart the machine
-      always: { target: "Idle" }
+      always: { target: "Init" }
     }
   }
 });
