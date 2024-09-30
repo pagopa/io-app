@@ -7,7 +7,7 @@ import {
   fromPromise,
   StateFrom,
   waitFor as waitForActor
-} from "xstate5";
+} from "xstate";
 import { WalletAttestationResult } from "../../../common/utils/itwAttestationUtils";
 import {
   ItwStatusAttestationMocks,

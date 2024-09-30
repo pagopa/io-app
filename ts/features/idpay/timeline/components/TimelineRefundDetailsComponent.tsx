@@ -39,9 +39,9 @@ const TimelineRefundDetailsComponent = (props: Props) => {
     // would result in an error.
     NavigationService.dispatchNavigationAction(
       CommonActions.navigate(
-        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN,
+        IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
         {
-          screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
+          screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
           params: {
             initiativeId
           }
