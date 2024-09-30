@@ -13,6 +13,7 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { PaymentsBarcodeRoutes } from "../../barcode/navigation/routes";
 import { PaymentsTransactionRoutes } from "../../transaction/navigation/routes";
+import * as analytics from "../analytics";
 
 type Props = {
   withPictogram?: boolean;
@@ -28,6 +29,7 @@ const PaymentsHomeEmptyScreenContent = ({ withPictogram = false }: Props) => {
   };
 
   const handleOnFindLegacyTransactionsPress = () => {
+    analytics.trackPaymentsOpenOldReceiptListing("payments_home");
     navigation.navigate(
       PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR,
       {

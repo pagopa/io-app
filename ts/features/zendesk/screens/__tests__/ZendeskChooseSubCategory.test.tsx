@@ -14,6 +14,7 @@ import ZendeskChooseSubCategory from "../ZendeskChooseSubCategory";
 jest.useFakeTimers();
 
 const mockedNavigation = jest.fn();
+const mockedSetOptions = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
@@ -22,6 +23,7 @@ jest.mock("@react-navigation/native", () => {
     useNavigation: () => ({
       navigate: mockedNavigation,
       dispatch: jest.fn(),
+      setOptions: mockedSetOptions,
       addListener: () => jest.fn()
     })
   };
