@@ -1,4 +1,4 @@
-import { ErrorActorEvent } from "xstate5";
+import { ErrorActorEvent } from "xstate";
 import { type useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 export type Reset = {

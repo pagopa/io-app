@@ -1,4 +1,4 @@
-import { StateFrom } from "xstate5";
+import { StateFrom } from "xstate";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ItwTags } from "../tags";
