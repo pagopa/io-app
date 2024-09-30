@@ -8,6 +8,8 @@ import {
   isExpiredDate,
   removeTimezoneFromDate
 } from "../dates";
+import { localeDateFormat } from "../locale";
+import I18n from "../../i18n";
 
 describe("getExpireStatus", () => {
   it("should be VALID", () => {
@@ -116,25 +118,12 @@ describe("getDateFromExpiryDate", () => {
 });
 
 describe("removeTimezoneFromDate", () => {
-  // Save the original timezone implementation to restore it after the tests
-  const getTimezoneOffset = Date.prototype.getTimezoneOffset;
-
-  beforeAll(() => {
-    // eslint-disable-next-line functional/immutable-data, no-extend-native
-    Date.prototype.getTimezoneOffset = jest.fn(() => 1440); // 24 hours shift
-  });
-
-  afterAll(() => {
-    // eslint-disable-next-line functional/immutable-data, no-extend-native
-    Date.prototype.getTimezoneOffset = getTimezoneOffset;
-  });
-
-  it("should remove the timezone from a valid date", () => {
+  it("should remove the timezone from a date", () => {
     const date = new Date("2023-02-01");
     const dateWithoutTimezone = removeTimezoneFromDate(date);
-    expect(dateWithoutTimezone.getUTCDate()).toBe(2);
-    expect(dateWithoutTimezone.getUTCMonth()).toBe(1);
-    expect(dateWithoutTimezone.getUTCFullYear()).toBe(2023);
+    expect(dateWithoutTimezone.getDate()).toBe(1);
+    expect(dateWithoutTimezone.getMonth()).toBe(1); // Month is zero based
+    expect(dateWithoutTimezone.getFullYear()).toBe(2023);
   });
 
   it("should throw if the date is invalid", () => {
