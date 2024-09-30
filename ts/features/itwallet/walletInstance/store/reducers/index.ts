@@ -10,20 +10,20 @@ import itwCreateSecureStorage from "../../../common/store/storages/itwSecureStor
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { itwWalletInstanceAttestationStore } from "../actions";
 
-export type ItwWiaState = {
+export type ItwWalletInstanceState = {
   attestation: O.Option<string>;
 };
 
-export const itwWiaInitialState: ItwWiaState = {
+export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   attestation: O.none
 };
 
-const CURRENT_REDUX_ITW_WIA_STORE_VERSION = -1;
+const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = -1;
 
 const reducer = (
-  state: ItwWiaState = itwWiaInitialState,
+  state: ItwWalletInstanceState = itwWalletInstanceInitialState,
   action: Action
-): ItwWiaState => {
+): ItwWalletInstanceState => {
   switch (action.type) {
     case getType(itwWalletInstanceAttestationStore): {
       return {
@@ -32,26 +32,26 @@ const reducer = (
     }
 
     case getType(itwLifecycleStoresReset):
-      return { ...itwWiaInitialState };
+      return { ...itwWalletInstanceInitialState };
 
     default:
       return state;
   }
 };
 
-const itwWalletInstanceAttestationPersistConfig: PersistConfig = {
-  key: "itwWalletInstanceAttestation",
+const itwWalletInstancePersistConfig: PersistConfig = {
+  key: "itwWalletInstance",
   storage: itwCreateSecureStorage(),
-  version: CURRENT_REDUX_ITW_WIA_STORE_VERSION
+  version: CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION
 };
 
 const persistedReducer = persistReducer(
-  itwWalletInstanceAttestationPersistConfig,
+  itwWalletInstancePersistConfig,
   reducer
 );
 
-export const itwSelectWalletInstanceAttestation = (state: GlobalState) =>
-  state.features.itWallet.wia.attestation;
+export const itwWalletInstanceAttestationSelector = (state: GlobalState) =>
+  state.features.itWallet.walletInstance.attestation;
 
 /**
  * Checks if the Wallet Instance Attestation needs to be requested by
@@ -60,7 +60,7 @@ export const itwSelectWalletInstanceAttestation = (state: GlobalState) =>
  * @returns true if the Wallet Instance Attestation is expired or not present
  */
 export const itwShouldRequestAttestationSelector = createSelector(
-  itwSelectWalletInstanceAttestation,
+  itwWalletInstanceAttestationSelector,
   flow(
     O.map(attestation => {
       const { payload } = WalletInstanceAttestation.decode(attestation);
@@ -68,7 +68,7 @@ export const itwShouldRequestAttestationSelector = createSelector(
       const now = new Date();
       return now > expiryDate;
     }),
-    O.getOrElse(() => false)
+    O.getOrElse(() => true)
   )
 );
 

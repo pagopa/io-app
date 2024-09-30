@@ -14,14 +14,16 @@ import issuanceReducer, {
 import lifecycleReducer, {
   ItwLifecycleState
 } from "../../../lifecycle/store/reducers";
-import wiaReducer, { ItwWiaState } from "../../../wia/store/reducers";
+import wiaReducer, {
+  ItwWalletInstanceState
+} from "../../../walletInstance/store/reducers";
 
 export type ItWalletState = {
   identification: ItwIdentificationState;
   issuance: ItwIssuanceState;
   lifecycle: ItwLifecycleState;
   credentials: ItwCredentialsState & PersistPartial;
-  wia: ItwWiaState & PersistPartial;
+  walletInstance: ItwWalletInstanceState & PersistPartial;
 };
 
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
@@ -33,7 +35,7 @@ const itwReducer = combineReducers({
   issuance: issuanceReducer,
   lifecycle: lifecycleReducer,
   credentials: itwCredentialsReducer,
-  wia: wiaReducer
+  walletInstance: wiaReducer
 });
 
 const itwPersistConfig: PersistConfig = {
