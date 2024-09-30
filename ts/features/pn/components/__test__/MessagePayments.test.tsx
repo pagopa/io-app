@@ -12,6 +12,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 const globalMessageId = "01HTFFDYS8VQ779EA4M5WB9YWA" as UIMessageId;
 const globalMaxVisiblePaymentCount = 5;
@@ -491,6 +492,7 @@ const renderComponent = (
         messageId={messageId}
         payments={payments}
         presentPaymentsBottomSheetRef={mockPresentPaymentsBottomSheetRef}
+        serviceId={"01J5X3DFDZJ9AJ6CW89WY8QS4N" as ServiceId}
       />
     ),
     PN_ROUTES.MESSAGE_DETAILS,

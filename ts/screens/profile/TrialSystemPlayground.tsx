@@ -50,8 +50,7 @@ const TrialSystemPlayground = () => {
   }, [dispatch]);
 
   useHeaderSecondLevel({
-    title: "Sistema di  Sperimentazione Playground",
-    canGoBack: true
+    title: "Sistema di  Sperimentazione Playground"
   });
 
   return (

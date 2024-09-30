@@ -44,6 +44,7 @@ export type SuccessGetMessageDataActionType = {
   hasRemoteContent: boolean;
   isPNMessage: boolean;
   messageId: UIMessageId;
+  organizationFiscalCode: string;
   organizationName: string;
   serviceId: ServiceId;
   serviceName: string;
@@ -115,11 +116,13 @@ export type LoadMessagesRequestPayload = {
   pageSize: number;
   cursor?: string;
   filter: Filter;
+  fromUserAction: boolean;
 };
 
 type PaginatedMessagesSuccessPayload = {
   messages: ReadonlyArray<UIMessage>;
   filter: Filter;
+  fromUserAction: boolean;
 };
 
 // The data is appended to the state
@@ -165,7 +168,7 @@ export const reloadAllMessages = createAsyncAction(
   "MESSAGES_RELOAD_SUCCESS",
   "MESSAGES_RELOAD_FAILURE"
 )<
-  Pick<LoadMessagesRequestPayload, "pageSize" | "filter">,
+  Pick<LoadMessagesRequestPayload, "pageSize" | "filter" | "fromUserAction">,
   ReloadMessagesPayload,
   MessagesFailurePayload
 >();
@@ -244,18 +247,21 @@ export const removeCachedAttachment = createStandardAction(
 export type UpdatePaymentForMessageRequest = {
   messageId: UIMessageId;
   paymentId: string;
+  serviceId: ServiceId;
 };
 
 export type UpdatePaymentForMessageSuccess = {
   messageId: UIMessageId;
   paymentId: string;
   paymentData: PaymentRequestsGetResponse;
+  serviceId: ServiceId;
 };
 
 export type UpdatePaymentForMessageFailure = {
   messageId: UIMessageId;
   paymentId: string;
   details: Detail_v2Enum;
+  serviceId: ServiceId;
 };
 
 export type UpdatePaymentForMessageCancel =
@@ -276,6 +282,13 @@ export const updatePaymentForMessage = createAsyncAction(
 export const cancelQueuedPaymentUpdates = createAction(
   "CANCEL_QUEUED_PAYMENT_UPDATES"
 );
+
+export const startPaymentStatusTracking = createStandardAction(
+  "MESSAGES_START_TRACKING_PAYMENT_STATUS"
+)<void>();
+export const cancelPaymentStatusTracking = createStandardAction(
+  "MESSAGES_CANCEL_PAYMENT_STATUS_TRACKING"
+)<void>();
 
 export const addUserSelectedPaymentRptId = createAction(
   "MESSAGES_ADD_USER_SELECTED_PAYMENT_RPTID",
@@ -322,4 +335,6 @@ export type MessagesActions = ActionType<
   | typeof removeScheduledMessageArchivingAction
   | typeof interruptMessageArchivingProcessingAction
   | typeof requestAutomaticMessagesRefresh
+  | typeof startPaymentStatusTracking
+  | typeof cancelPaymentStatusTracking
 >;

@@ -1,4 +1,6 @@
 import { parse as textLintParse } from "@textlint/markdown-to-ast";
+import { AnyTxtNode, TxtParentNode } from "@textlint/ast-node-types";
+import { omit } from "lodash";
 import { AnyTxtNodeWithSpacer, IOMarkdownRenderRules, Renderer } from "./types";
 
 /**
@@ -21,26 +23,43 @@ export function getRenderMarkdown(rules: IOMarkdownRenderRules): Renderer {
  * @returns The parsed content.
  */
 export function parse(content: string): Array<AnyTxtNodeWithSpacer> {
-  return textLintParse(content).children.reduce<Array<AnyTxtNodeWithSpacer>>(
-    (acc, currNode, idx, self) => {
-      const nextNode = self[idx + 1];
-      const nextNodeBeginning = nextNode?.loc.start.line;
-      const currNodeEnding = currNode.loc.end.line;
-      const diff = nextNodeBeginning - currNodeEnding;
+  const parsedContent = textLintParse(content);
+  return integrateParent(parsedContent).children.reduce<
+    Array<AnyTxtNodeWithSpacer>
+  >((acc, currNode, idx, self) => {
+    const nextNode = self[idx + 1];
+    const nextNodeBeginning = nextNode?.loc.start.line;
+    const currNodeEnding = currNode.loc.end.line;
+    const diff = nextNodeBeginning - currNodeEnding;
 
-      if (diff > 1) {
-        return [
-          ...acc,
-          currNode,
-          {
-            type: "Spacer",
-            size: Math.min(2, diff - 1) * 8,
-            key: `Spacer_${currNodeEnding}_${nextNodeBeginning}`
-          }
-        ];
+    if (diff > 1) {
+      return [
+        ...acc,
+        currNode,
+        {
+          type: "Spacer",
+          size: Math.min(2, diff - 1) * 8,
+          key: `Spacer_${currNodeEnding}_${nextNodeBeginning}`
+        }
+      ];
+    }
+    return [...acc, currNode];
+  }, []);
+}
+
+function integrateParent<T extends AnyTxtNode>(
+  node: T,
+  parent?: TxtParentNode
+): T {
+  const parentLight = omit(parent, "children");
+
+  return "children" in node
+    ? {
+        ...node,
+        children: node.children.map(n =>
+          integrateParent(n, { ...node, parent })
+        ),
+        parent: parentLight
       }
-      return [...acc, currNode];
-    },
-    []
-  );
+    : { ...node, parent: parentLight };
 }

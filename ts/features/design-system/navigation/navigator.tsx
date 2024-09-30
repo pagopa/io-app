@@ -30,7 +30,6 @@ import { DSBottomSheet } from "../core/DSBottomSheet";
 import { DSButtons } from "../core/DSButtons";
 import { DSCards } from "../core/DSCards";
 import { DSColors } from "../core/DSColors";
-import { DSDynamicBackground } from "../core/DSDynamicBackground";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
 import { DSFooterActions } from "../core/DSFooterActions";
 import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
@@ -387,16 +386,6 @@ export const DesignSystemNavigator = () => {
         {/* EXPERIMENTAL LAB */}
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_BACKGROUND.route}
-          component={DSDynamicBackground}
-          options={{
-            headerShown: false,
-            headerTitle:
-              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_BACKGROUND.title
-          }}
-        />
-
-        <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ANIMATED_PICTOGRAMS.route}
           component={DSAnimatedPictograms}
           options={{
@@ -536,20 +525,17 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Group
-          screenOptions={
-            Platform.OS === "ios"
+          screenOptions={{
+            headerMode: "screen",
+            presentation: "modal",
+            ...(Platform.OS === "ios"
               ? {
                   gestureEnabled: isGestureEnabled,
                   cardOverlayEnabled: true,
-                  headerMode: "screen",
-                  presentation: "modal",
                   ...TransitionPresets.ModalPresentationIOS
                 }
-              : {
-                  headerMode: "screen",
-                  presentation: "modal"
-                }
-          }
+              : null)
+          }}
         >
           <Stack.Screen
             name={DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route}
