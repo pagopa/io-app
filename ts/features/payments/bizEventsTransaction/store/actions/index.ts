@@ -34,12 +34,22 @@ export const getPaymentsLatestBizEventsTransactionsAction = createAsyncAction(
   "PAYMENTS_LATEST_TRANSACTIONS_LIST_CANCEL"
 )<void, NoticeListWrapResponse["notices"], NetworkError, void>();
 
+export type PaymentsTransactionDetailsPayload = {
+  transactionId: string;
+  isPayer?: boolean;
+};
+
 export const getPaymentsBizEventsTransactionDetailsAction = createAsyncAction(
   "PAYMENTS_BIZ_EVENTS_TRANSACTION_DETAILS_REQUEST",
   "PAYMENTS_BIZ_EVENTS_TRANSACTION_DETAILS_SUCCESS",
   "PAYMENTS_BIZ_EVENTS_TRANSACTION_DETAILS_FAILURE",
   "PAYMENTS_BIZ_EVENTS_TRANSACTION_DETAILS_CANCEL"
-)<{ transactionId: string }, NoticeDetailResponse, NetworkError, void>();
+)<
+  PaymentsTransactionDetailsPayload,
+  NoticeDetailResponse,
+  NetworkError,
+  void
+>();
 
 export type PaymentsTransactionReceiptPayload = {
   transactionId: string;
