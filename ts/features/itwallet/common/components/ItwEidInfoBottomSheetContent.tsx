@@ -6,7 +6,8 @@ import {
   Icon,
   IOStyles,
   VStack,
-  H4
+  H4,
+  Alert
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
@@ -14,6 +15,7 @@ import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import IOMarkdown from "../../../../components/IOMarkdown";
+import { format } from "../../../../utils/dates";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
 import { StoredCredential } from "../utils/itwTypesUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
@@ -50,6 +52,13 @@ export const ItwEidInfoBottomSheetContent = () => {
             </React.Fragment>
           ))}
         </View>
+        <Alert
+          variant="success"
+          content={I18n.t(
+            "features.itWallet.presentation.bottomSheets.eidInfo.alert.valid",
+            { issuanceDate: format(credential.issuedAt, "DD-MM-YYYY") }
+          )}
+        />
         <IOMarkdown
           content={I18n.t(
             "features.itWallet.presentation.bottomSheets.eidInfo.contentBottom"

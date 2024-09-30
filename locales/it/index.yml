@@ -3349,8 +3349,10 @@ features:
         eidInfo:
           title: "Documenti su IO:\nidentità verificata"
           contentTop: Con **Documenti su IO** salvi nel Portafoglio di IO le versioni digitali dei tuoi documenti.
-          contentBottom: "###### Come funziona?\n\nPer garantire che sei tu e tenere al sicuro i tuoi documenti, la tua **identità è verificata** in fase di attivazione tramite SPID o CIE."
+          contentBottom: "###### Come funziona?\n\nLa tua **identità è verificata** in fase di attivazione tramite SPID o CIE."
           triggerLabel: Cos'è?
+          alert:
+            valid: L'ultima verifica è del {{issuanceDate}}.
       credentialDetails:
         flipCard: "Mostra retro"
         personalDataTitle: "Dati personali"
