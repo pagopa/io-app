@@ -25,6 +25,7 @@ import {
   regenerateCryptoKey,
   WIA_CREDENTIAL_KEYTAG
 } from "./itwCryptoContextUtils";
+import { getSafeISODate } from "./itwClaimsUtils";
 
 export type InitializeWalletParams = {
   integrityKeyTag: string;
@@ -179,7 +180,7 @@ export const obtainCredential = async ({
 
   // Parse and verify the credential. The ignoreMissingAttributes flag must be set to false or omitted in production.
 
-  const { parsedCredential } =
+  const { parsedCredential, issuedAt, expiration } =
     await Credential.Issuance.verifyAndParseCredential(
       issuerConf,
       credential,
@@ -193,7 +194,9 @@ export const obtainCredential = async ({
     credentialType,
     format,
     issuerConf,
-    keyTag: credentialKeyTag
+    keyTag: credentialKeyTag,
+    expiration: getSafeISODate(expiration),
+    issuedAt: getSafeISODate(issuedAt)
   };
 
   return {

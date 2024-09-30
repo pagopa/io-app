@@ -18,6 +18,7 @@ import {
 import { type IdentificationContext } from "../../machine/eid/context";
 import { StoredCredential } from "./itwTypesUtils";
 import { DPOP_EID_KEYTAG, regenerateCryptoKey } from "./itwCryptoContextUtils";
+import { getSafeISODate } from "./itwClaimsUtils";
 
 type AccessToken = Awaited<
   ReturnType<typeof Credential.Issuance.authorizeAccess>
@@ -267,7 +268,7 @@ const getPid = async ({
     }
   );
 
-  const { parsedCredential } =
+  const { parsedCredential, issuedAt, expiration } =
     await Credential.Issuance.verifyAndParseCredential(
       issuerConf,
       credential,
@@ -281,7 +282,9 @@ const getPid = async ({
     keyTag: credentialKeyTag,
     credentialType: CREDENTIAL_TYPE,
     format,
-    credential
+    credential,
+    expiration: getSafeISODate(expiration),
+    issuedAt: getSafeISODate(issuedAt)
   };
 };
 

@@ -4,6 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import { SdJwt } from "@pagopa/io-react-native-wallet";
 import { ItwCredentialsState } from "../../../credentials/store/reducers";
 import { StoredCredential } from "../../utils/itwTypesUtils";
+import { getSafeISODate } from "../../utils/itwClaimsUtils";
 
 export const CURRENT_REDUX_ITW_STORE_VERSION = -1;
 
@@ -35,20 +36,17 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
       credential: StoredCredential
     ): StoredCredential => {
       const { disclosures, sdJwt } = SdJwt.decode(credential.credential);
-      const defaultDate = new Date().toISOString(); // This should not be needed, but it's a safe default
       const iatDisclosure = disclosures.find(
         ({ decoded }) => decoded[1] === "iat"
       );
       return {
         ...credential,
-        expiration:
-          typeof sdJwt.payload.exp === "number"
-            ? new Date(sdJwt.payload.exp * 1000).toISOString()
-            : defaultDate,
-        issuedAt:
-          typeof iatDisclosure?.decoded[2] === "number"
-            ? new Date(iatDisclosure.decoded[2] * 1000).toISOString()
-            : defaultDate
+        expiration: getSafeISODate(new Date(sdJwt.payload.exp * 1000)),
+        issuedAt: getSafeISODate(
+          iatDisclosure
+            ? new Date((iatDisclosure.decoded[2] as number) * 1000)
+            : new Date()
+        )
       };
     };
     const prevState = state as ItwCredentialsState & PersistPartial;
