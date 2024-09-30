@@ -1,5 +1,6 @@
 import { mixpanelTrack } from "../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
 import { IdentificationContext } from "../machine/eid/context";
@@ -554,6 +555,15 @@ export const trackSaveCredentialSuccess = (credential: MixPanelCredential) => {
     buildEventProperties("UX", "confirm", { credential })
   );
 };
+
+export const trackItwDeactivated = (state: GlobalState) => {
+  void mixpanelTrack(
+    ITW_CONFIRM_EVENTS.ITW_DEACTIVATED,
+    buildEventProperties("UX", "confirm")
+  );
+  updatePropertiesWalletRevoked(state);
+};
+
 // #endregion CONFIRM
 
 // #region EXIT
@@ -602,43 +612,25 @@ export const trackItwRequestSuccess = (ITW_ID_method?: ItwIdMethod) => {
 
 // #region PROFILE AND SUPER PROPERTIES UPDATE
 
-// export const updateItwProfileProperties = async (
-//   state: GlobalState,
-//   properties: UpdateItwProfileProperties
-// ) => {
-//   mixPanelCredentials.forEach(async property => {
-//     if (property === "ITW_ID") {
-//       // ITW_ID value type generates a typescript problem due to type infer of {property, value} object requested by updateMixpanelProfileProperties
-//       await updateMixpanelProfileProperties(state, {
-//         property,
-//         value: properties.ITW_ID
-//       });
-//       return;
-//     }
-//     await updateMixpanelProfileProperties(state, {
-//       property,
-//       value: properties[property]
-//     });
-//   });
-// };
+const updatePropertiesWalletRevoked = (state: GlobalState) => {
+  mixPanelCredentials.forEach(property => {
+    void updateMixpanelProfileProperties(state, {
+      property,
+      value: "not_available"
+    });
+    void updateMixpanelSuperProperties(state, {
+      property,
+      value: "not_available"
+    });
+  });
+  void updateMixpanelProfileProperties(state, {
+    property: "ITW_STATUS",
+    value: "not_active"
+  });
+  void updateMixpanelSuperProperties(state, {
+    property: "ITW_STATUS",
+    value: "not_active"
+  });
+};
 
-// export const updateItwSuperProperties = async (
-//   state: GlobalState,
-//   properties: UpdateItwProfileProperties
-// ) => {
-//   mixPanelCredentials.forEach(async property => {
-//     if (property === "ITW_ID") {
-//       // ITW_ID value type generates a typescript problem due to type infer of {property, value} object requested by updateMixpanelProfileProperties
-//       await updateMixpanelSuperProperties(state, {
-//         property,
-//         value: properties.ITW_ID
-//       });
-//       return;
-//     }
-//     await updateMixpanelSuperProperties(state, {
-//       property,
-//       value: properties[property]
-//     });
-//   });
-// };
 // #endregion PROFILE AND SUPER PROPERTIES UPDATE

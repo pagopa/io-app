@@ -1,7 +1,11 @@
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
+import {
+  itwCredentialsRemove,
+  itwCredentialsStore,
+  itwIpzsHasReadPolicy
+} from "../actions";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
@@ -9,11 +13,13 @@ import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 export type ItwCredentialsState = {
   eid: O.Option<StoredCredential>;
   credentials: Array<O.Option<StoredCredential>>;
+  hasReadIPZSPolicy: boolean;
 };
 
 export const itwCredentialsInitialState: ItwCredentialsState = {
   eid: O.none,
-  credentials: []
+  credentials: [],
+  hasReadIPZSPolicy: false
 };
 
 const reducer = (
@@ -34,6 +40,7 @@ const reducer = (
       }
 
       return {
+        ...state,
         eid: eid ? O.some(eid) : state.eid,
         credentials: getUpsertedCredentials(state.credentials, otherCredentials)
       };
@@ -57,7 +64,11 @@ const reducer = (
 
     case getType(itwLifecycleStoresReset):
       return { ...itwCredentialsInitialState };
-
+    case getType(itwIpzsHasReadPolicy):
+      return {
+        ...state,
+        hasReadIPZSPolicy: action.payload
+      };
     default:
       return state;
   }

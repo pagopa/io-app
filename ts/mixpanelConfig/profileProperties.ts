@@ -22,7 +22,8 @@ import {
 } from "../features/itwallet/analytics";
 import {
   itwCredentialsByTypeSelector,
-  itwCredentialsSelector
+  itwCredentialsSelector,
+  itwIPZSHasReadPolicySelector
 } from "../features/itwallet/credentials/store/selectors";
 import {
   MixpanelOptInTrackingType,
@@ -73,6 +74,7 @@ export const updateMixpanelProfileProperties = async (
   const ITW_TS = tsStatusHandler(state);
   const ITW_CED = cedStatusHandler(state);
   const paymentsAnalyticsData = getPaymentsAnalyticsConfiguration(state);
+  const ITW_HAS_READ_IPZS_POLICY = ipzs_policy(state);
 
   const profilePropertiesObject: ProfileProperties = {
     LOGIN_SESSION,
@@ -84,8 +86,7 @@ export const updateMixpanelProfileProperties = async (
       getNotificationPermissionType(notificationsEnabled),
     SERVICE_CONFIGURATION,
     TRACKING,
-    // TODO check this property
-    ITW_HAS_READ_IPZS_POLICY: false,
+    ITW_HAS_READ_IPZS_POLICY,
     ITW_STATUS,
     ITW_ID,
     ITW_PG,
@@ -124,6 +125,9 @@ const tosVersionHandler = (state: GlobalState): number | string => {
 
 // TODO [SIW-1438]: Add dynamic profile properties
 const walletStatusHandler = (): ItwStatus => "L2";
+
+const ipzs_policy = (state: GlobalState): boolean =>
+  itwIPZSHasReadPolicySelector(state);
 
 const idStatusHandler = (state: GlobalState): ItwId => {
   const credentialsState = itwCredentialsSelector(state);
