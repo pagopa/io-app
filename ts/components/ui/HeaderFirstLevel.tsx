@@ -95,7 +95,8 @@ export const HeaderFirstLevel = ({
   secondAction,
   thirdAction,
   endBlock,
-  animatedRef
+  animatedRef,
+  animatedFlatListRef
 }: HeaderFirstLevel) => {
   const titleRef = React.createRef<View>();
   const insets = useSafeAreaInsets();
@@ -109,7 +110,10 @@ export const HeaderFirstLevel = ({
   });
 
   /* We show the divider only when the header is scrolled down */
-  const offset = useScrollViewOffset(animatedRef || null);
+  const offset = useScrollViewOffset(
+    (animatedRef as AnimatedRef<Animated.ScrollView>) ||
+      (animatedFlatListRef as AnimatedRef<Animated.FlatList<any>>)
+  );
 
   const animatedDivider = useAnimatedStyle(() => ({
     opacity: withTiming(offset.value > 0 ? 1 : 0, { duration: 200 })
