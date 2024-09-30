@@ -1,4 +1,4 @@
-import { fromPromise } from "xstate5";
+import { fromPromise } from "xstate";
 import * as O from "fp-ts/lib/Option";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
@@ -13,6 +13,8 @@ import {
 import { useIOStore } from "../../../../store/hooks";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
+import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
+import { trackItwRequest } from "../../analytics";
 import type {
   WalletAttestationContext,
   IdentificationContext,
@@ -53,6 +55,8 @@ export const createEidIssuanceActorsImplementation = (
       return storedIntegrityKeyTag.value;
     }
 
+    // Reset the wallet store to prevent having dirty state before registering a new wallet instance
+    store.dispatch(itwLifecycleStoresReset());
     const hardwareKeyTag = await getIntegrityHardwareKeyTag();
     await registerWalletInstance(hardwareKeyTag, sessionToken);
 
@@ -89,6 +93,7 @@ export const createEidIssuanceActorsImplementation = (
           ...input.cieAuthContext,
           ...input.walletAttestationContext
         });
+        trackItwRequest("ciePin");
         return issuanceUtils.getPid({
           ...authParams,
           ...input.cieAuthContext
@@ -100,6 +105,9 @@ export const createEidIssuanceActorsImplementation = (
         identification: input.identification,
         ...input.walletAttestationContext
       });
+
+      trackItwRequest(input.identification.mode);
+
       return issuanceUtils.getPid(authParams);
     }
   ),

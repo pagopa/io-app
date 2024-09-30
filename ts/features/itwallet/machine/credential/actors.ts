@@ -1,11 +1,14 @@
 import * as O from "fp-ts/lib/Option";
-import { fromPromise } from "xstate5";
+import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
+import { getCredentialStatusAttestation } from "../../common/utils/itwCredentialStatusAttestationUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { type Context } from "./context";
 
 export type InitializeWalletActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.initializeWallet>
@@ -24,6 +27,8 @@ export type ObtainCredentialActorInput =
 export type ObtainCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.obtainCredential>
 >;
+
+export type ObtainStatusAttestationActorInput = Pick<Context, "credential">;
 
 export default (store: ReturnType<typeof useIOStore>) => {
   const initializeWallet = fromPromise<InitializeWalletActorOutput>(
@@ -99,9 +104,29 @@ export default (store: ReturnType<typeof useIOStore>) => {
     });
   });
 
+  const obtainStatusAttestation = fromPromise<
+    StoredCredential,
+    ObtainStatusAttestationActorInput
+  >(async ({ input }) => {
+    assert(input.credential, "credential is undefined");
+
+    const { statusAttestation, parsedStatusAttestation } =
+      await getCredentialStatusAttestation(input.credential);
+
+    return {
+      ...input.credential,
+      storedStatusAttestation: {
+        credentialStatus: "valid",
+        statusAttestation,
+        parsedStatusAttestation: parsedStatusAttestation.payload
+      }
+    };
+  });
+
   return {
     initializeWallet,
     requestCredential,
-    obtainCredential
+    obtainCredential,
+    obtainStatusAttestation
   };
 };

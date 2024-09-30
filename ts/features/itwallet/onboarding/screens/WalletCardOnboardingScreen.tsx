@@ -9,6 +9,7 @@ import {
 import { constFalse, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -32,6 +33,11 @@ import {
   selectIsLoading
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import {
+  CREDENTIALS_MAP,
+  trackShowCredentialsList,
+  trackStartAddNewCredential
+} from "../../analytics";
 
 const activeBadge: Badge = {
   variant: "success",
@@ -43,8 +49,10 @@ const WalletCardOnboardingScreen = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
 
+  useFocusEffect(() => trackShowCredentialsList());
+
   const isItwSectionVisible = React.useMemo(
-    // IT Wallet cedential catalog should be visible if
+    // IT Wallet credential catalog should be visible if
     () =>
       isItwTrialEnabled && // User is part of the trial
       isItwValid && // An eID has ben obtained and wallet is valid
@@ -83,6 +91,8 @@ const ItwCredentialOnboardingSection = () => {
     if (isCredentialIssuancePending) {
       return;
     }
+    const credentialName = CREDENTIALS_MAP[type];
+    trackStartAddNewCredential(credentialName);
     machineRef.send({
       type: "select-credential",
       credentialType: type,
@@ -92,7 +102,8 @@ const ItwCredentialOnboardingSection = () => {
   // List of available credentials to show to the user
   const availableCredentials = [
     CredentialType.DRIVING_LICENSE,
-    CredentialType.EUROPEAN_DISABILITY_CARD
+    CredentialType.EUROPEAN_DISABILITY_CARD,
+    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
   ] as const;
 
   const credentialIconByType: Record<
@@ -100,7 +111,8 @@ const ItwCredentialOnboardingSection = () => {
     IOIcons
   > = {
     [CredentialType.DRIVING_LICENSE]: "car",
-    [CredentialType.EUROPEAN_DISABILITY_CARD]: "accessibility"
+    [CredentialType.EUROPEAN_DISABILITY_CARD]: "accessibility",
+    [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: "healthCard"
   };
 
   return (
@@ -148,11 +160,13 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
   const isCgnActive = useIOSelector(isCgnInformationAvailableSelector);
 
   const startCgnActiviation = React.useCallback(() => {
+    trackStartAddNewCredential("CGN");
     dispatch(loadAvailableBonuses.request());
     dispatch(cgnActivationStart());
   }, [dispatch]);
 
   const navigateToPaymentMethodOnboarding = () => {
+    trackStartAddNewCredential("payment_method");
     navigation.navigate(PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR, {
       screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
     });

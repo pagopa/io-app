@@ -1,19 +1,24 @@
 import { IOStyles } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { useCallback, useLayoutEffect } from "react";
-import Animated, {
-  LinearTransition,
-  useAnimatedRef
-} from "react-native-reanimated";
+import { useLayoutEffect } from "react";
+import Animated, { Layout, useAnimatedRef } from "react-native-reanimated";
 import HeaderFirstLevel from "../../../../components/ui/HeaderFirstLevel";
-import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import {
+  IOScrollView,
+  IOScrollViewActions
+} from "../../../../components/ui/IOScrollView";
 import { useHeaderFirstLevelActionPropHelp } from "../../../../hooks/useHeaderFirstLevelActionPropHelp";
 import I18n from "../../../../i18n";
+import { useHeaderFirstLevelActionPropSettings } from "../../../../navigation/components/HeaderFirstLevelHandler";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
 import { PaymentsBarcodeRoutes } from "../../barcode/navigation/routes";
+import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
+import * as analytics from "../analytics";
 import { PaymentsAlertStatus } from "../components/PaymentsAlertStatus";
 import { PaymentsHomeEmptyScreenContent } from "../components/PaymentsHomeEmptyScreenContent";
 import { PaymentsHomeTransactionsList } from "../components/PaymentsHomeTransactionsList";
@@ -21,19 +26,31 @@ import { PaymentsHomeUserMethodsList } from "../components/PaymentsHomeUserMetho
 import {
   isPaymentsLatestTransactionsEmptySelector,
   isPaymentsSectionEmptySelector,
+  isPaymentsSectionLoadingFirstTimeSelector,
   isPaymentsSectionLoadingSelector
 } from "../store/selectors";
-import { useHeaderFirstLevelActionPropSettings } from "../../../../navigation/components/HeaderFirstLevelHandler";
 
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
 
   const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
+  const isLoadingFirstTime = useIOSelector(
+    isPaymentsSectionLoadingFirstTimeSelector
+  );
   const isTransactionsEmpty = useIOSelector(
     isPaymentsLatestTransactionsEmptySelector
   );
 
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
+
   const handleOnPayNoticedPress = () => {
+    analytics.trackPaymentStartDataEntry({
+      payments_home_status: paymentAnalyticsData?.paymentsHomeStatus,
+      saved_payment_method:
+        paymentAnalyticsData?.savedPaymentMethods?.length ?? 0
+    });
     navigation.navigate(PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR, {
       screen: PaymentsBarcodeRoutes.PAYMENT_BARCODE_SCAN
     });
@@ -73,17 +90,31 @@ const PaymentsHomeScreen = () => {
     navigation
   ]);
 
-  const AnimatedPaymentsHomeScreenContent = useCallback(
+  const AnimatedPaymentsHomeScreenContent = React.useCallback(
     () => (
-      <Animated.View
-        style={IOStyles.flex}
-        layout={LinearTransition.duration(200)}
-      >
+      <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
         <PaymentsHomeScreenContent />
       </Animated.View>
     ),
     []
   );
+
+  React.useEffect(() => {
+    if (!isLoading) {
+      setIsRefreshing(false);
+      analytics.trackPaymentsHome({
+        saved_payment_method:
+          paymentAnalyticsData?.savedPaymentMethods?.length ?? 0,
+        payments_home_status: paymentAnalyticsData?.paymentsHomeStatus
+      });
+    }
+  }, [isLoading, paymentAnalyticsData]);
+
+  const handleRefreshPaymentsHome = () => {
+    setIsRefreshing(true);
+    dispatch(getPaymentsWalletUserMethods.request());
+    dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
+  };
 
   if (isTransactionsEmpty) {
     return (
@@ -100,23 +131,28 @@ const PaymentsHomeScreen = () => {
     );
   }
 
+  const primaryActionProps: IOScrollViewActions["primary"] = {
+    label: I18n.t("features.payments.cta"),
+    onPress: handleOnPayNoticedPress,
+    icon: "qrCode",
+    iconPosition: "end",
+    testID: "PaymentsHomeScreenTestID-cta"
+  };
+
   return (
     <IOScrollView
       animatedRef={scrollViewContentRef}
-      excludeSafeAreaMargins={true}
+      refreshControlProps={{
+        refreshing: isRefreshing,
+        onRefresh: handleRefreshPaymentsHome
+      }}
       actions={
-        isLoading
-          ? undefined
-          : {
+        !isLoadingFirstTime
+          ? {
               type: "SingleButton",
-              primary: {
-                label: I18n.t("features.payments.cta"),
-                icon: "qrCode",
-                iconPosition: "end",
-                onPress: handleOnPayNoticedPress,
-                testID: "PaymentsHomeScreenTestID-cta"
-              }
+              primary: primaryActionProps
             }
+          : undefined
       }
     >
       <PaymentsAlertStatus />
@@ -126,7 +162,9 @@ const PaymentsHomeScreen = () => {
 };
 
 const PaymentsHomeScreenContent = () => {
-  const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
+  const isLoadingFirstTime = useIOSelector(
+    isPaymentsSectionLoadingFirstTimeSelector
+  );
   const isEmpty = useIOSelector(isPaymentsSectionEmptySelector);
 
   if (isEmpty) {
@@ -135,8 +173,8 @@ const PaymentsHomeScreenContent = () => {
 
   return (
     <>
-      <PaymentsHomeUserMethodsList enforcedLoadingState={isLoading} />
-      <PaymentsHomeTransactionsList enforcedLoadingState={isLoading} />
+      <PaymentsHomeUserMethodsList enforcedLoadingState={isLoadingFirstTime} />
+      <PaymentsHomeTransactionsList enforcedLoadingState={isLoadingFirstTime} />
     </>
   );
 };

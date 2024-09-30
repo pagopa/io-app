@@ -14,10 +14,15 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
 import ROUTES from "../../../navigation/routes";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { isSettingsVisibleAndHideProfileSelector } from "../../../store/reducers/backendStatus";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
+import {
+  trackAllCredentialProfileProperties,
+  trackOpenWalletScreen,
+  trackWalletAdd
+} from "../../itwallet/analytics";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
@@ -28,11 +33,18 @@ import { selectWalletCards } from "../store/selectors";
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
 const WalletHomeScreen = ({ route }: Props) => {
+  const store = useIOStore();
+  useFocusEffect(() => {
+    trackOpenWalletScreen();
+    void trackAllCredentialProfileProperties(store.getState());
+  });
+
   const dispatch = useIODispatch();
   const isNewElementAdded = React.useRef(route.params?.newMethodAdded || false);
 
   useFocusEffect(
     React.useCallback(() => {
+      trackOpenWalletScreen();
       dispatch(walletToggleLoadingState(true));
       dispatch(getPaymentsWalletUserMethods.request());
       dispatch(idPayWalletGet.request());
@@ -111,6 +123,7 @@ const WalletScrollView = ({
   const cards = useIOSelector(selectWalletCards);
 
   const handleAddToWalletButtonPress = () => {
+    trackWalletAdd();
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ONBOARDING
     });
