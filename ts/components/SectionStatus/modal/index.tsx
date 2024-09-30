@@ -15,6 +15,8 @@ import { getFullLocale } from "../../../utils/locale";
 import { openWebUrl } from "../../../utils/url";
 import { useIOSelector } from "../../../store/hooks";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { isMixpanelInitializedSelector } from "../../../features/mixpanel/store/selectors";
+import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
 
 type Props = {
   sectionKey: SectionStatusKey;
@@ -53,6 +55,8 @@ const ModalSectionStatusComponent = ({
   const { top } = useSafeAreaInsets();
   const viewRef = useRef<View>(null);
   const locale = getFullLocale();
+  const isMixpanelInitialized = useIOSelector(isMixpanelInitializedSelector);
+  const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
 
   const navigation = useIONavigation();
   const isSectionVisible = useIOSelector(state =>
@@ -80,10 +84,19 @@ const ModalSectionStatusComponent = ({
   }, [onSectionRef, viewRef]);
 
   useEffect(() => {
-    if (isSectionVisible) {
+    if (
+      isSectionVisible &&
+      isMixpanelInitialized &&
+      isMixpanelEnabled !== false
+    ) {
       trackingAction?.();
     }
-  }, [isSectionVisible, trackingAction]);
+  }, [
+    isSectionVisible,
+    isMixpanelInitialized,
+    isMixpanelEnabled,
+    trackingAction
+  ]);
 
   useEffect(() => {
     if (!isSectionVisible) {
