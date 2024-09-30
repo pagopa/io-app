@@ -2757,7 +2757,7 @@ transaction:
       iuv: "IUV"
       subject: "Zahlungsgrund"
       noticeCode: "Kodex der Zahlungsaufforderung"
-      taxCode: "Steuernummer Körperschaft
+      taxCode: "Steuernummer Körperschaft"
 permissionRequest:
   gallery:
     title: "Erlaube IO den Zugriff auf deine Fotos"
