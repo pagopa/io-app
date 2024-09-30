@@ -1,6 +1,6 @@
 import { IOStyles, IOToast, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useLayoutEffect } from "react";
+import React, { PropsWithChildren, useLayoutEffect } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
@@ -63,9 +63,27 @@ const WalletHomeScreen = ({ route }: Props) => {
     }, [isNewElementAdded])
   );
 
-  /* CODE RELATED TO THE HEADER */
+  return (
+    <WalletScrollView>
+      <VSpacer size={16} />
+      <WalletPaymentsRedirectBanner />
+      <WalletCardsContainer />
+    </WalletScrollView>
+  );
+};
 
+const WalletScrollView = ({ children }: PropsWithChildren<any>) => {
   const navigation = useIONavigation();
+  const cards = useIOSelector(selectWalletCards);
+
+  const handleAddToWalletButtonPress = () => {
+    trackWalletAdd();
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ONBOARDING
+    });
+  };
+
+  /* CODE RELATED TO THE HEADER */
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
 
   /* Scroll to top when the active tab is tapped */
@@ -106,33 +124,10 @@ const WalletHomeScreen = ({ route }: Props) => {
     settingsAction
   ]);
 
-  return (
-    <WalletScrollView animatedRef={scrollViewContentRef}>
-      <VSpacer size={16} />
-      <WalletPaymentsRedirectBanner />
-      <WalletCardsContainer />
-    </WalletScrollView>
-  );
-};
-
-const WalletScrollView = ({
-  children,
-  animatedRef
-}: React.PropsWithChildren<any>) => {
-  const navigation = useIONavigation();
-  const cards = useIOSelector(selectWalletCards);
-
-  const handleAddToWalletButtonPress = () => {
-    trackWalletAdd();
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ONBOARDING
-    });
-  };
-
   if (cards.length === 0) {
     return (
       <Animated.ScrollView
-        ref={animatedRef}
+        ref={scrollViewContentRef}
         contentContainerStyle={[
           IOStyles.flex,
           IOStyles.horizontalContentPadding
@@ -145,7 +140,7 @@ const WalletScrollView = ({
 
   return (
     <IOScrollView
-      animatedRef={animatedRef}
+      animatedRef={scrollViewContentRef}
       excludeSafeAreaMargins={true}
       actions={{
         type: "SingleButton",

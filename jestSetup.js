@@ -21,21 +21,12 @@ jest.mock("react-native-share", () => jest.fn());
 jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
 jest.mock("@react-native-camera-roll/camera-roll", () => mockRNCameraRoll);
 
-/**
- * adds as for documentation suggestion
- * https://docs.swmansion.com/react-native-reanimated/docs/1.x.x/getting_started/#testing
- */
 jest.mock("react-native-reanimated", () => {
   const Reanimated = require("react-native-reanimated/mock");
 
-  // The mock misses the `addWhitelistedUIProps` implementation
-  // So we override it with a no-op
-  // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function
-  Reanimated.default.addWhitelistedUIProps = () => {};
-
   return {
     ...Reanimated,
-    useScrollViewOffset: jest.fn
+    useScrollViewOffset: jest.fn(() => 0)
   };
 });
 
