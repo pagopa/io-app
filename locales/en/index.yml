@@ -3312,7 +3312,7 @@ features:
             continue: Aggiungi primo documento
             close: Continua più tardi
       credentialResult:
-        toast: Fatto! Hai aggiunto {{credentialName}}
+        toast: Fatto!
       notMatchingIdentityError:
         title: Identità non riconosciuta
         body: Non puoi attivare Documenti con un’identità diversa da quella che usi per accedere a IO. Verifica le credenziali di accesso e riprova.
@@ -3328,8 +3328,8 @@ features:
         body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
         primaryAction: Ho capito
       asyncCredentialError:
-        title: La tua richiesta è stata presa in carico
-        body: Riceverai un messaggio in app con l'esito della tua richiesta appena sarà disponibile.
+        title: Motorizzazione Civile ha preso in carico la tua richiesta
+        body: Riceverai un messaggio in app per continuare appena Motorizzazione Civile avrà elaborato la tua richiesta.
         primaryAction: Ho capito
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
