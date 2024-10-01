@@ -15,6 +15,9 @@ type Props = {
   credential: StoredCredential;
 };
 
+// When the title is very long, we need to increase the bottom padding to have enough space
+const BOTTOM_SHEET_LARGE_BOTTOM_PADDING = 128;
+
 export const ItwPresentationAlertsSection = ({ credential }: Props) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
@@ -30,14 +33,29 @@ export const ItwPresentationAlertsSection = ({ credential }: Props) => {
   const isEhc =
     credential.credentialType === CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD;
 
-  const mdlDisclaimerBottomSheet = useIOBottomSheetAutoresizableModal({
-    title: I18n.t("features.itWallet.presentation.bottomSheets.mdl.title"),
-    component: (
-      <ItwMarkdown>
-        {I18n.t("features.itWallet.presentation.bottomSheets.mdl.content")}
-      </ItwMarkdown>
-    )
-  });
+  const disclaimerByCredential: {
+    [K in CredentialType]?: { title: string; content: string };
+  } = {
+    [CredentialType.DRIVING_LICENSE]: {
+      title: I18n.t("features.itWallet.presentation.bottomSheets.mdl.title"),
+      content: I18n.t("features.itWallet.presentation.bottomSheets.mdl.content")
+    },
+    [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: {
+      title: I18n.t("features.itWallet.presentation.bottomSheets.ehc.title"),
+      content: I18n.t("features.itWallet.presentation.bottomSheets.ehc.content")
+    }
+  } as const;
+
+  const disclaimer =
+    disclaimerByCredential[credential.credentialType as CredentialType];
+
+  const disclaimerBottomSheet = useIOBottomSheetAutoresizableModal(
+    {
+      title: disclaimer?.title ?? "",
+      component: <ItwMarkdown>{disclaimer?.content ?? ""}</ItwMarkdown>
+    },
+    isEhc ? BOTTOM_SHEET_LARGE_BOTTOM_PADDING : undefined
+  );
 
   const expireStatus = getCredentialStatus(credential);
   const expireDays = getCredentialExpireDays(credential.parsedCredential);
@@ -81,9 +99,9 @@ export const ItwPresentationAlertsSection = ({ credential }: Props) => {
             )}
             variant="info"
             action={I18n.t("features.itWallet.presentation.alerts.mdl.action")}
-            onPress={mdlDisclaimerBottomSheet.present}
+            onPress={disclaimerBottomSheet.present}
           />
-          {mdlDisclaimerBottomSheet.bottomSheet}
+          {disclaimerBottomSheet.bottomSheet}
         </>
       )}
       {isEhc && (
@@ -94,8 +112,10 @@ export const ItwPresentationAlertsSection = ({ credential }: Props) => {
               "features.itWallet.presentation.alerts.ehc.content"
             )}
             variant="info"
+            action={I18n.t("features.itWallet.presentation.alerts.ehc.action")}
+            onPress={disclaimerBottomSheet.present}
           />
-          {mdlDisclaimerBottomSheet.bottomSheet}
+          {disclaimerBottomSheet.bottomSheet}
         </>
       )}
     </VStack>
