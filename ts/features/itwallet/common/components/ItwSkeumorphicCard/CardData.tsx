@@ -173,7 +173,6 @@ const DcFrontData = ({ claims }: DataComponentProps) => {
           width: "24.7%",
           aspectRatio: 73 / 106 // This aspect ration was extracted from the Figma design
         }}
-        textTransform="uppercase"
       />
       <CardClaim
         claim={claims["family_name"]}
@@ -183,6 +182,7 @@ const DcFrontData = ({ claims }: DataComponentProps) => {
       <CardClaim
         claim={claims["given_name"]}
         position={{ right: "3.5%", top: `${rows[1]}%` }}
+        textTransform="uppercase"
       />
       <CardClaim
         claim={claims["birth_date"]}
@@ -208,7 +208,7 @@ const DcBackData = ({ claims }: DataComponentProps) => (
       component={qrCode => (
         <CardClaimContainer
           position={{
-            right: `7.5%`,
+            right: `7.0%`,
             top: `11.5%`
           }}
         >
