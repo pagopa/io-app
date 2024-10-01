@@ -7,7 +7,8 @@ import {
   VStack,
   Body,
   FeatureInfo,
-  VSpacer
+  VSpacer,
+  H6
 } from "@pagopa/io-app-design-system";
 import Animated from "react-native-reanimated";
 import I18n from "../../../../i18n";
@@ -15,7 +16,10 @@ import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/ho
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { generateTrustmarkUrl } from "../../common/utils/itwCredentialUtils";
+import {
+  generateTrustmarkUrl,
+  getCredentialNameFromType
+} from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 import { itwEaaVerifierBaseUrl } from "../../../../config";
@@ -111,9 +115,12 @@ export const QrCodeBottomSheetContent = ({
         size={170}
         value={generateTrustmarkUrl(credential, itwEaaVerifierBaseUrl)}
       />
-      <Body>
-        {I18n.t("features.itWallet.presentation.trustmark.usageDescription")}
-      </Body>
+      <VStack space={8}>
+        <H6>{getCredentialNameFromType(credential.credentialType)}</H6>
+        <Body>
+          {I18n.t("features.itWallet.presentation.trustmark.usageDescription")}
+        </Body>
+      </VStack>
       <FeatureInfo
         iconName="security"
         body={I18n.t("features.itWallet.presentation.trustmark.certifiedLabel")}
