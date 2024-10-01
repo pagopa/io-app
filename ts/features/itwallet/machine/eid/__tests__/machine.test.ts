@@ -143,16 +143,19 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
     await waitFor(() =>
-      expect(storeIntegrityKeyTag).toHaveBeenCalledWith(expect.any(Object), {
-        keyTag: T_INTEGRITY_KEY
-      })
+      expect(storeIntegrityKeyTag).toHaveBeenCalledWith(
+        expect.objectContaining({
+          context: expect.objectContaining({ integrityKeyTag: T_INTEGRITY_KEY })
+        }),
+        undefined
+      )
     );
     await waitFor(() =>
       expect(storeWalletInstanceAttestation).toHaveBeenCalledWith(
-        expect.any(Object),
-        {
-          wia: T_WIA
-        }
+        expect.objectContaining({
+          context: expect.objectContaining({ walletInstanceAttestation: T_WIA })
+        }),
+        undefined
       )
     );
     expect(actor.getSnapshot().context).toMatchSnapshot({

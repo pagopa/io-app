@@ -39,9 +39,8 @@ export const itwEidIssuanceMachine = setup({
     navigateToCiePinScreen: notImplemented,
     navigateToCieReadCardScreen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
-    storeIntegrityKeyTag: (_, _params: { keyTag: string }) => notImplemented(),
-    storeWalletInstanceAttestation: (_, _params: { wia: string }) =>
-      notImplemented(),
+    storeIntegrityKeyTag: notImplemented,
+    storeWalletInstanceAttestation: notImplemented,
     storeEidCredential: notImplemented,
     closeIssuance: notImplemented,
     setWalletInstanceToOperational: notImplemented,
@@ -123,10 +122,7 @@ export const itwEidIssuanceMachine = setup({
             assign(({ event }) => ({
               integrityKeyTag: event.output
             })),
-            {
-              type: "storeIntegrityKeyTag",
-              params: ({ event }) => ({ keyTag: event.output })
-            },
+            { type: "storeIntegrityKeyTag" },
             { type: "setWalletInstanceToOperational" }
           ],
           target: "WalletInstanceAttestationObtainment"
@@ -155,10 +151,7 @@ export const itwEidIssuanceMachine = setup({
             assign(({ event }) => ({
               walletInstanceAttestation: event.output
             })),
-            {
-              type: "storeWalletInstanceAttestation",
-              params: ({ event }) => ({ wia: event.output })
-            }
+            { type: "storeWalletInstanceAttestation" }
           ],
           target: "UserIdentification"
         },

@@ -124,19 +124,29 @@ export const createEidIssuanceActionsImplementation = (
     dispatch(itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_VALID));
   },
 
-  storeIntegrityKeyTag: (_: unknown, params: { keyTag: string }) => {
-    dispatch(itwStoreIntegrityKeyTag(params.keyTag));
+  storeIntegrityKeyTag: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.integrityKeyTag, "integrityKeyTag is undefined");
+    dispatch(itwStoreIntegrityKeyTag(context.integrityKeyTag));
   },
 
-  storeWalletInstanceAttestation: (_: unknown, params: { wia: string }) => {
-    dispatch(itwWalletInstanceAttestationStore(params.wia));
+  storeWalletInstanceAttestation: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(
+      context.walletInstanceAttestation,
+      "walletInstanceAttestation is undefined"
+    );
+    dispatch(
+      itwWalletInstanceAttestationStore(context.walletInstanceAttestation)
+    );
   },
 
   storeEidCredential: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assert(context.eid, "eID is undefined");
-
     dispatch(itwCredentialsStore([context.eid]));
   },
 
