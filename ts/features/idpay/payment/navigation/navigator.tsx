@@ -1,65 +1,54 @@
-import { ParamListBase, RouteProp } from "@react-navigation/native";
-import {
-  StackNavigationProp,
-  createStackNavigator
-} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import {
-  IDPayPaymentAuthorizationScreen,
-  IDPayPaymentAuthorizationScreenRouteParams
-} from "../screens/IDPayPaymentAuthorizationScreen";
+  IdPayPaymentMachineContext,
+  IdPayPaymentMachineProvider
+} from "../machine/provider";
+import { IDPayPaymentAuthorizationScreen } from "../screens/IDPayPaymentAuthorizationScreen";
 import { IDPayPaymentCodeInputScreen } from "../screens/IDPayPaymentCodeInputScreen";
 import { IDPayPaymentResultScreen } from "../screens/IDPayPaymentResultScreen";
-import { IDPayPaymentMachineProvider } from "../xstate/provider";
+import { IdPayPaymentParamsList } from "./params";
+import { IdPayPaymentRoutes } from "./routes";
 
-export const IDPayPaymentRoutes = {
-  IDPAY_PAYMENT_MAIN: "IDPAY_PAYMENT_MAIN",
-  IDPAY_PAYMENT_CODE_SCAN: "IDPAY_PAYMENT_CODE_SCAN",
-  IDPAY_PAYMENT_CODE_INPUT: "IDPAY_PAYMENT_CODE_INPUT",
-  IDPAY_PAYMENT_AUTHORIZATION: "IDPAY_PAYMENT_AUTHORIZATION",
-  IDPAY_PAYMENT_RESULT: "IDPAY_PAYMENT_RESULT"
-} as const;
+const Stack = createStackNavigator<IdPayPaymentParamsList>();
 
-export type IDPayPaymentParamsList = {
-  [IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT]: undefined;
-  [IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION]: IDPayPaymentAuthorizationScreenRouteParams;
-  [IDPayPaymentRoutes.IDPAY_PAYMENT_RESULT]: undefined;
-};
-
-const Stack = createStackNavigator<IDPayPaymentParamsList>();
-
-export const IDPayPaymentNavigator = () => (
-  <IDPayPaymentMachineProvider>
-    <Stack.Navigator
-      initialRouteName={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT}
-      screenOptions={{ gestureEnabled: false, headerShown: false }}
-    >
-      <Stack.Screen
-        name={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT}
-        component={IDPayPaymentCodeInputScreen}
-        options={{ gestureEnabled: true }}
-      />
-      <Stack.Screen
-        name={IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION}
-        component={IDPayPaymentAuthorizationScreen}
-      />
-      <Stack.Screen
-        name={IDPayPaymentRoutes.IDPAY_PAYMENT_RESULT}
-        component={IDPayPaymentResultScreen}
-      />
-    </Stack.Navigator>
-  </IDPayPaymentMachineProvider>
+export const IdPayPaymentNavigator = () => (
+  <IdPayPaymentMachineProvider>
+    <InnerNavigation />
+  </IdPayPaymentMachineProvider>
 );
 
-export type IDPayPaymentStackNavigationRouteProps<
-  ParamList extends ParamListBase,
-  RouteName extends keyof ParamList = string
-> = {
-  navigation: IDPayPaymentStackNavigationProp<ParamList, RouteName>;
-  route: RouteProp<ParamList, RouteName>;
-};
+const InnerNavigation = () => {
+  const idPayPaymentMachineRef = IdPayPaymentMachineContext.useActorRef();
 
-export type IDPayPaymentStackNavigationProp<
-  ParamList extends ParamListBase,
-  RouteName extends keyof ParamList = string
-> = StackNavigationProp<IDPayPaymentParamsList & ParamList, RouteName>;
+  return (
+    <IdPayPaymentMachineProvider>
+      <Stack.Navigator
+        initialRouteName={IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT}
+        screenOptions={{ gestureEnabled: false, headerShown: false }}
+        screenListeners={{
+          beforeRemove: () => {
+            // Read more on https://reactnavigation.org/docs/preventing-going-back/
+            // Whenever we have a back navigation action we send a "back" event to the machine.
+            // Since the back event is accepted only by specific states, we can safely send a back event to each machine
+            idPayPaymentMachineRef.send({ type: "back" });
+          }
+        }}
+      >
+        <Stack.Screen
+          name={IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT}
+          component={IDPayPaymentCodeInputScreen}
+          options={{ gestureEnabled: true }}
+        />
+        <Stack.Screen
+          name={IdPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION}
+          component={IDPayPaymentAuthorizationScreen}
+        />
+        <Stack.Screen
+          name={IdPayPaymentRoutes.IDPAY_PAYMENT_RESULT}
+          component={IDPayPaymentResultScreen}
+        />
+      </Stack.Navigator>
+    </IdPayPaymentMachineProvider>
+  );
+};

@@ -1,4 +1,4 @@
-import { assign, fromPromise, setup } from "xstate5";
+import { assign, fromPromise, setup } from "xstate";
 import { ItwTags } from "../tags";
 import { ItwSessionExpiredError } from "../../api/client";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";

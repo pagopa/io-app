@@ -250,6 +250,7 @@ permissionRationale:
     message: "We require camera permissions to use the torch on the back of your phone."
 startup:
   title: We are getting ready for your experience on IO
+  title2: Just a little more patience...
   authentication: User authenticated
   sessionInfo: SPID attributes loaded
   profileInfo: User profile loaded
@@ -263,6 +264,15 @@ startup:
     cta_2: Discard
   contextualHelp:
     title: Startup problems?
+  connection_lost:
+    title: It looks like you don't have an active internet connection
+    description: Check your connection and restart the app
+  slowdowns_results_screen:
+    title: Things seem to be going a little slowly at the moment.
+    subtitle: It may depend on our systems or on your device's connection. Please try again in a few minutes.
+  cdn_unreachable_results_screen:
+    title: Something went wrong
+    subtitle: Close the app and try again in a few minutes.
 login:
   expiration_info: For security reasons, you’ll need to sign in again with CIE or SPID every 30 days.
   expiration_info_FL: For security reasons, you’ll need to sign in using SPID or CIE once a year.
@@ -3745,6 +3755,7 @@ idpay:
       INSTRUMENTS_LIST_LOAD_FAILURE: "Errore nel caricamento della lista strumenti"
       INSTRUMENT_ENROLL_FAILURE: "Errore durante l'aggiunta del metodo di pagamento"
       INSTRUMENT_DELETE_FAILURE: "Errore durante la rimozione del metodo di pagamento"
+      SESSION_EXPIRED: "C'è stato un problema, riprova"
     headerTitle: "Configure the initiative"
     intro:
       title: "We are almost there"
