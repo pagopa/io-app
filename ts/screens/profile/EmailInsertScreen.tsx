@@ -104,14 +104,19 @@ const EmailInsertScreen = () => {
   const isProfileEmailAlreadyTaken = useIOSelector(
     isProfileEmailAlreadyTakenSelector
   );
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState("");
   const flow = getFlowType(isOnboarding, isFirstOnboarding);
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   // This reference is used to prevent the refresh visual glitch
   // caused by the polling stop in the email validation screen.
   const canShowLoadingSpinner = useRef(true);
 
-  useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
+  useFocusEffect(
+    useCallback(
+      () => setAccessibilityFocus(accessibilityFirstFocuseViewRef),
+      []
+    )
+  );
 
   useOnFirstRender(() => {
     if (isProfileEmailAlreadyTaken) {
@@ -173,18 +178,15 @@ const EmailInsertScreen = () => {
 
   const sameEmailsErrorRender = useCallback(() => {
     if (isProfileEmailAlreadyTaken && isFirstOnboarding) {
-      setErrorMessage(I18n.t("email.newinsert.alert.description1"));
-      return;
+      return I18n.t("email.newinsert.alert.description1");
     }
     if (isOnboarding) {
-      setErrorMessage(I18n.t("email.newinsert.alert.description2"));
-      return;
+      return I18n.t("email.newinsert.alert.description2");
     }
     if (!isOnboarding && !isFirstOnboarding) {
-      setErrorMessage(I18n.t("email.newinsert.alert.description3"));
-      return;
+      return I18n.t("email.newinsert.alert.description3");
     }
-    setErrorMessage(I18n.t("email.newinsert.alert.description1"));
+    return I18n.t("email.newinsert.alert.description1");
   }, [isFirstOnboarding, isOnboarding, isProfileEmailAlreadyTaken]);
 
   /** validate email returning two possible values:
@@ -198,18 +200,33 @@ const EmailInsertScreen = () => {
         email,
         O.fold(
           () => {
-            setErrorMessage(I18n.t("email.newinsert.alert.invalidemail"));
-            return false;
+            const errMessage = I18n.t("email.newinsert.alert.invalidemail");
+            setErrorMessage(errMessage);
+
+            return {
+              isValid: false,
+              errorMessage: errMessage
+            };
           },
           value => {
             if (!validator.isEmail(value)) {
-              setErrorMessage(I18n.t("email.newinsert.alert.invalidemail"));
-              return false;
+              const errMessage = I18n.t("email.newinsert.alert.invalidemail");
+              setErrorMessage(errMessage);
+
+              return {
+                isValid: false,
+                errorMessage: errMessage
+              };
             }
             if (areSameEmails) {
-              sameEmailsErrorRender();
-              return false;
+              const errMessage = sameEmailsErrorRender();
+              setErrorMessage(errMessage);
+
+              return { isValid: false, errorMessage: errMessage };
             }
+            // If the instered email is valid the error is resetted
+            setErrorMessage("");
+
             return true;
           }
         )
@@ -221,7 +238,8 @@ const EmailInsertScreen = () => {
     Keyboard.dismiss();
     // eslint-disable-next-line functional/immutable-data
     canShowLoadingSpinner.current = true;
-    if (isValidEmail()) {
+    const isValid = isValidEmail();
+    if ((typeof isValid === "boolean" && isValid) || isValid.isValid) {
       pipe(
         email,
         O.map(e => {
@@ -414,7 +432,11 @@ const EmailInsertScreen = () => {
       >
         <ScrollView contentContainerStyle={styles.scrollViewContentContainer}>
           <ContentWrapper>
-            <View accessible={true} ref={accessibilityFirstFocuseViewRef}>
+            <View
+              accessible={true}
+              accessibilityRole="header"
+              ref={accessibilityFirstFocuseViewRef}
+            >
               <H1 testID="title-test">
                 {isFirstOnboarding
                   ? I18n.t("email.newinsert.title")
@@ -446,9 +468,10 @@ const EmailInsertScreen = () => {
                 inputMode: "email"
               }}
               accessibilityLabel={I18n.t("email.newinsert.label")}
+              accessibilityHint={errorMessage}
               placeholder={I18n.t("email.newinsert.label")}
               onValidate={isValidEmail}
-              errorMessage={errorMessage}
+              errorMessage={I18n.t("email.newinsert.alert.invalidemail")}
               value={pipe(
                 email,
                 O.getOrElse(() => EMPTY_EMAIL)

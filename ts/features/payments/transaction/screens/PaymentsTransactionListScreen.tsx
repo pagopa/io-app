@@ -33,6 +33,7 @@ import { Transaction } from "../../../../types/pagopa";
 import { PaymentsLegacyListItemTransaction } from "../components/PaymentsLegacyListItemTransaction";
 import { usePaymentsLegacyAttachmentBottomSheet } from "../components/PaymentsLegacyAttachmentBottomSheet";
 import { PaymentsLegacyTransactionsEmptyContent } from "../components/PaymentsLegacyTransactionsEmptyContent";
+import * as analytics from "../analytics";
 
 export type PaymentsTransactionListScreenProps = RouteProp<
   PaymentsTransactionParamsList,
@@ -85,19 +86,24 @@ const PaymentsTransactionListScreen = () => {
 
   useOnFirstRender(
     React.useCallback(() => {
+      analytics.trackPaymentsReceiptOldListing();
       dispatch(fetchTransactionsRequestWithExpBackoff({ start: 0 }));
     }, [dispatch])
   );
 
   useHeaderSecondLevel({
     title: I18n.t("features.payments.transactions.legacy.title"),
-    canGoBack: true,
     supportRequest: true,
     scrollValues: {
       contentOffsetY: scrollTranslationY,
       triggerOffset: titleHeight
     }
   });
+
+  const handleOnShowLegacyAttachmentBottomSheet = () => {
+    analytics.trackPaymentsReceiptOldListingInfo();
+    presentLegacyAttachmentBottomSheet();
+  };
 
   const SectionListHeaderTitle = (
     <View onLayout={getTitleHeight}>
@@ -119,7 +125,7 @@ const PaymentsTransactionListScreen = () => {
             action={I18n.t(
               "features.payments.transactions.legacy.banner.action"
             )}
-            onPress={presentLegacyAttachmentBottomSheet}
+            onPress={handleOnShowLegacyAttachmentBottomSheet}
             color="neutral"
             pictogramName="workInProgress"
             size="big"

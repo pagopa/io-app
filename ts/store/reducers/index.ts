@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /**
  * Aggregates all defined reducers
  */
@@ -32,10 +33,8 @@ import { isDevEnv } from "../../utils/environment";
 import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
 import { notificationsReducer } from "../../features/pushNotifications/store/reducers";
 import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
-import { itwIssuanceInitialState } from "../../features/itwallet/issuance/store/reducers";
-import { itwCredentialsInitialState } from "../../features/itwallet/credentials/store/reducers";
-import { itwLifecycleInitialState } from "../../features/itwallet/lifecycle/store/reducers";
 import { itwIdentificationInitialState } from "../../features/itwallet/identification/store/reducers";
+import { cieLoginInitialState } from "../../features/cieLogin/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
@@ -200,7 +199,7 @@ export function createRootReducer(
         ? ({
             authentication: {
               ...authenticationInitialState,
-              // eslint-disable-next-line no-underscore-dangle
+
               _persist: state.authentication._persist
             },
             // backend status must be kept
@@ -217,13 +216,11 @@ export function createRootReducer(
               organizations: state.entities.organizations,
               paymentByRptId: state.entities.paymentByRptId,
               calendarEvents: state.entities.calendarEvents,
-              // eslint-disable-next-line no-underscore-dangle
               _persist: state.entities._persist
             },
             features: {
               whatsNew: {
                 ...whatsNewInitialState,
-                // eslint-disable-next-line no-underscore-dangle
                 _persist: state.features.whatsNew._persist
               },
               loginFeatures: {
@@ -231,7 +228,6 @@ export function createRootReducer(
                   optIn: {
                     ...fastLoginOptInInitialState,
                     _persist:
-                      // eslint-disable-next-line no-underscore-dangle
                       state.features.loginFeatures.fastLogin.optIn._persist
                   },
                   securityAdviceAcknowledged: {
@@ -239,37 +235,39 @@ export function createRootReducer(
                       state.features.loginFeatures.fastLogin
                         .securityAdviceAcknowledged.acknowledged,
                     _persist:
-                      // eslint-disable-next-line no-underscore-dangle
                       state.features.loginFeatures.fastLogin
                         .securityAdviceAcknowledged._persist
                   }
+                },
+                cieLogin: {
+                  ...cieLoginInitialState,
+                  isCieIDFeatureEnabled:
+                    state.features.loginFeatures.cieLogin.isCieIDFeatureEnabled,
+                  _persist: state.features.loginFeatures.cieLogin._persist
                 }
               },
               profileSettings: {
                 ...profileSettingsReducerInitialState,
                 showProfileBanner:
                   state.features.profileSettings.showProfileBanner,
-                // eslint-disable-next-line no-underscore-dangle
+                hasUserAcknowledgedSettingsBanner:
+                  state.features.profileSettings
+                    .hasUserAcknowledgedSettingsBanner,
                 _persist: state.features.profileSettings._persist
               },
-              // eslint-disable-next-line no-underscore-dangle
               _persist: state.features._persist,
+              // IT Wallet must be kept
               itWallet: {
                 identification: itwIdentificationInitialState,
-                issuance: itwIssuanceInitialState,
-                lifecycle: itwLifecycleInitialState,
-                credentials: {
-                  ...itwCredentialsInitialState,
-                  // eslint-disable-next-line no-underscore-dangle
-                  _persist: state.features.itWallet.credentials._persist
-                },
-                // eslint-disable-next-line no-underscore-dangle
+                issuance: state.features.itWallet.issuance,
+                lifecycle: state.features.itWallet.lifecycle,
+                credentials: state.features.itWallet.credentials,
+
                 _persist: state.features.itWallet._persist
               }
             },
             identification: {
               ...identificationInitialState,
-              // eslint-disable-next-line no-underscore-dangle
               _persist: state.identification._persist
             },
             // notifications must be kept
@@ -293,14 +291,12 @@ export function createRootReducer(
             wallet: {
               wallets: {
                 ...walletsInitialState,
-                // eslint-disable-next-line no-underscore-dangle
                 _persist: state.wallet.wallets._persist
               }
             },
             lollipop: {
               ...initialLollipopState,
               keyTag: state.lollipop.keyTag,
-              // eslint-disable-next-line no-underscore-dangle
               _persist: state.lollipop._persist
             }
           } as GlobalState)

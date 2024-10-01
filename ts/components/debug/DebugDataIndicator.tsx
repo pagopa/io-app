@@ -30,7 +30,7 @@ export const DebugDataIndicator = (props: DebugDataIndicatorProps) => {
       accessibilityHint={"Opend the debug data"}
       onPress={props.onPress}
     >
-      <HStack space={4} alignItems="center">
+      <HStack space={4} style={{ alignItems: "center" }}>
         <Icon name="ladybug" size={16} color="warning-850" />
         <Text style={styles.text}>{dataSize}</Text>
       </HStack>

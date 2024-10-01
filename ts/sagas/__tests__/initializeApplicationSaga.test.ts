@@ -42,6 +42,7 @@ import { watchLogoutSaga } from "../startup/watchLogoutSaga";
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
 import { startupTransientErrorInitialState } from "../../store/reducers/startup";
+import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -66,6 +67,8 @@ const profile: InitializedProfile = {
 describe("initializeApplicationSaga", () => {
   it("should call handleTransientError if check session response is 200 but session is none", () => {
     testSaga(initializeApplicationSaga)
+      .next()
+      .select(isBlockingScreenSelector)
       .next()
       .call(checkAppHistoryVersionSaga)
       .next()
@@ -116,6 +119,8 @@ describe("initializeApplicationSaga", () => {
   it("should dispatch sessionExpired if check session response is 401 & FastLogin disabled", () => {
     testSaga(initializeApplicationSaga)
       .next()
+      .select(isBlockingScreenSelector)
+      .next()
       .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
@@ -157,6 +162,8 @@ describe("initializeApplicationSaga", () => {
 
   it("should dispatch refreshTokenRequest if check session response is 401 & FastLogin enabled", () => {
     testSaga(initializeApplicationSaga)
+      .next()
+      .select(isBlockingScreenSelector)
       .next()
       .call(checkAppHistoryVersionSaga)
       .next()
@@ -205,6 +212,8 @@ describe("initializeApplicationSaga", () => {
   it("should dispatch loadprofile if installation id response is 200 and session is still valid", () => {
     testSaga(initializeApplicationSaga)
       .next()
+      .select(isBlockingScreenSelector)
+      .next()
       .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
@@ -248,7 +257,8 @@ describe("initializeApplicationSaga", () => {
       .next(
         O.some({
           spidLevel: "https://www.spid.gov.it/SpidL2",
-          walletToken: "wallet_token"
+          walletToken: "wallet_token",
+          bpdToken: "bpd_token"
         })
       )
       .next(lollipopPublicKeySelector)
@@ -258,5 +268,113 @@ describe("initializeApplicationSaga", () => {
       .fork(watchProfile, undefined)
       .next()
       .call(loadProfile, undefined);
+  });
+
+  it("should dispatch handleApplicationStartupTransientError if session information is none", () => {
+    testSaga(initializeApplicationSaga)
+      .next()
+      .select(isBlockingScreenSelector)
+      .next()
+      .call(checkAppHistoryVersionSaga)
+      .next()
+      .call(initMixpanel)
+      .next()
+      .call(testWaitForNavigatorServiceInitialization!)
+      .next()
+      .call(cancellAllLocalNotifications)
+      .next()
+      .call(previousInstallationDataDeleteSaga)
+      .next()
+      .put(previousInstallationDataDeleteSuccess())
+      .next()
+      .next()
+      .next()
+      .select(profileSelector)
+      .next(pot.some(profile))
+      .fork(watchProfileEmailValidationChangedSaga, O.none)
+      .next(pot.some(profile))
+      .put(resetProfileState())
+      .next()
+      .next(generateLollipopKeySaga)
+      .next(false) // unsupported device
+      .select(backendStatusSelector)
+      .next(O.some({}))
+      .select(sessionTokenSelector)
+      .next(aSessionToken)
+      .next(getKeyInfo)
+      .fork(watchSessionExpiredSaga)
+      .next()
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .next()
+      .spawn(watchLogoutSaga, undefined)
+      .next()
+      .next(200) // check session
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      .select(sessionInfoSelector)
+      .next(O.none)
+      .next(O.none)
+      .call(handleApplicationStartupTransientError, "GET_SESSION_DOWN");
+  });
+
+  it("should dispatch handleApplicationStartupTransientError if session information is some but walletToken and bpdToken are missing", () => {
+    testSaga(initializeApplicationSaga)
+      .next()
+      .select(isBlockingScreenSelector)
+      .next()
+      .call(checkAppHistoryVersionSaga)
+      .next()
+      .call(initMixpanel)
+      .next()
+      .call(testWaitForNavigatorServiceInitialization!)
+      .next()
+      .call(cancellAllLocalNotifications)
+      .next()
+      .call(previousInstallationDataDeleteSaga)
+      .next()
+      .put(previousInstallationDataDeleteSuccess())
+      .next()
+      .next()
+      .next()
+      .select(profileSelector)
+      .next(pot.some(profile))
+      .fork(watchProfileEmailValidationChangedSaga, O.none)
+      .next(pot.some(profile))
+      .put(resetProfileState())
+      .next()
+      .next(generateLollipopKeySaga)
+      .next(false) // unsupported device
+      .select(backendStatusSelector)
+      .next(O.some({}))
+      .select(sessionTokenSelector)
+      .next(aSessionToken)
+      .next(getKeyInfo)
+      .fork(watchSessionExpiredSaga)
+      .next()
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .next()
+      .spawn(watchLogoutSaga, undefined)
+      .next()
+      .next(200) // check session
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      .select(sessionInfoSelector)
+      .next(
+        O.some({
+          spidLevel: "https://www.spid.gov.it/SpidL2"
+        })
+      )
+      .next(
+        O.some({
+          spidLevel: "https://www.spid.gov.it/SpidL2"
+        })
+      )
+      .call(handleApplicationStartupTransientError, "GET_SESSION_DOWN");
   });
 });

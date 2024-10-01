@@ -1,4 +1,4 @@
-import { call, select, take, takeLatest } from "typed-redux-saga/macro";
+import { call, select, take, takeLatest, put } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
 import { ActionType, getType } from "typesafe-actions";
 import {
@@ -18,6 +18,13 @@ import {
 } from "../store/actions/authentication";
 import { GlobalState } from "../store/reducers/types";
 import { updateMixpanelProfileProperties } from "../mixpanelConfig/profileProperties";
+import { setIsMixpanelInitialized } from "../features/mixpanel/store/actions";
+
+function* initializeMixpanelAndUpdateState() {
+  const state = (yield* select()) as GlobalState;
+  yield* call(initializeMixPanel, state);
+  yield* put(setIsMixpanelInitialized(true));
+}
 
 export function* watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel() {
   yield* takeLatest(
@@ -48,8 +55,7 @@ export function* initMixpanel(): Generator<ReduxSagaEffect, void, boolean> {
 
   if (isMixpanelEnabledResult ?? true) {
     // initialize mixpanel
-    const state = (yield* select()) as GlobalState;
-    yield* call(initializeMixPanel, state);
+    yield* call(initializeMixpanelAndUpdateState);
   }
 }
 
@@ -57,8 +63,7 @@ export function* handleSetMixpanelEnabled(
   action: ActionType<typeof setMixpanelEnabled>
 ) {
   if (action.payload) {
-    const state = (yield* select()) as GlobalState;
-    yield* call(initializeMixPanel, state);
+    yield* call(initializeMixpanelAndUpdateState);
     // The user has opted in
     yield* call(identifyMixpanelSaga);
   } else {
