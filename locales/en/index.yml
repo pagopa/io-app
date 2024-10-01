@@ -3299,7 +3299,7 @@ features:
         bottomSheet:
           about:
             title: "Chi è?"
-            subtitle: "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo."
+            subtitle: "È l'ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
