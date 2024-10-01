@@ -25,7 +25,10 @@ import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal
 import { ServicesActions } from "../../features/services/common/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
-import { NotificationsActions } from "../../features/pushNotifications/store/actions/notifications";
+import { NotificationsActions } from "../../features/pushNotifications/store/actions/installation";
+import { NotificationPermissionsActions } from "../../features/pushNotifications/store/actions/permissions";
+import { PendingMessageActions } from "../../features/pushNotifications/store/actions/pendingMessage";
+import { ProfileNotificationPermissionsActions } from "../../features/pushNotifications/store/actions/profileNotificationPermissions";
 import { GlobalState } from "../reducers/types";
 import { CieLoginConfigActions } from "../../features/cieLogin/store/actions";
 import { FimsActions } from "../../features/fims/common/store/actions";
@@ -70,6 +73,9 @@ export type Action =
   | MessagesActions
   | MixpanelActions
   | NotificationsActions
+  | NotificationPermissionsActions
+  | PendingMessageActions
+  | ProfileNotificationPermissionsActions
   | PinSetActions
   | OnboardingActions
   | PreferencesActions
