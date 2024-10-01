@@ -1,12 +1,15 @@
 /* eslint-disable functional/immutable-data */
 import { IOToast } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
-import { openAppStoreUrl } from "../../../../utils/url";
+import {
+  trackHistoryFailure,
+  trackHistoryScreen
+} from "../../common/analytics";
+import { FimsUpdateAppAlert } from "../../common/components/FimsUpdateAppAlert";
 import { FimsHistoryEmptyContent } from "../components/FimsHistoryEmptyContent";
 import { FimsHistoryKoScreen } from "../components/FimsHistoryKoScreen";
 import { FimsHistoryNonEmptyContent } from "../components/FimsHistoryNonEmptyContent";
@@ -37,7 +40,10 @@ export const FimsHistoryScreen = () => {
 
   React.useEffect(() => {
     if (!requiresAppUpdate) {
+      trackHistoryScreen();
       dispatch(fimsHistoryGet.request({ shouldReloadFromScratch: true }));
+    } else {
+      trackHistoryFailure("update_required");
     }
     return () => {
       // full reset in order to avoid wonky error toast behaviour
@@ -70,17 +76,7 @@ export const FimsHistoryScreen = () => {
   // ---------- FAILURE CASES
 
   if (requiresAppUpdate) {
-    return (
-      <OperationResultScreenContent
-        isHeaderVisible
-        title={I18n.t("titleUpdateAppAlert")}
-        pictogram="umbrellaNew"
-        action={{
-          label: I18n.t("btnUpdateApp"),
-          onPress: () => openAppStoreUrl
-        }}
-      />
-    );
+    return <FimsUpdateAppAlert />;
   }
 
   if (historyErrorState === "FULL_KO") {

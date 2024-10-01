@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-// eslint-disable-next-line no-redeclare
 /* globals jest, NativeModules, require, global */
 /**
  * Set up of the testing environment
@@ -27,7 +26,6 @@ jest.mock("@react-native-camera-roll/camera-roll", () => mockRNCameraRoll);
  * https://docs.swmansion.com/react-native-reanimated/docs/1.x.x/getting_started/#testing
  */
 jest.mock("react-native-reanimated", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const Reanimated = require("react-native-reanimated/mock");
 
   // The mock misses the `addWhitelistedUIProps` implementation
@@ -35,7 +33,10 @@ jest.mock("react-native-reanimated", () => {
   // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function
   Reanimated.default.addWhitelistedUIProps = () => {};
 
-  return Reanimated;
+  return {
+    ...Reanimated,
+    useScrollViewOffset: jest.fn
+  };
 });
 
 jest.mock("react-native-blob-util", () => ({
@@ -53,11 +54,10 @@ NativeModules.PlatformConstants = NativeModules.PlatformConstants || {
 
 const {
   AbortController
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
 } = require("abortcontroller-polyfill/dist/cjs-ponyfill");
-// eslint-disable-next-line @typescript-eslint/no-explicit-any,functional/immutable-data
+// eslint-disable-next-line functional/immutable-data
 global.fetch = nodeFetch;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any,functional/immutable-data
+// eslint-disable-next-line functional/immutable-data
 global.AbortController = AbortController;
 
 jest.mock("remark-directive", () => jest.fn());
@@ -73,7 +73,6 @@ jest.mock("react-native-device-info", () => mockRNDeviceInfo);
 global.__reanimatedWorkletInit = () => jest.fn();
 
 jest.mock("@gorhom/bottom-sheet", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const rn = require("react-native");
 
   return {
@@ -160,4 +159,10 @@ jest.mock("react-native-vision-camera", () => ({
     codeTypes: ["qr", "data-matrix"],
     onCodeScanned: jest.fn()
   }))
+}));
+/**
+ * NefInfo's `fetch` method mock
+ */
+jest.mock("@react-native-community/netinfo", () => ({
+  fetch: jest.fn().mockResolvedValue({ isConnected: true })
 }));

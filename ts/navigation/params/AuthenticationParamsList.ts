@@ -29,4 +29,11 @@ export type AuthenticationParamsList = {
   [ROUTES.CIE_UNEXPECTED_ERROR]: undefined;
   [ROUTES.CIE_EXTENDED_APDU_NOT_SUPPORTED_SCREEN]: undefined;
   [ROUTES.CIE_WRONG_CARD_SCREEN]: undefined;
+  // Cie wizard screens
+  [ROUTES.AUTHENTICATION_CIE_ID_WIZARD]: undefined;
+  [ROUTES.AUTHENTICATION_CIE_PIN_WIZARD]: undefined;
+  [ROUTES.AUTHENTICATION_SPID_WIZARD]: undefined;
+  [ROUTES.AUTHENTICATION_ID_ACTIVATION_WIZARD]: undefined;
+  // CieID sign in Error
+  [ROUTES.AUTHENTICATION_CIE_ID_ERROR]: undefined;
 };

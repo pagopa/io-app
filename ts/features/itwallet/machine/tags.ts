@@ -1,3 +1,4 @@
 export enum ItwTags {
-  Loading = "Loading"
+  Loading = "Loading",
+  Issuing = "Issuing"
 }

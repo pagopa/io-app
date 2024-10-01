@@ -1,46 +1,34 @@
-import { useSelector } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { default as React } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
+import { IdPayPaymentMachineContext } from "../machine/provider";
+import { failureSelector, isCancelledSelector } from "../machine/selectors";
 import { PaymentFailureEnum } from "../types/PaymentFailure";
-import { usePaymentMachineService } from "../xstate/provider";
-import {
-  selectFailureOption,
-  selectIsCancelled,
-  selectIsFailure
-} from "../xstate/selectors";
 
 const IDPayPaymentResultScreen = () => {
-  const machine = usePaymentMachineService();
+  const { useActorRef, useSelector } = IdPayPaymentMachineContext;
+  const machine = useActorRef();
 
-  const failureOption = useSelector(machine, selectFailureOption);
-  const isCancelled = useSelector(machine, selectIsCancelled);
-  const isFailure = useSelector(machine, selectIsFailure);
+  const failureOption = useSelector(failureSelector);
+  const isCancelled = useSelector(isCancelledSelector);
 
   const defaultCloseAction = React.useMemo(
     () => ({
       label: I18n.t("global.buttons.close"),
       accessibilityLabel: I18n.t("global.buttons.close"),
-      onPress: () => machine.send({ type: "EXIT" })
+      onPress: () => machine.send({ type: "close" })
     }),
     [machine]
   );
 
-  if (isFailure) {
-    const failureContentProps = pipe(
-      failureOption,
-      O.map(mapFailureToContentProps),
-      O.getOrElse(() => genericErrorProps)
-    );
-
+  if (O.isSome(failureOption)) {
     return (
       <OperationResultScreenContent
-        {...failureContentProps}
+        {...mapFailureToContentProps(failureOption.value)}
         action={defaultCloseAction}
         testID="paymentFailureScreenTestID"
       />

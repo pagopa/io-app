@@ -1,13 +1,10 @@
+import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import {
-  TransitionPresets,
-  createStackNavigator
-} from "@react-navigation/stack";
-import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
+import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
+import AuthenticationNavigator from "./AuthenticationNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
-import AuthenticationNavigator from "./AuthenticationNavigator";
 
 const Stack = createStackNavigator<AppParamsList>();
 const NotAuthenticatedStackNavigator = () => (
@@ -20,11 +17,14 @@ const NotAuthenticatedStackNavigator = () => (
       component={AuthenticationNavigator}
     />
 
-    <Stack.Screen
-      name={ZENDESK_ROUTES.MAIN}
-      component={ZendeskStackNavigator}
-      options={{ ...TransitionPresets.ModalSlideFromBottomIOS }}
-    />
+    <Stack.Group
+      screenOptions={{ headerMode: "screen", presentation: "modal" }}
+    >
+      <Stack.Screen
+        name={ZENDESK_ROUTES.MAIN}
+        component={ZendeskStackNavigator}
+      />
+    </Stack.Group>
   </Stack.Navigator>
 );
 

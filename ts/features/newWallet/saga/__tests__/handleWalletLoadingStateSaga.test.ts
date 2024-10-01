@@ -1,7 +1,7 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { testSaga } from "redux-saga-test-plan";
 import { delay } from "typed-redux-saga";
-import { getActionType } from "xstate/lib/utils";
+import { getType } from "typesafe-actions";
 import { walletAddCards } from "../../store/actions/cards";
 import { walletToggleLoadingState } from "../../store/actions/placeholders";
 import { selectWalletCards } from "../../store/selectors";
@@ -50,7 +50,7 @@ describe("handleWalletLoadingStateSaga", () => {
       .isDone();
   });
 
-  it(`disables the loading state as soon as ${getActionType(
+  it(`disables the loading state as soon as ${getType(
     walletAddCards
   )} action is dispatched`, () => {
     testSaga(

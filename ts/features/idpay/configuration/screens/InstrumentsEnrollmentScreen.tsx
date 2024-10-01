@@ -3,8 +3,9 @@ import {
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { useSelector } from "@xstate/react";
+import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView } from "react-native";
 import AdviceComponent from "../../../../components/AdviceComponent";
@@ -12,106 +13,102 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import { Wallet } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { InstrumentEnrollmentSwitch } from "../components/InstrumentEnrollmentSwitch";
-import { IDPayConfigurationParamsList } from "../navigation/navigator";
-import { ConfigurationMode } from "../xstate/context";
-import { InitiativeFailureType } from "../xstate/failure";
-import { useConfigurationMachineService } from "../xstate/provider";
+import { IdPayConfigurationMachineContext } from "../machine/provider";
 import {
   failureSelector,
   initiativeInstrumentsByIdWalletSelector,
-  isLoadingSelector,
   isUpsertingInstrumentSelector,
   selectInitiativeDetails,
   selectIsInstrumentsOnlyMode,
   selectWalletInstruments
-} from "../xstate/selectors";
+} from "../machine/selectors";
+import { IdPayConfigurationParamsList } from "../navigation/params";
+import { ConfigurationMode } from "../types";
+import { InitiativeFailureType } from "../types/failure";
+import { isLoadingSelector } from "../../common/machine/selectors";
 
-type InstrumentsEnrollmentScreenRouteParams = {
+export type IdPayInstrumentsEnrollmentScreenParams = {
   initiativeId?: string;
 };
 
-type InstrumentsEnrollmentScreenRouteProps = RouteProp<
-  IDPayConfigurationParamsList,
+type RouteProps = RouteProp<
+  IdPayConfigurationParamsList,
   "IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT"
 >;
 
-const InstrumentsEnrollmentScreen = () => {
-  const route = useRoute<InstrumentsEnrollmentScreenRouteProps>();
-  const { initiativeId } = route.params;
+export const InstrumentsEnrollmentScreen = () => {
+  const navigation = useIONavigation();
+  const { params } = useRoute<RouteProps>();
+  const { initiativeId } = params;
+
+  const { useActorRef, useSelector } = IdPayConfigurationMachineContext;
+  const machine = useActorRef();
 
   const [stagedWalletId, setStagedWalletId] = React.useState<number>();
 
-  const configurationMachine = useConfigurationMachineService();
+  const isLoading = useSelector(isLoadingSelector);
+  const failure = useSelector(failureSelector);
 
-  const isLoading = useSelector(configurationMachine, isLoadingSelector);
-  const failure = useSelector(configurationMachine, failureSelector);
+  const initiativeDetails = useSelector(selectInitiativeDetails);
+  const isInstrumentsOnlyMode = useSelector(selectIsInstrumentsOnlyMode);
+  const walletInstruments = useSelector(selectWalletInstruments);
 
-  const initiativeDetails = useSelector(
-    configurationMachine,
-    selectInitiativeDetails
-  );
-  const isInstrumentsOnlyMode = useSelector(
-    configurationMachine,
-    selectIsInstrumentsOnlyMode
-  );
-
-  const walletInstruments = useSelector(
-    configurationMachine,
-    selectWalletInstruments
-  );
-
-  const isUpserting = useSelector(
-    configurationMachine,
-    isUpsertingInstrumentSelector
-  );
+  const isUpserting = useSelector(isUpsertingInstrumentSelector);
 
   const initiativeInstrumentsByIdWallet = useSelector(
-    configurationMachine,
     initiativeInstrumentsByIdWalletSelector
   );
 
   const hasSelectedInstruments =
     Object.keys(initiativeInstrumentsByIdWallet).length > 0;
 
-  React.useEffect(() => {
-    if (initiativeId) {
-      configurationMachine.send({
-        type: "START_CONFIGURATION",
-        initiativeId,
-        mode: ConfigurationMode.INSTRUMENTS
-      });
-    }
-  }, [configurationMachine, initiativeId]);
+  useFocusEffect(
+    React.useCallback(() => {
+      if (initiativeId) {
+        machine.send({
+          type: "start-configuration",
+          initiativeId,
+          mode: ConfigurationMode.INSTRUMENTS
+        });
+      }
+    }, [machine, initiativeId])
+  );
 
   React.useEffect(() => {
-    if (
-      failure === InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE ||
-      failure === InitiativeFailureType.INSTRUMENT_DELETE_FAILURE
-    ) {
-      setStagedWalletId(undefined);
-    }
+    pipe(
+      failure,
+      O.filter(
+        failure =>
+          failure === InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE ||
+          failure === InitiativeFailureType.INSTRUMENT_DELETE_FAILURE
+      ),
+      O.map(() => setStagedWalletId(undefined))
+    );
   }, [failure]);
 
-  const handleBackPress = () => configurationMachine.send({ type: "BACK" });
+  const handleBackPress = () => machine.send({ type: "back" });
 
-  const handleSkipButton = () => configurationMachine.send({ type: "SKIP" });
+  const handleSkipButton = () => machine.send({ type: "skip-instruments" });
 
-  const handleContinueButton = () =>
-    configurationMachine.send({ type: "NEXT" });
+  const handleContinueButton = () => machine.send({ type: "next" });
 
   const handleAddPaymentMethodButton = () =>
-    configurationMachine.send({ type: "ADD_PAYMENT_METHOD" });
+    navigation.replace(ROUTES.WALLET_NAVIGATOR, {
+      screen: ROUTES.WALLET_ADD_PAYMENT_METHOD,
+      params: { inPayment: O.none }
+    });
 
   const handleEnrollConfirm = () => {
     if (stagedWalletId) {
-      configurationMachine.send({
-        type: "ENROLL_INSTRUMENT",
+      machine.send({
+        type: "enroll-instrument",
         walletId: stagedWalletId.toString()
       });
       setStagedWalletId(undefined);
@@ -232,22 +229,24 @@ const InstrumentsEnrollmentScreen = () => {
     );
   };
 
-  useNavigationSwipeBackListener(() => {
-    configurationMachine.send({ type: "BACK", skipNavigation: true });
-  });
-
   const handleInstrumentValueChange = (wallet: Wallet) => (value: boolean) => {
     if (value) {
       setStagedWalletId(wallet.idWallet);
     } else {
       const instrument = initiativeInstrumentsByIdWallet[wallet.idWallet];
-      configurationMachine.send({
-        type: "DELETE_INSTRUMENT",
+      machine.send({
+        type: "delete-instrument",
         instrumentId: instrument.instrumentId,
         walletId: wallet.idWallet.toString()
       });
     }
   };
+
+  const initiativeName = pipe(
+    initiativeDetails,
+    O.map(i => i.initiativeName),
+    O.toUndefined
+  );
 
   return (
     <>
@@ -269,7 +268,7 @@ const InstrumentsEnrollmentScreen = () => {
             <VSpacer size={8} />
             <Body>
               {I18n.t("idpay.configuration.instruments.body", {
-                initiativeName: initiativeDetails?.initiativeName ?? ""
+                initiativeName
               })}
             </Body>
             <VSpacer size={24} />
@@ -296,7 +295,3 @@ const InstrumentsEnrollmentScreen = () => {
     </>
   );
 };
-
-export type { InstrumentsEnrollmentScreenRouteParams };
-
-export default InstrumentsEnrollmentScreen;

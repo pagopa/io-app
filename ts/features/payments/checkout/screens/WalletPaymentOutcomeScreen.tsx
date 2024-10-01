@@ -38,6 +38,7 @@ import { paymentCompletedSuccess } from "../store/actions/orchestration";
 import { walletPaymentSelectedPspSelector } from "../store/selectors/psps";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -123,6 +124,7 @@ const WalletPaymentOutcomeScreen = () => {
       onSuccessAction === "showHome" ||
       onSuccessAction === "showTransaction"
     ) {
+      dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
       // Currently we do support only navigation to the wallet
       // TODO navigate to the transaction details if payment outcome is success
       navigation.popToTop();
@@ -210,7 +212,6 @@ const WalletPaymentOutcomeScreen = () => {
     if (kind && rptId) {
       dispatch(paymentCompletedSuccess({ rptId, kind }));
     }
-
     trackOutcomeScreen();
   });
 
@@ -223,7 +224,8 @@ const WalletPaymentOutcomeScreen = () => {
         amount: paymentAnalyticsData?.formattedAmount,
         expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
         payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
-        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        saved_payment_method:
+          paymentAnalyticsData?.savedPaymentMethods?.length || 0,
         selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
         data_entry: paymentAnalyticsData?.startOrigin
       });
