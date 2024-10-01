@@ -31,7 +31,7 @@ jest.mock("react-native-reanimated", () => {
 
   // The mock misses the `addWhitelistedUIProps` implementation
   // So we override it with a no-op
-  // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function
+  // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function, prettier/prettier
   Reanimated.default.addWhitelistedUIProps = () => { };
 
   return {
@@ -174,3 +174,10 @@ jest.mock("@pagopa/io-app-design-system", () => {
 jest
   .spyOn(AccessibilityInfo, "isBoldTextEnabled")
   .mockImplementation(() => Promise.resolve(false));
+
+/**
+ * NefInfo's `fetch` method mock
+ */
+jest.mock("@react-native-community/netinfo", () => ({
+  fetch: jest.fn().mockResolvedValue({ isConnected: true })
+}));
