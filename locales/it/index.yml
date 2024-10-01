@@ -3289,7 +3289,8 @@ features:
           1: I dati saranno condivisi solo per il tempo necessario al rilascio della credenziale.
         tos: "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione)."
       eidPreview:
-        title: "Stiamo aggiungendo i seguenti dati al Portafoglio:"
+        title: Identità verificata
+        subtitle: "Stai attivando **Documenti su IO** come:"
         actions:
           primary: Continua
           secondary: Annulla
