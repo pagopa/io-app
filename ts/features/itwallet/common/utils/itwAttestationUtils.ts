@@ -84,5 +84,5 @@ export const isWalletInstanceAttestationValid = (
   const { payload } = WalletInstanceAttestation.decode(attestation);
   const expiryDate = new Date(payload.exp * 1000);
   const now = new Date();
-  return now > expiryDate;
+  return now < expiryDate;
 };

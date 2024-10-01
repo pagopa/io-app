@@ -21,7 +21,8 @@ import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
 import type { CieAuthContext, IdentificationContext } from "./context";
 
-export type InitializeWalletActorOutput = {
+export type OnInitActorOutput = {
+  integrityKeyTag: string | undefined;
   wiaCryptoContext: CryptoContext;
   walletInstanceAttestation: string | undefined;
 };
@@ -51,17 +52,20 @@ export type GetWalletAttestationActorParams = {
 export const createEidIssuanceActorsImplementation = (
   store: ReturnType<typeof useIOStore>
 ) => ({
-  initializeWallet: fromPromise<InitializeWalletActorOutput>(async () => {
+  onInit: fromPromise<OnInitActorOutput>(async () => {
     const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
     const walletInstanceAttestation = itwWalletInstanceAttestationSelector(
       store.getState()
     );
+    const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(store.getState());
 
     return {
+      integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
       wiaCryptoContext,
       walletInstanceAttestation
     };
   }),
+
   createWalletInstance: fromPromise<string>(async () => {
     const sessionToken = sessionTokenSelector(store.getState());
     assert(sessionToken, "sessionToken is undefined");

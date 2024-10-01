@@ -10,7 +10,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
   GetWalletAttestationActorParams,
-  InitializeWalletActorOutput,
+  OnInitActorOutput,
   StartCieAuthFlowActorParams,
   type RequestEidActorParams
 } from "./actors";
@@ -56,7 +56,7 @@ export const itwEidIssuanceMachine = setup({
     abortIdentification: notImplemented
   },
   actors: {
-    initializeWallet: fromPromise<InitializeWalletActorOutput>(notImplemented),
+    onInit: fromPromise<OnInitActorOutput>(notImplemented),
     createWalletInstance: fromPromise<string>(notImplemented),
     getWalletAttestation: fromPromise<
       WalletAttestationResult,
@@ -84,22 +84,19 @@ export const itwEidIssuanceMachine = setup({
 }).createMachine({
   id: "itwEidIssuanceMachine",
   context: InitialContext,
-  initial: "Init",
-  states: {
-    Init: {
-      description: "Initializes and prepares the machine context",
-      entry: assign(() => InitialContext),
-      invoke: {
-        src: "initializeWallet",
-        onDone: {
-          actions: assign(({ event }) => ({
-            wiaCryptoContext: event.output.wiaCryptoContext,
-            walletInstanceAttestation: event.output.walletInstanceAttestation
-          })),
-          target: "Idle"
-        }
-      }
+  initial: "Idle",
+  invoke: {
+    src: "onInit",
+    onDone: {
+      actions: assign(({ event }) => ({
+        integrityKeyTag: event.output.integrityKeyTag,
+        wiaCryptoContext: event.output.wiaCryptoContext,
+        walletInstanceAttestation: event.output.walletInstanceAttestation
+      }))
     },
+    target: ".Idle"
+  },
+  states: {
     Idle: {
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
@@ -171,7 +168,9 @@ export const itwEidIssuanceMachine = setup({
             assign(({ event }) => ({
               walletInstanceAttestation: event.output.walletAttestation
             })),
-            "storeWalletInstanceAttestation"
+            {
+              type: "storeWalletInstanceAttestation"
+            }
           ],
           target: "UserIdentification"
         },
@@ -419,7 +418,7 @@ export const itwEidIssuanceMachine = setup({
           actions: "navigateToWallet"
         },
         reset: {
-          target: "Init"
+          target: "Idle"
         }
       }
     },
@@ -430,7 +429,7 @@ export const itwEidIssuanceMachine = setup({
           actions: ["closeIssuance"]
         },
         reset: {
-          target: "Init"
+          target: "Idle"
         }
       }
     },
