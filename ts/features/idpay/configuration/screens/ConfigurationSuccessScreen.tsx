@@ -1,6 +1,3 @@
-import React from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import { useSelector } from "@xstate/react";
 import {
   Body,
   ButtonOutline,
@@ -10,38 +7,39 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import React from "react";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import themeVariables from "../../../../theme/variables";
-import { useConfigurationMachineService } from "../xstate/provider";
+import { IdPayConfigurationMachineContext } from "../machine/provider";
 import {
   selectAreInstrumentsSkipped,
   selectInitiativeDetails
-} from "../xstate/selectors";
+} from "../machine/selectors";
 
-const ConfigurationSuccessScreen = () => {
-  const configurationMachine = useConfigurationMachineService();
+export const ConfigurationSuccessScreen = () => {
+  const navigation = useIONavigation();
+  const { useActorRef, useSelector } = IdPayConfigurationMachineContext;
+  const machine = useActorRef();
 
-  const initiativeDetails = useSelector(
-    configurationMachine,
-    selectInitiativeDetails
-  );
-
-  const areInstrumentsSkipped = useSelector(
-    configurationMachine,
-    selectAreInstrumentsSkipped
-  );
+  const initiativeDetails = useSelector(selectInitiativeDetails);
+  const areInstrumentsSkipped = useSelector(selectAreInstrumentsSkipped);
 
   if (initiativeDetails === undefined) {
     return null;
   }
 
-  const { initiativeName } = initiativeDetails;
-
-  const handleNavigateToInitiativePress = () =>
-    configurationMachine.send({ type: "COMPLETE_CONFIGURATION" });
+  const handleNavigateToInitiativePress = () => machine.send({ type: "next" });
 
   const handleAddPaymentMethodButtonPress = () =>
-    configurationMachine.send({ type: "ADD_PAYMENT_METHOD" });
+    navigation.replace(ROUTES.WALLET_NAVIGATOR, {
+      screen: ROUTES.WALLET_ADD_PAYMENT_METHOD,
+      params: { inPayment: O.none }
+    });
 
   const renderButtons = () => {
     if (areInstrumentsSkipped) {
@@ -86,6 +84,12 @@ const ConfigurationSuccessScreen = () => {
     );
   };
 
+  const initiativeName = pipe(
+    initiativeDetails,
+    O.map(i => i.initiativeName),
+    O.toUndefined
+  );
+
   return (
     <SafeAreaView style={IOStyles.flex}>
       <View style={[IOStyles.horizontalContentPadding, styles.container]}>
@@ -125,5 +129,3 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
-
-export default ConfigurationSuccessScreen;
