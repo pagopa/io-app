@@ -1,23 +1,25 @@
 import {
+  ButtonLink,
+  ContentWrapper,
   Divider,
-  FooterWithButtons,
-  IOColors,
-  IOIconSizeScale,
   IOToast,
-  Icon,
+  IOVisualCostants,
+  ListItemHeader,
+  ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
-import { default as React, useCallback, useEffect } from "react";
-import { Platform, SafeAreaView, ScrollView, View } from "react-native";
-import { H1 } from "../../../components/core/typography/H1";
-import { H3 } from "../../../components/core/typography/H3";
-import { H4 } from "../../../components/core/typography/H4";
-import { Link } from "../../../components/core/typography/Link";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import _ from "lodash";
+import {
+  ComponentProps,
+  default as React,
+  useCallback,
+  useEffect
+} from "react";
+import { FlatList, ListRenderItemInfo, Platform } from "react-native";
+import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import { zendeskPrivacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
@@ -58,9 +60,6 @@ import {
   zendeskidentityProviderId
 } from "../../../utils/supportAssistance";
 import { handleItemOnPress, openWebUrl } from "../../../utils/url";
-import ZendeskItemPermissionComponent, {
-  ItemPermissionProps
-} from "../components/ZendeskItemPermissionComponent";
 import { ZendeskParamsList } from "../navigation/params";
 import {
   zendeskStopPolling,
@@ -78,113 +77,13 @@ import {
  */
 const arrayToZendeskValue = (arr: Array<string>) => arr.join(", ");
 
-type ItemProps = {
-  fiscalCode: string;
-  nameSurname: string;
-  email: string;
-  deviceDescription: string;
-  identityProvider: string;
+export type ItemPermissionProps = Pick<
+  ComponentProps<typeof ListItemInfo>,
+  "testID" | "label" | "value" | "icon"
+> & {
+  id?: string;
+  zendeskID?: string;
 };
-
-const iconStyleProps = {
-  size: 24 as IOIconSizeScale,
-  color: "blue" as IOColors
-};
-
-const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
-  {
-    id: "profileNameSurname",
-    icon: <Icon name="profile" {...iconStyleProps} />,
-    title: I18n.t("support.askPermissions.nameSurname"),
-    value: props.nameSurname,
-    testId: "profileNameSurname"
-  },
-  {
-    id: "profileFiscalCode",
-    icon: <Icon name="fiscalCodeIndividual" {...iconStyleProps} />,
-    title: I18n.t("support.askPermissions.fiscalCode"),
-    value: props.fiscalCode,
-    testId: "profileFiscalCode"
-  },
-  {
-    id: "profileEmail",
-    icon: <Icon name="email" {...iconStyleProps} />,
-    title: I18n.t("support.askPermissions.emailAddress"),
-    value: props.email,
-    testId: "profileEmail"
-  },
-  {
-    id: "galleryProminentDisclosure",
-    icon: <Icon name="gallery" {...iconStyleProps} />,
-    title: I18n.t("support.askPermissions.prominentDisclosure"),
-    value: I18n.t("support.askPermissions.prominentDisclosureData"),
-    testId: "galleryProminentDisclosure"
-  },
-  {
-    id: "paymentIssues",
-    icon: <Icon name="docGiacenza" {...iconStyleProps} />,
-    title: I18n.t("support.askPermissions.stock"),
-    value: I18n.t("support.askPermissions.stockValue"),
-    testId: "paymentIssues"
-  },
-  {
-    id: "addCardIssues",
-    icon: <Icon name="creditCard" {...iconStyleProps} />,
-    title: I18n.t("support.askPermissions.card"),
-    value: I18n.t("support.askPermissions.cardValue"),
-    testId: "addCardIssues"
-  },
-  {
-    id: "addFciIssues",
-    icon: <Icon name="docGiacenza" {...iconStyleProps} />,
-    title: I18n.t("support.askPermissions.fci"),
-    value: I18n.t("support.askPermissions.fciValue"),
-    testId: "addFciIssues"
-  },
-  {
-    icon: <Icon name="device" {...iconStyleProps} />,
-    title: I18n.t("support.askPermissions.deviceAndOS"),
-    value: props.deviceDescription,
-    zendeskId: zendeskDeviceAndOSId,
-    testId: "deviceAndOS"
-  },
-  {
-    icon: <Icon name="battery" {...iconStyleProps} />,
-    title: I18n.t("support.askPermissions.devicePerformance"),
-    value: Platform.select({
-      ios: I18n.t("support.askPermissions.devicePerformanceDataiOS", {
-        storage: formatBytesWithUnit(getFreeDiskStorage())
-      }),
-      android: I18n.t("support.askPermissions.devicePerformanceDataAndroid")
-    }),
-    testId: "devicePerformance"
-  },
-  {
-    icon: <Icon name="website" {...iconStyleProps} />,
-    title: I18n.t("support.askPermissions.ipAddress"),
-    value: I18n.t("support.askPermissions.ipAddressValue"),
-    testId: "ipAddress"
-  },
-  {
-    icon: <Icon name="info" {...iconStyleProps} />,
-    title: I18n.t("support.askPermissions.appVersionsHistory"),
-    value: I18n.t("support.askPermissions.appVersionsHistoryValue"),
-    testId: "appVersionsHistory"
-  },
-  {
-    icon: <Icon name="login" {...iconStyleProps} />,
-    title: I18n.t("support.askPermissions.identityProvider"),
-    value: props.identityProvider,
-    zendeskId: zendeskidentityProviderId,
-    testId: "identityProvider"
-  },
-  {
-    icon: <Icon name="history" {...iconStyleProps} />,
-    title: I18n.t("support.askPermissions.navigationData"),
-    value: I18n.t("support.askPermissions.navigationDataValue"),
-    testId: "navigationData"
-  }
-];
 
 export type ZendeskAskPermissionsNavigationParams = {
   assistanceForPayment: boolean;
@@ -212,7 +111,7 @@ const ZendeskAskPermissions = () => {
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
   const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
   const identityProvider = pipe(
-    useIOSelector(idpSelector),
+    useIOSelector(idpSelector, _.isEqual),
     O.map(idp => idp.name),
     O.getOrElse(() => notAvailable)
   );
@@ -229,6 +128,8 @@ const ZendeskAskPermissions = () => {
   const zendeskSelectedSubcategory = useIOSelector(
     zendeskSelectedSubcategorySelector
   );
+  // TODO: beware while doing this task IOPID-2055 because
+  // now the zendeskToken could be undefined also if you are logged in!
   const zendeskToken = useIOSelector(zendeskTokenSelector);
 
   useEffect(() => {
@@ -247,15 +148,102 @@ const ZendeskAskPermissions = () => {
 
   const currentVersion = getAppVersion();
 
-  const itemsProps: ItemProps = {
-    fiscalCode,
-    nameSurname,
-    email,
-    deviceDescription: `${getModel()} · ${
-      isIos ? "iOS" : "Android"
-    } · ${getSystemVersion()}`,
-    identityProvider
-  };
+  const permissionItems: ReadonlyArray<ItemPermissionProps> = [
+    {
+      id: "profileNameSurname",
+      icon: "profile",
+      label: I18n.t("support.askPermissions.nameSurname"),
+      value: nameSurname,
+      testID: "profileNameSurname"
+    },
+    {
+      id: "profileFiscalCode",
+      icon: "fiscalCodeIndividual",
+      label: I18n.t("support.askPermissions.fiscalCode"),
+      value: fiscalCode,
+      testID: "profileFiscalCode"
+    },
+    {
+      id: "profileEmail",
+      icon: "email",
+      label: I18n.t("support.askPermissions.emailAddress"),
+      value: email,
+      testID: "profileEmail"
+    },
+    {
+      id: "galleryProminentDisclosure",
+      icon: "gallery",
+      label: I18n.t("support.askPermissions.prominentDisclosure"),
+      value: I18n.t("support.askPermissions.prominentDisclosureData"),
+      testID: "galleryProminentDisclosure"
+    },
+    {
+      id: "paymentIssues",
+      icon: "docGiacenza",
+      label: I18n.t("support.askPermissions.stock"),
+      value: I18n.t("support.askPermissions.stockValue"),
+      testID: "paymentIssues"
+    },
+    {
+      id: "addCardIssues",
+      icon: "creditCard",
+      label: I18n.t("support.askPermissions.card"),
+      value: I18n.t("support.askPermissions.cardValue"),
+      testID: "addCardIssues"
+    },
+    {
+      id: "addFciIssues",
+      icon: "docGiacenza",
+      label: I18n.t("support.askPermissions.fci"),
+      value: I18n.t("support.askPermissions.fciValue"),
+      testID: "addFciIssues"
+    },
+    {
+      icon: "device",
+      label: I18n.t("support.askPermissions.deviceAndOS"),
+      value: `${getModel()} · ${
+        isIos ? "iOS" : "Android"
+      } ${getSystemVersion()}`,
+      zendeskID: zendeskDeviceAndOSId,
+      testID: "deviceAndOS"
+    },
+    {
+      icon: "battery",
+      label: I18n.t("support.askPermissions.devicePerformance"),
+      value: Platform.select({
+        ios: I18n.t("support.askPermissions.devicePerformanceDataiOS", {
+          storage: formatBytesWithUnit(getFreeDiskStorage())
+        }),
+        android: I18n.t("support.askPermissions.devicePerformanceDataAndroid")
+      }),
+      testID: "devicePerformance"
+    },
+    {
+      icon: "website",
+      label: I18n.t("support.askPermissions.ipAddress"),
+      value: I18n.t("support.askPermissions.ipAddressValue"),
+      testID: "ipAddress"
+    },
+    {
+      icon: "info",
+      label: I18n.t("support.askPermissions.appVersionsHistory"),
+      value: I18n.t("support.askPermissions.appVersionsHistoryValue"),
+      testID: "appVersionsHistory"
+    },
+    {
+      icon: "login",
+      label: I18n.t("support.askPermissions.identityProvider"),
+      value: identityProvider,
+      zendeskID: zendeskidentityProviderId,
+      testID: "identityProvider"
+    },
+    {
+      icon: "history",
+      label: I18n.t("support.askPermissions.navigationData"),
+      value: I18n.t("support.askPermissions.navigationDataValue"),
+      testID: "navigationData"
+    }
+  ];
 
   // It should never happens since it is selected in the previous screen
   if (zendeskSelectedCategory === undefined) {
@@ -277,7 +265,8 @@ const ZendeskAskPermissions = () => {
     // if the OS is IOS remove the item related to the gallery prominent disclosure
     ...(isIos ? ["galleryProminentDisclosure"] : [])
   ];
-  const items = getItems(itemsProps)
+
+  const items = permissionItems
     .filter(it => (!assistanceForPayment ? it.id !== "paymentIssues" : true))
     .filter(it => (!assistanceForCard ? it.id !== "addCardIssues" : true))
     .filter(it => (!assistanceForFci ? it.id !== "addFciIssues" : true))
@@ -309,8 +298,8 @@ const ZendeskAskPermissions = () => {
   const handleOnContinuePress = () => {
     // Set custom fields
     items.forEach(it => {
-      if (it.value !== undefined && it.zendeskId !== undefined) {
-        addTicketCustomField(it.zendeskId, it.value);
+      if (it.value !== undefined && it.zendeskID !== undefined) {
+        addTicketCustomField(it.zendeskID, it.value as string);
       }
     });
 
@@ -334,66 +323,71 @@ const ZendeskAskPermissions = () => {
     workUnitCompleted();
   };
 
-  return (
-    <BaseScreenComponent
-      showChat={false}
-      goBack={true}
-      headerTitle={I18n.t("support.askPermissions.header")}
-    >
-      <SafeAreaView style={IOStyles.flex} testID={"ZendeskAskPermissions"}>
-        <ScrollView>
-          <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-            <H1>{I18n.t("support.askPermissions.title")}</H1>
-            <VSpacer size={16} />
-            <H4 weight={"Regular"}>{I18n.t("support.askPermissions.body")}</H4>
-            <VSpacer size={4} />
-            <Link
-              onPress={() => {
-                openWebUrl(zendeskPrivacyUrl, () =>
-                  IOToast.error(I18n.t("global.jserror.title"))
-                );
-              }}
-            >
-              {I18n.t("support.askPermissions.privacyLink")}
-            </Link>
-            <VSpacer size={8} />
-            <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
+  const buttonConf: ComponentProps<
+    typeof IOScrollViewWithLargeHeader
+  >["actions"] = {
+    type: "TwoButtons",
+    primary: {
+      label: I18n.t("support.askPermissions.cta.allow"),
+      testID: "continueButtonId",
+      onPress: handleOnContinuePress
+    },
+    secondary: {
+      label: I18n.t("support.askPermissions.cta.denies"),
+      testID: "cancelButtonId",
+      onPress: handleOnCancel
+    }
+  };
 
-            {/* TODO: Replace this chunk with `FlatList` to avoid manual control on Divider */}
-            {items.map((item, idx, arr) => (
-              <>
-                <ZendeskItemPermissionComponent
-                  key={`permission_item_${idx}`}
-                  {...item}
-                />
-                {idx !== arr.length - 1 && <Divider />}
-              </>
-            ))}
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-      <FooterWithButtons
-        type="TwoButtonsInlineHalf"
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            label: I18n.t("support.askPermissions.cta.denies"),
-            accessibilityLabel: I18n.t("support.askPermissions.cta.denies"),
-            testID: "cancelButtonId",
-            onPress: handleOnCancel
-          }
+  const renderPermissionItem = ({
+    item
+  }: ListRenderItemInfo<ItemPermissionProps>) => (
+    <ListItemInfo
+      testID={item?.testID}
+      label={item?.label}
+      value={item?.value}
+      icon={item?.icon}
+    />
+  );
+
+  return (
+    <IOScrollViewWithLargeHeader
+      title={{
+        label: I18n.t("support.askPermissions.title"),
+        section: I18n.t("support.askPermissions.header")
+      }}
+      testID={"ZendeskAskPermissions"}
+      description={I18n.t("support.askPermissions.body")}
+      ignoreSafeAreaMargin={true}
+      actions={buttonConf}
+    >
+      <ContentWrapper>
+        <ButtonLink
+          label={I18n.t("support.askPermissions.privacyLink")}
+          onPress={() => {
+            openWebUrl(zendeskPrivacyUrl, () =>
+              IOToast.error(I18n.t("global.jserror.title"))
+            );
+          }}
+        />
+      </ContentWrapper>
+
+      <VSpacer size={16} />
+
+      <FlatList
+        scrollEnabled={false}
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
-        secondary={{
-          type: "Solid",
-          buttonProps: {
-            label: I18n.t("support.askPermissions.cta.allow"),
-            accessibilityLabel: I18n.t("support.askPermissions.cta.allow"),
-            testID: "continueButtonId",
-            onPress: handleOnContinuePress
-          }
-        }}
+        ListHeaderComponent={
+          <ListItemHeader label={I18n.t("support.askPermissions.listHeader")} />
+        }
+        data={items}
+        keyExtractor={(item, idx) => `permission_item_${item}_${idx}`}
+        renderItem={renderPermissionItem}
+        ItemSeparatorComponent={() => <Divider />}
       />
-    </BaseScreenComponent>
+    </IOScrollViewWithLargeHeader>
   );
 };
 

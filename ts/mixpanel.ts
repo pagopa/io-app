@@ -4,8 +4,7 @@ import { getDeviceId } from "./utils/device";
 import { GlobalState } from "./store/reducers/types";
 import { updateMixpanelSuperProperties } from "./mixpanelConfig/superProperties";
 import { updateMixpanelProfileProperties } from "./mixpanelConfig/profileProperties";
-
-// eslint-disable-next-line
+// eslint-disable-next-line functional/no-let
 export let mixpanel: Mixpanel | undefined;
 
 /**

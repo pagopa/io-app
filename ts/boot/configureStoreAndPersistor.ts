@@ -43,10 +43,6 @@ import {
 } from "../store/reducers/installation";
 import { NotificationsState } from "../features/pushNotifications/store/reducers";
 import { getInitialState as getInstallationInitialState } from "../features/pushNotifications/store/reducers/installation";
-import {
-  itwCredentialsPersistConfig,
-  itwPersistConfig
-} from "../features/itwallet/common/store/reducers";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { walletsPersistConfig } from "../store/reducers/wallet";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
@@ -57,7 +53,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 33;
+const CURRENT_REDUX_STORE_VERSION = 36;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -430,7 +426,21 @@ const migrations: MigrationManifest = {
   // Version 33
   // Removes it wallet section FF
   "33": (state: PersistedState) =>
-    omit(state, "persistedPreferences.isItWalletTestEnabled")
+    omit(state, "persistedPreferences.isItWalletTestEnabled"),
+  // removes show scan section and hide profile local FF
+  "34": (state: PersistedState) =>
+    omit(state, "persistedPreferences.isNewScanSectionEnabled"),
+  // as a result of the PR revert, the data above was reinserted
+  // PR: https://github.com/pagopa/io-app/pull/6145
+  "35": (state: PersistedState) =>
+    merge(state, {
+      persistedPreferences: {
+        isNewScanSectionEnabled: false
+      }
+    }),
+  // Remove isNewScanSectionEnabled from persistedPreferences
+  "36": (state: PersistedState) =>
+    omit(state, "persistedPreferences.isNewScanSectionEnabled")
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
@@ -468,9 +478,7 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
     rootPersistConfig,
     authenticationPersistConfig,
     walletsPersistConfig,
-    entitiesPersistConfig,
-    itwPersistConfig,
-    itwCredentialsPersistConfig
+    entitiesPersistConfig
   ])
 );
 
@@ -529,7 +537,7 @@ function configureStoreAndPersistor(): {
   const persistor = persistStore(store);
 
   if (isDebuggingInChrome) {
-    // eslint-disable-next-line
+    // eslint-disable-next-line functional/immutable-data
     (window as any).store = store;
   }
 

@@ -1,4 +1,4 @@
-import { assign, fromPromise, setup } from "xstate5";
+import { assign, fromPromise, setup, or } from "xstate";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { WalletAttestationResult } from "../../common/utils/itwAttestationUtils";
 import { assert } from "../../../../utils/assert";
@@ -43,11 +43,10 @@ export const itwEidIssuanceMachine = setup({
       notImplemented(),
     storeEidCredential: notImplemented,
     closeIssuance: notImplemented,
-    requestAssistance: notImplemented,
     setWalletInstanceToOperational: notImplemented,
     setWalletInstanceToValid: notImplemented,
-    disposeWalletAttestation: notImplemented,
-    handleSessionExpired: notImplemented
+    handleSessionExpired: notImplemented,
+    abortIdentification: notImplemented
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
@@ -65,7 +64,8 @@ export const itwEidIssuanceMachine = setup({
   guards: {
     isNativeAuthSessionClosed: notImplemented,
     issuedEidMatchesAuthenticatedUser: notImplemented,
-    isSessionExpired: notImplemented
+    isSessionExpired: notImplemented,
+    isOperationAborted: notImplemented
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -176,7 +176,12 @@ export const itwEidIssuanceMachine = setup({
               },
               {
                 guard: ({ event }) => event.mode === "cieId",
-                actions: assign(() => ({ identification: { mode: "cieId" } })),
+                actions: assign(() => ({
+                  identification: {
+                    mode: "cieId",
+                    abortController: new AbortController()
+                  }
+                })),
                 target: "#itwEidIssuanceMachine.UserIdentification.Completed"
               }
             ],
@@ -315,6 +320,9 @@ export const itwEidIssuanceMachine = setup({
       initial: "RequestingEid",
       states: {
         RequestingEid: {
+          on: {
+            abort: { actions: "abortIdentification" }
+          },
           tags: [ItwTags.Loading],
           invoke: {
             src: "requestEid",
@@ -329,7 +337,7 @@ export const itwEidIssuanceMachine = setup({
             },
             onError: [
               {
-                guard: "isNativeAuthSessionClosed",
+                guard: or(["isNativeAuthSessionClosed", "isOperationAborted"]),
                 target: "#itwEidIssuanceMachine.UserIdentification"
               },
               {
@@ -359,15 +367,11 @@ export const itwEidIssuanceMachine = setup({
         DisplayingPreview: {
           on: {
             "add-to-wallet": {
-              actions: [
-                "storeEidCredential",
-                "setWalletInstanceToValid",
-                "disposeWalletAttestation"
-              ],
+              actions: ["storeEidCredential", "setWalletInstanceToValid"],
               target: "#itwEidIssuanceMachine.Success"
             },
             close: {
-              actions: ["closeIssuance", "disposeWalletAttestation"]
+              actions: ["closeIssuance"]
             }
           }
         }
@@ -391,10 +395,7 @@ export const itwEidIssuanceMachine = setup({
       entry: "navigateToFailureScreen",
       on: {
         close: {
-          actions: ["closeIssuance", "disposeWalletAttestation"]
-        },
-        "request-assistance": {
-          actions: "requestAssistance"
+          actions: ["closeIssuance"]
         },
         reset: {
           target: "Idle"

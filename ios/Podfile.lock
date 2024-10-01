@@ -104,7 +104,7 @@ PODS:
     - JOSESwift (~> 2.3)
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - pagopa-io-react-native-login-utils (1.0.4):
+  - pagopa-io-react-native-login-utils (1.0.5):
     - React-Core
   - pagopa-react-native-zendesk (0.3.29):
     - RCT-Folly (= 2021.07.22.00)
@@ -435,6 +435,8 @@ PODS:
     - React-Core
   - react-native-image-picker (4.10.3):
     - React-Core
+  - react-native-netinfo (6.0.6):
+    - React-Core
   - react-native-pager-view (6.2.3):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -448,7 +450,7 @@ PODS:
     - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
     - React
-  - react-native-skia (1.3.9):
+  - react-native-skia (1.3.13):
     - RCT-Folly (= 2021.07.22.00)
     - React
     - React-callinvoker
@@ -613,16 +615,17 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTImage
-  - RNSentry (5.22.2):
+  - RNSentry (5.32.0):
     - hermes-engine
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-hermes
-    - Sentry/HybridSDK (= 8.25.0)
+    - Sentry/HybridSDK (= 8.36.0)
   - RNShare (10.2.1):
     - React-Core
   - RNSVG (15.1.0):
     - React-Core
-  - Sentry/HybridSDK (8.25.0)
+  - Sentry/HybridSDK (8.36.0)
   - SocketRocket (0.6.1)
   - SwiftCBOR (0.4.7)
   - VisionCamera (3.9.2):
@@ -724,6 +727,7 @@ DEPENDENCIES:
   - react-native-flipper (from `../node_modules/react-native-flipper`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-pdf-thumbnail (from `../node_modules/react-native-pdf-thumbnail`)
@@ -892,6 +896,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-get-random-values"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-pdf:
@@ -1023,7 +1029,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-http-client: cbdfb83c92432efb0de22b7c3c85cffa391870f8
   pagopa-io-react-native-integrity: ca77804cefb1cd75d04053652472bcb938ce4b18
   pagopa-io-react-native-jwt: 662d4e722715996758b079774abea1996b057467
-  pagopa-io-react-native-login-utils: 5e34d0d51cc56f480747dd3aa1eb5563d294e815
+  pagopa-io-react-native-login-utils: c7e8a4908c1239ce834fe1d16dd22ccc7c7f5536
   pagopa-react-native-zendesk: 60a26f8a8072234789c34bb7c8a769c156eb57dc
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 264adaca1d8b1a9c078761891898d4142df05313
@@ -1050,13 +1056,14 @@ SPEC CHECKSUMS:
   react-native-flipper: 97d537d855e0e7f6ac26a065e01bf1aecc8ba41c
   react-native-get-random-values: 21325b2244dfa6b58878f51f9aa42821e7ba3d06
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
+  react-native-netinfo: 40b91995cd49c33ae57996486db76f0af067b630
   react-native-pager-view: 948dc00b6545d82b53e5f99cafef4a8521c60dd4
   react-native-pdf: 79aa75e39a80c1d45ffe58aa500f3cf08f267a2e
   react-native-pdf-thumbnail: a042fffdab7a49f0f9df0e11da0a90beebfd4241
   react-native-render-html: 96c979fe7452a0a41559685d2f83b12b93edac8c
   react-native-safe-area-context: 399a5859f6acbdf67f671c69b53113f535f3b5b0
   react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
-  react-native-skia: c06ca6074cc70bfe1ec8c45dcc82e76079805fd7
+  react-native-skia: c0d99aa1fb10f6d97627c1dc018c0ab269439a76
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-view-shot: 4475fde003fe8a210053d1f98fb9e06c1d834e1c
@@ -1095,10 +1102,10 @@ SPEC CHECKSUMS:
   RNReactNativeHapticFeedback: 6d24decfa94e037c2ecc312407d2a057b7933f10
   RNReanimated: 108a53626a492df35db30b98fc922a7189d1c601
   RNScreens: b8d370282cdeae9df85dd5eab20c88eb5181243b
-  RNSentry: f6a5aee809d646763640130714d1fdfe69aac36b
+  RNSentry: 3e667c2c6ea5d35ea292c7f262c6b44e43842cc1
   RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
   RNSVG: 50cf2c7018e57cf5d3522d98d0a3a4dd6bf9d093
-  Sentry: cd86fc55628f5b7c572cabe66cc8f95a9d2f165a
+  Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   SwiftCBOR: 465775bed0e8bac7bfb8160bcf7b95d7f75971e4
   VisionCamera: 36c460338692788a0d377dce7d32f8ba049fb4f2

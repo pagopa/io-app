@@ -17,7 +17,6 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
@@ -26,7 +25,7 @@ import {
 } from "../../../store/reducers/backendStatus";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
+import { IdPayPaymentRoutes } from "../../idpay/payment/navigation/routes";
 import { PaymentsCheckoutRoutes } from "../../payments/checkout/navigation/routes";
 import * as analytics from "../analytics";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
@@ -44,12 +43,15 @@ import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
 import { PaymentsBarcodeRoutes } from "../../payments/barcode/navigation/routes";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
+import { usePagoPaPayment } from "../../payments/checkout/hooks/usePagoPaPayment";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
   const openDeepLink = useOpenDeepLink();
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+
+  const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
   useHardwareBackButton(() => {
     navigation.goBack();
@@ -137,13 +139,11 @@ const BarcodeScanScreen = () => {
           void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
         }
 
-        navigateToPaymentTransactionSummaryScreen({
-          rptId: barcode.rptId,
-          initialAmount: barcode.amount,
-          paymentStartOrigin: isDataMatrix
-            ? "poste_datamatrix_scan"
-            : "qrcode_scan"
+        startPaymentFlowWithRptId(barcode.rptId, {
+          onSuccess: "showTransaction",
+          startOrigin: isDataMatrix ? "poste_datamatrix_scan" : "qrcode_scan"
         });
+
         break;
       case "IDPAY":
         openDeepLink(barcode.authUrl);
@@ -169,8 +169,8 @@ const BarcodeScanScreen = () => {
 
   const handleIdPayPaymentCodeInput = () => {
     manualInputModal.dismiss();
-    navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
-      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
+    navigation.navigate(IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
+      screen: IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
     });
   };
 

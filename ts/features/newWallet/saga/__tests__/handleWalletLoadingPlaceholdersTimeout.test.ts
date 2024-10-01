@@ -1,7 +1,7 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { testSaga } from "redux-saga-test-plan";
 import { delay } from "typed-redux-saga";
-import { getActionType } from "xstate/lib/utils";
+import { getType } from "typesafe-actions";
 import {
   walletResetPlaceholders,
   walletToggleLoadingState
@@ -38,9 +38,7 @@ describe("handleWalletLoadingPlaceholdersTimeout", () => {
       .isDone();
   });
 
-  it(`dispatches ${getActionType(
-    walletResetPlaceholders
-  )} after timeout`, () => {
+  it(`dispatches ${getType(walletResetPlaceholders)} after timeout`, () => {
     testSaga(
       handleWalletPlaceholdersTimeout,
       LOADING_STATE_TIMEOUT,
