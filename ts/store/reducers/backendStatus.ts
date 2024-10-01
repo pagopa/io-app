@@ -59,6 +59,9 @@ export const backendStatusSelector = (
   state: GlobalState
 ): O.Option<BackendStatus> => state.backendStatus.status;
 
+export const isBackendStatusLoadedSelector = (state: GlobalState) =>
+  O.isSome(backendStatusSelector(state));
+
 // return the section status for the given key. if it is not present, returns undefined
 export const sectionStatusSelector = (sectionStatusKey: SectionStatusKey) =>
   createSelector(
