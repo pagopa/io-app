@@ -3356,7 +3356,8 @@ features:
           title: "Patente: contesti di verifica"
           content: "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Carta di Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valore legale del documento fisico.**"
       credentialDetails:
-        flipCard: "Mostra retro"
+        flipCardFront: "Mostra retro"
+        flipCardBack: "Mostra fronte"
         personalDataTitle: "Dati personali"
         documentDataTitle: "Dati documento"
         lastUpdated: "Dati aggiornati al {{lastUpdateTime}}"
