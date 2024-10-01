@@ -209,7 +209,7 @@ export function* initializeApplicationSaga(
   yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments);
 
   // Retrieve and listen for notification permissions status changes
-  yield* fork(notificationPermissionsListener);
+  yield* call(notificationPermissionsListener);
 
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =

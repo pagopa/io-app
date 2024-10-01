@@ -1,54 +1,67 @@
 import { testSaga } from "redux-saga-test-plan";
-import { notificationPermissionsListener } from "../notificationPermissionsListener";
+import {
+  checkNotificationPermissionsOnAppForegroundState,
+  notificationPermissionsListener
+} from "../notificationPermissionsListener";
 import { checkAndUpdateNotificationPermissionsIfNeeded } from "../common";
 import { applicationChangeState } from "../../../../store/actions/application";
 
 describe("notificationPermissionsListener", () => {
-  it("Should get and update system permissions, listen for application going into foreground, get and update the system permissions and then start to listen for application going into foreground again", () => {
+  it("Should get and update system permissions and start listening for 'applicationChangeState' action with 'takeLatest'", () => {
     testSaga(notificationPermissionsListener)
       .next()
       .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next()
-      .take(applicationChangeState)
-      .next(applicationChangeState("active"))
-      .call(checkAndUpdateNotificationPermissionsIfNeeded)
+      .takeLatest(
+        applicationChangeState,
+        checkNotificationPermissionsOnAppForegroundState
+      )
       .next()
-      .take(applicationChangeState);
+      .isDone();
   });
-  it("Should get and update system permissions, listen for application state change, but not do anything if the state is 'background', starting to listening for application state change again", () => {
-    testSaga(notificationPermissionsListener)
+});
+
+describe("checkNotificationPermissionsOnAppForegroundState", () => {
+  it("Should call 'checkAndUpdateNotificationPermissionsIfNeeded' and terminate if new app state is 'active'", () => {
+    testSaga(
+      checkNotificationPermissionsOnAppForegroundState,
+      applicationChangeState("active")
+    )
       .next()
       .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next()
-      .take(applicationChangeState)
-      .next(applicationChangeState("background"))
-      .take(applicationChangeState);
+      .isDone();
   });
-  it("Should get and update system permissions, listen for application state change, but not do anything if the state is 'extension', starting to listening for application state change again", () => {
-    testSaga(notificationPermissionsListener)
+  it("Should do nothing and terminate if new app state is 'background'", () => {
+    testSaga(
+      checkNotificationPermissionsOnAppForegroundState,
+      applicationChangeState("background")
+    )
       .next()
-      .call(checkAndUpdateNotificationPermissionsIfNeeded)
-      .next()
-      .take(applicationChangeState)
-      .next(applicationChangeState("extension"))
-      .take(applicationChangeState);
+      .isDone();
   });
-  it("Should get and update system permissions, listen for application state change, but not do anything if the state is 'inactive', starting to listening for application state change again", () => {
-    testSaga(notificationPermissionsListener)
+  it("Should do nothing and terminate if new app state is 'extension'", () => {
+    testSaga(
+      checkNotificationPermissionsOnAppForegroundState,
+      applicationChangeState("extension")
+    )
       .next()
-      .call(checkAndUpdateNotificationPermissionsIfNeeded)
-      .next()
-      .take(applicationChangeState)
-      .next(applicationChangeState("inactive"))
-      .take(applicationChangeState);
+      .isDone();
   });
-  it("Should get and update system permissions, listen for application state change, but not do anything if the state is 'unknown', starting to listening for application state change again", () => {
-    testSaga(notificationPermissionsListener)
+  it("Should do nothing and terminate if new app state is 'inactive'", () => {
+    testSaga(
+      checkNotificationPermissionsOnAppForegroundState,
+      applicationChangeState("inactive")
+    )
       .next()
-      .call(checkAndUpdateNotificationPermissionsIfNeeded)
+      .isDone();
+  });
+  it("Should do nothing and terminate if new app state is 'unknown'", () => {
+    testSaga(
+      checkNotificationPermissionsOnAppForegroundState,
+      applicationChangeState("unknown")
+    )
       .next()
-      .take(applicationChangeState)
-      .next(applicationChangeState("unknown"))
-      .take(applicationChangeState);
+      .isDone();
   });
 });
