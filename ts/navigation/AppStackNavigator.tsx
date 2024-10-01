@@ -14,7 +14,7 @@ import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator"
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
-import { IngressScreen } from "../screens/ingress/IngressScreen";
+import { IngressScreen } from "../features/ingress/screens/IngressScreen";
 import { startApplicationInitialization } from "../store/actions/application";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
