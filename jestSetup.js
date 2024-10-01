@@ -160,3 +160,9 @@ jest.mock("react-native-vision-camera", () => ({
     onCodeScanned: jest.fn()
   }))
 }));
+/**
+ * NefInfo's `fetch` method mock
+ */
+jest.mock("@react-native-community/netinfo", () => ({
+  fetch: jest.fn().mockResolvedValue({ isConnected: true })
+}));

@@ -1,17 +1,10 @@
-import {
-  Divider,
-  H4,
-  Icon,
-  VStack,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+import { Divider, H4, VStack, useIOTheme } from "@pagopa/io-app-design-system";
 import * as React from "react";
 
 import { Alert } from "react-native";
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
 import ListItemComponent from "../../../components/screens/ListItemComponent";
 import OrderOption from "../../bonus/cgn/components/merchants/search/OrderOption";
-import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItemPermissionComponent";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
@@ -130,14 +123,6 @@ export const DSLegacyListItems = () => {
                 value={"Value"}
                 checked={false}
                 onPress={onListItemPress}
-              />
-            </DSComponentViewerBox>
-            <DSComponentViewerBox name="ZendeskItemPermissionComponent">
-              <ZendeskItemPermissionComponent
-                icon={<Icon name="info" size={24} />}
-                title="Storico versioni dell'app"
-                value="Per capire se il problema dipende dall'ultimo aggiornamento"
-                testId="TestID"
               />
             </DSComponentViewerBox>
           </VStack>
