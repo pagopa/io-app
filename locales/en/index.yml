@@ -488,11 +488,16 @@ profile:
   data:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
+    profileTitle: Profile
+    loading: Awaiting for data upload
+    error: Error in loading data 
+    retry: Reload data
     list:
       email: Email address
       need_validate: To be validated
       nameSurname: Name and surname
       fiscalCode: Fiscal code
+      birthDate: Date of birth
   security:
     title: Security
     subtitle: Manage in-app authentication methods.
@@ -537,6 +542,8 @@ profile:
       notifications:
         title: Push notifications
         subtitle: Allow previews and reminders
+      newProfilePage:
+        title: Enable new profile page
     unavailable:
       title: This setting is set up on your SPID profile
     language:

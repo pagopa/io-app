@@ -487,12 +487,17 @@ profile:
       close: Chiudi il banner e non mostrarlo più
   data:
     title: I tuoi dati
+    profileTitle: Profilo
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
+    loading: In attesa del caricamento dei dati 
+    error: Errore nel caricamento dei dati 
+    retry: Ricarica i dati
     list:
       email: Indirizzo email
       need_validate: Da validare
       nameSurname: Nome e cognome
       fiscalCode: Codice Fiscale
+      birthDate: Data di nascita
   security:
     title: Sicurezza
     subtitle: Gestisci le modalità di autenticazione in app.
@@ -537,6 +542,8 @@ profile:
       notifications:
         title: Notifiche push
         subtitle: Consenti anteprime e promemoria
+      newProfilePage:
+        title: Abilita nuova pagina profilo
     unavailable:
       title: Questa preferenza è impostata nel tuo profilo SPID
     language:

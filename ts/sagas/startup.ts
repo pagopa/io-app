@@ -157,6 +157,7 @@ import { checkItWalletIdentitySaga } from "./startup/checkItWalletIdentitySaga";
 import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
+import { watchProfileRequest } from "./profileAlternative";
 
 export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -424,6 +425,9 @@ export function* initializeApplicationSaga(
 
   // Start watching for requests of refresh the profile
   yield* fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
+
+  // Start watching for requests of alternative profile
+  yield* fork(watchProfileRequest, backendClient.getProfileAlternative);
 
   // Start watching for requests about session and support token
   yield* fork(

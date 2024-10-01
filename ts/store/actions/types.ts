@@ -57,6 +57,7 @@ import { StartupActions } from "./startup";
 import { UserDataProcessingActions } from "./userDataProcessing";
 import { WalletActions } from "./wallet";
 import { OutcomeCodeActions } from "./wallet/outcomeCode";
+import { ProfileAlternativeActions } from "./profileAlternative";
 
 export type Action =
   | AnalyticsActions
@@ -73,6 +74,7 @@ export type Action =
   | PreferencesActions
   | PersistedPreferencesActions
   | ProfileActions
+  | ProfileAlternativeActions
   | ServicesActions
   | WalletActions
   | ContentActions

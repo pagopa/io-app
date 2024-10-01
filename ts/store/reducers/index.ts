@@ -68,6 +68,7 @@ import persistedPreferencesReducer, {
 } from "./persistedPreferences";
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
+import alternativeProfileReducer from "./profileAlternative";
 import searchReducer from "./search";
 import startupReducer from "./startup";
 import { GlobalState } from "./types";
@@ -156,6 +157,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   onboarding: onboardingReducer,
   notifications: notificationsReducer,
   profile: profileReducer,
+  alternativeProfile: alternativeProfileReducer,
   userDataProcessing: userDataProcessingReducer,
   entities: persistReducer<EntitiesState, Action>(
     entitiesPersistConfig,

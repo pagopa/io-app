@@ -29,6 +29,7 @@ import { SearchState } from "./search";
 import { UserDataProcessingState } from "./userDataProcessing";
 import { WalletState } from "./wallet";
 import { StartupState } from "./startup";
+import { AlternativeProfileState } from "./profileAlternative";
 
 export type GlobalState = Readonly<{
   appState: AppState;
@@ -41,6 +42,7 @@ export type GlobalState = Readonly<{
   notifications: NotificationsState;
   onboarding: OnboardingState;
   profile: ProfileState;
+  alternativeProfile: AlternativeProfileState;
   userDataProcessing: UserDataProcessingState;
   wallet: WalletState;
   preferences: PreferencesState;

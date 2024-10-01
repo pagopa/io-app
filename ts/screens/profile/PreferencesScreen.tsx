@@ -2,12 +2,14 @@
  * Implements the preferences screen where the user can see and update his
  * preferences about notifications, calendar, services, messages and languages
  */
-import React, { ComponentProps, useCallback } from "react";
+import React, { ComponentProps, useCallback, useMemo } from "react";
 import { Alert, FlatList, ListRenderItemInfo } from "react-native";
 import {
+  ContentWrapper,
   Divider,
   IOVisualCostants,
-  ListItemNav
+  ListItemNav,
+  ListItemSwitch
 } from "@pagopa/io-app-design-system";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";
@@ -17,6 +19,9 @@ import ROUTES from "../../navigation/routes";
 import { requestWriteCalendarPermission } from "../../utils/permission";
 import { checkAndRequestPermission } from "../../utils/calendar";
 import { openAppSettings } from "../../utils/appSettings";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { preferencesAlternativeProfilePageEnabled } from "../../store/actions/persistedPreferences";
+import { isAlternativeProfilePageEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 type PreferencesNavListItem = {
   value: string;
@@ -32,6 +37,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const PreferencesScreen = () => {
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
+  const isAlternativeProfilePageEnabled = useIOSelector(
+    isAlternativeProfilePageEnabledSelector
+  );
 
   const navigateToServicePreferenceScreen = useCallback(() => {
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
@@ -139,6 +148,28 @@ const PreferencesScreen = () => {
     }
   ];
 
+  const onNewProfilePageToggle = useCallback(
+    (enabled: boolean) => {
+      dispatch(
+        preferencesAlternativeProfilePageEnabled({
+          isAlternativeProfilePageEnabled: enabled
+        })
+      );
+    },
+    [dispatch]
+  );
+
+  const switchItems = useMemo(
+    () => [
+      {
+        label: I18n.t("profile.preferences.list.newProfilePage.title"),
+        value: isAlternativeProfilePageEnabled,
+        onSwitchValueChange: onNewProfilePageToggle
+      }
+    ],
+    [isAlternativeProfilePageEnabled, onNewProfilePageToggle]
+  );
+
   const renderPreferencesNavItem = ({
     item: { value, description, onPress, testID }
   }: ListRenderItemInfo<PreferencesNavListItem>) => (
@@ -173,6 +204,16 @@ const PreferencesScreen = () => {
         renderItem={renderPreferencesNavItem}
         ItemSeparatorComponent={() => <Divider />}
       />
+      <ContentWrapper>
+        {switchItems.map((item, index) => (
+          <ListItemSwitch
+            key={index}
+            label={item.label}
+            value={item.value}
+            onSwitchValueChange={item.onSwitchValueChange}
+          />
+        ))}
+      </ContentWrapper>
     </IOScrollViewWithLargeHeader>
   );
 };
