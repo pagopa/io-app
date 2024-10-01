@@ -56,7 +56,7 @@ export const ItwEidInfoBottomSheetContent = () => {
           variant="success"
           content={I18n.t(
             "features.itWallet.presentation.bottomSheets.eidInfo.alert.valid",
-            { issuanceDate: format(credential.issuedAt, "DD-MM-YYYY") }
+            { issuanceDate: format(credential.jwt.issuedAt, "DD-MM-YYYY") }
           )}
         />
         <IOMarkdown

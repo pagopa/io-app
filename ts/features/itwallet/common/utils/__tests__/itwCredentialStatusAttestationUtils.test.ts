@@ -10,8 +10,10 @@ describe("isStatusAttestationMissingOrExpired", () => {
     keyTag: "9020c6f8-01be-4236-9b6f-834af9dcbc63",
     issuerConf: {} as StoredCredential["issuerConf"],
     parsedCredential: {},
-    issuedAt: "2024-09-30T07:32:49.000Z",
-    expiration: "2025-09-30T07:32:50.000Z"
+    jwt: {
+      issuedAt: "2024-09-30T07:32:49.000Z",
+      expiration: "2025-09-30T07:32:50.000Z"
+    }
   };
 
   it("return true when the status attestation is missing", () => {

@@ -398,14 +398,3 @@ export const getSafeText = (text: string) => truncate(text, { length: 128 });
 
 export const isExpirationDateClaim = (claim: ClaimDisplayFormat) =>
   claim.id === WellKnownClaim.expiry_date;
-
-/**
- * Return a ISO date from a valid date, otherwise default to now.
- */
-export const getSafeISODate = (date: Date): string =>
-  pipe(
-    date,
-    O.fromPredicate(isValid),
-    O.map(d => d.toISOString()),
-    O.getOrElse(() => new Date().toISOString())
-  );

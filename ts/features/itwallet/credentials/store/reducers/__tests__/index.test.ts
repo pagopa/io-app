@@ -23,8 +23,10 @@ const mockedEid: StoredCredential = {
   format: "vc+sd-jwt",
   keyTag: "9020c6f8-01be-4236-9b6f-834af9dcbc63",
   issuerConf: {} as StoredCredential["issuerConf"],
-  issuedAt: "2024-09-30T07:32:49.000Z",
-  expiration: "2025-09-30T07:32:50.000Z"
+  jwt: {
+    issuedAt: "2024-09-30T07:32:49.000Z",
+    expiration: "2025-09-30T07:32:50.000Z"
+  }
 };
 
 const mockedCredential: StoredCredential = {
@@ -34,8 +36,10 @@ const mockedCredential: StoredCredential = {
   format: "vc+sd-jwt",
   keyTag: "d191ad52-2674-46f3-9610-6eb7bd9146a3",
   issuerConf: {} as StoredCredential["issuerConf"],
-  issuedAt: "2024-09-30T07:32:49.000Z",
-  expiration: "2025-09-30T07:32:50.000Z"
+  jwt: {
+    issuedAt: "2024-09-30T07:32:49.000Z",
+    expiration: "2025-09-30T07:32:50.000Z"
+  }
 };
 
 const mockedCredential2: StoredCredential = {
@@ -45,8 +49,10 @@ const mockedCredential2: StoredCredential = {
   format: "vc+sd-jwt",
   keyTag: "07ccc69a-d1b5-4c3c-9955-6a436d0c3710",
   issuerConf: {} as StoredCredential["issuerConf"],
-  issuedAt: "2024-09-30T07:32:49.000Z",
-  expiration: "2025-09-30T07:32:50.000Z"
+  jwt: {
+    issuedAt: "2024-09-30T07:32:49.000Z",
+    expiration: "2025-09-30T07:32:50.000Z"
+  }
 };
 
 describe("ITW credentials reducer", () => {

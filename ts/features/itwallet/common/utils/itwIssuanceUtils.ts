@@ -15,10 +15,10 @@ import {
   itWalletIssuanceRedirectUriCie,
   itwIdpHintTest
 } from "../../../../config";
+import { getISODateWithDefault } from "../../../../utils/dates";
 import { type IdentificationContext } from "../../machine/eid/context";
 import { StoredCredential } from "./itwTypesUtils";
 import { DPOP_EID_KEYTAG, regenerateCryptoKey } from "./itwCryptoContextUtils";
-import { getSafeISODate } from "./itwClaimsUtils";
 
 type AccessToken = Awaited<
   ReturnType<typeof Credential.Issuance.authorizeAccess>
@@ -283,8 +283,10 @@ const getPid = async ({
     credentialType: CREDENTIAL_TYPE,
     format,
     credential,
-    expiration: getSafeISODate(expiration),
-    issuedAt: getSafeISODate(issuedAt)
+    jwt: {
+      expiration: getISODateWithDefault(expiration),
+      issuedAt: getISODateWithDefault(issuedAt)
+    }
   };
 };
 

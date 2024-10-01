@@ -13,6 +13,7 @@ import {
   itwWalletProviderBaseUrl
 } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
+import { getISODateWithDefault } from "../../../../utils/dates";
 import { createItWalletFetch } from "../../api/client";
 import { getIntegrityContext } from "./itwIntegrityUtils";
 import {
@@ -25,7 +26,6 @@ import {
   regenerateCryptoKey,
   WIA_CREDENTIAL_KEYTAG
 } from "./itwCryptoContextUtils";
-import { getSafeISODate } from "./itwClaimsUtils";
 
 export type InitializeWalletParams = {
   integrityKeyTag: string;
@@ -195,8 +195,10 @@ export const obtainCredential = async ({
     format,
     issuerConf,
     keyTag: credentialKeyTag,
-    expiration: getSafeISODate(expiration),
-    issuedAt: getSafeISODate(issuedAt)
+    jwt: {
+      expiration: getISODateWithDefault(expiration),
+      issuedAt: getISODateWithDefault(issuedAt)
+    }
   };
 
   return {
