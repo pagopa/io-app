@@ -538,20 +538,17 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Group
-          screenOptions={
-            Platform.OS === "ios"
+          screenOptions={{
+            headerMode: "screen",
+            presentation: "modal",
+            ...(Platform.OS === "ios"
               ? {
                   gestureEnabled: isGestureEnabled,
                   cardOverlayEnabled: true,
-                  headerMode: "screen",
-                  presentation: "modal",
                   ...TransitionPresets.ModalPresentationIOS
                 }
-              : {
-                  headerMode: "screen",
-                  presentation: "modal"
-                }
-          }
+              : null)
+          }}
         >
           <Stack.Screen
             name={DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route}

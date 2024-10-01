@@ -40,7 +40,7 @@ import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import * as analytics from "../analytics";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { PaymentAnalyticsSelectedMethodFlag } from "../types/PaymentAnalytics";
+import { PaymentAnalyticsSelectedMethodFlag } from "../../common/types/PaymentAnalytics";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 
 const WalletPaymentPickMethodScreen = () => {
@@ -157,7 +157,8 @@ const WalletPaymentPickMethodScreen = () => {
         organization_name: paymentAnalyticsData?.verifiedData?.paName,
         service_name: paymentAnalyticsData?.serviceName,
         amount: paymentAnalyticsData?.formattedAmount,
-        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        saved_payment_method:
+          paymentAnalyticsData?.savedPaymentMethods?.length || 0,
         saved_payment_method_unavailable:
           paymentAnalyticsData?.savedPaymentMethodsUnavailable?.length,
         last_used_payment_method: "no", // <- TODO: This should be dynamic when the feature will be implemented
