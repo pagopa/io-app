@@ -88,8 +88,8 @@ export const buildEventProperties = (
 ) => ({
   event_category: eventCategory,
   event_type: eventType,
-  ...customProperties,
-  flow
+  flow,
+  ...customProperties
 });
 
 // Lollipop events

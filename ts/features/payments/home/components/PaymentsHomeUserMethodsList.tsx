@@ -5,9 +5,9 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { View } from "react-native";
+import * as analytics from "../analytics";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -20,6 +20,8 @@ import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
 import { paymentsWalletUserMethodsSelector } from "../../wallet/store/selectors";
 import { paymentsSetAddMethodsBannerVisible } from "../store/actions";
 import { isAddMethodsBannerVisibleSelector } from "../store/selectors";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import {
   PaymentCardsCarousel,
   PaymentCardsCarouselSkeleton
@@ -40,15 +42,18 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   );
   const paymentMethodsPot = useIOSelector(paymentsWalletUserMethodsSelector);
   const paymentMethods = pot.getOrElse(paymentMethodsPot, []);
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
-  const isLoading = pot.isLoading(paymentMethodsPot) || enforcedLoadingState;
+  const isLoading =
+    (!pot.isSome(paymentMethodsPot) && pot.isLoading(paymentMethodsPot)) ||
+    enforcedLoadingState;
   const isEmpty = paymentMethods.length === 0;
 
-  useFocusEffect(
-    React.useCallback(() => {
+  useOnFirstRender(() => {
+    if (pot.isNone(paymentMethodsPot)) {
       dispatch(getPaymentsWalletUserMethods.request());
-    }, [dispatch])
-  );
+    }
+  });
 
   const handleOnMethodPress = (walletId: string) => () => {
     navigation.navigate(
@@ -63,6 +68,13 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   };
 
   const handleOnAddMethodPress = () => {
+    analytics.trackPaymentWalletAddStart({
+      add_entry_point: "payments_home",
+      wallet_item: "payment_method",
+      payments_home_status: paymentAnalyticsData?.paymentsHomeStatus,
+      saved_payment_method:
+        paymentAnalyticsData?.savedPaymentMethods?.length ?? 0
+    });
     navigation.navigate(PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR, {
       screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
     });

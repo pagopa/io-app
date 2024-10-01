@@ -71,7 +71,8 @@ const PaymentsBarcodeChoiceScreen = () => {
 
     if (isNewWalletSectionEnabled) {
       startPaymentFlowWithRptId(barcode.rptId, {
-        onSuccess: "showTransaction"
+        onSuccess: "showTransaction",
+        startOrigin: paymentStartOrigin
       });
     } else {
       dispatch(paymentInitializeState());

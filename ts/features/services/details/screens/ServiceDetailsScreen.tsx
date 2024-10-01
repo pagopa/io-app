@@ -11,6 +11,7 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { logosForService } from "../../common/utils";
 import { CTA, CTAS } from "../../../messages/types/MessageCTA";
 import {
+  CTAActionType,
   getServiceCTA,
   handleCtaAction
 } from "../../../messages/utils/messages";
@@ -41,6 +42,7 @@ import {
   serviceMetadataInfoSelector
 } from "../store/reducers";
 import { ServiceMetadataInfo } from "../types/ServiceMetadataInfo";
+import { trackAuthenticationStart } from "../../../fims/common/analytics";
 
 export type ServiceDetailsScreenRouteParams = {
   serviceId: ServiceId;
@@ -148,7 +150,18 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
       cta_category: ctaType,
       service_id: serviceId
     });
-    handleCtaAction(cta, linkTo);
+    handleCtaAction(cta, linkTo, (type: CTAActionType) => {
+      if (type === "fims") {
+        trackAuthenticationStart(
+          service.service_id,
+          service.service_name,
+          service.organization_name,
+          service.organization_fiscal_code,
+          cta.text,
+          "service_detail"
+        );
+      }
+    });
   };
 
   const getActionsProps = (

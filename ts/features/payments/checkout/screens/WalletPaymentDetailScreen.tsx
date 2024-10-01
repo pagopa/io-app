@@ -148,7 +148,8 @@ const WalletPaymentDetailContent = ({
       amount: paymentAnalyticsData?.formattedAmount,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
-      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      saved_payment_method:
+        paymentAnalyticsData?.savedPaymentMethods?.length || 0,
       service_name: paymentAnalyticsData?.serviceName,
       data_entry: paymentAnalyticsData?.startOrigin,
       first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no"
@@ -173,7 +174,8 @@ const WalletPaymentDetailContent = ({
       attempt: paymentAnalyticsData?.attempt,
       organization_name: payment.paName,
       service_name: paymentAnalyticsData?.serviceName,
-      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      saved_payment_method:
+        paymentAnalyticsData?.savedPaymentMethods?.length || 0,
       amount,
       expiration_date: dueDate
     });
@@ -195,7 +197,7 @@ const WalletPaymentDetailContent = ({
                 rptId: paymentDetails?.rptId
               })
             );
-            navigation.replace(
+            navigation.navigate(
               PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR,
               {
                 screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
