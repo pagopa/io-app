@@ -1,4 +1,3 @@
-import { createCryptoContextFor } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
@@ -10,7 +9,6 @@ import {
   getIntegrityHardwareKeyTag,
   registerWalletInstance
 } from "../../common/utils/itwAttestationUtils";
-import { WIA_KEYTAG } from "../../common/utils/itwCryptoContextUtils";
 import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUtils";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
@@ -47,7 +45,6 @@ export const createEidIssuanceActorsImplementation = (
   store: ReturnType<typeof useIOStore>
 ) => ({
   onInit: fromPromise<OnInitActorOutput>(async () => {
-    const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
     const walletInstanceAttestation = itwWalletInstanceAttestationSelector(
       store.getState()
     );
@@ -55,7 +52,6 @@ export const createEidIssuanceActorsImplementation = (
 
     return {
       integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
-      wiaCryptoContext,
       walletInstanceAttestation
     };
   }),

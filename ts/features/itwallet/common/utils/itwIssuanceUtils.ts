@@ -48,7 +48,6 @@ type StartCieAuthFlowParams = {
  * reading the card to get the `authUrl` to launch the CIE web view, and other params that are needed later.
  * After successfully reading the card, the flow must be completed invoking `completeCieAuthFlow`.
  * @param walletAttestation - The wallet attestation.
- * @param wiaCryptoContext - The crypto context related to the wallet attestation.
  * @returns Authentication params to use when completing the flow.
  */
 const startCieAuthFlow = async ({
@@ -113,7 +112,6 @@ export type CompleteCieAuthFlowResult = Awaited<
  * and after reading the card to get the final `callbackUrl`. The rest of the parameters are those obtained from
  * `startCieAuthFlow` + the wallet attestation.
  * @param walletAttestation - The wallet attestation.
- * @param wiaCryptoContext - The crypto context related to the wallet attestation.
  * @param callbackUrl - The callback url from which the code to get the access token is extracted.
  * @returns Authentication tokens.
  */
@@ -156,7 +154,6 @@ type FullAuthFlowParams = {
  * Full authentication flow completely handled by `io-react-native-wallet`. The consumer of the library
  * does not need to implement any authentication screen or logic. Only compatible with SPID and CieID.
  * @param walletAttestation - The wallet attestation.
- * @param wiaCryptoContext - The crypto context related to the wallet attestation.
  * @param identification - Object that contains details on the selected identification mode.
  * @returns Authentication tokens and other params needed to get the PID.
  */
