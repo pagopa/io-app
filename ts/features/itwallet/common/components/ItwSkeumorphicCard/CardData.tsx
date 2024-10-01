@@ -208,11 +208,11 @@ const DcBackData = ({ claims }: DataComponentProps) => (
       component={qrCode => (
         <CardClaimContainer
           position={{
-            right: `6.9%`,
-            top: `11.5%`
+            right: `6%`,
+            top: `10%`
           }}
         >
-          <QrCodeImage value={qrCode} size={100} />
+          <QrCodeImage value={qrCode} size={"28.5%"} />
         </CardClaimContainer>
       )}
     />

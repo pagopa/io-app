@@ -18,8 +18,8 @@ exports[`CardData should match snapshot for DC back data 1`] = `
           "position": "absolute",
         },
         {
-          "right": "6.9%",
-          "top": "11.5%",
+          "right": "6%",
+          "top": "10%",
         },
         undefined,
       ]
@@ -34,17 +34,17 @@ exports[`CardData should match snapshot for DC back data 1`] = `
       }
     >
       <View
-        height={100}
+        height={213.74999999999997}
         radius={16}
         style={
           {
             "backgroundColor": "#efefef",
             "borderRadius": 16,
-            "height": 100,
-            "width": 100,
+            "height": 213.74999999999997,
+            "width": 213.74999999999997,
           }
         }
-        width={100}
+        width={213.74999999999997}
       />
     </View>
   </View>
