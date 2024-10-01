@@ -7,7 +7,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
   GetWalletAttestationActorOutput,
-  InitializeWalletActorOutput,
+  OnInitActorOutput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAttestationActorInput,
@@ -39,7 +39,7 @@ export const itwCredentialIssuanceMachine = setup({
     handleSessionExpired: notImplemented
   },
   actors: {
-    initializeWallet: fromPromise<InitializeWalletActorOutput>(notImplemented),
+    onInit: fromPromise<OnInitActorOutput>(notImplemented),
     getWalletAttestation:
       fromPromise<GetWalletAttestationActorOutput>(notImplemented),
     requestCredential: fromPromise<
@@ -68,22 +68,18 @@ export const itwCredentialIssuanceMachine = setup({
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
   context: InitialContext,
-  initial: "Init",
-  states: {
-    Init: {
-      description: "Initializes and prepares the machine context",
-      entry: assign(() => InitialContext),
-      invoke: {
-        src: "initializeWallet",
-        onDone: {
-          actions: assign(({ event }) => ({
-            wiaCryptoContext: event.output.wiaCryptoContext,
-            walletInstanceAttestation: event.output.walletInstanceAttestation
-          })),
-          target: "Idle"
-        }
-      }
+  initial: "Idle",
+  invoke: {
+    src: "onInit",
+    onDone: {
+      actions: assign(({ event }) => ({
+        wiaCryptoContext: event.output.wiaCryptoContext,
+        walletInstanceAttestation: event.output.walletInstanceAttestation
+      }))
     },
+    target: ".Idle"
+  },
+  states: {
     Idle: {
       description:
         "Waits for a credential selection in order to proceed with the issuance",
@@ -259,7 +255,7 @@ export const itwCredentialIssuanceMachine = setup({
           actions: ["closeIssuance"]
         },
         reset: {
-          target: "Init"
+          target: "Idle"
         },
         retry: {
           target: "#itwCredentialIssuanceMachine.RequestingCredential"
@@ -269,7 +265,7 @@ export const itwCredentialIssuanceMachine = setup({
     SessionExpired: {
       entry: ["handleSessionExpired"],
       // Since the refresh token request does not change the current screen, restart the machine
-      always: { target: "Init" }
+      always: { target: "Idle" }
     }
   }
 });

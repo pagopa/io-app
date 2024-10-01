@@ -15,7 +15,7 @@ import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
 import { type Context } from "./context";
 
-export type InitializeWalletActorOutput = {
+export type OnInitActorOutput = {
   wiaCryptoContext: CryptoContext;
   walletInstanceAttestation: string | undefined;
 };
@@ -41,19 +41,17 @@ export type ObtainCredentialActorOutput = Awaited<
 export type ObtainStatusAttestationActorInput = Pick<Context, "credential">;
 
 export default (store: ReturnType<typeof useIOStore>) => {
-  const initializeWallet = fromPromise<InitializeWalletActorOutput>(
-    async () => {
-      const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
-      const walletInstanceAttestation = itwWalletInstanceAttestationSelector(
-        store.getState()
-      );
+  const onInit = fromPromise<OnInitActorOutput>(async () => {
+    const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
+    const walletInstanceAttestation = itwWalletInstanceAttestationSelector(
+      store.getState()
+    );
 
-      return {
-        wiaCryptoContext,
-        walletInstanceAttestation
-      };
-    }
-  );
+    return {
+      wiaCryptoContext,
+      walletInstanceAttestation
+    };
+  });
 
   const getWalletAttestation = fromPromise<GetWalletAttestationActorOutput>(
     async () => {
@@ -142,7 +140,7 @@ export default (store: ReturnType<typeof useIOStore>) => {
   });
 
   return {
-    initializeWallet,
+    onInit,
     getWalletAttestation,
     requestCredential,
     obtainCredential,
