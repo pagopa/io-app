@@ -1,4 +1,3 @@
-import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
   type AuthorizationDetail,
   type Credential
@@ -29,7 +28,6 @@ export type CieAuthContext = {
 };
 
 export type Context = {
-  wiaCryptoContext: CryptoContext | undefined;
   walletInstanceAttestation: string | undefined;
   integrityKeyTag: string | undefined;
   identification: IdentificationContext | undefined;
@@ -39,7 +37,6 @@ export type Context = {
 };
 
 export const InitialContext: Context = {
-  wiaCryptoContext: undefined,
   walletInstanceAttestation: undefined,
   integrityKeyTag: undefined,
   identification: undefined,

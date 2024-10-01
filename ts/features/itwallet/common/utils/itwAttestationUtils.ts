@@ -42,10 +42,6 @@ export const registerWalletInstance = async (
   });
 };
 
-export type WalletAttestationResult = {
-  walletAttestation: string;
-};
-
 /**
  * Getter for the wallet attestation binded to the wallet instance created with the given hardwareKeyTag.
  * @param hardwareKeyTag - the hardware key tag of the wallet instance
@@ -54,22 +50,19 @@ export type WalletAttestationResult = {
 export const getAttestation = async (
   hardwareKeyTag: string,
   sessionToken: SessionToken
-): Promise<WalletAttestationResult> => {
+): Promise<string> => {
   const integrityContext = getIntegrityContext(hardwareKeyTag);
 
   await regenerateCryptoKey(WIA_KEYTAG);
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
-
   const appFetch = createItWalletFetch(itwWalletProviderBaseUrl, sessionToken);
 
-  const walletAttestation = await WalletInstanceAttestation.getAttestation({
+  return await WalletInstanceAttestation.getAttestation({
     wiaCryptoContext,
     integrityContext,
     walletProviderBaseUrl: itwWalletProviderBaseUrl,
     appFetch
   });
-
-  return { walletAttestation };
 };
 
 /**

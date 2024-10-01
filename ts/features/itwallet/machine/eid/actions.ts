@@ -128,16 +128,8 @@ export const createEidIssuanceActionsImplementation = (
     dispatch(itwStoreIntegrityKeyTag(params.keyTag));
   },
 
-  storeWalletInstanceAttestation: ({
-    context
-  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    assert(
-      context.walletInstanceAttestation,
-      "walletInstanceAttestation is undefined"
-    );
-    dispatch(
-      itwWalletInstanceAttestationStore(context.walletInstanceAttestation)
-    );
+  storeWalletInstanceAttestation: (_: unknown, params: { wia: string }) => {
+    dispatch(itwWalletInstanceAttestationStore(params.wia));
   },
 
   storeEidCredential: ({

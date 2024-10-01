@@ -17,7 +17,11 @@ import {
 } from "../../../../config";
 import { type IdentificationContext } from "../../machine/eid/context";
 import { StoredCredential } from "./itwTypesUtils";
-import { DPOP_KEYTAG, regenerateCryptoKey } from "./itwCryptoContextUtils";
+import {
+  DPOP_KEYTAG,
+  regenerateCryptoKey,
+  WIA_KEYTAG
+} from "./itwCryptoContextUtils";
 
 type AccessToken = Awaited<
   ReturnType<typeof Credential.Issuance.authorizeAccess>
@@ -37,7 +41,6 @@ const getRedirectUri = (identificationMode: IdentificationContext["mode"]) =>
 
 type StartCieAuthFlowParams = {
   walletAttestation: string;
-  wiaCryptoContext: CryptoContext;
 };
 
 /**
@@ -49,8 +52,7 @@ type StartCieAuthFlowParams = {
  * @returns Authentication params to use when completing the flow.
  */
 const startCieAuthFlow = async ({
-  walletAttestation,
-  wiaCryptoContext
+  walletAttestation
 }: StartCieAuthFlowParams) => {
   const startFlow: Credential.Issuance.StartFlow = () => ({
     issuerUrl: itwPidProviderBaseUrl,
@@ -62,6 +64,8 @@ const startCieAuthFlow = async ({
   const { issuerConf } = await Credential.Issuance.evaluateIssuerTrust(
     issuerUrl
   );
+
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   const { issuerRequestUri, clientId, codeVerifier, credentialDefinition } =
     await Credential.Issuance.startUserAuthorization(
@@ -98,7 +102,6 @@ type CompleteCieAuthFlowParams = {
   clientId: string;
   codeVerifier: string;
   walletAttestation: string;
-  wiaCryptoContext: CryptoContext;
 };
 
 export type CompleteCieAuthFlowResult = Awaited<
@@ -119,14 +122,14 @@ const completeCieAuthFlow = async ({
   clientId,
   codeVerifier,
   issuerConf,
-  walletAttestation,
-  wiaCryptoContext
+  walletAttestation
 }: CompleteCieAuthFlowParams) => {
   const query = Object.fromEntries(new URL(callbackUrl).searchParams);
   const { code } = Credential.Issuance.parseAuthroizationResponse(query);
 
   await regenerateCryptoKey(DPOP_KEYTAG);
   const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   const { accessToken } = await Credential.Issuance.authorizeAccess(
     issuerConf,
@@ -146,7 +149,6 @@ const completeCieAuthFlow = async ({
 
 type FullAuthFlowParams = {
   walletAttestation: string;
-  wiaCryptoContext: CryptoContext;
   identification: Exclude<IdentificationContext, { mode: "ciePin" }>;
 };
 
@@ -160,7 +162,6 @@ type FullAuthFlowParams = {
  */
 const startAndCompleteFullAuthFlow = async ({
   walletAttestation,
-  wiaCryptoContext,
   identification
 }: FullAuthFlowParams) => {
   const authorizationContext: AuthorizationContext | undefined =
@@ -182,6 +183,8 @@ const startAndCompleteFullAuthFlow = async ({
   );
 
   const redirectUri = getRedirectUri(identification.mode);
+
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   const { issuerRequestUri, clientId, codeVerifier, credentialDefinition } =
     await Credential.Issuance.startUserAuthorization(

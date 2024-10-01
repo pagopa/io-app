@@ -57,7 +57,7 @@ export const itwCredentialIssuanceMachine = setup({
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
-  context: InitialContext,
+  context: { ...InitialContext },
   initial: "Idle",
   invoke: {
     src: "onInit",
@@ -117,7 +117,7 @@ export const itwCredentialIssuanceMachine = setup({
           target: "RequestingCredential",
           actions: [
             assign(({ event }) => ({
-              walletInstanceAttestation: event.output.walletAttestation
+              walletInstanceAttestation: event.output
             })),
             "storeWalletInstanceAttestation"
           ]

@@ -1,14 +1,13 @@
-import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import { createActor, fromPromise, StateFrom } from "xstate";
 import { idps } from "../../../../../utils/idps";
-import { WalletAttestationResult } from "../../../common/utils/itwAttestationUtils";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
   GetWalletAttestationActorParams,
+  OnInitActorOutput,
   RequestEidActorParams,
   StartCieAuthFlowActorParams
 } from "../actors";
@@ -19,10 +18,6 @@ type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
 const T_INTEGRITY_KEY = "abc";
 const T_WIA: string = "abcdefg";
-const T_WIA_CRYPTO_CONTEXT: CryptoContext = {
-  getPublicKey: async () => null,
-  getSignature: async () => ""
-};
 
 describe("itwEidIssuanceMachine", () => {
   const navigateToTosScreen = jest.fn();
@@ -37,6 +32,7 @@ describe("itwEidIssuanceMachine", () => {
   const navigateToCieReadCardScreen = jest.fn();
   const navigateToNfcInstructionsScreen = jest.fn();
   const storeIntegrityKeyTag = jest.fn();
+  const storeWalletInstanceAttestation = jest.fn();
   const storeEidCredential = jest.fn();
   const closeIssuance = jest.fn();
   const setWalletInstanceToOperational = jest.fn();
@@ -44,6 +40,7 @@ describe("itwEidIssuanceMachine", () => {
   const handleSessionExpired = jest.fn();
   const abortIdentification = jest.fn();
 
+  const onInit = jest.fn();
   const createWalletInstance = jest.fn();
   const getWalletAttestation = jest.fn();
   const requestEid = jest.fn();
@@ -53,6 +50,7 @@ describe("itwEidIssuanceMachine", () => {
   const issuedEidMatchesAuthenticatedUser = jest.fn();
   const isSessionExpired = jest.fn();
   const isOperationAborted = jest.fn();
+  const hasValidWalletInstanceAttestation = jest.fn();
 
   const mockedMachine = itwEidIssuanceMachine.provide({
     actions: {
@@ -68,6 +66,7 @@ describe("itwEidIssuanceMachine", () => {
       navigateToCieReadCardScreen,
       navigateToNfcInstructionsScreen,
       storeIntegrityKeyTag,
+      storeWalletInstanceAttestation,
       storeEidCredential,
       closeIssuance,
       setWalletInstanceToOperational,
@@ -76,9 +75,10 @@ describe("itwEidIssuanceMachine", () => {
       abortIdentification
     },
     actors: {
+      onInit: fromPromise<OnInitActorOutput>(onInit),
       createWalletInstance: fromPromise<string>(createWalletInstance),
       getWalletAttestation: fromPromise<
-        WalletAttestationResult,
+        string,
         GetWalletAttestationActorParams
       >(getWalletAttestation),
       requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
@@ -93,17 +93,25 @@ describe("itwEidIssuanceMachine", () => {
       isNativeAuthSessionClosed,
       issuedEidMatchesAuthenticatedUser,
       isSessionExpired,
-      isOperationAborted
+      isOperationAborted,
+      hasValidWalletInstanceAttestation
     }
   });
 
   beforeEach(() => {
+    onInit.mockImplementation(() => Promise.resolve({} as OnInitActorOutput));
+    hasValidWalletInstanceAttestation.mockImplementation(() => false);
+  });
+
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
   it("Should obtain an eID (SPID)", async () => {
     const actor = createActor(mockedMachine);
     actor.start();
+
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
@@ -126,9 +134,7 @@ describe("itwEidIssuanceMachine", () => {
     createWalletInstance.mockImplementation(() =>
       Promise.resolve(T_INTEGRITY_KEY)
     );
-    getWalletAttestation.mockImplementation(() =>
-      Promise.resolve({ walletAttestaton: T_WIA })
-    );
+    getWalletAttestation.mockImplementation(() => Promise.resolve(T_WIA));
 
     actor.send({ type: "accept-tos" });
 
@@ -136,17 +142,28 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
     await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
+    await waitFor(() =>
+      expect(storeIntegrityKeyTag).toHaveBeenCalledWith(expect.any(Object), {
+        keyTag: T_INTEGRITY_KEY
+      })
+    );
+    await waitFor(() =>
+      expect(storeWalletInstanceAttestation).toHaveBeenCalledWith(
+        expect.any(Object),
+        {
+          wia: T_WIA
+        }
+      )
+    );
+    expect(actor.getSnapshot().context).toMatchSnapshot({
+      walletInstanceAttestation: T_WIA,
+      integrityKeyTag: T_INTEGRITY_KEY
+    });
 
     // Wallet instance creation and attestation obtainment success
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: "ModeSelection"
-    });
-    expect(actor.getSnapshot().context).toStrictEqual<Context>({
-      ...InitialContext,
-      integrityKeyTag: T_INTEGRITY_KEY,
-      walletInstanceAttestation: T_WIA,
-      wiaCryptoContext: T_WIA_CRYPTO_CONTEXT
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
@@ -180,7 +197,6 @@ describe("itwEidIssuanceMachine", () => {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: T_WIA,
-      wiaCryptoContext: T_WIA_CRYPTO_CONTEXT,
       identification: {
         mode: "spid",
         idpId: idps[0].id
@@ -199,7 +215,6 @@ describe("itwEidIssuanceMachine", () => {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: T_WIA,
-      wiaCryptoContext: T_WIA_CRYPTO_CONTEXT,
       identification: {
         mode: "spid",
         idpId: idps[0].id
@@ -240,8 +255,7 @@ describe("itwEidIssuanceMachine", () => {
       value: { UserIdentification: "ModeSelection" },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: T_WIA,
-        wiaCryptoContext: T_WIA_CRYPTO_CONTEXT
+        walletInstanceAttestation: T_WIA
       }
     } as MachineSnapshot);
 
@@ -264,7 +278,6 @@ describe("itwEidIssuanceMachine", () => {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: T_WIA,
-      wiaCryptoContext: T_WIA_CRYPTO_CONTEXT,
       identification: {
         mode: "cieId",
         abortController: new AbortController()
@@ -286,8 +299,7 @@ describe("itwEidIssuanceMachine", () => {
       value: { UserIdentification: "ModeSelection" },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: T_WIA,
-        wiaCryptoContext: T_WIA_CRYPTO_CONTEXT
+        walletInstanceAttestation: T_WIA
       }
     } as MachineSnapshot);
 
@@ -312,7 +324,6 @@ describe("itwEidIssuanceMachine", () => {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: T_WIA,
-      wiaCryptoContext: T_WIA_CRYPTO_CONTEXT,
       identification: undefined
     });
     expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
@@ -338,7 +349,6 @@ describe("itwEidIssuanceMachine", () => {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: T_WIA,
-      wiaCryptoContext: T_WIA_CRYPTO_CONTEXT,
       identification: {
         mode: "ciePin",
         pin: "12345678"
@@ -394,8 +404,7 @@ describe("itwEidIssuanceMachine", () => {
       },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: T_WIA,
-        wiaCryptoContext: T_WIA_CRYPTO_CONTEXT
+        walletInstanceAttestation: T_WIA
       }
     } as MachineSnapshot);
 
@@ -424,7 +433,6 @@ describe("itwEidIssuanceMachine", () => {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: T_WIA,
-      wiaCryptoContext: T_WIA_CRYPTO_CONTEXT,
       identification: {
         mode: "ciePin",
         pin: "12345678"
@@ -496,7 +504,9 @@ describe("itwEidIssuanceMachine", () => {
     expect(getWalletAttestation).toHaveBeenCalledTimes(1);
   });
 
-  it("Should skip Wallet Instance Attestation obtainment", () => {
+  it("Should skip Wallet Instance Attestation obtainment", async () => {
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
@@ -504,8 +514,7 @@ describe("itwEidIssuanceMachine", () => {
     const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: T_WIA,
-        wiaCryptoContext: T_WIA_CRYPTO_CONTEXT
+        walletInstanceAttestation: T_WIA
       }
     } as MachineSnapshot);
 
@@ -540,7 +549,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: "ModeSelection"
     });
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
     expect(createWalletInstance).toHaveBeenCalledTimes(0);
     expect(getWalletAttestation).toHaveBeenCalledTimes(0);
   });
@@ -572,6 +581,8 @@ describe("itwEidIssuanceMachine", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -583,6 +594,7 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "start" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
 
@@ -591,7 +603,6 @@ describe("itwEidIssuanceMachine", () => {
      */
 
     createWalletInstance.mockImplementation(() => Promise.reject({}));
-
     isSessionExpired.mockImplementation(() => true);
 
     actor.send({ type: "accept-tos" });
@@ -609,6 +620,8 @@ describe("itwEidIssuanceMachine", () => {
   it("Should return to TOS acceptance if session expires when obtaining a Wallet Instance Attestation ", async () => {
     const actor = createActor(mockedMachine);
     actor.start();
+
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
@@ -651,6 +664,8 @@ describe("itwEidIssuanceMachine", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -688,6 +703,8 @@ describe("itwEidIssuanceMachine", () => {
   it("Should fail when obtaining Wallet Instance Attestation", async () => {
     const actor = createActor(mockedMachine);
     actor.start();
+
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().context).toStrictEqual(InitialContext);

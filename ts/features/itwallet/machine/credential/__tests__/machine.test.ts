@@ -1,6 +1,9 @@
 /* eslint-disable sonarjs/no-identical-functions */
 import { CryptoContext } from "@pagopa/io-react-native-jwt";
-import { AuthorizationDetail } from "@pagopa/io-react-native-wallet";
+import {
+  AuthorizationDetail,
+  createCryptoContextFor
+} from "@pagopa/io-react-native-wallet";
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import {
@@ -24,6 +27,7 @@ import {
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAttestationActorInput,
+  OnInitActorOutput,
   RequestCredentialActorInput,
   RequestCredentialActorOutput
 } from "../actors";
@@ -133,8 +137,11 @@ describe("itwCredentialIssuanceMachine", () => {
       handleSessionExpired
     },
     actors: {
-      initializeWallet:
-        fromPromise<InitializeWalletActorOutput>(initializeWallet),
+      onInit: fromPromise<OnInitActorOutput>(async () => ({
+        integrityKeyTag: "",
+        walletInstanceAttestation: "",
+        wiaCryptoContext: createCryptoContextFor("")
+      })),
       requestCredential: fromPromise<
         RequestCredentialActorOutput,
         RequestCredentialActorInput
