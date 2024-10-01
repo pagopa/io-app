@@ -1,7 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import { useSelector } from "@xstate/react";
-import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
 import {
   Body,
   FooterWithButtons,
@@ -12,21 +9,130 @@ import {
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { default as React } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import PagerView from "react-native-pager-view";
+import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
 import { H4 } from "../../../../components/core/typography/H4";
-import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
-import I18n from "../../../../i18n";
-import { useOnboardingMachineService } from "../xstate/provider";
-import {
-  criteriaToDisplaySelector,
-  prerequisiteAnswerIndexSelector
-} from "../xstate/selectors";
 import { Link } from "../../../../components/core/typography/Link";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../i18n";
+import { IdPayOnboardingMachineContext } from "../machine/provider";
+import {
+  multiRequiredCriteriaSelector,
+  selectCurrentMultiSelfDeclarationPage
+} from "../machine/selectors";
 
 type ListItemProps = {
   text: string;
   checked: boolean;
   onPress: () => void;
+};
+
+const MultiValuePrerequisitesScreen = () => {
+  const pagerRef = React.useRef<PagerView>(null);
+
+  const multiSelfDeclarations = IdPayOnboardingMachineContext.useSelector(
+    multiRequiredCriteriaSelector
+  );
+  const currentPage = IdPayOnboardingMachineContext.useSelector(
+    selectCurrentMultiSelfDeclarationPage
+  );
+
+  React.useEffect(() => {
+    pagerRef.current?.setPage(currentPage);
+  }, [pagerRef, currentPage]);
+
+  return (
+    <PagerView
+      ref={pagerRef}
+      scrollEnabled={false}
+      style={IOStyles.flex}
+      initialPage={0}
+    >
+      {multiSelfDeclarations.map((selfDelcaration, index) => (
+        <View key={index}>
+          <MultiValuePrerequisiteItemScreenContent
+            selfDeclaration={selfDelcaration}
+          />
+        </View>
+      ))}
+    </PagerView>
+  );
+};
+
+type MultiValuePrerequisiteItemScreenContentProps = {
+  selfDeclaration: SelfDeclarationMultiDTO;
+};
+
+const MultiValuePrerequisiteItemScreenContent = ({
+  selfDeclaration
+}: MultiValuePrerequisiteItemScreenContentProps) => {
+  const machine = IdPayOnboardingMachineContext.useActorRef();
+
+  const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>(
+    undefined
+  );
+
+  const handleContinuePress = () => {
+    if (selectedIndex !== undefined) {
+      machine.send({
+        type: "select-multi-consent",
+        data: {
+          _type: selfDeclaration._type,
+          value: selfDeclaration.value[selectedIndex],
+          code: selfDeclaration.code
+        }
+      });
+    }
+  };
+  const handleGoBack = () => machine.send({ type: "back" });
+
+  return (
+    <>
+      <BaseScreenComponent
+        goBack={handleGoBack}
+        headerTitle={I18n.t("idpay.onboarding.headerTitle")}
+      >
+        <View style={IOStyles.horizontalContentPadding}>
+          <H1>{I18n.t("idpay.onboarding.multiPrerequisites.header")}</H1>
+          <VSpacer size={16} />
+          <Body>{I18n.t("idpay.onboarding.multiPrerequisites.body")}</Body>
+          <Link>{I18n.t("idpay.onboarding.multiPrerequisites.link")}</Link>
+          <VSpacer size={24} />
+          <H4>{selfDeclaration.description}</H4>
+          <ScrollView>
+            {selfDeclaration.value.map((answer, index) => (
+              <CustomListItem
+                key={index}
+                text={answer}
+                checked={index === selectedIndex}
+                onPress={() => setSelectedIndex(index)}
+              />
+            ))}
+          </ScrollView>
+        </View>
+      </BaseScreenComponent>
+      <FooterWithButtons
+        type="TwoButtonsInlineHalf"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            onPress: handleGoBack,
+            label: I18n.t("global.buttons.back")
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            onPress: handleContinuePress,
+            disabled: selectedIndex === undefined,
+            label: I18n.t("global.buttons.continue")
+          }
+        }}
+      />
+    </>
+  );
 };
 
 const CustomListItem = ({ text, onPress, checked }: ListItemProps) => (
@@ -47,92 +153,6 @@ const CustomListItem = ({ text, onPress, checked }: ListItemProps) => (
     </PressableListItemBase>
   </View>
 );
-
-const MultiValuePrerequisitesScreen = () => {
-  const machine = useOnboardingMachineService();
-
-  const currentPrerequisite = useSelector(machine, criteriaToDisplaySelector);
-  const possiblySelectedIndex = useSelector(
-    machine,
-    prerequisiteAnswerIndexSelector
-  );
-
-  const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>(
-    possiblySelectedIndex
-  );
-
-  const continueOnPress = () => {
-    if (selectedIndex === undefined) {
-      return null;
-    }
-    machine.send("SELECT_MULTI_CONSENT", {
-      data: {
-        _type: currentPrerequisite._type,
-        value: currentPrerequisite.value[selectedIndex],
-        code: currentPrerequisite.code
-      }
-    });
-
-    return null;
-  };
-  const goBack = () => machine.send("BACK");
-
-  useNavigationSwipeBackListener(() => {
-    machine.send({ type: "BACK", skipNavigation: true });
-  });
-
-  useHeaderSecondLevel({
-    title: I18n.t("idpay.onboarding.headerTitle"),
-    goBack,
-    supportRequest: false
-  });
-
-  return (
-    <>
-      <ScrollView
-        contentContainerStyle={[
-          IOStyles.horizontalContentPadding,
-          { flexGrow: 1 }
-        ]}
-      >
-        <H1>{I18n.t("idpay.onboarding.multiPrerequisites.header")}</H1>
-        <VSpacer size={16} />
-        <Body>{I18n.t("idpay.onboarding.multiPrerequisites.body")}</Body>
-        <Link>{I18n.t("idpay.onboarding.multiPrerequisites.link")}</Link>
-        <VSpacer size={24} />
-        <H4>{currentPrerequisite.description}</H4>
-
-        {currentPrerequisite.value.map((answer, index) => (
-          <CustomListItem
-            key={index}
-            text={answer}
-            checked={index === selectedIndex}
-            onPress={() => setSelectedIndex(index)}
-          />
-        ))}
-      </ScrollView>
-
-      <FooterWithButtons
-        type="TwoButtonsInlineHalf"
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            label: I18n.t("global.buttons.back"),
-            onPress: goBack
-          }
-        }}
-        secondary={{
-          type: "Solid",
-          buttonProps: {
-            label: I18n.t("global.buttons.continue"),
-            onPress: continueOnPress,
-            disabled: selectedIndex === undefined
-          }
-        }}
-      />
-    </>
-  );
-};
 
 const styles = StyleSheet.create({
   outerListItem: {

@@ -7,6 +7,7 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { View } from "react-native";
+import * as analytics from "../analytics";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -20,6 +21,7 @@ import { paymentsWalletUserMethodsSelector } from "../../wallet/store/selectors"
 import { paymentsSetAddMethodsBannerVisible } from "../store/actions";
 import { isAddMethodsBannerVisibleSelector } from "../store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import {
   PaymentCardsCarousel,
   PaymentCardsCarouselSkeleton
@@ -40,6 +42,7 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   );
   const paymentMethodsPot = useIOSelector(paymentsWalletUserMethodsSelector);
   const paymentMethods = pot.getOrElse(paymentMethodsPot, []);
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const isLoading =
     (!pot.isSome(paymentMethodsPot) && pot.isLoading(paymentMethodsPot)) ||
@@ -65,6 +68,13 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   };
 
   const handleOnAddMethodPress = () => {
+    analytics.trackPaymentWalletAddStart({
+      add_entry_point: "payments_home",
+      wallet_item: "payment_method",
+      payments_home_status: paymentAnalyticsData?.paymentsHomeStatus,
+      saved_payment_method:
+        paymentAnalyticsData?.savedPaymentMethods?.length ?? 0
+    });
     navigation.navigate(PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR, {
       screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
     });
