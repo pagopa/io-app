@@ -13,6 +13,8 @@ import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem"
 import { UserDetail } from "../../../../../definitions/pagopa/biz-events/UserDetail";
 import { formatAmountText } from "../utils";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import * as analytics from "../analytics";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 export type PaymentsTransactionBizEventsCartItemDetailsScreenParams = {
   cartItem: CartItem;
@@ -34,6 +36,10 @@ const PaymentsTransactionBizEventsCartItemDetailsScreen = () => {
       {debtor.taxCode ? <H6>({debtor.taxCode})</H6> : null}
     </>
   );
+
+  useOnFirstRender(() => {
+    analytics.trackPaymentsOpenSubReceipt();
+  });
 
   return (
     <IOScrollViewWithLargeHeader

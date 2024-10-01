@@ -3,14 +3,19 @@ import {
   FooterWithButtons,
   H1,
   IOColors,
+  IOIcons,
   IOStyles,
   Icon,
   LabelSmall,
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { useActor } from "@xstate/react";
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -20,55 +25,32 @@ import { H4 } from "../../../../components/core/typography/H4";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { LOADING_TAG } from "../../../../xstate/utils";
-import { IDPayConfigurationParamsList } from "../navigation/navigator";
-import { ConfigurationMode } from "../xstate/context";
-import { useConfigurationMachineService } from "../xstate/provider";
+import { IdPayConfigurationMachineContext } from "../machine/provider";
+import { IdPayConfigurationParamsList } from "../navigation/params";
+import { ConfigurationMode } from "../types";
+import { isLoadingSelector } from "../../common/machine/selectors";
 
-type InitiativeConfigurationIntroScreenRouteParams = {
-  initiativeId: string;
+export type IdPayInitiativeConfigurationIntroScreenParams = {
+  initiativeId?: string;
+  mode?: ConfigurationMode;
 };
 
-type InitiativeConfigurationIntroRouteProps = RouteProp<
-  IDPayConfigurationParamsList,
+type RouteProps = RouteProp<
+  IdPayConfigurationParamsList,
   "IDPAY_CONFIGURATION_INTRO"
 >;
 
-type RequiredDataItemProps = {
-  icon?: React.ReactNode;
-  title: string;
-  subTitle: string;
-};
-
-const RequiredDataItem = (props: RequiredDataItemProps) => (
-  <View style={[IOStyles.row, styles.listItem]}>
-    {!!props.icon && <View style={styles.icon}>{props.icon}</View>}
-    <View>
-      <H4 weight="Semibold" color="bluegreyDark">
-        {props.title}
-      </H4>
-      <LabelSmall weight="Regular" color="bluegrey">
-        {props.subTitle}
-      </LabelSmall>
-    </View>
-  </View>
-);
-
-const InitiativeConfigurationIntroScreen = () => {
+export const InitiativeConfigurationIntroScreen = () => {
   const navigation = useNavigation();
-  const route = useRoute<InitiativeConfigurationIntroRouteProps>();
+  const { params } = useRoute<RouteProps>();
+  const { initiativeId, mode } = params;
+  const { useActorRef, useSelector } = IdPayConfigurationMachineContext;
+  const machine = useActorRef();
 
-  const { initiativeId } = route.params;
-
-  const configurationMachine = useConfigurationMachineService();
-  const [state, send] = useActor(configurationMachine);
-
-  const theme = useIOTheme();
-
-  const isLoading = state.tags.has(LOADING_TAG);
+  const isLoading = useSelector(isLoadingSelector);
 
   const handleContinuePress = () => {
-    send({ type: "NEXT" });
+    machine.send({ type: "next" });
   };
 
   const customGoBack = (
@@ -77,40 +59,17 @@ const InitiativeConfigurationIntroScreen = () => {
     </TouchableDefaultOpacity>
   );
 
-  const requiredDataItems: ReadonlyArray<RequiredDataItemProps> = [
-    {
-      icon: (
-        <Icon
-          name="institution"
-          size={24}
-          color={theme["interactiveElem-default"]}
-        />
-      ),
-      title: I18n.t("idpay.configuration.intro.requiredData.ibanTitle"),
-      subTitle: I18n.t("idpay.configuration.intro.requiredData.ibanSubtitle")
-    },
-    {
-      icon: (
-        <Icon
-          name="creditCard"
-          size={24}
-          color={theme["interactiveElem-default"]}
-        />
-      ),
-      title: I18n.t("idpay.configuration.intro.requiredData.instrumentTitle"),
-      subTitle: I18n.t(
-        "idpay.configuration.intro.requiredData.instrumentSubtitle"
-      )
-    }
-  ];
-
-  React.useEffect(() => {
-    send({
-      type: "START_CONFIGURATION",
-      initiativeId,
-      mode: ConfigurationMode.COMPLETE
-    });
-  }, [send, initiativeId]);
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!!initiativeId && !!mode) {
+        machine.send({
+          type: "start-configuration",
+          initiativeId,
+          mode
+        });
+      }
+    }, [machine, initiativeId, mode])
+  );
 
   return (
     <BaseScreenComponent
@@ -132,9 +91,24 @@ const InitiativeConfigurationIntroScreen = () => {
                 {I18n.t("idpay.configuration.intro.requiredData.title")}
               </H3>
               <VSpacer size={8} />
-              {requiredDataItems.map((item, index) => (
-                <RequiredDataItem key={index} {...item} />
-              ))}
+              <RequiredDataItem
+                icon="creditCard"
+                title={I18n.t(
+                  "idpay.configuration.intro.requiredData.ibanTitle"
+                )}
+                subTitle={I18n.t(
+                  "idpay.configuration.intro.requiredData.ibanSubtitle"
+                )}
+              />
+              <RequiredDataItem
+                icon="institution"
+                title={I18n.t(
+                  "idpay.configuration.intro.requiredData.instrumentTitle"
+                )}
+                subTitle={I18n.t(
+                  "idpay.configuration.intro.requiredData.instrumentSubtitle"
+                )}
+              />
             </View>
           </ScrollView>
         </SafeAreaView>
@@ -156,6 +130,37 @@ const InitiativeConfigurationIntroScreen = () => {
   );
 };
 
+type RequiredDataItemProps = {
+  icon?: IOIcons;
+  title: string;
+  subTitle: string;
+};
+
+const RequiredDataItem = (props: RequiredDataItemProps) => {
+  const theme = useIOTheme();
+  return (
+    <View style={[IOStyles.row, styles.listItem]}>
+      {!!props.icon && (
+        <View style={styles.icon}>
+          <Icon
+            name={props.icon}
+            size={24}
+            color={theme["interactiveElem-default"]}
+          />
+        </View>
+      )}
+      <View>
+        <H4 weight="Semibold" color="bluegreyDark">
+          {props.title}
+        </H4>
+        <LabelSmall weight="Regular" color="bluegrey">
+          {props.subTitle}
+        </LabelSmall>
+      </View>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   listItem: {
     paddingVertical: 16,
@@ -166,7 +171,3 @@ const styles = StyleSheet.create({
     marginRight: 16
   }
 });
-
-export type { InitiativeConfigurationIntroScreenRouteParams };
-
-export default InitiativeConfigurationIntroScreen;

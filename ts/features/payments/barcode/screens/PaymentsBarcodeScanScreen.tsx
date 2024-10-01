@@ -95,7 +95,11 @@ const PaymentsBarcodeScanScreen = () => {
     if (barcode.type === "PAGOPA") {
       if (isNewWalletSectionEnabled) {
         startPaymentFlowWithRptId(barcode.rptId, {
-          onSuccess: "showTransaction"
+          onSuccess: "showTransaction",
+          startOrigin:
+            barcode.format === "DATA_MATRIX"
+              ? "poste_datamatrix_scan"
+              : "qrcode_scan"
         });
       } else {
         dispatch(paymentInitializeState());
