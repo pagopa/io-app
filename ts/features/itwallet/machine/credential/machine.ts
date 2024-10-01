@@ -1,16 +1,12 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { assign, fromPromise, not, setup } from "xstate";
-import { ItwSessionExpiredError } from "../../api/client";
-import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
   GetWalletAttestationActorOutput,
-  OnInitActorOutput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAttestationActorInput,
+  OnInitActorOutput,
   RequestCredentialActorInput,
   RequestCredentialActorOutput
 } from "./actors";
@@ -56,14 +52,8 @@ export const itwCredentialIssuanceMachine = setup({
     >(notImplemented)
   },
   guards: {
-    isSessionExpired: ({ event }: { event: CredentialIssuanceEvents }) =>
-      "error" in event && event.error instanceof ItwSessionExpiredError,
-    hasValidWalletInstanceAttestation: ({ context }) =>
-      pipe(
-        O.fromNullable(context.walletInstanceAttestation),
-        O.map(isWalletInstanceAttestationValid),
-        O.getOrElse(() => false)
-      )
+    isSessionExpired: notImplemented,
+    hasValidWalletInstanceAttestation: notImplemented
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",

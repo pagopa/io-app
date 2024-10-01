@@ -1,11 +1,6 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { assign, fromPromise, not, or, setup } from "xstate";
 import { assert } from "../../../../utils/assert";
-import {
-  isWalletInstanceAttestationValid,
-  WalletAttestationResult
-} from "../../common/utils/itwAttestationUtils";
+import { WalletAttestationResult } from "../../common/utils/itwAttestationUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
@@ -74,12 +69,7 @@ export const itwEidIssuanceMachine = setup({
     issuedEidMatchesAuthenticatedUser: notImplemented,
     isSessionExpired: notImplemented,
     isOperationAborted: notImplemented,
-    hasValidWalletInstanceAttestation: ({ context }) =>
-      pipe(
-        O.fromNullable(context.walletInstanceAttestation),
-        O.map(isWalletInstanceAttestationValid),
-        O.getOrElse(() => false)
-      )
+    hasValidWalletInstanceAttestation: notImplemented
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
