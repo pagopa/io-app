@@ -27,6 +27,7 @@ import {
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
@@ -44,11 +45,14 @@ const WalletHomeScreen = ({ route }: Props) => {
     React.useCallback(() => {
       trackOpenWalletScreen();
       dispatch(walletToggleLoadingState(true));
-      dispatch(getPaymentsWalletUserMethods.request());
-      dispatch(idPayWalletGet.request());
-      dispatch(cgnDetails.request());
     }, [dispatch])
   );
+
+  useOnFirstRender(() => {
+    dispatch(getPaymentsWalletUserMethods.request());
+    dispatch(idPayWalletGet.request());
+    dispatch(cgnDetails.request());
+  });
 
   // Handles the "New element added" toast display once the user returns to this screen
   useFocusEffect(
