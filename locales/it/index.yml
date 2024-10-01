@@ -3189,7 +3189,7 @@ features:
       eid: Identità Digitale
       mdl: Patente di Guida
       dc: Carta Europea della Disabilità
-      ts: Tessera Sanitaria
+      ts: Tessera Sanitaria - Tessera europea di assicurazione malattia
     wallet:
       active: Attivo
       inactive: Non attivo
@@ -3228,7 +3228,7 @@ features:
         issuedBy: "Credenziale emessa da"
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
-        releasedBy: "Rilasciata da"
+        releasedBy: Emissione versione digitale
         attachments: "Allegati"
         mdl:
           category: "Licenza {{category}}"
@@ -3299,7 +3299,7 @@ features:
         bottomSheet:
           about:
             title: "Chi è?"
-            subtitle: "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo."
+            subtitle: "È l'ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
