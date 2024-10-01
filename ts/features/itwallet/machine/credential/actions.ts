@@ -97,7 +97,6 @@ export default (
     CredentialIssuanceEvents
   >) => {
     assert(context.credential, "credential is undefined");
-
     dispatch(itwCredentialsStore([context.credential]));
   },
 

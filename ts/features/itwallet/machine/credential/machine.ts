@@ -63,7 +63,6 @@ export const itwCredentialIssuanceMachine = setup({
     src: "onInit",
     onDone: {
       actions: assign(({ event }) => ({
-        wiaCryptoContext: event.output.wiaCryptoContext,
         walletInstanceAttestation: event.output.walletInstanceAttestation
       }))
     },

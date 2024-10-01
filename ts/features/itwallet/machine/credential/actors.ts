@@ -1,5 +1,3 @@
-import { CryptoContext } from "@pagopa/io-react-native-jwt";
-import { createCryptoContextFor } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
@@ -8,7 +6,6 @@ import { assert } from "../../../../utils/assert";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
 import { getCredentialStatusAttestation } from "../../common/utils/itwCredentialStatusAttestationUtils";
-import { WIA_KEYTAG } from "../../common/utils/itwCryptoContextUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
@@ -16,7 +13,6 @@ import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store
 import { type Context } from "./context";
 
 export type OnInitActorOutput = {
-  wiaCryptoContext: CryptoContext;
   walletInstanceAttestation: string | undefined;
 };
 
@@ -42,13 +38,11 @@ export type ObtainStatusAttestationActorInput = Pick<Context, "credential">;
 
 export default (store: ReturnType<typeof useIOStore>) => {
   const onInit = fromPromise<OnInitActorOutput>(async () => {
-    const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
     const walletInstanceAttestation = itwWalletInstanceAttestationSelector(
       store.getState()
     );
 
     return {
-      wiaCryptoContext,
       walletInstanceAttestation
     };
   });
