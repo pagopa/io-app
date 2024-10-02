@@ -109,16 +109,16 @@ import { watchWalletSaga as watchNewWalletSaga } from "../features/newWallet/sag
 import { watchServicesSaga } from "../features/services/common/saga";
 import { watchItwSaga } from "../features/itwallet/common/saga";
 import { watchTrialSystemSaga } from "../features/trialSystem/store/sagas/watchTrialSystemSaga";
-import {
-  handlePendingMessageStateIfAllowedSaga,
-  updateInstallationSaga
-} from "../features/pushNotifications/sagas/notifications";
-import { checkNotificationsPreferencesSaga } from "../features/pushNotifications/sagas/checkNotificationsPreferencesSaga";
+import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
+import { profileAndSystemNotificationsPermissions } from "../features/pushNotifications/sagas/profileAndSystemNotificationsPermissions";
+import { pushNotificationTokenUpload } from "../features/pushNotifications/sagas/pushNotificationTokenUpload";
+import { handlePendingMessageStateIfAllowed } from "../features/pushNotifications/sagas/common";
 import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
 import { zendeskTokenNeedsRefresh } from "../features/zendesk/store/actions";
 import { zendeskTokenNeedsRefreshSelector } from "../features/zendesk/store/reducers";
 import { formatRequestedTokenString } from "../features/zendesk/utils";
+import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import {
   clearKeychainError,
   keychainError
@@ -173,6 +173,10 @@ const warningWaitNavigatorTime = 2000 as Millisecond;
 export function* initializeApplicationSaga(
   startupAction?: ActionType<typeof startApplicationInitialization>
 ): Generator<ReduxSagaEffect, void, any> {
+  const isBlockingScreen = yield* select(isBlockingScreenSelector);
+  if (isBlockingScreen) {
+    return;
+  }
   const handleSessionExpiration = !!(
     startupAction?.payload && startupAction.payload.handleSessionExpiration
   );
@@ -207,6 +211,9 @@ export function* initializeApplicationSaga(
 
   // clear cached downloads when the logged user changes
   yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments);
+
+  // Retrieve and listen for notification permissions status changes
+  yield* fork(notificationPermissionsListener);
 
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
@@ -522,8 +529,9 @@ export function* initializeApplicationSaga(
 
   userProfile = (yield* call(checkEmailSaga)) ?? userProfile;
 
-  // check if the user must set preferences for push notifications (e.g. reminders)
-  yield* call(checkNotificationsPreferencesSaga, userProfile);
+  // Check for both profile notifications permissions (anonymous
+  // content && reminder) and system notifications permissions.
+  yield* call(profileAndSystemNotificationsPermissions, userProfile);
 
   const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
   yield* call(askServicesPreferencesModeOptin, isFirstOnboarding);
@@ -536,9 +544,14 @@ export function* initializeApplicationSaga(
   // Stop the watchAbortOnboardingSaga
   yield* cancel(watchAbortOnboardingSagaTask);
 
-  // Start the notification installation update as early as
-  // possible to begin receiving push notifications
-  yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
+  // Fork the saga that uploads the push notification token to the backend.
+  // At this moment, the push notification token may not be available yet but
+  // the saga handles it internally. Make sure to fork it and not call it using
+  // a blocking call, since the saga will just hang, waiting for the token
+  yield* fork(
+    pushNotificationTokenUpload,
+    backendClient.createOrUpdateInstallation
+  );
 
   // This saga is called before the startup status is set to authenticated to avoid flashing
   // the home screen when the user is taken to the alert screen in case of identities that don't match.
@@ -681,7 +694,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchEmailNotificationPreferencesSaga);
 
   // Check if we have a pending notification message
-  yield* call(handlePendingMessageStateIfAllowedSaga, true);
+  yield* call(handlePendingMessageStateIfAllowed, true);
 
   // This tells the security advice bottomsheet that it can be shown
   yield* put(setSecurityAdviceReadyToShow(true));

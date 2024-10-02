@@ -3,7 +3,6 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useSelector } from "@xstate/react";
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -13,21 +12,18 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import themeVariables from "../../../../theme/variables";
-import { useOnboardingMachineService } from "../xstate/provider";
-import { isUpsertingSelector } from "../xstate/selectors";
+import { IdPayOnboardingMachineContext } from "../machine/provider";
+import { isLoadingSelector } from "../../common/machine/selectors";
 
 const CompletionScreen = () => {
-  const onboardingMachineService = useOnboardingMachineService();
+  const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
+  const machine = useActorRef();
 
-  const isUpserting = useSelector(
-    onboardingMachineService,
-    isUpsertingSelector
-  );
+  const isLoading = useSelector(isLoadingSelector);
 
-  const handleClosePress = () =>
-    onboardingMachineService.send({ type: "QUIT_ONBOARDING" });
+  const handleClosePress = () => machine.send({ type: "close" });
 
-  if (isUpserting) {
+  if (isLoading) {
     return (
       <SafeAreaView style={IOStyles.flex}>
         <BaseScreenComponent

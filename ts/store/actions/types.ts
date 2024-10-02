@@ -25,13 +25,18 @@ import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal
 import { ServicesActions } from "../../features/services/common/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
-import { NotificationsActions } from "../../features/pushNotifications/store/actions/notifications";
+import { NotificationsActions } from "../../features/pushNotifications/store/actions/installation";
+import { NotificationPermissionsActions } from "../../features/pushNotifications/store/actions/permissions";
+import { PendingMessageActions } from "../../features/pushNotifications/store/actions/pendingMessage";
+import { ProfileNotificationPermissionsActions } from "../../features/pushNotifications/store/actions/profileNotificationPermissions";
 import { GlobalState } from "../reducers/types";
 import { CieLoginConfigActions } from "../../features/cieLogin/store/actions";
 import { FimsActions } from "../../features/fims/common/store/actions";
 import { ItwActions } from "../../features/itwallet/common/store/actions";
 import { TrialSystemActions } from "../../features/trialSystem/store/actions";
 import { ProfileSettingsActions } from "../../features/profileSettings/store/actions";
+import { IngressScreenActions } from "../../features/ingress/store/actions";
+import { MixpanelFeatureActions } from "../../features/mixpanel/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -68,6 +73,9 @@ export type Action =
   | MessagesActions
   | MixpanelActions
   | NotificationsActions
+  | NotificationPermissionsActions
+  | PendingMessageActions
+  | ProfileNotificationPermissionsActions
   | PinSetActions
   | OnboardingActions
   | PreferencesActions
@@ -107,7 +115,9 @@ export type Action =
   | FimsActions
   | ItwActions
   | TrialSystemActions
-  | ProfileSettingsActions;
+  | ProfileSettingsActions
+  | IngressScreenActions
+  | MixpanelFeatureActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
