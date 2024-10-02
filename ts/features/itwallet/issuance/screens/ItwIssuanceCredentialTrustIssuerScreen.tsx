@@ -99,7 +99,6 @@ type ContentViewProps = {
 const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const route = useRoute();
 
-  // TODO check if we can clean this track second time (look at continuepress)
   useFocusEffect(() => trackWalletDataShare(CREDENTIALS_MAP[credentialType]));
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =

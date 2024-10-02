@@ -22,6 +22,7 @@ import {
 } from "../features/itwallet/analytics";
 import {
   itwCredentialsByTypeSelector,
+  itwCredentialsEidSelector,
   itwCredentialsSelector,
   itwIPZSHasReadPolicySelector
 } from "../features/itwallet/credentials/store/selectors";
@@ -68,7 +69,7 @@ export const updateMixpanelProfileProperties = async (
   const notificationsEnabled = await checkNotificationPermissions();
   const SERVICE_CONFIGURATION = serviceConfigHandler(state);
   const TRACKING = mixpanelOptInHandler(state);
-  const ITW_STATUS = walletStatusHandler();
+  const ITW_STATUS = walletStatusHandler(state);
   const ITW_ID = idStatusHandler(state);
   const ITW_PG = pgStatusHandler(state);
   const ITW_TS = tsStatusHandler(state);
@@ -124,12 +125,17 @@ const tosVersionHandler = (state: GlobalState): number | string => {
 };
 
 // TODO [SIW-1438]: Add dynamic profile properties
-const walletStatusHandler = (): ItwStatus => "L2";
+const walletStatusHandler = (state: GlobalState): ItwStatus => {
+  // TODO check if this is the correct selector and what returns (do the same in super properties file)
+  const walletInstance = itwCredentialsEidSelector(state);
+  return walletInstance ? "L2" : "not_active";
+};
 
 const ipzs_policy = (state: GlobalState): boolean =>
   itwIPZSHasReadPolicySelector(state);
 
 const idStatusHandler = (state: GlobalState): ItwId => {
+  // TODO pick
   const credentialsState = itwCredentialsSelector(state);
   return credentialsState.eid ? "valid" : "not_available";
 };

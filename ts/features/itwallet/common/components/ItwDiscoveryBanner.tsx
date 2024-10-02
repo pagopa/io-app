@@ -14,7 +14,6 @@ import {
   trackItWalletBannerClosure,
   trackITWalletBannerVisualized
 } from "../../analytics";
-import { itwTrialId } from "../../../../config";
 
 type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
@@ -47,7 +46,7 @@ export const ItwDiscoveryBanner = ({
 
   const trackBannerProperties = React.useMemo(
     () => ({
-      banner_id: itwTrialId,
+      banner_id: "itwDiscoveryBannerTestID",
       banner_page: route.name,
       banner_landing: "ITW_INTRO"
     }),
