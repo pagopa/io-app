@@ -30,7 +30,11 @@ describe("environmentReducer", () => {
   });
   it("'systemNotificationsEnabled' in output state should be 'false' after receiving 'updateSystemNotificationsEnabled(false)'", () => {
     const state = environmentReducer(
-      { systemNotificationsEnabled: true },
+      {
+        applicationInitialized: true,
+        onboardingInstructionsShown: false,
+        systemNotificationsEnabled: true
+      },
       updateSystemNotificationsEnabled(false)
     );
     expect(state.systemNotificationsEnabled).toBe(false);

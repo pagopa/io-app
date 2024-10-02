@@ -7,9 +7,11 @@ import { TabNavigationContainer } from "../components/Home/TabNavigationContaine
 import { SecuritySuggestions } from "../components/Home/SecuritySuggestions";
 import { Toasts } from "../components/Home/Toasts";
 import { Preconditions } from "../components/Home/Preconditions";
+import { useEngagementScreen } from "../../pushNotifications/hooks/useEngamentScreen";
 
 export const MessagesHomeScreen = () => {
   const pagerViewRef = useRef<PagerView>(null);
+  useEngagementScreen();
   return (
     <View style={IOStyles.flex}>
       <Toasts />

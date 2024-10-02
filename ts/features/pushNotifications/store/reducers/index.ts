@@ -42,4 +42,6 @@ export const persistedNotificationsReducer = persistReducer<
 
 export const shouldShowEngagementScreenSelector = (state: GlobalState) =>
   !state.notifications.environment.systemNotificationsEnabled &&
-  !state.notifications.userBehaviour.engagementScreenShown;
+  !state.notifications.userBehaviour.engagementScreenShown &&
+  state.notifications.environment.applicationInitialized &&
+  !state.notifications.environment.onboardingInstructionsShown;

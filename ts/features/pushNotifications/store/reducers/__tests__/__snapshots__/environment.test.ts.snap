@@ -2,6 +2,8 @@
 
 exports[`environment reducer initial state should match expected values 1`] = `
 {
+  "applicationInitialized": false,
+  "onboardingInstructionsShown": false,
   "systemNotificationsEnabled": false,
 }
 `;

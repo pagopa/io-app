@@ -3,6 +3,8 @@
 exports[`Main pushNotifications reducer notificationsReducer initial state should match snapshot 1`] = `
 {
   "environment": {
+    "applicationInitialized": false,
+    "onboardingInstructionsShown": false,
     "systemNotificationsEnabled": false,
   },
   "installation": {
@@ -19,6 +21,8 @@ exports[`Main pushNotifications reducer notificationsReducer initial state shoul
 exports[`Main pushNotifications reducer persistedNotificationsReducer initial state should match snapshot 1`] = `
 {
   "environment": {
+    "applicationInitialized": false,
+    "onboardingInstructionsShown": false,
     "systemNotificationsEnabled": false,
   },
   "installation": {

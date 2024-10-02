@@ -1,7 +1,6 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { setEngagementScreenShown } from "../actions/userBehaviour";
-import { GlobalState } from "../../../../store/reducers/types";
 
 export type UserBehaviourState = {
   engagementScreenShown: boolean;
