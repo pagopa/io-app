@@ -10,6 +10,7 @@ import {
   registerWalletInstance,
   WalletAttestationResult
 } from "../../common/utils/itwAttestationUtils";
+import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import { useIOStore } from "../../../../store/hooks";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
@@ -128,5 +129,12 @@ export const createEidIssuanceActorsImplementation = (
         callbackUrl: "" // This is not important in this phase, it will be set after completing the CIE auth flow
       };
     }
-  )
+  ),
+
+  revokeWalletInstance: fromPromise(async () => {
+    const sessionToken = sessionTokenSelector(store.getState());
+    assert(sessionToken, "sessionToken is undefined");
+
+    await revokeCurrentWalletInstance(sessionToken);
+  })
 });

@@ -46,10 +46,12 @@ export const itwEidIssuanceMachine = setup({
     setWalletInstanceToOperational: notImplemented,
     setWalletInstanceToValid: notImplemented,
     handleSessionExpired: notImplemented,
-    abortIdentification: notImplemented
+    abortIdentification: notImplemented,
+    resetWalletInstance: notImplemented
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
+    revokeWalletInstance: fromPromise(notImplemented),
     getWalletAttestation: fromPromise<
       WalletAttestationResult,
       GetWalletAttestationActorParams
@@ -78,6 +80,12 @@ export const itwEidIssuanceMachine = setup({
       on: {
         start: {
           target: "TosAcceptance"
+        },
+        close: {
+          actions: "closeIssuance"
+        },
+        "revoke-wallet-instance": {
+          target: "WalletInstanceRevocation"
         }
       }
     },
@@ -130,6 +138,21 @@ export const itwEidIssuanceMachine = setup({
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]
+      }
+    },
+    WalletInstanceRevocation: {
+      tags: [ItwTags.Loading],
+      invoke: {
+        src: "revokeWalletInstance",
+        onDone: {
+          actions: ["resetWalletInstance", "closeIssuance"]
+        },
+        onError: {
+          actions: assign(
+            setFailure(IssuanceFailureType.WALLET_REVOCATION_GENERIC)
+          ),
+          target: "#itwEidIssuanceMachine.Failure"
+        }
       }
     },
     WalletInstanceAttestationObtainment: {

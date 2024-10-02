@@ -3403,6 +3403,12 @@ features:
         title: Vuoi davvero disattivare Documenti su IO?
         subtitle: "Eliminerai i documenti che hai aggiunto al Portafoglio.\nSe cambi idea, potrai riattivare Documenti su IO in futuro."
         action: Conferma e continua
+      loadingScreen:
+        title: Stiamo disattivando Documenti su IO...
+        subtitle: Attendi qualche secondo
+      failureScreen:
+        title: Si è verificato un errore imprevisto
+        subtitle: Non è stato possibile disattivare il servizio. Riprova.
   trialSystem:
     toast:
       subscribed: Done! You will receive a message when the trial period will begin.

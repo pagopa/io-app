@@ -1,27 +1,55 @@
 import React from "react";
+import { View } from "react-native";
+import { Body, IOStyles } from "@pagopa/io-app-design-system";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { selectIsLoading } from "../../machine/eid/selectors";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 
-export const ItwLifecycleWalletRevocationScreen = () => (
-  <OperationResultScreenContent
-    pictogram="attention"
-    title={I18n.t("features.itWallet.walletRevocation.confirmScreen.title")}
-    subtitle={I18n.t(
-      "features.itWallet.walletRevocation.confirmScreen.subtitle"
-    )}
-    action={{
-      label: I18n.t("features.itWallet.walletRevocation.confirmScreen.action"),
-      accessibilityLabel: I18n.t(
-        "features.itWallet.walletRevocation.confirmScreen.action"
-      ),
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      onPress: () => {}
-    }}
-    secondaryAction={{
-      label: I18n.t("global.buttons.cancel"),
-      accessibilityLabel: I18n.t("global.buttons.cancel"),
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      onPress: () => {}
-    }}
-  />
-);
+export const ItwLifecycleWalletRevocationScreen = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+
+  if (isLoading) {
+    return (
+      <LoadingScreenContent
+        contentTitle={I18n.t(
+          "features.itWallet.walletRevocation.loadingScreen.title"
+        )}
+      >
+        <View style={[IOStyles.alignCenter, IOStyles.horizontalContentPadding]}>
+          <Body>
+            {I18n.t(
+              "features.itWallet.walletRevocation.loadingScreen.subtitle"
+            )}
+          </Body>
+        </View>
+      </LoadingScreenContent>
+    );
+  }
+
+  return (
+    <OperationResultScreenContent
+      pictogram="attention"
+      title={I18n.t("features.itWallet.walletRevocation.confirmScreen.title")}
+      subtitle={I18n.t(
+        "features.itWallet.walletRevocation.confirmScreen.subtitle"
+      )}
+      action={{
+        label: I18n.t(
+          "features.itWallet.walletRevocation.confirmScreen.action"
+        ),
+        accessibilityLabel: I18n.t(
+          "features.itWallet.walletRevocation.confirmScreen.action"
+        ),
+        onPress: () => machineRef.send({ type: "revoke-wallet-instance" })
+      }}
+      secondaryAction={{
+        label: I18n.t("global.buttons.cancel"),
+        accessibilityLabel: I18n.t("global.buttons.cancel"),
+        onPress: () => machineRef.send({ type: "close" })
+      }}
+    />
+  );
+};

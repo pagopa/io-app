@@ -9,7 +9,10 @@ import { useIODispatch } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
-import { itwLifecycleStateUpdated } from "../../lifecycle/store/actions";
+import {
+  itwLifecycleStateUpdated,
+  itwLifecycleWalletReset
+} from "../../lifecycle/store/actions";
 import { ItwLifecycleState } from "../../lifecycle/store/reducers";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { Context } from "./context";
@@ -144,5 +147,10 @@ export const createEidIssuanceActionsImplementation = (
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     context.identification?.abortController?.abort();
+  },
+
+  resetWalletInstance: () => {
+    dispatch(itwLifecycleWalletReset());
+    toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
   }
 });

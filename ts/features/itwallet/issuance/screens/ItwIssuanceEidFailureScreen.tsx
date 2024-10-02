@@ -136,6 +136,17 @@ export const ItwIssuanceEidFailureScreen = () => {
           ),
           onPress: () => undefined
         }
+      },
+      [IssuanceFailureType.WALLET_REVOCATION_GENERIC]: {
+        title: I18n.t("features.itWallet.walletRevocation.failureScreen.title"),
+        subtitle: I18n.t(
+          "features.itWallet.walletRevocation.failureScreen.subtitle"
+        ),
+        pictogram: "umbrellaNew",
+        action: {
+          label: I18n.t("global.buttons.close"),
+          onPress: () => machineRef.send({ type: "close" })
+        }
       }
     };
 
