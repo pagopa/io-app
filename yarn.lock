@@ -2100,10 +2100,10 @@
     abab "^2.0.6"
     zod "^3.22.4"
 
-"@pagopa/io-react-native-login-utils@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.5.tgz#02179a4cbeed17376b028a5ce506bdbf0b1b6e39"
-  integrity sha512-vtVH42V+1TydYDv4M7RpbTKbD/SOQx7HS7woaQ++UOwgoG+H28SmszK5O7AVIR4lkpiPgF75rq0HOkdNonReHA==
+"@pagopa/io-react-native-login-utils@1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.6.tgz#b211e953eb05b76b43effc0d9d7be79767c361f9"
+  integrity sha512-Dx1WPdqFaB76Wv8WgkLCIQoj9ADZeWyfe/GTnGWQKeIWnTe5v3socbEDdax9fh0asxizuTVzTVj962H2nCQxwg==
 
 "@pagopa/io-react-native-wallet@^0.17.1":
   version "0.17.1"
