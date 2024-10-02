@@ -6,21 +6,21 @@ import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { profileUpsert } from "../../../store/actions/profile";
 import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
-import {
-  checkNotificationPermissions,
-  requestNotificationPermissions
-} from "../utils";
+import { requestNotificationPermissions } from "../utils";
 import {
   trackNotificationsOptInPreviewStatus,
   trackNotificationsOptInReminderStatus
 } from "../analytics";
-import { SagaCallReturnType } from "../../../types/utils";
-import { notificationsInfoScreenConsent } from "../store/actions/notifications";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../store/reducers/types";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { notificationsInfoScreenConsent } from "../store/actions/profileNotificationPermissions";
+import {
+  checkAndUpdateNotificationPermissionsIfNeeded,
+  updateNotificationPermissionsIfNeeded
+} from "./common";
 
-export function* checkNotificationsPreferencesSaga(
+export function* profileAndSystemNotificationsPermissions(
   userProfile: InitializedProfile
 ) {
   const profileMissedPushSettings =
@@ -55,16 +55,22 @@ export function* checkNotificationsPreferencesSaga(
     }
   }
 
-  // check if the user has given system notification permissions
-  const hasNotificationPermission: SagaCallReturnType<
-    typeof checkNotificationPermissions
-  > = yield* call(checkNotificationPermissions);
+  // Check if the user has given system notification permissions
+  // and update the in-memory redux value if needed
+  const hasNotificationPermission = yield* call(
+    checkAndUpdateNotificationPermissionsIfNeeded
+  );
 
   if (!hasNotificationPermission) {
-    // Ask the user for notification permission
-    const userHasGivenNotificationPermission: SagaCallReturnType<
-      typeof requestNotificationPermissions
-    > = yield* call(requestNotificationPermissions);
+    // Ask the user for notification permission and update
+    // the in-memory redux value if needed
+    const userHasGivenNotificationPermission = yield* call(
+      requestNotificationPermissions
+    );
+    yield* call(
+      updateNotificationPermissionsIfNeeded,
+      userHasGivenNotificationPermission
+    );
 
     if (!userHasGivenNotificationPermission && profileMissedPushSettings) {
       // Show how to enable notification permission from the settings
@@ -77,9 +83,7 @@ export function* checkNotificationsPreferencesSaga(
         })
       );
 
-      yield* take<ActionType<typeof notificationsInfoScreenConsent>>(
-        notificationsInfoScreenConsent
-      );
+      yield* take(notificationsInfoScreenConsent);
 
       // Make sure to dismiss the modal
       yield* call(
