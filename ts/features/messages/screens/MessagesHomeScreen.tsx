@@ -7,7 +7,7 @@ import { TabNavigationContainer } from "../components/Home/TabNavigationContaine
 import { SecuritySuggestions } from "../components/Home/SecuritySuggestions";
 import { Toasts } from "../components/Home/Toasts";
 import { Preconditions } from "../components/Home/Preconditions";
-import { useEngagementScreen } from "../../pushNotifications/hooks/useEngamentScreen";
+import { useEngagementScreen } from "../../pushNotifications/hooks/useEngagementScreen";
 
 export const MessagesHomeScreen = () => {
   const pagerViewRef = useRef<PagerView>(null);

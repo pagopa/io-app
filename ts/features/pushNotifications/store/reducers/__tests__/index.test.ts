@@ -4,9 +4,11 @@ import {
   NOTIFICATIONS_STORE_VERSION,
   notificationsPersistConfig,
   notificationsReducer,
-  persistedNotificationsReducer
+  persistedNotificationsReducer,
+  shouldShowEngagementScreenSelector
 } from "..";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 describe("Main pushNotifications reducer", () => {
   it("persistor version should be -1", () => {
@@ -40,4 +42,36 @@ describe("Main pushNotifications reducer", () => {
     const stateWithoutInstallationId = omit(state, "installation.id");
     expect(stateWithoutInstallationId).toMatchSnapshot();
   });
+});
+
+describe("shouldShowEngagementScreenSelector", () => {
+  [false, true].forEach(applicationInitialized =>
+    [false, true].forEach(onboardingInstructionsShown =>
+      [false, true].forEach(systemNotificationsEnabled =>
+        [false, true].forEach(engagementScreenShown => {
+          const expectedOutput =
+            applicationInitialized &&
+            !onboardingInstructionsShown &&
+            !systemNotificationsEnabled &&
+            !engagementScreenShown;
+          it(`Should output '${expectedOutput}' when 'applicationInitialized' is '${applicationInitialized}' , 'onboardingInstructionsShown' is '${onboardingInstructionsShown}' , 'systemNotificationsEnabled' is '${systemNotificationsEnabled} ' and 'engagementScreenShown' is '${engagementScreenShown}' `, () => {
+            const state = {
+              notifications: {
+                environment: {
+                  applicationInitialized,
+                  onboardingInstructionsShown,
+                  systemNotificationsEnabled
+                },
+                userBehaviour: {
+                  engagementScreenShown
+                }
+              }
+            } as GlobalState;
+            const output = shouldShowEngagementScreenSelector(state);
+            expect(output).toBe(expectedOutput);
+          });
+        })
+      )
+    )
+  );
 });

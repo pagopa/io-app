@@ -9,6 +9,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { SystemNotificationPermissionsScreen } from "../SystemNotificationPermissionsScreen";
 import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
 import * as utils from "../../utils";
+import { setEngagementScreenShown } from "../../store/actions/userBehaviour";
 
 const mockGoBack = jest.fn();
 jest.mock("@react-navigation/native", () => ({
@@ -20,6 +21,12 @@ jest.mock("@react-navigation/native", () => ({
   })
 }));
 
+const mockDispatch = jest.fn();
+jest.mock("react-redux", () => ({
+  ...jest.requireActual<typeof import("react-redux")>("react-redux"),
+  useDispatch: () => mockDispatch
+}));
+
 describe("SystemNotificationPermissionsScreen", () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -28,6 +35,12 @@ describe("SystemNotificationPermissionsScreen", () => {
   it("Should match snapshot", () => {
     const screen = renderScreen();
     expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("Should dispatch 'setEngagementScreenShown' upon rendering", () => {
+    renderScreen();
+    expect(mockDispatch.mock.calls.length).toBe(1);
+    expect(mockDispatch.mock.calls[0].length).toBe(1);
+    expect(mockDispatch.mock.calls[0][0]).toEqual(setEngagementScreenShown());
   });
   it("Should have an X close button that should dispatch navigation.back upon pressing", () => {
     const settingsSpy = spyOnOpenSystemNotificationSettings();
