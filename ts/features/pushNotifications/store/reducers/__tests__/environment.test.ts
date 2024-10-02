@@ -1,35 +1,35 @@
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { updateSystemNotificationsEnabled } from "../../actions/permissions";
+import { updateSystemNotificationsEnabled } from "../../actions/environment";
 import {
   areNotificationPermissionsEnabled,
   INITIAL_STATE,
-  permissionsReducer
-} from "../permissions";
+  environmentReducer
+} from "../environment";
 
-describe("permissions reducer initial state", () => {
+describe("environment reducer initial state", () => {
   it("should match expected values", () => {
     expect(INITIAL_STATE).toMatchSnapshot();
   });
 });
 
-describe("permissionsReducer", () => {
+describe("environmentReducer", () => {
   it("output state should match INITIAL_STATE for an unrelated action", () => {
-    const state = permissionsReducer(
+    const state = environmentReducer(
       undefined,
       applicationChangeState("active")
     );
     expect(state).toStrictEqual(INITIAL_STATE);
   });
   it("'systemNotificationsEnabled' in output state should be 'true' after receiving 'updateSystemNotificationsEnabled(true)'", () => {
-    const state = permissionsReducer(
+    const state = environmentReducer(
       undefined,
       updateSystemNotificationsEnabled(true)
     );
     expect(state.systemNotificationsEnabled).toBe(true);
   });
   it("'systemNotificationsEnabled' in output state should be 'false' after receiving 'updateSystemNotificationsEnabled(false)'", () => {
-    const state = permissionsReducer(
+    const state = environmentReducer(
       { systemNotificationsEnabled: true },
       updateSystemNotificationsEnabled(false)
     );
@@ -41,7 +41,7 @@ describe("areNotificationPermissionsEnabled selector", () => {
   it("should output 'true' when 'systemNotificationsEnabled' is 'true'", () => {
     const state = {
       notifications: {
-        permissions: {
+        environment: {
           systemNotificationsEnabled: true
         }
       }
@@ -53,7 +53,7 @@ describe("areNotificationPermissionsEnabled selector", () => {
   it("should output 'false' when 'systemNotificationsEnabled' is 'false'", () => {
     const state = {
       notifications: {
-        permissions: {
+        environment: {
           systemNotificationsEnabled: false
         }
       }

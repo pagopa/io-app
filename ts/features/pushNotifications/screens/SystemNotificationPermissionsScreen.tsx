@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
@@ -14,6 +14,8 @@ import { WizardBody } from "../../../components/screens/WizardScreen";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { openSystemNotificationSettingsScreen } from "../utils";
 import I18n from "../../../i18n";
+import { useIODispatch } from "../../../store/hooks";
+import { setEngagementScreenShown } from "../store/actions/userBehaviour";
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -24,8 +26,10 @@ const styles = StyleSheet.create({
 });
 
 export const SystemNotificationPermissionsScreen = () => {
+  const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const safeAreaInsets = useSafeAreaInsets();
+
   const goBackCallback = useCallback(
     (openSystemNotificationSettings: boolean = false) => {
       if (openSystemNotificationSettings) {
@@ -35,6 +39,11 @@ export const SystemNotificationPermissionsScreen = () => {
     },
     [navigation]
   );
+
+  useEffect(() => {
+    dispatch(setEngagementScreenShown());
+  }, [dispatch]);
+
   return (
     <View
       style={[

@@ -20,7 +20,8 @@ describe("Main pushNotifications reducer", () => {
     );
     expect(notificationsPersistConfig.whitelist).toStrictEqual([
       "installation",
-      "pendingMessage"
+      "pendingMessage",
+      "userBehaviour"
     ]);
   });
   it("notificationsReducer initial state should match snapshot", () => {

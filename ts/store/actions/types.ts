@@ -26,9 +26,10 @@ import { ServicesActions } from "../../features/services/common/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { NotificationsActions } from "../../features/pushNotifications/store/actions/installation";
-import { NotificationPermissionsActions } from "../../features/pushNotifications/store/actions/permissions";
+import { NotificationPermissionsActions } from "../../features/pushNotifications/store/actions/environment";
 import { PendingMessageActions } from "../../features/pushNotifications/store/actions/pendingMessage";
 import { ProfileNotificationPermissionsActions } from "../../features/pushNotifications/store/actions/profileNotificationPermissions";
+import { UserBehaviourActions } from "../../features/pushNotifications/store/actions/userBehaviour";
 import { GlobalState } from "../reducers/types";
 import { CieLoginConfigActions } from "../../features/cieLogin/store/actions";
 import { FimsActions } from "../../features/fims/common/store/actions";
@@ -75,6 +76,7 @@ export type Action =
   | NotificationsActions
   | NotificationPermissionsActions
   | PendingMessageActions
+  | UserBehaviourActions
   | ProfileNotificationPermissionsActions
   | PinSetActions
   | OnboardingActions
