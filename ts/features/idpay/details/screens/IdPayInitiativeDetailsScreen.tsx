@@ -33,7 +33,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { format } from "../../../../utils/dates";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 import { IdPayInitiativeLastUpdateCounter } from "../components/IdPayInitiativeLastUpdateCounter";
@@ -155,7 +155,11 @@ const IdPayInitiativeDetailsScreen = () => {
                   label: I18n.t(
                     "idpay.initiative.details.initiativeCard.availableAmount"
                   ),
-                  value: formatNumberAmount(availableAmount, true, "right"),
+                  value: formatNumberCentsToAmount(
+                    availableAmount,
+                    true,
+                    "right"
+                  ),
                   progress: amountProgress
                 }
               ];
@@ -166,7 +170,11 @@ const IdPayInitiativeDetailsScreen = () => {
                   label: I18n.t(
                     "idpay.initiative.details.initiativeCard.availableAmount"
                   ),
-                  value: formatNumberAmount(availableAmount, true, "right"),
+                  value: formatNumberCentsToAmount(
+                    availableAmount,
+                    true,
+                    "right"
+                  ),
                   progress: amountProgress
                 },
                 {
@@ -174,7 +182,7 @@ const IdPayInitiativeDetailsScreen = () => {
                   label: I18n.t(
                     "idpay.initiative.details.initiativeCard.toRefund"
                   ),
-                  value: formatNumberAmount(accruedAmount, true, "right")
+                  value: formatNumberCentsToAmount(accruedAmount, true, "right")
                 }
               ];
           }
