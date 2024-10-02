@@ -3410,6 +3410,9 @@ support:
   panicMode:
     title: "We cannot help you at the moment"
     body: "We know there is a problem and we are working to solve it. If the problem remains, or if you need support on another topic, please try again later."
+  errorGetZendeskToken: 
+    title: Al momento non riusciamo ad aprire una richiesta di assistenza
+    subtitle: Riprova più tardi
   askPermissions:
     nameSurname: "Name and Surname"
     fiscalCode: "Fiscal code"
