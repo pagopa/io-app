@@ -13,7 +13,6 @@ import {
   itwWalletProviderBaseUrl
 } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
-import { getISODateWithDefault } from "../../../../utils/dates";
 import { createItWalletFetch } from "../../api/client";
 import { getIntegrityContext } from "./itwIntegrityUtils";
 import {
@@ -196,8 +195,8 @@ export const obtainCredential = async ({
     issuerConf,
     keyTag: credentialKeyTag,
     jwt: {
-      expiration: getISODateWithDefault(expiration),
-      issuedAt: getISODateWithDefault(issuedAt)
+      expiration: expiration.toISOString(),
+      issuedAt: issuedAt?.toISOString()
     }
   };
 
