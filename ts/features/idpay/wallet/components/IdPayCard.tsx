@@ -10,7 +10,7 @@ import React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import WalletCardShape from "../../../../../img/features/idpay/wallet_card.svg";
 import I18n from "../../../../i18n";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 
 export type IdPayCardProps = {
   name: string;
@@ -45,7 +45,7 @@ export const IdPayCard = (props: IdPayCardProps) => (
         <VSpacer size={16} />
         <LabelSmallAlt color="black">Disponibile</LabelSmallAlt>
         <H3 color="blueItalia-500">
-          {formatNumberAmount(props.amount, true, "right")}
+          {formatNumberCentsToAmount(props.amount, true, "right")}
         </H3>
       </View>
       <LabelSmallAlt color="blueItalia-850">

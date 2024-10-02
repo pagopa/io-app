@@ -15,7 +15,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 import I18n from "../../../../i18n";
 import { format } from "../../../../utils/dates";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { getLabelForCircuitType } from "../../common/labels";
 
 type Props = {
@@ -49,11 +49,14 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
   const formattedAmount = pipe(
     transaction.amountCents,
     O.fromNullable,
-    O.map(amount => formatNumberAmount(amount, true)),
+    O.map(amount => formatNumberCentsToAmount(amount, true)),
     O.getOrElse(() => "-")
   );
 
-  const formattedAccrued = formatNumberAmount(transaction.accruedCents, true);
+  const formattedAccrued = formatNumberCentsToAmount(
+    transaction.accruedCents,
+    true
+  );
 
   return (
     <View style={IOStyles.flex}>
