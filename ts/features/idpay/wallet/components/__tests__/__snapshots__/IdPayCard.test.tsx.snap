@@ -202,7 +202,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
         }
         weight="Semibold"
       >
-        9,999.00 €
+        99.99 €
       </Text>
     </View>
     <Text

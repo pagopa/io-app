@@ -97,11 +97,6 @@ import {
   updatePaymentStatus
 } from "../actions/wallet/wallets";
 import { buildEventProperties } from "../../utils/analytics";
-import {
-  notificationsInstallationTokenRegistered,
-  updateNotificationInstallationFailure,
-  updateNotificationsInstallationToken
-} from "../../features/pushNotifications/store/actions/notifications";
 import { trackServicesAction } from "../../features/services/common/analytics";
 import { trackMessagesActionsPostDispatch } from "../../features/messages/analytics";
 import { trackContentAction } from "./contentAnalytics";
@@ -237,7 +232,6 @@ const trackAction =
       case getType(paymentDeletePayment.failure):
       case getType(paymentUpdateWalletPsp.failure):
       case getType(paymentExecuteStart.failure):
-      case getType(updateNotificationInstallationFailure):
       //  Bonus vacanze
       case getType(loadAvailableBonuses.failure):
         return mp.track(action.type, {
@@ -321,8 +315,6 @@ const trackAction =
       //  profile First time Login
       case getType(profileFirstLogin):
       // other
-      case getType(updateNotificationsInstallationToken):
-      case getType(notificationsInstallationTokenRegistered):
       case getType(loadAvailableBonuses.success):
       case getType(loadAvailableBonuses.request):
         return mp.track(action.type);
