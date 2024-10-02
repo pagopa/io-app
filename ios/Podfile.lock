@@ -108,7 +108,7 @@ PODS:
     - JOSESwift (~> 2.3)
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - pagopa-io-react-native-login-utils (1.0.5):
+  - pagopa-io-react-native-login-utils (1.0.6):
     - React-Core
   - pagopa-react-native-zendesk (0.3.29):
     - RCT-Folly (= 2021.07.22.00)
@@ -441,6 +441,8 @@ PODS:
     - React-Core
   - react-native-netinfo (6.0.6):
     - React-Core
+  - react-native-notifications-utils (0.3.0):
+    - React-Core
   - react-native-pager-view (6.2.3):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -733,6 +735,7 @@ DEPENDENCIES:
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
+  - react-native-notifications-utils (from `../node_modules/react-native-notifications-utils`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-pdf-thumbnail (from `../node_modules/react-native-pdf-thumbnail`)
@@ -906,6 +909,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
+  react-native-notifications-utils:
+    :path: "../node_modules/react-native-notifications-utils"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-pdf:
@@ -1039,7 +1044,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-http-client: cbdfb83c92432efb0de22b7c3c85cffa391870f8
   pagopa-io-react-native-integrity: ca77804cefb1cd75d04053652472bcb938ce4b18
   pagopa-io-react-native-jwt: 662d4e722715996758b079774abea1996b057467
-  pagopa-io-react-native-login-utils: c7e8a4908c1239ce834fe1d16dd22ccc7c7f5536
+  pagopa-io-react-native-login-utils: a445c97d7d7dc86b089079029a1340f4c682128c
   pagopa-react-native-zendesk: 60a26f8a8072234789c34bb7c8a769c156eb57dc
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 264adaca1d8b1a9c078761891898d4142df05313
@@ -1067,6 +1072,7 @@ SPEC CHECKSUMS:
   react-native-get-random-values: 21325b2244dfa6b58878f51f9aa42821e7ba3d06
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
   react-native-netinfo: 40b91995cd49c33ae57996486db76f0af067b630
+  react-native-notifications-utils: f083307d1261f34444a89ca2f9b69f920c9b81e7
   react-native-pager-view: 948dc00b6545d82b53e5f99cafef4a8521c60dd4
   react-native-pdf: 79aa75e39a80c1d45ffe58aa500f3cf08f267a2e
   react-native-pdf-thumbnail: a042fffdab7a49f0f9df0e11da0a90beebfd4241
