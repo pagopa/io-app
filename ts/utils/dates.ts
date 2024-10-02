@@ -1,4 +1,4 @@
-import { format as dateFnsFormat } from "date-fns";
+import { format as dateFnsFormat, isValid } from "date-fns";
 import dfns_de from "date-fns/locale/de";
 import dfns_en from "date-fns/locale/en";
 import dfns_it from "date-fns/locale/it";
@@ -307,3 +307,14 @@ export const getDateFromExpiryDate = (expiryDate: string): Date | undefined => {
     return undefined;
   }
 };
+
+/**
+ * Return a ISO date from a valid date, otherwise default to now.
+ */
+export const getISODateWithDefault = (date: Date): string =>
+  pipe(
+    date,
+    O.fromPredicate(isValid),
+    O.map(d => d.toISOString()),
+    O.getOrElse(() => new Date().toISOString())
+  );

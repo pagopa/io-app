@@ -13,6 +13,7 @@ import {
   itwWalletProviderBaseUrl
 } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
+import { getISODateWithDefault } from "../../../../utils/dates";
 import { createItWalletFetch } from "../../api/client";
 import { getIntegrityContext } from "./itwIntegrityUtils";
 import {
@@ -179,7 +180,7 @@ export const obtainCredential = async ({
 
   // Parse and verify the credential. The ignoreMissingAttributes flag must be set to false or omitted in production.
 
-  const { parsedCredential } =
+  const { parsedCredential, issuedAt, expiration } =
     await Credential.Issuance.verifyAndParseCredential(
       issuerConf,
       credential,
@@ -193,7 +194,11 @@ export const obtainCredential = async ({
     credentialType,
     format,
     issuerConf,
-    keyTag: credentialKeyTag
+    keyTag: credentialKeyTag,
+    jwt: {
+      expiration: getISODateWithDefault(expiration),
+      issuedAt: getISODateWithDefault(issuedAt)
+    }
   };
 
   return {

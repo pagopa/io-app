@@ -60,13 +60,13 @@ export const ItwEidInfoBottomSheetContent = () => {
       valid: {
         variant: "success",
         content: I18n.t(`${i18nNs}.alert.valid`, {
-          date: format(credential.issuedAt, "DD-MM-YYYY")
+          date: format(credential.jwt.issuedAt, "DD-MM-YYYY")
         })
       },
       expiring: {
         variant: "warning",
         content: I18n.t(`${i18nNs}.alert.expiring`, {
-          date: format(credential.expiration, "DD-MM-YYYY")
+          date: format(credential.jwt.expiration, "DD-MM-YYYY")
         }),
         action: I18n.t("features.itWallet.discovery.banner.action"),
         // eslint-disable-next-line @typescript-eslint/no-empty-function

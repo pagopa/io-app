@@ -19,8 +19,10 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     format: "vc+sd-jwt",
     keyTag: "1",
     issuerConf: {} as StoredCredential["issuerConf"],
-    issuedAt: "2024-09-30T07:32:49.000Z",
-    expiration: "2025-09-30T07:32:50.000Z"
+    jwt: {
+      issuedAt: "2024-09-30T07:32:49.000Z",
+      expiration: "2025-09-30T07:32:50.000Z"
+    }
   };
 
   it("should not rehydrate the eID when the wallet is valid", () => {

@@ -280,7 +280,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
             >
               <View
                 collapsable={false}
-                handlerTag={5}
+                handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -1435,6 +1435,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
                                   style={{}}
+                                  testID="settings-btn"
                                 >
                                   <View
                                     style={

@@ -217,7 +217,7 @@ const renderComponent = ({
               integrityKeyTag: O.some("key-tag")
             },
             credentials: {
-              eid: O.some({ parsedCredential: {} }),
+              eid: O.some({ parsedCredential: {}, jwt: {} }),
               credentials: isWalletEmpty
                 ? []
                 : [O.some({ parsedCredential: {} })]

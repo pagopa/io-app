@@ -354,7 +354,7 @@ export const getCredentialStatus = (
   const { checkJwtExpiration, expiringDays = 14 } = options;
 
   const expireDate = checkJwtExpiration
-    ? credential.expiration
+    ? credential.jwt.expiration
     : getCredentialExpireDate(credential.parsedCredential);
 
   if (expireDate === undefined) {
