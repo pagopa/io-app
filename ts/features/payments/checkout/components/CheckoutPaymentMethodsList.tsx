@@ -22,9 +22,11 @@ import {
   walletPaymentAllMethodsSelector,
   walletPaymentEnabledUserWalletsSelector,
   walletPaymentSelectedPaymentMethodIdOptionSelector,
-  walletPaymentSelectedWalletIdOptionSelector
+  walletPaymentSelectedWalletIdOptionSelector,
+  walletRecentPaymentMethodSelector
 } from "../store/selectors/paymentMethods";
 import { getPaymentLogoFromWalletDetails } from "../../common/utils";
+import { WalletStatusEnum } from "../../../../../definitions/pagopa/ecommerce/WalletStatus";
 
 const CheckoutPaymentMethodsList = () => {
   const dispatch = useIODispatch();
@@ -35,6 +37,9 @@ const CheckoutPaymentMethodsList = () => {
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
   const allPaymentMethods = useIOSelector(walletPaymentAllMethodsSelector);
   const userWallets = useIOSelector(walletPaymentEnabledUserWalletsSelector);
+  const recentUsedPaymentMethodPot = useIOSelector(
+    walletRecentPaymentMethodSelector
+  );
 
   const selectedUserWalletIdOption = useIOSelector(
     walletPaymentSelectedWalletIdOptionSelector
@@ -49,6 +54,23 @@ const CheckoutPaymentMethodsList = () => {
     O.getOrElse(() => 0)
   );
 
+  const recentPaymentMethodListItem = useMemo(
+    () =>
+      pipe(
+        recentUsedPaymentMethodPot,
+        O.fromNullable,
+        O.chainNullableK(a => {
+          if (a.status === WalletStatusEnum.VALIDATED) {
+            return mapUserWalletToRadioItem(a);
+          }
+          return mapPaymentMethodToRadioItem(a, paymentAmount);
+        }),
+        O.map(A.of),
+        O.getOrElse(() => [] as Array<RadioItem<string>>)
+      ),
+    [recentUsedPaymentMethodPot, paymentAmount]
+  );
+
   const userPaymentMethodListItems = useMemo(
     () =>
       pipe(
@@ -57,9 +79,15 @@ const CheckoutPaymentMethodsList = () => {
         O.map(methods => methods.map(mapUserWalletToRadioItem)),
         O.map(A.map(O.fromNullable)),
         O.map(A.compact),
+        O.map(
+          A.filter(
+            method =>
+              !recentPaymentMethodListItem.some(item => item.id === method.id)
+          )
+        ),
         O.getOrElse(() => [] as Array<RadioItem<string>>)
       ),
-    [userWallets]
+    [userWallets, recentPaymentMethodListItem]
   );
 
   const allPaymentMethodListItems = useMemo(
@@ -70,18 +98,30 @@ const CheckoutPaymentMethodsList = () => {
         O.map(methods =>
           methods.map(item => mapPaymentMethodToRadioItem(item, paymentAmount))
         ),
+        O.map(
+          A.filter(
+            method =>
+              !recentPaymentMethodListItem.some(item => item.id === method.id)
+          )
+        ),
         O.getOrElse(() => [] as Array<RadioItem<string>>)
       ),
-    [allPaymentMethods, paymentAmount]
+    [allPaymentMethods, paymentAmount, recentPaymentMethodListItem]
   );
 
   useEffect(() => {
     const hasDisabledMethods =
-      [...userPaymentMethodListItems, ...allPaymentMethodListItems].find(
-        item => item.disabled
-      ) !== undefined;
+      [
+        ...userPaymentMethodListItems,
+        ...allPaymentMethodListItems,
+        ...recentPaymentMethodListItem
+      ].find(item => item.disabled) !== undefined;
     setShouldShowWarningBanner(hasDisabledMethods);
-  }, [userPaymentMethodListItems, allPaymentMethodListItems]);
+  }, [
+    userPaymentMethodListItems,
+    allPaymentMethodListItems,
+    recentPaymentMethodListItem
+  ]);
 
   const handleSelectUserWallet = (walletId: string) =>
     pipe(
@@ -128,6 +168,17 @@ const CheckoutPaymentMethodsList = () => {
           action={I18n.t("wallet.payment.methodSelection.alert.cta")}
         />
       )}
+      {!_.isEmpty(recentPaymentMethodListItem) && (
+        <ListItemHeader
+          label={I18n.t("wallet.payment.methodSelection.latestMethod")}
+        />
+      )}
+      <RadioGroup<string>
+        type="radioListItem"
+        selectedItem={selectedWalletId}
+        items={recentPaymentMethodListItem}
+        onPress={handleSelectUserWallet}
+      />
       {!_.isEmpty(userPaymentMethodListItems) && (
         <ListItemHeader
           label={I18n.t("wallet.payment.methodSelection.yourMethods")}
