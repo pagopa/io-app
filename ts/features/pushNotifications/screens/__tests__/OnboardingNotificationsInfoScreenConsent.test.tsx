@@ -1,3 +1,4 @@
+import { constUndefined } from "fp-ts/lib/function";
 import { createStore } from "redux";
 import { AppState } from "react-native";
 import { fireEvent, waitFor } from "@testing-library/react-native";
@@ -6,9 +7,10 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { OnboardingNotificationsInfoScreenConsent } from "../OnboardingNotificationsInfoScreenConsent";
-import * as notificationsActions from "../../store/actions/notifications";
+import * as profileNotificationPermissions from "../../store/actions/profileNotificationPermissions";
 import * as notification from "../../utils";
 import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
+import * as analytics from "../../analytics";
 
 const checkNotificationPermissions = jest.spyOn(
   notification,
@@ -16,14 +18,24 @@ const checkNotificationPermissions = jest.spyOn(
 );
 
 const notificationsInfoScreenConsentSpy = jest.spyOn(
-  notificationsActions,
+  profileNotificationPermissions,
   "notificationsInfoScreenConsent"
 );
+
+const analyticsOpenSettingsSpy = jest
+  .spyOn(analytics, "trackNotificationsOptInOpenSettings")
+  .mockImplementation(constUndefined);
+
+const openSystemNotificationSettingsScreenSpy = jest
+  .spyOn(notification, "openSystemNotificationSettingsScreen")
+  .mockImplementation(constUndefined);
 
 describe("OnboardingNotificationsInfoScreenConsent", () => {
   beforeEach(() => {
     checkNotificationPermissions.mockClear();
     notificationsInfoScreenConsentSpy.mockClear();
+    analyticsOpenSettingsSpy.mockClear();
+    openSystemNotificationSettingsScreenSpy.mockClear();
   });
 
   it("Click on the button continue check that the NOTIFICATIONS_INFO_SCREEN_CONSENT action is triggered", () => {
@@ -35,6 +47,19 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
     if (continueButton) {
       fireEvent(continueButton, "onPress");
       expect(notificationsInfoScreenConsentSpy).toBeCalled();
+    }
+  });
+
+  it("Settings button should be there and its tap should call 'trackNotificationsOptInOpenSettings' and 'openSystemNotificationSettingsScreen'", () => {
+    const screen = renderScreen();
+
+    const settingsButton = screen.queryByTestId("settings-btn");
+    expect(settingsButton).not.toBeUndefined();
+
+    if (settingsButton) {
+      fireEvent(settingsButton, "onPress");
+      expect(analyticsOpenSettingsSpy).toHaveBeenCalledTimes(1);
+      expect(openSystemNotificationSettingsScreenSpy).toHaveBeenCalledTimes(1);
     }
   });
 
