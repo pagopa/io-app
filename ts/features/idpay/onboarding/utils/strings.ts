@@ -15,7 +15,7 @@ const getPDNDCriteriaValueString = (code: CodeEnum, value?: string): string => {
       return pipe(
         NumberFromString.decode(value),
         O.fromEither,
-        O.map(amount => formatNumberCentsToAmount(amount)),
+        O.map(formatNumberCentsToAmount),
         O.map(valueString => `${valueString} €`),
         O.getOrElse(() => "-")
       );
