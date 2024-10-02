@@ -1932,7 +1932,7 @@ wallet:
       WAITING_CONFIRMATION_EMAIL:
         title: Attendi la conferma del pagamento
         subtitle: "Il pagamento non si è ancora concluso: riceverai a breve l’esito all'indirizzo {{email}}. L’operazione può richiedere fino a 15 minuti."
-        defaultSubtitle: "Il pagamento non si è ancora concluso: riceverai a breve l’esito all'indirizzo email associato. L’operazione può richiedere fino a 15 minuti."
+        defaultSubtitle: "Il pagamento non si è ancora concluso: riceverai a breve l’esito via email. L’operazione può richiedere fino a 15 minuti."
       METHOD_NOT_ENABLED:
         title: Abilita il metodo per effettuare pagamenti in app
         subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
