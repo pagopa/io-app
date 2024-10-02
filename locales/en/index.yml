@@ -250,6 +250,7 @@ permissionRationale:
     message: "We require camera permissions to use the torch on the back of your phone."
 startup:
   title: We are getting ready for your experience on IO
+  title2: Just a little more patience...
   authentication: User authenticated
   sessionInfo: SPID attributes loaded
   profileInfo: User profile loaded
@@ -263,6 +264,15 @@ startup:
     cta_2: Discard
   contextualHelp:
     title: Startup problems?
+  connection_lost:
+    title: It looks like you don't have an active internet connection
+    description: Check your connection and restart the app
+  slowdowns_results_screen:
+    title: Things seem to be going a little slowly at the moment.
+    subtitle: It may depend on our systems or on your device's connection. Please try again in a few minutes.
+  cdn_unreachable_results_screen:
+    title: Something went wrong
+    subtitle: Close the app and try again in a few minutes.
 login:
   expiration_info: For security reasons, you’ll need to sign in again with CIE or SPID every 30 days.
   expiration_info_FL: For security reasons, you’ll need to sign in using SPID or CIE once a year.
@@ -1920,9 +1930,9 @@ wallet:
       INVALID_METHOD:
         title: Il metodo di pagamento non è supportato
       WAITING_CONFIRMATION_EMAIL:
-        title: Attendi la conferma via email
-        subtitle: Riceverai l'esito del pagamento all'indirizzo {{email}}
-        defaultSubtitle: Riceverai l'esito del pagamento all'indirizzo email associato.
+        title: Attendi la conferma del pagamento
+        subtitle: "Il pagamento non si è ancora concluso: riceverai a breve l’esito all'indirizzo {{email}}. L’operazione può richiedere fino a 15 minuti."
+        defaultSubtitle: "Il pagamento non si è ancora concluso: riceverai a breve l’esito via email. L’operazione può richiedere fino a 15 minuti."
       METHOD_NOT_ENABLED:
         title: Abilita il metodo per effettuare pagamenti in app
         subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
