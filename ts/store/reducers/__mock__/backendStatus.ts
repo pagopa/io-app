@@ -308,6 +308,13 @@ export const baseRawBackendStatus: BackendStatus = {
     tos: {
       tos_url: "https://www.example.com",
       tos_version: 3.2
+    },
+    itw: {
+      enabled: false,
+      min_app_version: {
+        android: "0.0.0.0",
+        ios: "0.0.0.0"
+      }
     }
   }
 };
@@ -407,6 +414,13 @@ export const baseBackendConfig: Config = {
   tos: {
     tos_url: "https://www.example.com",
     tos_version: 3.2
+  },
+  itw: {
+    enabled: false,
+    min_app_version: {
+      android: "0.0.0.0",
+      ios: "0.0.0.0"
+    }
   }
 };
 

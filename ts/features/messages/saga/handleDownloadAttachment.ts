@@ -49,7 +49,7 @@ const getDelayMilliseconds = (headers: Record<string, string>) =>
   pipe(
     getHeaderByKey(headers, "retry-after"),
     NumberFromString.decode,
-    E.map(delay => delay * 1000),
+    E.map(retryAfterSeconds => retryAfterSeconds * 1000),
     E.getOrElse(() => 0)
   );
 

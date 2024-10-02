@@ -10,7 +10,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import _, { capitalize } from "lodash";
 import React, { useEffect, useMemo } from "react";
-import { View } from "react-native";
 import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import I18n from "../../../../i18n";
@@ -28,7 +27,6 @@ import {
 import { getPaymentLogoFromWalletDetails } from "../../common/utils";
 
 const CheckoutPaymentMethodsList = () => {
-  const alertRef = React.useRef<View>(null);
   const dispatch = useIODispatch();
 
   const [shouldShowWarningBanner, setShouldShowWarningBanner] =
@@ -126,7 +124,6 @@ const CheckoutPaymentMethodsList = () => {
         <Alert
           content={I18n.t("wallet.payment.methodSelection.alert.body")}
           variant="warning"
-          viewRef={alertRef}
           onPress={() => setShouldShowWarningBanner(false)}
           action={I18n.t("wallet.payment.methodSelection.alert.cta")}
         />

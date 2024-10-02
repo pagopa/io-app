@@ -17,13 +17,21 @@ import {
   shouldShowRefreshControllOnListSelector
 } from "../../store/reducers/allPaginated";
 import { UIMessage } from "../../types";
+import { ItwDiscoveryBanner } from "../../../itwallet/common/components/ItwDiscoveryBanner";
+import { trackPullToRefresh } from "../../analytics";
+import { SettingsDiscoveryBanner } from "../../../../screens/profile/components/SettingsDiscoveryBanner";
 import {
+  generateMessageListLayoutInfo,
   getLoadNextPageMessagesActionIfAllowed,
   getReloadAllMessagesActionForRefreshIfAllowed,
-  messageListItemHeight
+  LayoutInfo,
+  trackMessageListEndReachedIfAllowed
 } from "./homeUtils";
 import { WrappedMessageListItem } from "./WrappedMessageListItem";
-import { MessageListItemSkeleton } from "./DS/MessageListItemSkeleton";
+import {
+  SkeletonHeight,
+  MessageListItemSkeleton
+} from "./DS/MessageListItemSkeleton";
 import { EmptyList } from "./EmptyList";
 import { Footer } from "./Footer";
 
@@ -60,11 +68,27 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         safeAreaInsets.bottom -
         topBarHeight -
         bottomTabHeight;
-      const count = Math.floor(listHeight / messageListItemHeight());
+      const count = Math.floor(listHeight / SkeletonHeight);
       return [...Array(count).keys()];
     }, [safeAreaFrame.height, safeAreaInsets.top, safeAreaInsets.bottom]);
 
+    const layoutInfo: ReadonlyArray<LayoutInfo> = useMemo(
+      () =>
+        generateMessageListLayoutInfo(
+          loadingList,
+          messageList,
+          store.getState()
+        ),
+      [loadingList, messageList, store]
+    );
+    const getItemLayoutCallback = useCallback(
+      (_: ArrayLike<UIMessage | number> | null | undefined, index: number) =>
+        layoutInfo[index],
+      [layoutInfo]
+    );
+
     const onRefreshCallback = useCallback(() => {
+      trackPullToRefresh(category);
       const state = store.getState();
       const reloadAllMessagesAction =
         getReloadAllMessagesActionForRefreshIfAllowed(state, category);
@@ -79,6 +103,11 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         category,
         new Date()
       );
+      trackMessageListEndReachedIfAllowed(
+        category,
+        !!loadNextPageMessages,
+        state
+      );
       if (loadNextPageMessages) {
         dispatch(loadNextPageMessages);
       }
@@ -92,6 +121,14 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         }
         ListEmptyComponent={<EmptyList category={category} />}
         ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
+        ListHeaderComponent={
+          category === "INBOX" ? (
+            <ItwDiscoveryBanner
+              fallbackComponent={<SettingsDiscoveryBanner />}
+            />
+          ) : undefined
+        }
+        getItemLayout={getItemLayoutCallback}
         renderItem={({ index, item }) => {
           if (typeof item === "number") {
             return (
@@ -103,8 +140,8 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
             return (
               <WrappedMessageListItem
                 index={index}
-                listCategory={category}
                 message={item}
+                source={category}
               />
             );
           }

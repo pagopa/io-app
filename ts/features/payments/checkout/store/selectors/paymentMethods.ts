@@ -3,7 +3,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
-import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { getLatestUsedWallet, isValidPaymentMethod } from "../../utils";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { WalletApplicationStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletApplicationStatus";
@@ -121,12 +120,16 @@ export const notHasValidPaymentMethodsSelector = createSelector(
   walletPaymentAllMethodsSelector,
   walletPaymentEnabledUserWalletsSelector,
   walletPaymentDetailsSelector,
-  (allMethodsPot, userWalletsPot, paymentDetailsPot) => {
-    const allMethods = pipe(
-      allMethodsPot,
-      pot.toOption,
-      O.getOrElse(() => [] as PaymentMethodsResponse["paymentMethods"])
-    );
+  (_allMethodsPot, userWalletsPot, paymentDetailsPot) => {
+    // TODO: Uncomment the following lines when the "payment as a guest" feature will be implemented
+    // https://pagopa.atlassian.net/browse/IOBP-794
+    // ========================================
+    // const allMethods = pipe(
+    //   allMethodsPot,
+    //   pot.toOption,
+    //   O.getOrElse(() => [] as PaymentMethodsResponse["paymentMethods"])
+    // );
+    // ========================================
     const userWallets = pipe(
       userWalletsPot,
       pot.toOption,
@@ -134,8 +137,8 @@ export const notHasValidPaymentMethodsSelector = createSelector(
     );
 
     return (
-      pot.isSome(allMethodsPot) &&
-      _.isEmpty(allMethods) &&
+      // pot.isSome(allMethodsPot) &&
+      // _.isEmpty(allMethods) &&
       pot.isSome(userWalletsPot) &&
       _.isEmpty(userWallets) &&
       pot.isSome(paymentDetailsPot)

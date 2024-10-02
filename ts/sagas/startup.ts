@@ -69,7 +69,10 @@ import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { navigateToPrivacyScreen } from "../store/actions/navigation";
 import { clearOnboarding } from "../store/actions/onboarding";
 import { clearCache, resetProfileState } from "../store/actions/profile";
-import { startupLoadSuccess } from "../store/actions/startup";
+import {
+  startupLoadSuccess,
+  startupTransientError
+} from "../store/actions/startup";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
   sessionInfoSelector,
@@ -77,7 +80,8 @@ import {
 } from "../store/reducers/authentication";
 import {
   backendStatusSelector,
-  isPnEnabledSelector
+  isPnEnabledSelector,
+  isSettingsVisibleAndHideProfileSelector
 } from "../store/reducers/backendStatus";
 import { IdentificationResult } from "../store/reducers/identification";
 import {
@@ -88,7 +92,10 @@ import {
   isProfileFirstOnBoarding,
   profileSelector
 } from "../store/reducers/profile";
-import { StartupStatusEnum } from "../store/reducers/startup";
+import {
+  StartupStatusEnum,
+  startupTransientErrorInitialState
+} from "../store/reducers/startup";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
@@ -101,12 +108,13 @@ import { watchWalletSaga as watchNewWalletSaga } from "../features/newWallet/sag
 import { watchServicesSaga } from "../features/services/common/saga";
 import { watchItwSaga } from "../features/itwallet/common/saga";
 import { watchTrialSystemSaga } from "../features/trialSystem/store/sagas/watchTrialSystemSaga";
-import {
-  handlePendingMessageStateIfAllowedSaga,
-  updateInstallationSaga
-} from "../features/pushNotifications/sagas/notifications";
-import { checkNotificationsPreferencesSaga } from "../features/pushNotifications/sagas/checkNotificationsPreferencesSaga";
+import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
+import { profileAndSystemNotificationsPermissions } from "../features/pushNotifications/sagas/profileAndSystemNotificationsPermissions";
+import { pushNotificationTokenUpload } from "../features/pushNotifications/sagas/pushNotificationTokenUpload";
+import { handlePendingMessageStateIfAllowed } from "../features/pushNotifications/sagas/common";
 import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
+import { handleApplicationStartupTransientError } from "../features/startup/sagas";
+import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import {
   clearKeychainError,
   keychainError
@@ -145,11 +153,12 @@ import {
 } from "./startup/watchCheckSessionSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
+import { checkItWalletIdentitySaga } from "./startup/checkItWalletIdentitySaga";
 import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
-const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
+export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
 const warningWaitNavigatorTime = 2000 as Millisecond;
 
@@ -158,13 +167,17 @@ const warningWaitNavigatorTime = 2000 as Millisecond;
  */
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
 export function* initializeApplicationSaga(
-  action?: ActionType<typeof startApplicationInitialization>
+  startupAction?: ActionType<typeof startApplicationInitialization>
 ): Generator<ReduxSagaEffect, void, any> {
+  const isBlockingScreen = yield* select(isBlockingScreenSelector);
+  if (isBlockingScreen) {
+    return;
+  }
   const handleSessionExpiration = !!(
-    action?.payload && action.payload.handleSessionExpiration
+    startupAction?.payload && startupAction.payload.handleSessionExpiration
   );
   const showIdentificationModal =
-    action?.payload?.showIdentificationModalAtStartup ?? true;
+    startupAction?.payload?.showIdentificationModalAtStartup ?? true;
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
@@ -194,6 +207,9 @@ export function* initializeApplicationSaga(
 
   // clear cached downloads when the logged user changes
   yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments);
+
+  // Retrieve and listen for notification permissions status changes
+  yield* fork(notificationPermissionsListener);
 
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
@@ -325,7 +341,19 @@ export function* initializeApplicationSaga(
   // eslint-disable-next-line functional/no-let
   let maybeSessionInformation: ReturnType<typeof sessionInfoSelector> =
     yield* select(sessionInfoSelector);
-  if (isSessionRefreshed || O.isNone(maybeSessionInformation)) {
+  // In the check below we had also isSessionRefreshed, but it is not needed
+  // since the actual checkSession made above is enough to ensure that the
+  // session tokens are retrieved correctly.
+  // Only in the scenario when we get here and session tokens are not available,
+  // we have to load the session information from the backend.
+  // In a future refactoring where the checkSession won't get the session tokens
+  // anymore, we will need to rethink about this check.
+  if (
+    O.isNone(maybeSessionInformation) ||
+    (O.isSome(maybeSessionInformation) &&
+      (maybeSessionInformation.value.bpdToken === undefined ||
+        maybeSessionInformation.value.walletToken === undefined))
+  ) {
     // let's try to load the session information from the backend.
 
     maybeSessionInformation = yield* call(
@@ -333,12 +361,13 @@ export function* initializeApplicationSaga(
       backendClient.getSession
     );
 
-    if (O.isNone(maybeSessionInformation)) {
-      // we can't go further without session info, let's restart
-      // the initialization process
-      yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
-      yield* put(startApplicationInitialization());
-
+    if (
+      O.isNone(maybeSessionInformation) ||
+      (O.isSome(maybeSessionInformation) &&
+        (maybeSessionInformation.value.bpdToken === undefined ||
+          maybeSessionInformation.value.walletToken === undefined))
+    ) {
+      yield* call(handleApplicationStartupTransientError, "GET_SESSION_DOWN");
       return;
     }
   }
@@ -374,12 +403,10 @@ export function* initializeApplicationSaga(
   );
 
   if (O.isNone(maybeUserProfile)) {
-    // Start again if we can't load the profile but wait a while
-    yield* delay(WAIT_INITIALIZE_SAGA);
-    yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
-    yield* put(startApplicationInitialization());
+    yield* call(handleApplicationStartupTransientError, "GET_PROFILE_DOWN");
     return;
   }
+  yield* put(startupTransientError(startupTransientErrorInitialState));
 
   // eslint-disable-next-line functional/no-let
   let userProfile = maybeUserProfile.value;
@@ -436,6 +463,10 @@ export function* initializeApplicationSaga(
       return;
     }
 
+    if (!handleSessionExpiration) {
+      yield* call(setLanguageFromProfileIfExists);
+    }
+
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
     if (isFastLoginEnabled) {
       // At application startup, the state of the refresh token is "idle".
@@ -484,8 +515,9 @@ export function* initializeApplicationSaga(
 
   userProfile = (yield* call(checkEmailSaga)) ?? userProfile;
 
-  // check if the user must set preferences for push notifications (e.g. reminders)
-  yield* call(checkNotificationsPreferencesSaga, userProfile);
+  // Check for both profile notifications permissions (anonymous
+  // content && reminder) and system notifications permissions.
+  yield* call(profileAndSystemNotificationsPermissions, userProfile);
 
   const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
   yield* call(askServicesPreferencesModeOptin, isFirstOnboarding);
@@ -498,9 +530,18 @@ export function* initializeApplicationSaga(
   // Stop the watchAbortOnboardingSaga
   yield* cancel(watchAbortOnboardingSagaTask);
 
-  // Start the notification installation update as early as
-  // possible to begin receiving push notifications
-  yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
+  // Fork the saga that uploads the push notification token to the backend.
+  // At this moment, the push notification token may not be available yet but
+  // the saga handles it internally. Make sure to fork it and not call it using
+  // a blocking call, since the saga will just hang, waiting for the token
+  yield* fork(
+    pushNotificationTokenUpload,
+    backendClient.createOrUpdateInstallation
+  );
+
+  // This saga is called before the startup status is set to authenticated to avoid flashing
+  // the home screen when the user is taken to the alert screen in case of identities that don't match.
+  yield* call(checkItWalletIdentitySaga);
 
   yield* put(startupLoadSuccess(StartupStatusEnum.AUTHENTICATED));
   //
@@ -514,9 +555,11 @@ export function* initializeApplicationSaga(
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
   }
 
+  // Here we can be sure that the session information is loaded and valid
+  const bpdToken = maybeSessionInformation.value.bpdToken as string;
   if (cdcEnabled) {
     // Start watching for cdc actions
-    yield* fork(watchBonusCdcSaga, maybeSessionInformation.value.bpdToken);
+    yield* fork(watchBonusCdcSaga, bpdToken);
   }
 
   // Start watching for cgn actions
@@ -541,7 +584,7 @@ export function* initializeApplicationSaga(
 
   if (idPayTestEnabled) {
     // Start watching for IDPay actions
-    yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
+    yield* fork(watchIDPaySaga, bpdToken);
   }
 
   // Start watching for trial system saga
@@ -550,12 +593,10 @@ export function* initializeApplicationSaga(
   // Start watching for itw saga
   yield* fork(watchItwSaga);
 
+  // Here we can be sure that the session information is loaded and valid
+  const walletToken = maybeSessionInformation.value.walletToken as string;
   // Start watching for Wallet V3 actions
-  yield* fork(watchPaymentsSaga, maybeSessionInformation.value.walletToken);
-
-  // the wallet token is available,
-  // proceed with starting the "watch wallet" saga
-  const walletToken = maybeSessionInformation.value.walletToken;
+  yield* fork(watchPaymentsSaga, walletToken);
 
   const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> =
     yield* select(isPagoPATestEnabledSelector);
@@ -591,13 +632,20 @@ export function* initializeApplicationSaga(
         );
         type leftOrRight = "left" | "right";
         const alertChoiceChannel = channel<leftOrRight>();
+        const isSettingsVisibleAndHideProfile = yield* select(
+          isSettingsVisibleAndHideProfileSelector
+        );
         if (O.isSome(maybeDeletePending)) {
           Alert.alert(
             I18n.t("startup.userDeletePendingAlert.title"),
-            I18n.t("startup.userDeletePendingAlert.message"),
+            isSettingsVisibleAndHideProfile
+              ? I18n.t("startup.userDeletePendingAlert.message")
+              : I18n.t("startup.userDeletePendingAlert.messageLegacy"),
             [
               {
-                text: I18n.t("startup.userDeletePendingAlert.cta_1"),
+                text: isSettingsVisibleAndHideProfile
+                  ? I18n.t("startup.userDeletePendingAlert.cta_1")
+                  : I18n.t("startup.userDeletePendingAlert.cta_1_legacy"),
                 style: "cancel",
                 onPress: () => {
                   alertChoiceChannel.put("left");
@@ -631,7 +679,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchEmailNotificationPreferencesSaga);
 
   // Check if we have a pending notification message
-  yield* call(handlePendingMessageStateIfAllowedSaga, true);
+  yield* call(handlePendingMessageStateIfAllowed, true);
 
   // This tells the security advice bottomsheet that it can be shown
   yield* put(setSecurityAdviceReadyToShow(true));

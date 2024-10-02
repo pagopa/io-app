@@ -8,7 +8,6 @@ import I18n from "../../../i18n";
 //   WebViewErrorEvent,
 //   WebViewNavigationEvent
 // } from "react-native-webview/lib/WebViewTypes";
-import * as config from "../../../config";
 import { appReducer } from "../../../store/reducers";
 import { applicationChangeState } from "../../../store/actions/application";
 import { GlobalState } from "../../../store/reducers/types";
@@ -20,29 +19,16 @@ import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapp
 import OnboardingTosScreen from "../OnboardingTosScreen";
 import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 
-const CurrentTestZendeskEnabled = true;
 const CurrentTestToSVersion = 2.0;
-
-const zendeskEnabledDefaultValue = config.zendeskEnabled;
 
 // Restore defineProperty
 beforeAll(() => {
   jest.resetAllMocks();
   jest.mock("./../../../config");
-  // This can be replaced by jest.replaceProperty if we update jest to 29.4+
-  // eslint-disable-next-line functional/immutable-data
-  Object.defineProperty(config, "zendeskEnabled", {
-    value: CurrentTestZendeskEnabled
-  });
 });
 
 afterAll(() => {
   jest.resetAllMocks();
-  // This can be removed if we update jest to 29.4+ and switch to jest.replaceProperty
-  // eslint-disable-next-line functional/immutable-data
-  Object.defineProperty(config, "zendeskEnabled", {
-    value: zendeskEnabledDefaultValue
-  });
 });
 
 describe("TosScreen", () => {

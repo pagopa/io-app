@@ -11,9 +11,11 @@ import { loadServiceDetail } from "../../../../services/details/store/actions/de
 import { service_1 } from "../../../__mocks__/messages";
 import { reproduceSequence } from "../../../../../utils/tests";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
+import { UIMessageId } from "../../../types";
 
 const defaultProps: ComponentProps<typeof MessageDetailsHeader> = {
   createdAt: new Date("2021-10-18T16:00:30.541Z"),
+  messageId: "01J3DE93YA7QYAD9WZQZCP98M6" as UIMessageId,
   serviceId: service_1.service_id,
   subject: "#### Subject ####"
 };

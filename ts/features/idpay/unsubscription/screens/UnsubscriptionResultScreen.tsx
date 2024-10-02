@@ -1,19 +1,21 @@
-import { useSelector } from "@xstate/react";
+import {
+  Body,
+  ButtonOutline,
+  IOPictograms,
+  IOStyles,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import {
-  ButtonOutline,
-  VSpacer,
-  IOPictograms,
-  Pictogram,
-  Body,
-  IOStyles
-} from "@pagopa/io-app-design-system";
 import { H3 } from "../../../../components/core/typography/H3";
 import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import themeVariables from "../../../../theme/variables";
-import { useUnsubscriptionMachineService } from "../xstate/provider";
-import { selectIsFailure } from "../xstate/selectors";
+import { isFailureSelector } from "../store/selectors";
+import { idPayUnsubscribeAction } from "../store/actions";
 
 type ScreenContentType = {
   pictogram: IOPictograms;
@@ -23,13 +25,14 @@ type ScreenContentType = {
 };
 
 const UnsubscriptionResultScreen = () => {
-  const machine = useUnsubscriptionMachineService();
-  const isFailure = useSelector(machine, selectIsFailure);
+  const dispatch = useIODispatch();
+  const navigation = useIONavigation();
+  const isFailure = useIOSelector(isFailureSelector);
 
   const { pictogram, title, content, buttonLabel }: ScreenContentType =
     isFailure
       ? {
-          pictogram: "umbrella",
+          pictogram: "umbrellaNew",
           title: I18n.t("idpay.unsubscription.failure.title"),
           content: I18n.t("idpay.unsubscription.failure.content"),
           buttonLabel: I18n.t("idpay.unsubscription.failure.button")
@@ -41,7 +44,18 @@ const UnsubscriptionResultScreen = () => {
           buttonLabel: I18n.t("idpay.unsubscription.success.button")
         };
 
-  const handleButtonPress = () => machine.send({ type: "EXIT" });
+  const handleButtonPress = () => {
+    dispatch(idPayUnsubscribeAction.cancel());
+    if (isFailure) {
+      navigation.pop();
+    } else {
+      navigation.popToTop();
+      navigation.navigate(ROUTES.MAIN, {
+        screen: ROUTES.WALLET_HOME,
+        params: { newMethodAdded: false }
+      });
+    }
+  };
 
   return (
     <SafeAreaView style={[IOStyles.flex, { flexGrow: 1 }]}>

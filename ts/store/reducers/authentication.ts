@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
-import { PublicSession } from "../../../definitions/backend/PublicSession";
+import { PublicSession } from "../../../definitions/session_manager/PublicSession";
 import { SessionToken } from "../../types/SessionToken";
 import {
   idpSelected,
@@ -191,6 +191,11 @@ export const walletTokenSelector = (state: GlobalState): string | undefined =>
     ? state.authentication.sessionInfo.walletToken
     : undefined;
 
+export const bpdTokenSelector = (state: GlobalState): string | undefined =>
+  isLoggedInWithSessionInfo(state.authentication)
+    ? state.authentication.sessionInfo.bpdToken
+    : undefined;
+
 export const loggedInIdpSelector = (state: GlobalState) =>
   isLoggedIn(state.authentication) ? state.authentication.idp : undefined;
 
@@ -218,6 +223,9 @@ export const idpSelector = ({
   authentication
 }: GlobalState): O.Option<SpidIdp> =>
   matchWithIdp(authentication, O.none, ({ idp }) => O.some(idp));
+
+export const loggedInAuthSelector = ({ authentication }: GlobalState) =>
+  isLoggedIn(authentication) ? authentication : undefined;
 
 // eslint-disable-next-line complexity
 const reducer = (

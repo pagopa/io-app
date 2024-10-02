@@ -1,6 +1,3 @@
-/**
- * Set the basic PushNotification configuration
- */
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
@@ -11,25 +8,23 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Platform } from "react-native";
 import PushNotification from "react-native-push-notification";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-
 import { maximumItemsFromAPI, pageSize } from "../../../config";
 import {
   loadPreviousPageMessages,
   reloadAllMessages
 } from "../../messages/store/actions";
-import { getCursors } from "../../messages/store/reducers/allPaginated";
 import { isDevEnv } from "../../../utils/environment";
 import {
   trackMessageNotificationParsingFailure,
   trackMessageNotificationTap
 } from "../../messages/analytics";
 import { store } from "../../../boot/configureStoreAndPersistor";
-import {
-  updateNotificationsInstallationToken,
-  updateNotificationsPendingMessage
-} from "../store/actions/notifications";
+import { newPushNotificationsToken } from "../store/actions/installation";
+import { updateNotificationsPendingMessage } from "../store/actions/pendingMessage";
 import { isLoadingOrUpdating } from "../../../utils/pot";
 import { isArchivingInProcessingModeSelector } from "../../messages/store/reducers/archiving";
+import { GlobalState } from "../../../store/reducers/types";
+import { trackNewPushNotificationsTokenGenerated } from "../analytics";
 
 /**
  * Helper type used to validate the notification payload.
@@ -61,18 +56,22 @@ function handleForegroundMessageReload() {
     return;
   }
 
-  const { inbox: cursors } = getCursors(state);
-  if (pot.isNone(cursors)) {
+  const { inbox: inboxIndexes } =
+    getArchiveAndInboxNextAndPreviousPageIndexes(state);
+  if (pot.isNone(inboxIndexes)) {
     // nothing in the collection, refresh
-    store.dispatch(reloadAllMessages.request({ pageSize, filter: {} }));
-  } else if (pot.isSome(cursors)) {
+    store.dispatch(
+      reloadAllMessages.request({ pageSize, filter: {}, fromUserAction: false })
+    );
+  } else if (pot.isSome(inboxIndexes)) {
     // something in the collection, get the maximum amount of new ones only,
     // assuming that the message will be there
     store.dispatch(
       loadPreviousPageMessages.request({
-        cursor: cursors.value.previous,
+        cursor: inboxIndexes.value.previous,
         pageSize: maximumItemsFromAPI,
-        filter: {}
+        filter: {},
+        fromUserAction: false
       })
     );
   }
@@ -103,7 +102,8 @@ function configurePushNotifications() {
     // Called when token is generated
     onRegister: token => {
       // Dispatch an action to save the token in the store
-      store.dispatch(updateNotificationsInstallationToken(token.token));
+      store.dispatch(newPushNotificationsToken(token.token));
+      trackNewPushNotificationsTokenGenerated();
     },
 
     // Called when a remote or local notification is opened or received
@@ -167,5 +167,14 @@ function configurePushNotifications() {
     requestPermissions: Platform.OS !== "ios"
   });
 }
+
+const getArchiveAndInboxNextAndPreviousPageIndexes = (state: GlobalState) =>
+  pipe(state.entities.messages.allPaginated, ({ archive, inbox }) => ({
+    archive: pot.map(archive.data, ({ previous, next }) => ({
+      previous,
+      next
+    })),
+    inbox: pot.map(inbox.data, ({ previous, next }) => ({ previous, next }))
+  }));
 
 export default configurePushNotifications;

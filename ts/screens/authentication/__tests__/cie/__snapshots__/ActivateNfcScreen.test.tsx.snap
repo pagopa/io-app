@@ -357,6 +357,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             color="black"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="title1"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -364,6 +365,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 "lineHeight": 40,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
@@ -394,6 +396,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             color="bluegrey"
                             defaultColor="bluegrey"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="body"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -401,6 +404,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
@@ -464,6 +468,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     color="grey-700"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -471,6 +476,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     role="heading"
                                     style={
                                       [
@@ -608,15 +614,14 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -624,6 +629,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -647,6 +653,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                         color="black"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -654,6 +661,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -843,15 +851,14 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -859,6 +866,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -882,6 +890,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                         color="black"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -889,6 +898,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -1016,15 +1026,14 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -1032,6 +1041,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -1055,6 +1065,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                         color="black"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -1062,6 +1073,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -1318,7 +1330,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     }
                                   }
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.3}
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     [

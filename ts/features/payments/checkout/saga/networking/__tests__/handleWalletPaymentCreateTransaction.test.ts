@@ -1,23 +1,27 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-import { NewTransactionRequest } from "../../../../../../../definitions/pagopa/ecommerce/NewTransactionRequest";
 import { NewTransactionResponse } from "../../../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
 import { PaymentInfo } from "../../../../../../../definitions/pagopa/ecommerce/PaymentInfo";
 import { RptId } from "../../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/TransactionStatus";
-import { paymentsCreateTransactionAction } from "../../../store/actions/networking";
+import {
+  paymentsCreateTransactionAction,
+  WalletPaymentCreateTransactionPayload
+} from "../../../store/actions/networking";
 import { handleWalletPaymentCreateTransaction } from "../handleWalletPaymentCreateTransaction";
 import { paymentAnalyticsDataSelector } from "../../../../history/store/selectors";
 
 describe("Test handleWalletPaymentCreateTransaction saga", () => {
-  const newTransactionPayload: NewTransactionRequest = {
-    paymentNotices: [
-      {
-        rptId: "1234" as RptId,
-        amount: 1234 as PaymentInfo["amount"]
-      }
-    ]
+  const newTransactionPayload: WalletPaymentCreateTransactionPayload = {
+    data: {
+      paymentNotices: [
+        {
+          rptId: "1234" as RptId,
+          amount: 1234 as PaymentInfo["amount"]
+        }
+      ]
+    }
   };
   const T_SESSION_TOKEN = "ABCD";
 

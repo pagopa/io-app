@@ -21,6 +21,7 @@ import {
 } from "../../store/actions/archiving";
 import { MessageListCategory } from "../../types/messageListCategory";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
+import { useBottomTabNavigatorStyle } from "../../../../hooks/useBottomTabNavigatorStyle";
 
 const styles = StyleSheet.create({
   container: {
@@ -46,6 +47,8 @@ export const ArchiveRestoreBar = () => {
   const store = useIOStore();
   const tabNavigation = useIOTabNavigation();
 
+  const tabBarStyle = useBottomTabNavigatorStyle();
+
   const isArchivingDisabled = useIOSelector(isArchivingDisabledSelector);
   const shownCategory = useIOSelector(shownMessageCategorySelector);
 
@@ -58,11 +61,14 @@ export const ArchiveRestoreBar = () => {
 
   useEffect(() => {
     tabNavigation.setOptions({
-      tabBarStyle: {
-        display: isArchivingDisabled ? "flex" : "none"
-      }
+      tabBarStyle: [
+        tabBarStyle,
+        {
+          display: isArchivingDisabled ? "flex" : "none"
+        }
+      ]
     });
-  }, [isArchivingDisabled, tabNavigation]);
+  }, [isArchivingDisabled, tabBarStyle, tabNavigation]);
 
   if (isArchivingDisabled) {
     return null;

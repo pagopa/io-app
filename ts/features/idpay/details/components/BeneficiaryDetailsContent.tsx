@@ -1,6 +1,7 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
+import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -25,10 +26,10 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { format } from "../../../../utils/dates";
+import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import { Table, TableRow } from "../../common/components/Table";
 import { formatNumberCurrencyOrDefault } from "../../common/utils/strings";
-import { IDPayUnsubscriptionRoutes } from "../../unsubscription/navigation/navigator";
-import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
+import { IdPayUnsubscriptionRoutes } from "../../unsubscription/navigation/routes";
 import {
   InitiativeRulesInfoBox,
   InitiativeRulesInfoBoxSkeleton
@@ -149,7 +150,9 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             // in DISCOUNT initiatives, the spent amount is held in the accrued field,
             // while the refunded amount is always 0
             label: I18n.t("idpay.initiative.beneficiaryDetails.spentUntilNow"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.accrued),
+            value: formatNumberCurrencyOrDefault(
+              initiativeDetails.accruedCents
+            ),
             testID: "accruedTestID"
           }
         ];
@@ -157,12 +160,16 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
         return [
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.toBeRefunded"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.accrued),
+            value: formatNumberCurrencyOrDefault(
+              initiativeDetails.accruedCents
+            ),
             testID: "accruedTestID"
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.refunded"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.refunded),
+            value: formatNumberCurrencyOrDefault(
+              initiativeDetails.refundedCents
+            ),
             testID: "refundedTestID"
           }
         ];
@@ -183,12 +190,27 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
       )
     );
 
-  const handleUnsubscribePress = () =>
-    navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
-      initiativeId,
-      initiativeName,
-      initiativeType
-    });
+  const handleUnsubscribePress = () => {
+    pipe(
+      sequenceS(O.Monad)({
+        initiativeName: O.fromNullable(initiativeName),
+        initiativeType: O.fromNullable(initiativeType)
+      }),
+      O.map(({ initiativeName, initiativeType }) => {
+        navigation.navigate(
+          IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN,
+          {
+            screen: IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION,
+            params: {
+              initiativeId,
+              initiativeName,
+              initiativeType
+            }
+          }
+        );
+      })
+    );
+  };
 
   return (
     <>
@@ -208,7 +230,7 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.amount"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.amount),
+            value: formatNumberCurrencyOrDefault(initiativeDetails.amountCents),
             testID: "amountTestID"
           },
           ...getTypeDependantTableRows()

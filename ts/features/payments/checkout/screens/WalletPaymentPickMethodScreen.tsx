@@ -1,10 +1,10 @@
-import { GradientScrollView, H2, VSpacer } from "@pagopa/io-app-design-system";
+import { H2, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import { sequenceT } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { useEffect } from "react";
+import React from "react";
 import _ from "lodash";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -18,15 +18,13 @@ import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import {
   paymentsCalculatePaymentFeesAction,
   paymentsCreateTransactionAction,
-  paymentsGetPaymentMethodsAction,
-  paymentsGetPaymentUserMethodsAction
+  paymentsGetPaymentMethodsAction
 } from "../store/actions/networking";
 import {
   walletPaymentAmountSelector,
   walletPaymentDetailsSelector
 } from "../store/selectors";
 import {
-  notHasValidPaymentMethodsSelector,
   walletPaymentAllMethodsSelector,
   walletPaymentEnabledUserWalletsSelector,
   walletPaymentSelectedPaymentMethodIdOptionSelector,
@@ -38,12 +36,12 @@ import {
   walletPaymentTransactionSelector
 } from "../store/selectors/transaction";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
-import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
 import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import * as analytics from "../analytics";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { PaymentAnalyticsSelectedMethodFlag } from "../types/PaymentAnalytics";
+import { PaymentAnalyticsSelectedMethodFlag } from "../../common/types/PaymentAnalytics";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -60,10 +58,6 @@ const WalletPaymentPickMethodScreen = () => {
     walletPaymentIsTransactionActivatedSelector
   );
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
-  const notHasValidPaymentMethods = useIOSelector(
-    notHasValidPaymentMethodsSelector
-  );
-
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const selectedWalletIdOption = useIOSelector(
@@ -78,29 +72,8 @@ const WalletPaymentPickMethodScreen = () => {
   useFocusEffect(
     React.useCallback(() => {
       dispatch(paymentsGetPaymentMethodsAction.request());
-      dispatch(paymentsGetPaymentUserMethodsAction.request());
     }, [dispatch])
   );
-
-  // If the user doesn't have any onboarded payment method and the backend doesn't return any payment method as guest ..
-  // .. we redirect the user to the outcome screen with an outcome that allow the user to start the onboarding process of a new payment method.
-  // .. This implementation will be removed as soon as the backend will migrate totally to the NPG. (https://pagopa.atlassian.net/browse/IOBP-632)
-  useEffect(() => {
-    if (notHasValidPaymentMethods) {
-      const paymentDetails = pot.toUndefined(paymentDetailsPot);
-      dispatch(
-        paymentsInitOnboardingWithRptIdToResume({
-          rptId: paymentDetails?.rptId
-        })
-      );
-      navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
-        screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
-        params: {
-          outcome: WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE
-        }
-      });
-    }
-  }, [notHasValidPaymentMethods, paymentDetailsPot, navigation, dispatch]);
 
   const calculateFeesForSelectedPaymentMethod = React.useCallback(() => {
     pipe(
@@ -184,7 +157,8 @@ const WalletPaymentPickMethodScreen = () => {
         organization_name: paymentAnalyticsData?.verifiedData?.paName,
         service_name: paymentAnalyticsData?.serviceName,
         amount: paymentAnalyticsData?.formattedAmount,
-        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        saved_payment_method:
+          paymentAnalyticsData?.savedPaymentMethods?.length || 0,
         saved_payment_method_unavailable:
           paymentAnalyticsData?.savedPaymentMethodsUnavailable?.length,
         last_used_payment_method: "no", // <- TODO: This should be dynamic when the feature will be implemented
@@ -223,6 +197,10 @@ const WalletPaymentPickMethodScreen = () => {
       )
     );
 
+  const handleOnCreateTransactionError = () => {
+    setWaitingTransactionActivation(false);
+  };
+
   const handleContinue = () => {
     analytics.trackPaymentMethodSelected({
       attempt: paymentAnalyticsData?.attempt,
@@ -243,9 +221,12 @@ const WalletPaymentPickMethodScreen = () => {
         O.map(paymentDetails => {
           dispatch(
             paymentsCreateTransactionAction.request({
-              paymentNotices: [
-                { rptId: paymentDetails.rptId, amount: paymentDetails.amount }
-              ]
+              data: {
+                paymentNotices: [
+                  { rptId: paymentDetails.rptId, amount: paymentDetails.amount }
+                ]
+              },
+              onError: handleOnCreateTransactionError
             })
           );
           setWaitingTransactionActivation(true);
@@ -255,15 +236,18 @@ const WalletPaymentPickMethodScreen = () => {
   };
 
   return (
-    <GradientScrollView
-      primaryActionProps={
+    <IOScrollView
+      actions={
         canContinue
           ? {
-              label: I18n.t("global.buttons.continue"),
-              accessibilityLabel: I18n.t("global.buttons.continue"),
-              onPress: handleContinue,
-              disabled: isLoading || isLoadingTransaction,
-              loading: isLoading || isLoadingTransaction
+              type: "SingleButton",
+              primary: {
+                label: I18n.t("global.buttons.continue"),
+                accessibilityLabel: I18n.t("global.buttons.continue"),
+                onPress: handleContinue,
+                disabled: isLoading || isLoadingTransaction,
+                loading: isLoading || isLoadingTransaction
+              }
             }
           : undefined
       }
@@ -275,7 +259,7 @@ const WalletPaymentPickMethodScreen = () => {
       ) : (
         <CheckoutPaymentMethodsList />
       )}
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 

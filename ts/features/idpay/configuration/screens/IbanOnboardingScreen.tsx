@@ -4,8 +4,6 @@ import {
   Icon,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useSelector } from "@xstate/react";
-import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -18,41 +16,30 @@ import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useConfigurationMachineService } from "../xstate/provider";
-import { isLoadingSelector } from "../xstate/selectors";
+import { isLoadingSelector } from "../../common/machine/selectors";
+import { IdPayConfigurationMachineContext } from "../machine/provider";
 
-const IbanOnboardingScreen = () => {
-  const configurationMachine = useConfigurationMachineService();
-  const customGoBack = () => configurationMachine.send({ type: "BACK" });
-  const [iban, setIban] = React.useState<string | undefined>(undefined);
-  const [ibanName, setIbanName] = React.useState<string | undefined>(undefined);
-  const isLoading = useSelector(configurationMachine, isLoadingSelector);
-  const isIbanValid = () =>
-    pipe(
-      iban,
-      O.fromNullable,
-      O.fold(
-        () => undefined,
-        iban => E.isRight(Iban.decode(iban))
-      )
-    );
+export const IbanOnboardingScreen = () => {
+  const machine = IdPayConfigurationMachineContext.useActorRef();
 
-  const isIbanNameValid = () =>
-    pipe(
-      ibanName,
-      O.fromNullable,
-      O.fold(
-        () => undefined,
-        ibanName => ibanName.length > 0
-      )
-    );
+  const customGoBack = () => machine.send({ type: "back" });
+  const [iban, setIban] = React.useState<{
+    text: string;
+    value: O.Option<string>;
+  }>({ text: "", value: O.none });
 
-  useNavigationSwipeBackListener(() => {
-    configurationMachine.send({ type: "BACK", skipNavigation: true });
-  });
+  const [ibanName, setIbanName] = React.useState<string>("");
+  const isLoading =
+    IdPayConfigurationMachineContext.useSelector(isLoadingSelector);
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
+
+  const isInputValid = O.isSome(iban.value) && ibanName.length > 0;
 
   return (
     <BaseScreenComponent
@@ -68,7 +55,7 @@ const IbanOnboardingScreen = () => {
         <Link>{I18n.t("idpay.configuration.iban.onboarding.bodyLink")}</Link>
         <VSpacer size={24} />
         <LabelledItem
-          isValid={isIbanValid()}
+          isValid={O.isSome(iban.value)}
           label="IBAN"
           inputMaskProps={{
             type: "custom",
@@ -76,14 +63,15 @@ const IbanOnboardingScreen = () => {
               mask: "AA99A9999999999999999999999"
             },
             keyboardType: "default",
-            value: iban,
-            onChangeText: val => setIban(val)
+            value: iban.text,
+            onChangeText: text =>
+              setIban({ value: pipe(Iban.decode(text), O.fromEither), text })
           }}
         />
         <VSpacer size={16} />
         <LabelledItem
           label={I18n.t("idpay.configuration.iban.onboarding.nameAssignInput")}
-          isValid={isIbanNameValid()}
+          isValid={O.isSome(iban.value)}
           inputProps={{
             keyboardType: "default",
             returnKeyType: "done",
@@ -105,7 +93,9 @@ const IbanOnboardingScreen = () => {
           <Icon name="profile" size={30} color="bluegrey" />
           <HSpacer size={16} />
           <LabelSmall color="bluegrey" weight="Regular">
-            {I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}
+            {isSettingsVisibleAndHideProfile
+              ? I18n.t("idpay.configuration.iban.onboarding.bottomLabel")
+              : I18n.t("idpay.configuration.iban.onboarding.legacyBottomLabel")}
           </LabelSmall>
         </View>
       </ScrollView>
@@ -116,20 +106,17 @@ const IbanOnboardingScreen = () => {
           buttonProps: {
             label: I18n.t("global.buttons.continue"),
             loading: isLoading,
-            disabled: isLoading || !isIbanValid(),
+            disabled: isLoading || !isInputValid,
             onPress: () => {
-              const isDataSendable =
-                iban !== undefined &&
-                ibanName !== undefined &&
-                ibanName.length > 0;
-              if (isDataSendable) {
-                configurationMachine.send({
-                  type: "CONFIRM_IBAN",
-                  ibanBody: { iban, description: ibanName }
-                });
-              } else {
-                setIbanName(""); // force re-render to show error in the UI
-              }
+              pipe(
+                iban.value,
+                O.map(iban =>
+                  machine.send({
+                    type: "confirm-iban-onboarding",
+                    ibanBody: { iban, description: ibanName || "" }
+                  })
+                )
+              );
             }
           }
         }}
@@ -137,5 +124,3 @@ const IbanOnboardingScreen = () => {
     </BaseScreenComponent>
   );
 };
-
-export default IbanOnboardingScreen;

@@ -94,10 +94,6 @@ target 'ItaliaApp' do
             end
           end
         end        
-        # This is needed in order to build the project on Apple silicon.
-      	# Beware that after this modification you need Rosetta to run the app 
-      	# on the simulator.
-        config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
       end
     end
   end

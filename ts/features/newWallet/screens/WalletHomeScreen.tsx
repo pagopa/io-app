@@ -1,42 +1,54 @@
 import {
   GradientScrollView,
   IOStyles,
-  IOToast
+  IOToast,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import { ScrollView } from "react-native";
-import Animated, { Layout } from "react-native-reanimated";
 import I18n from "../../../i18n";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
+import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
-import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
-import { WalletRoutes } from "../navigation/routes";
-import { selectWalletCards } from "../store/selectors";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
+import { selectWalletCards } from "../store/selectors";
+import {
+  trackAllCredentialProfileProperties,
+  trackOpenWalletScreen,
+  trackWalletAdd
+} from "../../itwallet/analytics";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
 const WalletHomeScreen = ({ route }: Props) => {
+  const store = useIOStore();
+  useFocusEffect(() => {
+    trackOpenWalletScreen();
+    void trackAllCredentialProfileProperties(store.getState());
+  });
+
   const dispatch = useIODispatch();
   const isNewElementAdded = React.useRef(route.params?.newMethodAdded || false);
 
-  React.useEffect(() => {
-    // TODO SIW-960 Move cards request to app startup
-    dispatch(walletToggleLoadingState(true));
-    dispatch(getPaymentsWalletUserMethods.request());
-    dispatch(idPayWalletGet.request());
-    dispatch(cgnDetails.request());
-  }, [dispatch]);
+  useFocusEffect(
+    React.useCallback(() => {
+      trackOpenWalletScreen();
+      dispatch(walletToggleLoadingState(true));
+      dispatch(getPaymentsWalletUserMethods.request());
+      dispatch(idPayWalletGet.request());
+      dispatch(cgnDetails.request());
+    }, [dispatch])
+  );
 
   // Handles the "New element added" toast display once the user returns to this screen
   useFocusEffect(
@@ -50,25 +62,22 @@ const WalletHomeScreen = ({ route }: Props) => {
   );
 
   return (
-    <WalletHomeScreenContainer>
-      <WalletCategoryFilterTabs />
+    <WalletScrollView>
+      <VSpacer size={16} />
       <WalletPaymentsRedirectBanner />
-      <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
-        <WalletCardsContainer />
-      </Animated.View>
-    </WalletHomeScreenContainer>
+      <WalletCardsContainer />
+    </WalletScrollView>
   );
 };
 
-const WalletHomeScreenContainer = ({
-  children
-}: React.PropsWithChildren<any>) => {
+const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
   const navigation = useIONavigation();
   const cards = useIOSelector(selectWalletCards);
 
   const handleAddToWalletButtonPress = () => {
-    navigation.navigate(WalletRoutes.WALLET_NAVIGATOR, {
-      screen: WalletRoutes.WALLET_CARD_ONBOARDING
+    trackWalletAdd();
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ONBOARDING
     });
   };
 

@@ -1,78 +1,57 @@
 import {
-  Badge,
-  Body,
-  HSpacer,
+  HStack,
   IOColors,
+  makeFontStyleObject,
   Tag
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
+import { ImageSourcePropType, StyleSheet, Text, View } from "react-native";
+import { AnimatedImage } from "../../../../components/AnimatedImage";
 import I18n from "../../../../i18n";
+import { getCredentialNameFromType } from "../utils/itwCredentialUtils";
 import { CredentialType } from "../utils/itwMocksUtils";
+import { getThemeColorByCredentialType } from "../utils/itwStyleUtils";
+import { ItwDigitalVersionBadge } from "./ItwDigitalVersionBadge";
 
 export type ItwCredentialStatus = "valid" | "pending" | "expiring" | "expired";
 
-type PreviewProps = {
-  isPreview: true;
-};
-
-type DataProps = {
-  isPreview?: false;
-  data: ReadonlyArray<string>;
-};
-
-type BaseProps = {
-  credentialType: CredentialType;
-  isMasked?: boolean;
+export type ItwCredentialCard = {
+  credentialType: string;
   status?: ItwCredentialStatus;
+  isPreview?: boolean;
 };
-
-export type ItwCredentialCard = BaseProps & (PreviewProps | DataProps);
 
 export const ItwCredentialCard = ({
-  isMasked = false,
   status = "valid",
   credentialType,
-  ...props
+  isPreview = false
 }: ItwCredentialCard) => {
   const isValid = status === "valid";
-  const shouldDisplayData = !(!isValid || isMasked) && !props.isPreview;
-  const labelColor: IOColors = isValid ? "bluegreyDark" : "grey-700";
+  const theme = getThemeColorByCredentialType(credentialType);
+  const labelColor = isValid ? theme.textColor : IOColors["grey-700"];
 
   const cardBackgroundSource =
     credentialCardBackgrounds[credentialType][isValid ? 0 : 1];
   const statusTagProps = tagPropsByStatus[status];
 
   return (
-    <View style={props.isPreview && styles.previewContainer}>
+    <View style={isPreview && styles.previewContainer}>
       <View style={styles.cardContainer}>
         <View style={styles.card}>
-          <Image
-            style={styles.cardBackground}
+          <AnimatedImage
             source={cardBackgroundSource}
-            accessibilityIgnoresInvertColors={true}
+            style={styles.cardBackground}
           />
         </View>
-        <View style={styles.infoContainer}>
-          <View style={styles.header}>
-            <Body
-              color={labelColor}
-              weight="Semibold"
-              numberOfLines={2}
-              style={{ flex: 1 }}
-            >
-              {cardLabelByCredentialType[credentialType].toUpperCase()}
-            </Body>
-            {statusTagProps && (
-              <>
-                <HSpacer size={16} />
-                <Tag {...statusTagProps} />
-              </>
-            )}
-          </View>
-          {shouldDisplayData && <CredentialData {...props} />}
+        <View style={styles.header}>
+          <HStack space={16}>
+            <Text style={[styles.label, { color: labelColor }]}>
+              {getCredentialNameFromType(credentialType, "").toUpperCase()}
+            </Text>
+            {statusTagProps && <Tag {...statusTagProps} />}
+          </HStack>
         </View>
-        {!isValid && <DigitalVersionBadge />}
+        <ItwDigitalVersionBadge credentialType={credentialType} />
         <View
           style={[styles.border, { borderColor: borderColorByStatus[status] }]}
         />
@@ -81,53 +60,22 @@ export const ItwCredentialCard = ({
   );
 };
 
-const CredentialData = ({ data }: DataProps) => (
-  <View style={styles.personalInfo}>
-    {data.map(value => (
-      <Body
-        color="bluegreyDark"
-        weight="Semibold"
-        key={`credential_data_${value}`}
-      >
-        {value}
-      </Body>
-    ))}
-  </View>
-);
-
-const DigitalVersionBadge = () => (
-  <View style={styles.digitalVersionBadge}>
-    <Badge
-      // The space at the end is an hack to have extra padding inside the badge text
-      text={`${I18n.t("features.itWallet.card.digital")}   `}
-      variant="default"
-    />
-  </View>
-);
-
-const cardLabelByCredentialType: { [type in CredentialType]: string } = {
-  EuropeanDisabilityCard: I18n.t("features.itWallet.card.label.dc"),
-  EuropeanHealthInsuranceCard: I18n.t("features.itWallet.card.label.ts"),
-  mDL: I18n.t("features.itWallet.card.label.mdl"),
-  PersonIdentificationData: I18n.t("features.itWallet.card.label.eid")
-};
-
 const credentialCardBackgrounds: {
-  [type in CredentialType]: [ImageSourcePropType, ImageSourcePropType];
+  [type: string]: [ImageSourcePropType, ImageSourcePropType];
 } = {
-  EuropeanDisabilityCard: [
+  [CredentialType.EUROPEAN_DISABILITY_CARD]: [
     require("../../../../../img/features/itWallet/cards/dc.png"),
     require("../../../../../img/features/itWallet/cards/dc_off.png")
   ],
-  EuropeanHealthInsuranceCard: [
+  [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: [
     require("../../../../../img/features/itWallet/cards/ts.png"),
     require("../../../../../img/features/itWallet/cards/ts_off.png")
   ],
-  mDL: [
+  [CredentialType.DRIVING_LICENSE]: [
     require("../../../../../img/features/itWallet/cards/mdl.png"),
     require("../../../../../img/features/itWallet/cards/mdl_off.png")
   ],
-  PersonIdentificationData: [
+  [CredentialType.PID]: [
     require("../../../../../img/features/itWallet/cards/eid.png"),
     require("../../../../../img/features/itWallet/cards/eid_off.png")
   ]
@@ -188,20 +136,17 @@ const styles = StyleSheet.create({
     borderLeftWidth: 9,
     borderColor: transparentBorderColor
   },
-  infoContainer: {
-    paddingHorizontal: 16,
-    paddingTop: 14
+  label: {
+    flex: 1,
+    ...makeFontStyleObject("Semibold", false, "TitilliumSansPro"),
+    fontSize: 16
   },
   header: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
-  },
-  digitalVersionBadge: { position: "absolute", bottom: 16, right: -10 },
-  personalInfo: {
-    position: "absolute",
-    top: 95,
-    left: 16
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingTop: 14
   }
 });

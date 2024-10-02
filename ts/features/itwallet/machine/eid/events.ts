@@ -1,6 +1,11 @@
+import { ErrorActorEvent } from "xstate";
 import { LocalIdpsFallback } from "../../../../utils/idps";
 
-type IdentificationMode = "spid" | "ciePin" | "cieId";
+export type IdentificationMode = "spid" | "ciePin" | "cieId";
+
+export type Reset = {
+  type: "reset";
+};
 
 export type Start = {
   type: "start";
@@ -22,10 +27,6 @@ export type AddNewCredential = {
   type: "add-new-credential";
 };
 
-export type RequestAssistance = {
-  type: "request-assistance";
-};
-
 export type SelectIdentificationMode = {
   type: "select-identification-mode";
   mode: IdentificationMode;
@@ -34,6 +35,17 @@ export type SelectIdentificationMode = {
 export type SelectSpidIdp = {
   type: "select-spid-idp";
   idp: LocalIdpsFallback;
+};
+
+export type CiePinEntered = {
+  type: "cie-pin-entered";
+  pin: string;
+  isNfcEnabled: boolean;
+};
+
+export type CieIdentificationCompleted = {
+  type: "cie-identification-completed";
+  url: string;
 };
 
 export type Retry = {
@@ -48,15 +60,28 @@ export type Close = {
   type: "close";
 };
 
+export type NfcEnabled = {
+  type: "nfc-enabled";
+};
+
+export type Abort = {
+  type: "abort";
+};
+
 export type EidIssuanceEvents =
+  | Reset
   | Start
   | AcceptTos
   | SelectIdentificationMode
   | SelectSpidIdp
+  | CiePinEntered
+  | CieIdentificationCompleted
   | AddToWallet
   | GoToWallet
   | AddNewCredential
-  | RequestAssistance
   | Retry
   | Back
-  | Close;
+  | Close
+  | NfcEnabled
+  | Abort
+  | ErrorActorEvent;

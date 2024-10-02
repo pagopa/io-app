@@ -1,18 +1,22 @@
-import { constUndefined, pipe } from "fp-ts/lib/function";
+import { constTrue, constUndefined, pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { StyleSheet } from "react-native";
 import { ActionType } from "typesafe-actions";
 import { GlobalState } from "../../../../store/reducers/types";
-import { loadNextPageMessages, reloadAllMessages } from "../../store/actions";
-import { pageSize } from "../../../../config";
+import {
+  loadNextPageMessages,
+  loadPreviousPageMessages,
+  reloadAllMessages
+} from "../../store/actions";
+import { maximumItemsFromAPI, pageSize } from "../../../../config";
 import { MessageListCategory } from "../../types/messageListCategory";
 import { UIMessage } from "../../types";
 import I18n from "../../../../i18n";
 import { convertReceivedDateToAccessible } from "../../utils/convertDateToWordDistance";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { isLoadingServiceByIdSelector } from "../../../services/details/store/reducers";
 import {
+  isPaymentMessageWithPaidNoticeSelector,
   messagePagePotFromCategorySelector,
   shownMessageCategorySelector
 } from "../../store/reducers/allPaginated";
@@ -23,8 +27,22 @@ import {
   isStrictSomeError
 } from "../../../../utils/pot";
 import { isArchivingInProcessingModeSelector } from "../../store/reducers/archiving";
+import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
+import NavigationService from "../../../../navigation/NavigationService";
+import { trackMessageListEndReached, trackMessagesPage } from "../../analytics";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
+import { EnhancedHeight, StandardHeight } from "./DS/MessageListItem";
+import { SkeletonHeight } from "./DS/MessageListItemSkeleton";
 
+export type LayoutInfo = {
+  index: number;
+  length: number;
+  offset: number;
+};
+
+export const minDelayBetweenNavigationMilliseconds = 750;
 export const nextPageLoadingWaitMillisecondsGenerator = () => 2000;
+export const refreshIntervalMillisecondsGenerator = () => 60000;
 
 export const getInitialReloadAllMessagesActionIfNeeded = (
   state: GlobalState
@@ -32,7 +50,7 @@ export const getInitialReloadAllMessagesActionIfNeeded = (
   pipe(state, shownMessageCategorySelector, category =>
     pipe(
       state,
-      isArchivingInProcessingModeSelector,
+      isDoingAnAsyncOperationOnMessages,
       B.fold(
         () =>
           pipe(
@@ -40,7 +58,7 @@ export const getInitialReloadAllMessagesActionIfNeeded = (
             messagePagePotFromCategorySelector(category),
             isStrictNone,
             B.fold(constUndefined, () =>
-              initialReloadAllMessagesFromCategory(category)
+              initialReloadAllMessagesFromCategory(category, false)
             )
           ),
         constUndefined
@@ -58,11 +76,17 @@ export const messageViewPageIndexToListCategory = (
   pageIndex: number
 ): MessageListCategory => (pageIndex === 1 ? "ARCHIVE" : "INBOX");
 
-export const accessibilityLabelForMessageItem = (message: UIMessage): string =>
+export const accessibilityLabelForMessageItem = (
+  message: UIMessage,
+  isSelected?: boolean
+): string =>
   I18n.t("messages.accessibility.message.description", {
     newMessage: I18n.t(
       `messages.accessibility.message.${message.isRead ? "read" : "unread"}`
     ),
+    selected: isSelected
+      ? I18n.t("messages.accessibility.message.selected")
+      : "",
     organizationName: message.organizationName,
     serviceName: message.serviceName,
     subject: message.title,
@@ -70,53 +94,25 @@ export const accessibilityLabelForMessageItem = (message: UIMessage): string =>
     state: ""
   });
 
-export const messageListItemHeight = () => 130;
-
-export const getLoadServiceDetailsActionIfNeeded = (
-  state: GlobalState,
-  serviceId: ServiceId,
-  organizationFiscalCode?: string
-): ActionType<typeof loadServiceDetail.request> | undefined => {
-  if (!organizationFiscalCode) {
-    const isLoading = isLoadingServiceByIdSelector(state, serviceId);
-    if (!isLoading) {
-      return loadServiceDetail.request(serviceId);
-    }
-  }
-  return undefined;
-};
-
 export const getLoadNextPageMessagesActionIfAllowed = (
   state: GlobalState,
   category: MessageListCategory,
   comparisonTimeInCaseOfError: Date
 ): ActionType<typeof loadNextPageMessages.request> | undefined => {
   // No archiving/restoring running
-  const isProcessingArchiving = isArchivingInProcessingModeSelector(state);
-  if (isProcessingArchiving) {
+  if (isDoingAnAsyncOperationOnMessages(state)) {
     return undefined;
   }
 
   const allPaginated = state.entities.messages.allPaginated;
 
-  // No running message loading
-  const inboxData = allPaginated.inbox.data;
-  const archiveData = allPaginated.archive.data;
-  if (isLoadingOrUpdating(inboxData) || isLoadingOrUpdating(archiveData)) {
-    return undefined;
-  }
-
   // Check that there are more pages to load
-  const { messagePagePot, lastRequest } =
+  const messagePagePot =
+    category === "INBOX" ? allPaginated.inbox.data : allPaginated.archive.data;
+  const lastRequest =
     category === "INBOX"
-      ? {
-          messagePagePot: inboxData,
-          lastRequest: allPaginated.inbox.lastRequest
-        }
-      : {
-          messagePagePot: archiveData,
-          lastRequest: allPaginated.archive.lastRequest
-        };
+      ? allPaginated.inbox.lastRequest
+      : allPaginated.archive.lastRequest;
   const nextMessagePageStartingId = isSomeOrSomeError(messagePagePot)
     ? messagePagePot.value.next
     : undefined;
@@ -149,36 +145,153 @@ export const getLoadNextPageMessagesActionIfAllowed = (
   return loadNextPageMessages.request({
     pageSize,
     cursor: nextMessagePageStartingId,
-    filter: { getArchived: category === "ARCHIVE" }
+    filter: { getArchived: category === "ARCHIVE" },
+    fromUserAction: true
   });
 };
 
 export const getReloadAllMessagesActionForRefreshIfAllowed = (
   state: GlobalState,
   category: MessageListCategory
-): ActionType<typeof reloadAllMessages.request> | undefined => {
-  const allPaginated = state.entities.messages.allPaginated;
+): ActionType<typeof reloadAllMessages.request> | undefined =>
+  pipe(
+    state,
+    isDoingAnAsyncOperationOnMessages,
+    B.fold(
+      () => initialReloadAllMessagesFromCategory(category, true),
+      constUndefined
+    )
+  );
 
-  // No archiving/restoring running
-  const isProcessingArchiving = isArchivingInProcessingModeSelector(state);
-  if (isProcessingArchiving) {
-    return undefined;
-  }
+export const getLoadPreviousPageMessagesActionIfAllowed = (
+  state: GlobalState
+) =>
+  pipe(state.entities.messages.allPaginated, allPaginated =>
+    pipe(
+      allPaginated.shownCategory === "ARCHIVE"
+        ? allPaginated.archive
+        : allPaginated.inbox,
+      shownMessageCollection =>
+        pipe(
+          shownMessageCollection.lastUpdateTime.getTime() +
+            refreshIntervalMillisecondsGenerator() <
+            new Date().getTime(),
+          B.fold(constUndefined, () =>
+            pipe(
+              shownMessageCollection.data,
+              pot.toOption,
+              O.chainNullableK(a => a.previous),
+              O.fold(constUndefined, previousPageMessageId =>
+                pipe(
+                  state,
+                  isDoingAnAsyncOperationOnMessages,
+                  B.fold(
+                    () =>
+                      loadPreviousPageMessages.request({
+                        pageSize: maximumItemsFromAPI,
+                        cursor: previousPageMessageId,
+                        filter: {
+                          getArchived: allPaginated.shownCategory === "ARCHIVE"
+                        },
+                        fromUserAction: false
+                      }),
+                    constUndefined
+                  )
+                )
+              )
+            )
+          )
+        )
+    )
+  );
 
-  // No running message loading
-  const archiveMessagePagePot = allPaginated.archive.data;
-  const inboxMessagePagePot = allPaginated.inbox.data;
-  if (
-    isLoadingOrUpdating(archiveMessagePagePot) ||
-    isLoadingOrUpdating(inboxMessagePagePot)
-  ) {
-    return undefined;
-  }
-  return initialReloadAllMessagesFromCategory(category);
-};
-
-const initialReloadAllMessagesFromCategory = (category: MessageListCategory) =>
+const initialReloadAllMessagesFromCategory = (
+  category: MessageListCategory,
+  fromUserAction: boolean
+) =>
   reloadAllMessages.request({
     pageSize,
-    filter: { getArchived: category === "ARCHIVE" }
+    filter: { getArchived: category === "ARCHIVE" },
+    fromUserAction
   });
+
+const isDoingAnAsyncOperationOnMessages = (state: GlobalState) =>
+  pipe(
+    state,
+    isArchivingInProcessingModeSelector, // No archiving/restoring running
+    B.fold(
+      () =>
+        pipe(
+          // No running message loading
+          state.entities.messages.allPaginated,
+          allPaginated =>
+            isLoadingOrUpdating(allPaginated.archive.data) ||
+            isLoadingOrUpdating(allPaginated.inbox.data)
+        ),
+      constTrue
+    )
+  );
+
+export const generateMessageListLayoutInfo = (
+  loadingList: ReadonlyArray<number>,
+  messageList: ReadonlyArray<UIMessage> | undefined,
+  state: GlobalState
+) => {
+  if (messageList) {
+    const messageListLayoutInfo: Array<LayoutInfo> = [];
+    // eslint-disable-next-line functional/no-let
+    for (let i = 0; i < messageList.length; i++) {
+      const message = messageList[i];
+      const messageHasBadge =
+        message.category.tag === TagEnum.PN ||
+        isPaymentMessageWithPaidNoticeSelector(state, message.category);
+      const itemLayoutInfo: LayoutInfo = {
+        index: i,
+        length: messageHasBadge ? EnhancedHeight : StandardHeight,
+        offset:
+          i > 0
+            ? messageListLayoutInfo[i - 1].offset +
+              messageListLayoutInfo[i - 1].length +
+              StyleSheet.hairlineWidth
+            : 0
+      };
+      // eslint-disable-next-line functional/immutable-data
+      messageListLayoutInfo.push(itemLayoutInfo);
+    }
+    return messageListLayoutInfo;
+  } else {
+    return loadingList.map((_, index) => ({
+      index,
+      length: SkeletonHeight,
+      offset: index * SkeletonHeight
+    }));
+  }
+};
+
+export const trackMessagePageOnFocusEventIfAllowed = (state: GlobalState) => {
+  const routeName = NavigationService.getCurrentRouteName();
+  if (routeName !== MESSAGES_ROUTES.MESSAGES_HOME) {
+    return;
+  }
+
+  const shownMessageCategory = shownMessageCategorySelector(state);
+  const messagePagePot =
+    messagePagePotFromCategorySelector(shownMessageCategory)(state);
+  if (isSomeOrSomeError(messagePagePot)) {
+    // Track message category change
+    const selectedShownCategory = shownMessageCategorySelector(state);
+    const messageCount = messagePagePot.value.page.length;
+    trackMessagesPage(selectedShownCategory, messageCount, pageSize, true);
+  }
+};
+
+export const trackMessageListEndReachedIfAllowed = (
+  category: MessageListCategory,
+  willLoadNextPageMessages: boolean,
+  state: GlobalState
+) => {
+  const messagePagePot = messagePagePotFromCategorySelector(category)(state);
+  if (isSomeOrSomeError(messagePagePot)) {
+    trackMessageListEndReached(category, willLoadNextPageMessages);
+  }
+};

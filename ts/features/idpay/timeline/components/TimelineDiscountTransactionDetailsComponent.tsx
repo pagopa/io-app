@@ -1,8 +1,8 @@
+import { Alert, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Alert, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import {
   TransactionDetailDTO,
   StatusEnum as TransactionStatusEnum
@@ -14,7 +14,7 @@ import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { format } from "../../../../utils/dates";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 
 type Props = {
   transaction: TransactionDetailDTO;
@@ -22,8 +22,6 @@ type Props = {
 
 const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
   const { transaction } = props;
-
-  const alertViewRef = React.createRef<View>();
 
   const statusAlertComponent = pipe(
     transaction.status,
@@ -34,7 +32,6 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
           return (
             <>
               <Alert
-                viewRef={alertViewRef}
                 variant="error"
                 content={I18n.t(
                   "idpay.initiative.operationDetails.discount.details.alerts.CANCELLED"
@@ -51,9 +48,9 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
   );
 
   const formattedAmount = pipe(
-    transaction.amount,
+    transaction.amountCents,
     O.fromNullable,
-    O.map(amount => formatNumberAmount(amount, true)),
+    O.map(amount => formatNumberCentsToAmount(amount, true)),
     O.getOrElse(() => "-")
   );
 
@@ -82,7 +79,7 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
           )}
         </Body>
         <Body weight="Semibold">
-          {formatNumberAmount(transaction.accrued, true)}
+          {formatNumberCentsToAmount(transaction.accruedCents, true)}
         </Body>
       </View>
       <ItemSeparatorComponent noPadded={true} />

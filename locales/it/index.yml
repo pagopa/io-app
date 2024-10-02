@@ -81,7 +81,7 @@ global:
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
   unknown: sconosciuto
   sectionStatus:
-    moreInfo: più info
+    moreInfo: "Vuoi saperne di più?"
   accessibility:
     minusSymbol: meno
     reload: "Ricarica"
@@ -208,10 +208,6 @@ global:
     invalidSearchBarText: Inserisci almeno {{minCharacter}} caratteri
     noResultsFound: "Non ci sono risultati per questa ricerca: prova qualcos'altro."
     noResultsTitle: Nessun risultato.
-  media:
-    email: "Email"
-    pec: "PEC"
-    phone: "Telefono"
 tablet:
   message: L’interfaccia di IO è ottimizzata per smartphone, ma tutte le funzioni compatibili con il tuo dispositivo sono comunque disponibili.
 rooted:
@@ -225,13 +221,8 @@ rooted:
   bodyAndroid: !include rooted_body.md
   continueAlert:
     title: Continua
-    body: Hai compreso i rischi e vuoi continuare?
-    confirmText: Si
-    cancelText: Annulla
   cancelAlert:
     title: Esci
-    body: Puoi chiudere l'app
-    confirmText: Esci
 locales:
   it: Italiano
   en: Inglese
@@ -259,17 +250,29 @@ permissionRationale:
     message: "Abbiamo bisogno dell'accesso alla fotocamera per utilizzare la torcia."
 startup:
   title: Stiamo preparando la tua esperienza su IO
+  title2: Ancora un po’ di pazienza...
   authentication: Utente autenticato
   sessionInfo: Attributi SPID caricati
   profileInfo: Profilo utente caricato
   profileEnabled: Profilo utente abilitato
   userDeletePendingAlert:
     title: Eliminazione profilo in corso
-    message: Se hai cambiato idea, puoi annullare la richiesta nella sezione Privacy del tuo Profilo.
-    cta_1: Vai al Profilo
+    messageLegacy: Se hai cambiato idea, puoi annullare la richiesta nella sezione Privacy del tuo Profilo.
+    message: Se hai cambiato idea, puoi annullare la richiesta dalla sezione Privacy all'interno delle Impostazioni.
+    cta_1_legacy: Vai al Profilo
+    cta_1: Vai alle Impostazioni
     cta_2: Ignora
   contextualHelp:
     title: Problemi di inizializzazione?
+  connection_lost:
+    title: Non hai una connessione a internet attiva
+    description: Controlla la tua connessione e riavvia l’app
+  slowdowns_results_screen:
+    title: Sembra che le cose vadano un po' a rilento
+    subtitle: Può dipendere dai nostri sistemi o dalla connessione del tuo dispositivo. Riprova tra qualche minuto.
+  cdn_unreachable_results_screen:
+    title: Qualcosa non ha funzionato
+    subtitle: Chiudi l’app e riprova tra qualche minuto.
 login:
   expiration_info: Per ragioni di sicurezza, dovrai entrare con SPID o CIE ogni 30 giorni.
   expiration_info_FL: Per ragioni di sicurezza, dovrai entrare con SPID o CIE una volta all’anno.
@@ -278,25 +281,22 @@ inbox:
   enableButton: Abilita Inbox
   disableButton: Disabilita Inbox
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
+settings: 
+  informativeBanner: 
+    content: Cerchi il Profilo? Lo abbiamo spostato, ora è in alto a destra!
+    action: Vai alle Impostazioni
 profile:
   fiscalCode:
     accessibility:
       fiscalCodeHint: Immagine del codice a barre del tuo codice fiscale
       unavailable: Non disponibile
-      preview:
-        label: Anteprima del tuo codice fiscale
-        hint: Attiva per visualizzare il facsimile del tuo codice fiscale
-      front:
-        label: Parte anteriore del documento codice fiscale {{code}} di {{name}} {{family_name}}, sesso {{gender}}, nato a {{placeOfBirth}},{{province}} il {{birthDate}}
-        hint: Attiva per passare alla visualizzazione a schermo intero
-      rear:
-        label: Codice a barre del tuo documento
-        hint: Attiva per passare alla visualizzazione a schermo intero
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
     description: Usa il codice a barre per comunicare il tuo codice fiscale quando ti viene richiesto.
     help: !include profile/profile_fiscal_code.md
     facSimile: FAC-SIMILE
+    copyCode: Copia codice fiscale
+    codeCopied: Codice copiato!
   sections:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
@@ -315,7 +315,9 @@ profile:
     forgetCurrentSession: Dimentica sessione corrente
     clearAsyncStorage: Cancella contenuto di AsyncStorage
     dumpAsyncStorage: Scarica contenuto di AsyncStorage
-    contextualHelpTitle: Cosa puoi fare nel tuo Profilo
+    sentryTestEvent: Invia Exception a Sentry
+    contextualHelpTitle: Cosa puoi fare nella sezione {{pageName}}
+    legacyContextualHelpContent: !include profile/legacy_profile_account_main.md
     contextualHelpContent: !include profile/profile_account_main.md
     developerModeOn: Modalità sviluppatore attivata
     cache:
@@ -337,7 +339,7 @@ profile:
       subtitle: Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei dati personali.
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo...
       removeAccount:
-        title: Elimina il tuo account
+        title: Elimina il tuo profilo
         description: Elimina il tuo profilo e i tuoi dati personali
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
         alert:
@@ -354,9 +356,9 @@ profile:
           title: Elimina il tuo profilo
           description: Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento.
           banner: Il tuo profilo sarà eliminato definitivamente entro 30 giorni dalla richiesta.
-          body: 
+          body:
             p1: Se decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.
-            p2: 
+            p2:
               firstPart: "Eventuali bonus o sconti ottenuti tramite l'app IO "
               lastPart: non saranno più accessibili.
             p3: Potrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova registrazione tramite SPID o CIE.
@@ -388,11 +390,11 @@ profile:
             item3: il testo dei Messaggi che hai ricevuto;
             item4: le tue preferenze di notifica.
           paragraph1: Le informazioni saranno scaricate in formato YAML, un formato standard che in informatica consente lo scambio di dati fra applicazioni diverse.
-          paragraph2: 
+          paragraph2:
             part1: "Riceverai un "
             part2: "messaggio su IO "
-            part3: in cui sono presenti un link e una password validi per 15 giorni. 
-          paragraph3: 
+            part3: in cui sono presenti un link e una password validi per 15 giorni.
+          paragraph3:
             part1: Per maggiori informazioni consulta l’
             link: Informativa privacy di IO.
         alert:
@@ -438,7 +440,7 @@ profile:
           additionalInformation:
             description: "Per maggiori informazioni, leggi l'"
             cta: "Informativa Privacy e i Termini e Condizioni d’uso"
-          profileSettings: "Puoi modificare la tua scelta in ogni momento da Profilo > Privacy e Condizioni d’uso"
+          profileSettings: "Puoi modificare la tua scelta in ogni momento da {{pageName}} > Privacy e Condizioni d’uso"
           cta:
             shareData: "Condividi"
             dontShareData: Non condividere i dati
@@ -475,13 +477,14 @@ profile:
     idpay:
       idpayTest: IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
-    itWallet:
-      itWalletTest: IT Wallet
+    cieID:
+      cieIdTest:
+        title: CieID
     trial:
       titleSection: Partecipa alla sperimentazione
     designSystemEnvironment: Design System sperimentale
-    newWalletSection: Nuova sezione portafoglio
-    newHomeSection: Nuova home messaggi
+    newScanSection: Nuova funzione 'Inquadra'
+    sessionRefresh: Attiva il refresh della sessione
     appVersion: Versione
     backendVersion: Versione Backend
     debugMode: Modalità debug
@@ -500,12 +503,6 @@ profile:
       need_validate: Da validare
       nameSurname: Nome e cognome
       fiscalCode: Codice Fiscale
-    email:
-      contextualHelpTitle: Come gestire la tua mail
-      contextualHelpContent: !include profile/profile_data_email_address.md
-    spid_email:
-      contextualHelpTitle: Questo dato è impostato nel tuo profilo SPID
-      contextualHelpContent: !include profile/profile_data_spid_email.md
   security:
     title: Sicurezza
     subtitle: Gestisci le modalità di autenticazione in app.
@@ -623,6 +620,17 @@ authentication:
       os_problem: È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori.
       nfc_alert: Il tuo dispositivo non ha l'NFC.
       os_alert: Il sistema operativo del dispositivo non è aggiornato.
+    cie_bottom_sheet:
+      title: Come vuoi entrare?
+      module_cie_pin:
+        title: Entra con CIE + PIN
+        subtitle: Usa Carta di Identità Elettronica e PIN
+      module_cie_id:
+        title: Entra con CieID
+        subtitle: Usa l'app CieID
+      help_banner:
+        title: Non sai cosa scegliere?
+        action: Ti diamo una mano
     contentTitleCie: Non hai SPID o la CIE?
     cie_information_request: !include cie.md
     spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
@@ -651,6 +659,52 @@ authentication:
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
+  wizards:
+    cie_id_wizard:
+      title: Hai l'app CieID?
+      description: Se hai l’app CieID sul tuo dispositivo, accedi a IO inserendo le credenziali dell’app. Puoi usare anche il tuo volto o l’impronta, oppure il codice che hai impostato per l’app CieID.
+      actions:
+        primary:
+          label: Sì, entra con CieID
+        secondary:
+          label: Non ho CieID
+      link: Cos'è CieID?
+    cie_pin_wizard:
+      title: Hai la Carta di Identità Elettronica e il PIN?
+      description: Se hai la tua Carta di Identità Elettronica a portata di mano, puoi accedere a IO inserendo il PIN della carta e avvicinandola al dispositivo per consentire la lettura dei dati.
+      actions:
+        primary:
+          label: Sì, entra con CIE + PIN
+        secondary:
+          label: Non ho la CIE e il PIN
+      bottom_sheet:
+        title: Dove trovo il PIN della CIE?
+        content: !include authentication/wizards/cie_pin_content.md
+        link: Hai dimenticato il PIN?
+        cta:
+          label: Dove trovo il PIN della CIE?
+    spid_wizard:
+      title: Hai SPID?
+      description: Se hai SPID, entra su IO inserendo le tue credenziali, usando il tuo volto o l’impronta, oppure tramite l’app del tuo fornitore di SPID.
+      actions:
+        primary:
+          label: Sì, entra con SPID
+        secondary:
+          label: Non ho SPID
+    id_activation_wizard:
+      title: Attiva la tua identità digitale!
+      description: Devi avere un’identità digitale SPID o CIE (Carta di Identità Elettronica) attiva per usare IO.
+      list_items:
+        title: Come attivarla
+        request_cie:
+          label: Richiedi la tua CIE
+        activate_cie:
+          title: Attiva le credenziali CIE
+        activate_spid:
+          title: Attiva SPID
+      actions:
+        primary:
+          label: Chiudi
   auth_errors:
     error_19:
       title: Hai effettuato troppi tentativi di accesso
@@ -676,6 +730,16 @@ authentication:
     generic:
       title: Non è stato possibile accedere
       subtitle: Si è verificato un problema durante l’accesso. Riprova tra qualche minuto.
+  cie_id:
+    error_screen:
+      title: Non riesci a entrare con CieID?
+      cie_pin_supported:
+        description: "Se hai la tua Carta di Identità Elettronica a portata di mano, usala per accedere a IO.\n\nInserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura dei dati."
+        primary_action_label: Entra con CIE + PIN
+      cie_pin_not_supported:
+        description: Se hai SPID, entra su IO inserendo le tue credenziali. Puoi usare anche il tuo volto o l’impronta o il codice impostato per l’app del tuo fornitore di SPID.
+        primary_action_label: Entra con SPID
+      secondary_action_label: Chiudi
   cie:
     genericTitle: Entra con CIE
     cie: CIE
@@ -703,6 +767,7 @@ authentication:
         placeholderLabel: PIN della Carta di identità elettronica
         label: Campo di inserimento per pin della Carta di Identità elettronica
         hint: Inserire in questo campo il pin a 8 cifre della propria Carta di Identità Elettronica
+        deleteLabel: Hai eliminato {{number}}
       pinCardTitle: Inserisci il PIN della CIE
       pinCardHeader: Entra con CIE
       pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
@@ -722,10 +787,7 @@ authentication:
       contextualHelpBody: !include help/ciePinHelpBody.md
       contextualHelpCTA: Hai dimenticato il PIN/PUK?
     pinTempLocked:
-      header: Entra con CIE
       title: Carta temporaneamente bloccata
-      content: !include cie/temporary_blocked_cie.md
-      button: "Scarica / Apri CieID"
     card:
       title: Appoggia la CIE sul retro del dispositivo
       titleiOS: Appoggia la CIE sul dispositivo, in alto
@@ -757,8 +819,6 @@ authentication:
         unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
         genericErrorTitle: Non siamo riusciti a recuperare i dati dalla carta
         genericErrorSubtitle: Se riscontri più volte il problema, attendi qualche minuto e riprova.
-    dataUsageConsent:
-      retryCTA: Entra
   spid: SPID
   spid_information_request:
     headerTitle: Non hai SPID?
@@ -810,16 +870,6 @@ authentication:
       body: L'identity provider che hai scelto non è disponibile in questo momento, puoi riprovare più tardi. Se disponi di un altra identità SPID scegli un provider alternativo. Puoi segnalarci il problema con l’icona '?' in alto a destra.
     login:
       title: Errore nel login
-      body: Si è verificato un errore durante il login, si prega di riprovare!
-    spid:
-      unknown: Errore sconosciuto
-      error_19: "Hai inserito troppe volte un nome utente o una password non corretti: riprova fra qualche minuto o contatta il tuo fornitore di identità SPID per cambiare le tue credenziali."
-      error_20: "Per motivi di sicurezza IO richiede un login con un secondo fattore di autenticazione: contatta il tuo fornitore di identità SPID per capire come si usa."
-      error_21: "È passato troppo tempo da quando hai iniziato l'accesso: per piacere riparti dall'inizio."
-      error_22: "Per usare IO, devi acconsentire all’invio di alcuni dati. Entra di nuovo e dai il tuo consenso."
-      error_23: "La tua identità SPID risulta sospesa o revocata. Per riattivare il tuo account, contatta il tuo fornitore di identità SPID."
-      error_25: "Hai annullato l'operazione di login: puoi riprovare quando vuoi."
-      error_1001: "Accesso negato: non hai l'età minima richiesta per usare IO"
   expiredSessionBanner:
     title: Avviso di sicurezza
   unlock:
@@ -866,7 +916,6 @@ email:
   read:
     title: Il tuo indirizzo email
     info: Questo è l'indirizzo email che hai associato all'account SPID. Puoi usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua casella di posta elettronica.
-    details: Puoi modificare questo indirizzo, che dovrai validare cliccando su un link che spediremo alla tua casella di posta. Nel frattempo, le funzioni di IO che dipendono dalla email (pagamenti, inoltro messaggi, etc.) saranno disattivate.
     alert: "Attenzione: il tuo account pagoPA è associato alla tua email, quindi se la modifichi non troverai più elencati nell'applicazione le tue transazioni ed i tuoi metodi di pagamento."
     help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal tuo provider di servizi SPID.
   insert:
@@ -929,6 +978,7 @@ email:
     subtitle: Riceverai le comunicazioni di IO all’indirizzo
 onboarding:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
+  legacyContextualHelpContent: !include onboarding/legacy_onboarding_fingerprint.md
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configura IO
@@ -977,7 +1027,7 @@ onboarding:
     headerTitle: Configura IO
     available:
       title: Attiva il riconoscimento biometrico
-      settings: Puoi modificare la tua scelta in ogni momento da Profilo > Sicurezza
+      settings: Puoi modificare la tua scelta in ogni momento da {{pageName}} > Sicurezza
       body:
         text: Potrai usare il tuo volto o impronta digitale al posto del codice di sblocco. Ti permetterà di accedere all’app e autorizzare operazioni e pagamenti in modo più rapido e sicuro.
         infoStart: Potrai usare il riconoscimento biometrico al posto del codice di sblocco. Ti permetterà di accedere all’app e autorizzare operazioni e pagamenti, con il tuo
@@ -995,7 +1045,7 @@ onboarding:
             value: Configura il volto o l’impronta
           step3:
             label: Step 3
-            value: Attivalo su IO in Profilo > Sicurezza
+            value: Attivalo su IO in {{pageName}} > Sicurezza
     unavailable:
       title: Proteggi il tuo dispositivo
       subtitle: IO ti invia comunicazioni che ti riguardano personalmente. Assicurati che solo tu possa accedere all’app impostando un codice o un segno per sbloccare il dispositivo.
@@ -1114,8 +1164,6 @@ payment:
     editButton: Modifica
     termsAndConditions: Proseguendo dichiari di aver letto e compreso i
     termsAndConditionsLink: Termini e condizioni d'uso e l'Informativa Privacy
-    loading:
-      title: Sto caricando le informazioni del pagamento
 wallet:
   methodDetails:
     cobadgeTitle: "Carta di debito"
@@ -1523,7 +1571,7 @@ wallet:
     idTransaction: Codice identificativo della transazione
     amountInfo:
       title: Vedi un importo diverso?
-      message: pagoPA aggiorna automaticamente l'importo per assicurarti di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
+      message: pagoPA aggiorna l'importo in tempo reale, per permetterti di pagare evitando more o interessi aggiuntivi. Può succedere, per esempio, quando l'ente applica dei costi di notifica (se ti ha inviato una comunicazione a valore legale) o se sei in ritardo con il pagamento.
       cta: Ok, va bene
     contextualHelpTitle: Riepilogo della transazione
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
@@ -1785,10 +1833,12 @@ wallet:
       noticeNumber:
         title: Inserisci il codice avviso
         subtitle: Ha 18 cifre, lo trovi vicino al codice QR.
+        validationError: Ha 18 cifre, inizia con 0, 1 o 3.
         placeholder: Codice avviso
       fiscalCode:
         title: Inserisci il codice fiscale dell’Ente Creditore
         subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
+        validationError: Inserisci 11 cifre.
         placeholder: Codice fiscale Ente Creditore
     abortDialog:
       title: Vuoi interrompere l'operazione?
@@ -1846,6 +1896,7 @@ wallet:
     outcome:
       SUCCESS:
         title: Hai pagato {{amount}}
+        subtitle: La ricevuta è nella sezione Pagamenti.
         button: Ok, chiudi
         banner:
           title: Puoi dirci com’è andata?
@@ -1879,16 +1930,17 @@ wallet:
       INVALID_METHOD:
         title: Il metodo di pagamento non è supportato
       WAITING_CONFIRMATION_EMAIL:
-        title: Attendi la conferma via email
-        subtitle: Riceverai l'esito del pagamento all'indirizzo {{email}}
-        defaultSubtitle: Riceverai l'esito del pagamento all'indirizzo email associato.
+        title: Attendi la conferma del pagamento
+        subtitle: "Il pagamento non si è ancora concluso: riceverai a breve l’esito all'indirizzo {{email}}. L’operazione può richiedere fino a 15 minuti."
+        defaultSubtitle: "Il pagamento non si è ancora concluso: riceverai a breve l’esito via email. L’operazione può richiedere fino a 15 minuti."
       METHOD_NOT_ENABLED:
         title: Abilita il metodo per effettuare pagamenti in app
         subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
       PAYMENT_METHODS_NOT_AVAILABLE:
-        title: Aggiungi un metodo per effettuare pagamenti in app
+        title: Vuoi pagare con carta? Aggiungila ora!
         subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
-        primaryAction: Aggiungi metodo
+        primaryAction: Aggiungi carta
+        secondaryAction: Usa altri metodi
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -1925,9 +1977,10 @@ messages:
       read: "Messaggio"
       unread: "Messaggio non letto"
       archived: Archiviato
-      description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
+      description: "{{newMessage}} {{selected}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "ricevuto il"
       received_at: "ricevuto alle ore"
+      selected: "selezionato"
   contextualHelpTitle: Cosa puoi fare nei tuoi Messaggi
   contextualHelpContent: !include messages/messages_home.md
   counting:
@@ -1951,18 +2004,6 @@ messages:
     unarchive: Ripristina
     selectAll: Tutti
     deselectAll: Nessuno
-    payment:
-      expired: Pagamento scaduto
-      paid: Questo avviso è stato pagato. Visualizza la ricevuta nel tuo
-      addMemo:
-        block1: Aggiungi un promemoria per il
-        block2: alle
-      expiringOrValidAlert:
-        block1: Scade il
-        block2: alle ore
-      expiredAlert:
-        block1: Scaduto il
-        block2: alle ore
     pay: Paga € {{amount}}
     onlyPay: Paga
     paid: Pagato
@@ -2005,11 +2046,6 @@ messages:
     emptyMessage:
       title: Non hai ancora ricevuto alcun messaggio
       subtitle: "Quando un ente ti invierà una comunicazione la visualizzerai qui."
-  pagination:
-    migration:
-      started: "Attendi, stiamo aggiornando la sezione messaggi"
-      succeeded: "Fatto!"
-      failed: "Non siamo riusciti ad aggiornare la sezione messaggi."
   operations:
     archive:
       success: "Archiviazione riuscita!"
@@ -2020,6 +2056,13 @@ messages:
     restore:
       success: "Ripristino effettuato."
       failure: "Il ripristino non è andato a buon fine"
+  search:
+    emptyState:
+      title: "Inserisci almeno tre caratteri"
+    input:
+      cancel: "Annulla"
+      clear: "Cancella"
+      placeholderShort: "Inserisci testo"
 messageDetails:
   accessibilityAttachmentIcon: "Contiene allegati"
   contextualHelpTitle: Dettagli del messaggio
@@ -2050,10 +2093,6 @@ messageDetails:
     corruptedFile: "L'allegato è danneggato e non può essere aperto. Contatta l'ente mittente"
     downloadFailed: "L'allegato non è al momento disponibile. Riprova o contatta l'ente mittente"
     showPreview: "Visualizza anteprima"
-    unavailable:
-      firstPart: "Gli allegati non sono più disponibili. "
-      secondPart: "Contatta l'ente mittente"
-      thirdPart: " per maggiori informazioni."
     failing:
       details: "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
   banner:
@@ -2129,6 +2168,7 @@ services:
         title: "Preferenze salvate!"
         body: "Potrai sempre vedere la lista dei servizi disponibili visitando la sezione Servizi."
         cta: "Vedi i servizi disponibili"
+      banner: Puoi modificare la tua scelta in ogni momento da {{pageName}} > Preferenze
       oldUsersBadge: "Impostazione attuale"
       choiceLabel: "Hai scelto la"
       unavailable: "Non selezionato"
@@ -2157,6 +2197,14 @@ services:
   contextualHelpContent: !include services/services_home.md
   new: Nuovo
   home:
+    bottomSheet:
+      content:
+        servicesPreferences:
+          value: Chi può scriverti?
+          description: Scegli chi può contattarti
+        settings:
+          value: Tutte le impostazioni
+          description: Gestisci i tuoi dati e le preferenze d'uso
     featured:
       services:
         title: In primo piano
@@ -2181,7 +2229,11 @@ services:
       cancel: "Annulla"
       clear: "Cancella"
     emptyState:
-      title: "Inserisci il nome di un ente,\nnazionale o locale"
+      invalidQuery:
+        title: "Inserisci il nome di un ente,\nnazionale o locale"
+      noResults:
+        title: "Nessun risultato trovato"
+        subtitle: "Inserisci il nome di un ente nazionale o locale esistente."
   details:
     failure:
       title: "C'è un problema temporaneo, riprova"
@@ -2579,7 +2631,7 @@ bonus:
   active: Attivo
   failed: Fallito
   redeemed: Utilizzato
-  termsAndConditionFooter: 'Premendo "{{ctaText}}" dichiari di aver letto e compreso la [Guida]({{regulationLink}}) e l''[Informativa Privacy]({{tosUrl}})'
+  termsAndConditionFooter: 'Premendo "{{ctaText}}" dichiari di essere in possesso dei requisiti e di aver letto e compreso la [Guida]({{regulationLink}}) e l''[Informativa Privacy]({{tosUrl}})'
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -2601,8 +2653,11 @@ bonus:
       online: Online
       places: Luoghi
       navigationTitle: Agevolazioni
-      screenTitle: Seleziona un operatore e scopri agevolazioni e opportunità
-      merchantsAll: Tutti gli operatori
+      screenTitle: Scopri le opportunità
+      merchantsAll: Tutti i partner
+      tabs:
+        perInitiative: Per categoria
+        perMerchant: Per partner
       cta:
         filter: Filtra
       categoriesList:
@@ -2651,25 +2706,25 @@ bonus:
         discountUrl: Vai all'opportunità
         website: Vai al sito del partner
       categories:
-        all: Tutti gli operatori
         counting: e altre {{count}}
-        cultureAndEntertainment: Cultura e Tempo Libero
-        health: Salute e Benessere
-        learning: Istruzione e Formazione
+        cultureAndEntertainment: Cultura e tempo libero
+        health: Salute e benessere
+        learning: Istruzione e formazione
         sport: Sport
         home: Casa
-        telco: Telefonia e Internet
-        finance: Servizi Bancari e Finanziari
-        travel: Viaggi e Trasporti
-        mobility: Mobilità Sostenibile
-        job: Lavoro e Tirocini
+        telco: Telefonia e internet
+        finance: Servizi bancari e finanziari
+        travel: Viaggi e trasporti
+        mobility: Mobilità sostenibile
+        job: Lavoro e tirocini
       information:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
     cta:
-      activeBonus: Richiedi la Carta
+      activeBonus: Attiva Carta Giovani Nazionale
+      back: Non ora
       deactivateBonus: Disattiva Carta Giovani Nazionale
-      goToDetail: Visualizza la Carta
+      goToDetail: Usa la Carta
     detail:
       cta:
         buyers: Scopri le opportunità CGN
@@ -2685,15 +2740,15 @@ bonus:
         warning: "Attenzione! "
         revoked: "Attenzione! Questa carta è stata revocata per {{reason}}"
         expired: "Attenzione! Questa carta è scaduta il {{date}}"
-      ownership: Chi può usare la carta?
+      ownership: Chi può usare la Carta?
       status:
-        title: Carta Giovani Nazionale (CGN)
+        title: Carta Giovani Nazionale
         eyca: Carta EYCA
         eycaCircuit: Circuito EYCA
         eycaNumber: Numero carta
         eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
         eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
-        eycaBottomSheetTitle: "Numero di carta EYCA"
+        eycaBottomSheetTitle: "Cos’è il circuito EYCA?"
         eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nPuoi usare la Carta presso i partner aderenti, per usufruire delle opportunità disponibili per attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
         badge:
           active: Attiva
@@ -2717,19 +2772,19 @@ bonus:
           body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
       loading:
         caption: "Stiamo attivando la tua Carta Giovani Nazionale"
-        subCaption: "Ti preghiamo di attendere."
+        subCaption: "Attendi qualche secondo..."
       error:
         title: "Il servizio Carta Giovani Nazionale in questo momento non è disponibile."
-        body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+        body: "Ci dispiace, riprova più tardi."
       ineligible:
         title: "Purtroppo non hai i requisiti per attivare la Carta Giovani Nazionale."
         body: "La Carta Giovani Nazionali è disponibile solo per i cittadini italiani ed europei residenti in Italia, dai 18 ai 35 anni di età."
       timeout:
-        title: "Stiamo processando la tua richiesta."
+        title: "Stiamo lavorando alla tua richiesta."
         body: "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
       alreadyActive:
         title: "La tua Carta Giovani Nazionale è già attiva!"
-        body: "Puoi visualizzarne i dettagli nella sezione Portafoglio."
+        body: "Puoi trovare la tua Carta nella sezione Portafoglio."
       pending:
         title: "La tua Carta Giovani Nazionale è in fase di attivazione."
         body: "Riceverai un messaggio quando sarà attivata."
@@ -2741,6 +2796,7 @@ bonus:
         alert:
           title: "Disattiva carta"
           message: "Vuoi davvero disattivare la tua Carta Giovani Nazionale? Se confermi, non potrai più accedere alle opportunità e la carta scomparirà dal Portafoglio."
+        expired: Elimina Carta Giovani Nazionale
     otp:
       error: "Per un problema tecnico non siamo riusciti a generare un codice sconto. Ti chiediamo di riprovare."
       code:
@@ -2752,8 +2808,6 @@ bonus:
         seconds:
           one: 1 secondo
           other: "{{seconds}} secondi"
-  sv:
-    headerTitle: "Sicilia Vola"
   cdc:
     title: "Carta della cultura"
     serviceCta:
@@ -3058,10 +3112,16 @@ features:
         all: Tutti
         bonus: Iniziative welfare
         cgn: Carta Giovani Nazionale
-        itw: IT Wallet
+        itw: Documenti
         payment: Metodi di pagamento
+        other: Altro
     onboarding:
-      title: Cosa vuoi aggiungere al portafoglio?
+      title: Cosa vuoi aggiungere al Portafoglio?
+      sections:
+        itw: Documenti
+        other: Altro
+      badge:
+        active: Già presente
       options:
         cgn: Carta Giovani Nazionale
         welfare: Iniziative welfare
@@ -3094,7 +3154,7 @@ features:
           noticeHeading: Avvisi pagati di recente
           noticeBody: "Stiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
           allNoticesHeading: Tutti gli altri avvisi
-          allNoticesBody: Per ottenere le ricevute in formato PDF di operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
+          allNoticesBody: Per le operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
       multiplePayment: Pagamento multiplo
       title: Ricevute pagoPA
       button: Vedi tutte
@@ -3105,11 +3165,18 @@ features:
         failure: FALLITA
         success: ""
       receipt:
-        title: Ricevuta PagoPA
+        title: Ricevuta pagoPA
         shareButton: Salva o condividi
-        error: Impossibile scaricare la ricevuta, riprova più tardi.
-        download: Scarica ricevuta
+        error: Non è stato possibile recuperare la ricevuta.
+        download: Ottieni ricevuta
+      details:
+        totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
+        totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
     details:
+      payPal:
+        banner:
+          title: Vuoi pagare in 3 rate?
+          content: Non usare questo metodo. Durante il pagamento, seleziona "PayPal (anche in 3 rate)".
       pspAlert:
         description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
         action: "Cosa significa?"
@@ -3118,25 +3185,29 @@ features:
     errors:
       transactionCreationError: C’è un problema con i sistemi di pagamento.
   itWallet:
+    credentialName:
+      eid: Identità Digitale
+      mdl: Patente di Guida
+      dc: Carta Europea della Disabilità
+      ts: Tessera Sanitaria
+    wallet:
+      active: Attivo
+      inactive: Non attivo
     card:
       status:
         expired: Non valida
         expiring: In scadenza
         pending: In lavorazione
-      label:
-        eid: Identità Digitale
-        mdl: Patente di Guida
-        dc: Carta Europea della Disabilità
-        ts: Tessera Sanitaria
       digital: Versione digitale
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
         body: "Riprova tra qualche minuto. Se si ripete, contatta l'assistenza."
       alert:
-        title: "Vuoi interrompere l’operazione?"
-        confirm: "Sì, interrompi"
-        cancel: "No, vai indietro"
+        title: Vuoi interrompere l'operazione?
+        body: Dovrai ripetere di nuovo tutti i passaggi
+        confirm: Sì, interrompi
+        cancel: No, riprendi
       dataSource:
         multi: "Forniti da {{credentialSource}}"
         single: "Fornito da {{credentialSource}}"
@@ -3145,11 +3216,6 @@ features:
         claimLabelNotAvailable: "Etichetta attributo non presente"
         organizationName: "Nome ente non disponibile"
     verifiableCredentials:
-      type:
-        digitalCredential: "Identità digitale"
-        disabilityCard: "Tessera Europa della disabilità"
-        healthCard: "Tessera Sanitaria"
-        drivingLicense: "Licenza di guida"
       claims:
         uniqueId: "ID univoco"
         givenName: "Nome"
@@ -3163,22 +3229,25 @@ features:
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
         releasedBy: "Rilasciata da"
+        attachments: "Allegati"
         mdl:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
-      unrecognizedData:
-        title: "Non riconosci alcuni dati?"
-        body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
-        cta: "Chiedi informazioni o segnala errori"
+          restrictionConditions: "Codici"
     discovery:
-      title: Attiva IT Wallet
-      content: "###### Cos'è e come funziona? \n IT Wallet è la nuova funzionalità di IO che ti permette di aggiungere al Portafoglio la tua **Identità Digitale** e di portare sempre con te **la versione digitale dei documenti fisici** che già possiedi, come la Tessera Sanitaria e presto molti altri. \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
-      tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()
+      banner:
+        title: "Novità: Documenti su IO"
+        content: Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!
+        action: Inizia
+      title: La versione digitale dei tuoi documenti, su IO
+      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti personali**, come la Patente di guida, la Tessera Sanitaria e presto molti altri. \n Attiva la funzionalità *Documenti su IO* per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
+      tos: Per maggiori informazioni, leggi l’[informativa Privacy](https://io.italia.it/informativa-sperimentazione) e i [Termini e Condizioni d’uso](https://io.italia.it/tos-sperimentazione)
     identification:
       mode:
-        title: Con quale metodo vuoi identificarti?
-        header: Metodi disponibili
+        title: Per iniziare, attiva Documenti su IO
+        description: È un passaggio necessario solo la prima volta per garantire la sicurezza dei tuoi dati.
+        header: Scegli come identificarti
         method:
           spid:
             title: SPID
@@ -3189,17 +3258,27 @@ features:
           cieId:
             title: CieID
             subtitle: Usa credenziali e app CieID
+        privacy: Identificandoti dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione) di **Istituto Poligrafico e Zecca dello Stato**.
       nfc:
         title: Attiva l'NFC per continuare
-        description: La funzionalità NFC permette al dispositivo di leggere la tua CIE.
-        header: "Ecco come:"
+        description: Per consentire a IO di leggere la tua CIE, attiva l'NFC dalle Impostazioni del tuo dispositivo.
+        header: Come fare
         steps:
           label: Step {{value}}
-          1: Vai alle impostazioni
-          2: Cerca "NFC"
-          3: Attivalo
-        primaryAction: Vai alle impostazioni
-        secondaryAction: Ho fatto
+          1: Apri "Impostazioni"
+          2: Cerca la funzionalità "NFC"
+          3: Attiva la funzionalità
+        primaryAction: Apri impostazioni
+        secondaryAction: Continua
+      notMatchingIdentityScreen:
+        title: "Tutti i documenti saranno rimossi da IO"
+        subtitle: "Se accedi con una nuova identità, i documenti già presenti nel Portafoglio saranno rimossi e Documenti su IO disattivato."
+        action: "Continua con la nuova identità"
+      loading:
+        cieId:
+          title: Connessione con la tua app CieID in corso...
+          subtitle: Autorizza l'accesso nell'app CieID per continuare oppure annulla la connessione
+          cancel: Annulla connessione
     issuance:
       credentialAuth:
         title: "{{credentialName}}: dati necessari"
@@ -3208,59 +3287,112 @@ features:
         disclaimer:
           0: I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.
           1: I dati saranno condivisi solo per il tempo necessario al rilascio della credenziale.
-        tos:
-          0: Per maggiori informazioni, leggi
-          1: l’informativa Privacy e i Termini e Condizioni d’uso
+        tos: "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione)."
       eidPreview:
         title: "Stiamo aggiungendo i seguenti dati al Portafoglio:"
         actions:
           primary: Continua
           secondary: Annulla
       credentialPreview:
+        loading: Attendi ancora qualche secondo, senza uscire dall’app
         title: "{{credential}}: ecco l'anteprima dei tuoi dati"
         bottomSheet:
           about:
             title: "Chi è?"
-            subtitle: "È la fonte che gestisce e protegge i tuoi dati. App IO ti consente di visualizzarli perché è in grado di verificare e proteggere la tua identità grazie a importanti procedure di sicurezza."
-          data:
-            title: "Protezione dei dati"
-            subtitle: "I tuoi dati non vengono salvati su questo dispositivo, ma conservati nella Wallet Instance e potrai decidere di revocarli in qualsiasi momento."
+            subtitle: "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
       eidResult:
         success:
-          title: "IT Wallet è attivo!"
-          subtitle: È tutto pronto, ora puoi aggiungere il primo documento al Portafoglio.
+          title: È tutto pronto!
+          subtitle: Ora puoi aggiungere il primo documento al Portafoglio di IO.
           toast: Fatto!
           actions:
             continue: Aggiungi primo documento
             close: Continua più tardi
+      credentialResult:
+        toast: Fatto! Hai aggiunto {{credentialName}}
+      notMatchingIdentityError:
+        title: Identità non riconosciuta
+        body: Non puoi attivare Documenti con un’identità diversa da quella che usi per accedere a IO. Verifica le credenziali di accesso e riprova.
+        primaryAction: Ho capito
+        secondaryAction: Segnala un problema
+      genericError:
+        title: Si è verificato un errore imprevisto
+        body: La tua richiesta verso l'ente che emette il documento non è andata a buon fine.
+        primaryAction: Riprova
+        secondaryAction: Chiudi
+      notEntitledCredentialError: 
+        title: Non è possibile aggiungere il documento
+        body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
+        primaryAction: Ho capito
+      asyncCredentialError:
+        title: La tua richiesta è stata presa in carico
+        body: Riceverai un messaggio in app con l'esito della tua richiesta appena sarà disponibile.
+        primaryAction: Ho capito
     unsupportedDevice:
-      text: A partire dal 02.07.2024 il tuo dispositivo potrebbe non essere più compatibile con IO.
-      moreInfo: Scopri perchè
+      text: Starting from 02.07.2024 your device may no longer be compatible with IO.
+      moreInfo: More info
+      error:
+        title: Il tuo dispositivo non supporta Documenti su IO
+        body: Il tuo dispositivo non ha i requisiti di sicurezza necessari per questa funzionalità.
+        primaryAction: Chiudi
+        secondaryAction: Scopri di più
     presentation:
+      alerts:
+        mdl:
+          content: "In questa fase, la versione digitale della Patente non ha lo stesso valore del documento fisico: dovrai presentarla insieme a un documento di identità valido."
+          action: Scopri di più
+        ehc:
+          content: "Questo documento è valido solo in Italia. La copia ufficiale del documento si trova nel PDF."
+        expired:
+          content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
+          action: Aggiorna il documento
+        expiring:
+          content: Mancano {{days}} giorni alla scadenza del documento.
+      bottomSheets:
+        mdl:
+          title: "Patente: contesti di verifica"
+          content: "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Carta di Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valore legale del documento fisico.**"
       credentialDetails:
+        flipCard: "Mostra retro"
         personalDataTitle: "Dati personali"
         documentDataTitle: "Dati documento"
         lastUpdated: "Dati aggiornati al {{lastUpdateTime}}"
+        boolClaim:
+          true: Sì
+          false: No
         hiddenClaim: "Nascosto"
+        fiscalCode: Codice fiscale
         status:
           valid: Valida
-          expired: Scaduta
+          expired: Non valida
+          expiring: In scadenza
         actions:
           removeFromWallet: "Rimuovi dal Portafoglio"
-          requestAssistance: "Qualcosa non torna? Contatta {{authSource}}"
+          requestAssistance: "Qualcosa non torna?"
           showClaimValues: "Mostra gli attributi del documento"
           hideClaimValues: "Nascondi gli attributi del documento"
+        dialogs:
+          remove:
+            title: Vuoi rimuovere il documento dal Portafoglio?
+            content: Se cambi idea, potrai riaggiungerlo in seguito.
+            confirm: Sì, rimuovi
+        toast:
+          removed: Fatto! Hai rimosso {{credentialName}}
+      ctas:
+        openPdf: "Apri documento PDF"
+        shareButton: Salva o condividi
+        fiscalCode: Il tuo Codice Fiscale
+      trustmark:
+        cta: Mostra certificato di autenticità
+        title: Certificato di autenticità
+        usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
+        certifiedLabel: Questo documento è certificato dall'ente emittente.
   trialSystem:
     toast:
       subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione
-webView:
-  error:
-    missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
-    missingToken: Non hai l'autorizzazione per avviare questo flusso
-    convertMessage: Non è stato possibile decodificare il messaggio inviato all'app
 support:
   ticketList:
     noTicket:
@@ -3349,7 +3481,7 @@ idpay:
       bodyCta: "Come funziona?"
       banner:
         header: E se lo dimentichi?
-        body: Puoi reimpostare il codice in ogni momento da Profilo > Sicurezza.
+        body: Puoi reimpostare il codice in ogni momento da {{pageName}} > Sicurezza.
       title: Paga con la tua carta d'identità elettronica
       description: Spendi il denaro delle iniziative a te previste usando la tua carta d’identità elettronica.
       buttons:
@@ -3452,7 +3584,7 @@ idpay:
             GENERIC: In questo momento non è possibile generare un codice
         successScreen:
           header: Ora puoi utilizzare la tua carta d’identità per pagare!
-          body: Se non ricordi il codice, puoi reimpostarlo in ogni momento dalla sezione Profilo > Sicurezza.
+          body: Se non ricordi il codice, puoi reimpostarlo in ogni momento da {{pageName}} > Sicurezza.
           cta: Ok, chiudi
     beneficiaryDetails:
       infobox:
@@ -3531,7 +3663,7 @@ idpay:
         title: "Come funziona?"
         featureOne: "Puoi pagare presso tutti gli esercenti convenzionati: ti basterà appoggiare sul POS la tua carta d’identità elettronica."
         featureTwo: "Per autorizzare il pagamento, inserisci sul POS il tuo codice di sicurezza. Lo crei in app una volta sola e vale per qualsiasi iniziativa welfare compatibile."
-        featureThree: "Se dimentichi il codice, puoi generarne un altro in ogni momento in Profilo > Sicurezza."
+        featureThree: "Se dimentichi il codice, puoi generarne un altro in ogni momento da {{pageName}} > Sicurezza."
   onboarding:
     success:
       pleaseWait: Un attimo di pazienza...
@@ -3623,6 +3755,7 @@ idpay:
       INSTRUMENTS_LIST_LOAD_FAILURE: "Errore nel caricamento della lista strumenti"
       INSTRUMENT_ENROLL_FAILURE: "Errore durante l'aggiunta del metodo di pagamento"
       INSTRUMENT_DELETE_FAILURE: "Errore durante la rimozione del metodo di pagamento"
+      SESSION_EXPIRED: "C'è stato un problema, riprova"
     headerTitle: "Configura l'iniziativa"
     intro:
       title: "Ci siamo quasi"
@@ -3686,18 +3819,21 @@ idpay:
         bodyLink: Scopri di più
         modal:
           title: Cosa significa?
-          content: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPer farlo, visita la sezione Profilo."
+          legacyContent: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPer farlo, visita la sezione Profilo."
+          content: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPuoi farlo dalle impostazioni dell'app."
           button: Ok, ho capito
       onboarding:
         header: Qual è il tuo IBAN?
         body: Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del
         bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47
         nameAssignInput: Assegna un nome
-        bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+        legacyBottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+        bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento dalle impostazioni dell'app
       enrollment:
         header: Scegli quale IBAN associare all’iniziativa
         subTitle: Associa un IBAN salvato nel tuo profilo per poter ricevere i rimborsi legati all’iniziativa.
-        footer: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+        legacyFooter: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+        footer: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento dalle impostazioni dell'app
       button:
         addNew: Aggiungi nuovo
       updateToast: IBAN associato correttamente
@@ -3717,7 +3853,7 @@ idpay:
         content: L’Ente potrà conservarli secondo i termini indicati nell’Informativa Privacy
       4:
         title: Metodi di pagamento e IBAN rimangono in app per eventuali altre iniziative
-        content: Puoi rimuovere in ogni momento l’IBAN e i tuoi metodi di pagamento visitando le sezioni Profilo e Portafoglio.
+        content: Puoi rimuovere in ogni momento l’IBAN e i tuoi metodi di pagamento visitando le sezioni Impostazioni e Portafoglio.
     button:
       continue: Rimuovi
     modal:
@@ -3892,16 +4028,48 @@ permissionRequest:
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
 FIMS:
+  updateApp:
+    header: "Aggiorna l’app per proseguire"
+    body: "Per continuare a utilizzare tutte le funzionalità, scarica la nuova versione di IO dallo store."
+  history:
+    errorStates:
+      dataUnavailable: "Dati non disponibili"
+      ko:
+        title: "C’è un problema temporaneo"
+        body: "Il caricamento della lista degli accessi non è riuscito"
+      toast: C’è un problema nel caricamento della lista. Riprova
+    emptyBody: "Non hai ancora effettuato alcun accesso a servizi di terze parti"
+    exportData:
+      alerts:
+        areYouSure: "Vuoi davvero esportare una copia di tutti gli accessi?"
+        alreadyExporting:
+          title: "Abbiamo già preso in carico una richiesta di esportazione."
+          body: "Al termine dell’elaborazione, riceverai una email con tutte le informazioni dello storico accessi."
+      CTA: "Richiedi una copia via email"
+      successToast: "Fatto! Controlla la tua casella di posta."
+      errorToast: "C’è stato un problema nell’invio della richiesta. Riprova"
+    profileCTA:
+      title: Accessi a servizi di terze parti
+      subTitle: Rivedi gli accessi effettuati a servizi di terze parti tramite IO
+    historyScreen:
+      header: Accessi a servizi di terze parti
+      body: Qui puoi vedere tutti gli accessi a servizi esterni che hai fatto tramite IO e richiederne una copia via email
   loadingScreen:
     abort:
-      title: "Operazione annullata"
+      title: "I dati non sono stati condivisi"
     consents:
       title: "Attendi qualche secondo"
-    in-app-browser:
+    idle:
+      title: "Attendi qualche secondo"
+    fastLogin_forced_restart:
+      title: "Attendi qualche secondo"
+    in-app-browser-loading:
       title: "Ti stiamo indirizzando al servizio"
-      subtitle: "Attendi qualche secondo"
+    subtitle: "Attendi qualche secondo"
   consentsScreen:
-    title: "Consenti la condivisione dei tuoi dati"
+    errorStates:
+      tempErrorBody: "C’è un problema temporaneo, riprova più tardi"
+    title: "Per accedere al servizio, consenti la condivisione dei seguenti dati"
     subtitle: "Autorizza IO a trasmettere a "
     subtitle2: " i dati necessari per la tua autenticazione su "
     requiredData: "Dati richiesti"
@@ -3909,10 +4077,6 @@ FIMS:
     privacyCta: "l’Informativa sulla Privacy "
     bottomSheet:
       title: "Accedi a servizi di terze parti tramite IO"
-      body: "Per consentirti di accedere al servizio esterno senza autenticarti
-        nuovamente con SPID o CIE, l’app IO condivide un set di dati con l’ente
-        che lo eroga."
-      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le
-        finalità indicate dall’ente e consultabili nell’ "
-      bodyPrivacy: "Informativa sulla
-        Privacy."
+      body: "Per consentirti di accedere al servizio esterno senza autenticarti nuovamente con SPID o CIE, l’app IO condivide un set di dati con l’ente che lo eroga."
+      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le finalità indicate dall’ente e consultabili nell’ "
+      bodyPrivacy: "Informativa sulla Privacy."

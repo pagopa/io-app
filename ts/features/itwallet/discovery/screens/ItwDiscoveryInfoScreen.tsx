@@ -5,14 +5,22 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import { AnimatedImage } from "../../../../components/AnimatedImage";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
+import { selectIsLoading } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import {
+  trackOpenItwTos,
+  trackItWalletActivationStart,
+  trackItWalletIntroScreen
+} from "../../analytics";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -21,7 +29,15 @@ import { ItwEidIssuanceMachineContext } from "../../machine/provider";
  * with a primary and secondary action.
  */
 const ItwDiscoveryInfoScreen = () => {
+  useFocusEffect(trackItWalletIntroScreen);
+
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+
+  const handleContinuePress = () => {
+    trackItWalletActivationStart();
+    machineRef.send({ type: "accept-tos" });
+  };
 
   useOnFirstRender(() => {
     machineRef.send({ type: "start" });
@@ -35,9 +51,8 @@ const ItwDiscoveryInfoScreen = () => {
 
   return (
     <ForceScrollDownView threshold={50}>
-      <Image
+      <AnimatedImage
         source={require("../../../../../img/features/itWallet/discovery/itw_hero.png")}
-        accessibilityIgnoresInvertColors={true}
         style={styles.hero}
       />
       <VSpacer size={24} />
@@ -47,7 +62,10 @@ const ItwDiscoveryInfoScreen = () => {
         <ItwMarkdown>
           {I18n.t("features.itWallet.discovery.content")}
         </ItwMarkdown>
-        <ItwMarkdown styles={{ body: { fontSize: 14 } }}>
+        <ItwMarkdown
+          styles={{ body: { fontSize: 14 } }}
+          onLinkOpen={trackOpenItwTos}
+        >
           {I18n.t("features.itWallet.discovery.tos")}
         </ItwMarkdown>
       </ContentWrapper>
@@ -56,9 +74,10 @@ const ItwDiscoveryInfoScreen = () => {
         actions={{
           type: "SingleButton",
           primary: {
+            loading: isLoading,
             label: I18n.t("global.buttons.continue"),
             accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: () => machineRef.send({ type: "accept-tos" })
+            onPress: handleContinuePress
           }
         }}
       />

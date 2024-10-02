@@ -8,9 +8,12 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 
+export const SkeletonHeight = 95 + StyleSheet.hairlineWidth;
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+    height: SkeletonHeight,
     padding: 16
   },
   serviceLogo: {
@@ -21,17 +24,15 @@ const styles = StyleSheet.create({
     marginLeft: 8
   },
   textRow1Container: {
-    marginTop: 25
+    marginTop: 13
   },
-  textRow2Container: { marginTop: 13, marginBottom: 5 },
-  textRow3Container: { marginTop: 13 },
+  textRow2Container: { marginTop: 15, marginBottom: 5 },
   timeContainer: {
-    marginLeft: 8,
-    width: 35
+    marginLeft: 12,
+    width: 30
   },
   titleContainer: {
-    flexDirection: "row",
-    paddingTop: 3
+    flexDirection: "row"
   },
   titleRow: {
     ...IOStyles.flex
@@ -92,15 +93,6 @@ export const MessageListItemSkeleton = ({
           radius={IOVisualCostants.avatarRadiusSizeSmall}
           height={8}
           width={"100%"}
-        />
-      </View>
-      <View style={styles.textRow3Container}>
-        <Placeholder.Box
-          animate={"fade"}
-          color={IOColors["grey-100"]}
-          radius={IOVisualCostants.avatarRadiusSizeSmall}
-          height={8}
-          width={"50%"}
         />
       </View>
     </View>

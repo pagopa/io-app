@@ -1,9 +1,6 @@
 import { Locales } from "../../../locales/locales";
 import { setLocale } from "../../i18n";
-import {
-  formatFiscalCodeBirthdayAsShortFormat,
-  formatFiscalCodeBirthdayAsAccessibilityReadableFormat
-} from "../dates";
+import { formatFiscalCodeBirthdayAsShortFormat } from "../dates";
 
 // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 describe("Check fiscal code date", () => {
@@ -39,10 +36,5 @@ const testFiscalCodeByLocale = (locale: Locales, timeZone: string) => {
   expect(timezone).toBe(timeZone);
   const testDate = new Date("1977-05-22T00:00:00.000Z");
   const checkDate = formatFiscalCodeBirthdayAsShortFormat(testDate!);
-  const checkDateForAccessibility =
-    formatFiscalCodeBirthdayAsAccessibilityReadableFormat(testDate!);
-  const dayName = locale === "it" ? "domenica" : "Sunday";
-  const monthName = locale === "it" ? "maggio" : "May";
-  expect(`${dayName} 22 ${monthName} 1977`).toBe(checkDateForAccessibility);
   expect("22/05/1977").toBe(checkDate);
 };

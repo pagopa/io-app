@@ -8,36 +8,40 @@ import {
   accessibilityLabelForMessageItem,
   getInitialReloadAllMessagesActionIfNeeded,
   getLoadNextPageMessagesActionIfAllowed,
-  getLoadServiceDetailsActionIfNeeded,
+  getLoadPreviousPageMessagesActionIfAllowed,
   getMessagesViewPagerInitialPageIndex,
   getReloadAllMessagesActionForRefreshIfAllowed,
   messageListCategoryToViewPageIndex,
-  messageListItemHeight,
   messageViewPageIndexToListCategory,
-  nextPageLoadingWaitMillisecondsGenerator
+  nextPageLoadingWaitMillisecondsGenerator,
+  refreshIntervalMillisecondsGenerator
 } from "../homeUtils";
-import { pageSize } from "../../../../../config";
+import { maximumItemsFromAPI, pageSize } from "../../../../../config";
 import { Action } from "../../../../../store/actions/types";
 import {
   loadNextPageMessages,
+  loadPreviousPageMessages,
   reloadAllMessages
 } from "../../../store/actions";
 import { UIMessage } from "../../../types";
 import { format } from "../../../../../utils/dates";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { loadServiceDetail } from "../../../../services/details/store/actions/details";
 import {
   isLoadingOrUpdating,
   isSomeOrSomeError,
+  isStrictNone,
   isStrictSome,
   isStrictSomeError
 } from "../../../../../utils/pot";
-import { INITIAL_STATE } from "../../../store/reducers/archiving";
+import {
+  ArchivingStatus,
+  INITIAL_STATE
+} from "../../../store/reducers/archiving";
 
 const createGlobalState = (
   archiveData: allPaginated.MessagePagePot,
   inboxData: allPaginated.MessagePagePot,
-  shownCategory: MessageListCategory
+  shownCategory: MessageListCategory,
+  archivingStatus: ArchivingStatus = "disabled"
 ) =>
   ({
     entities: {
@@ -51,7 +55,10 @@ const createGlobalState = (
           },
           shownCategory
         },
-        archiving: INITIAL_STATE
+        archiving: {
+          ...INITIAL_STATE,
+          status: archivingStatus
+        }
       }
     }
   } as GlobalState);
@@ -69,179 +76,88 @@ const checkReturnedAction = (action?: Action, getArchived: boolean = false) => {
 };
 
 describe("getInitialReloadAllMessagesActionIfNeeded", () => {
-  it("should return reloadAllMessages.request when showing inbox with pot.none inbox", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.none,
-      "INBOX"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    checkReturnedAction(reloadAllMessagesRequest);
-  });
-  it("should return undefined when showing inbox with pot.noneLoading inbox", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.noneLoading,
-      "INBOX"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing inbox with pot.noneUpdating inbox", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.noneUpdating({} as allPaginated.MessagePage),
-      "INBOX"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing inbox with pot.noneError inbox", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.noneError({ reason: "", time: new Date() }),
-      "INBOX"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing inbox with pot.some inbox", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.some({} as allPaginated.MessagePage),
-      "INBOX"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing inbox with pot.someLoading inbox", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.someLoading({} as allPaginated.MessagePage),
-      "INBOX"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing inbox with pot.someUpdating inbox", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.someUpdating(
-        {} as allPaginated.MessagePage,
-        {} as allPaginated.MessagePage
-      ),
-      "INBOX"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing inbox with pot.someError inbox", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.someError({} as allPaginated.MessagePage, {
-        reason: "",
-        time: new Date()
-      }),
-      "INBOX"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
+  const shownCategories: ReadonlyArray<MessageListCategory> = [
+    "ARCHIVE",
+    "INBOX"
+  ];
+  const archiveStatuses: ReadonlyArray<ArchivingStatus> = [
+    "disabled",
+    "enabled",
+    "processing"
+  ];
+  const messagePage = {} as allPaginated.MessagePage;
+  const anError = { reason: "", time: new Date() } as allPaginated.MessageError;
+  const potValues = [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating(messagePage),
+    pot.noneError(anError),
+    pot.some(messagePage),
+    pot.someLoading(messagePage),
+    pot.someUpdating(messagePage, messagePage),
+    pot.someError(messagePage, anError)
+  ];
+  const outputActionShouldBeUndefined = (
+    archivingStatus: ArchivingStatus,
+    currentCategoryPot: pot.Pot<
+      allPaginated.MessagePage,
+      allPaginated.MessageError
+    >,
+    oppositeCategoryPot: pot.Pot<
+      allPaginated.MessagePage,
+      allPaginated.MessageError
+    >
+  ) =>
+    archivingStatus === "processing" ||
+    isLoadingOrUpdating(oppositeCategoryPot) ||
+    !isStrictNone(currentCategoryPot);
 
-  it("should return reloadAllMessages.request when showing archive with pot.none archive", () => {
-    const globalState = createGlobalState(
-      pot.none,
-      pot.some({} as allPaginated.MessagePage),
-      "ARCHIVE"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    checkReturnedAction(reloadAllMessagesRequest, true);
-  });
-  it("should return undefined when showing archive with pot.noneLoading archive", () => {
-    const globalState = createGlobalState(
-      pot.noneLoading,
-      pot.some({} as allPaginated.MessagePage),
-      "ARCHIVE"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing archive with pot.noneUpdating archive", () => {
-    const globalState = createGlobalState(
-      pot.noneUpdating({} as allPaginated.MessagePage),
-      pot.some({} as allPaginated.MessagePage),
-      "ARCHIVE"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing archive with pot.noneError archive", () => {
-    const globalState = createGlobalState(
-      pot.noneError({ reason: "", time: new Date() }),
-      pot.some({} as allPaginated.MessagePage),
-      "ARCHIVE"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing archive with pot.some archive", () => {
-    const globalState = createGlobalState(
-      pot.some({} as allPaginated.MessagePage),
-      pot.some({} as allPaginated.MessagePage),
-      "ARCHIVE"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing archive with pot.someLoading archive", () => {
-    const globalState = createGlobalState(
-      pot.someLoading({} as allPaginated.MessagePage),
-      pot.some({} as allPaginated.MessagePage),
-      "ARCHIVE"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing archive with pot.someUpdating archive", () => {
-    const globalState = createGlobalState(
-      pot.someUpdating(
-        {} as allPaginated.MessagePage,
-        {} as allPaginated.MessagePage
-      ),
-      pot.some({} as allPaginated.MessagePage),
-      "ARCHIVE"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined when showing archive with pot.someError archive", () => {
-    const globalState = createGlobalState(
-      pot.someError({} as allPaginated.MessagePage, {
-        reason: "",
-        time: new Date()
-      }),
-      pot.some({} as allPaginated.MessagePage),
-      "ARCHIVE"
-    );
-    const reloadAllMessagesRequest =
-      getInitialReloadAllMessagesActionIfNeeded(globalState);
-    expect(reloadAllMessagesRequest).toBeUndefined();
-  });
+  // eslint-disable-next-line sonarjs/cognitive-complexity
+  shownCategories.forEach(shownCategory =>
+    archiveStatuses.forEach(archiveStatus =>
+      potValues.forEach(inboxPot =>
+        potValues.forEach(archivePot => {
+          const currentCategoryPot =
+            shownCategory === "ARCHIVE" ? archivePot : inboxPot;
+          const oppositeCategoryPot =
+            shownCategory === "INBOX" ? archivePot : inboxPot;
+          const reloadAllMessagesActionShouldBeDefined =
+            !outputActionShouldBeUndefined(
+              archiveStatus,
+              currentCategoryPot,
+              oppositeCategoryPot
+            );
+          it(`Should return ${
+            reloadAllMessagesActionShouldBeDefined
+              ? "reloadAllMessages.request"
+              : "undefined"
+          } when showing ${shownCategory}, inbox status is ${
+            inboxPot.kind
+          }, archive status is ${
+            archivePot.kind
+          }, archiving mode is ${archiveStatus}`, () => {
+            const globalState = createGlobalState(
+              archivePot,
+              inboxPot,
+              shownCategory,
+              archiveStatus
+            );
+            const reloadAllMessagesRequest =
+              getInitialReloadAllMessagesActionIfNeeded(globalState);
+
+            if (reloadAllMessagesActionShouldBeDefined) {
+              checkReturnedAction(
+                reloadAllMessagesRequest,
+                shownCategory === "ARCHIVE"
+              );
+            } else {
+              expect(reloadAllMessagesRequest).toBeUndefined();
+            }
+          });
+        })
+      )
+    )
+  );
 });
 
 describe("getMessagesViewPagerInitialPageIndex", () => {
@@ -293,7 +209,7 @@ describe("accessibilityLabelForMessageItem", () => {
     const serviceName = "Service Name";
     const title = "Message Title";
     const createdAt = new Date(1990, 0, 2, 1, 1, 1);
-    const expectedOutput = `Unread message, received by ${organizationName}, ${serviceName}. ${title}. \n    received on ${format(
+    const expectedOutput = `Unread message , received by ${organizationName}, ${serviceName}. ${title}. \n    received on ${format(
       createdAt,
       "MMMM Do YYYY"
     )}\n  . `;
@@ -313,7 +229,7 @@ describe("accessibilityLabelForMessageItem", () => {
     const title = "Message Title";
     const createdAt = new Date();
     createdAt.setTime(createdAt.getTime() - 60 * 60 * 1000);
-    const expectedOutput = `Unread message, received by ${organizationName}, ${serviceName}. ${title}. received at ${format(
+    const expectedOutput = `Unread message , received by ${organizationName}, ${serviceName}. ${title}. received at ${format(
       createdAt,
       "H:mm"
     )}. `;
@@ -332,7 +248,7 @@ describe("accessibilityLabelForMessageItem", () => {
     const serviceName = "Service Name";
     const title = "Message Title";
     const createdAt = new Date(1990, 0, 2, 1, 1, 1);
-    const expectedOutput = `Message, received by ${organizationName}, ${serviceName}. ${title}. \n    received on ${format(
+    const expectedOutput = `Message , received by ${organizationName}, ${serviceName}. ${title}. \n    received on ${format(
       createdAt,
       "MMMM Do YYYY"
     )}\n  . `;
@@ -352,7 +268,7 @@ describe("accessibilityLabelForMessageItem", () => {
     const title = "Message Title";
     const createdAt = new Date();
     createdAt.setTime(createdAt.getTime() - 60 * 60 * 1000);
-    const expectedOutput = `Message, received by ${organizationName}, ${serviceName}. ${title}. received at ${format(
+    const expectedOutput = `Message , received by ${organizationName}, ${serviceName}. ${title}. received at ${format(
       createdAt,
       "H:mm"
     )}. `;
@@ -365,222 +281,6 @@ describe("accessibilityLabelForMessageItem", () => {
     } as UIMessage;
     const accessibilityLabel = accessibilityLabelForMessageItem(message);
     expect(accessibilityLabel).toStrictEqual(expectedOutput);
-  });
-});
-
-describe("messageListItemHeight", () => {
-  it("should return 130", () => {
-    const height = messageListItemHeight();
-    expect(height).toBe(130);
-  });
-});
-
-describe("getLoadServiceDetailsActionIfNeeded", () => {
-  it("should return undefined, defined organization fiscal code", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.none
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const organizationFiscalCode = "11359591002";
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      organizationFiscalCode
-    );
-    expect(loadServiceDetailRequestAction).toBeUndefined();
-  });
-  it("should return undefined, undefined organization fiscal code, service pot.noneLoading", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.noneLoading
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toBeUndefined();
-  });
-  it("should return undefined, undefined organization fiscal code, service pot.someLoading", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.someLoading({})
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toBeUndefined();
-  });
-  it("should return loadServiceDetail.request, undefined organization fiscal code, service unmatching", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {}
-          }
-        }
-      }
-    } as GlobalState;
-    const expectedOutput = loadServiceDetail.request(serviceId);
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toStrictEqual(expectedOutput);
-  });
-  it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.none", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.none
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const expectedOutput = loadServiceDetail.request(serviceId);
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toStrictEqual(expectedOutput);
-  });
-  it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.noneUpdating", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.noneUpdating({})
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const expectedOutput = loadServiceDetail.request(serviceId);
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toStrictEqual(expectedOutput);
-  });
-  it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.noneError", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.noneError(new Error())
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const expectedOutput = loadServiceDetail.request(serviceId);
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toStrictEqual(expectedOutput);
-  });
-  it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.some", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.some({})
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const expectedOutput = loadServiceDetail.request(serviceId);
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toStrictEqual(expectedOutput);
-  });
-  it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.someUpdating", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.someUpdating({}, {})
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const expectedOutput = loadServiceDetail.request(serviceId);
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toStrictEqual(expectedOutput);
-  });
-  it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.someError", () => {
-    const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
-    const globalState = {
-      features: {
-        services: {
-          details: {
-            byId: {
-              [serviceId]: pot.someError({}, new Error())
-            }
-          }
-        }
-      }
-    } as GlobalState;
-    const expectedOutput = loadServiceDetail.request(serviceId);
-    const loadServiceDetailRequestAction = getLoadServiceDetailsActionIfNeeded(
-      globalState,
-      serviceId,
-      undefined
-    );
-    expect(loadServiceDetailRequestAction).toStrictEqual(expectedOutput);
   });
 });
 
@@ -620,11 +320,15 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
   ) => {
     // This method is the human-unreadable logic of the `getLoadNextPageMessagesActionIfAllowed` method
     // Check that one instead to filter out the case where the loadNextPageMessages.request action is returned.
-    const allPaginated = state.entities.messages.allPaginated;
+    const allPaginatedInstance = state.entities.messages.allPaginated;
     const selectedCollection =
-      category === "ARCHIVE" ? allPaginated.archive : allPaginated.inbox;
+      category === "ARCHIVE"
+        ? allPaginatedInstance.archive
+        : allPaginatedInstance.inbox;
     const oppositeCollection =
-      category === "ARCHIVE" ? allPaginated.inbox : allPaginated.archive;
+      category === "ARCHIVE"
+        ? allPaginatedInstance.inbox
+        : allPaginatedInstance.archive;
     const selectedCollectionNextValue = isSomeOrSomeError(
       selectedCollection.data
     )
@@ -647,7 +351,8 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
       ? loadNextPageMessages.request({
           pageSize,
           cursor: selectedCollectionNextValue,
-          filter: { getArchived: category === "ARCHIVE" }
+          filter: { getArchived: category === "ARCHIVE" },
+          fromUserAction: true
         })
       : undefined;
   };
@@ -729,6 +434,13 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
   );
 });
 
+describe("refreshIntervalMillisecondsGenerator", () => {
+  it("should return 60000 milliseconds", () => {
+    const refreshInterval = refreshIntervalMillisecondsGenerator();
+    expect(refreshInterval).toBe(60000);
+  });
+});
+
 describe("getReloadAllMessagesActionForRefreshIfAllowed", () => {
   const pots = [
     pot.none,
@@ -748,7 +460,8 @@ describe("getReloadAllMessagesActionForRefreshIfAllowed", () => {
           !isLoadingOrUpdating(inboxPot) && !isLoadingOrUpdating(archivePot)
             ? reloadAllMessages.request({
                 pageSize,
-                filter: { getArchived: category === "ARCHIVE" }
+                filter: { getArchived: category === "ARCHIVE" },
+                fromUserAction: true
               })
             : undefined;
         it(`should return '${
@@ -776,6 +489,132 @@ describe("getReloadAllMessagesActionForRefreshIfAllowed", () => {
           expect(reloadAllMessagesAction).toStrictEqual(expectedOutput);
         });
       })
+    )
+  );
+});
+
+describe("getLoadNextPreviousPageMessagesActionIfAllowed", () => {
+  const generateMessagePots = (previousPageMessageId?: string) => [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating({ page: [], previous: previousPageMessageId }),
+    pot.noneError(""),
+    pot.some({ page: [], previous: previousPageMessageId }),
+    pot.someLoading({ page: [], previous: previousPageMessageId }),
+    pot.someUpdating(
+      { page: [], previous: previousPageMessageId },
+      { page: [], previous: previousPageMessageId }
+    ),
+    pot.someError({ page: [], previous: previousPageMessageId }, "")
+  ];
+  const lastUpdateTimes = [
+    new Date(new Date().getTime() - refreshIntervalMillisecondsGenerator() - 1), // Can update
+    new Date(new Date().getTime() + 60 * 60 * 1000) // Cannot update
+  ];
+  const expectedOutputGenerator = (
+    shownCategoryMessagePot: pot.Pot<{ previous?: string }, unknown>,
+    previousPageMessageId: string | undefined,
+    dateIndex: number,
+    archivingStatus: string,
+    otherCategoryMessagePot: pot.Pot<unknown, unknown>,
+    shownCategory: string
+  ) => {
+    const shownCategoryMessageOption = pot.toOption(shownCategoryMessagePot);
+    if (
+      !previousPageMessageId ||
+      dateIndex === 1 ||
+      O.isNone(shownCategoryMessageOption) ||
+      !shownCategoryMessageOption.value.previous ||
+      archivingStatus === "processing" ||
+      pot.isLoading(shownCategoryMessagePot) ||
+      pot.isUpdating(shownCategoryMessagePot) ||
+      pot.isLoading(otherCategoryMessagePot) ||
+      pot.isUpdating(otherCategoryMessagePot)
+    ) {
+      return undefined;
+    }
+    return loadPreviousPageMessages.request({
+      pageSize: maximumItemsFromAPI,
+      cursor: previousPageMessageId,
+      filter: {
+        getArchived: shownCategory === "ARCHIVE"
+      },
+      fromUserAction: false
+    });
+  };
+  // eslint-disable-next-line sonarjs/cognitive-complexity
+  ["INBOX", "ARCHIVE"].forEach(shownCategory =>
+    [undefined, "01J2C0Z8H1XFTNRHRJHB20QZHG"].forEach(previousPageMessageId =>
+      generateMessagePots(previousPageMessageId).forEach(
+        shownCategoryMessagePot =>
+          generateMessagePots().forEach(otherCategoryMessagePot =>
+            ["disabled", "enabled", "processing"].forEach(archivingStatus =>
+              lastUpdateTimes.forEach((lastUpdateTime, dateIndex) => {
+                const expectedOutput = expectedOutputGenerator(
+                  shownCategoryMessagePot,
+                  previousPageMessageId,
+                  dateIndex,
+                  archivingStatus,
+                  otherCategoryMessagePot,
+                  shownCategory
+                );
+                it(`should return '${
+                  expectedOutput
+                    ? "loadPreviousPageMessages.request"
+                    : "undefined"
+                }' for category '${shownCategory}' with pot '${
+                  shownCategoryMessagePot.kind
+                }' previous Id '${previousPageMessageId}' date that '${
+                  dateIndex === 0 ? "allows" : "denies"
+                }' update, while other category is '${
+                  otherCategoryMessagePot.kind
+                }' and archving status is '${archivingStatus}'`, () => {
+                  const state = {
+                    entities: {
+                      messages: {
+                        allPaginated: {
+                          archive:
+                            shownCategory === "ARCHIVE"
+                              ? {
+                                  data: shownCategoryMessagePot,
+                                  lastRequest: O.none,
+                                  lastUpdateTime
+                                }
+                              : {
+                                  data: otherCategoryMessagePot,
+                                  lastRequest: O.none,
+                                  lastUpdateTime: new Date(0)
+                                },
+                          inbox:
+                            shownCategory === "INBOX"
+                              ? {
+                                  data: shownCategoryMessagePot,
+                                  lastRequest: O.none,
+                                  lastUpdateTime
+                                }
+                              : {
+                                  data: otherCategoryMessagePot,
+                                  lastRequest: O.none,
+                                  lastUpdateTime: new Date(0)
+                                },
+                          shownCategory
+                        },
+                        archiving: {
+                          status: archivingStatus
+                        }
+                      }
+                    }
+                  } as GlobalState;
+                  const loadPreviousPageMessagesAction =
+                    getLoadPreviousPageMessagesActionIfAllowed(state);
+                  expect(loadPreviousPageMessagesAction).toStrictEqual(
+                    expectedOutput
+                  );
+                });
+              })
+            )
+          )
+      )
     )
   );
 });

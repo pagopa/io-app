@@ -3,10 +3,11 @@ import {
   IOVisualCostants,
   ListItemNav,
   VSpacer,
+  VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { SectionList, StatusBar, View, useColorScheme } from "react-native";
+import { SectionList, StatusBar, useColorScheme } from "react-native";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -30,6 +31,9 @@ const DATA_ROUTES_COMPONENTS: RoutesProps = Object.values(
 );
 const DATA_ROUTES_HEADERS: RoutesProps = Object.values(
   DESIGN_SYSTEM_ROUTES.HEADERS
+);
+const DATA_ROUTES_EXPERIMENTAL_LAB: RoutesProps = Object.values(
+  DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB
 );
 const DATA_ROUTES_DEBUG: RoutesProps = Object.values(
   DESIGN_SYSTEM_ROUTES.DEBUG
@@ -63,6 +67,10 @@ const DESIGN_SYSTEM_SECTION_DATA: Array<SectionDataProps> = [
   {
     title: "Screens",
     data: DATA_ROUTES_SCREENS
+  },
+  {
+    title: "Experimental lab",
+    data: DATA_ROUTES_EXPERIMENTAL_LAB
   },
   {
     title: "Debug",
@@ -100,14 +108,14 @@ export const DesignSystem = () => {
   }: {
     section: { title: string; description?: string };
   }) => (
-    <View style={{ marginBottom: 8 }}>
+    <VStack space={4}>
       <H1 color={theme["textHeading-default"]}>{title}</H1>
       {description && (
         <LabelSmall weight={"Regular"} color={theme["textBody-tertiary"]}>
           {description}
         </LabelSmall>
       )}
-    </View>
+    </VStack>
   );
 
   const renderDSSectionFooter = ({ section }: { section: SectionDataProps }) =>
@@ -115,7 +123,7 @@ export const DesignSystem = () => {
     we already apply the `screenEndMargin` */
     DESIGN_SYSTEM_SECTION_DATA.indexOf(section) !==
     DESIGN_SYSTEM_SECTION_DATA.length - 1 ? (
-      <VSpacer size={40} />
+      <VSpacer size={32} />
     ) : null;
 
   return (
@@ -136,6 +144,7 @@ export const DesignSystem = () => {
         ]}
         renderSectionHeader={renderDSSection}
         renderSectionFooter={renderDSSectionFooter}
+        SectionSeparatorComponent={() => <VSpacer size={8} />}
         renderItem={renderDSNavItem}
         ItemSeparatorComponent={() => <Divider />}
         sections={DESIGN_SYSTEM_SECTION_DATA}

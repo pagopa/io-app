@@ -6,17 +6,19 @@ exports[`Test LinkedText component should render a LinkedText component with pro
   color="bluegreyDark"
   defaultColor="bluegreyDark"
   defaultWeight="Semibold"
+  dynamicTypeRamp="title3"
   font="TitilliumSansPro"
   fontStyle={
     {
-      "fontSize": 22,
+      "fontSize": 20,
       "lineHeight": 24,
     }
   }
+  maxFontSizeMultiplier={1.25}
   style={
     [
       {
-        "fontSize": 22,
+        "fontSize": 20,
         "lineHeight": 24,
       },
       {
@@ -34,6 +36,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -41,6 +44,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -62,6 +66,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -69,6 +74,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -92,6 +98,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -99,6 +106,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -122,6 +130,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -129,6 +138,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -152,6 +162,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -159,6 +170,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -182,6 +194,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -189,6 +202,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -212,6 +226,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -219,6 +234,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -242,6 +258,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -249,6 +266,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -272,6 +290,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -279,6 +298,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -302,6 +322,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -309,6 +330,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -332,6 +354,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -339,6 +362,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -362,6 +386,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -369,6 +394,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -392,6 +418,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -399,6 +426,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -422,6 +450,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -429,6 +458,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -452,6 +482,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -459,6 +490,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
@@ -482,6 +514,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -489,6 +522,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {

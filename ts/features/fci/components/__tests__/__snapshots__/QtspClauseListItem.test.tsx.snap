@@ -354,17 +354,19 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                             color="bluegreyDark"
                             defaultColor="bluegreyDark"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="title3"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
-                                "fontSize": 22,
+                                "fontSize": 20,
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 22,
+                                  "fontSize": 20,
                                   "lineHeight": 24,
                                 },
                                 {
@@ -382,6 +384,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                               color="bluegreyDark"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="headline"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -389,6 +392,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   "lineHeight": 25,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -413,6 +417,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                               color="blue"
                               defaultColor="blue"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="footnote"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -421,6 +426,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   "textDecorationLine": "underline",
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               onPress={[Function]}
                               style={
                                 [
@@ -446,6 +452,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                               color="bluegreyDark"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="headline"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -453,6 +460,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   "lineHeight": 25,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -532,6 +540,8 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                             }
                           >
                             <View
+                              accessibilityElementsHidden={true}
+                              importantForAccessibility="no-hide-descendants"
                               pointerEvents="none"
                               style={
                                 {
@@ -636,6 +646,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="headline"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -643,6 +654,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   "lineHeight": 25,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {

@@ -1,6 +1,6 @@
-import { createAsyncAction, createStandardAction } from "typesafe-actions";
+import { createStandardAction } from "typesafe-actions";
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
-import { UIMessageId, WithUIMessageId } from "../../types";
+import { UIMessageId } from "../../types";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 
 // NPS stands for Next Precondition Status
@@ -82,17 +82,3 @@ export const shownPreconditionStatusAction = createStandardAction(
 export const updateRequiredPreconditionStatusAction = createStandardAction(
   "TO_UPDATE_REQUIRED_PRECONDITION_STATUS"
 )<NPSUpdateRequired>();
-
-export const getLegacyMessagePrecondition = createAsyncAction(
-  "GET_MESSAGE_PRECONDITION_REQUEST",
-  "GET_MESSAGE_PRECONDITION_SUCCESS",
-  "GET_MESSAGE_PRECONDITION_FAILURE"
-)<
-  WithUIMessageId<{ categoryTag: MessageCategory["tag"] }>,
-  ThirdPartyMessagePrecondition,
-  Error
->();
-
-export const clearLegacyMessagePrecondition = createStandardAction(
-  "CLEAR_MESSAGE_PRECONDITION"
-)<void>();

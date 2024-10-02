@@ -437,6 +437,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -444,6 +445,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   [
@@ -472,6 +474,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                         color="grey-850"
                         defaultColor="bluegrey"
                         defaultWeight="Regular"
+                        dynamicTypeRamp="body"
                         font="TitilliumSansPro"
                         fontStyle={
                           {
@@ -479,6 +482,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                             "lineHeight": 24,
                           }
                         }
+                        maxFontSizeMultiplier={1.25}
                         style={
                           [
                             {
@@ -660,7 +664,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                     {
                                       "busy": undefined,
                                       "checked": undefined,
-                                      "disabled": false,
+                                      "disabled": undefined,
                                       "expanded": undefined,
                                       "selected": undefined,
                                     }
@@ -685,23 +689,26 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       [
                                         {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         {
                                           "transform": [
                                             {
@@ -709,66 +716,66 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                             },
                                           ],
                                         },
-                                        {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "center",
+                                          "columnGap": 8,
+                                          "display": "flex",
+                                          "flexDirection": "row",
                                         }
                                       }
                                     >
-                                      <Text
-                                        allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
+                                      <View
+                                        style={
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
+                                            "alignItems": "flex-start",
+                                            "display": "flex",
+                                            "flexDirection": "column",
+                                            "flexGrow": 1,
+                                            "flexShrink": 1,
+                                            "rowGap": 4,
                                           }
                                         }
-                                        numberOfLines={1}
-                                        style={
-                                          [
+                                      >
+                                        <Text
+                                          allowFontScaling={false}
+                                          color="blueIO-500"
+                                          defaultColor="black"
+                                          defaultWeight="Semibold"
+                                          dynamicTypeRamp="footnote"
+                                          font="TitilliumSansPro"
+                                          fontStyle={
                                             {
                                               "fontSize": 16,
                                               "lineHeight": 21,
-                                            },
-                                            {
-                                              "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                            },
-                                          ]
-                                        }
-                                        weight="Semibold"
-                                      >
-                                        2
-                                      </Text>
-                                      <View
-                                        style={
-                                          {
-                                            "height": 4,
+                                            }
                                           }
-                                        }
-                                      />
-                                      <View
-                                        style={
-                                          {
-                                            "width": 44,
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={2}
+                                          style={
+                                            [
+                                              {
+                                                "fontSize": 16,
+                                                "lineHeight": 21,
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                            ]
                                           }
-                                        }
-                                      >
+                                          weight="Semibold"
+                                        >
+                                          2
+                                        </Text>
                                         <View
+                                          accessible={true}
                                           style={
                                             [
                                               {
@@ -787,7 +794,12 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                           }
                                         >
                                           <Text
+                                            accessibilityLabel="PDF"
+                                            accessibilityRole="text"
+                                            allowFontScaling={false}
                                             ellipsizeMode="tail"
+                                            importantForAccessibility="yes"
+                                            maxFontSizeMultiplier={1.25}
                                             numberOfLines={1}
                                             style={
                                               [
@@ -813,15 +825,6 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                           </Text>
                                         </View>
                                       </View>
-                                    </View>
-                                    <View
-                                      style={
-                                        {
-                                          "alignItems": "center",
-                                          "marginLeft": 12,
-                                        }
-                                      }
-                                    >
                                       <RNSVGSvgView
                                         accessibilityElementsHidden={true}
                                         accessibilityLabel=""
@@ -900,7 +903,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                     {
                                       "busy": undefined,
                                       "checked": undefined,
-                                      "disabled": false,
+                                      "disabled": undefined,
                                       "expanded": undefined,
                                       "selected": undefined,
                                     }
@@ -925,23 +928,26 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       [
                                         {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         {
                                           "transform": [
                                             {
@@ -949,66 +955,66 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                             },
                                           ],
                                         },
-                                        {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "center",
+                                          "columnGap": 8,
+                                          "display": "flex",
+                                          "flexDirection": "row",
                                         }
                                       }
                                     >
-                                      <Text
-                                        allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
+                                      <View
+                                        style={
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
+                                            "alignItems": "flex-start",
+                                            "display": "flex",
+                                            "flexDirection": "column",
+                                            "flexGrow": 1,
+                                            "flexShrink": 1,
+                                            "rowGap": 4,
                                           }
                                         }
-                                        numberOfLines={1}
-                                        style={
-                                          [
+                                      >
+                                        <Text
+                                          allowFontScaling={false}
+                                          color="blueIO-500"
+                                          defaultColor="black"
+                                          defaultWeight="Semibold"
+                                          dynamicTypeRamp="footnote"
+                                          font="TitilliumSansPro"
+                                          fontStyle={
                                             {
                                               "fontSize": 16,
                                               "lineHeight": 21,
-                                            },
-                                            {
-                                              "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                            },
-                                          ]
-                                        }
-                                        weight="Semibold"
-                                      >
-                                        4
-                                      </Text>
-                                      <View
-                                        style={
-                                          {
-                                            "height": 4,
+                                            }
                                           }
-                                        }
-                                      />
-                                      <View
-                                        style={
-                                          {
-                                            "width": 44,
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={2}
+                                          style={
+                                            [
+                                              {
+                                                "fontSize": 16,
+                                                "lineHeight": 21,
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                            ]
                                           }
-                                        }
-                                      >
+                                          weight="Semibold"
+                                        >
+                                          4
+                                        </Text>
                                         <View
+                                          accessible={true}
                                           style={
                                             [
                                               {
@@ -1027,7 +1033,12 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                           }
                                         >
                                           <Text
+                                            accessibilityLabel="PDF"
+                                            accessibilityRole="text"
+                                            allowFontScaling={false}
                                             ellipsizeMode="tail"
+                                            importantForAccessibility="yes"
+                                            maxFontSizeMultiplier={1.25}
                                             numberOfLines={1}
                                             style={
                                               [
@@ -1053,15 +1064,6 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                           </Text>
                                         </View>
                                       </View>
-                                    </View>
-                                    <View
-                                      style={
-                                        {
-                                          "alignItems": "center",
-                                          "marginLeft": 12,
-                                        }
-                                      }
-                                    >
                                       <RNSVGSvgView
                                         accessibilityElementsHidden={true}
                                         accessibilityLabel=""
@@ -2616,6 +2618,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -2623,6 +2626,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   [
@@ -2651,6 +2655,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                         color="grey-850"
                         defaultColor="bluegrey"
                         defaultWeight="Regular"
+                        dynamicTypeRamp="body"
                         font="TitilliumSansPro"
                         fontStyle={
                           {
@@ -2658,6 +2663,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                             "lineHeight": 24,
                           }
                         }
+                        maxFontSizeMultiplier={1.25}
                         style={
                           [
                             {
@@ -2691,7 +2697,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                           {
                             "busy": undefined,
                             "checked": undefined,
-                            "disabled": false,
+                            "disabled": undefined,
                             "expanded": undefined,
                             "selected": undefined,
                           }
@@ -2716,23 +2722,26 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                         onResponderTerminate={[Function]}
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
+                        onTouchEnd={[Function]}
                       >
                         <View
-                          accessibilityElementsHidden={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             [
                               {
                                 "alignItems": "center",
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "#CCD4DC",
+                                "borderColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
-                                "borderStyle": "solid",
                                 "borderWidth": 1,
                                 "flexDirection": "row",
+                                "justifyContent": "space-between",
                                 "paddingHorizontal": 16,
                                 "paddingVertical": 16,
                               },
+                              {
+                                "borderColor": "#E8EBF1",
+                              },
+                              false,
                               {
                                 "transform": [
                                   {
@@ -2740,66 +2749,66 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                   },
                                 ],
                               },
-                              {
-                                "opacity": 1,
-                              },
                             ]
                           }
                         >
                           <View
                             style={
                               {
-                                "flex": 1,
-                                "flexDirection": "column",
+                                "alignItems": "center",
+                                "columnGap": 8,
+                                "display": "flex",
+                                "flexDirection": "row",
                               }
                             }
                           >
-                            <Text
-                              allowFontScaling={false}
-                              color="blueIO-500"
-                              defaultColor="black"
-                              defaultWeight="Semibold"
-                              font="TitilliumSansPro"
-                              fontStyle={
+                            <View
+                              style={
                                 {
-                                  "fontSize": 16,
-                                  "lineHeight": 21,
+                                  "alignItems": "flex-start",
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "flexGrow": 1,
+                                  "flexShrink": 1,
+                                  "rowGap": 4,
                                 }
                               }
-                              numberOfLines={1}
-                              style={
-                                [
+                            >
+                              <Text
+                                allowFontScaling={false}
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
+                                font="TitilliumSansPro"
+                                fontStyle={
                                   {
                                     "fontSize": 16,
                                     "lineHeight": 21,
-                                  },
-                                  {
-                                    "color": "#0B3EE3",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                  },
-                                ]
-                              }
-                              weight="Semibold"
-                            >
-                              2
-                            </Text>
-                            <View
-                              style={
-                                {
-                                  "height": 4,
+                                  }
                                 }
-                              }
-                            />
-                            <View
-                              style={
-                                {
-                                  "width": 44,
+                                maxFontSizeMultiplier={1.25}
+                                numberOfLines={2}
+                                style={
+                                  [
+                                    {
+                                      "fontSize": 16,
+                                      "lineHeight": 21,
+                                    },
+                                    {
+                                      "color": "#0B3EE3",
+                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                    },
+                                  ]
                                 }
-                              }
-                            >
+                                weight="Semibold"
+                              >
+                                2
+                              </Text>
                               <View
+                                accessible={true}
                                 style={
                                   [
                                     {
@@ -2818,7 +2827,12 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                 }
                               >
                                 <Text
+                                  accessibilityLabel="PDF"
+                                  accessibilityRole="text"
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  importantForAccessibility="yes"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -2844,15 +2858,6 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                 </Text>
                               </View>
                             </View>
-                          </View>
-                          <View
-                            style={
-                              {
-                                "alignItems": "center",
-                                "marginLeft": 12,
-                              }
-                            }
-                          >
                             <RNSVGSvgView
                               accessibilityElementsHidden={true}
                               accessibilityLabel=""

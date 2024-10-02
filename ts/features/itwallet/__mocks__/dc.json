@@ -1095,7 +1095,7 @@
     "credentialType": "EuropeanDisabilityCard",
     "displayData": {
         "title": "Tessera Europa della disabilità",
-        "icon": "disabilityCard",
+        "icon": "accessibility",
         "incoming": false,
         "textColor": "black",
         "firstLine": [

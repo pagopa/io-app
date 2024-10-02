@@ -571,18 +571,20 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
-                                  "fontSize": 24,
-                                  "lineHeight": 34,
+                                  "fontSize": 22,
+                                  "lineHeight": 33,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
-                                    "fontSize": 24,
-                                    "lineHeight": 34,
+                                    "fontSize": 22,
+                                    "lineHeight": 33,
                                   },
                                   {
                                     "color": "#17324D",
@@ -609,6 +611,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               color="grey-700"
                               defaultColor="blue"
                               defaultWeight="Bold"
+                              dynamicTypeRamp="footnote"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -616,6 +619,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   "lineHeight": 21,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -661,6 +665,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               color="grey-850"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -668,6 +673,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 [
                                   {
@@ -761,6 +767,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               onTouchEnd={[Function]}
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
                                   [
@@ -904,6 +911,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   292,
@@ -966,6 +974,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               testID="show-more-data-action"
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
                                   [
@@ -1109,6 +1118,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   1,
@@ -1174,6 +1184,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="grey-700"
                                               defaultColor="black"
                                               defaultWeight="Semibold"
+                                              dynamicTypeRamp="headline"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 {
@@ -1181,6 +1192,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   "lineHeight": 25,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               role="heading"
                                               style={
                                                 [
@@ -1238,6 +1250,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       onStartShouldSetResponder={[Function]}
                                     >
                                       <View
+                                        accessibilityElementsHidden={true}
                                         importantForAccessibility="no-hide-descendants"
                                         style={
                                           [
@@ -1350,6 +1363,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="grey-700"
                                               defaultColor="blue"
                                               defaultWeight="Bold"
+                                              dynamicTypeRamp="footnote"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 {
@@ -1357,6 +1371,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   "lineHeight": 21,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               style={
                                                 [
                                                   {
@@ -1380,6 +1395,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="blue"
                                               defaultColor="black"
                                               defaultWeight="Semibold"
+                                              dynamicTypeRamp="headline"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 {
@@ -1387,6 +1403,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   "lineHeight": 25,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               numberOfLines={2}
                                               style={
                                                 [
@@ -1516,6 +1533,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="grey-700"
                                               defaultColor="black"
                                               defaultWeight="Semibold"
+                                              dynamicTypeRamp="headline"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 {
@@ -1523,6 +1541,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   "lineHeight": 25,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               role="heading"
                                               style={
                                                 [
@@ -1580,6 +1599,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       onStartShouldSetResponder={[Function]}
                                     >
                                       <View
+                                        accessibilityElementsHidden={true}
                                         importantForAccessibility="no-hide-descendants"
                                         style={
                                           [
@@ -1692,6 +1712,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="grey-700"
                                               defaultColor="blue"
                                               defaultWeight="Bold"
+                                              dynamicTypeRamp="footnote"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 {
@@ -1699,6 +1720,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   "lineHeight": 21,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               style={
                                                 [
                                                   {
@@ -1722,6 +1744,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="blue"
                                               defaultColor="black"
                                               defaultWeight="Semibold"
+                                              dynamicTypeRamp="headline"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 {
@@ -1729,6 +1752,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   "lineHeight": 25,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               numberOfLines={2}
                                               style={
                                                 [

@@ -13,6 +13,7 @@ import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { NetworkError } from "../../../../../utils/errors";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
+import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 
 export const paymentsGetPaymentDetailsAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_DETAILS_REQUEST",
@@ -26,11 +27,15 @@ export const paymentsGetPaymentMethodsAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_METHODS_FAILURE"
 )<undefined, PaymentMethodsResponse, NetworkError>();
 
+type PaymentGetPaymentUserMethodsPayload = {
+  onResponse?: (wallets: ReadonlyArray<WalletInfo> | undefined) => void;
+};
+
 export const paymentsGetPaymentUserMethodsAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_USER_METHODS_REQUEST",
   "PAYMENTS_GET_PAYMENT_USER_METHODS_SUCCESS",
   "PAYMENTS_GET_PAYMENT_USER_METHODS_FAILURE"
-)<undefined, Wallets, NetworkError>();
+)<PaymentGetPaymentUserMethodsPayload, Wallets, NetworkError>();
 
 export type CalculateFeePayload = {
   paymentMethodId: string;
@@ -47,12 +52,17 @@ export const paymentsCalculatePaymentFeesAction = createAsyncAction(
   NetworkError
 >();
 
+export type WalletPaymentCreateTransactionPayload = {
+  data: NewTransactionRequest;
+  onError?: () => void;
+};
+
 export const paymentsCreateTransactionAction = createAsyncAction(
   "PAYMENTS_CREATE_TRANSACTION_REQUEST",
   "PAYMENTS_CREATE_TRANSACTION_SUCCESS",
   "PAYMENTS_CREATE_TRANSACTION_FAILURE"
 )<
-  NewTransactionRequest,
+  WalletPaymentCreateTransactionPayload,
   NewTransactionResponse,
   NetworkError | WalletPaymentFailure
 >();

@@ -15,7 +15,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 import I18n from "../../../../i18n";
 import { format } from "../../../../utils/dates";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { getLabelForCircuitType } from "../../common/labels";
 
 type Props = {
@@ -25,8 +25,6 @@ type Props = {
 const TimelineTransactionDetailsComponent = (props: Props) => {
   const { transaction } = props;
 
-  const alertViewRef = React.createRef<View>();
-
   const reversalAlertComponent = pipe(
     transaction.operationType,
     O.of,
@@ -34,7 +32,6 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
     O.map(() => (
       <>
         <Alert
-          viewRef={alertViewRef}
           variant="info"
           content={I18n.t(
             "idpay.initiative.operationDetails.transaction.reversalAdvice"
@@ -50,13 +47,16 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
   const idTrxAcquirer = transaction.idTrxAcquirer || "";
 
   const formattedAmount = pipe(
-    transaction.amount,
+    transaction.amountCents,
     O.fromNullable,
-    O.map(amount => formatNumberAmount(amount, true)),
+    O.map(amount => formatNumberCentsToAmount(amount, true)),
     O.getOrElse(() => "-")
   );
 
-  const formattedAccrued = formatNumberAmount(transaction.accrued, true);
+  const formattedAccrued = formatNumberCentsToAmount(
+    transaction.accruedCents,
+    true
+  );
 
   return (
     <View style={IOStyles.flex}>

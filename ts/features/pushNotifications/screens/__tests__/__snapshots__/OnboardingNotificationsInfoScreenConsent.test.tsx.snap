@@ -280,7 +280,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
             >
               <View
                 collapsable={false}
-                handlerTag={5}
+                handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -545,6 +545,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                 color="black"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="title1"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -552,6 +553,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     "lineHeight": 40,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -582,6 +584,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                 color="bluegrey"
                                 defaultColor="bluegrey"
                                 defaultWeight="Regular"
+                                dynamicTypeRamp="body"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -589,6 +592,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     "lineHeight": 24,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -619,6 +623,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -626,6 +631,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
                                     {
@@ -858,15 +864,14 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   }
                                 >
                                   <View
-                                    accessibilityElementsHidden={false}
                                     accessible={true}
-                                    importantForAccessibility="yes"
                                   >
                                     <Text
                                       allowFontScaling={false}
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -874,6 +879,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -897,6 +903,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                       color="black"
                                       defaultColor="black"
                                       defaultWeight="Semibold"
+                                      dynamicTypeRamp="headline"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -904,6 +911,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           "lineHeight": 25,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       numberOfLines={2}
                                       style={
                                         [
@@ -1083,15 +1091,14 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   }
                                 >
                                   <View
-                                    accessibilityElementsHidden={false}
                                     accessible={true}
-                                    importantForAccessibility="yes"
                                   >
                                     <Text
                                       allowFontScaling={false}
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -1099,6 +1106,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -1122,6 +1130,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                       color="black"
                                       defaultColor="black"
                                       defaultWeight="Semibold"
+                                      dynamicTypeRamp="headline"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -1129,6 +1138,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           "lineHeight": 25,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       numberOfLines={2}
                                       style={
                                         [
@@ -1260,15 +1270,14 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   }
                                 >
                                   <View
-                                    accessibilityElementsHidden={false}
                                     accessible={true}
-                                    importantForAccessibility="yes"
                                   >
                                     <Text
                                       allowFontScaling={false}
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -1276,6 +1285,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
                                           {
@@ -1299,6 +1309,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                       color="black"
                                       defaultColor="black"
                                       defaultWeight="Semibold"
+                                      dynamicTypeRamp="headline"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -1306,6 +1317,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           "lineHeight": 25,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       numberOfLines={2}
                                       style={
                                         [
@@ -1423,6 +1435,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
                                   style={{}}
+                                  testID="settings-btn"
                                 >
                                   <View
                                     style={
@@ -1484,7 +1497,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           }
                                         }
                                         importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.3}
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [

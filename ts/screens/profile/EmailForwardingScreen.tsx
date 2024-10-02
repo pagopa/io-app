@@ -118,6 +118,8 @@ const EmailForwardingScreen = () => {
         pot.isSome(profile) &&
         isCustomChannelEnabledChoice.current !== undefined
       ) {
+        IOToast.hideAll();
+        IOToast.success(I18n.t("profile.preferences.genericToastTitle"));
         setCustomEmailChannelEnabled(isCustomChannelEnabledChoice.current);
         setIsLoading(false);
         return;

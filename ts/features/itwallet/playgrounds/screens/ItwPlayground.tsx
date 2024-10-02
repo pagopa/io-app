@@ -6,12 +6,16 @@ import {
   ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { isDevEnv } from "../../../../utils/environment";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
-import { ITW_ROUTES } from "../../navigation/routes";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
+import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
 import { ItwTrialSystemSection } from "../components/ItwTrialSystemSection";
 
 // Sample markdown text
@@ -40,111 +44,79 @@ A malformed link [Error](httssdps://www.error.com) that show toast error.
  * @returns a screen with a list of playgrounds for the ITW
  */
 const ItwPlayground = () => {
-  const navigation = useIONavigation();
+  const credentialMachineRef =
+    ItwCredentialIssuanceMachineContext.useActorRef();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Resets the machine in case they were left in s failure state
+      credentialMachineRef.send({ type: "reset" });
+    }, [credentialMachineRef])
+  );
 
   useHeaderSecondLevel({
     title: "ITW Playground"
   });
 
-  const navigateToDiscovery = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.INFO
-    });
-  };
-
-  const navigateToCredentialDetail = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.EID_DETAIL
-    });
-  };
-
-  const navigateToCredentialPreview = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW
-    });
-  };
-
-  const navigateToCredentialAuth = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_AUTH
-    });
-  };
+  const handleStartCredentialIssuance =
+    (credentialType: CredentialType) => () => {
+      credentialMachineRef.send({
+        type: "select-credential",
+        credentialType,
+        skipNavigation: false
+      });
+    };
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>
       <ContentWrapper>
-        {/* Activation Playground */}
-        <ListItemHeader label="Activation" />
-        <ListItemNav
-          value="Wallet activation"
-          accessibilityLabel={"Discovery Playground"}
-          description="Start the eID issuing flow"
-          onPress={() => undefined}
-        />
-        <VSpacer size={16} />
         {/* Issuing Playground */}
         <ListItemHeader label="Credentials issuing" />
         <ListItemNav
           value="mDL issuing"
           accessibilityLabel={"mDL Issuing"}
           description="Start the issuing flow to get your mobile driving license"
-          onPress={() => undefined}
+          onPress={handleStartCredentialIssuance(
+            CredentialType.DRIVING_LICENSE
+          )}
         />
         <Divider />
         <ListItemNav
           value="TS issuing"
           accessibilityLabel={"TS Issuing"}
           description="Start the issuing flow to get your health insurance card"
-          onPress={() => undefined}
+          onPress={handleStartCredentialIssuance(
+            CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+          )}
         />
         <Divider />
         <ListItemNav
           value="DC issuing"
           accessibilityLabel={"DC Issuing"}
           description="Start the issuing flow to get your european disability card card"
-          onPress={() => undefined}
+          onPress={handleStartCredentialIssuance(
+            CredentialType.EUROPEAN_DISABILITY_CARD
+          )}
         />
         <VSpacer size={16} />
-        {/* Screens Playground */}
-        <ListItemHeader label="Screens" />
-        <ListItemNav
-          value="Wallet discovery screen"
-          accessibilityLabel={"Discovery screen"}
-          description="Navigate to the IT Wallet discovery screen"
-          onPress={navigateToDiscovery}
-        />
-        <Divider />
-        <ListItemNav
-          value="Credential preview (mDL)"
-          accessibilityLabel="Credential preview (mdl) Playground"
-          description="Open the credential preview screen"
-          onPress={navigateToCredentialPreview}
-        />
-        <Divider />
-        <ListItemNav
-          value="Credential detail (eID)"
-          accessibilityLabel={"Credential detail (eID) Playground"}
-          description="Open the eID credential detail screen"
-          onPress={navigateToCredentialDetail}
-        />
-        <Divider />
-        <ListItemNav
-          value="Credential auth (mDL)"
-          accessibilityLabel={"Credential auth (mdl) Playground"}
-          description="Open the eID credential detail screen"
-          onPress={navigateToCredentialAuth}
-        />
+        <ItwLifecycleSection />
         <VSpacer size={16} />
-        {/* F&F Experimentation */}
-        <ItwTrialSystemSection />
-        <VSpacer size={16} />
+        {
+          /* F&F Experimentation */
+          isDevEnv ? (
+            <>
+              <ItwTrialSystemSection />
+              <VSpacer size={16} />
+            </>
+          ) : null
+        }
         {/* Other Playgrounds */}
         <ListItemHeader label="Miscellaneous" />
         <H3>{"IT Wallet markdown preview"}</H3>
         <VSpacer size={8} />
         <ItwMarkdown>{sampleMarkdown}</ItwMarkdown>
-        {/* TODO: Add more items here */}
-        <VSpacer size={32} />
+        <VSpacer size={16} />
+        <ItwSkeumorphicCredentialSection />
       </ContentWrapper>
     </ScrollView>
   );

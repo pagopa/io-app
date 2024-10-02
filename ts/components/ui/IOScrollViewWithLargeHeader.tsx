@@ -4,7 +4,9 @@ import {
   H2,
   HeaderSecondLevel,
   IOStyles,
-  VSpacer
+  LabelSmall,
+  VSpacer,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React, { ComponentProps, forwardRef, useState } from "react";
@@ -16,6 +18,7 @@ import {
 } from "../../hooks/useHeaderProps";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
+import { WithTestID } from "../../types/WithTestID";
 import {
   BodyProps,
   ComposedBodyFromArray
@@ -26,18 +29,24 @@ export type LargeHeaderTitleProps = {
   label: string;
   accessibilityLabel?: string;
   testID?: string;
+  section?: string;
 };
 
-type Props = {
-  children: React.ReactNode;
-  actions?: ComponentProps<typeof IOScrollView>["actions"];
-  title: LargeHeaderTitleProps;
-  description?: string | Array<BodyProps>;
-  goBack?: BackProps["goBack"];
-  headerActionsProp?: HeaderActionProps;
-  canGoback?: boolean;
-  excludeEndContentMargin?: boolean;
-} & SupportRequestParams;
+type Props = WithTestID<
+  {
+    children?: React.ReactNode;
+    actions?: ComponentProps<typeof IOScrollView>["actions"];
+    title: LargeHeaderTitleProps;
+    description?: string | Array<BodyProps>;
+    goBack?: BackProps["goBack"];
+    ignoreSafeAreaMargin?: ComponentProps<
+      typeof HeaderSecondLevel
+    >["ignoreSafeAreaMargin"];
+    headerActionsProp?: HeaderActionProps;
+    canGoback?: boolean;
+    excludeEndContentMargin?: boolean;
+  } & SupportRequestParams
+>;
 
 /**
  * Special `IOScrollView` screen with a large title that is hidden by a transition when
@@ -56,14 +65,17 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       contextualHelp,
       contextualHelpMarkdown,
       faqCategories,
+      ignoreSafeAreaMargin = false,
       headerActionsProp = {},
-      excludeEndContentMargin
+      excludeEndContentMargin,
+      testID
     },
     ref
   ) => {
     const [titleHeight, setTitleHeight] = useState(0);
 
     const navigation = useNavigation();
+    const theme = useIOTheme();
 
     const getTitleHeight = (event: LayoutChangeEvent) => {
       const { height } = event.nativeEvent.layout;
@@ -78,8 +90,9 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       ...headerActionsProp
     };
 
-    const headerProps: ComponentProps<typeof HeaderSecondLevel> =
-      useHeaderProps(
+    const headerProps: ComponentProps<typeof HeaderSecondLevel> = {
+      ignoreSafeAreaMargin,
+      ...useHeaderProps(
         canGoback
           ? {
               ...headerPropsWithoutGoBack,
@@ -87,7 +100,8 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
               goBack: goBack ?? navigation.goBack
             }
           : headerPropsWithoutGoBack
-      );
+      )
+    };
 
     return (
       <IOScrollView
@@ -96,6 +110,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
         snapOffset={titleHeight}
         includeContentMargins={false}
         excludeEndContentMargin={excludeEndContentMargin}
+        testID={testID}
       >
         <View
           ref={ref}
@@ -103,8 +118,14 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
           style={IOStyles.horizontalContentPadding}
           onLayout={getTitleHeight}
         >
+          {title.section && (
+            <LabelSmall weight="Semibold" color={theme["textBody-tertiary"]}>
+              {title.section}
+            </LabelSmall>
+          )}
           <H2
-            testID={title.testID}
+            color={theme["textHeading-default"]}
+            testID={title?.testID}
             accessibilityLabel={title.accessibilityLabel ?? title.label}
             accessibilityRole="header"
           >
@@ -114,17 +135,20 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
 
         {description && (
           <ContentWrapper>
-            <VSpacer size={4} />
+            <VSpacer size={16} />
             {typeof description === "string" ? (
-              <Body color="grey-700">{description}</Body>
+              <Body color={theme["textBody-tertiary"]}>{description}</Body>
             ) : (
               <ComposedBodyFromArray body={description} textAlign="left" />
             )}
           </ContentWrapper>
         )}
-        <VSpacer size={16} />
-
-        {children}
+        {children && (
+          <>
+            <VSpacer size={16} />
+            {children}
+          </>
+        )}
       </IOScrollView>
     );
   }

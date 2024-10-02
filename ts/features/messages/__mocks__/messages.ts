@@ -13,8 +13,9 @@ import {
 import { UIMessageId } from "../types";
 
 export const defaultRequestPayload = {
-  pageSize: 8,
-  filter: { getArchived: false }
+  pageSize: 12,
+  filter: { getArchived: false },
+  fromUserAction: false
 };
 
 export const defaultRequestError = {
@@ -149,7 +150,8 @@ export const successReloadMessagesPayload: ReloadMessagesPayload = {
     previous: successPayloadMessages[0].id,
     next: successPayloadMessages[2].id
   },
-  filter: defaultRequestPayload.filter
+  filter: defaultRequestPayload.filter,
+  fromUserAction: false
 };
 
 export const successLoadNextPageMessagesPayload: NextPageMessagesSuccessPayload =
@@ -158,7 +160,8 @@ export const successLoadNextPageMessagesPayload: NextPageMessagesSuccessPayload 
     pagination: {
       next: successPayloadMessages[2].id
     },
-    filter: defaultRequestPayload.filter
+    filter: defaultRequestPayload.filter,
+    fromUserAction: false
   };
 
 export const successLoadPreviousPageMessagesPayload: PreviousPageMessagesSuccessPayload =
@@ -167,5 +170,6 @@ export const successLoadPreviousPageMessagesPayload: PreviousPageMessagesSuccess
     pagination: {
       previous: successPayloadMessages[0].id
     },
-    filter: defaultRequestPayload.filter
+    filter: defaultRequestPayload.filter,
+    fromUserAction: false
   };

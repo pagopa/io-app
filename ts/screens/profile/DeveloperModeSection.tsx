@@ -13,6 +13,7 @@ import {
   useIOTheme,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
+import * as Sentry from "@sentry/react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as React from "react";
 import { ComponentProps } from "react";
@@ -21,7 +22,10 @@ import I18n from "../../i18n";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../config";
-import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import {
+  isAutomaticSessionRefreshToggleActiveSelector,
+  isFastLoginEnabledSelector
+} from "../../features/fastLogin/store/selectors";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
 import { notificationsInstallationSelector } from "../../features/pushNotifications/store/reducers/installation";
@@ -32,9 +36,6 @@ import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
-  preferencesItWalletTestSetEnabled,
-  preferencesNewHomeSectionSetEnabled,
-  preferencesNewWalletSectionSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
@@ -47,9 +48,6 @@ import {
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
   isIdPayTestEnabledSelector,
-  isItWalletTestEnabledSelector,
-  isNewHomeSectionEnabledSelector,
-  isNewWalletSectionLocallyEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -58,6 +56,9 @@ import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
+import { setAutomaticSessionRefresh } from "../../features/fastLogin/store/actions/sessionRefreshActions";
+import { isCieIDLocalFeatureEnabledSelector } from "../../features/cieLogin/store/selectors";
+import { cieIDFeatureSetEnabled } from "../../features/cieLogin/store/actions";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -110,6 +111,10 @@ const DeveloperActionsSection = () => {
     );
   };
 
+  const sendSentryTestEvent = () => {
+    Sentry.captureException(new Error("Random test Error"));
+  };
+
   const dumpAsyncStorage = () => {
     /* eslint-disable no-console */
     console.log("[DUMP START]");
@@ -152,6 +157,12 @@ const DeveloperActionsSection = () => {
       color: "primary",
       label: I18n.t("profile.main.dumpAsyncStorage"),
       onPress: dumpAsyncStorage
+    },
+    {
+      condition: true,
+      color: "primary",
+      label: I18n.t("profile.main.sentryTestEvent"),
+      onPress: sendSentryTestEvent
     }
   ];
 
@@ -292,28 +303,16 @@ const DesignSystemSection = () => {
   const { themeType, setTheme } = useIOThemeContext();
   const dispatch = useIODispatch();
 
-  const isNewWalletSectionLocallyEnabled = useIOSelector(
-    isNewWalletSectionLocallyEnabledSelector
-  );
-  const isNewHomeSectionEnabled = useIOSelector(
-    isNewHomeSectionEnabledSelector
+  const isAutomaticSessionRefreshToggleActive = useIOSelector(
+    isAutomaticSessionRefreshToggleActiveSelector
   );
 
-  const onNewWalletSectionToggle = (enabled: boolean) => {
-    dispatch(
-      preferencesNewWalletSectionSetEnabled({
-        isNewWalletSectionEnabled: enabled
-      })
-    );
-  };
-
-  const onNewHomeSectionToggle = (enabled: boolean) => {
-    dispatch(
-      preferencesNewHomeSectionSetEnabled({
-        isNewHomeSectionEnabled: enabled
-      })
-    );
-  };
+  const dispatchAutomaticSessionRefresh = React.useCallback(
+    (enabled: boolean) => {
+      dispatch(setAutomaticSessionRefresh({ enabled }));
+    },
+    [dispatch]
+  );
 
   return (
     <ContentWrapper>
@@ -340,15 +339,9 @@ const DesignSystemSection = () => {
       />
       <Divider />
       <ListItemSwitch
-        label={I18n.t("profile.main.newWalletSection")}
-        value={isNewWalletSectionLocallyEnabled}
-        onSwitchValueChange={onNewWalletSectionToggle}
-      />
-      <Divider />
-      <ListItemSwitch
-        label={I18n.t("profile.main.newHomeSection")}
-        value={isNewHomeSectionEnabled}
-        onSwitchValueChange={onNewHomeSectionToggle}
+        label={I18n.t("profile.main.sessionRefresh")}
+        value={isAutomaticSessionRefreshToggleActive}
+        onSwitchValueChange={dispatchAutomaticSessionRefresh}
       />
     </ContentWrapper>
   );
@@ -358,7 +351,6 @@ const PlaygroundsSection = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
-  const isItWalletTestEnabled = useIOSelector(isItWalletTestEnabledSelector);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
 
   const onAddTestCard = () => {
@@ -378,6 +370,13 @@ const PlaygroundsSection = () => {
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
           screen: ROUTES.MARKDOWN_PLAYGROUND
+        })
+    },
+    {
+      value: "IO Markdown",
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.IO_MARKDOWN_PLAYGROUND
         })
     },
     {
@@ -411,8 +410,7 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      condition: isItWalletTestEnabled,
-      value: "IT Wallet",
+      value: "Documenti su IO",
       onPress: () =>
         navigation.navigate(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.PLAYGROUNDS
@@ -474,7 +472,9 @@ const DeveloperTestEnvironmentSection = ({
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
   const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
-  const isItWalletTestEnabled = useIOSelector(isItWalletTestEnabledSelector);
+  const isCieIDFeatureEnabled = useIOSelector(
+    isCieIDLocalFeatureEnabledSelector
+  );
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -521,12 +521,8 @@ const DeveloperTestEnvironmentSection = ({
     dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled: enabled }));
     handleShowModal();
   };
-
-  const onItWalletTestToggle = (enabled: boolean) => {
-    dispatch(
-      preferencesItWalletTestSetEnabled({ isItWalletTestEnabled: enabled })
-    );
-    handleShowModal();
+  const onCieIDFeatureToggle = (enabled: boolean) => {
+    dispatch(cieIDFeatureSetEnabled({ isCieIDFeatureEnabled: enabled }));
   };
 
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
@@ -548,9 +544,9 @@ const DeveloperTestEnvironmentSection = ({
       onSwitchValueChange: onIdPayTestToggle
     },
     {
-      label: I18n.t("profile.main.itWallet.itWalletTest"),
-      value: isItWalletTestEnabled,
-      onSwitchValueChange: onItWalletTestToggle
+      label: I18n.t("profile.main.cieID.cieIdTest.title"),
+      value: isCieIDFeatureEnabled,
+      onSwitchValueChange: onCieIDFeatureToggle
     }
   ];
 

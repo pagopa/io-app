@@ -208,12 +208,12 @@ const reducer = (
         ...state,
         transaction: pot.some(action.payload)
       };
+    case getType(paymentsCreateTransactionAction.failure):
     case getType(paymentsDeleteTransactionAction.success):
       return {
         ...state,
         transaction: pot.none
       };
-    case getType(paymentsCreateTransactionAction.failure):
     case getType(paymentsGetPaymentTransactionInfoAction.failure):
     case getType(paymentsDeleteTransactionAction.failure):
       return {

@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
-import sha from "sha.js";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { WalletCard, WalletCardCategory } from "../../types";
@@ -27,31 +26,35 @@ const reducer = (
   action: Action
 ): WalletPlaceholdersState => {
   switch (action.type) {
-    case getType(walletAddCards):
-      return {
-        ...state,
-        items: action.payload.reduce(cardPlaceholderReducerFn, state.items)
-      };
-    case getType(walletRemoveCards):
-      return {
-        ...state,
-        items: Object.fromEntries(
-          Object.entries(state.items).filter(
-            ([key]) => !action.payload.map(hashKey).includes(key)
-          )
-        )
-      };
-
     case getType(walletToggleLoadingState):
       return {
         ...state,
         isLoading: action.payload
       };
 
+    case getType(walletAddCards):
+      return {
+        ...state,
+        items: action.payload
+          .filter(({ type }) => type !== "placeholder")
+          .reduce(cardPlaceholderReducerFn, state.items)
+      };
+    case getType(walletRemoveCards):
+      return {
+        ...state,
+        items: Object.fromEntries(
+          Object.entries(state.items).filter(
+            ([key]) => !action.payload.includes(key)
+          )
+        )
+      };
+
     case getType(walletResetPlaceholders):
       return {
         ...state,
-        items: action.payload.reduce(cardPlaceholderReducerFn, {})
+        items: action.payload
+          .filter(({ type }) => type !== "placeholder")
+          .reduce(cardPlaceholderReducerFn, {})
       };
   }
   return state;
@@ -62,12 +65,8 @@ const cardPlaceholderReducerFn = (
   { category, key }: WalletCard
 ) => ({
   ...acc,
-  [hashKey(key)]: category
+  [key]: category
 });
-
-// We have no control over what can be used as a key to store cards.
-// Key hashing avoids storing sensitive data
-const hashKey = (key: string) => sha("sha256").update(key).digest("hex");
 
 const CURRENT_REDUX_WALLET_PLACEHOLDERS_STORE_VERSION = -1;
 

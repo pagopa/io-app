@@ -8,7 +8,7 @@ import {
 } from "../../../../store/reducers/testLogin";
 import {
   CieLoginState,
-  cieLoginReducer
+  cieLoginPersistor
 } from "../../../cieLogin/store/reducers";
 import {
   EuCovidCertState,
@@ -22,7 +22,7 @@ import fciReducer, { FciState } from "../../../fci/store/reducers";
 import fimsReducer, { FimsState } from "../../../fims/common/store/reducer";
 import idPayReducer, { IDPayState } from "../../../idpay/common/store/reducers";
 import itWalletReducer, {
-  ItWalletState
+  PersistedItWalletState
 } from "../../../itwallet/common/store/reducers";
 import {
   NativeLoginState,
@@ -44,12 +44,20 @@ import {
   WhatsNewState,
   whatsNewPersistor
 } from "../../../whatsnew/store/reducers";
+import {
+  mixpanelReducer,
+  MixpanelState
+} from "../../../mixpanel/store/reducer";
+import {
+  ingressScreenReducer,
+  IngressScreenState
+} from "../../../ingress/store/reducer";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
   nativeLogin: NativeLoginState;
   fastLogin: FastLoginState;
-  cieLogin: CieLoginState;
+  cieLogin: CieLoginState & PersistPartial;
 };
 
 export type FeaturesState = {
@@ -63,8 +71,10 @@ export type FeaturesState = {
   services: ServicesState;
   wallet: WalletState;
   fims: FimsState;
-  itWallet: ItWalletState;
+  itWallet: PersistedItWalletState;
   profileSettings: ProfileSettingsState & PersistPartial;
+  mixpanel: MixpanelState;
+  ingress: IngressScreenState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -81,12 +91,14 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     testLogin: testLoginReducer,
     nativeLogin: nativeLoginReducer,
     fastLogin: fastLoginReducer,
-    cieLogin: cieLoginReducer
+    cieLogin: cieLoginPersistor
   }),
   wallet: walletReducer,
   fims: fimsReducer,
   itWallet: itWalletReducer,
-  profileSettings: profileSettingsReducerPersistor
+  profileSettings: profileSettingsReducerPersistor,
+  mixpanel: mixpanelReducer,
+  ingress: ingressScreenReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;

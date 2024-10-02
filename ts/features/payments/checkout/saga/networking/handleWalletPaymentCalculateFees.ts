@@ -26,7 +26,6 @@ export function* handleWalletPaymentCalculateFees(
     const { paymentMethodId, idPsp, ...body } = { ...action.payload, language };
     const calculateFeesResult = yield* withPaymentsSessionToken(
       calculateFees,
-      paymentsCalculatePaymentFeesAction.failure,
       action,
       {
         id: paymentMethodId,
@@ -60,12 +59,14 @@ export function* handleWalletPaymentCalculateFees(
         }
         yield* put(paymentsCalculatePaymentFeesAction.success(res.value));
         return;
+      } else if (res.status !== 401) {
+        // The 401 status is handled by the withPaymentsSessionToken
+        yield* put(
+          paymentsCalculatePaymentFeesAction.failure(
+            getGenericError(new Error(`Error: ${res.status}`))
+          )
+        );
       }
-      yield* put(
-        paymentsCalculatePaymentFeesAction.failure(
-          getGenericError(new Error(`Error: ${res.status}`))
-        )
-      );
     }
   } catch (e) {
     yield* put(

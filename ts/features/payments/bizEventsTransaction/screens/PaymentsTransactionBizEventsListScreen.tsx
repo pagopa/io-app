@@ -36,6 +36,7 @@ import { groupTransactionsByMonth } from "../utils";
 import I18n from "../../../../i18n";
 import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
 import { PaymentsTransactionRoutes } from "../../transaction/navigation/routes";
+import * as analytics from "../analytics";
 
 export type PaymentsTransactionBizEventsListScreenProps = RouteProp<
   PaymentsTransactionBizEventsParamsList,
@@ -78,13 +79,15 @@ const PaymentsTransactionBizEventsListScreen = () => {
         screen:
           PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_DETAILS,
         params: {
-          transactionId: transaction.transactionId
+          transactionId: transaction.transactionId,
+          isPayer: transaction.isPayer
         }
       }
     );
   };
 
   const handleNavigateToLegacyTransactions = () => {
+    analytics.trackPaymentsOpenOldReceiptListing("payments_receipt_listing");
     navigation.navigate(
       PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR,
       {
@@ -109,6 +112,7 @@ const PaymentsTransactionBizEventsListScreen = () => {
 
   useOnFirstRender(
     React.useCallback(() => {
+      analytics.trackPaymentsReceiptListing();
       dispatch(
         getPaymentsBizEventsTransactionsAction.request({
           firstLoad: true,
@@ -126,7 +130,6 @@ const PaymentsTransactionBizEventsListScreen = () => {
 
   useHeaderSecondLevel({
     title: I18n.t("features.payments.transactions.title"),
-    canGoBack: true,
     supportRequest: true,
     scrollValues: {
       contentOffsetY: scrollTranslationY,

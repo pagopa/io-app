@@ -32,13 +32,9 @@ export const pnActivationReducer = (
   return state;
 };
 
-export const pnActivationSelector = (state: GlobalState): PnActivationState =>
-  state.features.pn.activation;
-
 export const isLoadingPnActivationSelector = (state: GlobalState) =>
   pipe(
-    state,
-    pnActivationSelector,
+    state.features.pn.activation,
     pnActivationPot =>
       pot.isLoading(pnActivationPot) || pot.isUpdating(pnActivationPot)
   );

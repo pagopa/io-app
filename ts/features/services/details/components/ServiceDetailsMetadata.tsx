@@ -133,7 +133,7 @@ export const ServiceDetailsMetadata = ({
       kind: "ListItemInfoCopy",
       label: I18n.t("services.details.metadata.fiscalCode"),
       icon: "entityCode",
-      onPress: handleItemOnPress(serviceId, "COPY"),
+      onPress: handleItemOnPress(organizationFiscalCode, "COPY"),
       value: organizationFiscalCode,
       testID: "service-details-metadata-org-fiscal-code"
     },

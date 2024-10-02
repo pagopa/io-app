@@ -481,6 +481,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             color="black"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -488,6 +489,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
@@ -511,6 +513,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             color="black"
                             defaultColor="black"
                             defaultWeight="Bold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -518,6 +521,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
@@ -1032,6 +1036,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             color="black"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -1039,6 +1044,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
@@ -1062,6 +1068,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             color="black"
                             defaultColor="black"
                             defaultWeight="Bold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -1069,6 +1076,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
@@ -1583,6 +1591,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             color="black"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -1590,6 +1599,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
@@ -1613,6 +1623,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             color="black"
                             defaultColor="black"
                             defaultWeight="Bold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -1620,6 +1631,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
@@ -2134,6 +2146,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             color="black"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -2141,6 +2154,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
@@ -2164,6 +2178,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             color="black"
                             defaultColor="black"
                             defaultWeight="Bold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -2171,6 +2186,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {

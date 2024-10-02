@@ -5,6 +5,16 @@ import { ItwCredentialCard, ItwCredentialStatus } from "../ItwCredentialCard";
 
 describe("ItwCredentialCard", () => {
   it.each([
+    "EuropeanHealthInsuranceCard",
+    "EuropeanDisabilityCard",
+    "MDL",
+    "PersonIdentificationData"
+  ])("should match snapshot when credential type is %p", type => {
+    const component = render(<ItwCredentialCard credentialType={type} />);
+    expect(component).toMatchSnapshot();
+  });
+
+  it.each([
     "valid",
     "expired",
     "expiring",
@@ -13,11 +23,7 @@ describe("ItwCredentialCard", () => {
     "should match snapshot when status is %p",
     status => {
       const component = render(
-        <ItwCredentialCard
-          credentialType={CredentialType.PID}
-          data={["ABCDEFG ABCDEFG", "AAAAAA99A99A999A"]}
-          status={status}
-        />
+        <ItwCredentialCard credentialType={"MDL"} status={status} />
       );
       expect(component).toMatchSnapshot();
     }

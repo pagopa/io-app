@@ -367,6 +367,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                         testID="show-more-data-action"
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -510,6 +511,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,
@@ -920,6 +922,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                         testID="show-more-data-action"
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -1063,6 +1066,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,
@@ -1128,6 +1132,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -1135,6 +1140,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
@@ -1542,6 +1548,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                         testID="show-more-data-action"
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -1685,6 +1692,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,
@@ -1750,6 +1758,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -1757,6 +1766,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
@@ -1814,6 +1824,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -1858,6 +1869,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -1865,6 +1877,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -1888,6 +1901,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -1895,6 +1909,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -2370,6 +2385,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                         testID="show-more-data-action"
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -2513,6 +2529,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,
@@ -2578,6 +2595,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -2585,6 +2603,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
@@ -2642,6 +2661,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -2754,6 +2774,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -2761,6 +2782,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -2784,6 +2806,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -2791,6 +2814,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -3266,6 +3290,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                         testID="show-more-data-action"
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -3409,6 +3434,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,
@@ -3474,6 +3500,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -3481,6 +3508,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
@@ -3538,6 +3566,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -3582,6 +3611,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -3589,6 +3619,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -3612,6 +3643,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -3619,6 +3651,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -3752,6 +3785,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -3796,6 +3830,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -3803,6 +3838,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -3826,6 +3862,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -3833,6 +3870,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -4308,6 +4346,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                         testID="show-more-data-action"
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -4451,6 +4490,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,
@@ -4516,6 +4556,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -4523,6 +4564,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
@@ -4580,6 +4622,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -4692,6 +4735,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -4699,6 +4743,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -4722,6 +4767,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -4729,6 +4775,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -4862,6 +4909,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -4974,6 +5022,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -4981,6 +5030,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -5004,6 +5054,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -5011,6 +5062,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -5486,6 +5538,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                         testID="show-more-data-action"
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -5629,6 +5682,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,
@@ -5694,6 +5748,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -5701,6 +5756,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
@@ -5758,6 +5814,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -5802,6 +5859,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -5809,6 +5867,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -5832,6 +5891,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -5839,6 +5899,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -5968,6 +6029,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -5975,6 +6037,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
@@ -6032,6 +6095,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -6076,6 +6140,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -6083,6 +6148,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -6106,6 +6172,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -6113,6 +6180,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -6246,6 +6314,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -6358,6 +6427,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -6365,6 +6435,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -6388,6 +6459,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -6395,6 +6467,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -6524,6 +6597,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -6531,6 +6605,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
@@ -6588,6 +6663,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -6632,6 +6708,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -6639,6 +6716,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -6662,6 +6740,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -6669,6 +6748,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -6802,6 +6882,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -6914,6 +6995,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -6921,6 +7003,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -6944,6 +7027,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -6951,6 +7035,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -7084,6 +7169,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -7128,6 +7214,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -7135,6 +7222,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -7158,6 +7246,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -7165,6 +7254,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -7640,6 +7730,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                         testID="show-more-data-action"
                       >
                         <View
+                          accessibilityElementsHidden={true}
                           importantForAccessibility="no-hide-descendants"
                           style={
                             [
@@ -7783,6 +7874,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                         }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,
@@ -7848,6 +7940,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -7855,6 +7948,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
@@ -7912,6 +8006,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -7956,6 +8051,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -7963,6 +8059,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -7986,6 +8083,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -7993,6 +8091,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -8122,6 +8221,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -8129,6 +8229,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
@@ -8186,6 +8287,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -8230,6 +8332,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -8237,6 +8340,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -8260,6 +8364,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -8267,6 +8372,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -8400,6 +8506,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
                                     [
@@ -8512,6 +8619,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -8519,6 +8627,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           [
                                             {
@@ -8542,6 +8651,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -8549,6 +8659,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [

@@ -17,7 +17,7 @@ import {
   trackSpidLoginSuccess
 } from "../../screens/authentication/analytics";
 import { idpSelector } from "../../store/reducers/authentication";
-import { IdpCIE } from "../../screens/authentication/LandingScreen";
+import { IdpCIE } from "../../hooks/useNavigateToLoginMethod";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 /**

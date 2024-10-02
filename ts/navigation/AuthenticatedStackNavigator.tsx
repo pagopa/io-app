@@ -5,7 +5,6 @@ import {
 import React from "react";
 import { Platform } from "react-native";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
-import { fimsEnabled } from "../config";
 import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
 import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
@@ -17,37 +16,26 @@ import {
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { FciStackNavigator } from "../features/fci/navigation/FciStackNavigator";
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
-import { FimsLegacyNavigator } from "../features/fimsLegacy/navigation/navigator";
 import { IdPayBarcodeNavigator } from "../features/idpay/barcode/navigation/navigator";
 import { IdPayBarcodeRoutes } from "../features/idpay/barcode/navigation/routes";
 import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
 import { IdPayCodeRoutes } from "../features/idpay/code/navigation/routes";
-import {
-  IDPayConfigurationNavigator,
-  IDPayConfigurationRoutes
-} from "../features/idpay/configuration/navigation/navigator";
+import { IdPayConfigurationNavigator } from "../features/idpay/configuration/navigation/navigator";
+import { IdPayConfigurationRoutes } from "../features/idpay/configuration/navigation/routes";
 import {
   IDpayDetailsNavigator,
   IDPayDetailsRoutes
 } from "../features/idpay/details/navigation";
-import {
-  IDPayOnboardingNavigator,
-  IDPayOnboardingRoutes
-} from "../features/idpay/onboarding/navigation/navigator";
-import {
-  IDPayPaymentNavigator,
-  IDPayPaymentRoutes
-} from "../features/idpay/payment/navigation/navigator";
+import { IdPayOnboardingNavigator } from "../features/idpay/onboarding/navigation/navigator";
+import { IdPayOnboardingRoutes } from "../features/idpay/onboarding/navigation/routes";
+import { IdPayPaymentNavigator } from "../features/idpay/payment/navigation/navigator";
+import { IdPayPaymentRoutes } from "../features/idpay/payment/navigation/routes";
 import { IDPayPaymentCodeScanScreen } from "../features/idpay/payment/screens/IDPayPaymentCodeScanScreen";
-import {
-  IDPayUnsubscriptionNavigator,
-  IDPayUnsubscriptionRoutes
-} from "../features/idpay/unsubscription/navigation/navigator";
+import { IdPayUnsubscriptionNavigator } from "../features/idpay/unsubscription/navigation/navigator";
+import { IdPayUnsubscriptionRoutes } from "../features/idpay/unsubscription/navigation/routes";
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import { WalletNavigator as NewWalletNavigator } from "../features/newWallet/navigation";
-import { WalletRoutes as NewWalletRoutes } from "../features/newWallet/navigation/routes";
 import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
 import { PaymentsBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
 import { PaymentsCheckoutNavigator } from "../features/payments/checkout/navigation/navigator";
@@ -72,17 +60,14 @@ import {
   isCdcEnabledSelector,
   isCGNEnabledSelector,
   isFciEnabledSelector,
-  isFIMSEnabledSelector,
-  isIdPayEnabledSelector,
-  isNewPaymentSectionEnabledSelector
+  isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
-import { isItWalletTestEnabledSelector } from "../store/reducers/persistedPreferences";
 import { isGestureEnabled } from "../utils/navigation";
 import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
-import FIMS_LEGACY_ROUTES from "../features/fimsLegacy/navigation/routes";
 import { SearchScreen } from "../features/services/search/screens/SearchScreen";
 import { FIMS_ROUTES, FimsNavigator } from "../features/fims/common/navigation";
+import { MessagesSearchScreen } from "../features/messages/screens/MessagesSearchScreen";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -99,14 +84,9 @@ const hideHeaderOptions = {
 
 const AuthenticatedStackNavigator = () => {
   const cdcEnabled = useIOSelector(isCdcEnabledSelector);
-  const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewPaymentSectionEnabledSelector
-  );
-  const isItWalletEnabled = useIOSelector(isItWalletTestEnabledSelector);
 
   return (
     <Stack.Navigator
@@ -145,19 +125,26 @@ const AuthenticatedStackNavigator = () => {
         options={hideHeaderOptions}
         component={MessagesStackNavigator}
       />
-      {isNewWalletSectionEnabled ? (
-        <Stack.Screen
-          name={NewWalletRoutes.WALLET_NAVIGATOR}
-          options={hideHeaderOptions}
-          component={NewWalletNavigator}
-        />
-      ) : (
-        <Stack.Screen
-          name={ROUTES.WALLET_NAVIGATOR}
-          options={hideHeaderOptions}
-          component={WalletNavigator}
-        />
-      )}
+      {/* This screen is outside the MessagesNavigator to change gesture and transion behaviour. */}
+      <Stack.Screen
+        name={MESSAGES_ROUTES.MESSAGES_SEARCH}
+        component={MessagesSearchScreen}
+        options={{
+          ...hideHeaderOptions,
+          gestureEnabled: false,
+          ...Platform.select({
+            ios: {
+              animationEnabled: false
+            },
+            default: undefined
+          })
+        }}
+      />
+      <Stack.Screen
+        name={ROUTES.WALLET_NAVIGATOR}
+        options={hideHeaderOptions}
+        component={WalletNavigator}
+      />
       <Stack.Screen
         name={SERVICES_ROUTES.SERVICES_NAVIGATOR}
         options={{ ...hideHeaderOptions, gestureEnabled: isGestureEnabled }}
@@ -181,7 +168,11 @@ const AuthenticatedStackNavigator = () => {
 
       <Stack.Screen
         name={ROUTES.PROFILE_NAVIGATOR}
-        options={hideHeaderOptions}
+        options={{
+          ...hideHeaderOptions,
+          ...TransitionPresets.SlideFromRightIOS,
+          gestureEnabled: isGestureEnabled
+        }}
         component={ProfileStackNavigator}
       />
 
@@ -232,27 +223,24 @@ const AuthenticatedStackNavigator = () => {
         options={hideHeaderOptions}
         component={WorkunitGenericFailure}
       />
-      <Stack.Screen
-        name={ZENDESK_ROUTES.MAIN}
-        component={ZendeskStackNavigator}
-        options={{
-          ...TransitionPresets.ModalSlideFromBottomIOS,
-          ...hideHeaderOptions
+
+      <Stack.Group
+        screenOptions={{
+          headerShown: false,
+          presentation: "modal"
         }}
-      />
+      >
+        <Stack.Screen
+          name={ZENDESK_ROUTES.MAIN}
+          component={ZendeskStackNavigator}
+        />
+      </Stack.Group>
+
       <Stack.Screen
         name={UADONATION_ROUTES.WEBVIEW}
         options={hideHeaderOptions}
         component={UAWebViewScreen}
       />
-
-      {isFimsEnabled && (
-        <Stack.Screen
-          name={FIMS_LEGACY_ROUTES.MAIN}
-          options={hideHeaderOptions}
-          component={FimsLegacyNavigator}
-        />
-      )}
       <Stack.Screen
         name={FIMS_ROUTES.MAIN}
         options={hideHeaderOptions}
@@ -278,8 +266,8 @@ const AuthenticatedStackNavigator = () => {
       {isIdPayEnabled && (
         <>
           <Stack.Screen
-            name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
-            component={IDPayOnboardingNavigator}
+            name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
+            component={IdPayOnboardingNavigator}
             options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
           <Stack.Screen
@@ -288,13 +276,13 @@ const AuthenticatedStackNavigator = () => {
             options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
           <Stack.Screen
-            name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
-            component={IDPayConfigurationNavigator}
+            name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR}
+            component={IdPayConfigurationNavigator}
             options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
           <Stack.Screen
-            name={IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
-            component={IDPayUnsubscriptionNavigator}
+            name={IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
+            component={IdPayUnsubscriptionNavigator}
             options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
           {/*
@@ -302,7 +290,7 @@ const AuthenticatedStackNavigator = () => {
             FIXME IOBP-383: Using react-navigation 6.x we can achive this using a Stack.Group inside the IDPayPaymentNavigator
           */}
           <Stack.Screen
-            name={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
+            name={IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
             component={IDPayPaymentCodeScanScreen}
             options={{
               ...hideHeaderOptions,
@@ -311,8 +299,8 @@ const AuthenticatedStackNavigator = () => {
             }}
           />
           <Stack.Screen
-            name={IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN}
-            component={IDPayPaymentNavigator}
+            name={IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN}
+            component={IdPayPaymentNavigator}
             options={{ gestureEnabled: false, ...hideHeaderOptions }}
           />
           <Stack.Screen
@@ -379,14 +367,11 @@ const AuthenticatedStackNavigator = () => {
           ...hideHeaderOptions
         }}
       />
-
-      {isItWalletEnabled && (
-        <Stack.Screen
-          name={ITW_ROUTES.MAIN}
-          component={ItwStackNavigator}
-          options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
-        />
-      )}
+      <Stack.Screen
+        name={ITW_ROUTES.MAIN}
+        component={ItwStackNavigator}
+        options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+      />
     </Stack.Navigator>
   );
 };

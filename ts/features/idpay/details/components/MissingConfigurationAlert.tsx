@@ -1,14 +1,12 @@
-import React from "react";
-import { View } from "react-native";
 import { Alert, VSpacer } from "@pagopa/io-app-design-system";
 import { NavigatorScreenParams } from "@react-navigation/native";
+import React from "react";
+import { View } from "react-native";
 import { StatusEnum as InitiativeStatusEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import I18n from "../../../../i18n";
-import {
-  IDPayConfigurationParamsList,
-  IDPayConfigurationRoutes
-} from "../../configuration/navigation/navigator";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { IdPayConfigurationParamsList } from "../../configuration/navigation/params";
+import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 
 type StatusWithAlert = Exclude<
   InitiativeStatusEnum,
@@ -37,27 +35,30 @@ const MissingConfigurationAlert = (props: Props) => {
 
   const viewRef = React.createRef<View>();
 
-  const screen: Record<StatusWithAlert, keyof IDPayConfigurationParamsList> = {
+  const screen: Record<StatusWithAlert, keyof IdPayConfigurationParamsList> = {
     NOT_REFUNDABLE_ONLY_IBAN:
-      IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
+      IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
     NOT_REFUNDABLE_ONLY_INSTRUMENT:
-      IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
-    NOT_REFUNDABLE: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO
+      IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
+    NOT_REFUNDABLE: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO
   };
 
   const handleNavigation = () => {
-    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: screen[status] as keyof IDPayConfigurationParamsList,
-      params: {
-        initiativeId
-      }
-    } as NavigatorScreenParams<IDPayConfigurationParamsList>);
+    navigation.navigate(
+      IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
+      {
+        screen: screen[status] as keyof IdPayConfigurationParamsList,
+        params: {
+          initiativeId
+        }
+      } as NavigatorScreenParams<IdPayConfigurationParamsList>
+    );
   };
 
   return (
     <>
       <Alert
-        viewRef={viewRef}
+        ref={viewRef}
         content={I18n.t(
           `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.content`
         )}
