@@ -83,6 +83,10 @@ PODS:
     - React-Core
   - JOSESwift (2.4.0)
   - libevent (2.1.12)
+  - lottie-ios (4.4.1)
+  - lottie-react-native (6.7.2):
+    - lottie-ios (= 4.4.1)
+    - React-Core
   - Mixpanel-swift (4.2.0):
     - Mixpanel-swift/Complete (= 4.2.0)
   - Mixpanel-swift/Complete (4.2.0)
@@ -435,6 +439,10 @@ PODS:
     - React-Core
   - react-native-image-picker (4.10.3):
     - React-Core
+  - react-native-netinfo (6.0.6):
+    - React-Core
+  - react-native-notifications-utils (0.3.0):
+    - React-Core
   - react-native-pager-view (6.2.3):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -448,6 +456,11 @@ PODS:
     - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
     - React
+  - react-native-skia (1.3.13):
+    - RCT-Folly (= 2021.07.22.00)
+    - React
+    - React-callinvoker
+    - React-Core
   - react-native-slider (3.0.3):
     - React
   - react-native-splash-screen (3.2.0):
@@ -685,6 +698,7 @@ DEPENDENCIES:
   - io-react-native-secure-storage (from `../node_modules/io-react-native-secure-storage`)
   - jail-monkey (from `../node_modules/jail-monkey`)
   - libevent (~> 2.1.12)
+  - lottie-react-native (from `../node_modules/lottie-react-native`)
   - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
   - OpenSSL-Universal (= 1.1.1100)
   - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
@@ -720,12 +734,15 @@ DEPENDENCIES:
   - react-native-flipper (from `../node_modules/react-native-flipper`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
+  - react-native-notifications-utils (from `../node_modules/react-native-notifications-utils`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-pdf-thumbnail (from `../node_modules/react-native-pdf-thumbnail`)
   - react-native-render-html (from `../node_modules/react-native-render-html`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-screen-brightness (from `../node_modules/react-native-screen-brightness`)
+  - "react-native-skia (from `../node_modules/@shopify/react-native-skia`)"
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-view-shot (from `../node_modules/react-native-view-shot`)
@@ -785,6 +802,7 @@ SPEC REPOS:
     - fmt
     - JOSESwift
     - libevent
+    - lottie-ios
     - Mixpanel-swift
     - OpenSSL-Universal
     - Sentry
@@ -823,6 +841,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/io-react-native-secure-storage"
   jail-monkey:
     :path: "../node_modules/jail-monkey"
+  lottie-react-native:
+    :path: "../node_modules/lottie-react-native"
   MixpanelReactNative:
     :path: "../node_modules/mixpanel-react-native"
   pagopa-io-react-native-crypto:
@@ -887,6 +907,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-get-random-values"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
+  react-native-notifications-utils:
+    :path: "../node_modules/react-native-notifications-utils"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-pdf:
@@ -899,6 +923,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-screen-brightness:
     :path: "../node_modules/react-native-screen-brightness"
+  react-native-skia:
+    :path: "../node_modules/@shopify/react-native-skia"
   react-native-slider:
     :path: "../node_modules/@react-native-community/slider"
   react-native-splash-screen:
@@ -1009,6 +1035,8 @@ SPEC CHECKSUMS:
   jail-monkey: a71b35d482a70ecba844a90f002994012cf12a5d
   JOSESwift: 7ff178bb9173ff42c6e990929a9f2fa702a34f69
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
+  lottie-ios: e047b1d2e6239b787cc5e9755b988869cf190494
+  lottie-react-native: 17547b2f3c7034e2ae8672833fdb63262164d18a
   Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
   MixpanelReactNative: 0101b8828c2f335c128850e71ab7d3b7adde089a
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
@@ -1043,12 +1071,15 @@ SPEC CHECKSUMS:
   react-native-flipper: 97d537d855e0e7f6ac26a065e01bf1aecc8ba41c
   react-native-get-random-values: 21325b2244dfa6b58878f51f9aa42821e7ba3d06
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
+  react-native-netinfo: 40b91995cd49c33ae57996486db76f0af067b630
+  react-native-notifications-utils: f083307d1261f34444a89ca2f9b69f920c9b81e7
   react-native-pager-view: 948dc00b6545d82b53e5f99cafef4a8521c60dd4
   react-native-pdf: 79aa75e39a80c1d45ffe58aa500f3cf08f267a2e
   react-native-pdf-thumbnail: a042fffdab7a49f0f9df0e11da0a90beebfd4241
   react-native-render-html: 96c979fe7452a0a41559685d2f83b12b93edac8c
   react-native-safe-area-context: 399a5859f6acbdf67f671c69b53113f535f3b5b0
   react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
+  react-native-skia: c0d99aa1fb10f6d97627c1dc018c0ab269439a76
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-view-shot: 4475fde003fe8a210053d1f98fb9e06c1d834e1c

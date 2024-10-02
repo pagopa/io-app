@@ -62,4 +62,12 @@ export type StoredCredential = {
   credentialType: string;
   issuerConf: IssuerConfiguration;
   storedStatusAttestation?: StoredStatusAttestation;
+  /**
+   * The SD-JWT issuance and expiration dates in ISO format.
+   * These might be different from the underlying document's dates.
+   */
+  jwt: {
+    issuedAt: string;
+    expiration: string;
+  };
 };

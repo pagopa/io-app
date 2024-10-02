@@ -250,6 +250,7 @@ permissionRationale:
     message: "Abbiamo bisogno dell'accesso alla fotocamera per utilizzare la torcia."
 startup:
   title: Stiamo preparando la tua esperienza su IO
+  title2: Ancora un po’ di pazienza...
   authentication: Utente autenticato
   sessionInfo: Attributi SPID caricati
   profileInfo: Profilo utente caricato
@@ -263,6 +264,15 @@ startup:
     cta_2: Ignora
   contextualHelp:
     title: Problemi di inizializzazione?
+  connection_lost:
+    title: Non hai una connessione a internet attiva
+    description: Controlla la tua connessione e riavvia l’app
+  slowdowns_results_screen:
+    title: Sembra che le cose vadano un po' a rilento
+    subtitle: Può dipendere dai nostri sistemi o dalla connessione del tuo dispositivo. Riprova tra qualche minuto.
+  cdn_unreachable_results_screen:
+    title: Qualcosa non ha funzionato
+    subtitle: Chiudi l’app e riprova tra qualche minuto.
 login:
   expiration_info: Per ragioni di sicurezza, dovrai entrare con SPID o CIE ogni 30 giorni.
   expiration_info_FL: Per ragioni di sicurezza, dovrai entrare con SPID o CIE una volta all’anno.
@@ -3349,8 +3359,10 @@ features:
         eidInfo:
           title: "Documenti su IO:\nidentità verificata"
           contentTop: Con **Documenti su IO** salvi nel Portafoglio di IO le versioni digitali dei tuoi documenti.
-          contentBottom: "###### Come funziona?\n\nPer garantire che sei tu e tenere al sicuro i tuoi documenti, la tua **identità è verificata** in fase di attivazione tramite SPID o CIE."
+          contentBottom: "###### Come funziona?\n\nLa tua **identità è verificata** in fase di attivazione tramite SPID o CIE."
           triggerLabel: Cos'è?
+          alert:
+            valid: L'ultima verifica è del {{issuanceDate}}.
       credentialDetails:
         flipCard: "Mostra retro"
         personalDataTitle: "Dati personali"
