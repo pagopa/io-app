@@ -67,7 +67,7 @@ export type StoredCredential = {
    * These might be different from the underlying document's dates.
    */
   jwt: {
-    issuedAt: string;
     expiration: string;
+    issuedAt?: string;
   };
 };
