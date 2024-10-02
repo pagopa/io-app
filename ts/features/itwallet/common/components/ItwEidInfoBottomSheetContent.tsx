@@ -64,6 +64,7 @@ export const ItwEidInfoBottomSheetContent = () => {
             "features.itWallet.presentation.bottomSheets.eidInfo.contentBottom"
           )}
         />
+        <View />
       </VStack>
     );
   };

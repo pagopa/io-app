@@ -1,7 +1,14 @@
-import { IOStyles, ListItemHeader } from "@pagopa/io-app-design-system";
+import {
+  ButtonSolid,
+  ContentWrapper,
+  IOStyles,
+  ListItemHeader,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { isItwEnabledSelector } from "../../../store/reducers/backendStatus";
@@ -20,6 +27,8 @@ import {
   ItwEidInfoBottomSheetTitle
 } from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import {
   WalletCardsCategoryContainer,
@@ -27,7 +36,7 @@ import {
 } from "./WalletCardsCategoryContainer";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
 
-const EID_INFO_BOTTOM_PADDING = 128;
+const EID_INFO_BOTTOM_PADDING = 168;
 
 const WalletCardsContainer = () => {
   const isLoading = useIOSelector(selectIsWalletCardsLoading);
@@ -70,13 +79,37 @@ const ItwCardsContainer = ({
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
+  const navigation = useIONavigation();
 
   const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
     {
       title: <ItwEidInfoBottomSheetTitle />,
-      component: <ItwEidInfoBottomSheetContent />
+      component: <ItwEidInfoBottomSheetContent />,
+      footer: (
+        <ContentWrapper>
+          <ButtonSolid
+            label="Disattiva Documenti su IO"
+            fullWidth
+            color="danger"
+            onPress={() =>
+              navigation.navigate(ITW_ROUTES.MAIN, {
+                screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
+              })
+            }
+          />
+          <VSpacer size={16} />
+        </ContentWrapper>
+      )
     },
     EID_INFO_BOTTOM_PADDING
+  );
+
+  useFocusEffect(
+    React.useCallback(
+      // Automatically dismiss the bottom sheet when focus is lost
+      () => eidInfoBottomSheet.dismiss,
+      [eidInfoBottomSheet.dismiss]
+    )
   );
 
   if (!isItwTrialEnabled || !isItwEnabled) {

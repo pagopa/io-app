@@ -22,6 +22,7 @@ import { ItwIssuanceEidFailureScreen } from "../issuance/screens/ItwIssuanceEidF
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import { ItwIdentityNotMatchingScreen } from "../lifecycle/screens/ItwIdentityNotMatchingScreen";
+import { ItwLifecycleWalletRevocationScreen } from "../lifecycle/screens/ItwLifecycleWalletRevocationScreen";
 import {
   ItWalletIssuanceMachineProvider,
   ItwCredentialIssuanceMachineContext,
@@ -171,6 +172,12 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN}
         component={ItwIdentityNotMatchingScreen}
+        options={{ headerShown: false, gestureEnabled: false }}
+      />
+
+      <Stack.Screen
+        name={ITW_ROUTES.WALLET_REVOCATION_SCREEN}
+        component={ItwLifecycleWalletRevocationScreen}
         options={{ headerShown: false, gestureEnabled: false }}
       />
     </Stack.Navigator>
