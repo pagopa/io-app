@@ -8,7 +8,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import {
   clearNotificationPendingMessage,
   updateNotificationsPendingMessage
-} from "../actions/notifications";
+} from "../actions/pendingMessage";
 
 export type PendingMessageState = Readonly<{
   id: string;
@@ -25,10 +25,8 @@ export const pendingMessageReducer = (
   switch (action.type) {
     case getType(updateNotificationsPendingMessage):
       return action.payload;
-
     case getType(clearNotificationPendingMessage):
       return INITIAL_STATE;
-
     default:
       return state;
   }
