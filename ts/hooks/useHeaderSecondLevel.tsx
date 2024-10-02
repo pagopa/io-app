@@ -144,6 +144,7 @@ export const useHeaderSecondLevel = ({
   }, [
     enableDiscreteTransition,
     animatedRef,
+    alertProps,
     scrollValues,
     variant,
     backgroundColor
@@ -188,7 +189,7 @@ export const useHeaderSecondLevel = ({
       type: "singleAction",
       firstAction: helpAction
     };
-  }, [alertProps, supportRequest, startSupportRequest, secondAction, thirdAction]);
+  }, [supportRequest, startSupportRequest, secondAction, thirdAction]);
 
   const headerComponentProps = useMemo(
     () => ({
