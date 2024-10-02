@@ -3399,6 +3399,7 @@ features:
         usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
         certifiedLabel: Questo documento è certificato dall'ente emittente.
     walletRevocation:
+      cta: Disattiva Documenti su IO
       confirmScreen:
         title: Vuoi davvero disattivare Documenti su IO?
         subtitle: "Eliminerai i documenti che hai aggiunto al Portafoglio.\nSe cambi idea, potrai riattivare Documenti su IO in futuro."

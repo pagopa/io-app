@@ -7,7 +7,8 @@ import {
   IOStyles,
   VStack,
   H4,
-  Alert
+  Alert,
+  ButtonSolid
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
@@ -29,7 +30,11 @@ export const ItwEidInfoBottomSheetTitle = () => (
   </HStack>
 );
 
-export const ItwEidInfoBottomSheetContent = () => {
+const ItwEidInfoBottomSheetContent = ({
+  onRevoke
+}: {
+  onRevoke: () => void;
+}) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
 
   const Content = ({ credential }: { credential: StoredCredential }) => {
@@ -64,7 +69,12 @@ export const ItwEidInfoBottomSheetContent = () => {
             "features.itWallet.presentation.bottomSheets.eidInfo.contentBottom"
           )}
         />
-        <View />
+        <ButtonSolid
+          label={I18n.t("features.itWallet.walletRevocation.cta")}
+          fullWidth
+          color="danger"
+          onPress={onRevoke}
+        />
       </VStack>
     );
   };
@@ -77,3 +87,9 @@ export const ItwEidInfoBottomSheetContent = () => {
     )
   );
 };
+
+const MemoizedItwEidInfoBottomSheetContent = React.memo(
+  ItwEidInfoBottomSheetContent
+);
+
+export { MemoizedItwEidInfoBottomSheetContent as ItwEidInfoBottomSheetContent };

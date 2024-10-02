@@ -36,7 +36,7 @@ import {
 } from "./WalletCardsCategoryContainer";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
 
-const EID_INFO_BOTTOM_PADDING = 168;
+const EID_INFO_BOTTOM_PADDING = 128;
 
 const WalletCardsContainer = () => {
   const isLoading = useIOSelector(selectIsWalletCardsLoading);
@@ -81,24 +81,22 @@ const ItwCardsContainer = ({
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const navigation = useIONavigation();
 
+  // navigation does not seem to work when the bottom sheet's component is not inline
+  const navigateToWalletRevocationScreen = React.useCallback(
+    () =>
+      navigation.navigate(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
+      }),
+    [navigation]
+  );
+
   const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
     {
       title: <ItwEidInfoBottomSheetTitle />,
-      component: <ItwEidInfoBottomSheetContent />,
-      footer: (
-        <ContentWrapper>
-          <ButtonSolid
-            label="Disattiva Documenti su IO"
-            fullWidth
-            color="danger"
-            onPress={() =>
-              navigation.navigate(ITW_ROUTES.MAIN, {
-                screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
-              })
-            }
-          />
-          <VSpacer size={16} />
-        </ContentWrapper>
+      component: (
+        <ItwEidInfoBottomSheetContent
+          onRevoke={navigateToWalletRevocationScreen}
+        />
       )
     },
     EID_INFO_BOTTOM_PADDING
