@@ -1,8 +1,7 @@
 import {
   GradientScrollView,
   IOStyles,
-  IOToast,
-  VSpacer
+  IOToast
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
@@ -19,6 +18,7 @@ import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
+import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { selectWalletCards } from "../store/selectors";
@@ -62,7 +62,7 @@ const WalletHomeScreen = ({ route }: Props) => {
 
   return (
     <WalletScrollView>
-      <VSpacer size={16} />
+      <WalletCategoryFilterTabs />
       <WalletPaymentsRedirectBanner />
       <WalletCardsContainer />
     </WalletScrollView>

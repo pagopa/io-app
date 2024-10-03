@@ -19,12 +19,14 @@ type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
   ignoreMargins?: boolean;
   fallbackComponent?: ReactElement;
+  closable?: boolean;
 };
 
 export const ItwDiscoveryBanner = ({
   withTitle = true,
   ignoreMargins = false,
-  fallbackComponent
+  fallbackComponent,
+  closable = true
 }: ItwDiscoveryBannerProps) => {
   const bannerRef = React.createRef<View>();
   const navigation = useIONavigation();
@@ -94,7 +96,7 @@ export const ItwDiscoveryBanner = ({
         pictogramName="itWallet"
         color="turquoise"
         size="big"
-        onClose={handleOnClose}
+        onClose={closable ? handleOnClose : undefined}
         labelClose={I18n.t("global.buttons.close")}
         onPress={handleOnPress}
       />

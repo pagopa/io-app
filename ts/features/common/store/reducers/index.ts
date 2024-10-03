@@ -44,6 +44,14 @@ import {
   WhatsNewState,
   whatsNewPersistor
 } from "../../../whatsnew/store/reducers";
+import {
+  mixpanelReducer,
+  MixpanelState
+} from "../../../mixpanel/store/reducer";
+import {
+  ingressScreenReducer,
+  IngressScreenState
+} from "../../../ingress/store/reducer";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -65,6 +73,8 @@ export type FeaturesState = {
   fims: FimsState;
   itWallet: PersistedItWalletState;
   profileSettings: ProfileSettingsState & PersistPartial;
+  mixpanel: MixpanelState;
+  ingress: IngressScreenState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -86,7 +96,9 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   wallet: walletReducer,
   fims: fimsReducer,
   itWallet: itWalletReducer,
-  profileSettings: profileSettingsReducerPersistor
+  profileSettings: profileSettingsReducerPersistor,
+  mixpanel: mixpanelReducer,
+  ingress: ingressScreenReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;
