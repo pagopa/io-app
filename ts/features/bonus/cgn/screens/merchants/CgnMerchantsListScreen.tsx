@@ -26,7 +26,7 @@ import {
   isLoading,
   isReady
 } from "../../../../../common/model/RemoteValue";
-import { CgnMerchantLlistViewRenderItem } from "../../components/merchants/CgnMerchantsListView";
+import { CgnMerchantListViewRenderItem } from "../../components/merchants/CgnMerchantsListView";
 import { navigateToCgnMerchantDetail } from "../../navigation/actions";
 import {
   cgnOfflineMerchants,
@@ -114,7 +114,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
   );
 
   const renderItem = React.useMemo(
-    () => CgnMerchantLlistViewRenderItem({ onItemPress }),
+    () => CgnMerchantListViewRenderItem({ onItemPress }),
     [onItemPress]
   );
 

@@ -7,7 +7,7 @@ import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/Onli
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import I18n from "../../../../../i18n";
 
-export const CgnMerchantLlistViewRenderItem =
+export const CgnMerchantListViewRenderItem =
   (props: {
     onItemPress: (id: Merchant["id"]) => void;
   }): ListRenderItem<OfflineMerchant | OnlineMerchant> =>

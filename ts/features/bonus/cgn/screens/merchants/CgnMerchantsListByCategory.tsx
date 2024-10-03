@@ -50,7 +50,8 @@ import { mixAndSortMerchants } from "../../utils/merchants";
 import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
-import { CgnMerchantLlistViewRenderItem } from "../../components/merchants/CgnMerchantsListView";
+import { CgnMerchantListViewRenderItem } from "../../components/merchants/CgnMerchantsListView";
+import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 
 export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
   category: ProductCategoryEnum;
@@ -103,9 +104,12 @@ const CgnMerchantsListByCategory = () => {
     [route]
   );
 
+  const [isPullRefresh, setIsPullRefresh] = React.useState(false);
+
   const initLoadingLists = () => {
     dispatch(cgnOfflineMerchants.request(categoryFilter));
     dispatch(cgnOnlineMerchants.request(categoryFilter));
+    setIsPullRefresh(false);
   };
 
   React.useEffect(initLoadingLists, [route, categoryFilter, dispatch]);
@@ -150,13 +154,14 @@ const CgnMerchantsListByCategory = () => {
   });
 
   const renderItem = React.useMemo(
-    () => CgnMerchantLlistViewRenderItem({ onItemPress }),
+    () => CgnMerchantListViewRenderItem({ onItemPress }),
     [onItemPress]
   );
 
-  const isRefreshing = useAdjustedRefreshingValue(
-    isLoading(onlineMerchants) || isLoading(offlineMerchants)
-  );
+  const isListLoading =
+    isLoading(onlineMerchants) || isLoading(offlineMerchants);
+
+  const isListRefreshing = isListLoading && isPullRefresh;
 
   return (
     <>
@@ -184,12 +189,16 @@ const CgnMerchantsListByCategory = () => {
               progressViewOffset={
                 Platform.OS === "ios" ? titleHeight : undefined
               }
-              refreshing={isRefreshing}
-              onRefresh={initLoadingLists}
+              refreshing={isListRefreshing}
+              onRefresh={() => {
+                initLoadingLists();
+                setIsPullRefresh(true);
+              }}
             />
           }
-          data={merchantsAll}
+          data={isListLoading && !isPullRefresh ? [] : merchantsAll}
           keyExtractor={item => item.id}
+          ListEmptyComponent={CgnMerchantListSkeleton}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <Divider />}
           ListHeaderComponent={() => (
@@ -255,40 +264,3 @@ const CgnMerchantsListByCategory = () => {
 };
 
 export default CgnMerchantsListByCategory;
-
-// adjust refreshing value in time for more pleasant loading indicator animation
-// it is true if it was awlays true in the last 0.3 seconds
-// it stays true for at least 1.0 second
-function useAdjustedRefreshingValue(isRefreshing: boolean): boolean {
-  const DO_NOT_SHOW_BEFORE_MILLIS = 300;
-  const SHOW_FOR_AT_LEAST_MILLIS = 1000;
-  const [adjustedIsRefreshing, setAdjustedIsRefreshing] =
-    React.useState(isRefreshing);
-  const [isRefrescingSince, setIsRefreshingSince] = React.useState(0);
-  React.useEffect(() => {
-    if (isRefreshing) {
-      setIsRefreshingSince(Date.now());
-      const timeout = setTimeout(() => {
-        setAdjustedIsRefreshing(true);
-      }, DO_NOT_SHOW_BEFORE_MILLIS);
-      return () => clearTimeout(timeout);
-    }
-    return () => undefined;
-  }, [isRefreshing]);
-  React.useEffect(() => {
-    if (!isRefreshing) {
-      const timeout = setTimeout(
-        () => setAdjustedIsRefreshing(false),
-        Math.max(
-          0,
-          DO_NOT_SHOW_BEFORE_MILLIS +
-            SHOW_FOR_AT_LEAST_MILLIS -
-            (Date.now() - isRefrescingSince)
-        )
-      );
-      return () => clearTimeout(timeout);
-    }
-    return () => undefined;
-  }, [isRefrescingSince, isRefreshing]);
-  return adjustedIsRefreshing;
-}
