@@ -14,12 +14,20 @@ import {
   selectWalletItwCards,
   selectWalletOtherCards
 } from "../store/selectors";
+import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
+import {
+  ItwEidInfoBottomSheetContent,
+  ItwEidInfoBottomSheetTitle
+} from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
+import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import {
   WalletCardsCategoryContainer,
   WalletCardsCategoryContainerProps
 } from "./WalletCardsCategoryContainer";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
+
+const EID_INFO_BOTTOM_PADDING = 128;
 
 const WalletCardsContainer = () => {
   const isLoading = useIOSelector(selectIsWalletCardsLoading);
@@ -63,40 +71,56 @@ const ItwCardsContainer = ({
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
 
+  const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
+    {
+      title: <ItwEidInfoBottomSheetTitle />,
+      component: <ItwEidInfoBottomSheetContent />
+    },
+    EID_INFO_BOTTOM_PADDING
+  );
+
   if (!isItwTrialEnabled || !isItwEnabled) {
     return null;
   }
 
-  const endElement: ListItemHeader["endElement"] = isItwValid
-    ? {
-        type: "badge",
+  const getHeader = (): ListItemHeader | undefined => {
+    if (!isItwValid) {
+      return undefined;
+    }
+    return {
+      iconName: "legalValue",
+      iconColor: "blueIO-500",
+      label: I18n.t("features.wallet.cards.categories.itw"),
+      endElement: {
+        type: "buttonLink",
         componentProps: {
-          text: I18n.t("features.itWallet.wallet.active"),
-          variant: "blue",
+          label: I18n.t(
+            "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
+          ),
+          onPress: eidInfoBottomSheet.present,
           testID: "walletCardsCategoryItwActiveBadgeTestID"
         }
       }
-    : {
-        type: "badge",
-        componentProps: {
-          text: I18n.t("features.itWallet.wallet.inactive"),
-          variant: "default",
-          testID: "walletCardsCategoryItwInactiveBadgeTestID"
-        }
-      };
+    };
+  };
 
   return (
-    <WalletCardsCategoryContainer
-      key={`cards_category_itw`}
-      testID={`walletCardsCategoryTestID_itw`}
-      cards={cards}
-      isStacked={isStacked}
-      header={{
-        label: I18n.t("features.wallet.cards.categories.itw"),
-        endElement
-      }}
-      footer={<ItwDiscoveryBanner ignoreMargins={true} />}
-    />
+    <>
+      <WalletCardsCategoryContainer
+        key={`cards_category_itw`}
+        testID={`walletCardsCategoryTestID_itw`}
+        cards={cards}
+        isStacked={isStacked}
+        header={getHeader()}
+        topElement={
+          <>
+            <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
+            <ItwWalletReadyBanner />
+          </>
+        }
+      />
+      {isItwValid && eidInfoBottomSheet.bottomSheet}
+    </>
   );
 };
 
@@ -106,10 +130,13 @@ const OtherCardsContainer = ({
   const cards = useIOSelector(selectWalletOtherCards);
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
+  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
 
   if (cards.length === 0) {
     return null;
   }
+
+  const displayHeader = isItwTrialEnabled && isItwEnabled && isItwValid;
 
   return (
     <WalletCardsCategoryContainer
@@ -118,7 +145,7 @@ const OtherCardsContainer = ({
       cards={cards}
       isStacked={isStacked}
       header={
-        isItwTrialEnabled && isItwEnabled
+        displayHeader
           ? {
               label: I18n.t("features.wallet.cards.categories.other")
             }
