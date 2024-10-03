@@ -175,14 +175,12 @@ const DcFrontData = ({ claims }: DataComponentProps) => {
         }}
       />
       <CardClaim
-        claim={claims["family_name"]}
+        claim={claims["given_name"]}
         position={{ right: "3.5%", top: `${rows[0]}%` }}
-        textTransform="uppercase"
       />
       <CardClaim
-        claim={claims["given_name"]}
+        claim={claims["family_name"]}
         position={{ right: "3.5%", top: `${rows[1]}%` }}
-        textTransform="uppercase"
       />
       <CardClaim
         claim={claims["birth_date"]}

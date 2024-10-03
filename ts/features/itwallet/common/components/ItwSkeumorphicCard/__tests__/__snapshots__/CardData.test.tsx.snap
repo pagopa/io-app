@@ -118,7 +118,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       fontStyle={
         {
           "fontSize": 22.916666666666668,
-          "textTransform": "uppercase",
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -127,7 +127,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
         [
           {
             "fontSize": 22.916666666666668,
-            "textTransform": "uppercase",
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",
@@ -139,7 +139,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       }
       weight="Semibold"
     >
-      Mastrini
+      Federico
     </Text>
   </View>
   <View
@@ -165,7 +165,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       fontStyle={
         {
           "fontSize": 22.916666666666668,
-          "textTransform": "uppercase",
+          "textTransform": "none",
         }
       }
       lineBreakMode="head"
@@ -174,7 +174,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
         [
           {
             "fontSize": 22.916666666666668,
-            "textTransform": "uppercase",
+            "textTransform": "none",
           },
           {
             "color": "#0E0F13",
@@ -186,7 +186,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       }
       weight="Semibold"
     >
-      Federico
+      Mastrini
     </Text>
   </View>
   <View
