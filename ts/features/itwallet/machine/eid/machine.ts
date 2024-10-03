@@ -10,17 +10,11 @@ import {
   StartCieAuthFlowActorParams,
   type RequestEidActorParams
 } from "./actors";
-import { IssuanceFailureType } from "./failure";
+import { mapEventToFailure } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
 };
-
-const setFailure =
-  (type: IssuanceFailureType) =>
-  ({ event }: { event: EidIssuanceEvents }): Partial<Context> => ({
-    failure: { type, reason: "error" in event ? event.error : undefined }
-  });
 
 export const itwEidIssuanceMachine = setup({
   types: {
@@ -46,7 +40,8 @@ export const itwEidIssuanceMachine = setup({
     setWalletInstanceToOperational: notImplemented,
     setWalletInstanceToValid: notImplemented,
     handleSessionExpired: notImplemented,
-    abortIdentification: notImplemented
+    abortIdentification: notImplemented,
+    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) }))
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
@@ -126,7 +121,7 @@ export const itwEidIssuanceMachine = setup({
             target: "SessionExpired"
           },
           {
-            actions: assign(setFailure(IssuanceFailureType.GENERIC)), // TODO: [SIW-1390] Use unsupported device from io-rn-wallet
+            actions: "setFailure",
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]
@@ -151,7 +146,7 @@ export const itwEidIssuanceMachine = setup({
             target: "SessionExpired"
           },
           {
-            actions: assign(setFailure(IssuanceFailureType.GENERIC)),
+            actions: "setFailure",
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]
@@ -262,9 +257,7 @@ export const itwEidIssuanceMachine = setup({
                   target: "ReadingCieCard"
                 },
                 onError: {
-                  actions: assign(
-                    setFailure(IssuanceFailureType.ISSUER_GENERIC)
-                  ),
+                  actions: "setFailure",
                   target: "#itwEidIssuanceMachine.Failure"
                 }
               },
@@ -341,7 +334,7 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.UserIdentification"
               },
               {
-                actions: assign(setFailure(IssuanceFailureType.ISSUER_GENERIC)),
+                actions: "setFailure",
                 target: "#itwEidIssuanceMachine.Failure"
               }
             ]
@@ -357,9 +350,7 @@ export const itwEidIssuanceMachine = setup({
               target: "DisplayingPreview"
             },
             {
-              actions: assign(
-                setFailure(IssuanceFailureType.NOT_MATCHING_IDENTITY)
-              ),
+              actions: "setFailure",
               target: "#itwEidIssuanceMachine.Failure"
             }
           ]
