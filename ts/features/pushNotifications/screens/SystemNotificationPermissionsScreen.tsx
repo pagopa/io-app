@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
@@ -30,16 +30,6 @@ export const SystemNotificationPermissionsScreen = () => {
   const navigation = useIONavigation();
   const safeAreaInsets = useSafeAreaInsets();
 
-  const goBackCallback = useCallback(
-    (openSystemNotificationSettings: boolean = false) => {
-      if (openSystemNotificationSettings) {
-        openSystemNotificationSettingsScreen();
-      }
-      navigation.goBack();
-    },
-    [navigation]
-  );
-
   useEffect(() => {
     dispatch(setEngagementScreenShown());
   }, [dispatch]);
@@ -57,7 +47,7 @@ export const SystemNotificationPermissionsScreen = () => {
         <IconButton
           icon="closeMedium"
           color="neutral"
-          onPress={() => goBackCallback()}
+          onPress={navigation.goBack}
           testID="notifications-modal-close-button"
           accessibilityLabel={I18n.t("global.buttons.close")}
         />
@@ -71,7 +61,10 @@ export const SystemNotificationPermissionsScreen = () => {
         <ButtonSolid
           label={I18n.t("notifications.modal.primaryButton")}
           fullWidth={true}
-          onPress={() => goBackCallback(true)}
+          onPress={() => {
+            openSystemNotificationSettingsScreen();
+            navigation.goBack();
+          }}
           testID="notifications-modal-open-system-settings-button"
         />
 
@@ -80,7 +73,7 @@ export const SystemNotificationPermissionsScreen = () => {
           <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
             <ButtonLink
               label={I18n.t("notifications.modal.secondaryButton")}
-              onPress={() => goBackCallback()}
+              onPress={navigation.goBack}
               testID="notifications-modal-not-now-button"
             />
           </View>
