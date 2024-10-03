@@ -69,7 +69,7 @@ import {
 import {
   getZendeskTokenStatusSelector,
   zendeskConfigSelector,
-  ZendeskTokenStatus
+  ZendeskTokenStatusEnum
 } from "../store/reducers";
 import { handleContactSupport } from "../utils";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
@@ -91,9 +91,9 @@ export type ContextualHelpData = {
 
 export type ZendeskSupportHelpCenterNavigationParams = ZendeskStartPayload;
 
-enum ButtonPressed {
-  "ON_GOING_REQUEST" = "ON_GOING_REQUEST",
-  "OPEN_NEW_REQUEST" = "OPEN_NEW_REQUEST"
+enum ButtonPressedEnum {
+  ON_GOING_REQUEST = "ON_GOING_REQUEST",
+  OPEN_NEW_REQUEST = "OPEN_NEW_REQUEST"
 }
 /**
  * This component must be used only here.
@@ -216,7 +216,7 @@ const ZendeskSupportHelpCenter = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const route = useRoute<RouteProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">>();
-  const [pressedButton, setPressedButton] = useState<ButtonPressed>();
+  const [pressedButton, setPressedButton] = useState<ButtonPressedEnum>();
   // Navigation prop
   const {
     faqCategories,
@@ -287,14 +287,16 @@ const ZendeskSupportHelpCenter = () => {
   );
 
   const handleButtonPress = React.useCallback(
-    (value: ButtonPressed) => {
+    (value: ButtonPressedEnum) => {
       setPressedButton(value);
       if (isUserLoggedIn) {
+        // dispatching this action invokes the saga that performs
+        // the getSession and retrieves the Zendesk token from the BE
         dispatch(getZendeskToken.request());
       } else {
-        if (value === ButtonPressed.ON_GOING_REQUEST) {
+        if (value === ButtonPressedEnum.ON_GOING_REQUEST) {
           handleOnGoingRequest();
-        } else if (value === ButtonPressed.OPEN_NEW_REQUEST) {
+        } else if (value === ButtonPressedEnum.OPEN_NEW_REQUEST) {
           handleContactSupportPress();
         }
       }
@@ -308,15 +310,15 @@ const ZendeskSupportHelpCenter = () => {
       primary: {
         testID: "contactSupportButton",
         label: I18n.t("support.helpCenter.cta.contactSupport"),
-        onPress: () => handleButtonPress(ButtonPressed.OPEN_NEW_REQUEST),
+        onPress: () => handleButtonPress(ButtonPressedEnum.OPEN_NEW_REQUEST),
         loading:
           getZendeskTokenStatus === "request" &&
-          pressedButton === ButtonPressed.OPEN_NEW_REQUEST
+          pressedButton === ButtonPressedEnum.OPEN_NEW_REQUEST
       },
       secondary: {
         testID: "showTicketsButton",
         label: I18n.t("support.helpCenter.cta.seeReports"),
-        onPress: () => handleButtonPress(ButtonPressed.ON_GOING_REQUEST)
+        onPress: () => handleButtonPress(ButtonPressedEnum.ON_GOING_REQUEST)
       }
     }),
     [getZendeskTokenStatus, handleButtonPress, pressedButton]
@@ -337,19 +339,20 @@ const ZendeskSupportHelpCenter = () => {
     addTicketCustomField(zendeskFciId, signatureRequestId ?? "");
   }
 
+  // This useEffect handles the response of the getSession and allows the request to be handled.
   useEffect(() => {
     if (
-      prevGetZendeskTokenStatus === ZendeskTokenStatus.REQUEST &&
-      getZendeskTokenStatus === ZendeskTokenStatus.SUCCESS
+      prevGetZendeskTokenStatus === ZendeskTokenStatusEnum.REQUEST &&
+      getZendeskTokenStatus === ZendeskTokenStatusEnum.SUCCESS
     ) {
-      if (pressedButton === ButtonPressed.ON_GOING_REQUEST) {
+      if (pressedButton === ButtonPressedEnum.ON_GOING_REQUEST) {
         handleOnGoingRequest();
-      } else if (pressedButton === ButtonPressed.OPEN_NEW_REQUEST) {
+      } else if (pressedButton === ButtonPressedEnum.OPEN_NEW_REQUEST) {
         handleContactSupportPress();
       }
     } else if (
-      prevGetZendeskTokenStatus === ZendeskTokenStatus.REQUEST &&
-      getZendeskTokenStatus === ZendeskTokenStatus.ERROR
+      prevGetZendeskTokenStatus === ZendeskTokenStatusEnum.REQUEST &&
+      getZendeskTokenStatus === ZendeskTokenStatusEnum.ERROR
     ) {
       navigation.navigate(ZENDESK_ROUTES.MAIN, {
         screen: ZENDESK_ROUTES.ERROR_REQUEST_ZENDESK_TOKEN

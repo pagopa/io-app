@@ -33,7 +33,6 @@ import {
   formatRequestedTokenString,
   getOnlyNotAlreadyExistentValues
 } from "../utils";
-import { convertUnknownToError } from "../../../utils/errors";
 import { withRefreshApiCall } from "../../fastLogin/saga/utils";
 import { sessionInformationLoadSuccess } from "../../../store/actions/authentication";
 import { sessionInfoSelector } from "../../../store/reducers/authentication";
@@ -100,18 +99,23 @@ export function* watchZendeskSupportSaga() {
     dismissSupport();
   });
 }
-
+/**
+ *
+ * @param getSession is the API call to get the session tokens.
+ * The goal of this saga is to take Zendesk token from the BE in order to properly report to support.
+ */
 function* getZendeskTokenSaga(
   getSession: ReturnType<typeof BackendClient>["getSession"]
 ) {
   try {
+    // Define the fields needed for the token request, in this case, the needed field is only 'zendeskToken'
     const fields = formatRequestedTokenString(false, ["zendeskToken"]);
     const isFastLogin = yield* select(isFastLoginEnabledSelector);
 
     const response = (yield* call(
       withRefreshApiCall,
       getSession({ fields }),
-      getZendeskToken.failure("401")
+      getZendeskToken.failure("401") // if the error is 401 the error screen is not show thanks this parameter
     )) as unknown as SagaCallReturnType<typeof getSession>;
 
     if (E.isLeft(response)) {
@@ -129,17 +133,15 @@ function* getZendeskTokenSaga(
           )
         );
       } else {
-        // todo: control if it is correct or if i can delete this control
-        if (!isFastLogin) {
+        if (!isFastLogin || response.right.status !== 401) {
           yield* put(getZendeskToken.failure());
         }
       }
       return;
     }
   } catch (e) {
-    const error = convertUnknownToError(e);
     yield* put(getZendeskToken.failure());
-    return error;
+    return;
   }
 }
 
