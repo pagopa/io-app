@@ -41,6 +41,7 @@ import { ItwParamsList } from "../../features/itwallet/navigation/ItwParamsList"
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import { MessagesParamsList } from "../../features/messages/navigation/params";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
+import { NOTIFICATIONS_ROUTES } from "../../features/pushNotifications/navigation/routes";
 import { PaymentsBarcodeParamsList } from "../../features/payments/barcode/navigation/params";
 import { PaymentsBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
 import { PaymentsTransactionBizEventsParamsList } from "../../features/payments/bizEventsTransaction/navigation/params";
@@ -78,6 +79,7 @@ export type AppParamsList = {
 
   [MESSAGES_ROUTES.MESSAGES_NAVIGATOR]: NavigatorScreenParams<MessagesParamsList>;
   [MESSAGES_ROUTES.MESSAGES_SEARCH]: undefined;
+  [NOTIFICATIONS_ROUTES.SYSTEM_NOTIFICATION_PERMISSIONS]: undefined;
   [ROUTES.WALLET_NAVIGATOR]: NavigatorScreenParams<WalletParamsList>;
   [SERVICES_ROUTES.SERVICES_NAVIGATOR]: NavigatorScreenParams<ServicesParamsList>;
   [SERVICES_ROUTES.SEARCH]: undefined;
