@@ -1,3 +1,4 @@
+import * as E from "fp-ts/lib/Either";
 import {
   Alert,
   ListItemHeader,
@@ -27,6 +28,7 @@ import {
 } from "../store/selectors/paymentMethods";
 import { getPaymentLogoFromWalletDetails } from "../../common/utils";
 import { WalletStatusEnum } from "../../../../../definitions/pagopa/ecommerce/WalletStatus";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const CheckoutPaymentMethodsList = () => {
   const dispatch = useIODispatch();
@@ -37,7 +39,7 @@ const CheckoutPaymentMethodsList = () => {
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
   const allPaymentMethods = useIOSelector(walletPaymentAllMethodsSelector);
   const userWallets = useIOSelector(walletPaymentEnabledUserWalletsSelector);
-  const recentUsedPaymentMethodPot = useIOSelector(
+  const recentUsedPaymentMethod = useIOSelector(
     walletRecentPaymentMethodSelector
   );
 
@@ -54,10 +56,31 @@ const CheckoutPaymentMethodsList = () => {
     O.getOrElse(() => 0)
   );
 
+  useOnFirstRender(
+    () => {
+      const recentUserWalletUsed = pipe(
+        recentUsedPaymentMethod,
+        WalletInfo.decode,
+        E.getOrElseW(() => undefined)
+      );
+      const recentGuestPaymentMethodUsed = pipe(
+        recentUsedPaymentMethod,
+        PaymentMethodResponse.decode,
+        E.getOrElseW(() => undefined)
+      );
+      if (recentUserWalletUsed) {
+        handleSelectUserWallet(recentUserWalletUsed.walletId);
+      } else if (recentGuestPaymentMethodUsed) {
+        handleSelectPaymentMethod(recentGuestPaymentMethodUsed.id);
+      }
+    },
+    () => recentUsedPaymentMethod !== undefined
+  );
+
   const recentPaymentMethodListItem = useMemo(
     () =>
       pipe(
-        recentUsedPaymentMethodPot,
+        recentUsedPaymentMethod,
         O.fromNullable,
         O.chainNullableK(a => {
           if (a.status === WalletStatusEnum.VALIDATED) {
@@ -68,7 +91,7 @@ const CheckoutPaymentMethodsList = () => {
         O.map(A.of),
         O.getOrElse(() => [] as Array<RadioItem<string>>)
       ),
-    [recentUsedPaymentMethodPot, paymentAmount]
+    [recentUsedPaymentMethod, paymentAmount]
   );
 
   const userPaymentMethodListItems = useMemo(
@@ -175,7 +198,7 @@ const CheckoutPaymentMethodsList = () => {
       )}
       <RadioGroup<string>
         type="radioListItem"
-        selectedItem={selectedWalletId}
+        selectedItem={selectedWalletId || selectedPaymentMethodId}
         items={recentPaymentMethodListItem}
         onPress={handleSelectUserWallet}
       />

@@ -93,6 +93,9 @@ const reducer = (
       return {
         ...state,
         rptId: action.payload,
+        recentUsedPaymentMethod: pot.none,
+        selectedPaymentMethod: O.none,
+        selectedWallet: O.none,
         paymentDetails: pot.toLoading(state.paymentDetails)
       };
     case getType(paymentsGetPaymentDetailsAction.success):
