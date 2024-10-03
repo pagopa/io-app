@@ -3332,6 +3332,16 @@ features:
         title: La tua richiesta è stata presa in carico
         body: Riceverai un messaggio in app con l'esito della tua richiesta appena sarà disponibile.
         primaryAction: Ho capito
+      credentialAlreadyAdded:
+        title: Hai già questo documento
+        body: La versione digitale del documento è già presente nel tuo Portafoglio.
+        primaryAction: Vai al documento
+      walletInstanceNotActive:
+        title: Attiva Documenti su IO per continuare
+        body: "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare "
+        bodyBold: Documenti su IO
+        primaryAction: Inizia
+        secondaryAction: Non ora
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
