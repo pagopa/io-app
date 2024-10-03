@@ -2100,10 +2100,10 @@
     abab "^2.0.6"
     zod "^3.22.4"
 
-"@pagopa/io-react-native-login-utils@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.5.tgz#02179a4cbeed17376b028a5ce506bdbf0b1b6e39"
-  integrity sha512-vtVH42V+1TydYDv4M7RpbTKbD/SOQx7HS7woaQ++UOwgoG+H28SmszK5O7AVIR4lkpiPgF75rq0HOkdNonReHA==
+"@pagopa/io-react-native-login-utils@1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.6.tgz#b211e953eb05b76b43effc0d9d7be79767c361f9"
+  integrity sha512-Dx1WPdqFaB76Wv8WgkLCIQoj9ADZeWyfe/GTnGWQKeIWnTe5v3socbEDdax9fh0asxizuTVzTVj962H2nCQxwg==
 
 "@pagopa/io-react-native-wallet@^0.17.1":
   version "0.17.1"
@@ -13471,6 +13471,11 @@ react-native-masked-text@^1.13.0:
   dependencies:
     date-and-time "0.9.0"
     tinymask "1.0.2"
+
+react-native-notifications-utils@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-notifications-utils/-/react-native-notifications-utils-0.3.0.tgz#a26ceabef2161dc8e9052badf36f09f6b3954832"
+  integrity sha512-URKVdNeDxlZopZ+F2X3qi9x6pjn+o+JXzSR82E9OfGlYfPKq4oMrYEYRSptIBQwwnloc4amMERcBH8x7DFIqdA==
 
 react-native-pager-view@^6.2.3:
   version "6.2.3"
