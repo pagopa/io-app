@@ -8,8 +8,11 @@ import {
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { logoutRequest } from "../../../../store/actions/authentication";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { useIODispatch } from "../../../../store/hooks";
-import { trackItwIdNotMatch } from "../../analytics";
+import { useIODispatch, useIOStore } from "../../../../store/hooks";
+import {
+  trackItwIdNotMatch,
+  updatePropertiesWalletRevoked
+} from "../../analytics";
 
 export const ItwIdentityNotMatchingScreen = () => {
   useAvoidHardwareBackButton();
@@ -17,10 +20,12 @@ export const ItwIdentityNotMatchingScreen = () => {
   useFocusEffect(trackItwIdNotMatch);
 
   const dispatch = useIODispatch();
+  const store = useIOStore();
 
   const resetWallet = () => {
     dispatch(itwLifecycleWalletReset());
     dispatch(itwLifecycleIdentityCheckCompleted());
+    updatePropertiesWalletRevoked(store.getState());
   };
 
   const handleCancel = () => {

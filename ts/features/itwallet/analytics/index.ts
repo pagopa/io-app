@@ -20,7 +20,12 @@ export type KoState = {
   cta_id: string;
 };
 
-const mixPanelCredentials = ["ITW_ID", "ITW_PG", "ITW_CED", "ITW_TS"] as const;
+const mixPanelCredentials = [
+  "ITW_ID_V2",
+  "ITW_PG_V2",
+  "ITW_CED_V2",
+  "ITW_TS_V2"
+] as const;
 
 type MixPanelCredential = (typeof mixPanelCredentials)[number];
 
@@ -33,15 +38,15 @@ export type OtherMixPanelCredential = "welfare" | "payment_method" | "CGN";
 type NewCredential = MixPanelCredential | OtherMixPanelCredential;
 
 export const CREDENTIALS_MAP: Record<string, MixPanelCredential> = {
-  PersonIdentificationData: "ITW_ID",
-  MDL: "ITW_PG",
-  EuropeanDisabilityCard: "ITW_CED",
-  EuropeanHealthInsuranceCard: "ITW_TS"
+  PersonIdentificationData: "ITW_ID_V2",
+  MDL: "ITW_PG_V2",
+  EuropeanDisabilityCard: "ITW_CED_V2",
+  EuropeanHealthInsuranceCard: "ITW_TS_V2"
 };
 
 type BackToWallet = {
   exit_page: string;
-  credential: Extract<MixPanelCredential, "ITW_ID">;
+  credential: Extract<MixPanelCredential, "ITW_ID_V2">;
 };
 
 type ItwExit = {
@@ -185,7 +190,7 @@ export function trackItWalletDeferredIssuing(credential: string) {
 export function trackWalletCredentialFAC_SIMILE() {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS["ITW_CREDENTIAL_FAC-SIMILE"],
-    buildEventProperties("UX", "screen_view", { credential: "ITW_TS" })
+    buildEventProperties("UX", "screen_view", { credential: "ITW_TS_V2" })
   );
 }
 // #endregion SCREEN VIEW EVENTS
@@ -353,7 +358,7 @@ export function trackWalletShowBack(credential: string) {
 export function trackWalletPgValidityInfo() {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_PG_VALIDITY_INFO,
-    buildEventProperties("UX", "action", { credential: "ITW_PG" })
+    buildEventProperties("UX", "action", { credential: "ITW_PG_V2" })
   );
 }
 
@@ -380,7 +385,7 @@ export function trackWalletCredentialSupport(credential: string) {
 export function trackWalletCredentialShowFAC_SIMILE() {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS["ITW_CREDENTIAL_SHOW_FAC-SIMILE"],
-    buildEventProperties("UX", "action", { credential: "ITW_TS" })
+    buildEventProperties("UX", "action", { credential: "ITW_TS_V2" })
   );
 }
 
@@ -514,17 +519,8 @@ export const trackAddCredentialFailure = ({
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
-export const trackCredentialPropertiesSuccess = async (
-  credential: MixPanelCredential,
-  state: GlobalState
-) => {
-  await updateMixpanelProfileProperties(state, {
-    property: credential,
-    value: "valid"
-  });
-};
 
-export const trackCredentialDeleteProfileProperties = async (
+export const trackCredentialDeleteProperties = async (
   credential: MixPanelCredential,
   state: GlobalState
 ) => {
@@ -532,18 +528,25 @@ export const trackCredentialDeleteProfileProperties = async (
     property: credential,
     value: "not_available"
   });
+  await updateMixpanelSuperProperties(state, {
+    property: credential,
+    value: "not_available"
+  });
 };
 
-export const trackAllCredentialProfileProperties = async (
+export const trackAllCredentialProfileAndSuperProperties = async (
   state: GlobalState
 ) => {
-  mixPanelCredentials.forEach(
-    async credential =>
-      await updateMixpanelProfileProperties(state, {
-        property: credential,
-        value: "valid"
-      })
-  );
+  mixPanelCredentials.forEach(async credential => {
+    await updateMixpanelProfileProperties(state, {
+      property: credential,
+      value: "valid"
+    });
+    await updateMixpanelSuperProperties(state, {
+      property: credential,
+      value: "valid"
+    });
+  });
 };
 // #endregion PROFILE PROPERTIES
 
@@ -604,7 +607,10 @@ export const trackItwRequestSuccess = (ITW_ID_method?: ItwIdMethod) => {
   if (ITW_ID_method) {
     void mixpanelTrack(
       ITW_TECH_EVENTS.ITW_ID_REQUEST_SUCCESS,
-      buildEventProperties("TECH", undefined, { ITW_ID_method, ITW_ID: "L2" })
+      buildEventProperties("TECH", undefined, {
+        ITW_ID_method,
+        ITW_ID_V2: "L2"
+      })
     );
   }
 };
@@ -612,7 +618,30 @@ export const trackItwRequestSuccess = (ITW_ID_method?: ItwIdMethod) => {
 
 // #region PROFILE AND SUPER PROPERTIES UPDATE
 
-const updatePropertiesWalletRevoked = (state: GlobalState) => {
+export const updateITWStatusAndIDProperties = (state: GlobalState) => {
+  void updateMixpanelProfileProperties(state, {
+    property: "ITW_STATUS_V2",
+    value: "L2"
+  });
+  void updateMixpanelSuperProperties(state, {
+    property: "ITW_STATUS_V2",
+    value: "L2"
+  });
+  void updateMixpanelProfileProperties(state, {
+    property: "ITW_ID_V2",
+    value: "valid"
+  });
+  void updateMixpanelSuperProperties(state, {
+    property: "ITW_ID_V2",
+    value: "valid"
+  });
+};
+
+/**
+ * This function is used to set all to not_available / not_active when wallet is revoked or when the wallet section is visualized in empty state
+ * @param state
+ */
+export const updatePropertiesWalletRevoked = (state: GlobalState) => {
   mixPanelCredentials.forEach(property => {
     void updateMixpanelProfileProperties(state, {
       property,
@@ -624,11 +653,11 @@ const updatePropertiesWalletRevoked = (state: GlobalState) => {
     });
   });
   void updateMixpanelProfileProperties(state, {
-    property: "ITW_STATUS",
+    property: "ITW_STATUS_V2",
     value: "not_active"
   });
   void updateMixpanelSuperProperties(state, {
-    property: "ITW_STATUS",
+    property: "ITW_STATUS_V2",
     value: "not_active"
   });
 };

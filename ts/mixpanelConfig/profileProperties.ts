@@ -45,11 +45,11 @@ type ProfileProperties = {
   NOTIFICATION_PERMISSION: NotificationPermissionType;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
   TRACKING: MixpanelOptInTrackingType;
-  ITW_STATUS: ItwStatus;
-  ITW_ID: ItwId;
-  ITW_PG: ItwPg;
-  ITW_TS: ItwTs;
-  ITW_CED: ItwCed;
+  ITW_STATUS_V2: ItwStatus;
+  ITW_ID_V2: ItwId;
+  ITW_PG_V2: ItwPg;
+  ITW_TS_V2: ItwTs;
+  ITW_CED_V2: ItwCed;
   ITW_HAS_READ_IPZS_POLICY: boolean;
   SAVED_PAYMENT_METHOD: number;
 };
@@ -69,11 +69,11 @@ export const updateMixpanelProfileProperties = async (
   const notificationsEnabled = await checkNotificationPermissions();
   const SERVICE_CONFIGURATION = serviceConfigHandler(state);
   const TRACKING = mixpanelOptInHandler(state);
-  const ITW_STATUS = walletStatusHandler(state);
-  const ITW_ID = idStatusHandler(state);
-  const ITW_PG = pgStatusHandler(state);
-  const ITW_TS = tsStatusHandler(state);
-  const ITW_CED = cedStatusHandler(state);
+  const ITW_STATUS_V2 = walletStatusHandler(state);
+  const ITW_ID_V2 = idStatusHandler(state);
+  const ITW_PG_V2 = pgStatusHandler(state);
+  const ITW_TS_V2 = tsStatusHandler(state);
+  const ITW_CED_V2 = cedStatusHandler(state);
   const paymentsAnalyticsData = getPaymentsAnalyticsConfiguration(state);
   const ITW_HAS_READ_IPZS_POLICY = ipzs_policy(state);
 
@@ -88,11 +88,11 @@ export const updateMixpanelProfileProperties = async (
     SERVICE_CONFIGURATION,
     TRACKING,
     ITW_HAS_READ_IPZS_POLICY,
-    ITW_STATUS,
-    ITW_ID,
-    ITW_PG,
-    ITW_TS,
-    ITW_CED,
+    ITW_STATUS_V2,
+    ITW_ID_V2,
+    ITW_PG_V2,
+    ITW_TS_V2,
+    ITW_CED_V2,
     SAVED_PAYMENT_METHOD: paymentsAnalyticsData.savedPaymentMethods || 0
   };
 
@@ -124,18 +124,15 @@ const tosVersionHandler = (state: GlobalState): number | string => {
   return optInState ? optInState : "not set";
 };
 
-// TODO [SIW-1438]: Add dynamic profile properties
 const walletStatusHandler = (state: GlobalState): ItwStatus => {
-  // TODO check if this is the correct selector and what returns (do the same in super properties file)
-  const walletInstance = itwCredentialsEidSelector(state);
-  return walletInstance ? "L2" : "not_active";
+  const credentialsState = itwCredentialsSelector(state);
+  return credentialsState.eid ? "L2" : "not_active";
 };
 
 const ipzs_policy = (state: GlobalState): boolean =>
   itwIPZSHasReadPolicySelector(state);
 
 const idStatusHandler = (state: GlobalState): ItwId => {
-  // TODO pick
   const credentialsState = itwCredentialsSelector(state);
   return credentialsState.eid ? "valid" : "not_available";
 };
@@ -145,8 +142,6 @@ const pgStatusHandler = (state: GlobalState): ItwPg => {
 };
 const tsStatusHandler = (state: GlobalState): ItwTs => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
-  // TODO check if this is the correct value
-  // console.log("🚀 ~ tsStatusHandler ~ credentialsByType:", credentialsByType);
   return credentialsByType.EuropeanHealthInsuranceCard
     ? "valid"
     : "not_available";

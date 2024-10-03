@@ -109,7 +109,7 @@ const getCtaProps = (
   const { parsedCredential } = credential;
 
   const onPress = () => {
-    if (credential.credential === "ITW_TS") {
+    if (credential.credential === "ITW_TS_V2") {
       trackWalletCredentialShowFAC_SIMILE();
     }
 

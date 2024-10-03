@@ -23,7 +23,7 @@ import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedire
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { selectWalletCards } from "../store/selectors";
 import {
-  trackAllCredentialProfileProperties,
+  trackAllCredentialProfileAndSuperProperties,
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
@@ -34,7 +34,7 @@ const WalletHomeScreen = ({ route }: Props) => {
   const store = useIOStore();
   useFocusEffect(() => {
     trackOpenWalletScreen();
-    void trackAllCredentialProfileProperties(store.getState());
+    void trackAllCredentialProfileAndSuperProperties(store.getState());
   });
 
   const dispatch = useIODispatch();

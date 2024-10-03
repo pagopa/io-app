@@ -8,22 +8,23 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 import {
   trackAddFirstCredential,
   trackBackToWallet,
-  trackSaveCredentialSuccess
+  trackSaveCredentialSuccess,
+  updateITWStatusAndIDProperties
 } from "../../analytics";
-import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { useIOStore } from "../../../../store/hooks";
-import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 
-const ITW_CREDENTIAL = "ITW_ID";
+const ITW_CREDENTIAL = "ITW_ID_V2";
 
 export const ItwIssuanceEidResultScreen = () => {
   const route = useRoute();
+  const store = useIOStore();
 
-  useFocusEffect(() => trackSaveCredentialSuccess(ITW_CREDENTIAL));
+  useFocusEffect(() => {
+    trackSaveCredentialSuccess(ITW_CREDENTIAL);
+    updateITWStatusAndIDProperties(store.getState());
+  });
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-
-  const store = useIOStore();
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
@@ -36,8 +37,7 @@ export const ItwIssuanceEidResultScreen = () => {
   const handleClose = async () => {
     machineRef.send({ type: "go-to-wallet" });
     trackBackToWallet({ exit_page: route.name, credential: ITW_CREDENTIAL });
-    void updateMixpanelProfileProperties(store.getState());
-    void updateMixpanelSuperProperties(store.getState());
+    updateITWStatusAndIDProperties(store.getState());
   };
 
   return (
