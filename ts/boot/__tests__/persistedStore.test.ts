@@ -17,11 +17,11 @@ describe("Check the addition for new fields to the persisted store. If one of th
         id: "fakeInstallationId"
       }
     };
-    const notificationsWithoutPermissions = _.omit(
+    const notificationsWithoutEnvironment = _.omit(
       notifications,
-      "permissions"
+      "environment"
     );
-    expect(notificationsWithoutPermissions).toMatchSnapshot();
+    expect(notificationsWithoutEnvironment).toMatchSnapshot();
   });
   it("Freeze 'profile' state", () => {
     expect(globalState.profile).toMatchSnapshot();

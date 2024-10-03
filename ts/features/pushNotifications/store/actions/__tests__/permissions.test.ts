@@ -1,4 +1,4 @@
-import { updateSystemNotificationsEnabled } from "../permissions";
+import { updateSystemNotificationsEnabled } from "../environment";
 
 describe("updateSystemNotificationsEnabled", () => {
   it("should have 'UPDATE_SYSTEM_NOTIFICATIONS_ENABLED' as type and 'true' payload", () => {
