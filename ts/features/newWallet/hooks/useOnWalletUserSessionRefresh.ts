@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Action } from "typesafe-actions";
-import { useIOSelector } from "../../store/hooks";
-import { fastLoginPendingActionsSelector } from "../../features/fastLogin/store/selectors";
+import { useIOSelector } from "../../../store/hooks";
+import { fastLoginPendingActionsSelector } from "../../fastLogin/store/selectors";
 
 /**
  * This custom hook runs the callback everytime the user session refreshes.
@@ -10,7 +10,7 @@ import { fastLoginPendingActionsSelector } from "../../features/fastLogin/store/
  *
  * @param callback
  */
-export const useOnSessionRefresh = (callback: () => void) => {
+export const useOnWalletUserSessionRefresh = (callback: () => void) => {
   const sessionPendingActions = useIOSelector(fastLoginPendingActionsSelector);
   const [previousPendingActions, setPreviousPendingActions] = useState<
     Array<Action>

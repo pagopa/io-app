@@ -27,8 +27,8 @@ import {
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
-import { useOnSessionRefresh } from "../../../utils/hooks/useOnSessionRefresh";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { useOnWalletUserSessionRefresh } from "../hooks/useOnWalletUserSessionRefresh";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
@@ -53,7 +53,7 @@ const WalletHomeScreen = ({ route }: Props) => {
     fetchWalletSectionData();
   });
 
-  useOnSessionRefresh(() => {
+  useOnWalletUserSessionRefresh(() => {
     fetchWalletSectionData();
   });
 
