@@ -2,8 +2,8 @@ import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { call, put, select } from "typed-redux-saga/macro";
-import { areNotificationPermissionsEnabled } from "../store/reducers/permissions";
-import { updateSystemNotificationsEnabled } from "../store/actions/permissions";
+import { areNotificationPermissionsEnabled } from "../store/reducers/environment";
+import { updateSystemNotificationsEnabled } from "../store/actions/environment";
 import { checkNotificationPermissions } from "../utils";
 import {
   PendingMessageState,
