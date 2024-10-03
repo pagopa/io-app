@@ -169,7 +169,8 @@ describe("ITW credentials reducer", () => {
 
     expect(targetSate.features.itWallet.credentials).toEqual({
       eid: O.none,
-      credentials: []
+      credentials: [],
+      hasReadIPZSPolicy: false
     });
   });
 
