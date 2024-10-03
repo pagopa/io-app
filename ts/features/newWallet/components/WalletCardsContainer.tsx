@@ -21,6 +21,7 @@ import {
 } from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
 import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLifecycleAlert";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import {
   WalletCardsCategoryContainer,
@@ -120,6 +121,10 @@ const ItwCardsContainer = ({
           <>
             <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
             <ItwWalletReadyBanner />
+            <ItwEidLifecycleAlert
+              lifecycleStatus={["expiring", "expired"]}
+              verticalSpacing={true}
+            />
           </>
         }
       />

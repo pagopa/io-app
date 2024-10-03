@@ -1,4 +1,4 @@
-import React, { ComponentProps } from "react";
+import React from "react";
 import { View } from "react-native";
 import {
   Divider,
@@ -6,23 +6,18 @@ import {
   Icon,
   IOStyles,
   VStack,
-  H4,
-  Alert
+  H4
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import {
-  itwCredentialsEidSelector,
-  itwCredentialsEidStatusSelector
-} from "../../credentials/store/selectors";
+import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { format } from "../../../../utils/dates";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
 import { StoredCredential } from "../utils/itwTypesUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
-import { ItwCredentialStatus } from "./ItwCredentialCard";
+import { ItwEidLifecycleAlert } from "./ItwEidLifecycleAlert";
 
 export const ItwEidInfoBottomSheetTitle = ({
   isExpired
@@ -47,41 +42,9 @@ export const ItwEidInfoBottomSheetContent = () => {
   const Content = ({ credential }: { credential: StoredCredential }) => {
     const i18nNs = "features.itWallet.presentation.bottomSheets.eidInfo";
 
-    const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
-
     const claims = parseClaims(credential.parsedCredential, {
       exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
     });
-
-    const alertProps: Record<
-      Exclude<ItwCredentialStatus, "pending">,
-      ComponentProps<typeof Alert>
-    > = {
-      valid: {
-        variant: "success",
-        content: I18n.t(`${i18nNs}.alert.valid`, {
-          date: credential.jwt.issuedAt
-            ? format(credential.jwt.issuedAt, "DD-MM-YYYY")
-            : "-"
-        })
-      },
-      expiring: {
-        variant: "warning",
-        content: I18n.t(`${i18nNs}.alert.expiring`, {
-          date: format(credential.jwt.expiration, "DD-MM-YYYY")
-        }),
-        action: I18n.t("features.itWallet.discovery.banner.action"),
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onPress: () => {}
-      },
-      expired: {
-        variant: "error",
-        content: I18n.t(`${i18nNs}.alert.expired`),
-        action: I18n.t("features.itWallet.discovery.banner.action"),
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onPress: () => {}
-      }
-    };
 
     return (
       <VStack space={24}>
@@ -94,9 +57,7 @@ export const ItwEidInfoBottomSheetContent = () => {
             </React.Fragment>
           ))}
         </View>
-        {eidStatus && eidStatus !== "pending" && (
-          <Alert {...alertProps[eidStatus]} />
-        )}
+        <ItwEidLifecycleAlert />
         <IOMarkdown content={I18n.t(`${i18nNs}.contentBottom`)} />
       </VStack>
     );
