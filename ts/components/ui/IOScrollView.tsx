@@ -143,8 +143,8 @@ export const IOScrollView = ({
   excludeSafeAreaMargins = false,
   excludeEndContentMargin = false,
   includeContentMargins = true,
-  animatedRef,
   debugMode = false,
+  animatedRef,
   refreshControlProps,
   testID
 }: IOScrollView) => {

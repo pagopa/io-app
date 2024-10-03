@@ -196,7 +196,6 @@ const DeveloperActionsSection = () => {
       data={filteredDevActionButtons}
       renderItem={renderDevActionButton}
       ItemSeparatorComponent={() => <VSpacer size={8} />}
-      ListFooterComponent={() => <VSpacer size={8} />}
     />
   );
 };

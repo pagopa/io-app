@@ -1,85 +1,56 @@
-import { ActionProp, HeaderFirstLevel } from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
+import { ActionProp } from "@pagopa/io-app-design-system";
+
 import React, { ComponentProps, useCallback, useMemo } from "react";
-import { useServicesHomeBottomSheet } from "../../features/services/home/hooks/useServicesHomeBottomSheet";
+import HeaderFirstLevel from "../../components/ui/HeaderFirstLevel";
 import { useWalletHomeHeaderBottomSheet } from "../../components/wallet/WalletHomeHeader";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
-import {
-  SupportRequestParams,
-  useStartSupportRequest
-} from "../../hooks/useStartSupportRequest";
-import I18n from "../../i18n";
-import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
-import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
-import { MainTabParamsList } from "../params/MainTabParamsList";
-import ROUTES from "../routes";
-import { useIONavigation } from "../params/AppParamsList";
-import {
-  isNewPaymentSectionEnabledSelector,
-  isSettingsVisibleAndHideProfileSelector
-} from "../../store/reducers/backendStatus";
-import * as analytics from "../../features/services/common/analytics";
+import { resetMessageArchivingAction } from "../../features/messages/store/actions/archiving";
 import {
   isArchivingInProcessingModeSelector,
   isArchivingInSchedulingModeSelector
 } from "../../features/messages/store/reducers/archiving";
-import { resetMessageArchivingAction } from "../../features/messages/store/actions/archiving";
+import { useHeaderFirstLevelActionPropHelp } from "../../hooks/useHeaderFirstLevelActionPropHelp";
+import I18n from "../../i18n";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
+import {
+  isNewPaymentSectionEnabledSelector,
+  isSettingsVisibleAndHideProfileSelector
+} from "../../store/reducers/backendStatus";
+import { useIONavigation } from "../params/AppParamsList";
+import { MainTabParamsList } from "../params/MainTabParamsList";
+import ROUTES from "../routes";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
-type TabRoutes = keyof MainTabParamsList;
 
-const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
-  [MESSAGES_ROUTES.MESSAGES_HOME]: {
-    faqCategories: ["messages"],
-    contextualHelpMarkdown: {
-      title: "messages.contextualHelpTitle",
-      body: "messages.contextualHelpContent"
-    }
-  },
-  // TODO: delete this route when the showBarcodeScanSection
-  // and isSettingsVisibleAndHideProfileSelector FF will be deleted
-  [ROUTES.PROFILE_MAIN]: {
-    faqCategories: ["profile"],
-    contextualHelpMarkdown: {
-      title: "profile.main.contextualHelpTitle",
-      body: "profile.main.contextualHelpContent"
-    }
-  },
-  [SERVICES_ROUTES.SERVICES_HOME]: {
-    faqCategories: ["services"],
-    contextualHelpMarkdown: {
-      title: "services.contextualHelpTitle",
-      body: "services.contextualHelpContent"
-    }
-  },
-  [ROUTES.WALLET_HOME]: {
-    faqCategories: ["wallet", "wallet_methods"],
-    contextualHelpMarkdown: {
-      title: "wallet.contextualHelpTitle",
-      body: "wallet.contextualHelpContent"
-    }
-  },
-  [ROUTES.BARCODE_SCAN]: {},
-  [ROUTES.PAYMENTS_HOME]: {
-    faqCategories: ["wallet", "wallet_methods"],
-    contextualHelpMarkdown: {
-      title: "wallet.contextualHelpTitle",
-      body: "wallet.contextualHelpContent"
-    }
-  }
+type HeaderFirstLevelHandlerProps = {
+  currentRouteName: keyof MainTabParamsList;
 };
 
-type Props = {
-  currentRouteName: TabRoutes;
+const useNavigateToSettingMainScreen = () => {
+  const navigation = useIONavigation();
+
+  return useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.SETTINGS_MAIN
+    });
+  }, [navigation]);
 };
+
+export const useHeaderFirstLevelActionPropSettings = (): ActionProp => ({
+  icon: "coggle",
+  accessibilityLabel: I18n.t("global.buttons.settings"),
+  onPress: useNavigateToSettingMainScreen()
+});
+
 /**
  * This Component aims to handle the header of the first level screens. based on the current route
  * it will set the header title and the contextual help and the actions related to the screen
  * THIS COMPONENT IS NOT MEANT TO BE USED OUTSIDE THE NAVIGATION.
  * THIS COMPONENT WILL BE REMOVED ONCE REACT NAVIGATION WILL BE UPGRADED TO V6
  */
-export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
+export const HeaderFirstLevelHandler = ({
+  currentRouteName
+}: HeaderFirstLevelHandlerProps) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const store = useIOStore();
@@ -91,11 +62,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   const isSettingsVisibleAndHideProfile = useIOSelector(
     isSettingsVisibleAndHideProfileSelector
   );
-
-  const {
-    bottomSheet: ServicesHomeBottomSheet,
-    present: presentServicesHomeBottomSheet
-  } = useServicesHomeBottomSheet();
 
   const canNavigateIfIsArchivingCallback = useCallback(() => {
     const state = store.getState();
@@ -124,31 +90,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     }
   }, [canNavigateIfIsArchivingCallback, navigation]);
 
-  const handleSearchInstituion = useCallback(() => {
-    analytics.trackSearchStart({ source: "header_icon" });
-    navigation.navigate(SERVICES_ROUTES.SEARCH);
-  }, [navigation]);
-
-  const navigateToSettingsOrServicesPreferences = useCallback(() => {
-    if (isSettingsVisibleAndHideProfile) {
-      presentServicesHomeBottomSheet();
-      return;
-    }
-
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_SERVICES
-    });
-  }, [
-    isSettingsVisibleAndHideProfile,
-    navigation,
-    presentServicesHomeBottomSheet
-  ]);
-
-  const navigateToSettingMainScreen = useCallback(() => {
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.SETTINGS_MAIN
-    });
-  }, [navigation]);
+  const navigateToSettingMainScreen = useNavigateToSettingMainScreen();
 
   const navigateToSettingMainScreenFromMessageSection = useCallback(() => {
     if (canNavigateIfIsArchivingCallback()) {
@@ -156,52 +98,15 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     }
   }, [canNavigateIfIsArchivingCallback, navigateToSettingMainScreen]);
 
-  const settingsAction: ActionProp = useMemo(
-    () => ({
-      icon: "coggle",
-      accessibilityLabel: I18n.t("global.buttons.settings"),
-      onPress: navigateToSettingMainScreen
-    }),
-    [navigateToSettingMainScreen]
-  );
+  const settingsAction = useHeaderFirstLevelActionPropSettings();
+  const helpAction = useHeaderFirstLevelActionPropHelp(currentRouteName);
 
-  const settingsActionInMessageSection: ActionProp = useMemo(
+  const settingsActionInMessageSection = useMemo(
     () => ({
-      icon: "coggle",
-      accessibilityLabel: I18n.t("global.buttons.settings"),
+      ...settingsAction,
       onPress: navigateToSettingMainScreenFromMessageSection
     }),
-    [navigateToSettingMainScreenFromMessageSection]
-  );
-
-  const settingsActionInServicesSection: ActionProp = useMemo(
-    () => ({
-      icon: "coggle",
-      accessibilityLabel: I18n.t("global.buttons.settings"),
-      onPress: navigateToSettingsOrServicesPreferences
-    }),
-    [navigateToSettingsOrServicesPreferences]
-  );
-
-  const requestParams = useMemo(
-    () =>
-      pipe(
-        headerHelpByRoute[currentRouteName as TabRoutes],
-        O.fromNullable,
-        O.getOrElse(() => ({}))
-      ),
-    [currentRouteName]
-  );
-  const startSupportRequest = useStartSupportRequest(requestParams);
-  const helpAction: ActionProp = useMemo(
-    () => ({
-      icon: "help",
-      accessibilityLabel: I18n.t(
-        "global.accessibility.contextualHelp.open.label"
-      ),
-      onPress: startSupportRequest
-    }),
-    [startSupportRequest]
+    [navigateToSettingMainScreenFromMessageSection, settingsAction]
   );
 
   const {
@@ -228,33 +133,8 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     [messageSearchCallback]
   );
 
-  const searchInstitutionAction: ActionProp = useMemo(
-    () => ({
-      icon: "search",
-      accessibilityLabel: I18n.t("global.accessibility.search"),
-      onPress: handleSearchInstituion
-    }),
-    [handleSearchInstituion]
-  );
-
   const headerProps: HeaderFirstLevelProps = useMemo(() => {
     switch (currentRouteName) {
-      case SERVICES_ROUTES.SERVICES_HOME:
-        return {
-          title: I18n.t("services.title"),
-          type: "threeActions",
-          firstAction: helpAction,
-          secondAction: settingsActionInServicesSection,
-          thirdAction: searchInstitutionAction
-        };
-      // TODO: delete this route when the showBarcodeScanSection
-      // and isSettingsVisibleAndHideProfileSelector FF will be deleted
-      case ROUTES.PROFILE_MAIN:
-        return {
-          title: I18n.t("profile.main.title"),
-          type: "singleAction",
-          firstAction: helpAction
-        };
       case ROUTES.WALLET_HOME:
         if (isNewWalletSectionEnabled) {
           return {
@@ -285,17 +165,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
                 secondAction: walletAction
               })
         };
-      case ROUTES.PAYMENTS_HOME:
-        return {
-          title: I18n.t("features.payments.title"),
-          firstAction: helpAction,
-          ...(isSettingsVisibleAndHideProfile
-            ? {
-                type: "twoActions",
-                secondAction: settingsAction
-              }
-            : { type: "singleAction" })
-        };
       case MESSAGES_ROUTES.MESSAGES_HOME:
       default:
         return {
@@ -319,18 +188,15 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     helpAction,
     isNewWalletSectionEnabled,
     isSettingsVisibleAndHideProfile,
-    settingsAction,
-    walletAction,
     searchMessageAction,
-    searchInstitutionAction,
+    settingsAction,
     settingsActionInMessageSection,
-    settingsActionInServicesSection
+    walletAction
   ]);
 
   return (
     <>
       <HeaderFirstLevel {...headerProps} />
-      {ServicesHomeBottomSheet}
       {WalletHomeHeaderBottomSheet}
     </>
   );
