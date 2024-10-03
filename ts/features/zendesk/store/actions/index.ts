@@ -88,7 +88,7 @@ export const getZendeskToken = createAsyncAction(
   "GET_ZENDESK_TOKEN_REQUEST",
   "GET_ZENDESK_TOKEN_SUCCESS",
   "GET_ZENDESK_TOKEN_FAILURE"
-)<undefined, undefined, undefined>();
+)<undefined, undefined, "401" | void>();
 
 /**
  * Request the zendesk config

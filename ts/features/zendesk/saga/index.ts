@@ -108,14 +108,11 @@ function* getZendeskTokenSaga(
     const fields = formatRequestedTokenString(false, ["zendeskToken"]);
     const isFastLogin = yield* select(isFastLoginEnabledSelector);
 
-    const response = isFastLogin
-      ? ((yield* call(
-          withRefreshApiCall,
-          getSession({ fields })
-        )) as unknown as SagaCallReturnType<typeof getSession>)
-      : ((yield* call(getSession, { fields })) as unknown as SagaCallReturnType<
-          typeof getSession
-        >);
+    const response = (yield* call(
+      withRefreshApiCall,
+      getSession({ fields }),
+      getZendeskToken.failure("401")
+    )) as unknown as SagaCallReturnType<typeof getSession>;
 
     if (E.isLeft(response)) {
       throw Error(readableReport(response.left));
@@ -132,7 +129,10 @@ function* getZendeskTokenSaga(
           )
         );
       } else {
-        yield* put(getZendeskToken.failure());
+        // todo: control if it is correct or if i can delete this control
+        if (!isFastLogin) {
+          yield* put(getZendeskToken.failure());
+        }
       }
       return;
     }

@@ -23,6 +23,7 @@ import React, {
 } from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+import _ from "lodash";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import IOMarkdown from "../../../components/IOMarkdown";
 import { ContextualHelpProps } from "../../../components/screens/BaseScreenComponent";
@@ -197,9 +198,12 @@ const ZendeskSupportHelpCenter = () => {
   const dispatch = useIODispatch();
   const workUnitCancel = () => dispatch(zendeskSupportCancel());
   // const workUnitComplete = () => dispatch(zendeskSupportCompleted());
-  const profile = useIOSelector(profileSelector);
+  const profile = useIOSelector(profileSelector, _.isEqual);
   const signatureRequestId = useIOSelector(fciSignatureRequestIdSelector);
-  const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
+  const isEmailValidated = useIOSelector(
+    isProfileEmailValidatedSelector,
+    _.isEqual
+  );
   const showRequestSupportContacts = isEmailValidated || !pot.isSome(profile);
 
   const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
@@ -213,7 +217,6 @@ const ZendeskSupportHelpCenter = () => {
 
   const route = useRoute<RouteProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">>();
   const [pressedButton, setPressedButton] = useState<ButtonPressed>();
-
   // Navigation prop
   const {
     faqCategories,
@@ -223,7 +226,7 @@ const ZendeskSupportHelpCenter = () => {
     assistanceForPayment,
     assistanceForCard,
     assistanceForFci
-  } = route.params;
+  } = route.params || {};
   //   !contextualHelpMarkdown
   // );
 

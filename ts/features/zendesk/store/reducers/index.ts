@@ -48,7 +48,7 @@ export type ZendeskState = {
   ticketNumber: pot.Pot<number, Error>;
   getSessionPollingRunning?: boolean;
   zendeskTokenNeedsRefresh?: boolean;
-  getZendeskTokenStatus?: ZendeskTokenStatus;
+  getZendeskTokenStatus?: ZendeskTokenStatus | "401";
 };
 
 const INITIAL_STATE: ZendeskState = {
@@ -80,7 +80,8 @@ const reducer = (
     case getType(getZendeskToken.failure):
       return {
         ...state,
-        getZendeskTokenStatus: ZendeskTokenStatus.ERROR
+        getZendeskTokenStatus:
+          action.payload === "401" ? action.payload : ZendeskTokenStatus.ERROR
       };
     case getType(zendeskStopPolling):
       return {
