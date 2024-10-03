@@ -255,6 +255,11 @@ export function* initializeApplicationSaga(
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
     yield* select(sessionTokenSelector);
 
+  // workaround to send keychainError
+  // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
+  yield* call(trackKeychainGetFailure, keychainError);
+  yield* call(clearKeychainError);
+
   // Unless we have a valid session token already, login until we have one.
   const sessionToken: SagaCallReturnType<typeof authenticationSaga> =
     previousSessionToken
@@ -495,11 +500,6 @@ export function* initializeApplicationSaga(
   }
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
-
-  // workaround to send keychainError for Pixel devices
-  // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
-  yield* call(trackKeychainGetFailure, keychainError);
-  yield* call(clearKeychainError);
 
   // track if the Android device has StrongBox
   yield* call(handleIsKeyStrongboxBacked, keyInfo.keyTag);
