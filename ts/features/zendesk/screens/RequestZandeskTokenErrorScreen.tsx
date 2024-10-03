@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import I18n from "../../../i18n";
@@ -6,9 +6,9 @@ import I18n from "../../../i18n";
 const RequestZandeskTokenErrorScreen = () => {
   const navigation = useIONavigation();
 
-  const handleOnClose = () => {
+  const handleOnClose = useCallback(() => {
     navigation.goBack();
-  };
+  }, [navigation]);
 
   return (
     <OperationResultScreenContent

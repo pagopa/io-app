@@ -77,6 +77,10 @@ export const zendeskSupportFailure = createStandardAction(
   "ZENDESK_SUPPORT_FAILURE"
 )<string>();
 
+/**
+ * this dispatch should only be used if there is a need to
+ * also refresh the zendeskToken and it is known previously
+ */
 export const zendeskTokenNeedsRefresh = createStandardAction(
   "ZENDESK_TOKEN_NEEDS_REFRESH"
 )<boolean>();

@@ -287,10 +287,10 @@ export function* initializeApplicationSaga(
   // it will handle its own cancelation logic.
   yield* spawn(watchLogoutSaga, backendClient.logout);
 
-  // check if the current session is still valid
   const needRefreshZendeskToken = yield* select(
     zendeskTokenNeedsRefreshSelector
   );
+  // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
     yield* call(
       checkSession,

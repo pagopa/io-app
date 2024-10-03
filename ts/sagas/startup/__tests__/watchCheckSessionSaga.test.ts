@@ -27,11 +27,11 @@ describe("checkSession", () => {
       value: responseValue
     });
 
-    const fields = "(zendeskToken,walletToken,lollipopAssertionRef)"; // Simuliamo il parametro opzionale
+    const fields = "(zendeskToken,walletToken,lollipopAssertionRef)";
 
     testSaga(testableCheckSession!, getSessionValidity, fields)
       .next()
-      .call(getSessionValidity, { fields }) // Verifichiamo che `fields` venga passato
+      .call(getSessionValidity, { fields })
       .next(responseOK)
       .put(
         checkCurrentSession.success({
@@ -65,7 +65,7 @@ describe("checkSession", () => {
   it("if response is 500 the session is valid", () => {
     const response500 = E.right({ status: 500 });
 
-    const fields = undefined; // Nessun campo specificato, il parametro può essere `undefined`
+    const fields = undefined;
 
     testSaga(testableCheckSession!, getSessionValidity, fields)
       .next()
