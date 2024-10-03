@@ -27,4 +27,5 @@ export const applicationChangeState = createStandardAction(
 
 export type ApplicationActions =
   | ActionType<typeof startApplicationInitialization>
+  | ActionType<typeof applicationInitialized>
   | ActionType<typeof applicationChangeState>;

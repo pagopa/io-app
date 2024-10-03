@@ -18,8 +18,8 @@ import { isArchivingDisabledSelector } from "../../../messages/store/reducers/ar
 import NavigationService from "../../../../navigation/NavigationService";
 import { navigateToMainNavigatorAction } from "../../../../store/actions/navigation";
 import { resetMessageArchivingAction } from "../../../messages/store/actions/archiving";
-import { areNotificationPermissionsEnabled } from "../../store/reducers/permissions";
-import { updateSystemNotificationsEnabled } from "../../store/actions/permissions";
+import { areNotificationPermissionsEnabled } from "../../store/reducers/environment";
+import { updateSystemNotificationsEnabled } from "../../store/actions/environment";
 import { checkNotificationPermissions } from "../../utils";
 
 describe("handlePendingMessageStateIfAllowed", () => {
