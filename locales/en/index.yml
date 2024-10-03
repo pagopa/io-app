@@ -3408,7 +3408,7 @@ features:
             content: Se cambi idea, potrai riaggiungerlo in seguito.
             confirm: Sì, rimuovi
         toast:
-          removed: Fatto! Hai rimosso {{credentialName}}
+          removed: Fatto!
       ctas:
         openPdf: "Open PDF document"
         shareButton: Save or share
