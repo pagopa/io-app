@@ -60,7 +60,9 @@ export const ItwEidInfoBottomSheetContent = () => {
       valid: {
         variant: "success",
         content: I18n.t(`${i18nNs}.alert.valid`, {
-          date: format(credential.jwt.issuedAt, "DD-MM-YYYY")
+          date: credential.jwt.issuedAt
+            ? format(credential.jwt.issuedAt, "DD-MM-YYYY")
+            : "-"
         })
       },
       expiring: {

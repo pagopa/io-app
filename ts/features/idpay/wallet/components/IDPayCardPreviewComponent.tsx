@@ -20,7 +20,7 @@ import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpac
 import { H4 } from "../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 
 type Props = {
   initiativeName?: string;
@@ -30,7 +30,7 @@ type Props = {
 };
 
 const formatNumberRightSign = (amount: number) =>
-  `${formatNumberAmount(amount, false)} €`;
+  `${formatNumberCentsToAmount(amount, false)} €`;
 
 const IDPayCardPreviewComponent = (props: Props) => {
   const { initiativeName, logoUrl, onPress } = props;
