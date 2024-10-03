@@ -57,13 +57,15 @@ const ItwEidInfoBottomSheetContent = ({
             </React.Fragment>
           ))}
         </View>
-        <Alert
-          variant="success"
-          content={I18n.t(
-            "features.itWallet.presentation.bottomSheets.eidInfo.alert.valid",
-            { issuanceDate: format(credential.jwt.issuedAt, "DD-MM-YYYY") }
-          )}
-        />
+        {credential.jwt.issuedAt && (
+          <Alert
+            variant="success"
+            content={I18n.t(
+              "features.itWallet.presentation.bottomSheets.eidInfo.alert.valid",
+              { issuanceDate: format(credential.jwt.issuedAt, "DD-MM-YYYY") }
+            )}
+          />
+        )}
         <IOMarkdown
           content={I18n.t(
             "features.itWallet.presentation.bottomSheets.eidInfo.contentBottom"

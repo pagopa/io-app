@@ -4,7 +4,6 @@ import { pipe } from "fp-ts/lib/function";
 import { SdJwt } from "@pagopa/io-react-native-wallet";
 import { ItwCredentialsState } from "../../../credentials/store/reducers";
 import { StoredCredential } from "../../utils/itwTypesUtils";
-import { getISODateWithDefault } from "../../../../../utils/dates";
 
 export const CURRENT_REDUX_ITW_STORE_VERSION = -1;
 
@@ -39,15 +38,17 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
       const iatDisclosure = disclosures.find(
         ({ decoded }) => decoded[1] === "iat"
       );
+      const exp = sdJwt.payload.exp
+        ? new Date(sdJwt.payload.exp * 1000)
+        : new Date();
       return {
         ...credential,
         jwt: {
-          expiration: getISODateWithDefault(new Date(sdJwt.payload.exp * 1000)),
-          issuedAt: getISODateWithDefault(
-            iatDisclosure
-              ? new Date((iatDisclosure.decoded[2] as number) * 1000)
-              : new Date()
-          )
+          expiration: exp.toISOString(),
+          issuedAt:
+            iatDisclosure && typeof iatDisclosure.decoded[2] === "number"
+              ? new Date(iatDisclosure.decoded[2] * 1000).toISOString()
+              : undefined
         }
       };
     };
