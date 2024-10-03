@@ -2,6 +2,7 @@ import { put } from "typed-redux-saga/macro";
 import { walletAddCards } from "../../../newWallet/store/actions/cards";
 import { itwCredentialsStore } from "../store/actions";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 
 /**
  * This saga handles the credential store action and ensures the consistency between stored credentials and wallet state.
@@ -10,9 +11,13 @@ import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 export function* handleItwCredentialsStoreSaga(
   itwCredentialsStoreAction: ReturnType<typeof itwCredentialsStore>
 ) {
+  const credentialsToAdd = itwCredentialsStoreAction.payload.filter(
+    c => c.credentialType !== CredentialType.PID
+  );
+
   yield* put(
     walletAddCards(
-      itwCredentialsStoreAction.payload.map(c => ({
+      credentialsToAdd.map(c => ({
         key: `ITW_${c.credentialType}`,
         type: "itw",
         category: "itw",
