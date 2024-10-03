@@ -127,7 +127,7 @@ export const DSWallet = () => {
               iconName: "creditCard"
             }}
             isStacked={isStacked}
-            footer={
+            topElement={
               <>
                 <VSpacer size={16} />
                 <Banner
