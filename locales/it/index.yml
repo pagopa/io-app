@@ -3358,10 +3358,10 @@ features:
     presentation:
       alerts:
         mdl:
-          content: "In questa fase, la versione digitale della Patente non ha lo stesso valore del documento fisico: dovrai presentarla insieme a un documento di identità valido."
+          content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle forze dell'ordine."
           action: Scopri di più
         ehc:
-          content: "La tua Tessera sanitaria - Tessera europea di assicurazione malattia su IO è equivalente al documento fisico."
+          content: "La tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO è equivalente al documento fisico e consente, mostrandola, di accedere a tutti i servizi previsti."
           action: "Scopri di più"
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
@@ -3386,7 +3386,7 @@ features:
         flipCardFront: "Mostra retro"
         flipCardBack: "Mostra fronte"
         personalDataTitle: "Dati personali"
-        documentDataTitle: "Dati documento"
+        documentDataTitle: "Dati del documento"
         lastUpdated: "Dati aggiornati al {{lastUpdateTime}}"
         boolClaim:
           true: Sì
