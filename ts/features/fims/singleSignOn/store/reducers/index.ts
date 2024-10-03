@@ -5,7 +5,6 @@ import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { startApplicationInitialization } from "../../../../../store/actions/application";
 import { Action } from "../../../../../store/actions/types";
-import { FIMS_SSO_ERROR_TAGS } from "../../components/FimsErrorScreens";
 import { ConsentData } from "../../types";
 import { shouldRestartFimsAuthAfterFastLoginFailure } from "../../utils";
 import {
@@ -22,6 +21,7 @@ export type FimsFlowStateTags =
   | "abort"
   | "fastLogin_forced_restart";
 
+export type FIMS_SSO_ERROR_TAGS = "GENERIC" | "DEBUG" | "MISSING_INAPP_BROWSER";
 export type FimsErrorStateType = {
   errorTag: FIMS_SSO_ERROR_TAGS;
   standardMessage: string; // this will be deprecated

@@ -7,9 +7,8 @@ import { isStrictNone } from "../../../../../utils/pot";
 import { getDomainFromUrl } from "../../saga/sagaUtils";
 import { ConsentData } from "../../types";
 import { foldFimsFlowStateK } from "../../utils";
-import { FimsErrorStateType } from "../reducers";
+import { FIMS_SSO_ERROR_TAGS, FimsErrorStateType } from "../reducers";
 import { isDebugModeEnabledSelector } from "../../../../../store/reducers/debug";
-import { FIMS_SSO_ERROR_TAGS } from "../../components/FimsErrorScreens";
 
 export const fimsConsentsDataSelector = (state: GlobalState) =>
   state.features.fims.sso.consentsData;
