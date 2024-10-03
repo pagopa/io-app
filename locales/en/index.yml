@@ -3315,6 +3315,7 @@ features:
           toast: Fatto!
           actions:
             continue: Aggiungi primo documento
+            continueAlt: Aggiungi documento
             close: Continua più tardi
       credentialResult:
         toast: Fatto!
@@ -3336,6 +3337,16 @@ features:
         title: Motorizzazione Civile ha preso in carico la tua richiesta
         body: Riceverai un messaggio in app per continuare appena Motorizzazione Civile avrà elaborato la tua richiesta.
         primaryAction: Ho capito
+      credentialAlreadyAdded:
+        title: Hai già questo documento
+        body: La versione digitale del documento è già presente nel tuo Portafoglio.
+        primaryAction: Vai al documento
+      walletInstanceNotActive:
+        title: Attiva Documenti su IO per continuare
+        body: "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare "
+        bodyBold: Documenti su IO
+        primaryAction: Inizia
+        secondaryAction: Non ora
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
@@ -3364,6 +3375,13 @@ features:
         ehc:
           title: "Tessera Sanitaria - Tessera europea di assicurazione malattia su IO: contesti d'uso"
           content: "###### In quali casi posso usare la versione digitale della mia Tessera Sanitaria - Tessera europea di assicurazione malattia? \n Puoi usare la versione digitale della tua Tessera Sanitaria - Tessera europea di assicurazione malattia per prenotare una visita medica o un esame di laboratorio, per ritirare un medicinale in farmacia e ogni volta che devi certificare il tuo Codice Fiscale. \n\n All'estero puoi usarla per usufruire delle prestazioni sanitarie secondo le normative vigenti nei singoli paesi."
+        eidInfo:
+          title: "Documenti su IO:\nidentità verificata"
+          contentTop: Con **Documenti su IO** salvi nel Portafoglio di IO le versioni digitali dei tuoi documenti.
+          contentBottom: "###### Come funziona?\n\nLa tua **identità è verificata** in fase di attivazione tramite SPID o CIE."
+          triggerLabel: Cos'è?
+          alert:
+            valid: L'ultima verifica è del {{issuanceDate}}.
       credentialDetails:
         flipCardFront: "Show back"
         flipCardBack: "Show front"
