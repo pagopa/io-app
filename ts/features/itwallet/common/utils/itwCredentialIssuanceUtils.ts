@@ -136,7 +136,7 @@ export const obtainCredential = async ({
 
   // Parse and verify the credential. The ignoreMissingAttributes flag must be set to false or omitted in production.
 
-  const { parsedCredential } =
+  const { parsedCredential, issuedAt, expiration } =
     await Credential.Issuance.verifyAndParseCredential(
       issuerConf,
       credential,
@@ -150,7 +150,11 @@ export const obtainCredential = async ({
     credentialType,
     format,
     issuerConf,
-    keyTag: credentialKeyTag
+    keyTag: credentialKeyTag,
+    jwt: {
+      expiration: expiration.toISOString(),
+      issuedAt: issuedAt?.toISOString()
+    }
   };
 
   return {
