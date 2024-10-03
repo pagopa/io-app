@@ -22,7 +22,6 @@ import {
 } from "../features/itwallet/analytics";
 import {
   itwCredentialsByTypeSelector,
-  itwCredentialsEidSelector,
   itwCredentialsSelector,
   itwIPZSHasReadPolicySelector
 } from "../features/itwallet/credentials/store/selectors";
