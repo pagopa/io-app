@@ -28,8 +28,9 @@ const ItwPresentationFiscalCode = () => {
       </Text>
       <Barcode
         value={fiscalCode}
-        width={1.54}
+        width={1.125}
         height={50}
+        format={"CODE39"} // We use CODE39 because that's the encoding format used by the physical TS-CNS card
         background={IOColors[theme["appBackground-primary"]]}
         lineColor={IOColors[theme["textBody-default"]]}
       />
