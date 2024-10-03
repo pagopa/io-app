@@ -3,13 +3,16 @@ import { Banner } from "@pagopa/io-app-design-system";
 import { Linking } from "react-native";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { isTrialActiveSelector } from "../../../trialSystem/store/reducers";
+import { trialStatusSelector } from "../../../trialSystem/store/reducers";
 import { itwTrialId } from "../../../../config";
+import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
+import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus";
 
 export const ItwUpcomingWalletBanner = () => {
-  const isItwTrialActive = useIOSelector(isTrialActiveSelector(itwTrialId));
+  const isItwEnabled = useIOSelector(isItwEnabledSelector);
+  const itwTrialStatus = useIOSelector(trialStatusSelector(itwTrialId));
 
-  if (isItwTrialActive) {
+  if (!isItwEnabled || itwTrialStatus !== SubscriptionStateEnum.SUBSCRIBED) {
     return null;
   }
 
