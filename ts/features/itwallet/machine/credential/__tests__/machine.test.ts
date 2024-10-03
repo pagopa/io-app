@@ -455,6 +455,13 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   it("Should go to failure if credential request fails", async () => {
+    onInit.mockImplementation(() =>
+      Promise.resolve({
+        walletInstanceAttestation: T_WIA
+      })
+    );
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+
     const actor = createActor(mockedMachine);
     actor.start();
 
@@ -475,15 +482,13 @@ describe("itwCredentialIssuanceMachine", () => {
       skipNavigation: true
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual(
-      "ObtainingWalletInstanceAttestation"
-    );
+    expect(actor.getSnapshot().value).toStrictEqual("RequestingCredential");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       credentialType: "MDL"
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
     expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(0);
-    await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(0));
     await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
