@@ -6,8 +6,7 @@ import I18n from "../../../i18n";
 const RequestZandeskTokenErrorScreen = () => {
   const navigation = useIONavigation();
 
-  const handleClose = () => {
-    navigation.goBack();
+  const handleOnClose = () => {
     navigation.goBack();
   };
 
@@ -19,7 +18,7 @@ const RequestZandeskTokenErrorScreen = () => {
       action={{
         label: I18n.t("global.buttons.close"),
         accessibilityLabel: I18n.t("global.buttons.close"),
-        onPress: handleClose
+        onPress: handleOnClose
       }}
     />
   );

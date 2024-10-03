@@ -289,20 +289,14 @@ const ZendeskSupportHelpCenter = () => {
       if (isUserLoggedIn) {
         dispatch(getZendeskToken.request());
       } else {
-        if (pressedButton === ButtonPressed.ON_GOING_REQUEST) {
+        if (value === ButtonPressed.ON_GOING_REQUEST) {
           handleOnGoingRequest();
-        } else if (pressedButton === ButtonPressed.OPEN_NEW_REQUEST) {
+        } else if (value === ButtonPressed.OPEN_NEW_REQUEST) {
           handleContactSupportPress();
         }
       }
     },
-    [
-      dispatch,
-      handleOnGoingRequest,
-      handleContactSupportPress,
-      isUserLoggedIn,
-      pressedButton
-    ]
+    [dispatch, handleOnGoingRequest, handleContactSupportPress, isUserLoggedIn]
   );
 
   const footerActions: IOScrollViewActions = useMemo(

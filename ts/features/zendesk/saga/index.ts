@@ -106,11 +106,16 @@ function* getZendeskTokenSaga(
 ) {
   try {
     const fields = formatRequestedTokenString(false, ["zendeskToken"]);
+    const isFastLogin = yield* select(isFastLoginEnabledSelector);
 
-    const response = (yield* call(
-      withRefreshApiCall,
-      getSession({ fields })
-    )) as unknown as SagaCallReturnType<typeof getSession>;
+    const response = isFastLogin
+      ? ((yield* call(
+          withRefreshApiCall,
+          getSession({ fields })
+        )) as unknown as SagaCallReturnType<typeof getSession>)
+      : ((yield* call(getSession, { fields })) as unknown as SagaCallReturnType<
+          typeof getSession
+        >);
 
     if (E.isLeft(response)) {
       throw Error(readableReport(response.left));
@@ -129,7 +134,7 @@ function* getZendeskTokenSaga(
       } else {
         yield* put(getZendeskToken.failure());
       }
-      return response.right.status;
+      return;
     }
   } catch (e) {
     const error = convertUnknownToError(e);

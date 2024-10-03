@@ -454,6 +454,9 @@ export function* initializeApplicationSaga(
   );
   yield* put(zendeskTokenNeedsRefresh(false));
   // Start watching for requests of abort the onboarding
+
+  yield* fork(watchGetZendeskTokenSaga, backendClient.getSession);
+
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
   yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
@@ -564,9 +567,7 @@ export function* initializeApplicationSaga(
 
   // Start wathing new wallet sagas
   yield* fork(watchNewWalletSaga);
-
   if (zendeskEnabled) {
-    yield* fork(watchGetZendeskTokenSaga, backendClient.getSession);
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
   }
 
