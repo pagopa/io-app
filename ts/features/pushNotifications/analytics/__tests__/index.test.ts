@@ -1,12 +1,12 @@
 import {
   trackNewPushNotificationsTokenGenerated,
   trackNotificationInstallationTokenNotChanged,
+  trackNotificationPermissionsStatus,
   trackNotificationsOptInOpenSettings,
   trackNotificationsOptInPreviewStatus,
   trackNotificationsOptInReminderOnPermissionsOff,
   trackNotificationsOptInReminderStatus,
   trackNotificationsOptInSkipSystemPermissions,
-  trackNotificationStatus,
   trackPushNotificationTokenUploadFailure,
   trackPushNotificationTokenUploadSucceeded,
   trackSystemNotificationPermissionScreenOutcome,
@@ -215,7 +215,7 @@ describe("pushNotifications analytics", () => {
   it("'trackNotificationStatus' should have expected event name and properties for 'false' input", () => {
     const mockMixpanelTrack = getMockMixpanelTrack();
     const notificationPermissionsEnabled = false;
-    void trackNotificationStatus(notificationPermissionsEnabled);
+    void trackNotificationPermissionsStatus(notificationPermissionsEnabled);
     expect(mockMixpanelTrack.mock.calls.length).toBe(1);
     expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
     expect(mockMixpanelTrack.mock.calls[0][0]).toBe("PUSH_NOTIF_STATE_UPDATED");
@@ -227,7 +227,7 @@ describe("pushNotifications analytics", () => {
   it("'trackNotificationStatus' should have expected event name and properties for 'true' input", () => {
     const mockMixpanelTrack = getMockMixpanelTrack();
     const notificationPermissionsEnabled = true;
-    void trackNotificationStatus(notificationPermissionsEnabled);
+    void trackNotificationPermissionsStatus(notificationPermissionsEnabled);
     expect(mockMixpanelTrack.mock.calls.length).toBe(1);
     expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
     expect(mockMixpanelTrack.mock.calls[0][0]).toBe("PUSH_NOTIF_STATE_UPDATED");
