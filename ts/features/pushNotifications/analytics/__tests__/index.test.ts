@@ -226,7 +226,7 @@ describe("pushNotifications analytics", () => {
   });
   it("'trackNotificationStatus' should have expected event name and properties for 'true' input", () => {
     const mockMixpanelTrack = getMockMixpanelTrack();
-    const notificationPermissionsEnabled = false;
+    const notificationPermissionsEnabled = true;
     void trackNotificationStatus(notificationPermissionsEnabled);
     expect(mockMixpanelTrack.mock.calls.length).toBe(1);
     expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
