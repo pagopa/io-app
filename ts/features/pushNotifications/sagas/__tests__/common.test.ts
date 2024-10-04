@@ -21,6 +21,7 @@ import { resetMessageArchivingAction } from "../../../messages/store/actions/arc
 import { areNotificationPermissionsEnabled } from "../../store/reducers/environment";
 import { updateSystemNotificationsEnabled } from "../../store/actions/environment";
 import { checkNotificationPermissions } from "../../utils";
+import { trackNotificationPermissionsStatus } from "../../analytics";
 
 describe("handlePendingMessageStateIfAllowed", () => {
   const mockedPendingMessageState: PendingMessageState = {
@@ -194,32 +195,36 @@ describe("trackMessageNotificationTapIfNeeded", () => {
 });
 
 describe("updateNotificationPermissionsIfNeeded", () => {
-  it("should not dispatch 'updateSystemNotificationsEnabled' when system permissions are 'false' and in-memory data are 'false'", () => {
+  it("should not call the analytics event and not dispatch 'updateSystemNotificationsEnabled' when system permissions are 'false' and in-memory data are 'false'", () => {
     testSaga(updateNotificationPermissionsIfNeeded, false)
       .next()
       .select(areNotificationPermissionsEnabled)
       .next(false)
       .isDone();
   });
-  it("should dispatch 'updateSystemNotificationsEnabled(false)' when system permissions are 'false' and in-memory data are 'true'", () => {
+  it("should call the analytics event and dispatch 'updateSystemNotificationsEnabled(false)' when system permissions are 'false' and in-memory data are 'true'", () => {
     testSaga(updateNotificationPermissionsIfNeeded, false)
       .next()
       .select(areNotificationPermissionsEnabled)
       .next(true)
+      .call(trackNotificationPermissionsStatus, false)
+      .next()
       .put(updateSystemNotificationsEnabled(false))
       .next()
       .isDone();
   });
-  it("should dispatch 'updateSystemNotificationsEnabled(true)' when system permissions are 'true' and in-memory data are 'false'", () => {
+  it("should call the analytics event and dispatch 'updateSystemNotificationsEnabled(true)' when system permissions are 'true' and in-memory data are 'false'", () => {
     testSaga(updateNotificationPermissionsIfNeeded, true)
       .next()
       .select(areNotificationPermissionsEnabled)
       .next(false)
+      .call(trackNotificationPermissionsStatus, true)
+      .next()
       .put(updateSystemNotificationsEnabled(true))
       .next()
       .isDone();
   });
-  it("should not dispatch 'updateSystemNotificationsEnabled' when system permissions are 'true' and in-memory data are 'true'", () => {
+  it("should not call the analytics event and not dispatch 'updateSystemNotificationsEnabled' when system permissions are 'true' and in-memory data are 'true'", () => {
     testSaga(updateNotificationPermissionsIfNeeded, true)
       .next()
       .select(areNotificationPermissionsEnabled)

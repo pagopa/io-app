@@ -65,28 +65,28 @@ export const trackPushNotificationTokenUploadFailure = (reason: string) =>
     buildEventProperties("KO", "error", { reason })
   );
 
-export const trackSystemNotificationPermissionScreenShown = () =>
-  void mixpanelTrack(
-    "PUSH_NOTIF_APP_MODAL",
-    buildEventProperties("UX", "screen_view")
-  );
+export const trackSystemNotificationPermissionScreenShown = () => {
+  const eventName = "PUSH_NOTIF_APP_MODAL";
+  const props = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, props);
+};
 
 export const trackSystemNotificationPermissionScreenOutcome = (
   outcome: "activate" | "dismiss"
-) =>
-  void mixpanelTrack(
-    "PUSH_NOTIF_APP_MODAL_INTERACTION",
-    buildEventProperties("UX", "action", {
-      outcome
-    })
-  );
+) => {
+  const eventName = "PUSH_NOTIF_APP_MODAL_INTERACTION";
+  const props = buildEventProperties("UX", "action", {
+    outcome
+  });
+  void mixpanelTrack(eventName, props);
+};
 
-export const trackNotificationStatus = (
+export const trackNotificationPermissionsStatus = (
   systemNotificationPermissionsEnabled: boolean
-) =>
-  void mixpanelTrack(
-    "PUSH_NOTIF_STATE_UPDATED",
-    buildEventProperties("TECH", undefined, {
-      new_notification_status: systemNotificationPermissionsEnabled
-    })
-  );
+) => {
+  const eventName = "PUSH_NOTIF_STATE_UPDATED";
+  const props = buildEventProperties("TECH", undefined, {
+    new_notification_status: systemNotificationPermissionsEnabled
+  });
+  void mixpanelTrack(eventName, props);
+};

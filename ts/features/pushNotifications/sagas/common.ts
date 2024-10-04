@@ -18,6 +18,7 @@ import NavigationService from "../../../navigation/NavigationService";
 import { navigateToMessageRouterAction } from "../utils/navigation";
 import { UIMessageId } from "../../messages/types";
 import { trackMessageNotificationTap } from "../../messages/analytics";
+import { trackNotificationPermissionsStatus } from "../analytics";
 
 export function* checkAndUpdateNotificationPermissionsIfNeeded() {
   // Retrieve system notification receival permission
@@ -42,6 +43,11 @@ export function* updateNotificationPermissionsIfNeeded(
   );
   // If it is different, compared to the input one
   if (systemNotificationPermissions !== storedNotificationPermissions) {
+    // Track the new status
+    yield* call(
+      trackNotificationPermissionsStatus,
+      systemNotificationPermissions
+    );
     // Update the in-memory redux value
     yield* put(updateSystemNotificationsEnabled(systemNotificationPermissions));
   }
