@@ -2149,10 +2149,10 @@ notifications:
     errorTitle: Push notifications
     errorMessage: Registration with the push notifications service generated an error
   modal:
-    content: "Per farlo, dai il tuo consenso nelle impostazioni di sistema del dispositivo."
-    primaryButton: "Attiva notifiche push"
-    secondaryButton: "Non ora"
-    title: "Attiva le notifiche push per non perdere messaggi importanti!"
+    content: "Turn on push notifications to know immediately when you get a new message."
+    primaryButton: "Turn on notificatons"
+    secondaryButton: "Not now"
+    title: "Don't miss any important messages!"
 biometric_recognition:
   contextualHelpTitle: How works biometric recognition
   contextualHelpContent: !include profile/profile_security_biometric_recognition.md
