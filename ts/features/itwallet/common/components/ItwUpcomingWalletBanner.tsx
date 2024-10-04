@@ -26,7 +26,7 @@ export const ItwUpcomingWalletBanner = () => {
         "features.itWallet.discovery.upcomingWalletBanner.content"
       )}
       action={I18n.t("features.itWallet.discovery.upcomingWalletBanner.action")}
-      onPress={() => Linking.openURL("https://io.italia.it/")}
+      onPress={() => Linking.openURL("https://io.italia.it/")} // TODO: [SIW-1716] Update the URL
     />
   );
 };
