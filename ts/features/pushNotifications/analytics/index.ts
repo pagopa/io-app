@@ -64,3 +64,29 @@ export const trackPushNotificationTokenUploadFailure = (reason: string) =>
     "NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE",
     buildEventProperties("KO", "error", { reason })
   );
+
+export const trackSystemNotificationPermissionScreenShown = () =>
+  void mixpanelTrack(
+    "PUSH_NOTIF_APP_MODAL",
+    buildEventProperties("UX", "screen_view")
+  );
+
+export const trackSystemNotificationPermissionScreenOutcome = (
+  outcome: "activate" | "dismiss"
+) =>
+  void mixpanelTrack(
+    "PUSH_NOTIF_APP_MODAL_INTERACTION",
+    buildEventProperties("UX", "action", {
+      outcome
+    })
+  );
+
+export const trackNotificationStatus = (
+  systemNotificationPermissionsEnabled: boolean
+) =>
+  void mixpanelTrack(
+    "PUSH_NOTIF_STATE_UPDATED",
+    buildEventProperties("TECH", undefined, {
+      new_notification_status: systemNotificationPermissionsEnabled
+    })
+  );
