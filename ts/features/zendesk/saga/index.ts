@@ -116,32 +116,29 @@ function* getZendeskTokenSaga(
       withRefreshApiCall,
       getSession({ fields }),
       getZendeskToken.failure("401") // if the error is 401 the error screen is not show thanks this parameter
-    )) as unknown as SagaCallReturnType<typeof getSession>;
+    )) as SagaCallReturnType<typeof getSession>;
 
     if (E.isLeft(response)) {
       throw Error(readableReport(response.left));
-    } else {
-      if (response.right.status === 200) {
-        yield* put(getZendeskToken.success());
-        const currentValues = yield* select(sessionInfoSelector);
-        yield* put(
-          sessionInformationLoadSuccess(
-            getOnlyNotAlreadyExistentValues(
-              response.right.value,
-              O.isSome(currentValues) && currentValues.value
-            )
+    }
+    if (response.right.status === 200) {
+      yield* put(getZendeskToken.success());
+      const currentValues = yield* select(sessionInfoSelector);
+      yield* put(
+        sessionInformationLoadSuccess(
+          getOnlyNotAlreadyExistentValues(
+            response.right.value,
+            O.isSome(currentValues) && currentValues.value
           )
-        );
-      } else {
-        if (!isFastLogin || response.right.status !== 401) {
-          yield* put(getZendeskToken.failure());
-        }
-      }
+        )
+      );
       return;
+    }
+    if (!isFastLogin || response.right.status !== 401) {
+      yield* put(getZendeskToken.failure());
     }
   } catch (e) {
     yield* put(getZendeskToken.failure());
-    return;
   }
 }
 

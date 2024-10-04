@@ -77,7 +77,7 @@ export const formatRequestedTokenString = (
   }
 
   if (needToRefreshZendeskToken && !tokensArray.includes("zendeskToken", 0)) {
-    return `(${[...tokensArray, "zendeskToken"].join(",")})`;
+    return `(${tokensArray.join(",")},zendeskToken)`;
   } else {
     return `(${tokensArray.join(",")})`;
   }
@@ -94,18 +94,4 @@ export const formatRequestedTokenString = (
 export const getOnlyNotAlreadyExistentValues = (
   newValues: PublicSession,
   currentValues?: PublicSession
-): PublicSession => {
-  const mergedValues: PublicSession = { ...currentValues };
-
-  for (const key in newValues) {
-    if (Object.prototype.hasOwnProperty.call(newValues, key)) {
-      const typedKey = key as keyof PublicSession;
-
-      if (newValues[typedKey] !== undefined) {
-        // eslint-disable-next-line functional/immutable-data
-        (mergedValues as any)[typedKey] = newValues[typedKey];
-      }
-    }
-  }
-  return mergedValues;
-};
+): PublicSession => ({ ...currentValues, ...newValues });
