@@ -3,6 +3,7 @@ import {
   Body,
   Caption,
   FeatureInfo,
+  H6,
   hexToRgba,
   useIOExperimentalDesign,
   VSpacer,
@@ -48,7 +49,10 @@ import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { itwEaaVerifierBaseUrl } from "../../../../config";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
-import { generateTrustmarkUrl } from "../../common/utils/itwCredentialUtils";
+import {
+  generateTrustmarkUrl,
+  getCredentialNameFromType
+} from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
@@ -337,9 +341,12 @@ export const QrCodeBottomSheetContent = ({
         size={170}
         value={generateTrustmarkUrl(credential, itwEaaVerifierBaseUrl)}
       />
-      <Body>
-        {I18n.t("features.itWallet.presentation.trustmark.usageDescription")}
-      </Body>
+      <VStack space={8}>
+        <H6>{getCredentialNameFromType(credential.credentialType)}</H6>
+        <Body>
+          {I18n.t("features.itWallet.presentation.trustmark.usageDescription")}
+        </Body>
+      </VStack>
       <FeatureInfo
         iconName="security"
         body={I18n.t("features.itWallet.presentation.trustmark.certifiedLabel")}
