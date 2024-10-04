@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   wrapper: {
     position: "absolute",
     bottom: 16,
-    right: 0
+    right: 2
   },
   badge: {
     flexDirection: "row",
