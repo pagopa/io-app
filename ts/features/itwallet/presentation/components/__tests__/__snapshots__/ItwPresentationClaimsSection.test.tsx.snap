@@ -1783,7 +1783,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Rilasciata da Istituto Poligrafico e Zecca di Stato"
+                          accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
                           accessible={false}
                           style={
                             {
@@ -1842,7 +1842,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   }
                                   weight="Regular"
                                 >
-                                  Rilasciata da
+                                  Emissione versione digitale
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
@@ -2132,7 +2132,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       }
                                       weight="Regular"
                                     >
-                                      È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo.
+                                      È l'ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.
                                     </Text>
                                     <View
                                       style={
@@ -4251,7 +4251,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       }
                                       weight="Regular"
                                     >
-                                      È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo.
+                                      È l'ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.
                                     </Text>
                                     <View
                                       style={
@@ -4282,7 +4282,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Rilasciata da Istituto Poligrafico e Zecca di Stato"
+                          accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
                           accessible={false}
                           style={
                             {
@@ -4341,7 +4341,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   }
                                   weight="Regular"
                                 >
-                                  Rilasciata da
+                                  Emissione versione digitale
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
@@ -4631,7 +4631,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       }
                                       weight="Regular"
                                     >
-                                      È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo.
+                                      È l'ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.
                                     </Text>
                                     <View
                                       style={
