@@ -708,7 +708,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              Don't miss any important messages!
+                              Attiva le notifiche push per non perdere messaggi importanti!
                             </Text>
                             <View
                               style={
@@ -738,7 +738,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              Turn on push notifications to know immediately when you get a new message.
+                              Per farlo, dai il tuo consenso nelle impostazioni di sistema del dispositivo.
                             </Text>
                           </View>
                         </View>
@@ -750,7 +750,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                           }
                         >
                           <View
-                            accessibilityLabel="Turn on notificatons"
+                            accessibilityLabel="Attiva notifiche push"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -854,7 +854,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  Turn on notificatons
+                                  Attiva notifiche push
                                 </Text>
                               </View>
                             </View>
@@ -879,7 +879,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Not now"
+                              accessibilityLabel="Non ora"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -973,7 +973,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  Not now
+                                  Non ora
                                 </Text>
                               </View>
                             </View>
