@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.71.0-rc.2](https://github.com/pagopa/io-app/compare/2.71.0-rc.1...2.71.0-rc.2) (2024-10-04)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1471](https://pagopa.atlassian.net/browse/SIW-1471)] Add skeumorphic card for the EU Disability Card ([#6184](https://github.com/pagopa/io-app/issues/6184)) ([ca7899f](https://github.com/pagopa/io-app/commit/ca7899fe4c738e9048de4829a8e97073803075b4))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1660](https://pagopa.atlassian.net/browse/SIW-1660),[SIW-1689](https://pagopa.atlassian.net/browse/SIW-1689)] Copy review ([#6227](https://github.com/pagopa/io-app/issues/6227)) ([15d61c5](https://github.com/pagopa/io-app/commit/15d61c58ef3001b516ddaea4391aa4b4c846c743))
+* [[IOBP-908](https://pagopa.atlassian.net/browse/IOBP-908)] Timeline amount format in cents ([#6242](https://github.com/pagopa/io-app/issues/6242)) ([d191cbc](https://github.com/pagopa/io-app/commit/d191cbc2f4bd343046fd5e409f1d57655e4c5642))
+* [[PE-605](https://pagopa.atlassian.net/browse/PE-605)] CGN category list unnecessary loading animation ([#6220](https://github.com/pagopa/io-app/issues/6220)) ([4de6b4a](https://github.com/pagopa/io-app/commit/4de6b4a7e82bf8c7aa2f2d521219e68e75879f75))
+* [[PE-699](https://pagopa.atlassian.net/browse/PE-699)] CGN detail header title on scroll ([#6241](https://github.com/pagopa/io-app/issues/6241)) ([b2d2470](https://github.com/pagopa/io-app/commit/b2d2470c9c5772c8957c1dea31b9fd8c2f28917a))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1573](https://pagopa.atlassian.net/browse/SIW-1573)] Map integrity errors from wallet provider in eID issuance flow ([#6238](https://github.com/pagopa/io-app/issues/6238)) ([12011c8](https://github.com/pagopa/io-app/commit/12011c84bf3a0d873f4099e3d3d88d4ae485b366))
+* [[IOBP-897](https://pagopa.atlassian.net/browse/IOBP-897)] Fetch payment methods only the first time when opening the Wallet section ([#6223](https://github.com/pagopa/io-app/issues/6223)) ([f6956c3](https://github.com/pagopa/io-app/commit/f6956c39844ce4ba3652ca43e6ff90f5a99879af))
+* [[IOCOM-1684](https://pagopa.atlassian.net/browse/IOCOM-1684)] New FIMS IAB error and error handling structure  ([#6218](https://github.com/pagopa/io-app/issues/6218)) ([09e172d](https://github.com/pagopa/io-app/commit/09e172dca738462573516010e18cb9ca14822487))
+* [[IOCOM-1749](https://pagopa.atlassian.net/browse/IOCOM-1749)] Analytics events for notification permission engagement modal, phase 1 ([#6244](https://github.com/pagopa/io-app/issues/6244)) ([e1282c7](https://github.com/pagopa/io-app/commit/e1282c708d111a976b5dcc54ef5fb268b1a5327a))
+* [[IOCOM-1847](https://pagopa.atlassian.net/browse/IOCOM-1847)] New labels on notification engagement modal ([#6243](https://github.com/pagopa/io-app/issues/6243)) ([2d85b52](https://github.com/pagopa/io-app/commit/2d85b52ced7dca6f1d511b8bc59ea1cf083be9be))
+* **Cross:** [[IOAPPX-387](https://pagopa.atlassian.net/browse/IOAPPX-387)] Bump fastlane to version `2.223.1` ([#6240](https://github.com/pagopa/io-app/issues/6240)) ([3b6de6e](https://github.com/pagopa/io-app/commit/3b6de6e6385c23c0846f3506a2e1bf11e45d95a2))
+
 ## [2.71.0-rc.1](https://github.com/pagopa/io-app/compare/2.71.0-rc.0...2.71.0-rc.1) (2024-10-03)
 
 
