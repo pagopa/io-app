@@ -23,7 +23,8 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
  * Credentials that should display a skeumorphic card
  */
 const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
-  CredentialType.DRIVING_LICENSE
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.EUROPEAN_DISABILITY_CARD
 ];
 
 type Props = {
@@ -61,7 +62,9 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
         <View style={styles.flipButton}>
           <ButtonLink
             label={I18n.t(
-              "features.itWallet.presentation.credentialDetails.flipCard"
+              `features.itWallet.presentation.credentialDetails.${
+                isFlipped ? "flipCardBack" : "flipCardFront"
+              }`
             )}
             onPress={() => setIsFlipped(_ => !_)}
             icon="switchCard"
