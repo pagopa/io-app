@@ -10,11 +10,17 @@ import {
   StartCieAuthFlowActorParams,
   type RequestEidActorParams
 } from "./actors";
-import { mapEventToFailure } from "./failure";
+import { IssuanceFailureType, mapEventToFailure } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
 };
+
+const setFailure =
+  (type: IssuanceFailureType) =>
+  ({ event }: { event: EidIssuanceEvents }): Partial<Context> => ({
+    failure: { type, reason: "error" in event ? event.error : undefined }
+  });
 
 export const itwEidIssuanceMachine = setup({
   types: {
@@ -334,7 +340,7 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.UserIdentification"
               },
               {
-                actions: "setFailure",
+                actions: assign(setFailure(IssuanceFailureType.ISSUER_GENERIC)),
                 target: "#itwEidIssuanceMachine.Failure"
               }
             ]
@@ -350,7 +356,9 @@ export const itwEidIssuanceMachine = setup({
               target: "DisplayingPreview"
             },
             {
-              actions: "setFailure",
+              actions: assign(
+                setFailure(IssuanceFailureType.NOT_MATCHING_IDENTITY)
+              ),
               target: "#itwEidIssuanceMachine.Failure"
             }
           ]
