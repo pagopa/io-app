@@ -3198,8 +3198,8 @@ features:
     checkout:
       bottomSheet:
         PAYMENT_REVERSED:
-          title: Cosa fare se il pagamento non va a buon fine?
-          payNotice: "**Paga l'avviso**\nRicorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, [scopri gli altri canali abilitati a pagoPA]({{url}}))"
+          title: "Cosa fare se il pagamento non va a buon fine?"
+          payNotice: "**Paga l'avviso**\nRicorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, [scopri gli altri canali abilitati a pagoPA]({{url}})"
           waitRefund: "**Attendi il rimborso**\nDi solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il trasferimento di denaro sul tuo conto o carta potrebbe richiedere più tempo."
           contactSupport: "**Contatta l'assistenza**\nSe dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’assistenza."
   itWallet:

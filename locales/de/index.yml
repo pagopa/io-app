@@ -2573,10 +2573,6 @@ features:
         title: "Vorherige Transaktionen"
         bottomSheet:
           title: "Wo finde ich die Zahlungsquittung?"
-          noticeHeading: "Kürzlich bezahlte Aufforderungen"
-          noticeBody: "Wir sind gerade dabei, unsere Systeme zu aktualisieren: Sobald sie abgeschlossen ist, findest du die Quittungen im PDF-Format im Abschnitt Zahlungen."
-          allNoticesHeading: "Alle anderen Aufforderungen"
-          allNoticesBody: "Für Transaktionen, die vor dem 1. April 2023 getätigt wurden, wende dich bitte an den Gläubiger."
       multiplePayment: "Mehrfache Zahlung"
       title: "Transaktionsverlauf"
       button: "Alle anzeigen"
