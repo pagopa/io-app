@@ -10,7 +10,7 @@ describe("notificationPermissionsListener", () => {
   it("Should get and update system permissions and start listening for 'applicationChangeState' action with 'takeLatest'", () => {
     testSaga(notificationPermissionsListener)
       .next()
-      .call(checkAndUpdateNotificationPermissionsIfNeeded)
+      .call(checkAndUpdateNotificationPermissionsIfNeeded, true)
       .next()
       .takeLatest(
         applicationChangeState,
