@@ -23,6 +23,7 @@ import { DesignSystem } from "../DesignSystem";
 import { DSAccordion } from "../core/DSAccordion";
 import { DSAdvice } from "../core/DSAdvice";
 import { DSAlert } from "../core/DSAlert";
+import { DSAnimatedPictograms } from "../core/DSAnimatedPictograms";
 import { DSBadges } from "../core/DSBadges";
 import { DSBonusCardScreen } from "../core/DSBonusCardScreen";
 import { DSBottomSheet } from "../core/DSBottomSheet";
@@ -385,6 +386,15 @@ export const DesignSystemNavigator = () => {
         />
 
         {/* EXPERIMENTAL LAB */}
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ANIMATED_PICTOGRAMS.route}
+          component={DSAnimatedPictograms}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ANIMATED_PICTOGRAMS.title
+          }}
+        />
 
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_BACKGROUND.route}

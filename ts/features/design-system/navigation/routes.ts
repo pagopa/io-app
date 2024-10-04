@@ -122,6 +122,10 @@ const DESIGN_SYSTEM_ROUTES = {
     IRIDESCENT_TRUSTMARK: {
       route: "DS_IRIDESCENT_TRUSTMARK",
       title: "Iridescent trustmark"
+    },
+    ANIMATED_PICTOGRAMS: {
+      route: "DS_ANIMATED_PICTOGRAMS",
+      title: "Animated pictograms"
     }
   },
   LEGACY: {
