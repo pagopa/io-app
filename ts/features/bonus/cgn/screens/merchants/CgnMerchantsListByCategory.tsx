@@ -163,6 +163,73 @@ const CgnMerchantsListByCategory = () => {
 
   const isListRefreshing = isListLoading && isPullRefresh;
 
+  const header = () => (
+    <>
+      {Platform.OS === "ios" && (
+        <View
+          style={{
+            position: "absolute",
+            height: 1000,
+            backgroundColor: categorySpecs?.colors,
+            top: -1000,
+            right: 0,
+            left: 0
+          }}
+        />
+      )}
+      {categorySpecs && (
+        <View
+          onLayout={getTitleHeight}
+          style={[
+            IOStyles.horizontalContentPadding,
+            {
+              paddingTop: insets.top,
+              backgroundColor: categorySpecs.colors,
+              paddingBottom: 24
+            }
+          ]}
+        >
+          <VSpacer size={48} />
+          <VSpacer size={32} />
+          <View style={[IOStyles.row, { alignItems: "center" }]}>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: hexToRgba(IOColors.white, 0.2),
+                height: 66,
+                width: 66,
+                borderRadius: 8
+              }}
+            >
+              <Icon
+                name={categorySpecs.icon}
+                size={32}
+                color={categorySpecs.textColor}
+              />
+            </View>
+            <HSpacer size={16} />
+            <View style={{ flex: 1 }}>
+              <H3 color={categorySpecs.textColor}>
+                {I18n.t(categorySpecs.nameKey)}
+              </H3>
+            </View>
+          </View>
+        </View>
+      )}
+    </>
+  );
+  const refreshControl = (
+    <RefreshControl
+      style={{ zIndex: 1 }}
+      progressViewOffset={Platform.OS === "ios" ? titleHeight : undefined}
+      refreshing={isListRefreshing}
+      onRefresh={() => {
+        initLoadingLists();
+        setIsPullRefresh(true);
+      }}
+    />
+  );
   return (
     <>
       <FocusAwareStatusBar
@@ -183,80 +250,13 @@ const CgnMerchantsListByCategory = () => {
             paddingBottom: 48,
             backgroundColor: IOColors.white
           }}
-          refreshControl={
-            <RefreshControl
-              style={{ zIndex: 1 }}
-              progressViewOffset={
-                Platform.OS === "ios" ? titleHeight : undefined
-              }
-              refreshing={isListRefreshing}
-              onRefresh={() => {
-                initLoadingLists();
-                setIsPullRefresh(true);
-              }}
-            />
-          }
+          refreshControl={refreshControl}
           data={isListLoading && !isPullRefresh ? [] : merchantsAll}
           keyExtractor={item => item.id}
           ListEmptyComponent={CgnMerchantListSkeleton}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <Divider />}
-          ListHeaderComponent={() => (
-            <>
-              {Platform.OS === "ios" && (
-                <View
-                  style={{
-                    position: "absolute",
-                    height: 1000,
-                    backgroundColor: categorySpecs?.colors,
-                    top: -1000,
-                    right: 0,
-                    left: 0
-                  }}
-                />
-              )}
-              {categorySpecs && (
-                <View
-                  onLayout={getTitleHeight}
-                  style={[
-                    IOStyles.horizontalContentPadding,
-                    {
-                      paddingTop: insets.top,
-                      backgroundColor: categorySpecs.colors,
-                      paddingBottom: 24
-                    }
-                  ]}
-                >
-                  <VSpacer size={48} />
-                  <VSpacer size={32} />
-                  <View style={[IOStyles.row, { alignItems: "center" }]}>
-                    <View
-                      style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: hexToRgba(IOColors.white, 0.2),
-                        height: 66,
-                        width: 66,
-                        borderRadius: 8
-                      }}
-                    >
-                      <Icon
-                        name={categorySpecs.icon}
-                        size={32}
-                        color={categorySpecs.textColor}
-                      />
-                    </View>
-                    <HSpacer size={16} />
-                    <View style={{ flex: 1 }}>
-                      <H3 color={categorySpecs.textColor}>
-                        {I18n.t(categorySpecs.nameKey)}
-                      </H3>
-                    </View>
-                  </View>
-                </View>
-              )}
-            </>
-          )}
+          ListHeaderComponent={header}
         />
       )}
     </>
