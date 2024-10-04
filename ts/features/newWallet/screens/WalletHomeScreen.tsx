@@ -58,6 +58,7 @@ const WalletHomeScreen = ({ route }: Props) => {
   });
 
   const fetchWalletSectionData = () => {
+    dispatch(walletToggleLoadingState(true));
     dispatch(getPaymentsWalletUserMethods.request());
     dispatch(idPayWalletGet.request());
     dispatch(cgnDetails.request());
