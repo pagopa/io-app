@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.71.0-rc.1](https://github.com/pagopa/io-app/compare/2.71.0-rc.0...2.71.0-rc.1) (2024-10-03)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1559](https://pagopa.atlassian.net/browse/SIW-1559),[SIW-1637](https://pagopa.atlassian.net/browse/SIW-1637)] Resume async credential issuance from deep link ([#6209](https://github.com/pagopa/io-app/issues/6209)) ([6010dea](https://github.com/pagopa/io-app/commit/6010deafb214e8bf505bc09e6529e5d6a6048a49))
+* [[IOPID-2176](https://pagopa.atlassian.net/browse/IOPID-2176),[IOPID-2177](https://pagopa.atlassian.net/browse/IOPID-2177),[IOPID-2178](https://pagopa.atlassian.net/browse/IOPID-2178),[IOPID-2179](https://pagopa.atlassian.net/browse/IOPID-2179)] Ingress screen evolutionary ([#6199](https://github.com/pagopa/io-app/issues/6199)) ([f71a48b](https://github.com/pagopa/io-app/commit/f71a48b5799c3bac46c27c8b73c067870b766adc))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1526](https://pagopa.atlassian.net/browse/SIW-1526)] Wrong date claim with different timezone ([#6217](https://github.com/pagopa/io-app/issues/6217)) ([a407e0a](https://github.com/pagopa/io-app/commit/a407e0ac2ce8a2949d1b1a56c94dc62bd46d9848))
+* [[IOCOM-1808](https://pagopa.atlassian.net/browse/IOCOM-1808)] Update io-react-native-login-utils ([#6232](https://github.com/pagopa/io-app/issues/6232)) ([e87b626](https://github.com/pagopa/io-app/commit/e87b6267f8f0a658c119af31600078a7bdfd3ee3))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1702](https://pagopa.atlassian.net/browse/SIW-1702)] Add automatic subscription to the ITW trial system ([#6228](https://github.com/pagopa/io-app/issues/6228)) ([ca8bc32](https://github.com/pagopa/io-app/commit/ca8bc3245507a865ad469346ecb0208c18a73687))
+* [[IOCOM-1741](https://pagopa.atlassian.net/browse/IOCOM-1741)] Notification engament modal - Phase 1 ([#6229](https://github.com/pagopa/io-app/issues/6229)) ([0b6483f](https://github.com/pagopa/io-app/commit/0b6483f5f4d2943c56f2706caf59924c1192da37))
+* **Cross:** [[IOAPPX-322](https://pagopa.atlassian.net/browse/IOAPPX-322)] Update the entire `Assistance` section with the new DS components ([#5869](https://github.com/pagopa/io-app/issues/5869)) ([01aedfb](https://github.com/pagopa/io-app/commit/01aedfba05113a0d0efeef2b87eba16ea5960c5c))
+* **Cross:** [[IOAPPX-343](https://pagopa.atlassian.net/browse/IOAPPX-343),[IOAPPX-311](https://pagopa.atlassian.net/browse/IOAPPX-311)] Add `react-native-skia` library + Dynamic header background (under the new Experimental Lab category) ([#6123](https://github.com/pagopa/io-app/issues/6123)) ([992c4c7](https://github.com/pagopa/io-app/commit/992c4c75e8f783679a1b3cceb436e0fd6a18ffa7))
+* **Cross:** [[IOAPPX-344](https://pagopa.atlassian.net/browse/IOAPPX-344)] Add the new animated pictograms thanks to the new `lottie-react-native` library ([#5960](https://github.com/pagopa/io-app/issues/5960)) ([12a8e9a](https://github.com/pagopa/io-app/commit/12a8e9a3eda4c7714820208745a48988b9a75b2f))
+* **IT Wallet:** [[SIW-1665](https://pagopa.atlassian.net/browse/SIW-1665)] Hide eID card in wallet ([#6214](https://github.com/pagopa/io-app/issues/6214)) ([f9a8b44](https://github.com/pagopa/io-app/commit/f9a8b44ba101d3913735a6144370b4c318580c29))
+* **IT Wallet:** [[SIW-1666](https://pagopa.atlassian.net/browse/SIW-1666)] Add category filter tabs to the wallet screen ([#6221](https://github.com/pagopa/io-app/issues/6221)) ([52caf94](https://github.com/pagopa/io-app/commit/52caf94e47bef5a2da79d95e335c5997d178660d))
+* **IT Wallet:** [[SIW-1709](https://pagopa.atlassian.net/browse/SIW-1709)] Update trustmark env URL ([#6236](https://github.com/pagopa/io-app/issues/6236)) ([03c931b](https://github.com/pagopa/io-app/commit/03c931bb95b8748344ac5cd5277153eccd05c969))
+* [[IOBP-893](https://pagopa.atlassian.net/browse/IOBP-893)] Adapted new IDPay amount with cents ([#6212](https://github.com/pagopa/io-app/issues/6212)) ([d57e415](https://github.com/pagopa/io-app/commit/d57e415f5615d2c5b0428f8ba98b234443a1f711))
+* [iOBP-898] Change payment outcome 17 copy message ([#6224](https://github.com/pagopa/io-app/issues/6224)) ([6c7ac1b](https://github.com/pagopa/io-app/commit/6c7ac1b23e40169ba3a1cc24f7c9ad8c6c6c311a))
+* [[IOCOM-1740](https://pagopa.atlassian.net/browse/IOCOM-1740)] Push Notification Data ([#6211](https://github.com/pagopa/io-app/issues/6211)) ([ceb5a5c](https://github.com/pagopa/io-app/commit/ceb5a5c1e63aa3849907b017fbbece7f6addd9ae))
+* add format number cents amount ([0ae120f](https://github.com/pagopa/io-app/commit/0ae120f5d91868008fdb6ddd75c30912d95deebc))
+
 ## [2.71.0-rc.0](https://github.com/pagopa/io-app/compare/2.70.0-rc.2...2.71.0-rc.0) (2024-09-26)
 
 

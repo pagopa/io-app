@@ -2148,6 +2148,11 @@ notifications:
   installation:
     errorTitle: Push notifications
     errorMessage: Registration with the push notifications service generated an error
+  modal:
+    content: "Per farlo, dai il tuo consenso nelle impostazioni di sistema del dispositivo."
+    primaryButton: "Attiva notifiche push"
+    secondaryButton: "Non ora"
+    title: "Attiva le notifiche push per non perdere messaggi importanti!"
 biometric_recognition:
   contextualHelpTitle: How works biometric recognition
   contextualHelpContent: !include profile/profile_security_biometric_recognition.md
@@ -3418,9 +3423,6 @@ features:
         title: Certificato di autenticità
         usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
         certifiedLabel: Questo documento è certificato dall'ente emittente.
-  trialSystem:
-    toast:
-      subscribed: Done! You will receive a message when the trial period will begin.
 support:
   ticketList:
     noTicket:
