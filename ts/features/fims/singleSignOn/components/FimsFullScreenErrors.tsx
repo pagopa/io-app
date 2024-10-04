@@ -10,7 +10,7 @@ import I18n from "../../../../i18n";
 import { fimsErrorStateSelector } from "../store/selectors";
 import { FIMS_SSO_ERROR_TAGS } from "../store/reducers";
 
-export const FimsSSOErrorScreen = ({
+export const FimsSSOFullScreenError = ({
   errorTag
 }: {
   errorTag: FIMS_SSO_ERROR_TAGS;

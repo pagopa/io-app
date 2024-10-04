@@ -37,7 +37,7 @@ import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import { fimsErrorTagSelector } from "../store/selectors";
 import { ConsentData } from "../types";
 import { FimsClaimsList } from "./FimsClaims";
-import { FimsSSOErrorScreen } from "./FimsErrorScreens";
+import { FimsSSOFullScreenError } from "./FimsFullScreenErrors";
 import { FimsPrivacyInfo } from "./FimsPrivacyInfo";
 
 type FimsSuccessBodyProps = { consents: ConsentData; onAbort: () => void };
@@ -73,7 +73,7 @@ export const FimsFlowSuccessBody = ({
   // -------- ERROR LOGIC
 
   if (pot.isError(servicePot) || isPrivacyUrlMissing) {
-    return <FimsSSOErrorScreen errorTag={errorTag ?? "GENERIC"} />;
+    return <FimsSSOFullScreenError errorTag={errorTag ?? "GENERIC"} />;
   }
 
   const serviceLogo = pipe(

@@ -14,7 +14,7 @@ import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backen
 import { trackAuthenticationError } from "../../common/analytics";
 import { FimsUpdateAppAlert } from "../../common/components/FimsUpdateAppAlert";
 import { FimsParamsList } from "../../common/navigation";
-import { FimsSSOErrorScreen } from "../components/FimsErrorScreens";
+import { FimsSSOFullScreenError } from "../components/FimsFullScreenErrors";
 import { FimsFlowSuccessBody } from "../components/FimsSuccessBody";
 import {
   fimsCancelOrAbortAction,
@@ -83,7 +83,7 @@ export const FimsFlowHandlerScreen = (
   }
 
   if (errorTag !== undefined) {
-    return <FimsSSOErrorScreen errorTag={errorTag} />;
+    return <FimsSSOFullScreenError errorTag={errorTag} />;
   }
   if (loadingState !== undefined) {
     const subtitle =
@@ -107,7 +107,7 @@ export const FimsFlowHandlerScreen = (
     consentsPot,
     pot.toOption,
     O.fold(
-      () => <FimsSSOErrorScreen errorTag="GENERIC" />,
+      () => <FimsSSOFullScreenError errorTag="GENERIC" />,
       consents => (
         <FimsFlowSuccessBody
           consents={consents}

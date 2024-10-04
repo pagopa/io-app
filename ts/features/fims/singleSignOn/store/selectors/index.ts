@@ -48,9 +48,8 @@ export const fimsErrorTagSelector = (
     return isDebug
       ? state.features.fims.sso.consentsData.error.errorTag
       : "DEBUG";
-  } else {
-    return undefined;
   }
+  return undefined;
 };
 
 // soon to be deprecated
