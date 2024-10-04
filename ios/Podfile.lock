@@ -83,6 +83,10 @@ PODS:
     - React-Core
   - JOSESwift (2.4.0)
   - libevent (2.1.12)
+  - lottie-ios (4.4.1)
+  - lottie-react-native (6.7.2):
+    - lottie-ios (= 4.4.1)
+    - React-Core
   - Mixpanel-swift (4.2.0):
     - Mixpanel-swift/Complete (= 4.2.0)
   - Mixpanel-swift/Complete (4.2.0)
@@ -104,7 +108,7 @@ PODS:
     - JOSESwift (~> 2.3)
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - pagopa-io-react-native-login-utils (1.0.5):
+  - pagopa-io-react-native-login-utils (1.0.6):
     - React-Core
   - pagopa-react-native-zendesk (0.3.29):
     - RCT-Folly (= 2021.07.22.00)
@@ -437,6 +441,8 @@ PODS:
     - React-Core
   - react-native-netinfo (6.0.6):
     - React-Core
+  - react-native-notifications-utils (0.3.0):
+    - React-Core
   - react-native-pager-view (6.2.3):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -692,6 +698,7 @@ DEPENDENCIES:
   - io-react-native-secure-storage (from `../node_modules/io-react-native-secure-storage`)
   - jail-monkey (from `../node_modules/jail-monkey`)
   - libevent (~> 2.1.12)
+  - lottie-react-native (from `../node_modules/lottie-react-native`)
   - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
   - OpenSSL-Universal (= 1.1.1100)
   - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
@@ -728,6 +735,7 @@ DEPENDENCIES:
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
+  - react-native-notifications-utils (from `../node_modules/react-native-notifications-utils`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-pdf-thumbnail (from `../node_modules/react-native-pdf-thumbnail`)
@@ -794,6 +802,7 @@ SPEC REPOS:
     - fmt
     - JOSESwift
     - libevent
+    - lottie-ios
     - Mixpanel-swift
     - OpenSSL-Universal
     - Sentry
@@ -832,6 +841,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/io-react-native-secure-storage"
   jail-monkey:
     :path: "../node_modules/jail-monkey"
+  lottie-react-native:
+    :path: "../node_modules/lottie-react-native"
   MixpanelReactNative:
     :path: "../node_modules/mixpanel-react-native"
   pagopa-io-react-native-crypto:
@@ -898,6 +909,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
+  react-native-notifications-utils:
+    :path: "../node_modules/react-native-notifications-utils"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-pdf:
@@ -1022,6 +1035,8 @@ SPEC CHECKSUMS:
   jail-monkey: a71b35d482a70ecba844a90f002994012cf12a5d
   JOSESwift: 7ff178bb9173ff42c6e990929a9f2fa702a34f69
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
+  lottie-ios: e047b1d2e6239b787cc5e9755b988869cf190494
+  lottie-react-native: 17547b2f3c7034e2ae8672833fdb63262164d18a
   Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
   MixpanelReactNative: 0101b8828c2f335c128850e71ab7d3b7adde089a
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
@@ -1029,7 +1044,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-http-client: cbdfb83c92432efb0de22b7c3c85cffa391870f8
   pagopa-io-react-native-integrity: ca77804cefb1cd75d04053652472bcb938ce4b18
   pagopa-io-react-native-jwt: 662d4e722715996758b079774abea1996b057467
-  pagopa-io-react-native-login-utils: c7e8a4908c1239ce834fe1d16dd22ccc7c7f5536
+  pagopa-io-react-native-login-utils: a445c97d7d7dc86b089079029a1340f4c682128c
   pagopa-react-native-zendesk: 60a26f8a8072234789c34bb7c8a769c156eb57dc
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: 264adaca1d8b1a9c078761891898d4142df05313
@@ -1057,6 +1072,7 @@ SPEC CHECKSUMS:
   react-native-get-random-values: 21325b2244dfa6b58878f51f9aa42821e7ba3d06
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
   react-native-netinfo: 40b91995cd49c33ae57996486db76f0af067b630
+  react-native-notifications-utils: f083307d1261f34444a89ca2f9b69f920c9b81e7
   react-native-pager-view: 948dc00b6545d82b53e5f99cafef4a8521c60dd4
   react-native-pdf: 79aa75e39a80c1d45ffe58aa500f3cf08f267a2e
   react-native-pdf-thumbnail: a042fffdab7a49f0f9df0e11da0a90beebfd4241
