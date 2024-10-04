@@ -287,6 +287,10 @@ export function* initializeApplicationSaga(
   // it will handle its own cancelation logic.
   yield* spawn(watchLogoutSaga, backendClient.logout);
 
+  if (zendeskEnabled) {
+    yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
+  }
+
   const needRefreshZendeskToken = yield* select(
     zendeskTokenNeedsRefreshSelector
   );
@@ -567,9 +571,6 @@ export function* initializeApplicationSaga(
 
   // Start wathing new wallet sagas
   yield* fork(watchNewWalletSaga);
-  if (zendeskEnabled) {
-    yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
-  }
 
   // Here we can be sure that the session information is loaded and valid
   const bpdToken = maybeSessionInformation.value.bpdToken as string;
