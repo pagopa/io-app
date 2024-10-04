@@ -42,6 +42,8 @@ import { watchLogoutSaga } from "../startup/watchLogoutSaga";
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
 import { startupTransientErrorInitialState } from "../../store/reducers/startup";
+import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
+import { notificationPermissionsListener } from "../../features/pushNotifications/sagas/notificationPermissionsListener";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -67,6 +69,8 @@ describe("initializeApplicationSaga", () => {
   it("should call handleTransientError if check session response is 200 but session is none", () => {
     testSaga(initializeApplicationSaga)
       .next()
+      .select(isBlockingScreenSelector)
+      .next()
       .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
@@ -80,6 +84,8 @@ describe("initializeApplicationSaga", () => {
       .put(previousInstallationDataDeleteSuccess())
       .next()
       .next()
+      .next()
+      .fork(notificationPermissionsListener)
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
@@ -116,6 +122,8 @@ describe("initializeApplicationSaga", () => {
   it("should dispatch sessionExpired if check session response is 401 & FastLogin disabled", () => {
     testSaga(initializeApplicationSaga)
       .next()
+      .select(isBlockingScreenSelector)
+      .next()
       .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
@@ -129,6 +137,8 @@ describe("initializeApplicationSaga", () => {
       .put(previousInstallationDataDeleteSuccess())
       .next()
       .next()
+      .next()
+      .fork(notificationPermissionsListener)
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
@@ -158,6 +168,8 @@ describe("initializeApplicationSaga", () => {
   it("should dispatch refreshTokenRequest if check session response is 401 & FastLogin enabled", () => {
     testSaga(initializeApplicationSaga)
       .next()
+      .select(isBlockingScreenSelector)
+      .next()
       .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
@@ -171,6 +183,8 @@ describe("initializeApplicationSaga", () => {
       .put(previousInstallationDataDeleteSuccess())
       .next()
       .next()
+      .next()
+      .fork(notificationPermissionsListener)
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
@@ -205,6 +219,8 @@ describe("initializeApplicationSaga", () => {
   it("should dispatch loadprofile if installation id response is 200 and session is still valid", () => {
     testSaga(initializeApplicationSaga)
       .next()
+      .select(isBlockingScreenSelector)
+      .next()
       .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
@@ -218,6 +234,8 @@ describe("initializeApplicationSaga", () => {
       .put(previousInstallationDataDeleteSuccess())
       .next()
       .next()
+      .next()
+      .fork(notificationPermissionsListener)
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
@@ -264,6 +282,8 @@ describe("initializeApplicationSaga", () => {
   it("should dispatch handleApplicationStartupTransientError if session information is none", () => {
     testSaga(initializeApplicationSaga)
       .next()
+      .select(isBlockingScreenSelector)
+      .next()
       .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
@@ -277,6 +297,8 @@ describe("initializeApplicationSaga", () => {
       .put(previousInstallationDataDeleteSuccess())
       .next()
       .next()
+      .next()
+      .fork(notificationPermissionsListener)
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
@@ -312,6 +334,8 @@ describe("initializeApplicationSaga", () => {
   it("should dispatch handleApplicationStartupTransientError if session information is some but walletToken and bpdToken are missing", () => {
     testSaga(initializeApplicationSaga)
       .next()
+      .select(isBlockingScreenSelector)
+      .next()
       .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
@@ -325,6 +349,8 @@ describe("initializeApplicationSaga", () => {
       .put(previousInstallationDataDeleteSuccess())
       .next()
       .next()
+      .next()
+      .fork(notificationPermissionsListener)
       .next()
       .select(profileSelector)
       .next(pot.some(profile))

@@ -36,6 +36,7 @@ import { IdPayUnsubscriptionRoutes } from "../features/idpay/unsubscription/navi
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import { NOTIFICATIONS_ROUTES } from "../features/pushNotifications/navigation/routes";
 import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
 import { PaymentsBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
 import { PaymentsCheckoutNavigator } from "../features/payments/checkout/navigation/navigator";
@@ -68,6 +69,7 @@ import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { SearchScreen } from "../features/services/search/screens/SearchScreen";
 import { FIMS_ROUTES, FimsNavigator } from "../features/fims/common/navigation";
 import { MessagesSearchScreen } from "../features/messages/screens/MessagesSearchScreen";
+import { SystemNotificationPermissionsScreen } from "../features/pushNotifications/screens/SystemNotificationPermissionsScreen";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -126,6 +128,16 @@ const AuthenticatedStackNavigator = () => {
         component={MessagesStackNavigator}
       />
       {/* This screen is outside the MessagesNavigator to change gesture and transion behaviour. */}
+
+      <Stack.Screen
+        name={NOTIFICATIONS_ROUTES.SYSTEM_NOTIFICATION_PERMISSIONS}
+        component={SystemNotificationPermissionsScreen}
+        options={{
+          gestureEnabled: true,
+          headerShown: false,
+          presentation: "modal"
+        }}
+      />
       <Stack.Screen
         name={MESSAGES_ROUTES.MESSAGES_SEARCH}
         component={MessagesSearchScreen}
