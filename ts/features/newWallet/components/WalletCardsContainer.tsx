@@ -63,6 +63,7 @@ const WalletCardsContainer = () => {
       layout={LinearTransition.duration(200)}
     >
       <View testID="walletCardsContainerTestID">
+        <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
         {shouldRender("itw") && <ItwCardsContainer isStacked={stackCards} />}
         {shouldRender("other") && (
           <OtherCardsContainer isStacked={stackCards} />
@@ -121,12 +122,7 @@ const ItwCardsContainer = ({
         cards={cards}
         isStacked={isStacked}
         header={getHeader()}
-        topElement={
-          <>
-            <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
-            <ItwWalletReadyBanner />
-          </>
-        }
+        topElement={<ItwWalletReadyBanner />}
       />
       {isItwValid && eidInfoBottomSheet.bottomSheet}
     </>

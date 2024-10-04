@@ -2,8 +2,11 @@ import {
   ForceScrollDownView,
   H2,
   HeaderSecondLevel,
+  HStack,
+  Icon,
+  IOStyles,
   IOVisualCostants,
-  VSpacer
+  VStack
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -36,6 +39,7 @@ import {
 } from "../../analytics";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 import { ItwIssuanceLoadingScreen } from "../components/ItwIssuanceLoadingScreen";
+import IOMarkdown from "../../../../components/IOMarkdown";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
@@ -137,12 +141,18 @@ const ContentView = ({ eid }: ContentViewProps) => {
 
   return (
     <ForceScrollDownView contentContainerStyle={styles.scroll}>
-      <View style={styles.contentWrapper}>
-        <H2>{I18n.t("features.itWallet.issuance.eidPreview.title")}</H2>
-        <VSpacer size={24} />
-        <ItwCredentialPreviewClaimsList data={eid} />
-        <VSpacer size={24} />
-      </View>
+      <VStack space={24} style={styles.contentWrapper}>
+        <HStack space={8} style={IOStyles.alignCenter}>
+          <Icon name="legalValue" color="blueIO-500" />
+          <H2>{I18n.t("features.itWallet.issuance.eidPreview.title")}</H2>
+        </HStack>
+        <IOMarkdown
+          content={I18n.t("features.itWallet.issuance.eidPreview.subtitle")}
+        />
+        <View>
+          <ItwCredentialPreviewClaimsList data={eid} releaserVisible={false} />
+        </View>
+      </VStack>
       <FooterActions
         fixed={false}
         actions={{
