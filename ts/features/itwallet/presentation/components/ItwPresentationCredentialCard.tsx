@@ -23,7 +23,8 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
  * Credentials that should display a skeumorphic card
  */
 const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
-  CredentialType.DRIVING_LICENSE
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.EUROPEAN_DISABILITY_CARD
 ];
 
 type Props = {
