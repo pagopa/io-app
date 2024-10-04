@@ -561,6 +561,8 @@ const statusMessagesSelector = (state: GlobalState) =>
     O.toUndefined
   );
 
+const EMPTY_ARRAY: ReadonlyArray<StatusMessage> = [];
+
 export const statusMessageByRouteSelector = (routeName: string) =>
   createSelector(
     statusMessagesSelector,
@@ -568,9 +570,12 @@ export const statusMessageByRouteSelector = (routeName: string) =>
       pipe(
         statusMessages,
         O.fromNullable,
-        O.map(({ items }) =>
-          items.filter(message => message.routes.includes(routeName))
-        ),
+        O.map(({ items }) => {
+          const messages = items.filter(message =>
+            message.routes.includes(routeName)
+          );
+          return messages.length > 0 ? messages : EMPTY_ARRAY;
+        }),
         O.toUndefined
       )
   );
