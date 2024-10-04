@@ -1,6 +1,9 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import {
+  formatNumberAmount,
+  formatNumberCentsToAmount
+} from "../../../../utils/stringBuilder";
 import { format } from "../../../../utils/dates";
 
 export const formatNumberCurrency = (amount: number) =>
@@ -37,12 +40,12 @@ export const formatNumberCurrencyCentsOrDefault = (
  * This function takes a number and converts it into its absolute value, then formats it as a string
  * using the 'formatNumberAmount' function. If the input is undefined, it returns the specified default value.
  *
- * @param {number | undefined} amount - The number to be formatted, or undefined if not available.
+ * @param {number | undefined} amount - The number amount in cents to be formatted, or undefined if not available.
  * @param {string} [defaultValue='-'] - The default value to be returned when the input 'amount' is undefined.
  *
  * @returns {string} - The formatted absolute number as a string or the default value.
  */
-export const formatAbsNumberAmountOrDefault = (
+export const formatAbsNumberAmountCentsOrDefault = (
   amount: number | undefined,
   defaultValue: string = "-"
 ) =>
@@ -50,7 +53,7 @@ export const formatAbsNumberAmountOrDefault = (
     amount,
     O.fromNullable,
     O.map(Math.abs),
-    O.map(formatNumberAmount),
+    O.map(formatNumberCentsToAmount),
     O.getOrElse(() => defaultValue)
   );
 
