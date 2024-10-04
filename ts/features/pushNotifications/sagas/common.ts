@@ -2,8 +2,8 @@ import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { call, put, select } from "typed-redux-saga/macro";
-import { areNotificationPermissionsEnabled } from "../store/reducers/permissions";
-import { updateSystemNotificationsEnabled } from "../store/actions/permissions";
+import { areNotificationPermissionsEnabled } from "../store/reducers/environment";
+import { updateSystemNotificationsEnabled } from "../store/actions/environment";
 import { checkNotificationPermissions } from "../utils";
 import {
   PendingMessageState,
@@ -18,8 +18,11 @@ import NavigationService from "../../../navigation/NavigationService";
 import { navigateToMessageRouterAction } from "../utils/navigation";
 import { UIMessageId } from "../../messages/types";
 import { trackMessageNotificationTap } from "../../messages/analytics";
+import { trackNotificationPermissionsStatus } from "../analytics";
 
-export function* checkAndUpdateNotificationPermissionsIfNeeded() {
+export function* checkAndUpdateNotificationPermissionsIfNeeded(
+  skipAnalyticsTracking: boolean = false
+) {
   // Retrieve system notification receival permission
   const systemNotificationPermissions = yield* call(
     checkNotificationPermissions
@@ -27,13 +30,15 @@ export function* checkAndUpdateNotificationPermissionsIfNeeded() {
   // Update the in-memory redux value if needed
   yield* call(
     updateNotificationPermissionsIfNeeded,
-    systemNotificationPermissions
+    systemNotificationPermissions,
+    skipAnalyticsTracking
   );
   return systemNotificationPermissions;
 }
 
 export function* updateNotificationPermissionsIfNeeded(
-  systemNotificationPermissions: boolean
+  systemNotificationPermissions: boolean,
+  skipAnalyticsTracking: boolean = false
 ) {
   // Retrieve the in-memory redux value of the
   // notification receival permission
@@ -42,6 +47,13 @@ export function* updateNotificationPermissionsIfNeeded(
   );
   // If it is different, compared to the input one
   if (systemNotificationPermissions !== storedNotificationPermissions) {
+    // Track the new status if allowed
+    if (!skipAnalyticsTracking) {
+      yield* call(
+        trackNotificationPermissionsStatus,
+        systemNotificationPermissions
+      );
+    }
     // Update the in-memory redux value
     yield* put(updateSystemNotificationsEnabled(systemNotificationPermissions));
   }
