@@ -263,7 +263,9 @@ export const itwEidIssuanceMachine = setup({
                   target: "ReadingCieCard"
                 },
                 onError: {
-                  actions: "setFailure",
+                  actions: assign(
+                    setFailure(IssuanceFailureType.ISSUER_GENERIC)
+                  ),
                   target: "#itwEidIssuanceMachine.Failure"
                 }
               },
