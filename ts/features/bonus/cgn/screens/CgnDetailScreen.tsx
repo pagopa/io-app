@@ -181,6 +181,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     <BonusCardScreenComponent
       logoUris={logoUris}
       name={I18n.t("bonus.cgn.name")}
+      title={I18n.t("bonus.cgn.name")}
       organizationName={I18n.t("bonus.cgn.departmentName")}
       cardBackground={<CgnAnimatedBackground />}
       actions={footerActions}
