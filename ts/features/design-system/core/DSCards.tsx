@@ -485,6 +485,15 @@ const ItwCards = () => (
         </DSComponentViewerBox>
       </VStack>
     </DesignSystemSection>
+    <DesignSystemSection title="Skeumorphic Disability Card">
+      <VStack space={componentMargin}>
+        <DSComponentViewerBox name="Valid">
+          <ItwSkeumorphicCardPreview
+            credential={ItwStoredCredentialsMocks.dc}
+          />
+        </DSComponentViewerBox>
+      </VStack>
+    </DesignSystemSection>
     <DesignSystemSection title="Health Insurance Card">
       <VStack space={componentMargin}>
         <DSComponentViewerBox name="Preview">
