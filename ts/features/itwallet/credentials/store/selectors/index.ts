@@ -49,3 +49,14 @@ export const selectFiscalCodeFromEid = createSelector(
       O.getOrElse(() => "")
     )
 );
+
+/**
+ * Returns whether the wallet is empty, i.e. it does not have any credential.
+ * The eID is not considered, only other (Q)EAAs.
+ *
+ * Note: this selector does not check the wallet validity.
+ */
+export const itwIsWalletEmptySelector = createSelector(
+  itwCredentialsSelector,
+  ({ credentials }) => credentials.length === 0
+);

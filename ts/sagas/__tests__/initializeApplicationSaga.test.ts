@@ -43,6 +43,7 @@ import { cancellAllLocalNotifications } from "../../features/pushNotifications/u
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
 import { startupTransientErrorInitialState } from "../../store/reducers/startup";
 import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
+import { notificationPermissionsListener } from "../../features/pushNotifications/sagas/notificationPermissionsListener";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -83,6 +84,8 @@ describe("initializeApplicationSaga", () => {
       .put(previousInstallationDataDeleteSuccess())
       .next()
       .next()
+      .next()
+      .fork(notificationPermissionsListener)
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
@@ -135,6 +138,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
+      .fork(notificationPermissionsListener)
+      .next()
       .select(profileSelector)
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
@@ -178,6 +183,8 @@ describe("initializeApplicationSaga", () => {
       .put(previousInstallationDataDeleteSuccess())
       .next()
       .next()
+      .next()
+      .fork(notificationPermissionsListener)
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
@@ -227,6 +234,8 @@ describe("initializeApplicationSaga", () => {
       .put(previousInstallationDataDeleteSuccess())
       .next()
       .next()
+      .next()
+      .fork(notificationPermissionsListener)
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
@@ -289,6 +298,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
+      .fork(notificationPermissionsListener)
+      .next()
       .select(profileSelector)
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
@@ -338,6 +349,8 @@ describe("initializeApplicationSaga", () => {
       .put(previousInstallationDataDeleteSuccess())
       .next()
       .next()
+      .next()
+      .fork(notificationPermissionsListener)
       .next()
       .select(profileSelector)
       .next(pot.some(profile))

@@ -1930,9 +1930,9 @@ wallet:
       INVALID_METHOD:
         title: Il metodo di pagamento non è supportato
       WAITING_CONFIRMATION_EMAIL:
-        title: Attendi la conferma via email
-        subtitle: Riceverai l'esito del pagamento all'indirizzo {{email}}
-        defaultSubtitle: Riceverai l'esito del pagamento all'indirizzo email associato.
+        title: Attendi la conferma del pagamento
+        subtitle: "Il pagamento non si è ancora concluso: riceverai a breve l’esito all'indirizzo {{email}}. L’operazione può richiedere fino a 15 minuti."
+        defaultSubtitle: "Il pagamento non si è ancora concluso: riceverai a breve l’esito via email. L’operazione può richiedere fino a 15 minuti."
       METHOD_NOT_ENABLED:
         title: Abilita il metodo per effettuare pagamenti in app
         subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
@@ -2148,6 +2148,11 @@ notifications:
   installation:
     errorTitle: Push notifications
     errorMessage: Registration with the push notifications service generated an error
+  modal:
+    content: "Per farlo, dai il tuo consenso nelle impostazioni di sistema del dispositivo."
+    primaryButton: "Attiva notifiche push"
+    secondaryButton: "Non ora"
+    title: "Attiva le notifiche push per non perdere messaggi importanti!"
 biometric_recognition:
   contextualHelpTitle: How works biometric recognition
   contextualHelpContent: !include profile/profile_security_biometric_recognition.md
@@ -3323,6 +3328,7 @@ features:
           toast: Fatto!
           actions:
             continue: Aggiungi primo documento
+            continueAlt: Aggiungi documento
             close: Continua più tardi
       credentialResult:
         toast: Fatto! Hai aggiunto {{credentialName}}
@@ -3344,6 +3350,16 @@ features:
         title: La tua richiesta è stata presa in carico
         body: Riceverai un messaggio in app con l'esito della tua richiesta appena sarà disponibile.
         primaryAction: Ho capito
+      credentialAlreadyAdded:
+        title: Hai già questo documento
+        body: La versione digitale del documento è già presente nel tuo Portafoglio.
+        primaryAction: Vai al documento
+      walletInstanceNotActive:
+        title: Attiva Documenti su IO per continuare
+        body: "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare "
+        bodyBold: Documenti su IO
+        primaryAction: Inizia
+        secondaryAction: Non ora
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
@@ -3368,6 +3384,13 @@ features:
         mdl:
           title: "Patente: contesti di verifica"
           content: "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Carta di Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valore legale del documento fisico.**"
+        eidInfo:
+          title: "Documenti su IO:\nidentità verificata"
+          contentTop: Con **Documenti su IO** salvi nel Portafoglio di IO le versioni digitali dei tuoi documenti.
+          contentBottom: "###### Come funziona?\n\nLa tua **identità è verificata** in fase di attivazione tramite SPID o CIE."
+          triggerLabel: Cos'è?
+          alert:
+            valid: L'ultima verifica è del {{issuanceDate}}.
       credentialDetails:
         flipCard: "Show back"
         personalDataTitle: "Personal data"
@@ -3403,9 +3426,6 @@ features:
         title: Certificato di autenticità
         usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
         certifiedLabel: Questo documento è certificato dall'ente emittente.
-  trialSystem:
-    toast:
-      subscribed: Done! You will receive a message when the trial period will begin.
 support:
   ticketList:
     noTicket:

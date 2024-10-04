@@ -7,7 +7,7 @@ import {
   PDNDCriteriaDTO
 } from "../../../../../definitions/idpay/PDNDCriteriaDTO";
 import I18n from "../../../../i18n";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 
 const getPDNDCriteriaValueString = (code: CodeEnum, value?: string): string => {
   switch (code) {
@@ -15,7 +15,7 @@ const getPDNDCriteriaValueString = (code: CodeEnum, value?: string): string => {
       return pipe(
         NumberFromString.decode(value),
         O.fromEither,
-        O.map(value => formatNumberAmount(value)),
+        O.map(formatNumberCentsToAmount),
         O.map(valueString => `${valueString} €`),
         O.getOrElse(() => "-")
       );

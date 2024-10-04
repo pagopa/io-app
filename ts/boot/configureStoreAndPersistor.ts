@@ -41,7 +41,10 @@ import {
   INSTALLATION_INITIAL_STATE,
   InstallationState
 } from "../store/reducers/installation";
-import { NotificationsState } from "../features/pushNotifications/store/reducers";
+import {
+  NOTIFICATIONS_STORE_VERSION,
+  NotificationsState
+} from "../features/pushNotifications/store/reducers";
 import { getInitialState as getInstallationInitialState } from "../features/pushNotifications/store/reducers/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { walletsPersistConfig } from "../store/reducers/wallet";
@@ -53,7 +56,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 36;
+const CURRENT_REDUX_STORE_VERSION = 37;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -440,7 +443,21 @@ const migrations: MigrationManifest = {
     }),
   // Remove isNewScanSectionEnabled from persistedPreferences
   "36": (state: PersistedState) =>
-    omit(state, "persistedPreferences.isNewScanSectionEnabled")
+    omit(state, "persistedPreferences.isNewScanSectionEnabled"),
+  // Move 'notifications' from root persistor to its own
+  "37": (state: PersistedState) => {
+    const typedState = state as GlobalState;
+    return {
+      ...state,
+      notifications: {
+        ...typedState.notifications,
+        _persist: {
+          version: NOTIFICATIONS_STORE_VERSION,
+          rehydrated: true
+        }
+      }
+    };
+  }
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
@@ -456,7 +473,6 @@ const rootPersistConfig: PersistConfig = {
   // Sections of the store that must be persisted and rehydrated with this storage.
   whitelist: [
     "onboarding",
-    "notifications",
     "profile",
     "persistedPreferences",
     "installation",

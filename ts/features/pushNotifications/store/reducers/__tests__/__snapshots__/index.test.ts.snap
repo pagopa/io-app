@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Main pushNotifications reducer notificationsReducer initial state should match snapshot 1`] = `
+{
+  "environment": {
+    "applicationInitialized": false,
+    "onboardingInstructionsShown": false,
+    "systemNotificationsEnabled": false,
+  },
+  "installation": {
+    "registeredToken": undefined,
+    "token": undefined,
+  },
+  "pendingMessage": null,
+  "userBehaviour": {
+    "engagementScreenShown": false,
+  },
+}
+`;
+
+exports[`Main pushNotifications reducer persistedNotificationsReducer initial state should match snapshot 1`] = `
+{
+  "environment": {
+    "applicationInitialized": false,
+    "onboardingInstructionsShown": false,
+    "systemNotificationsEnabled": false,
+  },
+  "installation": {
+    "registeredToken": undefined,
+    "token": undefined,
+  },
+  "pendingMessage": null,
+  "userBehaviour": {
+    "engagementScreenShown": false,
+  },
+}
+`;
