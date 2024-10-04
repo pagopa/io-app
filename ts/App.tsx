@@ -17,11 +17,9 @@ import { LightModalProvider } from "./components/ui/LightModal";
 import { sentryDsn } from "./config";
 import { isDevEnv } from "./utils/environment";
 
-export const routingInstrumentation = new Sentry.ReactNavigationInstrumentation(
-  {
-    enableTimeToInitialDisplay: true
-  }
-);
+export const routingInstrumentation = Sentry.reactNavigationIntegration({
+  enableTimeToInitialDisplay: true
+});
 
 const removeUserFromEvent = (event: ErrorEvent | TransactionEvent) => {
   // console.log(JSON.stringify(event));
