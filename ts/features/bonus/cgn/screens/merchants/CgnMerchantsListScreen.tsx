@@ -2,15 +2,11 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { debounce } from "lodash";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
-import {
-  Keyboard,
-  RefreshControl,
-  SafeAreaView,
-  ScrollView
-} from "react-native";
+import { FlatList, Keyboard, RefreshControl, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import {
   ContentWrapper,
+  Divider,
   ListItemHeader,
   TextInput,
   VSpacer
@@ -30,7 +26,7 @@ import {
   isLoading,
   isReady
 } from "../../../../../common/model/RemoteValue";
-import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
+import { CgnMerchantListViewRenderItem } from "../../components/merchants/CgnMerchantsListView";
 import { navigateToCgnMerchantDetail } from "../../navigation/actions";
 import {
   cgnOfflineMerchants,
@@ -60,6 +56,8 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
   const [merchantList, setMerchantsList] = React.useState<
     ReadonlyArray<MerchantsAll>
   >([]);
+
+  const { navigateToMerchantDetail } = props;
 
   // Mixes online and offline merchants to render on the same list
   // merchants are sorted by name
@@ -107,10 +105,18 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
 
   useFocusEffect(initLoadingLists);
 
-  const onItemPress = (id: Merchant["id"]) => {
-    props.navigateToMerchantDetail(id);
-    Keyboard.dismiss();
-  };
+  const onItemPress = React.useCallback(
+    (id: Merchant["id"]) => {
+      navigateToMerchantDetail(id);
+      Keyboard.dismiss();
+    },
+    [navigateToMerchantDetail]
+  );
+
+  const renderItem = React.useMemo(
+    () => CgnMerchantListViewRenderItem({ onItemPress }),
+    [onItemPress]
+  );
 
   return (
     <SafeAreaView style={IOStyles.flex}>
@@ -131,7 +137,11 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
         </ContentWrapper>
       )}
       {isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
-        <ScrollView
+        <FlatList
+          data={merchantList}
+          keyExtractor={item => item.id}
+          renderItem={renderItem}
+          ItemSeparatorComponent={() => <Divider />}
           refreshControl={
             <RefreshControl
               refreshing={
@@ -141,12 +151,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
               onRefresh={initLoadingLists}
             />
           }
-        >
-          <CgnMerchantsListView
-            merchantList={merchantList}
-            onItemPress={onItemPress}
-          />
-        </ScrollView>
+        />
       ) : (
         <LoadingErrorComponent
           isLoading={
