@@ -2157,10 +2157,10 @@ notifications:
     errorTitle: Notifiche push
     errorMessage: La registrazione verso il servizio di notifiche push ha generato un errore
   modal:
-    content: "Per farlo, dai il tuo consenso nelle impostazioni di sistema del dispositivo."
+    content: "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app."
     primaryButton: "Attiva notifiche push"
     secondaryButton: "Non ora"
-    title: "Attiva le notifiche push per non perdere messaggi importanti!"
+    title: "Non perderti i messaggi importanti!"
 biometric_recognition:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
   contextualHelpContent: !include profile/profile_security_biometric_recognition.md
