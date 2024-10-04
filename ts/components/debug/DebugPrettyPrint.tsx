@@ -1,18 +1,22 @@
 /*
 WARNING: This component is not referenced anywhere, but is used
-for development purposes. for development purposes. Don't REMOVE it!
+for development purposes. Please, Don't REMOVE it, thank you!
 */
 import {
   HStack,
   IOColors,
   IconButton,
   LabelSmall,
+  useIOToast,
   useTypographyFactory
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import RNFS from "react-native-fs";
+import Share from "react-native-share";
 import { Prettify } from "../../types/helpers";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
+import { truncateObjectStrings } from "./utils";
 import { withDebugEnabled } from "./withDebugEnabled";
 
 type ExpandableProps =
@@ -39,22 +43,41 @@ type Props = Prettify<
  */
 export const DebugPrettyPrint = withDebugEnabled(
   ({ title, data, expandable = true, isExpanded = false }: Props) => {
+    const toast = useIOToast();
     const [expanded, setExpanded] = React.useState(isExpanded);
-    const prettyData = React.useMemo(
-      () => JSON.stringify(data, null, 2),
-      [data]
-    );
 
     const content = React.useMemo(() => {
       if ((expandable && !expanded) || !expandable) {
         return null;
       }
+
       return (
         <View style={styles.content} pointerEvents="box-only">
-          <CustomBodyMonospace>{prettyData}</CustomBodyMonospace>
+          <CustomBodyMonospace>
+            {JSON.stringify(truncateObjectStrings(data), null, 2)}
+          </CustomBodyMonospace>
         </View>
       );
-    }, [prettyData, expandable, expanded]);
+    }, [data, expandable, expanded]);
+
+    const shareData = async () => {
+      try {
+        // Create a temporary file path
+        const filePath = `${RNFS.CachesDirectoryPath}/${title}.json`;
+        // Write JSON data to the file
+        await RNFS.writeFile(filePath, JSON.stringify(data, null, 2), "utf8");
+        await Share.open({
+          filename: `${title}.json`,
+          type: "application/json",
+          url: filePath,
+          failOnCancel: false
+        });
+
+        await RNFS.unlink(filePath);
+      } catch (err) {
+        toast.error("Error sharing debug data");
+      }
+    };
 
     return (
       <View testID="DebugPrettyPrintTestID" style={styles.container}>
@@ -64,15 +87,26 @@ export const DebugPrettyPrint = withDebugEnabled(
           </LabelSmall>
           <HStack space={16}>
             <IconButton
+              icon={"shareiOs"}
+              accessibilityLabel="share"
+              iconSize={20}
+              onPress={shareData}
+              color="contrast"
+            />
+            <IconButton
               icon={"copy"}
               accessibilityLabel="copy"
-              onPress={() => clipboardSetStringWithFeedback(prettyData)}
+              iconSize={20}
+              onPress={() =>
+                clipboardSetStringWithFeedback(JSON.stringify(data, null, 2))
+              }
               color="contrast"
             />
             {expandable && (
               <IconButton
-                icon={expanded ? "chevronTop" : "chevronBottom"}
-                accessibilityLabel="expand"
+                icon={expanded ? "eyeHide" : "eyeShow"}
+                accessibilityLabel="show"
+                iconSize={24}
                 onPress={() => setExpanded(_ => !_)}
                 color="contrast"
               />
