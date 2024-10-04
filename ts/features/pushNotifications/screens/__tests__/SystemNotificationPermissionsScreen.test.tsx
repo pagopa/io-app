@@ -10,6 +10,7 @@ import { SystemNotificationPermissionsScreen } from "../SystemNotificationPermis
 import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
 import * as utils from "../../utils";
 import { setEngagementScreenShown } from "../../store/actions/userBehaviour";
+import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 
 const mockGoBack = jest.fn();
 jest.mock("@react-navigation/native", () => ({
@@ -31,6 +32,7 @@ describe("SystemNotificationPermissionsScreen", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
+    mockAccessibilityInfo(false);
   });
   it("Should match snapshot", () => {
     const screen = renderScreen();
