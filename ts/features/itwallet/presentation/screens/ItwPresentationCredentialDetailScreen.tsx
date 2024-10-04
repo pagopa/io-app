@@ -10,7 +10,6 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
-import { getHumanReadableParsedCredential } from "../../common/utils/debug";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -51,9 +50,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   useDebugInfo({
     parsedCredential: pipe(
       credentialOption,
-      O.map(credential =>
-        getHumanReadableParsedCredential(credential.parsedCredential)
-      ),
+      O.map(credential => credential.parsedCredential),
       O.toUndefined
     )
   });
