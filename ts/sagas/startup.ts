@@ -39,6 +39,7 @@ import {
 } from "../features/fastLogin/store/selectors";
 import { watchFciSaga } from "../features/fci/saga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
+import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,
   generateLollipopKeySaga,
@@ -114,7 +115,6 @@ import { handlePendingMessageStateIfAllowed } from "../features/pushNotification
 import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
-import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
   clearKeychainError,
   keychainError
