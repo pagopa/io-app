@@ -16,7 +16,7 @@ export type WalletCardsCategoryContainerProps = WithTestID<{
   cards: ReadonlyArray<WalletCard>;
   isStacked?: boolean;
   header?: ListItemHeader;
-  footer?: JSX.Element;
+  topElement?: JSX.Element;
 }>;
 
 /**
@@ -27,11 +27,12 @@ export const WalletCardsCategoryContainer = ({
   cards,
   isStacked = false,
   header,
-  footer,
+  topElement,
   testID
 }: WalletCardsCategoryContainerProps) => (
   <Animated.View testID={testID} layout={LinearTransition.duration(200)}>
     {header && <ListItemHeader {...header} />}
+    {React.isValidElement(topElement) && React.cloneElement(topElement)}
     <Animated.FlatList
       scrollEnabled={false}
       data={cards}
@@ -43,7 +44,6 @@ export const WalletCardsCategoryContainer = ({
       entering={FadeInDown.duration(150)}
       exiting={FadeOutDown.duration(150)}
     />
-    {React.isValidElement(footer) && React.cloneElement(footer)}
     <VSpacer size={24} />
   </Animated.View>
 );
