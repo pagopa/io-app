@@ -213,6 +213,15 @@ describe("updateNotificationPermissionsIfNeeded", () => {
       .next()
       .isDone();
   });
+  it("should not call the analytics event if 'skipAnalyticsTracking' input is 'true' and dispatch 'updateSystemNotificationsEnabled(false)' when system permissions are 'false' and in-memory data are 'true'", () => {
+    testSaga(updateNotificationPermissionsIfNeeded, false, true)
+      .next()
+      .select(areNotificationPermissionsEnabled)
+      .next(true)
+      .put(updateSystemNotificationsEnabled(false))
+      .next()
+      .isDone();
+  });
   it("should call the analytics event and dispatch 'updateSystemNotificationsEnabled(true)' when system permissions are 'true' and in-memory data are 'false'", () => {
     testSaga(updateNotificationPermissionsIfNeeded, true)
       .next()
@@ -220,6 +229,15 @@ describe("updateNotificationPermissionsIfNeeded", () => {
       .next(false)
       .call(trackNotificationPermissionsStatus, true)
       .next()
+      .put(updateSystemNotificationsEnabled(true))
+      .next()
+      .isDone();
+  });
+  it("should not call the analytics event if 'skipAnalyticsTracking' input is 'true' and dispatch 'updateSystemNotificationsEnabled(true)' when system permissions are 'true' and in-memory data are 'false'", () => {
+    testSaga(updateNotificationPermissionsIfNeeded, true, true)
+      .next()
+      .select(areNotificationPermissionsEnabled)
+      .next(false)
       .put(updateSystemNotificationsEnabled(true))
       .next()
       .isDone();
@@ -234,25 +252,65 @@ describe("updateNotificationPermissionsIfNeeded", () => {
 });
 
 describe("checkAndUpdateNotificationPermissionsIfNeeded", () => {
-  it("when 'checkNotificationPermissions' returns 'false', should call 'updateNotificationPermissionsIfNeeded' with 'false' and return 'false'", () => {
+  it("when 'checkNotificationPermissions' returns 'false', should call 'updateNotificationPermissionsIfNeeded' with ('true', 'false') and return 'false'", () => {
     const systemPermissionsEnabled = false;
     testSaga(checkAndUpdateNotificationPermissionsIfNeeded)
       .next()
       .call(checkNotificationPermissions)
       .next(systemPermissionsEnabled)
-      .call(updateNotificationPermissionsIfNeeded, systemPermissionsEnabled)
+      .call(
+        updateNotificationPermissionsIfNeeded,
+        systemPermissionsEnabled,
+        false
+      )
       .next()
       .returns(systemPermissionsEnabled)
       .next()
       .isDone();
   });
-  it("when 'checkNotificationPermissions' returns 'true', should call 'updateNotificationPermissionsIfNeeded' with 'true' and return 'true'", () => {
+  it("when 'checkNotificationPermissions' returns 'true', should call 'updateNotificationPermissionsIfNeeded' with ('true', 'false') and return 'true'", () => {
     const systemPermissionsEnabled = true;
     testSaga(checkAndUpdateNotificationPermissionsIfNeeded)
       .next()
       .call(checkNotificationPermissions)
       .next(systemPermissionsEnabled)
-      .call(updateNotificationPermissionsIfNeeded, systemPermissionsEnabled)
+      .call(
+        updateNotificationPermissionsIfNeeded,
+        systemPermissionsEnabled,
+        false
+      )
+      .next()
+      .returns(systemPermissionsEnabled)
+      .next()
+      .isDone();
+  });
+  it("when 'checkNotificationPermissions' returns 'false' and 'skipAnalyticsTracking' is 'true', should call 'updateNotificationPermissionsIfNeeded' with ('true', 'true') and return 'false'", () => {
+    const systemPermissionsEnabled = false;
+    testSaga(checkAndUpdateNotificationPermissionsIfNeeded, true)
+      .next()
+      .call(checkNotificationPermissions)
+      .next(systemPermissionsEnabled)
+      .call(
+        updateNotificationPermissionsIfNeeded,
+        systemPermissionsEnabled,
+        true
+      )
+      .next()
+      .returns(systemPermissionsEnabled)
+      .next()
+      .isDone();
+  });
+  it("when 'checkNotificationPermissions' returns 'true' and 'skipAnalyticsTracking' is 'true', should call 'updateNotificationPermissionsIfNeeded' with ('true', 'true') and return 'true'", () => {
+    const systemPermissionsEnabled = true;
+    testSaga(checkAndUpdateNotificationPermissionsIfNeeded, true)
+      .next()
+      .call(checkNotificationPermissions)
+      .next(systemPermissionsEnabled)
+      .call(
+        updateNotificationPermissionsIfNeeded,
+        systemPermissionsEnabled,
+        true
+      )
       .next()
       .returns(systemPermissionsEnabled)
       .next()
