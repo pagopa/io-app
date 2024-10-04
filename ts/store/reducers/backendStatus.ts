@@ -30,7 +30,6 @@ import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
-import { StatusMessages } from "../../../definitions/content/StatusMessages";
 import { StatusMessage } from "../../../definitions/content/StatusMessage";
 import { isIdPayTestEnabledSelector } from "./persistedPreferences";
 import { GlobalState } from "./types";
@@ -556,15 +555,15 @@ const sectionStatusUncachedSelector = (
     )
   );
 
-const statusMessagesSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): StatusMessages | undefined =>
-    pipe(
-      backendStatus,
-      O.map(bs => bs.statusMessages),
-      O.toUndefined
-    )
-);
+const statusMessagesSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    backendStatusSelector,
+    O.map(bs => bs.statusMessages),
+    O.toUndefined
+  );
+
+const EMPTY_ARRAY: ReadonlyArray<StatusMessage> = [];
 
 export const statusMessageByRouteSelector = (routeName: string) =>
   createSelector(
@@ -573,9 +572,12 @@ export const statusMessageByRouteSelector = (routeName: string) =>
       pipe(
         statusMessages,
         O.fromNullable,
-        O.map(({ items }) =>
-          items.filter(message => message.routes.includes(routeName))
-        ),
+        O.map(({ items }) => {
+          const messages = items.filter(message =>
+            message.routes.includes(routeName)
+          );
+          return messages.length > 0 ? messages : EMPTY_ARRAY;
+        }),
         O.toUndefined
       )
   );
