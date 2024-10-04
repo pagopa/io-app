@@ -35,6 +35,7 @@ export function* handleFimsGetConsentsList(
 
     yield* put(
       fimsGetConsentsListAction.failure({
+        errorTag: "GENERIC",
         standardMessage: "missing FIMS data",
         debugMessage
       })
@@ -52,6 +53,7 @@ export function* handleFimsGetConsentsList(
 
     yield* put(
       fimsGetConsentsListAction.failure({
+        errorTag: "MISSING_INAPP_BROWSER",
         standardMessage: "The InApp Browser is not supported on this device",
         debugMessage
       })
@@ -76,6 +78,7 @@ export function* handleFimsGetConsentsList(
     yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetConsentsListAction.failure({
+        errorTag: "GENERIC",
         standardMessage: "cta url has invalid redirect response",
         debugMessage
       })
@@ -94,6 +97,7 @@ export function* handleFimsGetConsentsList(
     yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetConsentsListAction.failure({
+        errorTag: "GENERIC",
         standardMessage: "relying party did not redirect to provider",
         debugMessage
       })
@@ -126,6 +130,7 @@ export function* handleFimsGetConsentsList(
     yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetConsentsListAction.failure({
+        errorTag: "GENERIC",
         standardMessage: "consent data fetch error",
         debugMessage
       })
@@ -157,6 +162,7 @@ const decodeSuccessfulConsentsResponse = (
       () => {
         const debugMessage = `could not decode, body: ${getConsentsResult.body}`;
         return fimsGetConsentsListAction.failure({
+          errorTag: "GENERIC",
           standardMessage: "could not decode",
           debugMessage
         });
