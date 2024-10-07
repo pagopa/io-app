@@ -2148,6 +2148,11 @@ notifications:
   installation:
     errorTitle: Push notifications
     errorMessage: Registration with the push notifications service generated an error
+  modal:
+    content: "Turn on push notifications to know immediately when you get a new message."
+    primaryButton: "Turn on notificatons"
+    secondaryButton: "Not now"
+    title: "Don't miss any important messages!"
 biometric_recognition:
   contextualHelpTitle: How works biometric recognition
   contextualHelpContent: !include profile/profile_security_biometric_recognition.md
@@ -3189,7 +3194,7 @@ features:
       eid: Identità Digitale
       mdl: Patente di Guida
       dc: Carta Europea della Disabilità
-      ts: Tessera Sanitaria
+      ts: Tessera Sanitaria - Tessera europea di assicurazione malattia
     wallet:
       active: Attivo
       inactive: Non attivo
@@ -3228,7 +3233,7 @@ features:
         issuedBy: "Credenziale emessa da"
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
-        releasedBy: "Rilasciata da"
+        releasedBy: Emissione versione digitale
         attachments: "Attachments"
         mdl:
           category: "Licenza {{category}}"
@@ -3243,6 +3248,10 @@ features:
       title: La versione digitale dei tuoi documenti, su IO
       content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti personali**, come la Patente di guida, la Tessera Sanitaria e presto molti altri. \n Attiva la funzionalità *Documenti su IO* per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
       tos: Per maggiori informazioni, leggi l’[informativa Privacy](https://io.italia.it/informativa-sperimentazione) e i [Termini e Condizioni d’uso](https://io.italia.it/tos-sperimentazione)
+      upcomingWalletBanner:
+        title: "Novità in arrivo: i tuoi Documenti su IO"
+        content: Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!
+        action: Scopri di più
     identification:
       mode:
         title: Per iniziare, attiva Documenti su IO
@@ -3289,7 +3298,8 @@ features:
           1: I dati saranno condivisi solo per il tempo necessario al rilascio della credenziale.
         tos: "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione/)."
       eidPreview:
-        title: "Stiamo aggiungendo i seguenti dati al Portafoglio:"
+        title: Identità verificata
+        subtitle: "Stai attivando **Documenti su IO** come:"
         actions:
           primary: Continua
           secondary: Annulla
@@ -3299,7 +3309,7 @@ features:
         bottomSheet:
           about:
             title: "Chi è?"
-            subtitle: "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo."
+            subtitle: "È l'ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
@@ -3313,7 +3323,7 @@ features:
             continueAlt: Aggiungi documento
             close: Continua più tardi
       credentialResult:
-        toast: Fatto! Hai aggiunto {{credentialName}}
+        toast: Fatto!
       notMatchingIdentityError:
         title: Identità non riconosciuta
         body: Non puoi attivare Documenti con un’identità diversa da quella che usi per accedere a IO. Verifica le credenziali di accesso e riprova.
@@ -3329,8 +3339,8 @@ features:
         body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
         primaryAction: Ho capito
       asyncCredentialError:
-        title: La tua richiesta è stata presa in carico
-        body: Riceverai un messaggio in app con l'esito della tua richiesta appena sarà disponibile.
+        title: Motorizzazione Civile ha preso in carico la tua richiesta
+        body: Riceverai un messaggio in app per continuare appena Motorizzazione Civile avrà elaborato la tua richiesta.
         primaryAction: Ho capito
       credentialAlreadyAdded:
         title: Hai già questo documento
@@ -3356,7 +3366,8 @@ features:
           content: "In questa fase, la versione digitale della Patente non ha lo stesso valore del documento fisico: dovrai presentarla insieme a un documento di identità valido."
           action: Scopri di più
         ehc:
-          content: "This document is valid only in Italy. The official copy of the document is in PDF."
+          content: "La tua Tessera sanitaria - Tessera europea di assicurazione malattia su IO è equivalente al documento fisico."
+          action: "Scopri di più"
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
           action: Aggiorna il documento
@@ -3366,6 +3377,9 @@ features:
         mdl:
           title: "Patente: contesti di verifica"
           content: "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Carta di Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valore legale del documento fisico.**"
+        ehc:
+          title: "Tessera Sanitaria - Tessera europea di assicurazione malattia su IO: contesti d'uso"
+          content: "###### In quali casi posso usare la versione digitale della mia Tessera Sanitaria - Tessera europea di assicurazione malattia? \n Puoi usare la versione digitale della tua Tessera Sanitaria - Tessera europea di assicurazione malattia per prenotare una visita medica o un esame di laboratorio, per ritirare un medicinale in farmacia e ogni volta che devi certificare il tuo Codice Fiscale. \n\n All'estero puoi usarla per usufruire delle prestazioni sanitarie secondo le normative vigenti nei singoli paesi."
         eidInfo:
           title: "Documenti su IO:\nidentità verificata"
           titleExpired: "Documenti su IO:\nverifica la tua identità"
@@ -3377,7 +3391,8 @@ features:
             expiring: Verifica la tua identità entro il {{date}}.
             expired: È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.
       credentialDetails:
-        flipCard: "Show back"
+        flipCardFront: "Show back"
+        flipCardBack: "Show front"
         personalDataTitle: "Personal data"
         documentDataTitle: "Document data"
         lastUpdated: "Last updated on {{lastUpdateTime}}"
@@ -3401,7 +3416,7 @@ features:
             content: Se cambi idea, potrai riaggiungerlo in seguito.
             confirm: Sì, rimuovi
         toast:
-          removed: Fatto! Hai rimosso {{credentialName}}
+          removed: Fatto!
       ctas:
         openPdf: "Open PDF document"
         shareButton: Save or share
@@ -3411,9 +3426,6 @@ features:
         title: Certificato di autenticità
         usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
         certifiedLabel: Questo documento è certificato dall'ente emittente.
-  trialSystem:
-    toast:
-      subscribed: Done! You will receive a message when the trial period will begin.
 support:
   ticketList:
     noTicket:
@@ -4089,6 +4101,9 @@ FIMS:
     subtitle: "Attendi qualche secondo"
   consentsScreen:
     errorStates:
+      missingInAppBrowser:
+        title: "Aggiorna il tuo browser per procedere"
+        body: "Per completare l'accesso in modo sicuro, scarica o aggiorna il browser installato sul tuo dispositivo."
       tempErrorBody: "C’è un problema temporaneo, riprova più tardi"
     title: "Per accedere al servizio, consenti la condivisione dei seguenti dati"
     subtitle: "Autorizza IO a trasmettere a "

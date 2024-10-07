@@ -21,7 +21,6 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
-import { getHumanReadableParsedCredential } from "../../common/utils/debug";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
@@ -123,9 +122,7 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   });
 
   useDebugInfo({
-    parsedCredential: getHumanReadableParsedCredential(
-      credential.parsedCredential
-    )
+    parsedCredential: credential.parsedCredential
   });
 
   return (

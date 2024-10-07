@@ -80,7 +80,7 @@ export const ItwPresentationClaimsSection = ({
           </React.Fragment>
         );
       })}
-      <Divider />
+      {claims.length > 0 && <Divider />}
       <ItwReleaserName credential={credential} isPreview={false} />
     </View>
   );

@@ -36,6 +36,10 @@ const assetsMap: Record<string, CardAssets> = {
   MDL: {
     front: require("../../../../../../img/features/itWallet/credential/mdl_front.png"),
     back: require("../../../../../../img/features/itWallet/credential/mdl_back.png")
+  },
+  EuropeanDisabilityCard: {
+    front: require("../../../../../../img/features/itWallet/credential/dc_front.png"),
+    back: require("../../../../../../img/features/itWallet/credential/dc_back.png")
   }
 };
 
@@ -46,7 +50,8 @@ const styles = StyleSheet.create({
   },
   background: {
     width: "100%",
-    height: "100%"
+    height: "100%",
+    borderRadius: 8
   }
 });
 

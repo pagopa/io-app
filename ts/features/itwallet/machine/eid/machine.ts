@@ -10,7 +10,7 @@ import {
   StartCieAuthFlowActorParams,
   type RequestEidActorParams
 } from "./actors";
-import { IssuanceFailureType } from "./failure";
+import { IssuanceFailureType, mapEventToFailure } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -46,7 +46,8 @@ export const itwEidIssuanceMachine = setup({
     setWalletInstanceToOperational: notImplemented,
     setWalletInstanceToValid: notImplemented,
     handleSessionExpired: notImplemented,
-    abortIdentification: notImplemented
+    abortIdentification: notImplemented,
+    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) }))
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
@@ -126,7 +127,7 @@ export const itwEidIssuanceMachine = setup({
             target: "SessionExpired"
           },
           {
-            actions: assign(setFailure(IssuanceFailureType.GENERIC)), // TODO: [SIW-1390] Use unsupported device from io-rn-wallet
+            actions: "setFailure",
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]
@@ -151,7 +152,7 @@ export const itwEidIssuanceMachine = setup({
             target: "SessionExpired"
           },
           {
-            actions: assign(setFailure(IssuanceFailureType.GENERIC)),
+            actions: "setFailure",
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]

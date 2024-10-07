@@ -8,10 +8,12 @@ import { differenceInCalendarDays, isValid } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
+import * as E from "fp-ts/lib/Either";
 import { truncate } from "lodash";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
 import { ItwCredentialStatus } from "../components/ItwCredentialCard";
+import { removeTimezoneFromDate } from "../../../../utils/dates";
 import { JsonFromString } from "./ItwCodecUtils";
 import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
@@ -164,8 +166,28 @@ const FISCAL_CODE_WITH_PREFIX =
  * The date format is checked against the regex dateFormatRegex, which is currenlty mocked.
  * This is needed because a generic date decoder would accept invalid dates like numbers,
  * thus decoding properly and returning a wrong claim item to be displayed.
+ * It also removes the timezone from the date given that the date must be displayed regardless of the timezone of the device.
  */
-export const DateClaim = patternDateFromString(DATE_FORMAT_REGEX, "DateClaim");
+export const DateWithoutTimezoneClaim = new t.Type<Date, string, unknown>(
+  "DateWithoutTimezone",
+  (input: unknown): input is Date => input instanceof Date,
+  (input, context) =>
+    pipe(
+      patternDateFromString(DATE_FORMAT_REGEX, "DateClaim").validate(
+        input,
+        context
+      ),
+      E.fold(
+        () => t.failure(input, context, "Date is not in the correct format"),
+        str => {
+          const date = new Date(str);
+          return t.success(removeTimezoneFromDate(date));
+        }
+      )
+    ),
+  (date: Date) =>
+    `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}`
+);
 
 /**
  * io-ts decoder for the evidence claim field of the credential.
@@ -198,8 +220,8 @@ export type PlaceOfBirthClaimType = t.TypeOf<typeof PlaceOfBirthClaim>;
  */
 const DrivingPrivilegeClaim = t.type({
   driving_privilege: t.string,
-  issue_date: t.string,
-  expiry_date: t.string,
+  issue_date: DateWithoutTimezoneClaim,
+  expiry_date: DateWithoutTimezoneClaim,
   restrictions_conditions: t.union([t.string, t.null])
 });
 
@@ -267,7 +289,7 @@ export const ClaimValue = t.union([
   // Parse an object representing the claim evidence
   EvidenceClaim,
   // Otherwise parse a date
-  DateClaim,
+  DateWithoutTimezoneClaim,
   // Otherwise parse an image
   ImageClaim,
   // Otherwise parse a PDF
