@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { getCredentialNameFromType } from "../../utils/itwCredentialUtils";
 import { StoredCredential } from "../../utils/itwTypesUtils";
 import { CardBackground } from "./CardBackground";
 import { CardData } from "./CardData";
@@ -29,12 +30,24 @@ const ItwSkeumorphicCard = ({
   );
 
   return (
-    <FlippableCard
-      containerStyle={styles.card}
-      FrontComponent={FrontSide}
-      BackComponent={BackSide}
-      isFlipped={isFlipped}
-    />
+    <View
+      accessible={true}
+      accessibilityLabel={getCredentialNameFromType(credential.credentialType)}
+      accessibilityHint={getCredentialNameFromType(credential.credentialType)}
+      accessibilityRole="image"
+    >
+      <View
+        importantForAccessibility="no-hide-descendants"
+        accessibilityElementsHidden={true}
+      >
+        <FlippableCard
+          containerStyle={styles.card}
+          FrontComponent={FrontSide}
+          BackComponent={BackSide}
+          isFlipped={isFlipped}
+        />
+      </View>
+    </View>
   );
 };
 
