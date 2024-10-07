@@ -32,6 +32,7 @@ import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnbo
 import ItwPlayground from "../playgrounds/screens/ItwPlayground";
 import { ItwPresentationCredentialAttachmentScreen } from "../presentation/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialDetailScreen } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
+import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -156,6 +157,11 @@ const InnerNavigator = () => {
         /* gestureEnabled to false prevents going back to the loading screen, just go back to the home screen when swiping back.
          * TODO: [SIW-1375] better retry and go back handling logic for the issuance process
          */
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
+        component={ItwIssuanceCredentialAsyncContinuationScreen}
+        options={hiddenHeader}
       />
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen
