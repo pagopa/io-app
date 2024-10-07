@@ -91,8 +91,8 @@ export const obtainCredential = async ({
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   // Create PID and DPoP crypto context;
-  const pidCryptoContext = createCryptoContextFor(pid.keyTag);
   await regenerateCryptoKey(DPOP_KEYTAG);
+  const pidCryptoContext = createCryptoContextFor(pid.keyTag);
   const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
 
   // Complete the user authorization via form_post.jwt mode
