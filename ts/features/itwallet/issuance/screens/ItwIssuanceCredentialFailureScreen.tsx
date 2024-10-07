@@ -129,6 +129,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
           )
       }
     },
+    // NOTE: only the mDL supports the async flow, so this error message is specific to mDL
     ASYNC_ISSUANCE: {
       title: I18n.t("features.itWallet.issuance.asyncCredentialError.title"),
       subtitle: I18n.t("features.itWallet.issuance.asyncCredentialError.body"),

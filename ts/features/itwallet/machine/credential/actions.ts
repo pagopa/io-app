@@ -1,6 +1,4 @@
 import { IOToast } from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { ActionArgs, assertEvent } from "xstate";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -9,7 +7,6 @@ import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { useIODispatch } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { CREDENTIALS_MAP, trackSaveCredentialSuccess } from "../../analytics";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
@@ -46,17 +43,7 @@ export default (
     CredentialIssuanceEvents,
     CredentialIssuanceEvents
   >) => {
-    const credentialName = pipe(
-      O.fromNullable(context.credentialType),
-      O.map(getCredentialNameFromType),
-      O.toUndefined
-    );
-
-    toast.success(
-      I18n.t("features.itWallet.issuance.credentialResult.toast", {
-        credentialName
-      })
-    );
+    toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
     if (context.credentialType) {
       trackSaveCredentialSuccess(CREDENTIALS_MAP[context.credentialType]);
     }
