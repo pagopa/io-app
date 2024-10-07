@@ -1,13 +1,16 @@
 import {
   trackNewPushNotificationsTokenGenerated,
   trackNotificationInstallationTokenNotChanged,
+  trackNotificationPermissionsStatus,
   trackNotificationsOptInOpenSettings,
   trackNotificationsOptInPreviewStatus,
   trackNotificationsOptInReminderOnPermissionsOff,
   trackNotificationsOptInReminderStatus,
   trackNotificationsOptInSkipSystemPermissions,
   trackPushNotificationTokenUploadFailure,
-  trackPushNotificationTokenUploadSucceeded
+  trackPushNotificationTokenUploadSucceeded,
+  trackSystemNotificationPermissionScreenOutcome,
+  trackSystemNotificationPermissionScreenShown
 } from "..";
 import { PushNotificationsContentTypeEnum } from "../../../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../../definitions/backend/ReminderStatus";
@@ -166,6 +169,71 @@ describe("pushNotifications analytics", () => {
       event_category: "KO",
       event_type: "error",
       reason
+    });
+  });
+  it("'trackSystemNotificationPermissionScreenShown' should have expected event name and properties", () => {
+    const mockMixpanelTrack = getMockMixpanelTrack();
+    void trackSystemNotificationPermissionScreenShown();
+    expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+    expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+    expect(mockMixpanelTrack.mock.calls[0][0]).toBe("PUSH_NOTIF_APP_MODAL");
+    expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+      event_category: "UX",
+      event_type: "screen_view"
+    });
+  });
+  it("'trackSystemNotificationPermissionScreenOutcome' should have expected event name and properties for 'activate' input", () => {
+    const mockMixpanelTrack = getMockMixpanelTrack();
+    const outcome = "activate";
+    void trackSystemNotificationPermissionScreenOutcome(outcome);
+    expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+    expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+    expect(mockMixpanelTrack.mock.calls[0][0]).toBe(
+      "PUSH_NOTIF_APP_MODAL_INTERACTION"
+    );
+    expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+      event_category: "UX",
+      event_type: "action",
+      outcome
+    });
+  });
+  it("'trackSystemNotificationPermissionScreenOutcome' should have expected event name and properties for 'dismiss' input", () => {
+    const mockMixpanelTrack = getMockMixpanelTrack();
+    const outcome = "dismiss";
+    void trackSystemNotificationPermissionScreenOutcome(outcome);
+    expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+    expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+    expect(mockMixpanelTrack.mock.calls[0][0]).toBe(
+      "PUSH_NOTIF_APP_MODAL_INTERACTION"
+    );
+    expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+      event_category: "UX",
+      event_type: "action",
+      outcome
+    });
+  });
+  it("'trackNotificationStatus' should have expected event name and properties for 'false' input", () => {
+    const mockMixpanelTrack = getMockMixpanelTrack();
+    const notificationPermissionsEnabled = false;
+    void trackNotificationPermissionsStatus(notificationPermissionsEnabled);
+    expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+    expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+    expect(mockMixpanelTrack.mock.calls[0][0]).toBe("PUSH_NOTIF_STATE_UPDATED");
+    expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+      event_category: "TECH",
+      new_notification_status: notificationPermissionsEnabled
+    });
+  });
+  it("'trackNotificationStatus' should have expected event name and properties for 'true' input", () => {
+    const mockMixpanelTrack = getMockMixpanelTrack();
+    const notificationPermissionsEnabled = true;
+    void trackNotificationPermissionsStatus(notificationPermissionsEnabled);
+    expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+    expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+    expect(mockMixpanelTrack.mock.calls[0][0]).toBe("PUSH_NOTIF_STATE_UPDATED");
+    expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+      event_category: "TECH",
+      new_notification_status: notificationPermissionsEnabled
     });
   });
 });
