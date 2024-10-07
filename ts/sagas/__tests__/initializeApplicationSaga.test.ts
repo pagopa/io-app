@@ -31,6 +31,7 @@ import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 import {
+  checkLollipopSessionAssertionAndInvalidateIfNeeded,
   generateLollipopKeySaga,
   getKeyInfo
 } from "../../features/lollipop/saga";
@@ -43,8 +44,24 @@ import { cancellAllLocalNotifications } from "../../features/pushNotifications/u
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
 import { startupTransientErrorInitialState } from "../../store/reducers/startup";
 import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
+import { notificationPermissionsListener } from "../../features/pushNotifications/sagas/notificationPermissionsListener";
+import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigation";
 
 const aSessionToken = "a_session_token" as SessionToken;
+const aSessionInfo = O.some({
+  spidLevel: "https://www.spid.gov.it/SpidL2",
+  walletToken: "wallet_token",
+  bpdToken: "bpd_token"
+});
+const anEmptySessionInfo = O.some({
+  spidLevel: "https://www.spid.gov.it/SpidL2"
+});
+const aPublicKey = O.some({
+  crv: "P_256",
+  kty: "EC",
+  x: "nDbpq45jXUKfWxodyvec3F1e+r0oTSqhakbauVmB59Y=",
+  y: "CtI6Cozk4O5OJ4Q6WyjiUw9/K6TyU0aDdssd25YHZxg="
+});
 
 jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
@@ -84,6 +101,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
+      .fork(notificationPermissionsListener)
+      .next()
       .select(profileSelector)
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
@@ -91,7 +110,8 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
-      .next(false) // unsupported device
+      .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
+      .next(false) // the device is supported
       .select(backendStatusSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
@@ -135,6 +155,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
+      .fork(notificationPermissionsListener)
+      .next()
       .select(profileSelector)
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
@@ -142,7 +164,8 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
-      .next(false) // unsupported device
+      .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
+      .next(false) // the device is supported
       .select(backendStatusSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
@@ -179,6 +202,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
+      .fork(notificationPermissionsListener)
+      .next()
       .select(profileSelector)
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
@@ -186,7 +211,8 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
-      .next(false) // unsupported device
+      .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
+      .next(false) // the device is supported
       .select(backendStatusSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
@@ -228,6 +254,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
+      .fork(notificationPermissionsListener)
+      .next()
       .select(profileSelector)
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
@@ -235,7 +263,8 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
-      .next(false) // unsupported device
+      .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
+      .next(false) // the device is supported
       .select(backendStatusSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
@@ -254,15 +283,15 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .select(sessionInfoSelector)
-      .next(
-        O.some({
-          spidLevel: "https://www.spid.gov.it/SpidL2",
-          walletToken: "wallet_token",
-          bpdToken: "bpd_token"
-        })
-      )
-      .next(lollipopPublicKeySelector)
-      .next(true) // assertionRef is valid
+      .next(aSessionInfo)
+      .select(lollipopPublicKeySelector)
+      .next(aPublicKey)
+      .call(
+        checkLollipopSessionAssertionAndInvalidateIfNeeded,
+        aPublicKey,
+        aSessionInfo
+      ) // assertionRef is valid?
+      .next(true) // assertionRef is valid!
       .fork(watchProfileUpsertRequestsSaga, undefined)
       .next()
       .fork(watchProfile, undefined)
@@ -289,6 +318,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
+      .fork(notificationPermissionsListener)
+      .next()
       .select(profileSelector)
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
@@ -296,7 +327,8 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
-      .next(false) // unsupported device
+      .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
+      .next(false) // the device is supported
       .select(backendStatusSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
@@ -339,6 +371,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
+      .fork(notificationPermissionsListener)
+      .next()
       .select(profileSelector)
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
@@ -346,7 +380,8 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
-      .next(false) // unsupported device
+      .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
+      .next(false) // the device is supported
       .select(backendStatusSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
@@ -365,16 +400,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .select(sessionInfoSelector)
-      .next(
-        O.some({
-          spidLevel: "https://www.spid.gov.it/SpidL2"
-        })
-      )
-      .next(
-        O.some({
-          spidLevel: "https://www.spid.gov.it/SpidL2"
-        })
-      )
+      .next(anEmptySessionInfo)
+      .next(anEmptySessionInfo)
       .call(handleApplicationStartupTransientError, "GET_SESSION_DOWN");
   });
 });

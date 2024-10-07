@@ -2,12 +2,9 @@ import { CommonActions, StackActions } from "@react-navigation/native";
 import { testSaga } from "redux-saga-test-plan";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
-import {
-  checkNotificationPermissions,
-  requestNotificationPermissions
-} from "../../utils";
-import { notificationsInfoScreenConsent } from "../../store/actions/notifications";
-import { checkNotificationsPreferencesSaga } from "../checkNotificationsPreferencesSaga";
+import { requestNotificationPermissions } from "../../utils";
+import { notificationsInfoScreenConsent } from "../../store/actions/profileNotificationPermissions";
+import { profileAndSystemNotificationsPermissions } from "../profileAndSystemNotificationsPermissions";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 import { profileUpsert } from "../../../../store/actions/profile";
@@ -19,6 +16,10 @@ import {
 } from "../../analytics";
 import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
+import {
+  checkAndUpdateNotificationPermissionsIfNeeded,
+  updateNotificationPermissionsIfNeeded
+} from "../common";
 
 const generateUserProfile = (
   hasDoneNotificationOptIn: boolean,
@@ -52,7 +53,7 @@ describe("checkNotificationsPreferencesSaga", () => {
     const profile = generateUserProfile(false, true);
     const profileUpsertOutput = profileUpsertResult();
     const globalState = {};
-    testSaga(checkNotificationsPreferencesSaga, profile)
+    testSaga(profileAndSystemNotificationsPermissions, profile)
       .next()
       .call(
         NavigationService.dispatchNavigationAction,
@@ -74,10 +75,12 @@ describe("checkNotificationsPreferencesSaga", () => {
         profileUpsertOutput.payload.newValue.reminder_status
       )
       .next()
-      .call(checkNotificationPermissions)
+      .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next(false)
       .call(requestNotificationPermissions)
       .next(true)
+      .call(updateNotificationPermissionsIfNeeded, true)
+      .next()
       .select()
       .next(globalState)
       .call(updateMixpanelSuperProperties, globalState)
@@ -92,7 +95,7 @@ describe("checkNotificationsPreferencesSaga", () => {
     const profile = generateUserProfile(false, true);
     const profileUpsertOutput = profileUpsertResult();
     const globalState = {};
-    testSaga(checkNotificationsPreferencesSaga, profile)
+    testSaga(profileAndSystemNotificationsPermissions, profile)
       .next()
       .call(
         NavigationService.dispatchNavigationAction,
@@ -114,10 +117,12 @@ describe("checkNotificationsPreferencesSaga", () => {
         profileUpsertOutput.payload.newValue.reminder_status
       )
       .next()
-      .call(checkNotificationPermissions)
+      .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next(false)
       .call(requestNotificationPermissions)
       .next(false)
+      .call(updateNotificationPermissionsIfNeeded, false)
+      .next()
       .call(
         NavigationService.dispatchNavigationAction,
         CommonActions.navigate(ROUTES.ONBOARDING, {
@@ -143,7 +148,7 @@ describe("checkNotificationsPreferencesSaga", () => {
     const profile = generateUserProfile(false, true);
     const profileUpsertOutput = profileUpsertResult();
     const globalState = {};
-    testSaga(checkNotificationsPreferencesSaga, profile)
+    testSaga(profileAndSystemNotificationsPermissions, profile)
       .next()
       .call(
         NavigationService.dispatchNavigationAction,
@@ -165,7 +170,7 @@ describe("checkNotificationsPreferencesSaga", () => {
         profileUpsertOutput.payload.newValue.reminder_status
       )
       .next()
-      .call(checkNotificationPermissions)
+      .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next(true)
       .select()
       .next(globalState)
@@ -180,12 +185,14 @@ describe("checkNotificationsPreferencesSaga", () => {
   it("profile has     notification settings, missing service configuration, device has no notification permissions, gives  device notification permissions", () => {
     const profile = generateUserProfile(true, true);
     const globalState = {};
-    testSaga(checkNotificationsPreferencesSaga, profile)
+    testSaga(profileAndSystemNotificationsPermissions, profile)
       .next()
-      .call(checkNotificationPermissions)
+      .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next(false)
       .call(requestNotificationPermissions)
       .next(true)
+      .call(updateNotificationPermissionsIfNeeded, true)
+      .next()
       .select()
       .next(globalState)
       .call(updateMixpanelSuperProperties, globalState)
@@ -197,12 +204,14 @@ describe("checkNotificationsPreferencesSaga", () => {
   it("profile has     notification settings, missing service configuration, device has no notification permissions, denies device notification permissions", () => {
     const profile = generateUserProfile(true, true);
     const globalState = {};
-    testSaga(checkNotificationsPreferencesSaga, profile)
+    testSaga(profileAndSystemNotificationsPermissions, profile)
       .next()
-      .call(checkNotificationPermissions)
+      .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next(false)
       .call(requestNotificationPermissions)
       .next(false)
+      .call(updateNotificationPermissionsIfNeeded, false)
+      .next()
       .select()
       .next(globalState)
       .call(updateMixpanelSuperProperties, globalState)
@@ -214,9 +223,9 @@ describe("checkNotificationsPreferencesSaga", () => {
   it("profile has     notification settings, missing service configuration, device has    notification permissions", () => {
     const profile = generateUserProfile(true, true);
     const globalState = {};
-    testSaga(checkNotificationsPreferencesSaga, profile)
+    testSaga(profileAndSystemNotificationsPermissions, profile)
       .next()
-      .call(checkNotificationPermissions)
+      .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next(true)
       .select()
       .next(globalState)
@@ -230,7 +239,7 @@ describe("checkNotificationsPreferencesSaga", () => {
     const profile = generateUserProfile(false, false);
     const profileUpsertOutput = profileUpsertResult();
     const globalState = {};
-    testSaga(checkNotificationsPreferencesSaga, profile)
+    testSaga(profileAndSystemNotificationsPermissions, profile)
       .next()
       .call(
         NavigationService.dispatchNavigationAction,
@@ -252,10 +261,12 @@ describe("checkNotificationsPreferencesSaga", () => {
         profileUpsertOutput.payload.newValue.reminder_status
       )
       .next()
-      .call(checkNotificationPermissions)
+      .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next(false)
       .call(requestNotificationPermissions)
       .next(true)
+      .call(updateNotificationPermissionsIfNeeded, true)
+      .next()
       .select()
       .next(globalState)
       .call(updateMixpanelSuperProperties, globalState)
@@ -270,7 +281,7 @@ describe("checkNotificationsPreferencesSaga", () => {
     const profile = generateUserProfile(false, false);
     const profileUpsertOutput = profileUpsertResult();
     const globalState = {};
-    testSaga(checkNotificationsPreferencesSaga, profile)
+    testSaga(profileAndSystemNotificationsPermissions, profile)
       .next()
       .call(
         NavigationService.dispatchNavigationAction,
@@ -292,10 +303,12 @@ describe("checkNotificationsPreferencesSaga", () => {
         profileUpsertOutput.payload.newValue.reminder_status
       )
       .next()
-      .call(checkNotificationPermissions)
+      .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next(false)
       .call(requestNotificationPermissions)
       .next(false)
+      .call(updateNotificationPermissionsIfNeeded, false)
+      .next()
       .call(
         NavigationService.dispatchNavigationAction,
         CommonActions.navigate(ROUTES.ONBOARDING, {
@@ -321,7 +334,7 @@ describe("checkNotificationsPreferencesSaga", () => {
     const profile = generateUserProfile(false, false);
     const profileUpsertOutput = profileUpsertResult();
     const globalState = {};
-    testSaga(checkNotificationsPreferencesSaga, profile)
+    testSaga(profileAndSystemNotificationsPermissions, profile)
       .next()
       .call(
         NavigationService.dispatchNavigationAction,
@@ -343,7 +356,7 @@ describe("checkNotificationsPreferencesSaga", () => {
         profileUpsertOutput.payload.newValue.reminder_status
       )
       .next()
-      .call(checkNotificationPermissions)
+      .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next(true)
       .select()
       .next(globalState)
@@ -358,12 +371,14 @@ describe("checkNotificationsPreferencesSaga", () => {
   it("profile has     notification settings, has     service configuration, device has no notification permissions, gives  device notification permissions", () => {
     const profile = generateUserProfile(true, false);
     const globalState = {};
-    testSaga(checkNotificationsPreferencesSaga, profile)
+    testSaga(profileAndSystemNotificationsPermissions, profile)
       .next()
-      .call(checkNotificationPermissions)
+      .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next(false)
       .call(requestNotificationPermissions)
       .next(true)
+      .call(updateNotificationPermissionsIfNeeded, true)
+      .next()
       .select()
       .next(globalState)
       .call(updateMixpanelSuperProperties, globalState)
@@ -375,12 +390,14 @@ describe("checkNotificationsPreferencesSaga", () => {
   it("profile has     notification settings, has     service configuration, device has no notification permissions, denies device notification permissions", () => {
     const profile = generateUserProfile(true, false);
     const globalState = {};
-    testSaga(checkNotificationsPreferencesSaga, profile)
+    testSaga(profileAndSystemNotificationsPermissions, profile)
       .next()
-      .call(checkNotificationPermissions)
+      .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next(false)
       .call(requestNotificationPermissions)
       .next(false)
+      .call(updateNotificationPermissionsIfNeeded, false)
+      .next()
       .select()
       .next(globalState)
       .call(updateMixpanelSuperProperties, globalState)
@@ -392,9 +409,9 @@ describe("checkNotificationsPreferencesSaga", () => {
   it("profile has     notification settings, has     service configuration, device has    notification permissions", () => {
     const profile = generateUserProfile(true, false);
     const globalState = {};
-    testSaga(checkNotificationsPreferencesSaga, profile)
+    testSaga(profileAndSystemNotificationsPermissions, profile)
       .next()
-      .call(checkNotificationPermissions)
+      .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next(true)
       .select()
       .next(globalState)
