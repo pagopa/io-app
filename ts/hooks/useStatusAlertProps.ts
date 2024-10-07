@@ -14,8 +14,8 @@ const statusVariantMap: Record<LevelEnum, AlertEdgeToEdgeProps["variant"]> = {
 export const useStatusAlertProps = (
   routeName?: string
 ): AlertEdgeToEdgeProps | undefined => {
-  const currentStatusMessage = useIOSelector(
-    statusMessageByRouteSelector(routeName)
+  const currentStatusMessage = useIOSelector(state =>
+    statusMessageByRouteSelector(state, routeName)
   );
   const locale = getFullLocale();
 
