@@ -18,13 +18,12 @@ import { handleSessionExpiredSaga } from "../../features/fastLogin/saga/utils";
 
 // load the support token useful for user assistance
 function* handleLoadSupportToken(
-  getSupportToken: ReturnType<typeof BackendClient>["getSupportToken"],
-  fields?: string // Params are optional and default to an empty object
+  getSupportToken: ReturnType<typeof BackendClient>["getSupportToken"]
 ): SagaIterator {
   try {
     const response: SagaCallReturnType<typeof getSupportToken> = yield* call(
       getSupportToken,
-      { fields } // Pass the optional params
+      {}
     );
     if (E.isLeft(response)) {
       throw Error(readableReport(response.left));
