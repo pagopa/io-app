@@ -22,8 +22,7 @@ import {
   cgnMerchantsV2Enabled,
   fciEnabled,
   premiumMessagesOptInEnabled,
-  scanAdditionalBarcodesEnabled,
-  uaDonationsEnabled
+  scanAdditionalBarcodesEnabled
 } from "../../config";
 import { LocalizedMessageKeys } from "../../i18n";
 import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
@@ -138,35 +137,6 @@ export const assistanceToolConfigSelector = createSelector(
 );
 
 /**
- * return the remote config about Ukrainian donations enabled/disabled
- * if there is no data, false is the default value -> (donation disabled)
- */
-export const isUaDonationsEnabledSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): boolean =>
-    (uaDonationsEnabled &&
-      pipe(
-        backendStatus,
-        O.map(bs => bs.config.uaDonations.enabled),
-        O.toUndefined
-      )) ??
-    false
-);
-
-/**
- * return the remote config about Ukrainian donations banner if available
- */
-export const uaDonationsBannerConfigSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): UaDonationsBanner | undefined =>
-    pipe(
-      backendStatus,
-      O.map(bs => bs.config.uaDonations.banner),
-      O.toUndefined
-    )
-);
-
-/**
  * Transform a UaDonationsConfig to `some(UaDonationsBanner)` if all the required conditions are met:
  * - local feature flag === true
  * - remote feature flag === true
@@ -181,7 +151,6 @@ const filterBannerVisible = (
   uaConfig: UaDonationsConfig,
   locale: LocalizedMessageKeys
 ): O.Option<UaDonationsBanner> =>
-  uaDonationsEnabled &&
   uaConfig.enabled &&
   uaConfig.banner.visible &&
   !isStringNullyOrEmpty(uaConfig.banner.description[locale])
