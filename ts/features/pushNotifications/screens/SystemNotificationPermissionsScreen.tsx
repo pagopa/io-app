@@ -16,6 +16,10 @@ import { openSystemNotificationSettingsScreen } from "../utils";
 import I18n from "../../../i18n";
 import { useIODispatch } from "../../../store/hooks";
 import { setEngagementScreenShown } from "../store/actions/userBehaviour";
+import {
+  trackSystemNotificationPermissionScreenOutcome,
+  trackSystemNotificationPermissionScreenShown
+} from "../analytics";
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -30,7 +34,13 @@ export const SystemNotificationPermissionsScreen = () => {
   const navigation = useIONavigation();
   const safeAreaInsets = useSafeAreaInsets();
 
+  const onDismiss = () => {
+    trackSystemNotificationPermissionScreenOutcome("dismiss");
+    navigation.goBack();
+  };
+
   useEffect(() => {
+    trackSystemNotificationPermissionScreenShown();
     dispatch(setEngagementScreenShown());
   }, [dispatch]);
 
@@ -47,7 +57,7 @@ export const SystemNotificationPermissionsScreen = () => {
         <IconButton
           icon="closeMedium"
           color="neutral"
-          onPress={navigation.goBack}
+          onPress={onDismiss}
           testID="notifications-modal-close-button"
           accessibilityLabel={I18n.t("global.buttons.close")}
         />
@@ -62,6 +72,7 @@ export const SystemNotificationPermissionsScreen = () => {
           label={I18n.t("notifications.modal.primaryButton")}
           fullWidth={true}
           onPress={() => {
+            trackSystemNotificationPermissionScreenOutcome("activate");
             openSystemNotificationSettingsScreen();
             navigation.goBack();
           }}
@@ -73,7 +84,7 @@ export const SystemNotificationPermissionsScreen = () => {
           <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
             <ButtonLink
               label={I18n.t("notifications.modal.secondaryButton")}
-              onPress={navigation.goBack}
+              onPress={onDismiss}
               testID="notifications-modal-not-now-button"
             />
           </View>

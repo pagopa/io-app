@@ -49,7 +49,7 @@ import I18n from "../../../../i18n";
 import { hoursAndMinutesToAccessibilityReadableFormat } from "../../../../utils/accessibility";
 import { localeDateFormat } from "../../../../utils/locale";
 import { getBadgeTextByTransactionStatus } from "../../../payments/common/utils";
-import { formatAbsNumberAmountOrDefault } from "../../common/utils/strings";
+import { formatAbsNumberAmountCentsOrDefault } from "../../common/utils/strings";
 
 export type TimelineOperationListItemProps = WithTestID<
   | {
@@ -155,7 +155,9 @@ const getTransactionOperationProps = (
 
   const getAccruedString = () => {
     const signString = isReversal ? "" : "-";
-    const accruedString = `${formatAbsNumberAmountOrDefault(accruedCents)} €`;
+    const accruedString = `${formatAbsNumberAmountCentsOrDefault(
+      accruedCents
+    )} €`;
 
     return `${signString}${accruedString}`;
   };
@@ -305,7 +307,7 @@ const getRefundOperationProps = (
     subtitle,
     paymentLogoIcon,
     transactionStatus: "success",
-    transactionAmount: `${formatAbsNumberAmountOrDefault(amountCents)} €`
+    transactionAmount: `${formatAbsNumberAmountCentsOrDefault(amountCents)} €`
   };
 };
 
@@ -371,7 +373,7 @@ export const getOperationSubtitleWithAmount = (
   withMinusSign: boolean = false
 ): string => {
   const signString = withMinusSign ? "-" : "";
-  const amountString = `${formatAbsNumberAmountOrDefault(amount)} €`;
+  const amountString = `${formatAbsNumberAmountCentsOrDefault(amount)} €`;
 
   return `${getOperationSubtitle(
     operationDate

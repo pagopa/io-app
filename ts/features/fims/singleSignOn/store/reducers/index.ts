@@ -1,7 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { getType } from "typesafe-actions";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { startApplicationInitialization } from "../../../../../store/actions/application";
 import { Action } from "../../../../../store/actions/types";
 import { ConsentData } from "../../types";
@@ -12,7 +13,6 @@ import {
   fimsGetRedirectUrlAndOpenIABAction
 } from "../actions";
 import { abortUrlFromConsentsPot } from "../selectors";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 export type FimsFlowStateTags =
   | "idle"
@@ -21,8 +21,10 @@ export type FimsFlowStateTags =
   | "abort"
   | "fastLogin_forced_restart";
 
+export type FIMS_SSO_ERROR_TAGS = "GENERIC" | "DEBUG" | "MISSING_INAPP_BROWSER";
 export type FimsErrorStateType = {
-  standardMessage: string;
+  errorTag: FIMS_SSO_ERROR_TAGS;
+  standardMessage: string; // this will be deprecated
   debugMessage: string;
 };
 
