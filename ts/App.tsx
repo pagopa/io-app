@@ -17,6 +17,10 @@ import { LightModalProvider } from "./components/ui/LightModal";
 import { sentryDsn } from "./config";
 import { isDevEnv } from "./utils/environment";
 
+export const routingInstrumentation = Sentry.reactNavigationIntegration({
+  enableTimeToInitialDisplay: true
+});
+
 const removeUserFromEvent = (event: ErrorEvent | TransactionEvent) => {
   // console.log(JSON.stringify(event));
   // Modify or drop the event here
@@ -37,7 +41,12 @@ Sentry.init({
   beforeSendTransaction(event) {
     return removeUserFromEvent(event);
   },
+  integrations: integrations => [
+    ...integrations,
+    new Sentry.ReactNativeTracing({ routingInstrumentation })
+  ],
   enabled: !isDevEnv,
+  tracesSampleRate: 0.3,
   sampleRate: 0.3
 });
 
@@ -49,7 +58,7 @@ export type AppDispatch = typeof store.dispatch;
  * Main component of the application
  * @constructor
  */
-export const App = (): JSX.Element => (
+const App = (): JSX.Element => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <SafeAreaProvider>
       <IODSExperimentalContextProvider>
@@ -59,7 +68,9 @@ export const App = (): JSX.Element => (
               <PersistGate loading={undefined} persistor={persistor}>
                 <BottomSheetModalProvider>
                   <LightModalProvider>
-                    <RootContainer />
+                    <RootContainer
+                      routingInstumentation={routingInstrumentation}
+                    />
                   </LightModalProvider>
                 </BottomSheetModalProvider>
               </PersistGate>
@@ -70,3 +81,9 @@ export const App = (): JSX.Element => (
     </SafeAreaProvider>
   </GestureHandlerRootView>
 );
+
+/**
+ * We wrap the main app component with the sentry utility function to handle
+ * the Performance monitoring
+ */
+export default Sentry.wrap(App);

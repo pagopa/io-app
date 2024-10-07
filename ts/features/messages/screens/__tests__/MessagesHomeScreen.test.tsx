@@ -6,6 +6,7 @@ import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/per
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { MessagesHomeScreen } from "../MessagesHomeScreen";
+import * as engamentHook from "../../../pushNotifications/hooks/useEngagementScreen";
 
 jest.mock("../../components/Home/PagerViewContainer");
 jest.mock("../../components/Home/Preconditions");
@@ -21,6 +22,17 @@ describe("MessagesHomeScreen", () => {
   it("should match snapshot (with mocked components", () => {
     const screen = renderScreen();
     expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should call 'useEngagementScreen' hook", () => {
+    const mockUseEngagementeScreen = jest.fn();
+    jest
+      .spyOn(engamentHook, "useEngagementScreen")
+      .mockImplementation(mockUseEngagementeScreen);
+
+    renderScreen();
+
+    expect(mockUseEngagementeScreen.mock.calls.length).toBe(1);
+    expect(mockUseEngagementeScreen.mock.calls[0].length).toBe(0);
   });
 });
 

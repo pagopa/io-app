@@ -71,19 +71,22 @@ export const DSWallet = () => {
       key: "6",
       type: "itw",
       category: "itw",
-      credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+      credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+      status: "valid"
     },
     {
       key: "7",
       type: "itw",
       category: "itw",
-      credentialType: CredentialType.DRIVING_LICENSE
+      credentialType: CredentialType.DRIVING_LICENSE,
+      status: "valid"
     },
     {
       key: "8",
       type: "itw",
       category: "itw",
-      credentialType: CredentialType.PID
+      credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
+      status: "valid"
     },
     {
       key: "9",
@@ -116,35 +119,32 @@ export const DSWallet = () => {
             cards={cardsByCategory.itw}
             header={{
               label: "Documenti",
-              iconName: "fiscalCodeIndividual"
+              iconName: "legalValue",
+              iconColor: "blueIO-500"
             }}
             isStacked={isStacked}
           />
           <WalletCardsCategoryContainer
-            cards={cardsByCategory.payment}
-            header={{
-              label: "Metodi di pagamento",
-              iconName: "creditCard"
-            }}
-            isStacked={isStacked}
-            footer={
-              <>
-                <VSpacer size={16} />
-                <Banner
-                  color="turquoise"
-                  pictogramName="idea"
-                  size="small"
-                  content="Categories can have footers!"
-                />
-              </>
-            }
-          />
-          <WalletCardsCategoryContainer
-            cards={[...cardsByCategory.cgn, ...cardsByCategory.bonus]}
+            cards={[
+              ...cardsByCategory.payment,
+              ...cardsByCategory.cgn,
+              ...cardsByCategory.bonus
+            ]}
             header={{
               label: "Altro"
             }}
             isStacked={isStacked}
+            topElement={
+              <>
+                <Banner
+                  color="turquoise"
+                  pictogramName="idea"
+                  size="small"
+                  content="Categories can have a top element!"
+                />
+                <VSpacer size={16} />
+              </>
+            }
           />
         </DesignSystemSection>
 

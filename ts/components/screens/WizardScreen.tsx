@@ -71,7 +71,11 @@ type WizardBodyProps = {
   pictogram: IOPictograms;
 };
 
-const WizardBody = ({ title, description, pictogram }: WizardBodyProps) => (
+export const WizardBody = ({
+  title,
+  description,
+  pictogram
+}: WizardBodyProps) => (
   <View style={styles.wizardContent}>
     <View style={IOStyles.alignCenter}>
       <Pictogram name={pictogram} size={180} />
