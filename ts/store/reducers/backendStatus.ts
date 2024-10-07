@@ -30,7 +30,7 @@ import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
-
+import { StatusMessage } from "../../../definitions/content/StatusMessage";
 import { isIdPayTestEnabledSelector } from "./persistedPreferences";
 import { GlobalState } from "./types";
 import { isPropertyWithMinAppVersionEnabled } from "./featureFlagWithMinAppVersionStatus";
@@ -551,4 +551,31 @@ const sectionStatusUncachedSelector = (
   pipe(
     state.backendStatus.status,
     O.chainNullableK(status => status.sections[sectionStatusKey])
+  );
+
+const statusMessagesSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    backendStatusSelector,
+    O.map(bs => bs.statusMessages),
+    O.toUndefined
+  );
+
+const EMPTY_ARRAY: ReadonlyArray<StatusMessage> = [];
+
+export const statusMessageByRouteSelector = (routeName: string) =>
+  createSelector(
+    statusMessagesSelector,
+    (statusMessages): ReadonlyArray<StatusMessage> | undefined =>
+      pipe(
+        statusMessages,
+        O.fromNullable,
+        O.map(({ items }) => {
+          const messages = items.filter(message =>
+            message.routes.includes(routeName)
+          );
+          return messages.length > 0 ? messages : EMPTY_ARRAY;
+        }),
+        O.toUndefined
+      )
   );
