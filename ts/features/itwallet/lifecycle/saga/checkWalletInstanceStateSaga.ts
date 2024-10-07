@@ -19,7 +19,7 @@ export function* getAttestationOrResetWalletInstance(integrityKeyTag: string) {
   );
 
   if (isWalletInstanceAttestationValid) {
-    // The Wallet Instance Attestation is preset and  has not yet expired
+    // The Wallet Instance Attestation is present and  has not yet expired
     return;
   }
 
