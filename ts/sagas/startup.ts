@@ -115,8 +115,6 @@ import { pushNotificationTokenUpload } from "../features/pushNotifications/sagas
 import { handlePendingMessageStateIfAllowed } from "../features/pushNotifications/sagas/common";
 import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
-import { zendeskTokenNeedsRefresh } from "../features/zendesk/store/actions";
-import { zendeskTokenNeedsRefreshSelector } from "../features/zendesk/store/reducers";
 import { formatRequestedTokenString } from "../features/zendesk/utils";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import {
@@ -291,17 +289,13 @@ export function* initializeApplicationSaga(
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
   }
 
-  const needRefreshZendeskToken = yield* select(
-    zendeskTokenNeedsRefreshSelector
-  );
   // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
     yield* call(
       checkSession,
       backendClient.getSession,
-      formatRequestedTokenString(needRefreshZendeskToken)
+      formatRequestedTokenString()
     );
-  yield* put(zendeskTokenNeedsRefresh(false));
 
   if (checkSessionResponse === 401) {
     // This is the first API call we make to the backend, it may happen that
@@ -454,9 +448,8 @@ export function* initializeApplicationSaga(
     watchCheckSessionSaga,
     backendClient.getSession,
     backendClient.getSupportToken,
-    formatRequestedTokenString(needRefreshZendeskToken)
+    formatRequestedTokenString()
   );
-  yield* put(zendeskTokenNeedsRefresh(false));
   // Start watching for requests of abort the onboarding
 
   yield* fork(watchGetZendeskTokenSaga, backendClient.getSession);

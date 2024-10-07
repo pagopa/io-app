@@ -45,9 +45,7 @@ import { startupTransientErrorInitialState } from "../../store/reducers/startup"
 import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
 import { notificationPermissionsListener } from "../../features/pushNotifications/sagas/notificationPermissionsListener";
 import { checkSession } from "../startup/watchCheckSessionSaga";
-import { zendeskTokenNeedsRefreshSelector } from "../../features/zendesk/store/reducers";
 import { formatRequestedTokenString } from "../../features/zendesk/utils";
-import { zendeskTokenNeedsRefresh } from "../../features/zendesk/store/actions";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -116,8 +114,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
-      .next()
-      .next()
       .select(sessionInfoSelector)
       .next(O.none)
       .next(O.none) // loadSessionInformationSaga
@@ -165,12 +161,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .spawn(watchLogoutSaga, undefined)
       .next()
-      .select(zendeskTokenNeedsRefreshSelector)
-      .next(true)
-      .call(checkSession, undefined, formatRequestedTokenString(true))
+      .call(checkSession, undefined, formatRequestedTokenString())
       .next(401)
-      .put(zendeskTokenNeedsRefresh(false))
-      .next() // checksession
       .select(isFastLoginEnabledSelector)
       .next(false) // FastLogin FF
       .put(sessionExpired());
@@ -216,12 +208,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .spawn(watchLogoutSaga, undefined)
       .next()
-      .select(zendeskTokenNeedsRefreshSelector)
-      .next(true)
-      .call(checkSession, undefined, formatRequestedTokenString(true))
+      .call(checkSession, undefined, formatRequestedTokenString())
       .next(401)
-      .put(zendeskTokenNeedsRefresh(false))
-      .next() // checksession
       .next(true) // FastLogin FF
       .put(
         refreshSessionToken.request({
@@ -273,8 +261,6 @@ describe("initializeApplicationSaga", () => {
       .spawn(watchLogoutSaga, undefined)
       .next()
       .next(200) // check session
-      .next()
-      .next()
       .next()
       .next()
       .next()
@@ -343,8 +329,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
-      .next()
-      .next()
       .select(sessionInfoSelector)
       .next(O.none)
       .next(O.none)
@@ -392,8 +376,6 @@ describe("initializeApplicationSaga", () => {
       .spawn(watchLogoutSaga, undefined)
       .next()
       .next(200) // check session
-      .next()
-      .next()
       .next()
       .next()
       .next()

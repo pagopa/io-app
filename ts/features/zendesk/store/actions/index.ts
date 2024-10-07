@@ -78,14 +78,6 @@ export const zendeskSupportFailure = createStandardAction(
 )<string>();
 
 /**
- * this dispatch should only be used if there is a need to
- * also refresh the zendeskToken and it is known previously
- */
-export const zendeskTokenNeedsRefresh = createStandardAction(
-  "ZENDESK_TOKEN_NEEDS_REFRESH"
-)<boolean>();
-
-/**
  * Request the zendesk token to getSession
  */
 export const getZendeskToken = createAsyncAction(
@@ -131,7 +123,6 @@ export type ZendeskSupportActions =
   | ActionType<typeof zendeskSupportCancel>
   | ActionType<typeof zendeskSupportBack>
   | ActionType<typeof zendeskSupportFailure>
-  | ActionType<typeof zendeskTokenNeedsRefresh>
   | ActionType<typeof getZendeskToken>
   | ActionType<typeof getZendeskConfig>
   | ActionType<typeof zendeskSelectedCategory>

@@ -12,7 +12,6 @@ import * as O from "fp-ts/lib/Option";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import {
   getZendeskConfig,
-  zendeskTokenNeedsRefresh,
   zendeskPollingIteration,
   zendeskRequestTicketNumber,
   zendeskStartPolling,
@@ -55,9 +54,12 @@ function* zendeskGetSessionPollingLoop(
     // We start waiting to avoid action dispatching sync issues
     yield* call(startTimer, ZENDESK_GET_SESSION_POLLING_INTERVAL);
     // check if the current session is still valid
-    const checkSessionResponse = yield* call(checkSession, getSession);
+    const checkSessionResponse = yield* call(
+      checkSession,
+      getSession,
+      formatRequestedTokenString()
+    );
     if (checkSessionResponse === 401) {
-      yield* put(zendeskTokenNeedsRefresh(true));
       break;
     }
     zendeskPollingIsRunning = yield* select(
@@ -123,12 +125,12 @@ function* getZendeskTokenSaga(
     }
     if (response.right.status === 200) {
       yield* put(getZendeskToken.success());
-      const currentValues = yield* select(sessionInfoSelector);
+      const currentSessionInfo = yield* select(sessionInfoSelector);
       yield* put(
         sessionInformationLoadSuccess(
           getOnlyNotAlreadyExistentValues(
             response.right.value,
-            O.isSome(currentValues) && currentValues.value
+            O.isSome(currentSessionInfo) && currentSessionInfo.value
           )
         )
       );
