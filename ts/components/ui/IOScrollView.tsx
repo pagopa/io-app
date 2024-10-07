@@ -34,7 +34,7 @@ import LinearGradient from "react-native-linear-gradient";
 import Animated, {
   AnimatedRef,
   Easing,
-  Extrapolate,
+  Extrapolation,
   interpolate,
   useAnimatedScrollHandler,
   useAnimatedStyle,
@@ -140,10 +140,10 @@ export const IOScrollView = ({
   children,
   actions,
   snapOffset,
-  animatedRef,
   excludeSafeAreaMargins = false,
   excludeEndContentMargin = false,
   includeContentMargins = true,
+  animatedRef,
   debugMode = false,
   refreshControlProps,
   testID
@@ -227,7 +227,7 @@ export const IOScrollView = ({
       scrollPositionPercentage.value,
       [0, gradientOpacityScrollTrigger, 1],
       [1, 1, 0],
-      Extrapolate.CLAMP
+      Extrapolation.CLAMP
     )
   }));
 
@@ -287,8 +287,8 @@ export const IOScrollView = ({
               paddingBottom: bottomMargin
             }
           ]}
-          testID={testID}
           pointerEvents="box-none"
+          {...(testID && { testID: `${testID}-actions` })}
         >
           <Animated.View
             style={[

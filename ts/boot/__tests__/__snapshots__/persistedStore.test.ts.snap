@@ -78,6 +78,9 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
     "token": undefined,
   },
   "pendingMessage": null,
+  "userBehaviour": {
+    "engagementScreenShown": false,
+  },
 }
 `;
 
