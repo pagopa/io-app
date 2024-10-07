@@ -12,9 +12,6 @@ export const itwCredentialsSelector = (state: GlobalState) =>
 export const itwCredentialsEidSelector = (state: GlobalState) =>
   state.features.itWallet.credentials.eid;
 
-export const itwIPZSHasReadPolicySelector = (state: GlobalState) =>
-  state.features.itWallet.credentials.hasReadIPZSPolicy;
-
 export const itwCredentialsByTypeSelector = createSelector(
   itwCredentialsSelector,
   ({ eid, credentials }) =>

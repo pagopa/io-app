@@ -24,7 +24,7 @@ import {
   trackItWalletIDMethodSelected
 } from "../../analytics";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
-import { itwIpzsHasReadPolicy } from "../../credentials/store/actions";
+import { itwIpzsHasReadPolicy } from "../../issuance/store/actions";
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();

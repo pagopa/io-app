@@ -22,9 +22,9 @@ import {
 } from "../features/itwallet/analytics";
 import {
   itwCredentialsByTypeSelector,
-  itwCredentialsSelector,
-  itwIPZSHasReadPolicySelector
+  itwCredentialsSelector
 } from "../features/itwallet/credentials/store/selectors";
+import { itwIPZSHasReadPolicySelector } from "../features/itwallet/issuance/store/selectors";
 import {
   MixpanelOptInTrackingType,
   Property,
