@@ -25,7 +25,7 @@ import {
   isArchivingInSchedulingModeSelector
 } from "../../features/messages/store/reducers/archiving";
 import { resetMessageArchivingAction } from "../../features/messages/store/actions/archiving";
-import { useStatusAlertProps } from "../../components/StatusMessages";
+import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
@@ -241,7 +241,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
 
   const headerProps: HeaderFirstLevelProps = useMemo(() => {
     const commonProp = {
-      ignoreSafeAreaMargin: alertProps !== undefined
+      ignoreSafeAreaMargin: !!alertProps
     };
     switch (currentRouteName) {
       case SERVICES_ROUTES.SERVICES_HOME:

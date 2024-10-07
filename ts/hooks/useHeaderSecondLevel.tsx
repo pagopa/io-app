@@ -8,8 +8,8 @@ import {
 } from "../components/screens/BaseScreenComponent";
 import I18n from "../i18n";
 import { FAQsCategoriesType } from "../utils/faq";
-import { useStatusAlertProps } from "../components/StatusMessages";
 import { useStartSupportRequest } from "./useStartSupportRequest";
+import { useStatusAlertProps } from "./useStatusAlertProps";
 
 type SpecificHookProps = {
   canGoBack?: boolean;
@@ -129,7 +129,7 @@ export const useHeaderSecondLevel = ({
     const enableDiscreteTransitionProps =
       enableDiscreteTransition && animatedRef
         ? {
-            ignoreSafeAreaMargin: alertProps !== undefined,
+            ignoreSafeAreaMargin: !!alertProps,
             enableDiscreteTransition,
             animatedRef
           }
