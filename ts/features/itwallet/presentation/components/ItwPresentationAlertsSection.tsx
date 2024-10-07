@@ -1,7 +1,5 @@
 import { Alert, VStack } from "@pagopa/io-app-design-system";
 import React from "react";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import ItwMarkdown from "../../common/components/ItwMarkdown";
 import {
   getCredentialExpireDays,
   getCredentialStatus
@@ -29,15 +27,6 @@ export const ItwPresentationAlertsSection = ({ credential }: Props) => {
   const isMdl = credential.credentialType === CredentialType.DRIVING_LICENSE;
   const isEhc =
     credential.credentialType === CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD;
-
-  const mdlDisclaimerBottomSheet = useIOBottomSheetAutoresizableModal({
-    title: I18n.t("features.itWallet.presentation.bottomSheets.mdl.title"),
-    component: (
-      <ItwMarkdown>
-        {I18n.t("features.itWallet.presentation.bottomSheets.mdl.content")}
-      </ItwMarkdown>
-    )
-  });
 
   const expireStatus = getCredentialStatus(credential);
   const expireDays = getCredentialExpireDays(credential.parsedCredential);
@@ -73,30 +62,18 @@ export const ItwPresentationAlertsSection = ({ credential }: Props) => {
         />
       )}
       {isMdl && (
-        <>
-          <Alert
-            testID="itwMdlBannerTestID"
-            content={I18n.t(
-              "features.itWallet.presentation.alerts.mdl.content"
-            )}
-            variant="info"
-            action={I18n.t("features.itWallet.presentation.alerts.mdl.action")}
-            onPress={mdlDisclaimerBottomSheet.present}
-          />
-          {mdlDisclaimerBottomSheet.bottomSheet}
-        </>
+        <Alert
+          testID="itwMdlBannerTestID"
+          content={I18n.t("features.itWallet.presentation.alerts.mdl.content")}
+          variant="info"
+        />
       )}
       {isEhc && (
-        <>
-          <Alert
-            testID="itwEhcBannerTestID"
-            content={I18n.t(
-              "features.itWallet.presentation.alerts.ehc.content"
-            )}
-            variant="info"
-          />
-          {mdlDisclaimerBottomSheet.bottomSheet}
-        </>
+        <Alert
+          testID="itwEhcBannerTestID"
+          content={I18n.t("features.itWallet.presentation.alerts.ehc.content")}
+          variant="info"
+        />
       )}
     </VStack>
   );
