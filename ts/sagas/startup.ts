@@ -108,11 +108,10 @@ import { watchWalletSaga as watchNewWalletSaga } from "../features/newWallet/sag
 import { watchServicesSaga } from "../features/services/common/saga";
 import { watchItwSaga } from "../features/itwallet/common/saga";
 import { watchTrialSystemSaga } from "../features/trialSystem/store/sagas/watchTrialSystemSaga";
-import {
-  handlePendingMessageStateIfAllowedSaga,
-  updateInstallationSaga
-} from "../features/pushNotifications/sagas/notifications";
-import { checkNotificationsPreferencesSaga } from "../features/pushNotifications/sagas/checkNotificationsPreferencesSaga";
+import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
+import { profileAndSystemNotificationsPermissions } from "../features/pushNotifications/sagas/profileAndSystemNotificationsPermissions";
+import { pushNotificationTokenUpload } from "../features/pushNotifications/sagas/pushNotificationTokenUpload";
+import { handlePendingMessageStateIfAllowed } from "../features/pushNotifications/sagas/common";
 import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
@@ -209,6 +208,9 @@ export function* initializeApplicationSaga(
   // clear cached downloads when the logged user changes
   yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments);
 
+  // Retrieve and listen for notification permissions status changes
+  yield* fork(notificationPermissionsListener);
+
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
     yield* select(profileSelector);
@@ -236,10 +238,12 @@ export function* initializeApplicationSaga(
   // This saga must retrieve the publicKey by its own,
   // since it must make sure to have the latest in-memory value
   // (as an example, during the authentication saga the key may have been regenerated multiple times)
+  // #LOLLIPOP_CHECK_BLOCK1_START
   const unsupportedDevice = yield* call(checkPublicKeyAndBlockIfNeeded);
   if (unsupportedDevice) {
     return;
   }
+  // #LOLLIPOP_CHECK_BLOCK1_END
 
   // Since the backend.json is done in parallel with the startup saga,
   // we need to synchronize the two tasks, to be sure to have loaded the remote FF
@@ -372,6 +376,7 @@ export function* initializeApplicationSaga(
 
   const publicKey = yield* select(lollipopPublicKeySelector);
 
+  // #LOLLIPOP_CHECK_BLOCK2_START
   const isAssertionRefValid = yield* call(
     checkLollipopSessionAssertionAndInvalidateIfNeeded,
     publicKey,
@@ -380,6 +385,7 @@ export function* initializeApplicationSaga(
   if (!isAssertionRefValid) {
     return;
   }
+  // #LOLLIPOP_CHECK_BLOCK2_END
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
@@ -513,8 +519,9 @@ export function* initializeApplicationSaga(
 
   userProfile = (yield* call(checkEmailSaga)) ?? userProfile;
 
-  // check if the user must set preferences for push notifications (e.g. reminders)
-  yield* call(checkNotificationsPreferencesSaga, userProfile);
+  // Check for both profile notifications permissions (anonymous
+  // content && reminder) and system notifications permissions.
+  yield* call(profileAndSystemNotificationsPermissions, userProfile);
 
   const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
   yield* call(askServicesPreferencesModeOptin, isFirstOnboarding);
@@ -527,9 +534,14 @@ export function* initializeApplicationSaga(
   // Stop the watchAbortOnboardingSaga
   yield* cancel(watchAbortOnboardingSagaTask);
 
-  // Start the notification installation update as early as
-  // possible to begin receiving push notifications
-  yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
+  // Fork the saga that uploads the push notification token to the backend.
+  // At this moment, the push notification token may not be available yet but
+  // the saga handles it internally. Make sure to fork it and not call it using
+  // a blocking call, since the saga will just hang, waiting for the token
+  yield* fork(
+    pushNotificationTokenUpload,
+    backendClient.createOrUpdateInstallation
+  );
 
   // This saga is called before the startup status is set to authenticated to avoid flashing
   // the home screen when the user is taken to the alert screen in case of identities that don't match.
@@ -671,7 +683,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchEmailNotificationPreferencesSaga);
 
   // Check if we have a pending notification message
-  yield* call(handlePendingMessageStateIfAllowedSaga, true);
+  yield* call(handlePendingMessageStateIfAllowed, true);
 
   // This tells the security advice bottomsheet that it can be shown
   yield* put(setSecurityAdviceReadyToShow(true));

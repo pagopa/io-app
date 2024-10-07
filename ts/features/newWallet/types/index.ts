@@ -8,6 +8,11 @@ import { PaymentWalletCardProps } from "../../payments/wallet/components/Payment
 export const walletCardCategories = ["itw", "cgn", "bonus", "payment"] as const;
 export type WalletCardCategory = (typeof walletCardCategories)[number];
 
+// Used for the filtering logic in the wallet screen
+export const walletCardCategoryFilters = ["itw", "other"] as const;
+export type WalletCardCategoryFilter =
+  (typeof walletCardCategoryFilters)[number];
+
 // Basic type definition for a wallet card, describes the properties that
 // each card MUST have in order to be placed inside the wallet.
 type WalletCardBase = {

@@ -29,7 +29,7 @@ import { paymentsCurrentStateSelector } from "../store/reducers/payments/current
 import { PinString } from "../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
-import { handlePendingMessageStateIfAllowedSaga } from "../features/pushNotifications/sagas/notifications";
+import { handlePendingMessageStateIfAllowed } from "../features/pushNotifications/sagas/common";
 import { isFastLoginEnabledSelector } from "./../features/fastLogin/store/selectors/index";
 
 type ResultAction =
@@ -158,7 +158,7 @@ function* startAndHandleIdentificationResult(
     yield* put(startApplicationInitialization());
   } else if (identificationResult === IdentificationResult.success) {
     // Check if we have a pending notification message
-    yield* call(handlePendingMessageStateIfAllowedSaga);
+    yield* call(handlePendingMessageStateIfAllowed);
   }
 }
 
