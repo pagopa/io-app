@@ -9,7 +9,11 @@ import {
   itWalletIssuanceRedirectUri,
   itwEaaProviderBaseUrl
 } from "../../../../config";
-import { DPOP_KEYTAG, WIA_KEYTAG } from "./itwCryptoContextUtils";
+import {
+  DPOP_KEYTAG,
+  regenerateCryptoKey,
+  WIA_KEYTAG
+} from "./itwCryptoContextUtils";
 import {
   IssuerConfiguration,
   RequestObject,
@@ -88,6 +92,7 @@ export const obtainCredential = async ({
 
   // Create PID and DPoP crypto context;
   const pidCryptoContext = createCryptoContextFor(pid.keyTag);
+  await regenerateCryptoKey(DPOP_KEYTAG);
   const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
 
   // Complete the user authorization via form_post.jwt mode
