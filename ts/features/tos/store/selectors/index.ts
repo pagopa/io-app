@@ -8,7 +8,7 @@ import { backendStatusSelector } from "../../../../store/reducers/backendStatus"
 
 const DEFAULT_TOS_CONFIG: TosConfig = {
   tos_url: privacyUrl,
-  tos_version: 4.9
+  tos_version: 4.91
 };
 
 export const tosConfigSelector = createSelector(
