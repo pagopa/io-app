@@ -18,7 +18,7 @@ import {
   setNativeExceptionHandler
 } from "react-native-exception-handler";
 
-import { App } from "./ts/App";
+import App from "./ts/App";
 import { mixpanel } from "./ts/mixpanel";
 import { name as appName } from "./app.json";
 

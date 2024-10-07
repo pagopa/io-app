@@ -217,7 +217,7 @@ const AuthenticatedStackNavigator = () => {
       {cgnEnabled && (
         <Stack.Screen
           name={CGN_ROUTES.DETAILS.MAIN}
-          options={hideHeaderOptions}
+          options={{ ...hideHeaderOptions, gestureEnabled: isGestureEnabled }}
           component={CgnDetailsNavigator}
         />
       )}
