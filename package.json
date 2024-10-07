@@ -1,11 +1,11 @@
 {
   "name": "italia-app",
-  "version": "2.71.0-rc.1",
+  "version": "2.71.0-rc.2",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v14.3.0-RELEASE/api_backend.yaml",
   "io_session_manager_api": "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/internal.yaml",
   "io_session_manager_public_api": "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/public.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v14.3.0-RELEASE/api_public.yaml",
-  "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.40/definitions.yml",
+  "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.41/definitions.yml",
   "io_cgn_specs": "https://raw.githubusercontent.com/pagopa/io-backend/v14.3.0-RELEASE/api_cgn.yaml",
   "io_cgn_merchants_specs": "https://raw.githubusercontent.com/pagopa/io-backend/v14.3.0-RELEASE/api_cgn_operator_search.yaml",
   "api_fci": "https://raw.githubusercontent.com/pagopa/io-backend/v14.3.0-RELEASE/api_io_sign.yaml",
@@ -93,7 +93,9 @@
     "generate:payments": "npm-run-all generate:pagopa-walletv3-api generate:pagopa-ecommerce-api generate:pagopa-biz-events-api generate:pagopa-platform-api",
     "generate": "npm-run-all generate:*",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
-    "remove_unused_locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/remove-unused-locales.ts",
+    "remove_unused_locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/remove-unused-locales.ts",    
+    "lollipop_checks:comment": "./scripts/toggle-comments-on-lollipop-checks.sh comment ./ts/sagas/startup.ts",
+    "lollipop_checks:uncomment": "./scripts/toggle-comments-on-lollipop-checks.sh uncomment ./ts/sagas/startup.ts",
     "prepare": "husky install"
   },
   "lint-staged": {
@@ -112,7 +114,7 @@
     "@pagopa/io-react-native-integrity": "^0.3.0",
     "@pagopa/io-react-native-jwt": "^1.2.0",
     "@pagopa/io-react-native-login-utils": "1.0.6",
-    "@pagopa/io-react-native-wallet": "^0.18.1",
+    "@pagopa/io-react-native-wallet": "^0.19.0",
     "@pagopa/io-react-native-zendesk": "^0.3.29",
     "@pagopa/react-native-cie": "^1.3.0",
     "@pagopa/ts-commons": "^10.15.0",

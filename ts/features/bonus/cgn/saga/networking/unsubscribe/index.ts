@@ -10,6 +10,7 @@ import { readablePrivacyReport } from "../../../../../../utils/reporters"; // ha
 import { BackendCGN } from "../../../api/backendCgn";
 import { cgnUnsubscribe } from "../../../store/actions/unsubscribe";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
+import { walletRemoveCardsByType } from "../../../../../newWallet/store/actions/cards";
 
 // handle the request for CGN unsubscription
 export function* cgnUnsubscriptionHandler(
@@ -30,6 +31,7 @@ export function* cgnUnsubscriptionHandler(
         unsubscriptionResult.right.status === 201 ||
         unsubscriptionResult.right.status === 202
       ) {
+        yield* put(walletRemoveCardsByType("cgn"));
         yield* put(cgnUnsubscribe.success());
         return;
       }
