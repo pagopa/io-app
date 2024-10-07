@@ -1,5 +1,5 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
-import { createActorContext } from "@xstate5/react";
+import { createActorContext } from "@xstate/react";
 import * as React from "react";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOStore } from "../../../store/hooks";

@@ -191,6 +191,11 @@ export const walletTokenSelector = (state: GlobalState): string | undefined =>
     ? state.authentication.sessionInfo.walletToken
     : undefined;
 
+export const bpdTokenSelector = (state: GlobalState): string | undefined =>
+  isLoggedInWithSessionInfo(state.authentication)
+    ? state.authentication.sessionInfo.bpdToken
+    : undefined;
+
 export const loggedInIdpSelector = (state: GlobalState) =>
   isLoggedIn(state.authentication) ? state.authentication.idp : undefined;
 

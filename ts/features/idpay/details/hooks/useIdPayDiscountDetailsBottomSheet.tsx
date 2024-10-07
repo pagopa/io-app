@@ -7,7 +7,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idPayGenerateBarcode } from "../../barcode/store/actions";
-import { IDPayPaymentRoutes } from "../../payment/navigation/navigator";
+import { IdPayPaymentRoutes } from "../../payment/navigation/routes";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { idPayBarcodeSecondsTillExpireSelector } from "../../barcode/store";
@@ -21,7 +21,7 @@ export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
   const dispatch = useIODispatch();
 
   const navigateToPaymentAuthorization = () => {
-    navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN);
+    navigation.navigate(IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN);
   };
 
   const barcodePressHandler = () => {

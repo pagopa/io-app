@@ -7,6 +7,7 @@ import {
 } from "@react-navigation/native";
 import React, { useRef } from "react";
 import { View } from "react-native";
+import { ReactNavigationInstrumentation } from "@sentry/react-native";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
@@ -14,7 +15,7 @@ import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator"
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
-import { IngressScreen } from "../screens/ingress/IngressScreen";
+import { IngressScreen } from "../features/ingress/screens/IngressScreen";
 import { startApplicationInitialization } from "../store/actions/application";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
@@ -34,6 +35,7 @@ import {
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
+import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
@@ -78,7 +80,11 @@ export const AppStackNavigator = (): React.ReactElement => {
   return <AuthenticatedStackNavigator />;
 };
 
-const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
+type InnerNavigationContainerProps = React.PropsWithChildren<{
+  routingInstrumentation?: ReactNavigationInstrumentation;
+}>;
+
+const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   const routeNameRef = useRef<string>();
   const dispatch = useIODispatch();
   const store = useIOStore();
@@ -137,6 +143,13 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
             }
           }
         },
+        [ITW_ROUTES.MAIN]: {
+          path: "itw",
+          screens: {
+            [ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION]:
+              "credential/issuance"
+          }
+        },
         ...fciLinkingOptions,
         ...(cgnEnabled ? cgnLinkingOptions : {}),
         ...idPayLinkingOptions,
@@ -156,6 +169,11 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
       linking={linking}
       fallback={<LoadingSpinnerOverlay isLoading={true} />}
       onReady={() => {
+        if (props.routingInstrumentation) {
+          props.routingInstrumentation.registerNavigationContainer(
+            navigationRef
+          );
+        }
         NavigationService.setNavigationReady();
         routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
       }}
@@ -181,8 +199,12 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
  * Wraps the NavigationContainer with the AppStackNavigator (Root navigator of the app)
  * @constructor
  */
-export const IONavigationContainer = () => (
-  <InnerNavigationContainer>
+export const IONavigationContainer = ({
+  routingInstrumentation
+}: {
+  routingInstrumentation: ReactNavigationInstrumentation;
+}) => (
+  <InnerNavigationContainer routingInstrumentation={routingInstrumentation}>
     <AppStackNavigator />
   </InnerNavigationContainer>
 );

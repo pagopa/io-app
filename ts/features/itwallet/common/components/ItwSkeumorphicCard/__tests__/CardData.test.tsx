@@ -21,4 +21,22 @@ describe("CardData", () => {
     expect(component.queryByTestId("mdlBackDataTestID")).toBeTruthy();
     expect(component).toMatchSnapshot();
   });
+
+  it("should match snapshot for DC front data", () => {
+    const component = render(
+      <CardData credential={ItwStoredCredentialsMocks.dc} side="front" />
+    );
+
+    expect(component.queryByTestId("dcFrontDataTestID")).toBeTruthy();
+    expect(component).toMatchSnapshot();
+  });
+
+  it("should match snapshot for DC back data", () => {
+    const component = render(
+      <CardData credential={ItwStoredCredentialsMocks.dc} side="back" />
+    );
+
+    expect(component.queryByTestId("dcBackDataTestID")).toBeTruthy();
+    expect(component).toMatchSnapshot();
+  });
 });

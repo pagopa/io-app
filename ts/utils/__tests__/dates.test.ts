@@ -5,7 +5,8 @@ import {
   getDateFromExpiryDate,
   getExpireStatus,
   isExpired,
-  isExpiredDate
+  isExpiredDate,
+  removeTimezoneFromDate
 } from "../dates";
 
 describe("getExpireStatus", () => {
@@ -111,5 +112,20 @@ describe("getDateFromExpiryDate", () => {
       format(new Date(today.getFullYear(), today.getMonth() - 1), "YYYYMM")
     );
     expect(isExpiredDate(date!)).toEqual(true);
+  });
+});
+
+describe("removeTimezoneFromDate", () => {
+  it("should remove the timezone from a date", () => {
+    const date = new Date("2023-02-01");
+    const dateWithoutTimezone = removeTimezoneFromDate(date);
+    expect(dateWithoutTimezone.getDate()).toBe(1);
+    expect(dateWithoutTimezone.getMonth()).toBe(1); // Month is zero based
+    expect(dateWithoutTimezone.getFullYear()).toBe(2023);
+  });
+
+  it("should throw if the date is invalid", () => {
+    const date = new Date("invalid-date");
+    expect(() => removeTimezoneFromDate(date)).toThrow(Error);
   });
 });

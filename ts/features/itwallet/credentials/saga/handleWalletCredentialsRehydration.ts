@@ -34,10 +34,7 @@ export function* handleWalletCredentialsRehydration() {
     return;
   }
 
-  const allItwCredentials = [
-    eid.value,
-    ...pipe(credentials, A.filterMap(identity))
-  ];
+  const allItwCredentials = pipe(credentials, A.filterMap(identity));
 
   yield* put(walletAddCards(mapCredentialsToWalletCards(allItwCredentials)));
 }
