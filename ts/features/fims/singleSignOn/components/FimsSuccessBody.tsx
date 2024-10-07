@@ -19,6 +19,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { useSelector } from "react-redux";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { LoadingSkeleton } from "../../../../components/ui/Markdown/LoadingSkeleton";
@@ -33,9 +34,10 @@ import {
 } from "../../common/utils";
 import { useAutoFetchingServiceByIdPot } from "../../common/utils/hooks";
 import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
+import { fimsErrorTagSelector } from "../store/selectors";
 import { ConsentData } from "../types";
 import { FimsClaimsList } from "./FimsClaims";
-import { FimsMissingDataErrorScreen } from "./FimsErrorScreens";
+import { FimsSSOFullScreenError } from "./FimsFullScreenErrors";
 import { FimsPrivacyInfo } from "./FimsPrivacyInfo";
 
 type FimsSuccessBodyProps = { consents: ConsentData; onAbort: () => void };
@@ -51,7 +53,7 @@ export const FimsFlowSuccessBody = ({
   const servicePot = useAutoFetchingServiceByIdPot(serviceId);
   const serviceData = pot.toUndefined(servicePot);
   const privacyUrl = serviceData?.service_metadata?.privacy_url;
-
+  const errorTag = useSelector(fimsErrorTagSelector);
   const isPrivacyUrlMissing =
     pot.isSome(servicePot) && privacyUrl === undefined;
 
@@ -71,7 +73,7 @@ export const FimsFlowSuccessBody = ({
   // -------- ERROR LOGIC
 
   if (pot.isError(servicePot) || isPrivacyUrlMissing) {
-    return <FimsMissingDataErrorScreen />;
+    return <FimsSSOFullScreenError errorTag={errorTag ?? "GENERIC"} />;
   }
 
   const serviceLogo = pipe(

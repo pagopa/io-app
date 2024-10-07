@@ -1,16 +1,18 @@
-import React from "react";
-import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { constUndefined } from "fp-ts/lib/function";
+import React from "react";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../store/actions/application";
 import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { SystemNotificationPermissionsScreen } from "../SystemNotificationPermissionsScreen";
-import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
-import * as utils from "../../utils";
-import { setEngagementScreenShown } from "../../store/actions/userBehaviour";
 import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import * as analytics from "../../analytics";
+import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
+import { setEngagementScreenShown } from "../../store/actions/userBehaviour";
+import * as utils from "../../utils";
+import { SystemNotificationPermissionsScreen } from "../SystemNotificationPermissionsScreen";
 
 const mockGoBack = jest.fn();
 jest.mock("@react-navigation/native", () => ({
@@ -38,13 +40,24 @@ describe("SystemNotificationPermissionsScreen", () => {
     const screen = renderScreen();
     expect(screen.toJSON()).toMatchSnapshot();
   });
-  it("Should dispatch 'setEngagementScreenShown' upon rendering", () => {
+  it("Should call 'trackSystemNotificationPermissionScreenShown' and dispatch 'setEngagementScreenShown' upon rendering", () => {
+    const analyticsMock = jest
+      .spyOn(analytics, "trackSystemNotificationPermissionScreenShown")
+      .mockImplementation(constUndefined);
+
     renderScreen();
+
+    expect(analyticsMock.mock.calls.length).toBe(1);
+    expect(analyticsMock.mock.calls[0].length).toBe(0);
+
     expect(mockDispatch.mock.calls.length).toBe(1);
     expect(mockDispatch.mock.calls[0].length).toBe(1);
     expect(mockDispatch.mock.calls[0][0]).toEqual(setEngagementScreenShown());
   });
-  it("Should have an X close button that should dispatch navigation.back upon pressing", () => {
+  it("Should have an X close button that should call the analytics tracking and dispatch navigation.back upon pressing", () => {
+    const analyticsMock = jest
+      .spyOn(analytics, "trackSystemNotificationPermissionScreenOutcome")
+      .mockImplementation(constUndefined);
     const settingsSpy = spyOnOpenSystemNotificationSettings();
 
     const screen = renderScreen();
@@ -53,11 +66,18 @@ describe("SystemNotificationPermissionsScreen", () => {
 
     fireEvent.press(xCloseButton);
 
+    expect(analyticsMock.mock.calls.length).toBe(1);
+    expect(analyticsMock.mock.calls[0].length).toBe(1);
+    expect(analyticsMock.mock.calls[0][0]).toBe("dismiss");
+
     expect(settingsSpy.mock.calls.length).toBe(0);
     expect(mockGoBack.mock.calls.length).toBe(1);
     expect(mockGoBack.mock.calls[0].length).toBe(0);
   });
-  it("Should have an open-system-notification-settings button that should call the utility function and dispatch navigation.back upon pressing", () => {
+  it("Should have an open-system-notification-settings button that should call the analytics tracking, the utility function and dispatch navigation.back upon pressing", () => {
+    const analyticsMock = jest
+      .spyOn(analytics, "trackSystemNotificationPermissionScreenOutcome")
+      .mockImplementation(constUndefined);
     const settingsSpy = spyOnOpenSystemNotificationSettings();
 
     const screen = renderScreen();
@@ -68,12 +88,19 @@ describe("SystemNotificationPermissionsScreen", () => {
 
     fireEvent.press(xCloseButton);
 
+    expect(analyticsMock.mock.calls.length).toBe(1);
+    expect(analyticsMock.mock.calls[0].length).toBe(1);
+    expect(analyticsMock.mock.calls[0][0]).toBe("activate");
+
     expect(settingsSpy.mock.calls.length).toBe(1);
     expect(settingsSpy.mock.calls[0].length).toBe(0);
     expect(mockGoBack.mock.calls.length).toBe(1);
     expect(mockGoBack.mock.calls[0].length).toBe(0);
   });
-  it("Should have a bottom close button that should dispatch navigation.back upon pressing", () => {
+  it("Should have a bottom close button that should the analytics tracking and dispatch navigation.back upon pressing", () => {
+    const analyticsMock = jest
+      .spyOn(analytics, "trackSystemNotificationPermissionScreenOutcome")
+      .mockImplementation(constUndefined);
     const settingsSpy = spyOnOpenSystemNotificationSettings();
 
     const screen = renderScreen();
@@ -83,6 +110,10 @@ describe("SystemNotificationPermissionsScreen", () => {
     expect(xCloseButton).toBeDefined();
 
     fireEvent.press(xCloseButton);
+
+    expect(analyticsMock.mock.calls.length).toBe(1);
+    expect(analyticsMock.mock.calls[0].length).toBe(1);
+    expect(analyticsMock.mock.calls[0][0]).toBe("dismiss");
 
     expect(settingsSpy.mock.calls.length).toBe(0);
     expect(mockGoBack.mock.calls.length).toBe(1);
