@@ -137,16 +137,19 @@ export const CgnMerchantCategoriesListScreen = () => {
         ItemSeparatorComponent={() => <Divider />}
         ListFooterComponent={
           isDesignSystemEnabled ? (
-            <ListItemAction
-              onPress={present}
-              accessibilityLabel={I18n.t(
-                "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
-              )}
-              label={I18n.t(
-                "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
-              )}
-              variant="primary"
-            />
+            <>
+              <Divider />
+              <ListItemAction
+                onPress={present}
+                accessibilityLabel={I18n.t(
+                  "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
+                )}
+                label={I18n.t(
+                  "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
+                )}
+                variant="primary"
+              />
+            </>
           ) : null
         }
       />
