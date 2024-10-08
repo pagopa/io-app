@@ -30,6 +30,7 @@ import { StatusMessage } from "../../../definitions/content/StatusMessage";
 import { isIdPayTestEnabledSelector } from "./persistedPreferences";
 import { GlobalState } from "./types";
 import { isPropertyWithMinAppVersionEnabled } from "./featureFlagWithMinAppVersionStatus";
+import { currentRouteSelector } from "./navigation";
 
 export type SectionStatusKey = keyof Sections;
 /** note that this state is not persisted so Option type is accepted
@@ -65,7 +66,7 @@ export const sectionStatusSelector = (sectionStatusKey: SectionStatusKey) =>
     (backendStatus): SectionStatus | undefined =>
       pipe(
         backendStatus,
-        O.map(bs => bs.sections[sectionStatusKey]),
+        O.map(bs => bs.sections?.[sectionStatusKey]),
         O.toUndefined
       )
   );
@@ -477,7 +478,7 @@ const sectionStatusUncachedSelector = (
 ) =>
   pipe(
     state.backendStatus.status,
-    O.chainNullableK(status => status.sections[sectionStatusKey])
+    O.chainNullableK(status => status.sections?.[sectionStatusKey])
   );
 
 const statusMessagesSelector = (state: GlobalState) =>
@@ -490,16 +491,18 @@ const statusMessagesSelector = (state: GlobalState) =>
 
 const EMPTY_ARRAY: ReadonlyArray<StatusMessage> = [];
 
-export const statusMessageByRouteSelector = (routeName: string) =>
+// Since the return of the selector comes from an array.filter function it is important to cache the result
+// to avoid unintended rerender on components.
+export const statusMessageByRouteSelector = (routeName?: string) =>
   createSelector(
-    statusMessagesSelector,
-    (statusMessages): ReadonlyArray<StatusMessage> | undefined =>
+    [statusMessagesSelector, currentRouteSelector],
+    (statusMessages, currentRoute): ReadonlyArray<StatusMessage> | undefined =>
       pipe(
         statusMessages,
         O.fromNullable,
         O.map(({ items }) => {
           const messages = items.filter(message =>
-            message.routes.includes(routeName)
+            message.routes.includes(routeName ?? currentRoute)
           );
           return messages.length > 0 ? messages : EMPTY_ARRAY;
         }),
