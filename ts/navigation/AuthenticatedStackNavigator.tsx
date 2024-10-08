@@ -49,8 +49,6 @@ import { PaymentsTransactionNavigator } from "../features/payments/transaction/n
 import { PaymentsTransactionRoutes } from "../features/payments/transaction/navigation/routes";
 import ServicesNavigator from "../features/services/common/navigation/navigator";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
-import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { GalleryPermissionInstructionsScreen } from "../screens/misc/GalleryPermissionInstructionsScreen";
@@ -249,11 +247,6 @@ const AuthenticatedStackNavigator = () => {
       </Stack.Group>
 
       <Stack.Screen
-        name={UADONATION_ROUTES.WEBVIEW}
-        options={hideHeaderOptions}
-        component={UAWebViewScreen}
-      />
-      <Stack.Screen
         name={FIMS_ROUTES.MAIN}
         options={hideHeaderOptions}
         component={FimsNavigator}
@@ -285,7 +278,10 @@ const AuthenticatedStackNavigator = () => {
           <Stack.Screen
             name={IDPayDetailsRoutes.IDPAY_DETAILS_MAIN}
             component={IDpayDetailsNavigator}
-            options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+            options={{
+              gestureEnabled: isGestureEnabled,
+              ...hideHeaderOptions
+            }}
           />
           <Stack.Screen
             name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR}
