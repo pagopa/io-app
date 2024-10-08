@@ -41,7 +41,7 @@ function* handleLoadSupportToken(
 
 export function* checkSession(
   getSessionValidity: ReturnType<typeof BackendClient>["getSession"],
-  fields?: string // Params are optional and default to an empty object
+  fields?: string // the `fields` parameter is optional and it defaults to an empty object
 ): Generator<
   ReduxSagaEffect,
   TypeOfApiResponseStatus<GetSessionStateT> | undefined,
