@@ -52,7 +52,7 @@ export const itwEidIssuanceMachine = setup({
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
-    revokeWalletInstance: fromPromise(notImplemented),
+    revokeWalletInstance: fromPromise<void>(notImplemented),
     getWalletAttestation: fromPromise<
       WalletAttestationResult,
       GetWalletAttestationActorParams
