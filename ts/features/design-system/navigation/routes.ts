@@ -114,6 +114,16 @@ const DESIGN_SYSTEM_ROUTES = {
       title: "Footer Actions (not fixed)"
     }
   },
+  EXPERIMENTAL_LAB: {
+    DYNAMIC_BACKGROUND: {
+      route: "DS_DYNAMIC_BACKGROUND",
+      title: "Dynamic header background"
+    },
+    ANIMATED_PICTOGRAMS: {
+      route: "DS_ANIMATED_PICTOGRAMS",
+      title: "Animated pictograms"
+    }
+  },
   LEGACY: {
     TYPOGRAPHY: {
       route: "DESIGN_SYSTEM_LEGACY_TYPOGRAPHY",

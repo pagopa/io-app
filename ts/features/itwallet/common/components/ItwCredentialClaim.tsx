@@ -109,6 +109,8 @@ const DateClaimItem = ({
   claim: Date;
   status?: ItwCredentialStatus;
 }) => {
+  // Remove the timezone offset to display the date in its original format
+
   const value = localeDateFormat(
     claim,
     I18n.t("global.dateFormats.shortFormat")
@@ -267,11 +269,11 @@ const DrivingPrivilegesClaimItem = ({
   detailsButtonVisible?: boolean;
 }) => {
   const localExpiryDate = localeDateFormat(
-    new Date(claim.expiry_date),
+    claim.expiry_date,
     I18n.t("global.dateFormats.shortFormat")
   );
   const localIssueDate = localeDateFormat(
-    new Date(claim.issue_date),
+    claim.issue_date,
     I18n.t("global.dateFormats.shortFormat")
   );
   const privilegeBottomSheet = useIOBottomSheetAutoresizableModal({
