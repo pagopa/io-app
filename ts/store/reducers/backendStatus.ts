@@ -15,8 +15,6 @@ import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfi
 import { BarcodesScannerConfig } from "../../../definitions/content/BarcodesScannerConfig";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { Sections } from "../../../definitions/content/Sections";
-import { UaDonationsBanner } from "../../../definitions/content/UaDonationsBanner";
-import { UaDonationsConfig } from "../../../definitions/content/UaDonationsConfig";
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
@@ -26,7 +24,6 @@ import {
 } from "../../config";
 import { LocalizedMessageKeys } from "../../i18n";
 import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
-import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 import { StatusMessage } from "../../../definitions/content/StatusMessage";
@@ -133,45 +130,6 @@ export const assistanceToolConfigSelector = createSelector(
       backendStatus,
       O.map(bs => bs.config.assistanceTool.tool),
       O.toUndefined
-    )
-);
-
-/**
- * Transform a UaDonationsConfig to `some(UaDonationsBanner)` if all the required conditions are met:
- * - local feature flag === true
- * - remote feature flag === true
- * - banner visible === true
- * - The description in the current locale is not an empty string
- *
- * Return `O.none` otherwise.
- * @param uaConfig
- * @param locale
- */
-const filterBannerVisible = (
-  uaConfig: UaDonationsConfig,
-  locale: LocalizedMessageKeys
-): O.Option<UaDonationsBanner> =>
-  uaConfig.enabled &&
-  uaConfig.banner.visible &&
-  !isStringNullyOrEmpty(uaConfig.banner.description[locale])
-    ? O.some(uaConfig.banner)
-    : O.none;
-
-/**
- * The donation data is an information that we can or we cannot render, based on some conditions.
- * We represent this information using an {@link Option} in order to avoid chaining multiple boolean condition at component level
- * Return `some(UaDonationsBanner)` if all the enabled / visible conditions are met.
- * Return `O.none` otherwise
- */
-export const uaDonationsBannerSelector = createSelector(
-  [
-    backendStatusSelector,
-    (_: GlobalState, locale: LocalizedMessageKeys) => locale
-  ],
-  (backendStatus, locale): O.Option<UaDonationsBanner> =>
-    pipe(
-      backendStatus,
-      O.chain(bs => filterBannerVisible(bs.config.uaDonations, locale))
     )
 );
 
