@@ -2691,24 +2691,9 @@ bonus:
           byDistance: By proximity to your location
           byName: Alphabetical order
     merchantDetail:
-      bucket:
-        alert:
-          cta: I got it!
-        error:
-          noCode: Codes for this discount are temporary over, please try again later
       title:
         deals: Opportunities
-        description: Description
-        services: Services
-        contactInfo: Addresses
-        hours: Working Hours
-        validity: Validity
-        discountCode: Discount code
-        conditions: Conditions
       cta:
-        label: Go to partner's website
-        landingPage: Get the benefit
-        discountUrl: Go to the benefit
         website: Go to partner's website
       categories:
         counting: and other {{count}}

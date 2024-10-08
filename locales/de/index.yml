@@ -2282,24 +2282,9 @@ bonus:
           byDistance: "Nach der Nähe zu deinem Standort"
           byName: "Alphabetisch geordnet"
     merchantDetail:
-      bucket:
-        alert:
-          cta: "Verstanden!"
-        error:
-          noCode: "Die Rabattcodes für diese Ermäßigung sind derzeit abgelaufen, bitte versuche es später noch einmal."
       title:
         deals: Opportunità
-        description: "Beschreibung"
-        services: "Dienste"
-        contactInfo: "Adressen"
-        hours: "Öffnungszeiten"
-        validity: "Gültigkeit"
-        discountCode: "Rabattcode"
-        conditions: "Bedingungen"
       cta:
-        label: "Besuche die Website des Anbieters"
-        landingPage: "Die Ermäßigung nutzen"
-        discountUrl: "Nutze die Ermäßigung"
         website: Vai al sito del partner
       categories:
         counting: "und weitere {{count}}"

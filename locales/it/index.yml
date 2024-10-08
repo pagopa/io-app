@@ -2691,24 +2691,9 @@ bonus:
           byDistance: Per vicinanza alla tua posizione
           byName: Ordine alfabetico
     merchantDetail:
-      bucket:
-        alert:
-          cta: Ho capito!
-        error:
-          noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
         deals: Opportunità
-        description: Descrizione
-        services: Servizi
-        contactInfo: Contatti e informazioni
-        hours: Orari
-        validity: Validità
-        discountCode: Codice Sconto
-        conditions: Condizioni
       cta:
-        label: Vai al sito dell'operatore
-        landingPage: Accedi all’opportunità
-        discountUrl: Vai all'opportunità
         website: Vai al sito del partner
       categories:
         counting: e altre {{count}}
