@@ -58,13 +58,13 @@ export const CgnDiscountHeader = ({
                   text={I18n.t("bonus.cgn.merchantsList.news")}
                 />
               )}
-              {discountDetails.discount && (
+              {discountDetails.discount ? (
                 <Badge
                   variant="purple"
                   outline
                   text={`-${normalizedDiscountValue}%`}
                 />
-              )}
+              ) : null}
             </View>
             <VSpacer size={12} />
           </>
