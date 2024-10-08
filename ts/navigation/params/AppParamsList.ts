@@ -56,8 +56,6 @@ import { PaymentsTransactionParamsList } from "../../features/payments/transacti
 import { PaymentsTransactionRoutes } from "../../features/payments/transaction/navigation/routes";
 import { ServicesParamsList } from "../../features/services/common/navigation/params";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
-import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
-import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
@@ -96,7 +94,6 @@ export type AppParamsList = {
 
   [ROUTES.WORKUNIT_GENERIC_FAILURE]: undefined;
   [ZENDESK_ROUTES.MAIN]: NavigatorScreenParams<ZendeskParamsList>;
-  [UADONATION_ROUTES.WEBVIEW]: NavigatorScreenParams<UAWebviewScreenNavigationParams>;
   [CDC_ROUTES.BONUS_REQUEST_MAIN]: NavigatorScreenParams<CdcBonusRequestParamsList>;
   [FIMS_ROUTES.MAIN]: NavigatorScreenParams<FimsParamsList>;
   [FCI_ROUTES.MAIN]: NavigatorScreenParams<FciParamsList>;

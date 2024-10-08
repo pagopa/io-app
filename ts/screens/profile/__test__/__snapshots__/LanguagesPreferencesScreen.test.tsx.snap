@@ -213,10 +213,13 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                           <RCTScrollView
                             collapsable={false}
                             contentContainerStyle={
-                              {
-                                "paddingBottom": 56,
-                                "paddingHorizontal": 0,
-                              }
+                              [
+                                {
+                                  "paddingBottom": 56,
+                                  "paddingHorizontal": 0,
+                                },
+                                {},
+                              ]
                             }
                             decelerationRate="normal"
                             onScroll={[Function]}
