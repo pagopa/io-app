@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
 export const SystemNotificationPermissionsScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  // const safeAreaInsets = useSafeAreaInsets();
 
   const onDismiss = () => {
     trackSystemNotificationPermissionScreenOutcome("dismiss");
@@ -70,54 +69,4 @@ export const SystemNotificationPermissionsScreen = () => {
       />
     </>
   );
-
-  /* return (
-    <View
-      style={[
-        IOStyles.flex,
-        {
-          paddingBottom: safeAreaInsets.bottom
-        }
-      ]}
-    >
-      <View style={styles.headerContainer}>
-        <IconButton
-          icon="closeMedium"
-          color="neutral"
-          onPress={onDismiss}
-          testID="notifications-modal-close-button"
-          accessibilityLabel={I18n.t("global.buttons.close")}
-        />
-      </View>
-      <WizardBody
-        pictogram={"reactivate"}
-        title={I18n.t("notifications.modal.title")}
-        description={I18n.t("notifications.modal.content")}
-      />
-      <ContentWrapper>
-        <ButtonSolid
-          label={I18n.t("notifications.modal.primaryButton")}
-          fullWidth={true}
-          onPress={() => {
-            trackSystemNotificationPermissionScreenOutcome("activate");
-            openSystemNotificationSettingsScreen();
-            navigation.goBack();
-          }}
-          testID="notifications-modal-open-system-settings-button"
-        />
-
-        <>
-          <VSpacer size={24} />
-          <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
-            <ButtonLink
-              label={I18n.t("notifications.modal.secondaryButton")}
-              onPress={onDismiss}
-              testID="notifications-modal-not-now-button"
-            />
-          </View>
-          <VSpacer size={16} />
-        </>
-      </ContentWrapper>
-    </View>
-  ); */
 };
