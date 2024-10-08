@@ -564,22 +564,21 @@ const statusMessagesSelector = (state: GlobalState) =>
 
 const EMPTY_ARRAY: ReadonlyArray<StatusMessage> = [];
 
-export const statusMessageByRouteSelector = (
-  state: GlobalState,
-  routeName?: string
-): ReadonlyArray<StatusMessage> | undefined => {
-  const statusMessages = statusMessagesSelector(state);
-  const currentRoute = currentRouteSelector(state);
-
-  return pipe(
-    statusMessages,
-    O.fromNullable,
-    O.map(({ items }) => {
-      const messages = items.filter(message =>
-        message.routes.includes(routeName ?? currentRoute)
-      );
-      return messages.length > 0 ? messages : EMPTY_ARRAY;
-    }),
-    O.toUndefined
+// Since the return of the selector comes from an array.filter function it is important to cache the result
+// to avoid unintended rerender on components.
+export const statusMessageByRouteSelector = (routeName?: string) =>
+  createSelector(
+    [statusMessagesSelector, currentRouteSelector],
+    (statusMessages, currentRoute): ReadonlyArray<StatusMessage> | undefined =>
+      pipe(
+        statusMessages,
+        O.fromNullable,
+        O.map(({ items }) => {
+          const messages = items.filter(message =>
+            message.routes.includes(routeName ?? currentRoute)
+          );
+          return messages.length > 0 ? messages : EMPTY_ARRAY;
+        }),
+        O.toUndefined
+      )
   );
-};
