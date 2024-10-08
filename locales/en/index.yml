@@ -3435,9 +3435,6 @@ features:
       failureScreen:
         title: Si è verificato un errore imprevisto
         subtitle: Non è stato possibile disattivare il servizio. Riprova.
-  trialSystem:
-    toast:
-      subscribed: Done! You will receive a message when the trial period will begin.
 support:
   ticketList:
     noTicket:
