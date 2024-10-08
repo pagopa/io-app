@@ -1,3 +1,4 @@
+import { constUndefined } from "fp-ts/lib/function";
 import React, { ComponentProps } from "react";
 import { createStore } from "redux";
 import ROUTES from "../../../navigation/routes";
@@ -6,35 +7,84 @@ import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { IOScrollViewCentredContent } from "../IOScrollViewCentredContent";
+import { IOScrollViewActions } from "../IOScrollView";
 
-const defaultProps: IOScrollViewCentredContent = {
-  title: "This is a title",
-  description: "This is a description",
-  pictogram: "success",
-  actions: {
+const actions: ReadonlyArray<IOScrollViewActions> = [
+  {
+    type: "SingleButton",
+    primary: {
+      label: "primary button",
+      onPress: constUndefined
+    }
+  },
+  {
     type: "TwoButtons",
     primary: {
-      label: "primaryButton",
-      testID: "primaryButtonTestId",
-      onPress: () => undefined
+      label: "primary button",
+      onPress: constUndefined
     },
     secondary: {
-      label: "actionButton",
-      testID: "actionButtonTestId",
-      onPress: () => undefined
+      label: "secondary button",
+      onPress: constUndefined
+    }
+  },
+  {
+    type: "ThreeButtons",
+    primary: {
+      label: "primary button",
+      onPress: constUndefined
+    },
+    secondary: {
+      label: "secondary button",
+      onPress: constUndefined
+    },
+    tertiary: {
+      label: "tertiary button",
+      onPress: constUndefined
     }
   }
-};
+];
+
+const propsFromAction = (
+  action: IOScrollViewActions,
+  description?: string,
+  additionalLink?: IOScrollViewCentredContent["additionalLink"]
+): IOScrollViewCentredContent => ({
+  actions: action,
+  additionalLink,
+  description,
+  pictogram: "success",
+  title: "This is a title"
+});
+
+const availableProps: ReadonlyArray<IOScrollViewCentredContent> = [
+  ...[...actions].map(action => propsFromAction(action)),
+  ...[...actions].map(action =>
+    propsFromAction(action, "This is a description")
+  ),
+  ...[...actions].map(action =>
+    propsFromAction(action, undefined, {
+      label: "Additional Label",
+      onPress: constUndefined
+    })
+  ),
+  ...[...actions].map(action =>
+    propsFromAction(action, "This is a description", {
+      label: "Additional Label",
+      onPress: constUndefined
+    })
+  )
+];
 
 describe("IOScrollViewCentredContent", () => {
-  it("should render the component correctly", () => {
-    const component = renderComponent(defaultProps);
-
-    expect(component.queryByText(defaultProps.title));
-    expect(component.queryByText(defaultProps.description! as string));
-    expect(component.queryByTestId("primaryButtonTestId"));
-    expect(component.queryByTestId("actionButtonTestId"));
-  });
+  availableProps.forEach(availableProp =>
+    it(`should match snapshot, ${
+      availableProp.description ? "with    " : "without "
+    } description, ${
+      availableProp.additionalLink ? "with    " : "without "
+    } additional link, ${availableProp.actions.type}`, () =>
+      expect(renderComponent(availableProp).toJSON()).toMatchSnapshot())
+  );
 });
 
 function renderComponent(

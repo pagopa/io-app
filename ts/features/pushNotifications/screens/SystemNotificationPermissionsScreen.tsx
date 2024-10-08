@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
-import { IconButton, IOVisualCostants } from "@pagopa/io-app-design-system";
+import React, { useCallback, useEffect } from "react";
+import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { openSystemNotificationSettingsScreen } from "../utils";
 import I18n from "../../../i18n";
@@ -12,61 +11,57 @@ import {
 } from "../analytics";
 import { IOScrollViewCentredContent } from "../../../components/ui/IOScrollViewCentredContent";
 
-const styles = StyleSheet.create({
-  headerContainer: {
-    alignSelf: "flex-end",
-    marginRight: IOVisualCostants.appMarginDefault,
-    marginTop: IOVisualCostants.appMarginDefault
-  }
-});
-
 export const SystemNotificationPermissionsScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
-  const onDismiss = () => {
+  const onDismiss = useCallback(() => {
     trackSystemNotificationPermissionScreenOutcome("dismiss");
     navigation.goBack();
-  };
+  }, [navigation]);
 
   useEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <HeaderSecondLevel
+          ignoreSafeAreaMargin={true}
+          title={""}
+          type="singleAction"
+          firstAction={{
+            icon: "closeMedium",
+            accessibilityLabel: I18n.t("global.buttons.close"),
+            onPress: onDismiss
+          }}
+        />
+      )
+    });
+
     trackSystemNotificationPermissionScreenShown();
     dispatch(setEngagementScreenShown());
-  }, [dispatch]);
+  }, [dispatch, navigation, onDismiss]);
 
   return (
-    <>
-      <View style={styles.headerContainer}>
-        <IconButton
-          icon="closeMedium"
-          color="neutral"
-          onPress={onDismiss}
-          testID="notifications-modal-close-button"
-          accessibilityLabel={I18n.t("global.buttons.close")}
-        />
-      </View>
-      <IOScrollViewCentredContent
-        pictogram="reactivate"
-        title={I18n.t("notifications.modal.title")}
-        description={I18n.t("notifications.modal.content")}
-        actions={{
-          type: "TwoButtons",
-          primary: {
-            label: I18n.t("notifications.modal.primaryButton"),
-            onPress: () => {
-              trackSystemNotificationPermissionScreenOutcome("activate");
-              openSystemNotificationSettingsScreen();
-              navigation.goBack();
-            },
-            testID: "notifications-modal-open-system-settings-button"
+    <IOScrollViewCentredContent
+      pictogram="reactivate"
+      title={I18n.t("notifications.modal.title")}
+      description={I18n.t("notifications.modal.content")}
+      actions={{
+        type: "TwoButtons",
+        primary: {
+          label: I18n.t("notifications.modal.primaryButton"),
+          onPress: () => {
+            trackSystemNotificationPermissionScreenOutcome("activate");
+            openSystemNotificationSettingsScreen();
+            navigation.goBack();
           },
-          secondary: {
-            label: I18n.t("notifications.modal.secondaryButton"),
-            onPress: onDismiss,
-            testID: "notifications-modal-not-now-button"
-          }
-        }}
-      />
-    </>
+          testID: "notifications-modal-open-system-settings-button"
+        },
+        secondary: {
+          label: I18n.t("notifications.modal.secondaryButton"),
+          onPress: onDismiss,
+          testID: "notifications-modal-not-now-button"
+        }
+      }}
+    />
   );
 };
