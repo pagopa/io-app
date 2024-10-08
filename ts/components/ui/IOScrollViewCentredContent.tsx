@@ -9,7 +9,6 @@ import {
 import * as React from "react";
 import { ComponentProps } from "react";
 import { View } from "react-native";
-import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import {
   BodyProps,
   ComposedBodyFromArray
@@ -29,7 +28,10 @@ export type IOScrollViewCentredContent = {
 
 /**
  * Istance of `IOScrollView` where the main content is centred and the
- * action(s) is/are placed at the bottom of the page.
+ * action(s) is/are placed at the bottom of the page. This component
+ * does not make any assumption about the context in which it is used,
+ * so you need to configure any header (that you may be using) in the
+ * screen or the component that integrates it.
  */
 export const IOScrollViewCentredContent = ({
   title,
@@ -37,39 +39,29 @@ export const IOScrollViewCentredContent = ({
   additionalLink,
   pictogram,
   actions
-}: IOScrollViewCentredContent) => {
-  useHeaderSecondLevel({
-    canGoBack: true,
-    title: ""
-  });
-
-  return (
-    <IOScrollView centerContent actions={actions}>
-      <VStack space={16} style={{ alignItems: "center" }}>
-        <Pictogram name={pictogram} size={180} />
-        <View style={{ paddingHorizontal: 24 }}>
-          <VStack space={8} style={{ alignItems: "center" }}>
-            <H3 style={{ textAlign: "center" }}>{title}</H3>
-            {description && (
-              <>
-                {typeof description === "string" ? (
-                  <Body style={{ textAlign: "center" }}>{description}</Body>
-                ) : (
-                  <ComposedBodyFromArray
-                    textAlign="center"
-                    body={description}
-                  />
-                )}
-              </>
-            )}
-          </VStack>
+}: IOScrollViewCentredContent) => (
+  <IOScrollView centerContent actions={actions}>
+    <VStack space={16} style={{ alignItems: "center" }}>
+      <Pictogram name={pictogram} size={180} />
+      <View style={{ paddingHorizontal: 24 }}>
+        <VStack space={8} style={{ alignItems: "center" }}>
+          <H3 style={{ textAlign: "center" }}>{title}</H3>
+          {description && (
+            <>
+              {typeof description === "string" ? (
+                <Body style={{ textAlign: "center" }}>{description}</Body>
+              ) : (
+                <ComposedBodyFromArray textAlign="center" body={description} />
+              )}
+            </>
+          )}
+        </VStack>
+      </View>
+      {additionalLink && (
+        <View style={{ alignSelf: "center" }}>
+          <ButtonLink {...additionalLink} />
         </View>
-        {additionalLink && (
-          <View style={{ alignSelf: "center" }}>
-            <ButtonLink {...additionalLink} />
-          </View>
-        )}
-      </VStack>
-    </IOScrollView>
-  );
-};
+      )}
+    </VStack>
+  </IOScrollView>
+);

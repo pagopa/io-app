@@ -14,6 +14,7 @@ import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../../../config";
 import { IOScrollViewCentredContent } from "../../../../components/ui/IOScrollViewCentredContent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 type IdPayCodeOnboardingRouteParams = {
   initiativeId?: string;
@@ -83,6 +84,11 @@ const IdPayCodeOnboardingScreen = () => {
       requestBiometricAuthentication();
     }
   };
+
+  useHeaderSecondLevel({
+    canGoBack: true,
+    title: ""
+  });
 
   return (
     <>
