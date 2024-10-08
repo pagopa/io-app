@@ -1,4 +1,3 @@
-import * as E from "fp-ts/lib/Either";
 import {
   Alert,
   ListItemHeader,
@@ -28,7 +27,6 @@ import {
 } from "../store/selectors/paymentMethods";
 import { getPaymentLogoFromWalletDetails } from "../../common/utils";
 import { WalletStatusEnum } from "../../../../../definitions/pagopa/ecommerce/WalletStatus";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const CheckoutPaymentMethodsList = () => {
   const dispatch = useIODispatch();
@@ -54,27 +52,6 @@ const CheckoutPaymentMethodsList = () => {
     pot.toOption(paymentAmountPot),
     O.map(centsToAmount),
     O.getOrElse(() => 0)
-  );
-
-  useOnFirstRender(
-    () => {
-      const recentUserWalletUsed = pipe(
-        recentUsedPaymentMethod,
-        WalletInfo.decode,
-        E.getOrElseW(() => undefined)
-      );
-      const recentGuestPaymentMethodUsed = pipe(
-        recentUsedPaymentMethod,
-        PaymentMethodResponse.decode,
-        E.getOrElseW(() => undefined)
-      );
-      if (recentUserWalletUsed) {
-        handleSelectUserWallet(recentUserWalletUsed.walletId);
-      } else if (recentGuestPaymentMethodUsed) {
-        handleSelectPaymentMethod(recentGuestPaymentMethodUsed.id);
-      }
-    },
-    () => recentUsedPaymentMethod !== undefined
   );
 
   const recentPaymentMethodListItem = useMemo(
