@@ -2284,6 +2284,8 @@ bonus:
     merchantDetail:
       title:
         deals: Opportunità
+        description: "Beschreibung"
+        contactInfo: "Adressen"
       cta:
         website: Vai al sito del partner
       categories:

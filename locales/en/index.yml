@@ -2693,6 +2693,8 @@ bonus:
     merchantDetail:
       title:
         deals: Opportunities
+        description: Description
+        contactInfo: Addresses
       cta:
         website: Go to partner's website
       categories:

@@ -2693,6 +2693,8 @@ bonus:
     merchantDetail:
       title:
         deals: Opportunità
+        description: Descrizione
+        contactInfo: Contatti e informazioni
       cta:
         website: Vai al sito del partner
       categories:
