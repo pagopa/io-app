@@ -1,17 +1,15 @@
 import React from "react";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-import ScreenWithListItems, {
-  PropsScreenWithListItems
-} from "../ScreenWithListItems";
+import { IOScrollViewWithListItems } from "../IOScrollViewWithListItems";
 import { appReducer } from "../../../store/reducers";
 import { applicationChangeState } from "../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 
-describe("ScreenWithListItems", () => {
+describe("IOScrollViewWithListItems", () => {
   const mockAction = jest.fn();
 
-  const defaultProps: PropsScreenWithListItems = {
+  const defaultProps: IOScrollViewWithListItems = {
     title: "Test Title",
     subtitle: "Test Subtitle",
     renderItems: [
@@ -19,12 +17,14 @@ describe("ScreenWithListItems", () => {
       { label: "Item 2", value: "Value 2", testID: "item-2" }
     ],
     listItemHeaderLabel: "List Header",
-    primaryActionProps: {
-      label: "Press me",
-      accessibilityLabel: "Press me button",
-      onPress: mockAction,
-      testID: "action-button",
-      fullWidth: true
+    actions: {
+      type: "SingleButton",
+      primary: {
+        label: "Press me",
+        accessibilityLabel: "Press me button",
+        onPress: mockAction,
+        testID: "action-button"
+      }
     },
     isHeaderVisible: true
   };
@@ -52,7 +52,7 @@ describe("ScreenWithListItems", () => {
     });
 
     it("renders subtitle as array correctly", () => {
-      const propsWithArraySubtitle: PropsScreenWithListItems = {
+      const propsWithArraySubtitle: IOScrollViewWithListItems = {
         ...defaultProps,
         subtitle: [
           {
@@ -80,14 +80,16 @@ describe("ScreenWithListItems", () => {
     });
 
     it("renders correctly without optional props", () => {
-      const propsWithoutOptional: PropsScreenWithListItems = {
+      const propsWithoutOptional: IOScrollViewWithListItems = {
         renderItems: [],
-        primaryActionProps: {
-          label: "Press me",
-          accessibilityLabel: "Press me button",
-          onPress: mockAction,
-          testID: "action-button",
-          fullWidth: true
+        actions: {
+          type: "SingleButton",
+          primary: {
+            label: "Press me",
+            accessibilityLabel: "Press me button",
+            onPress: mockAction,
+            testID: "action-button"
+          }
         }
       };
       const { queryByText, toJSON } = renderComponent(propsWithoutOptional);
@@ -111,11 +113,11 @@ describe("ScreenWithListItems", () => {
   });
 });
 
-const renderComponent = (props: PropsScreenWithListItems) => {
+const renderComponent = (props: IOScrollViewWithListItems) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
   return renderScreenWithNavigationStoreContext(
-    () => <ScreenWithListItems {...props} />,
+    () => <IOScrollViewWithListItems {...props} />,
     "DUMMY",
     {},
     store
