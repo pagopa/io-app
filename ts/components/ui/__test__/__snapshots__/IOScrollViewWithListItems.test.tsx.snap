@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ScreenWithListItems Rendering renders correctly with default props 1`] = `
+exports[`IOScrollViewWithListItems Rendering renders correctly with default props 1`] = `
 <View
   style={
     {
@@ -334,10 +334,13 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 24,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 24,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -465,166 +468,212 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                             </View>
                           </View>
                           <View>
-                            <View>
+                            <View
+                              accessibilityLabel="Item 1; Value 1"
+                              accessible={true}
+                              style={
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                }
+                              }
+                              testID="item-1"
+                            >
                               <View
-                                accessibilityLabel="Item 1; Value 1"
-                                accessible={true}
                                 style={
                                   {
-                                    "marginHorizontal": -24,
-                                    "paddingHorizontal": 24,
-                                    "paddingVertical": 12,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
                                   }
                                 }
-                                testID="item-1"
                               >
                                 <View
                                   style={
                                     {
-                                      "alignItems": "center",
-                                      "flexDirection": "row",
-                                      "justifyContent": "space-between",
+                                      "flex": 1,
                                     }
                                   }
                                 >
                                   <View
-                                    style={
-                                      {
-                                        "flex": 1,
-                                      }
-                                    }
+                                    accessible={true}
                                   >
-                                    <View
-                                      accessible={true}
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="grey-700"
+                                      defaultColor="blue"
+                                      defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
+                                      font="TitilliumSansPro"
+                                      fontStyle={
+                                        {
+                                          "fontSize": 14,
+                                          "lineHeight": 21,
+                                        }
+                                      }
+                                      maxFontSizeMultiplier={1.25}
+                                      style={
+                                        [
+                                          {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          },
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                          },
+                                        ]
+                                      }
+                                      weight="Regular"
                                     >
-                                      <Text
-                                        allowFontScaling={false}
-                                        dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 14,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                              "lineHeight": 21,
-                                            },
-                                          ]
+                                      Item 1
+                                    </Text>
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="black"
+                                      defaultColor="black"
+                                      defaultWeight="Semibold"
+                                      dynamicTypeRamp="headline"
+                                      font="TitilliumSansPro"
+                                      fontStyle={
+                                        {
+                                          "fontSize": 18,
+                                          "lineHeight": 25,
                                         }
-                                      >
-                                        Item 1
-                                      </Text>
-                                      <Text
-                                        allowFontScaling={false}
-                                        dynamicTypeRamp="headline"
-                                        maxFontSizeMultiplier={1.25}
-                                        numberOfLines={2}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#0E0F13",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 18,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                              "lineHeight": 25,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        Value 1
-                                      </Text>
-                                    </View>
+                                      }
+                                      maxFontSizeMultiplier={1.25}
+                                      numberOfLines={2}
+                                      style={
+                                        [
+                                          {
+                                            "fontSize": 18,
+                                            "lineHeight": 25,
+                                          },
+                                          {
+                                            "color": "#0E0F13",
+                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                          },
+                                        ]
+                                      }
+                                      weight="Semibold"
+                                    >
+                                      Value 1
+                                    </Text>
                                   </View>
                                 </View>
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "backgroundColor": "#D2D6E3",
-                                    "height": 0.5,
-                                  }
-                                }
-                              />
                             </View>
-                            <View>
+                            <View
+                              style={
+                                {
+                                  "backgroundColor": "#D2D6E3",
+                                  "height": 0.5,
+                                }
+                              }
+                            />
+                          </View>
+                          <View>
+                            <View
+                              accessibilityLabel="Item 2; Value 2"
+                              accessible={true}
+                              style={
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                }
+                              }
+                              testID="item-2"
+                            >
                               <View
-                                accessibilityLabel="Item 2; Value 2"
-                                accessible={true}
                                 style={
                                   {
-                                    "marginHorizontal": -24,
-                                    "paddingHorizontal": 24,
-                                    "paddingVertical": 12,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
                                   }
                                 }
-                                testID="item-2"
                               >
                                 <View
                                   style={
                                     {
-                                      "alignItems": "center",
-                                      "flexDirection": "row",
-                                      "justifyContent": "space-between",
+                                      "flex": 1,
                                     }
                                   }
                                 >
                                   <View
-                                    style={
-                                      {
-                                        "flex": 1,
-                                      }
-                                    }
+                                    accessible={true}
                                   >
-                                    <View
-                                      accessible={true}
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="grey-700"
+                                      defaultColor="blue"
+                                      defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
+                                      font="TitilliumSansPro"
+                                      fontStyle={
+                                        {
+                                          "fontSize": 14,
+                                          "lineHeight": 21,
+                                        }
+                                      }
+                                      maxFontSizeMultiplier={1.25}
+                                      style={
+                                        [
+                                          {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          },
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                          },
+                                        ]
+                                      }
+                                      weight="Regular"
                                     >
-                                      <Text
-                                        allowFontScaling={false}
-                                        dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 14,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                              "lineHeight": 21,
-                                            },
-                                          ]
+                                      Item 2
+                                    </Text>
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="black"
+                                      defaultColor="black"
+                                      defaultWeight="Semibold"
+                                      dynamicTypeRamp="headline"
+                                      font="TitilliumSansPro"
+                                      fontStyle={
+                                        {
+                                          "fontSize": 18,
+                                          "lineHeight": 25,
                                         }
-                                      >
-                                        Item 2
-                                      </Text>
-                                      <Text
-                                        allowFontScaling={false}
-                                        dynamicTypeRamp="headline"
-                                        maxFontSizeMultiplier={1.25}
-                                        numberOfLines={2}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#0E0F13",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 18,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                              "lineHeight": 25,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        Value 2
-                                      </Text>
-                                    </View>
+                                      }
+                                      maxFontSizeMultiplier={1.25}
+                                      numberOfLines={2}
+                                      style={
+                                        [
+                                          {
+                                            "fontSize": 18,
+                                            "lineHeight": 25,
+                                          },
+                                          {
+                                            "color": "#0E0F13",
+                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                          },
+                                        ]
+                                      }
+                                      weight="Semibold"
+                                    >
+                                      Value 2
+                                    </Text>
                                   </View>
                                 </View>
                               </View>
@@ -892,7 +941,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
 </View>
 `;
 
-exports[`ScreenWithListItems Rendering renders correctly without optional props 1`] = `
+exports[`IOScrollViewWithListItems Rendering renders correctly without optional props 1`] = `
 <View
   style={
     {
@@ -1226,10 +1275,13 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 24,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 24,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -1262,7 +1314,6 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                               ]
                             }
                           />
-                          <View />
                         </View>
                       </RCTScrollView>
                       <View
@@ -1525,7 +1576,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
 </View>
 `;
 
-exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] = `
+exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly 1`] = `
 <View
   style={
     {
@@ -1859,10 +1910,13 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 24,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 24,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -2038,166 +2092,212 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                             </View>
                           </View>
                           <View>
-                            <View>
+                            <View
+                              accessibilityLabel="Item 1; Value 1"
+                              accessible={true}
+                              style={
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                }
+                              }
+                              testID="item-1"
+                            >
                               <View
-                                accessibilityLabel="Item 1; Value 1"
-                                accessible={true}
                                 style={
                                   {
-                                    "marginHorizontal": -24,
-                                    "paddingHorizontal": 24,
-                                    "paddingVertical": 12,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
                                   }
                                 }
-                                testID="item-1"
                               >
                                 <View
                                   style={
                                     {
-                                      "alignItems": "center",
-                                      "flexDirection": "row",
-                                      "justifyContent": "space-between",
+                                      "flex": 1,
                                     }
                                   }
                                 >
                                   <View
-                                    style={
-                                      {
-                                        "flex": 1,
-                                      }
-                                    }
+                                    accessible={true}
                                   >
-                                    <View
-                                      accessible={true}
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="grey-700"
+                                      defaultColor="blue"
+                                      defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
+                                      font="TitilliumSansPro"
+                                      fontStyle={
+                                        {
+                                          "fontSize": 14,
+                                          "lineHeight": 21,
+                                        }
+                                      }
+                                      maxFontSizeMultiplier={1.25}
+                                      style={
+                                        [
+                                          {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          },
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                          },
+                                        ]
+                                      }
+                                      weight="Regular"
                                     >
-                                      <Text
-                                        allowFontScaling={false}
-                                        dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 14,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                              "lineHeight": 21,
-                                            },
-                                          ]
+                                      Item 1
+                                    </Text>
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="black"
+                                      defaultColor="black"
+                                      defaultWeight="Semibold"
+                                      dynamicTypeRamp="headline"
+                                      font="TitilliumSansPro"
+                                      fontStyle={
+                                        {
+                                          "fontSize": 18,
+                                          "lineHeight": 25,
                                         }
-                                      >
-                                        Item 1
-                                      </Text>
-                                      <Text
-                                        allowFontScaling={false}
-                                        dynamicTypeRamp="headline"
-                                        maxFontSizeMultiplier={1.25}
-                                        numberOfLines={2}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#0E0F13",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 18,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                              "lineHeight": 25,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        Value 1
-                                      </Text>
-                                    </View>
+                                      }
+                                      maxFontSizeMultiplier={1.25}
+                                      numberOfLines={2}
+                                      style={
+                                        [
+                                          {
+                                            "fontSize": 18,
+                                            "lineHeight": 25,
+                                          },
+                                          {
+                                            "color": "#0E0F13",
+                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                          },
+                                        ]
+                                      }
+                                      weight="Semibold"
+                                    >
+                                      Value 1
+                                    </Text>
                                   </View>
                                 </View>
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "backgroundColor": "#D2D6E3",
-                                    "height": 0.5,
-                                  }
-                                }
-                              />
                             </View>
-                            <View>
+                            <View
+                              style={
+                                {
+                                  "backgroundColor": "#D2D6E3",
+                                  "height": 0.5,
+                                }
+                              }
+                            />
+                          </View>
+                          <View>
+                            <View
+                              accessibilityLabel="Item 2; Value 2"
+                              accessible={true}
+                              style={
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                }
+                              }
+                              testID="item-2"
+                            >
                               <View
-                                accessibilityLabel="Item 2; Value 2"
-                                accessible={true}
                                 style={
                                   {
-                                    "marginHorizontal": -24,
-                                    "paddingHorizontal": 24,
-                                    "paddingVertical": 12,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
                                   }
                                 }
-                                testID="item-2"
                               >
                                 <View
                                   style={
                                     {
-                                      "alignItems": "center",
-                                      "flexDirection": "row",
-                                      "justifyContent": "space-between",
+                                      "flex": 1,
                                     }
                                   }
                                 >
                                   <View
-                                    style={
-                                      {
-                                        "flex": 1,
-                                      }
-                                    }
+                                    accessible={true}
                                   >
-                                    <View
-                                      accessible={true}
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="grey-700"
+                                      defaultColor="blue"
+                                      defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
+                                      font="TitilliumSansPro"
+                                      fontStyle={
+                                        {
+                                          "fontSize": 14,
+                                          "lineHeight": 21,
+                                        }
+                                      }
+                                      maxFontSizeMultiplier={1.25}
+                                      style={
+                                        [
+                                          {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          },
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                          },
+                                        ]
+                                      }
+                                      weight="Regular"
                                     >
-                                      <Text
-                                        allowFontScaling={false}
-                                        dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 14,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                              "lineHeight": 21,
-                                            },
-                                          ]
+                                      Item 2
+                                    </Text>
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="black"
+                                      defaultColor="black"
+                                      defaultWeight="Semibold"
+                                      dynamicTypeRamp="headline"
+                                      font="TitilliumSansPro"
+                                      fontStyle={
+                                        {
+                                          "fontSize": 18,
+                                          "lineHeight": 25,
                                         }
-                                      >
-                                        Item 2
-                                      </Text>
-                                      <Text
-                                        allowFontScaling={false}
-                                        dynamicTypeRamp="headline"
-                                        maxFontSizeMultiplier={1.25}
-                                        numberOfLines={2}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#0E0F13",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 18,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                              "lineHeight": 25,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        Value 2
-                                      </Text>
-                                    </View>
+                                      }
+                                      maxFontSizeMultiplier={1.25}
+                                      numberOfLines={2}
+                                      style={
+                                        [
+                                          {
+                                            "fontSize": 18,
+                                            "lineHeight": 25,
+                                          },
+                                          {
+                                            "color": "#0E0F13",
+                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                          },
+                                        ]
+                                      }
+                                      weight="Semibold"
+                                    >
+                                      Value 2
+                                    </Text>
                                   </View>
                                 </View>
                               </View>

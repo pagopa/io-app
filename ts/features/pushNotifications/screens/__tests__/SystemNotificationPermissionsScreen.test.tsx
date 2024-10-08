@@ -3,6 +3,7 @@ import { constUndefined } from "fp-ts/lib/function";
 import React from "react";
 import { createStore } from "redux";
 
+import I18n from "../../../../i18n";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../../store/reducers";
@@ -15,12 +16,14 @@ import * as utils from "../../utils";
 import { SystemNotificationPermissionsScreen } from "../SystemNotificationPermissionsScreen";
 
 const mockGoBack = jest.fn();
+const mockSetNavigationOptions = jest.fn();
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual<typeof import("@react-navigation/native")>(
     "@react-navigation/native"
   ),
   useNavigation: () => ({
-    goBack: mockGoBack
+    goBack: mockGoBack,
+    setOptions: mockSetNavigationOptions
   })
 }));
 
@@ -54,17 +57,36 @@ describe("SystemNotificationPermissionsScreen", () => {
     expect(mockDispatch.mock.calls[0].length).toBe(1);
     expect(mockDispatch.mock.calls[0][0]).toEqual(setEngagementScreenShown());
   });
-  it("Should have an X close button that should call the analytics tracking and dispatch navigation.back upon pressing", () => {
+  it("Should use 'navigation.setOptions({header: })' and place an 'HeaderSecondLevel' component with an 'X' close button, which 'onPress' action should call the analytics tracking and dispatch navigation.back", () => {
     const analyticsMock = jest
       .spyOn(analytics, "trackSystemNotificationPermissionScreenOutcome")
       .mockImplementation(constUndefined);
     const settingsSpy = spyOnOpenSystemNotificationSettings();
 
-    const screen = renderScreen();
-    const xCloseButton = screen.getByTestId("notifications-modal-close-button");
-    expect(xCloseButton).toBeDefined();
+    renderScreen();
 
-    fireEvent.press(xCloseButton);
+    expect(mockSetNavigationOptions.mock.calls.length).toBe(1);
+    expect(mockSetNavigationOptions.mock.calls[0].length).toBe(1);
+    const navigationOptions = mockSetNavigationOptions.mock.calls[0][0];
+    expect(navigationOptions.header).toBeDefined();
+    expect(typeof navigationOptions.header).toBe("function");
+
+    const headerComponent = navigationOptions.header();
+    expect(headerComponent).toBeDefined();
+
+    expect(headerComponent.props.ignoreSafeAreaMargin).toBe(true);
+    expect(headerComponent.props.title).toBe("");
+    expect(headerComponent.props.type).toBe("singleAction");
+    expect(headerComponent.props.firstAction).toBeDefined();
+    expect(headerComponent.props.firstAction.icon).toBe("closeMedium");
+    expect(headerComponent.props.firstAction.accessibilityLabel).toBe(
+      I18n.t("global.buttons.close")
+    );
+    expect(headerComponent.props.firstAction.onPress).toBeDefined();
+    expect(typeof headerComponent.props.firstAction.onPress).toBe("function");
+
+    const onPressFunction = headerComponent.props.firstAction.onPress;
+    onPressFunction();
 
     expect(analyticsMock.mock.calls.length).toBe(1);
     expect(analyticsMock.mock.calls[0].length).toBe(1);
