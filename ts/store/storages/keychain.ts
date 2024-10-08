@@ -12,7 +12,11 @@ import { setGenericPasswordWithDefaultAccessibleOption } from "../../utils/keych
 const USERNAME = "REDUX_PERSIST";
 
 // eslint-disable-next-line functional/no-let
-export let keychainError: string | undefined;
+export let getKeychainError: string | undefined;
+// eslint-disable-next-line functional/no-let
+export let setKeychainError: string | undefined;
+// eslint-disable-next-line functional/no-let
+export let removeKeychainError: string | undefined;
 
 type SentryExceptionType =
   | "KEY_CHAIN_GET_GENERIC_PASSWORD_FAILURE"
@@ -44,7 +48,7 @@ export default function createSecureStorage(): Storage {
         trackExceptionOnSentry("KEY_CHAIN_GET_GENERIC_PASSWORD_FAILURE", err);
         // workaround to send keychainError for Pixel devices
         // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
-        keychainError = JSON.stringify(err);
+        getKeychainError = JSON.stringify(err);
         return undefined;
       }
     },
@@ -60,6 +64,7 @@ export default function createSecureStorage(): Storage {
         );
       } catch (err) {
         trackExceptionOnSentry("KEY_CHAIN_SET_GENERIC_PASSWORD_FAILURE", err);
+        setKeychainError = JSON.stringify(err);
         return false;
       }
     },
@@ -72,6 +77,7 @@ export default function createSecureStorage(): Storage {
           "KEY_CHAIN_REMOVE_GENERIC_PASSWORD_FAILURE",
           err
         );
+        removeKeychainError = JSON.stringify(err);
         return false;
       }
     }
@@ -79,5 +85,7 @@ export default function createSecureStorage(): Storage {
 }
 
 export const clearKeychainError = () => {
-  keychainError = undefined;
+  getKeychainError = undefined;
+  setKeychainError = undefined;
+  removeKeychainError = undefined;
 };

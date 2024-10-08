@@ -97,7 +97,7 @@ import {
   startupTransientErrorInitialState
 } from "../store/reducers/startup";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
-import { trackKeychainGetFailure } from "../utils/analytics";
+import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { walletPaymentHandlersInitialized } from "../store/actions/wallet/payment";
 import { watchFimsSaga } from "../features/fims/common/saga";
@@ -115,10 +115,6 @@ import { handlePendingMessageStateIfAllowed } from "../features/pushNotification
 import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
-import {
-  clearKeychainError,
-  keychainError
-} from "./../store/storages/keychain";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -259,8 +255,7 @@ export function* initializeApplicationSaga(
 
   // workaround to send keychainError
   // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
-  yield* call(trackKeychainGetFailure, keychainError);
-  yield* call(clearKeychainError);
+  yield* call(trackKeychainFailures);
 
   // Unless we have a valid session token already, login until we have one.
   const sessionToken: SagaCallReturnType<typeof authenticationSaga> =

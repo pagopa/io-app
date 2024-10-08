@@ -10,6 +10,12 @@ import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import { euCovidCertificateEnabled } from "../config";
 import { mixpanelTrack } from "../mixpanel";
 import { isLoginUtilsError } from "../features/lollipop/utils/login";
+import {
+  clearKeychainError,
+  getKeychainError,
+  removeKeychainError,
+  setKeychainError
+} from "../store/storages/keychain";
 
 const blackListRoutes: ReadonlyArray<string> = [];
 
@@ -181,12 +187,23 @@ export function trackSpidLoginError(
 // Keychain
 // workaround to send keychainError for Pixel devices
 // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
-export function trackKeychainGetFailure(reason: string | undefined) {
-  if (reason) {
+export function trackKeychainFailures() {
+  if (getKeychainError) {
     void mixpanelTrack("KEY_CHAIN_GET_GENERIC_PASSWORD_FAILURE", {
-      reason
+      getKeychainError
     });
   }
+  if (setKeychainError) {
+    void mixpanelTrack("KEY_CHAIN_SET_GENERIC_PASSWORD_FAILURE", {
+      setKeychainError
+    });
+  }
+  if (removeKeychainError) {
+    void mixpanelTrack("KEY_CHAIN_REMOVE_GENERIC_PASSWORD_FAILURE", {
+      removeKeychainError
+    });
+  }
+  clearKeychainError();
 }
 
 function toUrlWithoutQueryParams(url: string) {
