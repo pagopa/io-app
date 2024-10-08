@@ -10,7 +10,7 @@ import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSession
 const DEFAULT_LATEST_TRANSACTION_LIST_SIZE = 5;
 
 export function* handleGetLatestBizEventsTransactions(
-  getTransactionList: TransactionClient["getTransactionList"],
+  getTransactionList: TransactionClient["getPaidNotices"],
   action: ActionType<
     (typeof getPaymentsLatestBizEventsTransactionsAction)["request"]
   >
@@ -38,7 +38,7 @@ export function* handleGetLatestBizEventsTransactions(
     if (getTransactionListResult.right.status === 200) {
       yield* put(
         getPaymentsLatestBizEventsTransactionsAction.success(
-          getTransactionListResult.right.value
+          getTransactionListResult.right.value.notices
         )
       );
     } else if (getTransactionListResult.right.status === 404) {
