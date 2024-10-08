@@ -12,7 +12,7 @@ const ignoredUrls: RegExp | undefined = /symbolicate/;
 export const configureReactotron = (): Reactotron => {
   const rtt = ReactotronReactNative.configure({
     createSocket: path => new ReactotronFlipper(path),
-    host: "192.168.1.100"
+    host: "127.0.0.1"
   })
     .useReactNative({
       networking: {
