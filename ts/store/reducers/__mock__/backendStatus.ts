@@ -247,17 +247,6 @@ export const baseRawBackendStatus: BackendStatus = {
       enabled: true,
       merchants_v2: false
     },
-    uaDonations: {
-      enabled: false,
-      banner: {
-        visible: false,
-        description: {
-          "it-IT": "descrizione mock banner",
-          "en-EN": "mock banner description"
-        },
-        url: "mockbannerurl"
-      }
-    },
     fims: {
       enabled: false,
       domain: "mockFimsDomain"
@@ -352,17 +341,6 @@ export const baseBackendConfig: Config = {
   cgn: {
     enabled: true,
     merchants_v2: false
-  },
-  uaDonations: {
-    enabled: false,
-    banner: {
-      visible: false,
-      description: {
-        "it-IT": "descrizione mock banner",
-        "en-EN": "mock banner description"
-      },
-      url: "mockbannerurl"
-    }
   },
   fims: {
     enabled: false,
