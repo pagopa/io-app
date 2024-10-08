@@ -25,7 +25,6 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PaymentsTransactionBizEventsParamsList } from "../navigation/params";
 import { getPaymentsBizEventsTransactionsAction } from "../store/actions";
 import { walletTransactionBizEventsListPotSelector } from "../store/selectors";
-import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { isPaymentsTransactionsEmptySelector } from "../../home/store/selectors";
 import { PaymentsBizEventsListItemTransaction } from "../components/PaymentsBizEventsListItemTransaction";
@@ -36,6 +35,7 @@ import { groupTransactionsByMonth } from "../utils";
 import I18n from "../../../../i18n";
 import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
 import { PaymentsTransactionRoutes } from "../../transaction/navigation/routes";
+import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import * as analytics from "../analytics";
 
 export type PaymentsTransactionBizEventsListScreenProps = RouteProp<
@@ -44,7 +44,7 @@ export type PaymentsTransactionBizEventsListScreenProps = RouteProp<
 >;
 
 const AnimatedSectionList = Animated.createAnimatedComponent(
-  SectionList as new () => SectionList<TransactionListItem>
+  SectionList as new () => SectionList<NoticeListItem>
 );
 
 const PaymentsTransactionBizEventsListScreen = () => {
@@ -53,11 +53,12 @@ const PaymentsTransactionBizEventsListScreen = () => {
 
   const scrollTranslationY = useSharedValue(0);
   const [titleHeight, setTitleHeight] = React.useState(0);
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
   const [continuationToken, setContinuationToken] = React.useState<
     string | undefined
   >();
   const [groupedTransactions, setGroupedTransactions] =
-    React.useState<ReadonlyArray<SectionListData<TransactionListItem>>>();
+    React.useState<ReadonlyArray<SectionListData<NoticeListItem>>>();
   const insets = useSafeAreaInsets();
 
   const transactionsPot = useIOSelector(
@@ -67,10 +68,8 @@ const PaymentsTransactionBizEventsListScreen = () => {
 
   const isLoading = pot.isLoading(transactionsPot);
 
-  const handleNavigateToTransactionDetails = (
-    transaction: TransactionListItem
-  ) => {
-    if (transaction.transactionId === undefined) {
+  const handleNavigateToTransactionDetails = (transaction: NoticeListItem) => {
+    if (transaction.eventId === undefined) {
       return;
     }
     navigation.navigate(
@@ -79,7 +78,7 @@ const PaymentsTransactionBizEventsListScreen = () => {
         screen:
           PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_DETAILS,
         params: {
-          transactionId: transaction.transactionId,
+          transactionId: transaction.eventId,
           isPayer: transaction.isPayer
         }
       }
@@ -106,8 +105,19 @@ const PaymentsTransactionBizEventsListScreen = () => {
     setTitleHeight(height);
   };
 
-  const handleOnSuccess = (continuationToken?: string) => {
-    setContinuationToken(continuationToken);
+  const handleOnSuccess = (paginationToken?: string) => {
+    setContinuationToken(paginationToken);
+    setIsRefreshing(false);
+  };
+
+  const handleOnRefreshTransactionsList = () => {
+    setIsRefreshing(true);
+    dispatch(
+      getPaymentsBizEventsTransactionsAction.request({
+        firstLoad: true,
+        onSuccess: handleOnSuccess
+      })
+    );
   };
 
   useOnFirstRender(
@@ -194,7 +204,8 @@ const PaymentsTransactionBizEventsListScreen = () => {
 
   return (
     <AnimatedSectionList
-      // snapToEnd={false}
+      refreshing={isRefreshing}
+      onRefresh={handleOnRefreshTransactionsList}
       scrollIndicatorInsets={{ right: 0 }}
       contentContainerStyle={{
         ...IOStyles.horizontalContentPadding,
@@ -216,7 +227,7 @@ const PaymentsTransactionBizEventsListScreen = () => {
         <ListItemHeader label={section.title} />
       )}
       ListFooterComponent={renderLoadingFooter}
-      keyExtractor={item => `transaction_${item.transactionId}`}
+      keyExtractor={item => `transaction_${item.eventId}`}
       renderItem={({ item }) => (
         <PaymentsBizEventsListItemTransaction
           onPress={() => handleNavigateToTransactionDetails(item)}

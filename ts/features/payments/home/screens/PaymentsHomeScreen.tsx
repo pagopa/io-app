@@ -1,7 +1,6 @@
 import { IOStyles } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import Animated, { Layout } from "react-native-reanimated";
-import { ScrollView } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -79,15 +78,18 @@ const PaymentsHomeScreen = () => {
 
   if (isTransactionsEmpty) {
     return (
-      <ScrollView
+      <IOScrollView
         contentContainerStyle={{
-          paddingHorizontal: 24,
           flexGrow: 1
+        }}
+        refreshControlProps={{
+          refreshing: isRefreshing,
+          onRefresh: handleRefreshPaymentsHome
         }}
       >
         <PaymentsAlertStatus />
         <AnimatedPaymentsHomeScreenContent />
-      </ScrollView>
+      </IOScrollView>
     );
   }
 
