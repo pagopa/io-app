@@ -12,7 +12,6 @@ export const revokeCurrentWalletInstance = async (
 ): Promise<void> => {
   const appFetch = createItWalletFetch(itwWalletProviderBaseUrl, sessionToken);
 
-  // @ts-expect-error update io-react-native-wallet
   await WalletInstance.revokeCurrentWalletInstance({
     walletProviderBaseUrl: itwWalletProviderBaseUrl,
     appFetch
