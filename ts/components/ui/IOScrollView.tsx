@@ -12,6 +12,7 @@ import {
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import {
   ComponentProps,
@@ -41,7 +42,6 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
 import { WithTestID } from "../../types/WithTestID";
 
 export type IOScrollViewActions =
@@ -84,6 +84,8 @@ type IOScrollView = WithTestID<
     excludeEndContentMargin?: boolean;
     /* Include page margins */
     includeContentMargins?: boolean;
+    /* Center content in iOS without inertial scrolling */
+    centerContent?: boolean;
     refreshControlProps?: RefreshControlProps;
   }>
 >;
@@ -117,6 +119,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     width: "100%",
     flexShrink: 0
+  },
+  centerContentWrapper: {
+    flexGrow: 1,
+    alignItems: "stretch",
+    justifyContent: "center",
+    alignContent: "center"
   }
 });
 
@@ -145,6 +153,7 @@ export const IOScrollView = ({
   includeContentMargins = true,
   animatedRef,
   debugMode = false,
+  centerContent,
   refreshControlProps,
   testID
 }: IOScrollView) => {
@@ -265,16 +274,22 @@ export const IOScrollView = ({
         snapToEnd={false}
         decelerationRate="normal"
         refreshControl={RefreshControlComponent}
-        contentContainerStyle={{
-          paddingBottom: excludeEndContentMargin
-            ? 0
-            : actions
-            ? safeBottomAreaHeight
-            : bottomMargin + contentEndMargin,
-          paddingHorizontal: includeContentMargins
-            ? IOVisualCostants.appMarginDefault
-            : 0
-        }}
+        centerContent={centerContent}
+        contentContainerStyle={[
+          {
+            paddingBottom: excludeEndContentMargin
+              ? 0
+              : actions
+              ? safeBottomAreaHeight
+              : bottomMargin + contentEndMargin,
+            paddingHorizontal: includeContentMargins
+              ? IOVisualCostants.appMarginDefault
+              : 0
+          },
+          /* Apply the same logic used in the
+          `OperationResultScreenContent` component */
+          centerContent ? styles.centerContentWrapper : {}
+        ]}
       >
         {children}
       </Animated.ScrollView>

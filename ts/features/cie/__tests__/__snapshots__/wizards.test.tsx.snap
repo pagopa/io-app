@@ -5,10 +5,13 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
   <RCTScrollView
     collapsable={false}
     contentContainerStyle={
-      {
-        "paddingBottom": NaN,
-        "paddingHorizontal": 0,
-      }
+      [
+        {
+          "paddingBottom": NaN,
+          "paddingHorizontal": 0,
+        },
+        {},
+      ]
     }
     decelerationRate="normal"
     onScroll={[Function]}
@@ -552,10 +555,13 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
   <RCTScrollView
     collapsable={false}
     contentContainerStyle={
-      {
-        "paddingBottom": NaN,
-        "paddingHorizontal": 0,
-      }
+      [
+        {
+          "paddingBottom": NaN,
+          "paddingHorizontal": 0,
+        },
+        {},
+      ]
     }
     decelerationRate="normal"
     onScroll={[Function]}
@@ -1485,10 +1491,13 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
   <RCTScrollView
     collapsable={false}
     contentContainerStyle={
-      {
-        "paddingBottom": NaN,
-        "paddingHorizontal": 0,
-      }
+      [
+        {
+          "paddingBottom": NaN,
+          "paddingHorizontal": 0,
+        },
+        {},
+      ]
     }
     decelerationRate="normal"
     onScroll={[Function]}
@@ -2458,10 +2467,13 @@ exports[`SpidWizard Should match the snapshot 1`] = `
   <RCTScrollView
     collapsable={false}
     contentContainerStyle={
-      {
-        "paddingBottom": NaN,
-        "paddingHorizontal": 0,
-      }
+      [
+        {
+          "paddingBottom": NaN,
+          "paddingHorizontal": 0,
+        },
+        {},
+      ]
     }
     decelerationRate="normal"
     onScroll={[Function]}
