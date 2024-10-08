@@ -65,6 +65,7 @@ import {
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../utils/constants";
 import { canEycaCardBeShown } from "../utils/eyca";
+import { capitalize } from "../../../../utils/strings";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -197,7 +198,9 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
           }}
         >
           {pot.isSome(currentProfile)
-            ? `${currentProfile.value.name} ${currentProfile.value.family_name}`
+            ? `${capitalize(currentProfile.value.name)} ${capitalize(
+                currentProfile.value.family_name
+              )}`
             : ""}
         </H4>
       }
