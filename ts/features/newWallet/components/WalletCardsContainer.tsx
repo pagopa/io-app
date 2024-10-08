@@ -23,7 +23,6 @@ import {
 } from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { WalletCardCategoryFilter } from "../types";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import {
@@ -85,23 +84,11 @@ const ItwCardsContainer = ({
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const navigation = useIONavigation();
 
-  // navigation does not seem to work when the bottom sheet's component is not inline
-  const navigateToWalletRevocationScreen = React.useCallback(
-    () =>
-      navigation.navigate(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
-      }),
-    [navigation]
-  );
-
   const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
     {
       title: <ItwEidInfoBottomSheetTitle />,
-      component: (
-        <ItwEidInfoBottomSheetContent
-          onRevoke={navigateToWalletRevocationScreen}
-        />
-      )
+      // Navigation does not seem to work when the bottom sheet's component is not inline
+      component: <ItwEidInfoBottomSheetContent navigation={navigation} />
     },
     EID_INFO_BOTTOM_PADDING
   );

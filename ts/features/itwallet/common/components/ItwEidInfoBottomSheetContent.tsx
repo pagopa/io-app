@@ -17,7 +17,9 @@ import { useIOSelector } from "../../../../store/hooks";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { format } from "../../../../utils/dates";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
+import { ITW_ROUTES } from "../../navigation/routes";
 import { StoredCredential } from "../utils/itwTypesUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 
@@ -30,17 +32,22 @@ export const ItwEidInfoBottomSheetTitle = () => (
   </HStack>
 );
 
-const ItwEidInfoBottomSheetContent = ({
-  onRevoke
-}: {
-  onRevoke: () => void;
-}) => {
+type Props = {
+  navigation: ReturnType<typeof useIONavigation>;
+};
+
+const ItwEidInfoBottomSheetContent = ({ navigation }: Props) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
 
   const Content = ({ credential }: { credential: StoredCredential }) => {
     const claims = parseClaims(credential.parsedCredential, {
       exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
     });
+
+    const navigateToWalletRevocationScreen = () =>
+      navigation.navigate(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
+      });
 
     return (
       <VStack space={24}>
@@ -75,7 +82,7 @@ const ItwEidInfoBottomSheetContent = ({
           label={I18n.t("features.itWallet.walletRevocation.cta")}
           fullWidth
           color="danger"
-          onPress={onRevoke}
+          onPress={navigateToWalletRevocationScreen}
         />
       </VStack>
     );
