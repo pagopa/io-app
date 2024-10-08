@@ -1,3 +1,4 @@
+import { CieIdLoginProps } from "../../features/cieLogin/components/CieIdLoginWebView";
 import { AuthErrorScreenProps } from "../../screens/authentication/AuthErrorScreen";
 import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
 import { CieConsentDataUsageScreenNavigationParams } from "../../screens/authentication/cie/CieConsentDataUsageScreen";
@@ -18,6 +19,7 @@ export type AuthenticationParamsList = {
   [ROUTES.CIE_ACTIVATE_NFC_SCREEN]: CieCardReaderScreenNavigationParams;
   [ROUTES.AUTH_ERROR_SCREEN]: AuthErrorScreenProps;
   [ROUTES.UNLOCK_ACCESS_SCREEN]: UnlockAccessProps;
+  [ROUTES.AUTHENTICATION_CIE_ID_LOGIN]: CieIdLoginProps;
   // For expired cie screen
   [ROUTES.CIE_EXPIRED_SCREEN]: undefined;
   [ROUTES.CIE_PIN_SCREEN]: undefined;
