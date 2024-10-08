@@ -44,9 +44,10 @@ Sentry.init({
   },
   integrations: integrations => [
     ...integrations,
-    new Sentry.ReactNativeTracing({ routingInstrumentation })
+    Sentry.reactNativeTracingIntegration({ routingInstrumentation })
   ],
   enabled: !isDevEnv,
+  maxValueLength: 3000,
   tracesSampleRate: 0.3,
   sampleRate: 0.3
 });

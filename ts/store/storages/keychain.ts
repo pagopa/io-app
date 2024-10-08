@@ -14,6 +14,22 @@ const USERNAME = "REDUX_PERSIST";
 // eslint-disable-next-line functional/no-let
 export let keychainError: string | undefined;
 
+type SentryExceptionType =
+  | "KEY_CHAIN_GET_GENERIC_PASSWORD_FAILURE"
+  | "KEY_CHAIN_SET_GENERIC_PASSWORD_FAILURE"
+  | "KEY_CHAIN_REMOVE_GENERIC_PASSWORD_FAILURE";
+
+const trackExceptionOnSentry = (type: SentryExceptionType, err: unknown) => {
+  const { code, message } = err as { code?: string; message?: string };
+  Sentry.captureException(err);
+  Sentry.captureMessage(
+    `${type} - code: ${code ?? ""}, message: ${
+      message ?? ""
+    } - ${JSON.stringify(err)}`,
+    "warning"
+  );
+};
+
 export default function createSecureStorage(): Storage {
   return {
     getItem: async key => {
@@ -25,10 +41,7 @@ export default function createSecureStorage(): Storage {
           return result.password;
         }
       } catch (err) {
-        Sentry.captureException(err);
-        Sentry.captureMessage(
-          `KEY_CHAIN_GET_GENERIC_PASSWORD_FAILURE ${JSON.stringify(err)}`
-        );
+        trackExceptionOnSentry("KEY_CHAIN_GET_GENERIC_PASSWORD_FAILURE", err);
         // workaround to send keychainError for Pixel devices
         // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
         keychainError = JSON.stringify(err);
@@ -46,10 +59,7 @@ export default function createSecureStorage(): Storage {
           }
         );
       } catch (err) {
-        Sentry.captureException(err);
-        Sentry.captureMessage(
-          `KEY_CHAIN_SET_GENERIC_PASSWORD_FAILURE ${JSON.stringify(err)}`
-        );
+        trackExceptionOnSentry("KEY_CHAIN_SET_GENERIC_PASSWORD_FAILURE", err);
         return false;
       }
     },
@@ -58,9 +68,9 @@ export default function createSecureStorage(): Storage {
       try {
         return await Keychain.resetGenericPassword({ service: key });
       } catch (err) {
-        Sentry.captureException(err);
-        Sentry.captureMessage(
-          `KEY_CHAIN_REMOVE_GENERIC_PASSWORD_FAILURE ${JSON.stringify(err)}`
+        trackExceptionOnSentry(
+          "KEY_CHAIN_REMOVE_GENERIC_PASSWORD_FAILURE",
+          err
         );
         return false;
       }
