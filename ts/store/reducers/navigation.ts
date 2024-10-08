@@ -32,7 +32,7 @@ export function navigationReducer(
 
 /**
  * For debug / backwards compatibility purpose only
- * @deprecated Don't use this selector to create new application logic, will be removed after the upgrade to react-navigation v6
+ * The use of this selector is highly discouraged, it should be better to handle the current route through react-navigation proper hooks.
  * @param state
  */
 export const currentRouteSelector = (state: GlobalState) =>
