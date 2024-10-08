@@ -2145,6 +2145,9 @@ messagePDFPreview:
     opening: "An error occurred while opening the document. You may not have a PDF reader installed."
     saving: "An error occurred while saving the document"
 notifications:
+  profileBanner:
+    title: "Attiva le notifiche push per sapere quando ricevi un messaggio su IO."
+    cta: "Attiva notifiche push"
   installation:
     errorTitle: Push notifications
     errorMessage: Registration with the push notifications service generated an error

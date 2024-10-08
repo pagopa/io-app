@@ -2145,6 +2145,9 @@ messagePDFPreview:
     opening: "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF."
     saving: "Si è verificato un errore salvando il documento."
 notifications:
+  profileBanner:
+    title: "Attiva le notifiche push per sapere quando ricevi un messaggio su IO."
+    cta: "Attiva notifiche push"
   installation:
     errorTitle: Notifiche push
     errorMessage: La registrazione verso il servizio di notifiche push ha generato un errore
