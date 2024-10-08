@@ -6,27 +6,34 @@ import I18n from "../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { selectIsLoading } from "../../machine/eid/selectors";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+
+const RevocationLoadingScreen = () => {
+  useItwDisableGestureNavigation();
+  useAvoidHardwareBackButton();
+
+  return (
+    <LoadingScreenContent
+      contentTitle={I18n.t(
+        "features.itWallet.walletRevocation.loadingScreen.title"
+      )}
+    >
+      <View style={[IOStyles.alignCenter, IOStyles.horizontalContentPadding]}>
+        <Body>
+          {I18n.t("features.itWallet.walletRevocation.loadingScreen.subtitle")}
+        </Body>
+      </View>
+    </LoadingScreenContent>
+  );
+};
 
 export const ItwLifecycleWalletRevocationScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
   if (isLoading) {
-    return (
-      <LoadingScreenContent
-        contentTitle={I18n.t(
-          "features.itWallet.walletRevocation.loadingScreen.title"
-        )}
-      >
-        <View style={[IOStyles.alignCenter, IOStyles.horizontalContentPadding]}>
-          <Body>
-            {I18n.t(
-              "features.itWallet.walletRevocation.loadingScreen.subtitle"
-            )}
-          </Body>
-        </View>
-      </LoadingScreenContent>
-    );
+    return <RevocationLoadingScreen />;
   }
 
   return (
