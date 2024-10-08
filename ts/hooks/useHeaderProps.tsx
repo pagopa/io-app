@@ -17,7 +17,6 @@ type HeaderBaseProps = {
 };
 
 interface HeaderNoActionProps extends HeaderBaseProps {
-  isModal?: boolean;
   showHelp?: false;
   headerType?: never;
   secondAction?: never;
@@ -25,7 +24,6 @@ interface HeaderNoActionProps extends HeaderBaseProps {
 }
 
 interface HeaderHelpActionProps extends HeaderBaseProps {
-  isModal?: boolean;
   showHelp: true;
   headerType?: never;
   secondAction?: never;
@@ -33,7 +31,6 @@ interface HeaderHelpActionProps extends HeaderBaseProps {
 }
 
 interface HeaderTwoActionsProps extends HeaderBaseProps {
-  isModal?: boolean;
   showHelp: true;
   headerType: "twoActions";
   secondAction: ActionProp;
@@ -41,7 +38,6 @@ interface HeaderTwoActionsProps extends HeaderBaseProps {
 }
 
 interface HeaderThreeActionsProps extends HeaderBaseProps {
-  isModal?: boolean;
   showHelp: true;
   headerType: "threeActions";
   secondAction: ActionProp;
