@@ -16,6 +16,7 @@ import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
 import { sentryDsn } from "./config";
 import { isDevEnv } from "./utils/environment";
+import { StatusMessages } from "./components/StatusMessages";
 
 export const routingInstrumentation = Sentry.reactNavigationIntegration({
   enableTimeToInitialDisplay: true
@@ -68,9 +69,11 @@ const App = (): JSX.Element => (
               <PersistGate loading={undefined} persistor={persistor}>
                 <BottomSheetModalProvider>
                   <LightModalProvider>
-                    <RootContainer
-                      routingInstumentation={routingInstrumentation}
-                    />
+                    <StatusMessages>
+                      <RootContainer
+                        routingInstumentation={routingInstrumentation}
+                      />
+                    </StatusMessages>
                   </LightModalProvider>
                 </BottomSheetModalProvider>
               </PersistGate>
