@@ -190,17 +190,17 @@ export function trackSpidLoginError(
 export function trackKeychainFailures() {
   if (getKeychainError) {
     void mixpanelTrack("KEY_CHAIN_GET_GENERIC_PASSWORD_FAILURE", {
-      getKeychainError
+      reason: getKeychainError
     });
   }
   if (setKeychainError) {
     void mixpanelTrack("KEY_CHAIN_SET_GENERIC_PASSWORD_FAILURE", {
-      setKeychainError
+      reason: setKeychainError
     });
   }
   if (removeKeychainError) {
     void mixpanelTrack("KEY_CHAIN_REMOVE_GENERIC_PASSWORD_FAILURE", {
-      removeKeychainError
+      reason: removeKeychainError
     });
   }
   clearKeychainError();
