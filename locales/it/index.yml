@@ -2945,12 +2945,6 @@ features:
         title: "Non è possibile recuperare questo \ncertificato: contatta l’assistenza"
         subtitle: "Dati utili per ricevere assistenza:"
         cta: "Contatta l'assistenza"
-  uaDonations:
-    webViewScreen:
-      headerTitle: Donazione
-      errors:
-        data:
-          buttonTitle: Torna indietro
   pn:
     service:
       activate: "Attiva il servizio"
