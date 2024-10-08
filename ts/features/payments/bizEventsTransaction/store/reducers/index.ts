@@ -7,16 +7,17 @@ import {
   getPaymentsBizEventsTransactionDetailsAction,
   getPaymentsLatestBizEventsTransactionsAction,
   getPaymentsBizEventsTransactionsAction,
-  getPaymentsBizEventsReceiptAction
+  getPaymentsBizEventsReceiptAction,
+  PaymentsTransactionReceiptInfoPayload
 } from "../actions";
-import { TransactionListItem } from "../../../../../../definitions/pagopa/biz-events/TransactionListItem";
-import { TransactionDetailResponse } from "../../../../../../definitions/pagopa/biz-events/TransactionDetailResponse";
+import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
+import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
 
 export type PaymentsBizEventsTransactionState = {
-  transactions: pot.Pot<ReadonlyArray<TransactionListItem>, NetworkError>;
-  latestTransactions: pot.Pot<ReadonlyArray<TransactionListItem>, NetworkError>;
-  details: pot.Pot<TransactionDetailResponse, NetworkError>;
-  receiptDocument: pot.Pot<string, NetworkError>;
+  transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
+  latestTransactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
+  details: pot.Pot<NoticeDetailResponse, NetworkError>;
+  receiptDocument: pot.Pot<PaymentsTransactionReceiptInfoPayload, NetworkError>;
 };
 
 const INITIAL_STATE: PaymentsBizEventsTransactionState = {
@@ -40,7 +41,7 @@ const reducer = (
     case getType(getPaymentsLatestBizEventsTransactionsAction.success):
       return {
         ...state,
-        latestTransactions: pot.some(action.payload.transactions || [])
+        latestTransactions: pot.some(action.payload || [])
       };
     case getType(getPaymentsLatestBizEventsTransactionsAction.failure):
       return {
@@ -63,7 +64,7 @@ const reducer = (
       };
     case getType(getPaymentsBizEventsTransactionsAction.success):
       const previousTransactions = pot.getOrElse(state.transactions, []);
-      const maybeTransactions = action.payload.data.transactions || [];
+      const maybeTransactions = action.payload.data || [];
       return {
         ...state,
         transactions: !action.payload.appendElements

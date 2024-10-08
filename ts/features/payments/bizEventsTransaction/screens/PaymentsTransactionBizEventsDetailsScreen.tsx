@@ -23,6 +23,7 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
+import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 import * as analytics from "../analytics";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
@@ -144,15 +145,21 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
       title={{
         label: I18n.t("transaction.details.title")
       }}
-      actions={{
-        type: "SingleButton",
-        primary: {
-          label: I18n.t("features.payments.transactions.receipt.download"),
-          onPress: handleDownloadPdfReceipt,
-          loading: isLoadingReceipt,
-          disabled: isLoadingReceipt
-        }
-      }}
+      actions={
+        transactionDetails?.infoNotice?.origin !== OriginEnum.PM
+          ? {
+              type: "SingleButton",
+              primary: {
+                label: I18n.t(
+                  "features.payments.transactions.receipt.download"
+                ),
+                onPress: handleDownloadPdfReceipt,
+                loading: isLoadingReceipt,
+                disabled: isLoadingReceipt
+              }
+            }
+          : undefined
+      }
       contextualHelp={emptyContextualHelp}
       faqCategories={["wallet_transaction"]}
       headerActionsProp={{ showHelp: true }}

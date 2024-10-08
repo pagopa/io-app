@@ -3,6 +3,7 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import {
+  Alert,
   Divider,
   IOLogoPaymentType,
   IORadiusScale,
@@ -17,12 +18,13 @@ import I18n from "../../../../i18n";
 import { format } from "../../../../utils/dates";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import TransactionReceiptDivider from "../../../../../img/features/wallet/transaction-receipt-divider.svg";
-import { TransactionDetailResponse } from "../../../../../definitions/pagopa/biz-events/TransactionDetailResponse";
 import { WalletInfo } from "../../../../../definitions/pagopa/biz-events/WalletInfo";
 import { getPayerInfoLabel } from "../utils";
+import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
+import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 
 type PaymentsBizEventsTransactionInfoSectionProps = {
-  transaction?: TransactionDetailResponse;
+  transaction?: NoticeDetailResponse;
   loading?: boolean;
 };
 
@@ -46,7 +48,7 @@ const PaymentsBizEventsTransactionInfoSection = ({
   transaction,
   loading
 }: PaymentsBizEventsTransactionInfoSectionProps) => {
-  const transactionInfo = transaction?.infoTransaction;
+  const transactionInfo = transaction?.infoNotice;
   return (
     <>
       <TransactionReceiptDivider
@@ -112,12 +114,12 @@ const PaymentsBizEventsTransactionInfoSection = ({
                   <Divider />
                 </>
               )}
-              {transactionInfo.transactionDate && (
+              {transactionInfo.noticeDate && (
                 <>
                   <ListItemInfo
                     label={I18n.t("transaction.details.info.dateAndHour")}
                     value={format(
-                      new Date(transactionInfo.transactionDate),
+                      new Date(transactionInfo.noticeDate),
                       "DD MMMM YYYY, HH:mm:ss"
                     )}
                   />
@@ -156,23 +158,29 @@ const PaymentsBizEventsTransactionInfoSection = ({
                   <Divider />
                 </>
               )}
-              {transactionInfo.transactionId && (
+              {transactionInfo.eventId && (
                 <ListItemInfoCopy
                   onPress={() =>
                     clipboardSetStringWithFeedback(
-                      transactionInfo.transactionId ?? ""
+                      transactionInfo.eventId ?? ""
                     )
                   }
                   accessibilityLabel={`${I18n.t(
                     "transaction.details.info.transactionId"
-                  )}: ${transactionInfo.transactionId}`}
+                  )}: ${transactionInfo.eventId}`}
                   label={I18n.t("transaction.details.info.transactionId")}
-                  value={transactionInfo.transactionId}
+                  value={transactionInfo.eventId}
                 />
               )}
             </>
           )}
         </View>
+        {transactionInfo?.origin === OriginEnum.PM && (
+          <Alert
+            variant="info"
+            content={I18n.t("transaction.details.bannerImported.content")}
+          />
+        )}
       </View>
     </>
   );
