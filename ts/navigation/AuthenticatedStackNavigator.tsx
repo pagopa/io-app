@@ -285,7 +285,10 @@ const AuthenticatedStackNavigator = () => {
           <Stack.Screen
             name={IDPayDetailsRoutes.IDPAY_DETAILS_MAIN}
             component={IDpayDetailsNavigator}
-            options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+            options={{
+              gestureEnabled: isGestureEnabled,
+              ...hideHeaderOptions
+            }}
           />
           <Stack.Screen
             name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR}
