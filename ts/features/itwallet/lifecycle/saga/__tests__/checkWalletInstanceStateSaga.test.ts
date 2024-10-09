@@ -15,6 +15,7 @@ import { ensureIntegrityServiceIsReady } from "../../../common/utils/itwIntegrit
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { sessionTokenSelector } from "../../../../../store/reducers/authentication";
 import { handleWalletInstanceResetSaga } from "../handleWalletInstanceResetSaga";
+import { itwIsWalletInstanceAttestationValidSelector } from "../../../walletInstance/store/reducers";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({
   deleteKey: jest.fn
@@ -56,6 +57,7 @@ describe("checkWalletInstanceStateSaga", () => {
       .provide([
         [matchers.call.fn(ensureIntegrityServiceIsReady), true],
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
+        [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
         [
           matchers.call.fn(getAttestation),
           "aac6e82a-e27e-4293-9b55-94a9fab22763"
@@ -84,6 +86,7 @@ describe("checkWalletInstanceStateSaga", () => {
       .provide([
         [matchers.call.fn(ensureIntegrityServiceIsReady), true],
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
+        [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
         [
           matchers.call.fn(getAttestation),
           throwError(
@@ -114,6 +117,7 @@ describe("checkWalletInstanceStateSaga", () => {
       .provide([
         [matchers.call.fn(ensureIntegrityServiceIsReady), true],
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
+        [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
         [
           matchers.call.fn(getAttestation),
           "3396d31e-ac6a-4357-8083-cb5d3cda4d74"
@@ -142,6 +146,7 @@ describe("checkWalletInstanceStateSaga", () => {
       .provide([
         [matchers.call.fn(ensureIntegrityServiceIsReady), true],
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
+        [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
         [
           matchers.call.fn(getAttestation),
           throwError(
@@ -153,4 +158,26 @@ describe("checkWalletInstanceStateSaga", () => {
       .call.fn(handleWalletInstanceResetSaga)
       .run();
   });
+});
+
+describe("getAttestationOrResetWalletInstance", () => {
+  it("should obtain a new WIA if it doesn't exist or has expired", () =>
+    expectSaga(getAttestationOrResetWalletInstance, "")
+      .provide([
+        [matchers.call.fn(ensureIntegrityServiceIsReady), true],
+        [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
+        [matchers.select(itwIsWalletInstanceAttestationValidSelector), false]
+      ])
+      .call.fn(ensureIntegrityServiceIsReady)
+      .call.fn(getAttestation)
+      .run());
+  it("should skip WIA obtainment if it exists and has not yet expired", () =>
+    expectSaga(getAttestationOrResetWalletInstance, "")
+      .provide([
+        [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
+        [matchers.select(itwIsWalletInstanceAttestationValidSelector), true]
+      ])
+      .not.call.fn(ensureIntegrityServiceIsReady)
+      .not.call.fn(getAttestation)
+      .run());
 });
