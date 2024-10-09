@@ -331,166 +331,43 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                         }
                       }
                     >
-                      <View
-                        style={
+                      <RCTScrollView
+                        centerContent={true}
+                        collapsable={false}
+                        contentContainerStyle={
                           [
                             {
-                              "flex": 1,
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 24,
                             },
                             {
-                              "paddingBottom": 0,
+                              "alignContent": "center",
+                              "alignItems": "stretch",
+                              "flexGrow": 1,
+                              "justifyContent": "center",
                             },
                           ]
                         }
+                        decelerationRate="normal"
+                        onScroll={[Function]}
+                        scrollEventThrottle={8}
+                        snapToEnd={false}
+                        snapToOffsets={
+                          [
+                            0,
+                            0,
+                          ]
+                        }
+                        style={{}}
                       >
-                        <View
-                          style={
-                            {
-                              "alignSelf": "flex-end",
-                              "marginRight": 24,
-                              "marginTop": 24,
-                            }
-                          }
-                        >
-                          <View
-                            accessibilityLabel="Close"
-                            accessibilityRole="button"
-                            accessibilityState={
-                              {
-                                "busy": undefined,
-                                "checked": undefined,
-                                "disabled": false,
-                                "expanded": undefined,
-                                "selected": undefined,
-                              }
-                            }
-                            accessibilityValue={
-                              {
-                                "max": undefined,
-                                "min": undefined,
-                                "now": undefined,
-                                "text": undefined,
-                              }
-                            }
-                            accessible={true}
-                            collapsable={false}
-                            focusable={true}
-                            hitSlop={8}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onResponderGrant={[Function]}
-                            onResponderMove={[Function]}
-                            onResponderRelease={[Function]}
-                            onResponderTerminate={[Function]}
-                            onResponderTerminationRequest={[Function]}
-                            onStartShouldSetResponder={[Function]}
-                            testID="notifications-modal-close-button"
-                          >
-                            <View
-                              style={
-                                [
-                                  {
-                                    "height": 24,
-                                    "width": 24,
-                                  },
-                                  {
-                                    "alignItems": "center",
-                                  },
-                                  {
-                                    "justifyContent": "center",
-                                  },
-                                  {
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
-                                  },
-                                ]
-                              }
-                            >
-                              <RNSVGSvgView
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel=""
-                                accessible={false}
-                                align="xMidYMid"
-                                animatedProps={
-                                  {
-                                    "color": undefined,
-                                  }
-                                }
-                                bbHeight={24}
-                                bbWidth={24}
-                                focusable={false}
-                                height={24}
-                                importantForAccessibility="no-hide-descendants"
-                                meetOrSlice={0}
-                                minX={0}
-                                minY={0}
-                                style={
-                                  [
-                                    {
-                                      "backgroundColor": "transparent",
-                                      "borderWidth": 0,
-                                    },
-                                    {
-                                      "color": "#0E0F13",
-                                    },
-                                    {
-                                      "flex": 0,
-                                      "height": 24,
-                                      "width": 24,
-                                    },
-                                  ]
-                                }
-                                tintColor="#0E0F13"
-                                vbHeight={24}
-                                vbWidth={24}
-                                width={24}
-                              >
-                                <RNSVGGroup
-                                  fill={
-                                    {
-                                      "payload": 4278190080,
-                                      "type": 0,
-                                    }
-                                  }
-                                >
-                                  <RNSVGPath
-                                    clipRule={0}
-                                    d="M19.7071 5.70711c.3905-.39053.3905-1.02369 0-1.41422-.3905-.39052-1.0237-.39052-1.4142 0L12 10.5858 5.70711 4.29289c-.39053-.39052-1.02369-.39052-1.41422 0-.39052.39053-.39052 1.02369 0 1.41422L10.5858 12l-6.29291 6.2929c-.39052.3905-.39052 1.0237 0 1.4142.39053.3905 1.02369.3905 1.41422 0L12 13.4142l6.2929 6.2929c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L13.4142 12l6.2929-6.29289Z"
-                                    fill={
-                                      {
-                                        "type": 2,
-                                      }
-                                    }
-                                    fillRule={0}
-                                    propList={
-                                      [
-                                        "fill",
-                                        "fillRule",
-                                      ]
-                                    }
-                                  />
-                                </RNSVGGroup>
-                              </RNSVGSvgView>
-                            </View>
-                          </View>
-                        </View>
-                        <View
-                          style={
-                            {
-                              "flex": 1,
-                              "justifyContent": "center",
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        >
+                        <View>
                           <View
                             style={
                               {
                                 "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "rowGap": 16,
                               }
                             }
                           >
@@ -672,104 +549,230 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                 />
                               </RNSVGGroup>
                             </RNSVGSvgView>
-                          </View>
-                          <View
-                            style={
-                              {
-                                "height": 24,
-                              }
-                            }
-                          />
-                          <View
-                            style={
-                              {
-                                "paddingHorizontal": 28,
-                              }
-                            }
-                          >
-                            <Text
-                              allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
-                              dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
-                              maxFontSizeMultiplier={1.25}
-                              style={
-                                [
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                  {
-                                    "fontSize": 22,
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                  },
-                                ]
-                              }
-                              weight="Semibold"
-                            >
-                              Don't miss any important messages!
-                            </Text>
                             <View
                               style={
                                 {
-                                  "height": 8,
+                                  "paddingHorizontal": 24,
+                                }
+                              }
+                            >
+                              <View
+                                style={
+                                  {
+                                    "alignItems": "center",
+                                    "display": "flex",
+                                    "flexDirection": "column",
+                                    "rowGap": 8,
+                                  }
+                                }
+                              >
+                                <Text
+                                  allowFontScaling={false}
+                                  color="bluegreyDark"
+                                  defaultColor="bluegreyDark"
+                                  defaultWeight="Semibold"
+                                  dynamicTypeRamp="title2"
+                                  font="TitilliumSansPro"
+                                  fontStyle={
+                                    {
+                                      "fontSize": 22,
+                                      "lineHeight": 33,
+                                    }
+                                  }
+                                  maxFontSizeMultiplier={1.25}
+                                  style={
+                                    [
+                                      {
+                                        "textAlign": "center",
+                                      },
+                                      {
+                                        "fontSize": 22,
+                                        "lineHeight": 33,
+                                      },
+                                      {
+                                        "color": "#17324D",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                      },
+                                    ]
+                                  }
+                                  weight="Semibold"
+                                >
+                                  Don't miss any important messages!
+                                </Text>
+                                <Text
+                                  allowFontScaling={false}
+                                  color="bluegrey"
+                                  defaultColor="bluegrey"
+                                  defaultWeight="Regular"
+                                  dynamicTypeRamp="body"
+                                  font="TitilliumSansPro"
+                                  fontStyle={
+                                    {
+                                      "fontSize": 16,
+                                      "lineHeight": 24,
+                                    }
+                                  }
+                                  maxFontSizeMultiplier={1.25}
+                                  style={
+                                    [
+                                      {
+                                        "textAlign": "center",
+                                      },
+                                      {
+                                        "fontSize": 16,
+                                        "lineHeight": 24,
+                                      },
+                                      {
+                                        "color": "#475A6D",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                      },
+                                    ]
+                                  }
+                                  weight="Regular"
+                                >
+                                  Turn on push notifications to know immediately when you get a new message.
+                                </Text>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </RCTScrollView>
+                      <View
+                        pointerEvents="box-none"
+                        style={
+                          [
+                            {
+                              "bottom": 0,
+                              "justifyContent": "flex-end",
+                              "position": "absolute",
+                              "width": "100%",
+                            },
+                            {
+                              "height": 120,
+                              "paddingBottom": 24,
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          pointerEvents="none"
+                          style={
+                            [
+                              {
+                                "bottom": 0,
+                                "left": 0,
+                                "position": "absolute",
+                                "right": 0,
+                                "top": 0,
+                              },
+                              false,
+                            ]
+                          }
+                        >
+                          <View
+                            style={
+                              [
+                                {
+                                  "opacity": undefined,
+                                },
+                                false,
+                              ]
+                            }
+                          >
+                            <BVLinearGradient
+                              colors={
+                                [
+                                  16777215,
+                                  218103807,
+                                  419430399,
+                                  620756991,
+                                  822083583,
+                                  1040187391,
+                                  1241513983,
+                                  1442840575,
+                                  1644167167,
+                                  1845493759,
+                                  2046820351,
+                                  2264924159,
+                                  2466250751,
+                                  2667577343,
+                                  2868903935,
+                                  3070230527,
+                                  3271557119,
+                                  3489660927,
+                                  3690987519,
+                                  3892314111,
+                                  4093640703,
+                                  4294967295,
+                                ]
+                              }
+                              endPoint={
+                                {
+                                  "x": 0.5,
+                                  "y": 1,
+                                }
+                              }
+                              locations={
+                                [
+                                  0,
+                                  0.047619047619047616,
+                                  0.09523809523809523,
+                                  0.14285714285714285,
+                                  0.19047619047619047,
+                                  0.23809523809523808,
+                                  0.2857142857142857,
+                                  0.3333333333333333,
+                                  0.38095238095238093,
+                                  0.42857142857142855,
+                                  0.47619047619047616,
+                                  0.5238095238095237,
+                                  0.5714285714285714,
+                                  0.6190476190476191,
+                                  0.6666666666666666,
+                                  0.7142857142857142,
+                                  0.7619047619047619,
+                                  0.8095238095238095,
+                                  0.8571428571428571,
+                                  0.9047619047619047,
+                                  0.9523809523809523,
+                                  1,
+                                ]
+                              }
+                              startPoint={
+                                {
+                                  "x": 0.5,
+                                  "y": 0,
+                                }
+                              }
+                              style={
+                                {
+                                  "height": 99.6,
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={false}
-                              color="grey-850"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
-                              dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
-                              maxFontSizeMultiplier={1.25}
-                              style={
-                                [
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                  {
-                                    "fontSize": 16,
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                  },
-                                ]
-                              }
-                              weight="Regular"
-                            >
-                              Turn on push notifications to know immediately when you get a new message.
-                            </Text>
                           </View>
+                          <View
+                            style={
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 20.4,
+                              }
+                            }
+                          />
                         </View>
                         <View
+                          onLayout={[Function]}
+                          pointerEvents="box-none"
                           style={
                             {
+                              "flexShrink": 0,
                               "paddingHorizontal": 24,
+                              "width": "100%",
                             }
                           }
                         >
@@ -896,22 +899,18 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                           <View
                             style={
                               {
-                                "height": 24,
+                                "alignSelf": "center",
+                                "marginBottom": 0,
                               }
                             }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "alignItems": "center",
-                                },
-                                {
-                                  "alignSelf": "center",
-                                },
-                              ]
-                            }
                           >
+                            <View
+                              style={
+                                {
+                                  "height": 16,
+                                }
+                              }
+                            />
                             <View
                               accessibilityLabel="Not now"
                               accessibilityRole="button"
@@ -1012,13 +1011,6 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                               </View>
                             </View>
                           </View>
-                          <View
-                            style={
-                              {
-                                "height": 16,
-                              }
-                            }
-                          />
                         </View>
                       </View>
                     </View>
