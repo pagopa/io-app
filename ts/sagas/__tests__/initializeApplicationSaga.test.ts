@@ -46,6 +46,8 @@ import { startupTransientErrorInitialState } from "../../store/reducers/startup"
 import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
 import { notificationPermissionsListener } from "../../features/pushNotifications/sagas/notificationPermissionsListener";
 import { trackKeychainFailures } from "../../utils/analytics";
+import { checkSession } from "../startup/watchCheckSessionSaga";
+import { formatRequestedTokenString } from "../../features/zendesk/utils";
 import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigation";
 
 const aSessionToken = "a_session_token" as SessionToken;
@@ -180,7 +182,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .spawn(watchLogoutSaga, undefined)
       .next()
-      .next(401) // checksession
+      .call(checkSession, undefined, formatRequestedTokenString())
+      .next(401)
       .select(isFastLoginEnabledSelector)
       .next(false) // FastLogin FF
       .put(sessionExpired());
@@ -228,7 +231,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .spawn(watchLogoutSaga, undefined)
       .next()
-      .next(401) // checksession
+      .call(checkSession, undefined, formatRequestedTokenString())
+      .next(401)
       .next(true) // FastLogin FF
       .put(
         refreshSessionToken.request({

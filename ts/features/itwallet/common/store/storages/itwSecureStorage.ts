@@ -1,7 +1,7 @@
 import * as SecureStorage from "io-react-native-secure-storage";
 import { type Storage } from "redux-persist";
 
-export default function itwCreateCredentialsStorage(): Storage {
+export default function itwCreateSecureStorage(): Storage {
   return {
     getItem: async key => {
       try {

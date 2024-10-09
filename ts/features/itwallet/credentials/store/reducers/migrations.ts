@@ -1,13 +1,12 @@
+import { SdJwt } from "@pagopa/io-react-native-wallet";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { MigrationManifest, PersistPartial } from "redux-persist";
-import { pipe } from "fp-ts/lib/function";
-import { SdJwt } from "@pagopa/io-react-native-wallet";
-import { ItwCredentialsState } from "../../../credentials/store/reducers";
-import { StoredCredential } from "../../utils/itwTypesUtils";
-
-export const CURRENT_REDUX_ITW_STORE_VERSION = -1;
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { ItwCredentialsState } from ".";
 
 export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 1;
+
 export const itwCredentialsStateMigrations: MigrationManifest = {
   "0": (state): ItwCredentialsState & PersistPartial => {
     // Version 0
