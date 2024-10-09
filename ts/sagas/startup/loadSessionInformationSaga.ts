@@ -21,7 +21,8 @@ import { convertUnknownToError } from "../../utils/errors";
  *        a saga.
  */
 export function* loadSessionInformationSaga(
-  getSession: ReturnType<typeof BackendClient>["getSession"]
+  getSession: ReturnType<typeof BackendClient>["getSession"],
+  fields?: string
 ): Generator<
   ReduxSagaEffect,
   O.Option<PublicSession>,
@@ -29,7 +30,7 @@ export function* loadSessionInformationSaga(
 > {
   try {
     // Call the Backend service
-    const response = yield* call(getSession, {});
+    const response = yield* call(getSession, { fields });
     // Ko we got an error
     if (E.isLeft(response)) {
       throw readableReport(response.left);
