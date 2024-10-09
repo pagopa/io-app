@@ -1,11 +1,9 @@
 diff --git a/node_modules/react-native/.DS_Store b/node_modules/react-native/.DS_Store
 new file mode 100644
-index 0000000..b1221b4
-Binary files /dev/null and b/node_modules/react-native/.DS_Store differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native/Libraries/.DS_Store b/node_modules/react-native/Libraries/.DS_Store
 new file mode 100644
-index 0000000..a1f9425
-Binary files /dev/null and b/node_modules/react-native/Libraries/.DS_Store differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native/Libraries/ReactNative/UIManager.d.ts b/node_modules/react-native/Libraries/ReactNative/UIManager.d.ts
 index 1f0b346..12603ec 100644
 --- a/node_modules/react-native/Libraries/ReactNative/UIManager.d.ts
@@ -23,12 +21,10 @@ index 1f0b346..12603ec 100644
  export const UIManager: UIManagerStatic;
 diff --git a/node_modules/react-native/React/.DS_Store b/node_modules/react-native/React/.DS_Store
 new file mode 100644
-index 0000000..a7392ec
-Binary files /dev/null and b/node_modules/react-native/React/.DS_Store differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native/React/AccessibilityResources/.DS_Store b/node_modules/react-native/React/AccessibilityResources/.DS_Store
 new file mode 100644
-index 0000000..e6a50bd
-Binary files /dev/null and b/node_modules/react-native/React/AccessibilityResources/.DS_Store differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native/React/AccessibilityResources/it.lproj/Localizable.strings b/node_modules/react-native/React/AccessibilityResources/it.lproj/Localizable.strings
 new file mode 100644
 index 0000000..b0bc264
@@ -62,6 +58,18 @@ index 0000000..b0bc264
 +"collapsed"="compresso";
 +"mixed"="misto";
 \ No newline at end of file
+diff --git a/node_modules/react-native/jest/setup.js b/node_modules/react-native/jest/setup.js
+index 71f49e6..306cf78 100644
+--- a/node_modules/react-native/jest/setup.js
++++ b/node_modules/react-native/jest/setup.js
+@@ -122,6 +122,7 @@ jest
+     default: {
+       addEventListener: jest.fn(),
+       announceForAccessibility: jest.fn(),
++      announceForAccessibilityWithOptions: jest.fn(),
+       isAccessibilityServiceEnabled: jest.fn(),
+       isBoldTextEnabled: jest.fn(),
+       isGrayscaleEnabled: jest.fn(),
 diff --git a/node_modules/react-native/scripts/react-native-xcode.back.sh b/node_modules/react-native/scripts/react-native-xcode.back.sh
 new file mode 100755
 index 0000000..e6fc8d1
@@ -274,5 +282,4 @@ index e6fc8d1..15ae060 100755
    $EXTRA_PACKAGER_ARGS
 diff --git a/node_modules/react-native/types/.DS_Store b/node_modules/react-native/types/.DS_Store
 new file mode 100644
-index 0000000..b6e1b29
-Binary files /dev/null and b/node_modules/react-native/types/.DS_Store differ
+index 0000000..e69de29

@@ -174,3 +174,12 @@ Created on **29/08/2024**
 #### Reason:
 
 - Patch to fix an error occurring during Android gradle build (see https://github.com/hieuvp/react-native-fingerprint-scanner/issues/192)
+
+### react-native+0.72.14.patch
+
+Created on **04/10/2024**
+
+#### Reason:
+
+- Patch to fix this jest error: `TypeError: _reactNative.AccessibilityInfo.announceForAccessibilityWithOptions is not a function`.  
+In the `react-native/jest/setup.js` the `announceForAccessibilityWithOptions` method mock was missing (see [this issue](https://github.com/facebook/react-native/issues/44014)), this patch adds it.  
