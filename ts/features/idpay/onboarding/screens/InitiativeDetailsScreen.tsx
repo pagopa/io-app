@@ -1,71 +1,69 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { useSelector } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { ButtonSolid, VSpacer } from "@pagopa/io-app-design-system";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { ForceScrollDownView } from "../../../../components/ForceScrollDownView";
+import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import { FooterActions } from "../../../../components/ui/FooterActions";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { isLoadingSelector } from "../../common/machine/selectors";
 import {
   OnboardingDescriptionMarkdown,
   OnboardingDescriptionMarkdownSkeleton
 } from "../components/OnboardingDescriptionMarkdown";
 import { OnboardingPrivacyAdvice } from "../components/OnboardingPrivacyAdvice";
 import { OnboardingServiceHeader } from "../components/OnboardingServiceHeader";
-import { IDPayOnboardingParamsList } from "../navigation/navigator";
-import { useOnboardingMachineService } from "../xstate/provider";
-import { isUpsertingSelector, selectInitiative } from "../xstate/selectors";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { IdPayOnboardingMachineContext } from "../machine/provider";
+import { selectInitiative } from "../machine/selectors";
+import { IdPayOnboardingParamsList } from "../navigation/params";
 
-type InitiativeDetailsScreenRouteParams = {
-  serviceId: string;
+export type InitiativeDetailsScreenParams = {
+  serviceId?: string;
 };
 
-type InitiativeDetailsRouteProps = RouteProp<
-  IDPayOnboardingParamsList,
+type InitiativeDetailsScreenParamsRouteProps = RouteProp<
+  IdPayOnboardingParamsList,
   "IDPAY_ONBOARDING_INITIATIVE_DETAILS"
 >;
 
-const InitiativeDetailsScreen = () => {
-  const route = useRoute<InitiativeDetailsRouteProps>();
-  const machine = useOnboardingMachineService();
+export const InitiativeDetailsScreen = () => {
+  const { params } = useRoute<InitiativeDetailsScreenParamsRouteProps>();
 
-  const { serviceId } = route.params;
+  const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
+  const machine = useActorRef();
 
   React.useEffect(() => {
-    machine.send({
-      type: "SELECT_INITIATIVE",
-      serviceId
-    });
-  }, [machine, serviceId]);
+    if (params.serviceId !== undefined) {
+      machine.send({
+        type: "start-onboarding",
+        serviceId: params.serviceId
+      });
+    }
+  }, [machine, params]);
 
-  const initiative = useSelector(machine, selectInitiative);
-  const isUpserting = useSelector(machine, isUpsertingSelector);
+  const initiative = useSelector(selectInitiative);
+  const isLoading = useSelector(isLoadingSelector);
   const [isDescriptionLoaded, setDescriptionLoaded] = React.useState(false);
 
-  const handleGoBackPress = () => machine.send({ type: "QUIT_ONBOARDING" });
-
-  const handleContinuePress = () => machine.send({ type: "ACCEPT_TOS" });
+  const handleGoBackPress = () => machine.send({ type: "close" });
+  const handleContinuePress = () => machine.send({ type: "next" });
 
   const onboardingPrivacyAdvice = pipe(
     initiative,
-    O.fromNullable,
-    O.map(initiative => ({
-      privacyUrl: initiative.privacyLink,
-      tosUrl: initiative.tcLink
-    })),
     O.fold(
       () => null,
-      props => <OnboardingPrivacyAdvice {...props} />
+      ({ privacyLink, tcLink }) => (
+        <OnboardingPrivacyAdvice privacyUrl={privacyLink} tosUrl={tcLink} />
+      )
     )
   );
 
   const descriptionComponent = pipe(
     initiative,
-    O.fromNullable,
     O.fold(
       () => <OnboardingDescriptionMarkdownSkeleton />,
       ({ description }) => (
@@ -86,7 +84,7 @@ const InitiativeDetailsScreen = () => {
 
   return (
     <ForceScrollDownView
-      threshold={150}
+      threshold={50}
       scrollEnabled={isDescriptionLoaded}
       contentContainerStyle={styles.scrollContainer}
     >
@@ -99,18 +97,22 @@ const InitiativeDetailsScreen = () => {
         <ItemSeparatorComponent noPadded={true} />
         <VSpacer size={16} />
         {onboardingPrivacyAdvice}
-        <VSpacer size={32} />
-        <ButtonSolid
-          testID="IDPayOnboardingContinue"
-          key={"continue"}
-          label={I18n.t("global.buttons.continue")}
-          onPress={handleContinuePress}
-          loading={isUpserting}
-          disabled={isUpserting}
-          fullWidth
-        />
-        <VSpacer size={48} />
       </View>
+      <FooterActions
+        key={"continue"}
+        fixed={false}
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("global.buttons.continue"),
+            accessibilityLabel: I18n.t("global.buttons.continue"),
+            onPress: handleContinuePress,
+            testID: "IDPayOnboardingContinue",
+            loading: isLoading,
+            disabled: isLoading
+          }
+        }}
+      />
     </ForceScrollDownView>
   );
 };
@@ -124,7 +126,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24
   }
 });
-
-export type { InitiativeDetailsScreenRouteParams };
-
-export default InitiativeDetailsScreen;

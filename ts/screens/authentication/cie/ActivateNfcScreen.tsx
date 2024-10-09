@@ -1,16 +1,16 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
-import React, { useCallback } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
+import React, { useCallback } from "react";
 import { Alert } from "react-native";
+import { IOScrollViewWithListItems } from "../../../components/ui/IOScrollViewWithListItems";
 import I18n from "../../../i18n";
-import { useIOSelector } from "../../../store/hooks";
-import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../navigation/routes";
+import { useIOSelector } from "../../../store/hooks";
+import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import * as cieUtils from "../../../utils/cie";
-import ScreenWithListItems from "../../../components/screens/ScreenWithListItems";
 import { CieCardReaderScreenNavigationParams } from "./CieCardReaderScreen";
 
 const ActivateNfcScreen = () => {
@@ -76,19 +76,22 @@ const ActivateNfcScreen = () => {
   ];
 
   return (
-    <ScreenWithListItems
+    <IOScrollViewWithListItems
       isHeaderVisible={true}
       title={I18n.t("authentication.cie.nfc.title")}
       subtitle={I18n.t("authentication.cie.nfc.subtitle")}
       listItemHeaderLabel={I18n.t("authentication.cie.nfc.listItemTitle")}
       renderItems={renderItems}
-      primaryActionProps={{
-        label: I18n.t("authentication.cie.nfc.action"),
-        onPress: openSettings
-      }}
-      secondaryActionProps={{
-        label: I18n.t("global.buttons.continue"),
-        onPress: onContinue
+      actions={{
+        type: "TwoButtons",
+        primary: {
+          label: I18n.t("authentication.cie.nfc.action"),
+          onPress: openSettings
+        },
+        secondary: {
+          label: I18n.t("global.buttons.continue"),
+          onPress: onContinue
+        }
       }}
     />
   );

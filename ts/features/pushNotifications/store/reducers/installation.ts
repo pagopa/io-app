@@ -7,11 +7,11 @@ import {
   sessionInvalid
 } from "../../../../store/actions/authentication";
 import { clearCache } from "../../../../store/actions/profile";
-import {
-  notificationsInstallationTokenRegistered,
-  updateNotificationsInstallationToken
-} from "../actions/notifications";
 import { generateInstallationId } from "../../utils";
+import {
+  newPushNotificationsToken,
+  pushNotificationsTokenUploaded
+} from "../actions/installation";
 
 export type InstallationState = Readonly<{
   id: string;
@@ -34,9 +34,9 @@ export const installationReducer = (
   action: Action
 ): InstallationState => {
   switch (action.type) {
-    case getType(updateNotificationsInstallationToken):
+    case getType(newPushNotificationsToken):
       return { ...state, token: action.payload };
-    case getType(notificationsInstallationTokenRegistered):
+    case getType(pushNotificationsTokenUploaded):
       return { ...state, registeredToken: action.payload };
     // clear registeredToken when the authentication is not longer valid
     // IO backend will automatically delete it on the next user login

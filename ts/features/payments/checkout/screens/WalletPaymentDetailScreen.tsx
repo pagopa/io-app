@@ -150,7 +150,8 @@ const WalletPaymentDetailContent = ({
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
       organization_fiscal_code:
         paymentAnalyticsData?.verifiedData?.paFiscalCode,
-      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      saved_payment_method:
+        paymentAnalyticsData?.savedPaymentMethods?.length || 0,
       service_name: paymentAnalyticsData?.serviceName,
       data_entry: paymentAnalyticsData?.startOrigin,
       first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no"
@@ -176,7 +177,8 @@ const WalletPaymentDetailContent = ({
       organization_name: payment.paName,
       organization_fiscal_code: payment.paFiscalCode,
       service_name: paymentAnalyticsData?.serviceName,
-      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      saved_payment_method:
+        paymentAnalyticsData?.savedPaymentMethods?.length || 0,
       amount,
       expiration_date: dueDate
     });

@@ -12,6 +12,7 @@ import {
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import {
   ComponentProps,
@@ -32,15 +33,15 @@ import {
 import { easeGradient } from "react-native-easing-gradient";
 import LinearGradient from "react-native-linear-gradient";
 import Animated, {
+  AnimatedRef,
   Easing,
-  Extrapolate,
+  Extrapolation,
   interpolate,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
 import { WithTestID } from "../../types/WithTestID";
 
 export type IOScrollViewActions =
@@ -75,6 +76,7 @@ type IOScrollView = WithTestID<
     headerConfig?: ComponentProps<typeof HeaderSecondLevel>;
     actions?: IOScrollViewActions;
     debugMode?: boolean;
+    animatedRef?: AnimatedRef<Animated.ScrollView>;
     snapOffset?: number;
     /* Don't include safe area insets */
     excludeSafeAreaMargins?: boolean;
@@ -82,6 +84,8 @@ type IOScrollView = WithTestID<
     excludeEndContentMargin?: boolean;
     /* Include page margins */
     includeContentMargins?: boolean;
+    /* Center content in iOS without inertial scrolling */
+    centerContent?: boolean;
     refreshControlProps?: RefreshControlProps;
   }>
 >;
@@ -115,9 +119,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     width: "100%",
     flexShrink: 0
+  },
+  centerContentWrapper: {
+    flexGrow: 1,
+    alignItems: "stretch",
+    justifyContent: "center",
+    alignContent: "center"
   }
 });
 
+/**
+ * The main scrollable container component.
+ * It includes full support for custom headers and actions.
+ *
+ * @param [headerConfig] Configuration for the header component. Use this only if you need to configure a custom header from scratch.
+ * If you need the predefined configuration with default `Back (<)` and `Help (?)` buttons, use `useHeaderSecondLevel`
+ * @param {IOScrollViewActions} [actions] Actions to be rendered at the bottom of the `ScrollView`
+ * @param [animatedRef] Ref generated through `useAnimatedRef` (used by `useScrollViewOffset` to get the scroll position)
+ * @param {number} [snapOffset] Offset when you need to add a snap point
+ * @param {boolean} [excludeSafeAreaMargins=false] Exclude safe area margins at the bottom of the `ScrollView`
+ * This is useful if you have a screen with a tab bar at the bottom, or if the bottom margin is already being managed
+ * @param {boolean} [excludeEndContentMargin=false] Exclude the end content margin
+ * @param {boolean} [includeContentMargins=true] Include horizontal screen margins
+ * @param {boolean} [debugMode=false] Enable debug mode. Only for testing purposes
+ */
 export const IOScrollView = ({
   headerConfig,
   children,
@@ -126,7 +151,9 @@ export const IOScrollView = ({
   excludeSafeAreaMargins = false,
   excludeEndContentMargin = false,
   includeContentMargins = true,
+  animatedRef,
   debugMode = false,
+  centerContent,
   refreshControlProps,
   testID
 }: IOScrollView) => {
@@ -209,7 +236,7 @@ export const IOScrollView = ({
       scrollPositionPercentage.value,
       [0, gradientOpacityScrollTrigger, 1],
       [1, 1, 0],
-      Extrapolate.CLAMP
+      Extrapolation.CLAMP
     )
   }));
 
@@ -239,6 +266,7 @@ export const IOScrollView = ({
   return (
     <Fragment>
       <Animated.ScrollView
+        ref={animatedRef}
         testID={testID}
         onScroll={handleScroll}
         scrollEventThrottle={8}
@@ -246,16 +274,22 @@ export const IOScrollView = ({
         snapToEnd={false}
         decelerationRate="normal"
         refreshControl={RefreshControlComponent}
-        contentContainerStyle={{
-          paddingBottom: excludeEndContentMargin
-            ? 0
-            : actions
-            ? safeBottomAreaHeight
-            : bottomMargin + contentEndMargin,
-          paddingHorizontal: includeContentMargins
-            ? IOVisualCostants.appMarginDefault
-            : 0
-        }}
+        centerContent={centerContent}
+        contentContainerStyle={[
+          {
+            paddingBottom: excludeEndContentMargin
+              ? 0
+              : actions
+              ? safeBottomAreaHeight
+              : bottomMargin + contentEndMargin,
+            paddingHorizontal: includeContentMargins
+              ? IOVisualCostants.appMarginDefault
+              : 0
+          },
+          /* Apply the same logic used in the
+          `OperationResultScreenContent` component */
+          centerContent ? styles.centerContentWrapper : {}
+        ]}
       >
         {children}
       </Animated.ScrollView>
@@ -268,8 +302,8 @@ export const IOScrollView = ({
               paddingBottom: bottomMargin
             }
           ]}
-          testID={testID}
           pointerEvents="box-none"
+          {...(testID && { testID: `${testID}-actions` })}
         >
           <Animated.View
             style={[

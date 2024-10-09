@@ -34,4 +34,6 @@ export type AuthenticationParamsList = {
   [ROUTES.AUTHENTICATION_CIE_PIN_WIZARD]: undefined;
   [ROUTES.AUTHENTICATION_SPID_WIZARD]: undefined;
   [ROUTES.AUTHENTICATION_ID_ACTIVATION_WIZARD]: undefined;
+  // CieID sign in Error
+  [ROUTES.AUTHENTICATION_CIE_ID_ERROR]: undefined;
 };

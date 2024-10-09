@@ -16,10 +16,10 @@ import I18n from "../../../../i18n";
 import NavigationService from "../../../../navigation/NavigationService";
 import { useIOSelector } from "../../../../store/hooks";
 import themeVariables from "../../../../theme/variables";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
-import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { idpayInitiativeIdSelector } from "../../details/store";
 import { getRefundPeriodDateString } from "../utils/strings";
+import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 
 type Props = {
   refund: RefundDetailDTO;
@@ -39,9 +39,9 @@ const TimelineRefundDetailsComponent = (props: Props) => {
     // would result in an error.
     NavigationService.dispatchNavigationAction(
       CommonActions.navigate(
-        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN,
+        IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
         {
-          screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
+          screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
           params: {
             initiativeId
           }
@@ -73,9 +73,9 @@ const TimelineRefundDetailsComponent = (props: Props) => {
   );
 
   const formattedAmount = pipe(
-    refund.amount,
+    refund.amountCents,
     O.fromNullable,
-    O.map(amount => formatNumberAmount(amount, true)),
+    O.map(amount => formatNumberCentsToAmount(amount, true)),
     O.getOrElse(() => "-")
   );
 

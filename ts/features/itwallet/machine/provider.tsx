@@ -1,5 +1,5 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
-import { createActorContext } from "@xstate5/react";
+import { createActorContext } from "@xstate/react";
 import * as React from "react";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOStore } from "../../../store/hooks";
@@ -11,6 +11,7 @@ import { createEidIssuanceActionsImplementation } from "./eid/actions";
 import { createEidIssuanceActorsImplementation } from "./eid/actors";
 import { createEidIssuanceGuardsImplementation } from "./eid/guards";
 import { itwEidIssuanceMachine } from "./eid/machine";
+import { createCredentialIssuanceGuardsImplementation } from "./credential/guards";
 
 type Props = {
   children: JSX.Element;
@@ -43,6 +44,7 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
   });
 
   const credentialIssuanceMachine = itwCredentialIssuanceMachine.provide({
+    guards: createCredentialIssuanceGuardsImplementation(),
     actions: createCredentialIssuanceActionsImplementation(
       navigation,
       dispatch,

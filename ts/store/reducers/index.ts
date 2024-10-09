@@ -31,7 +31,7 @@ import { whatsNewInitialState } from "../../features/whatsnew/store/reducers";
 import { fastLoginOptInInitialState } from "../../features/fastLogin/store/reducers/optInReducer";
 import { isDevEnv } from "../../utils/environment";
 import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
-import { notificationsReducer } from "../../features/pushNotifications/store/reducers";
+import { persistedNotificationsReducer } from "../../features/pushNotifications/store/reducers";
 import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
 import { itwIdentificationInitialState } from "../../features/itwallet/identification/store/reducers";
 import { cieLoginInitialState } from "../../features/cieLogin/store/reducers";
@@ -154,7 +154,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   ),
   features: featuresPersistor,
   onboarding: onboardingReducer,
-  notifications: notificationsReducer,
+  notifications: persistedNotificationsReducer,
   profile: profileReducer,
   userDataProcessing: userDataProcessingReducer,
   entities: persistReducer<EntitiesState, Action>(
@@ -250,6 +250,9 @@ export function createRootReducer(
                 ...profileSettingsReducerInitialState,
                 showProfileBanner:
                   state.features.profileSettings.showProfileBanner,
+                hasUserAcknowledgedSettingsBanner:
+                  state.features.profileSettings
+                    .hasUserAcknowledgedSettingsBanner,
                 _persist: state.features.profileSettings._persist
               },
               _persist: state.features._persist,
@@ -269,7 +272,8 @@ export function createRootReducer(
             },
             // notifications must be kept
             notifications: {
-              ...state.notifications
+              ...state.notifications,
+              _persist: state.notifications._persist
             },
             // payments must be kept
             payments: {

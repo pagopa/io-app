@@ -93,7 +93,7 @@ describe("Test TimelineOperationListItem", () => {
       it("should render the component correctly", () => {
         const T_DATE = new Date(2023, 4, 5, 16, 31);
         const T_SUBTITLE = getOperationSubtitle(T_DATE);
-        const T_AMOUNT = 4578.74;
+        const T_AMOUNT = 457874;
         const T_AMOUNT_STRING = "4.578,74 €";
 
         const mockOnPress = jest.fn();
@@ -102,7 +102,7 @@ describe("Test TimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "",
           operationType: RefundOperationTypeEnum.PAID_REFUND,
-          amount: T_AMOUNT,
+          amountCents: T_AMOUNT,
           eventId: ""
         };
 
@@ -137,7 +137,7 @@ describe("Test TimelineOperationListItem", () => {
       it("should render the component correctly", () => {
         const T_DATE = new Date(2023, 4, 5, 16, 31);
         const T_SUBTITLE = getOperationSubtitle(T_DATE);
-        const T_AMOUNT = 4578.74;
+        const T_AMOUNT = 457874;
         const T_AMOUNT_STRING = "4.578,74 €";
 
         const mockOnPress = jest.fn();
@@ -146,7 +146,7 @@ describe("Test TimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "",
           operationType: RefundOperationTypeEnum.REJECTED_REFUND,
-          amount: T_AMOUNT,
+          amountCents: T_AMOUNT,
           eventId: ""
         };
 
@@ -420,7 +420,7 @@ describe("Test TimelineOperationListItem", () => {
       it("should render the component correctly", () => {
         const T_DATE = new Date(2023, 4, 5, 16, 31);
         const T_AMOUNT = 3456.1;
-        const T_ACCRUED = 234.56;
+        const T_ACCRUED = 23456;
         const T_ACCRUED_STRING = "-234,56 €";
         const T_SUBTITLE = getOperationSubtitleWithAmount(T_DATE, T_AMOUNT);
 
@@ -432,9 +432,9 @@ describe("Test TimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.TRANSACTION,
-          accrued: T_ACCRUED,
+          accruedCents: T_ACCRUED,
           status: StatusEnum.AUTHORIZED,
-          amount: T_AMOUNT,
+          amountCents: T_AMOUNT,
           brand: "VISA"
         };
 
@@ -450,7 +450,7 @@ describe("Test TimelineOperationListItem", () => {
       it("should render the component correctly with business name", () => {
         const T_DATE = new Date(2023, 4, 5, 16, 31);
         const T_AMOUNT = 3456.1;
-        const T_ACCRUED = 234.56;
+        const T_ACCRUED = 23456;
         const T_ACCRUED_STRING = "-234,56 €";
         const T_SUBTITLE = getOperationSubtitleWithAmount(T_DATE, T_AMOUNT);
         const T_BUSINESS_NAME = "Business name";
@@ -463,9 +463,9 @@ describe("Test TimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.TRANSACTION,
-          accrued: T_ACCRUED,
+          accruedCents: T_ACCRUED,
           status: StatusEnum.AUTHORIZED,
-          amount: T_AMOUNT,
+          amountCents: T_AMOUNT,
           brand: "VISA",
           businessName: T_BUSINESS_NAME
         };
@@ -483,7 +483,7 @@ describe("Test TimelineOperationListItem", () => {
       it("should render the component correctly if transaction is cancelled", () => {
         const T_DATE = new Date(2023, 4, 5, 16, 31);
         const T_AMOUNT = 3456.1;
-        const T_ACCRUED = 234.56;
+        const T_ACCRUED = 23456;
         const T_ACCRUED_STRING = "-234,56 €";
         const T_SUBTITLE = getOperationSubtitleWithAmount(
           T_DATE,
@@ -499,9 +499,9 @@ describe("Test TimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.TRANSACTION,
-          accrued: T_ACCRUED,
+          accruedCents: T_ACCRUED,
           status: StatusEnum.CANCELLED,
-          amount: T_AMOUNT
+          amountCents: T_AMOUNT
         };
 
         const component = render(
@@ -521,7 +521,7 @@ describe("Test TimelineOperationListItem", () => {
       it("should render the component correctly", () => {
         const T_DATE = new Date(2023, 4, 5, 16, 31);
         const T_AMOUNT = 3456.1;
-        const T_ACCRUED = 234.56;
+        const T_ACCRUED = 23456;
         const T_ACCRUED_STRING = "-234,56 €";
         const T_SUBTITLE = getOperationSubtitleWithAmount(
           T_DATE,
@@ -537,9 +537,9 @@ describe("Test TimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.REVERSAL,
-          accrued: T_ACCRUED,
+          accruedCents: T_ACCRUED,
           status: StatusEnum.AUTHORIZED,
-          amount: T_AMOUNT,
+          amountCents: T_AMOUNT,
           brand: "VISA"
         };
 
@@ -558,7 +558,7 @@ describe("Test TimelineOperationListItem", () => {
       it("should render the component correctly with business name", () => {
         const T_DATE = new Date(2023, 4, 5, 16, 31);
         const T_AMOUNT = 3456.1;
-        const T_ACCRUED = 234.56;
+        const T_ACCRUED = 23456;
         const T_ACCRUED_STRING = "-234,56 €";
         const T_SUBTITLE = getOperationSubtitleWithAmount(
           T_DATE,
@@ -575,9 +575,9 @@ describe("Test TimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.REVERSAL,
-          accrued: T_ACCRUED,
+          accruedCents: T_ACCRUED,
           status: StatusEnum.AUTHORIZED,
-          amount: T_AMOUNT,
+          amountCents: T_AMOUNT,
           brand: "VISA",
           businessName: T_BUSINESS_NAME
         };
@@ -598,7 +598,7 @@ describe("Test TimelineOperationListItem", () => {
       it("should render the component correctly if transaction is cancelled", () => {
         const T_DATE = new Date(2023, 4, 5, 16, 31);
         const T_AMOUNT = 3456.1;
-        const T_ACCRUED = 234.56;
+        const T_ACCRUED = 23456;
         const T_ACCRUED_STRING = "-234,56 €";
         const T_SUBTITLE = getOperationSubtitleWithAmount(
           T_DATE,
@@ -614,9 +614,9 @@ describe("Test TimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.REVERSAL,
-          accrued: T_ACCRUED,
+          accruedCents: T_ACCRUED,
           status: StatusEnum.CANCELLED,
-          amount: T_AMOUNT
+          amountCents: T_AMOUNT
         };
 
         const component = render(
@@ -649,7 +649,7 @@ describe("Test getOperationSubtitle", () => {
 describe("Test getOperationSubtitleWithAmount", () => {
   it("should return the correct date string with positive number", () => {
     const T_DATE = new Date(2023, 4, 5, 16, 31);
-    const T_AMOUNT = 4135.67;
+    const T_AMOUNT = 413567;
     const T_RESULT = "05 mag 2023, 16:31 · 4.135,67 €";
 
     const result = getOperationSubtitleWithAmount(T_DATE, T_AMOUNT);
@@ -659,7 +659,7 @@ describe("Test getOperationSubtitleWithAmount", () => {
 
   it("should return the correct date string with negative number", () => {
     const T_DATE = new Date(2023, 4, 5, 16, 31);
-    const T_AMOUNT = 4135.67;
+    const T_AMOUNT = 413567;
     const T_RESULT = "05 mag 2023, 16:31 · -4.135,67 €";
 
     const result = getOperationSubtitleWithAmount(T_DATE, T_AMOUNT, true);

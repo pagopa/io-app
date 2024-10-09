@@ -2,7 +2,6 @@ import {
   IOBadgeHSpacing,
   IOBadgeRadius,
   IOBadgeVSpacing,
-  IOColors,
   IOVisualCostants,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
@@ -40,10 +39,11 @@ const ItwDigitalVersionBadge = ({
     }
   };
 
-  const colorProps = mapCredentialTypes[credentialType] || {
-    foreground: IOColors["grey-850"],
-    background: IOColors["grey-100"]
-  };
+  const colorProps = mapCredentialTypes[credentialType];
+  if (!colorProps) {
+    // If a credential does not have the color configuration means that we should not display the badge
+    return null;
+  }
 
   const { background, foreground } = colorProps;
 
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   wrapper: {
     position: "absolute",
     bottom: 16,
-    right: 0
+    right: 2
   },
   badge: {
     flexDirection: "row",

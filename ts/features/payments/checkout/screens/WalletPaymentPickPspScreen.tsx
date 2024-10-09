@@ -102,7 +102,8 @@ const WalletPaymentPickPspScreen = () => {
         expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
         payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
         preselected_psp_flag: preSelectedPsp ? "customer" : "none",
-        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length
+        saved_payment_method:
+          paymentAnalyticsData?.savedPaymentMethods?.length || 0
       });
       // only need to run when the pspList changes
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -134,7 +135,8 @@ const WalletPaymentPickPspScreen = () => {
       service_name: paymentAnalyticsData?.serviceName,
       amount: paymentAnalyticsData?.formattedAmount,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
-      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      saved_payment_method:
+        paymentAnalyticsData?.savedPaymentMethods?.length || 0,
       payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
       selected_psp_flag: paymentAnalyticsData?.selectedPspFlag
     });

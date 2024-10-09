@@ -6,7 +6,6 @@ import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import I18n from "../../../../i18n";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
 import { isError, isReady } from "../../../../common/model/RemoteValue";
-import { cgnDetails } from "../store/actions/details";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 export function useCgnUnsubscribe() {
@@ -33,9 +32,8 @@ export function useCgnUnsubscribe() {
   };
 
   useEffect(() => {
-    if (isReady(unsubscriptionStatus)) {
+    if (isReady(unsubscriptionStatus) && unsubscriptionStatus.value) {
       navigation.goBack();
-      dispatch(cgnDetails.request());
       IOToast.success(I18n.t("bonus.cgn.activation.deactivate.toast"));
     }
     if (isError(unsubscriptionStatus) && !isFirstRender.current) {

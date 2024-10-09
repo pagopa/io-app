@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { IOToast } from "@pagopa/io-app-design-system";
-import { ActionArgs } from "xstate5";
+import { ActionArgs } from "xstate";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
@@ -12,6 +12,7 @@ import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwLifecycleStateUpdated } from "../../lifecycle/store/actions";
 import { ItwLifecycleState } from "../../lifecycle/store/reducers";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -123,15 +124,29 @@ export const createEidIssuanceActionsImplementation = (
     dispatch(itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_VALID));
   },
 
-  storeIntegrityKeyTag: (_: unknown, params: { keyTag: string }) => {
-    dispatch(itwStoreIntegrityKeyTag(params.keyTag));
+  storeIntegrityKeyTag: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.integrityKeyTag, "integrityKeyTag is undefined");
+    dispatch(itwStoreIntegrityKeyTag(context.integrityKeyTag));
+  },
+
+  storeWalletInstanceAttestation: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(
+      context.walletInstanceAttestation,
+      "walletInstanceAttestation is undefined"
+    );
+    dispatch(
+      itwWalletInstanceAttestationStore(context.walletInstanceAttestation)
+    );
   },
 
   storeEidCredential: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assert(context.eid, "eID is undefined");
-
     dispatch(itwCredentialsStore([context.eid]));
   },
 

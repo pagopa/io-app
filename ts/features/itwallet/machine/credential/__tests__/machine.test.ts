@@ -7,8 +7,7 @@ import {
   fromPromise,
   StateFrom,
   waitFor as waitForActor
-} from "xstate5";
-import { WalletAttestationResult } from "../../../common/utils/itwAttestationUtils";
+} from "xstate";
 import {
   ItwStatusAttestationMocks,
   ItwStoredCredentialsMocks
@@ -20,29 +19,24 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
-  InitializeWalletActorOutput,
+  GetWalletAttestationActorOutput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAttestationActorInput,
+  OnInitActorOutput,
   RequestCredentialActorInput,
   RequestCredentialActorOutput
 } from "../actors";
 import { Context, InitialContext } from "../context";
+import { CredentialIssuanceFailureTypeEnum } from "../failure";
 import {
   ItwCredentialIssuanceMachine,
   itwCredentialIssuanceMachine
 } from "../machine";
-import { CredentialIssuanceFailureTypeEnum } from "../failure";
 
 type MachineSnapshot = StateFrom<ItwCredentialIssuanceMachine>;
 
-const T_WIA_CONTEXT: WalletAttestationResult = {
-  walletAttestation: "abcdefg",
-  wiaCryptoContext: {
-    getPublicKey: async () => null,
-    getSignature: async () => ""
-  }
-};
+const T_WIA: string = "abcdefg";
 
 const T_CLIENT_ID = "clientId";
 const T_CODE_VERIFIER = "codeVerifier";
@@ -113,16 +107,19 @@ describe("itwCredentialIssuanceMachine", () => {
   const navigateToCredentialPreviewScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const navigateToWallet = jest.fn();
+  const storeWalletInstanceAttestation = jest.fn();
   const storeCredential = jest.fn();
   const closeIssuance = jest.fn();
   const handleSessionExpired = jest.fn();
 
-  const initializeWallet = jest.fn();
+  const onInit = jest.fn();
+  const getWalletAttestation = jest.fn();
   const requestCredential = jest.fn();
   const obtainCredential = jest.fn();
   const obtainStatusAttestation = jest.fn();
 
   const isSessionExpired = jest.fn();
+  const hasValidWalletInstanceAttestation = jest.fn();
 
   const mockedMachine = itwCredentialIssuanceMachine.provide({
     actions: {
@@ -130,13 +127,15 @@ describe("itwCredentialIssuanceMachine", () => {
       navigateToTrustIssuerScreen,
       navigateToFailureScreen,
       navigateToWallet,
+      storeWalletInstanceAttestation,
       storeCredential,
       closeIssuance,
       handleSessionExpired
     },
     actors: {
-      initializeWallet:
-        fromPromise<InitializeWalletActorOutput>(initializeWallet),
+      onInit: fromPromise<OnInitActorOutput>(onInit),
+      getWalletAttestation:
+        fromPromise<GetWalletAttestationActorOutput>(getWalletAttestation),
       requestCredential: fromPromise<
         RequestCredentialActorOutput,
         RequestCredentialActorInput
@@ -151,33 +150,23 @@ describe("itwCredentialIssuanceMachine", () => {
       >(obtainStatusAttestation)
     },
     guards: {
-      isSessionExpired
+      isSessionExpired,
+      hasValidWalletInstanceAttestation
     }
   });
 
   beforeEach(() => {
+    onInit.mockImplementation(() => Promise.resolve({} as OnInitActorOutput));
+    hasValidWalletInstanceAttestation.mockImplementation(() => false);
+  });
+
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
   it("Should obtain a credential with a valid status attestation", async () => {
-    const actor = createActor(mockedMachine);
-    actor.start();
-
-    expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
-
-    /**
-     * Initialize wallet and start credential issuance
-     */
-
-    initializeWallet.mockImplementation(() =>
-      Promise.resolve({
-        walletInstanceAttestation: T_WIA_CONTEXT.walletAttestation,
-        wiaCryptoContext: T_WIA_CONTEXT.wiaCryptoContext
-      })
-    );
-
+    hasValidWalletInstanceAttestation.mockImplementation(() => false);
+    getWalletAttestation.mockImplementation(() => Promise.resolve(T_WIA));
     requestCredential.mockImplementation(() =>
       Promise.resolve({
         clientId: T_CLIENT_ID,
@@ -188,32 +177,59 @@ describe("itwCredentialIssuanceMachine", () => {
       })
     );
 
+    /**
+     * Start
+     */
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+
     actor.send({
       type: "select-credential",
       credentialType: "MDL",
       skipNavigation: true
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual("WalletInitialization");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       credentialType: "MDL"
     });
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
     expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(0);
-    await waitFor(() => expect(initializeWallet).toHaveBeenCalledTimes(1));
+
+    /**
+     * Obtaint a new WIA if not present or expired
+     */
+
+    await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
+    await waitFor(() =>
+      expect(storeWalletInstanceAttestation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          context: expect.objectContaining({ walletInstanceAttestation: T_WIA })
+        }),
+        undefined
+      )
+    );
     await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(1));
 
-    expect(actor.getSnapshot().value).toStrictEqual("DisplayingTrustIssuer");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      walletInstanceAttestation: T_WIA_CONTEXT.walletAttestation,
-      wiaCryptoContext: T_WIA_CONTEXT.wiaCryptoContext,
+      walletInstanceAttestation: T_WIA,
       clientId: T_CLIENT_ID,
       codeVerifier: T_CODE_VERIFIER,
       credentialDefinition: T_CREDENTIAL_DEFINITION,
       requestedCredential: T_REQUESTED_CREDENTIAL,
       issuerConf: T_ISSUER_CONFIG
     });
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
+
+    /**
+     * Start credential issuance
+     */
+
     expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(1);
 
     /**
@@ -286,6 +302,69 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(navigateToWallet).toHaveBeenCalledTimes(1);
   });
 
+  it("Should skip WIA obtainment if still valid", async () => {
+    onInit.mockImplementation(() =>
+      Promise.resolve({
+        walletInstanceAttestation: T_WIA
+      })
+    );
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+    getWalletAttestation.mockImplementation(() => Promise.resolve(T_WIA));
+    requestCredential.mockImplementation(() =>
+      Promise.resolve({
+        clientId: T_CLIENT_ID,
+        codeVerifier: T_CODE_VERIFIER,
+        credentialDefinition: T_CREDENTIAL_DEFINITION,
+        requestedCredential: T_REQUESTED_CREDENTIAL,
+        issuerConf: T_ISSUER_CONFIG
+      })
+    );
+
+    /**
+     * Start
+     */
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(actor.getSnapshot().context).toStrictEqual({
+      ...InitialContext,
+      walletInstanceAttestation: T_WIA
+    });
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+
+    actor.send({
+      type: "select-credential",
+      credentialType: "MDL",
+      skipNavigation: true
+    });
+
+    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+      credentialType: "MDL"
+    });
+    expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(0);
+
+    /**
+     * Obtaint a new WIA if not present or expired
+     */
+
+    await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(storeWalletInstanceAttestation).not.toHaveBeenCalledWith(
+        expect.objectContaining({
+          context: expect.objectContaining({
+            walletInstanceAttestation: T_WIA
+          })
+        }),
+        undefined
+      )
+    );
+    expect(actor.getSnapshot().value).toStrictEqual("DisplayingTrustIssuer");
+  });
+
   it("Should not store the credential if the user closes the issuance", () => {
     /** Initial part is the same as the previous test, we can start from the preview */
 
@@ -325,19 +404,22 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(closeIssuance).toHaveBeenCalledTimes(1);
   });
 
-  it("Should go to failure if wallet initialization fails", async () => {
+  it("Should go to failure if wallet instance attestation obtainment fails", async () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
     /**
      * Initialize wallet and start credential issuance
      */
 
-    initializeWallet.mockImplementation(() => Promise.reject("SOME FAILURE"));
+    getWalletAttestation.mockImplementation(() =>
+      Promise.reject("SOME FAILURE")
+    );
 
     actor.send({
       type: "select-credential",
@@ -345,13 +427,15 @@ describe("itwCredentialIssuanceMachine", () => {
       skipNavigation: true
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual("WalletInitialization");
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "ObtainingWalletInstanceAttestation"
+    );
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       credentialType: "MDL"
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
     expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(0);
-    await waitFor(() => expect(initializeWallet).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(0));
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
@@ -371,23 +455,24 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   it("Should go to failure if credential request fails", async () => {
+    onInit.mockImplementation(() =>
+      Promise.resolve({
+        walletInstanceAttestation: T_WIA
+      })
+    );
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+
     const actor = createActor(mockedMachine);
     actor.start();
 
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
     /**
      * Initialize wallet and start credential issuance
      */
-
-    initializeWallet.mockImplementation(() =>
-      Promise.resolve({
-        walletInstanceAttestation: T_WIA_CONTEXT.walletAttestation,
-        wiaCryptoContext: T_WIA_CONTEXT.wiaCryptoContext
-      })
-    );
 
     requestCredential.mockImplementation(() => Promise.reject("SOME FAILURE"));
 
@@ -397,13 +482,13 @@ describe("itwCredentialIssuanceMachine", () => {
       skipNavigation: true
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual("WalletInitialization");
+    expect(actor.getSnapshot().value).toStrictEqual("RequestingCredential");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       credentialType: "MDL"
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
     expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(0);
-    await waitFor(() => expect(initializeWallet).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(0));
     await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
@@ -497,16 +582,11 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(closeIssuance).toHaveBeenCalledTimes(1);
   });
 
-  it("Should navigate to the next screen if skipNavigation is false", () => {
+  it("Should navigate to the next screen if skipNavigation is false", async () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
-    initializeWallet.mockImplementation(() =>
-      Promise.resolve({
-        walletInstanceAttestation: T_WIA_CONTEXT.walletAttestation,
-        wiaCryptoContext: T_WIA_CONTEXT.wiaCryptoContext
-      })
-    );
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     requestCredential.mockImplementation(() =>
       Promise.resolve({
@@ -524,7 +604,9 @@ describe("itwCredentialIssuanceMachine", () => {
       skipNavigation: false
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual("WalletInitialization");
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "ObtainingWalletInstanceAttestation"
+    );
     expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(1);
   });
 });
