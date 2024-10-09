@@ -3189,6 +3189,10 @@ features:
       mdl: Patente di Guida
       dc: Carta Europea della Disabilità
       ts: Tessera Sanitaria - Tessera europea di assicurazione malattia
+    ipzsPrivacy:
+      title: I tuoi Documenti su IO sono al sicuro
+      button:
+        label: Accetta e continua
     wallet:
       active: Attivo
       inactive: Non attivo

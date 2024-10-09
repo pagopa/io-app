@@ -15,6 +15,14 @@ export type AcceptTos = {
   type: "accept-tos";
 };
 
+export type AcceptIpzsPrivacy = {
+  type: "accept-ipzs-privacy";
+};
+
+export type ErrorIpzsPrivacy = {
+  type: "error-ipzs-privacy";
+};
+
 export type AddToWallet = {
   type: "add-to-wallet";
 };
@@ -72,6 +80,7 @@ export type EidIssuanceEvents =
   | Reset
   | Start
   | AcceptTos
+  | AcceptIpzsPrivacy
   | SelectIdentificationMode
   | SelectSpidIdp
   | CiePinEntered
@@ -84,4 +93,5 @@ export type EidIssuanceEvents =
   | Close
   | NfcEnabled
   | Abort
-  | ErrorActorEvent;
+  | ErrorActorEvent
+  | ErrorIpzsPrivacy;
