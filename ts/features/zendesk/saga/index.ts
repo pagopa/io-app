@@ -17,7 +17,8 @@ import {
   zendeskStartPolling,
   zendeskSupportCompleted,
   zendeskSupportStart,
-  getZendeskToken
+  getZendeskToken,
+  zendeskSupportCancel
 } from "../store/actions";
 import { ContentClient } from "../../../api/content";
 import { dismissSupport } from "../../../utils/supportAssistance";
@@ -135,6 +136,9 @@ function* getZendeskTokenSaga(
         )
       );
       return;
+    }
+    if (response.right.status === 401) {
+      yield* put(zendeskSupportCancel());
     }
     if (!isFastLogin || response.right.status !== 401) {
       yield* put(getZendeskToken.failure());
