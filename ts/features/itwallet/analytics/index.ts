@@ -340,7 +340,6 @@ export function trackItWalletBannerTap(
   );
 }
 
-// TODO It seems that category filters are not integrated yet.
 export function trackWalletCategoryFilter(wallet_category: string) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.WALLET_CATEGORY_FILTER,
@@ -368,7 +367,7 @@ export function trackWalletCredentialShowIssuer(credential: string) {
     buildEventProperties("UX", "action", { credential })
   );
 }
-// TODO check if this case exists
+
 export function trackWalletCredentialShowAuthSource(credential: string) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SHOW_AUTH_SOURCE,
@@ -393,6 +392,28 @@ export function trackWalletCredentialShowFAC_SIMILE() {
 export function trackWalletCredentialShowTrustmark(credential: string) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SHOW_TRUSTMARK,
+    buildEventProperties("UX", "action", { credential })
+  );
+}
+
+export function trackWalletStartDeactivation() {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_START_DEACTIVATION,
+    buildEventProperties("UX", "action")
+  );
+}
+
+export function trackWalletNewIdReset(state: GlobalState) {
+  updatePropertiesWalletRevoked(state);
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_NEW_ID_RESET,
+    buildEventProperties("UX", "action")
+  );
+}
+
+export function trackWalletCredentialRenewStart(credential: string) {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_RENEW_START,
     buildEventProperties("UX", "action", { credential })
   );
 }
@@ -493,7 +514,6 @@ export const trackItwHasAlreadyCredential = (
   );
 };
 
-// TODO It seems that this error case is not handled already.
 export const trackAddCredentialTimeout = ({
   credential,
   reason,

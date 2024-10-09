@@ -9,10 +9,7 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { logoutRequest } from "../../../../store/actions/authentication";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
-import {
-  trackItwIdNotMatch,
-  updatePropertiesWalletRevoked
-} from "../../analytics";
+import { trackItwIdNotMatch, trackWalletNewIdReset } from "../../analytics";
 
 export const ItwIdentityNotMatchingScreen = () => {
   useAvoidHardwareBackButton();
@@ -25,7 +22,7 @@ export const ItwIdentityNotMatchingScreen = () => {
   const resetWallet = () => {
     dispatch(itwLifecycleWalletReset());
     dispatch(itwLifecycleIdentityCheckCompleted());
-    updatePropertiesWalletRevoked(store.getState());
+    trackWalletNewIdReset(store.getState());
   };
 
   const handleCancel = () => {
