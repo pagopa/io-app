@@ -1,5 +1,5 @@
 import { Alert, VStack } from "@pagopa/io-app-design-system";
-import React, { useCallback } from "react";
+import React from "react";
 import {
   getCredentialExpireDays,
   getCredentialStatus
@@ -8,7 +8,6 @@ import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import I18n from "../../../../i18n";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { trackWalletPgValidityInfo } from "../../analytics";
 
 type Props = {
   credential: StoredCredential;
@@ -34,16 +33,6 @@ export const ItwPresentationAlertsSection = ({ credential }: Props) => {
   const isExpired = expireStatus === "expired";
   const isExpiring = expireStatus === "expiring";
 
-  const onPressWithMixpanelEvent = useCallback(
-    (callback: () => void) => {
-      if (isMdl) {
-        trackWalletPgValidityInfo();
-      }
-      return callback;
-    },
-    [isMdl]
-  );
-
   if (isExpired) {
     return (
       <Alert
@@ -53,7 +42,7 @@ export const ItwPresentationAlertsSection = ({ credential }: Props) => {
         )}
         variant="error"
         action={I18n.t("features.itWallet.presentation.alerts.expired.action")}
-        onPress={onPressWithMixpanelEvent(beginCredentialIssuance)}
+        onPress={beginCredentialIssuance}
       />
     );
   }
@@ -73,7 +62,6 @@ export const ItwPresentationAlertsSection = ({ credential }: Props) => {
         />
       )}
       {isMdl && (
-        // TODO this alert does not have cta anymore
         <Alert
           testID="itwMdlBannerTestID"
           content={I18n.t("features.itWallet.presentation.alerts.mdl.content")}

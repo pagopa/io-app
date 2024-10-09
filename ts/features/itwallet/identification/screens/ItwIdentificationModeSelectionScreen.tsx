@@ -10,11 +10,7 @@ import React from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
-import {
-  useIODispatch,
-  useIOSelector,
-  useIOStore
-} from "../../../../store/hooks";
+import { useIOSelector } from "../../../../store/hooks";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
@@ -23,16 +19,11 @@ import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
 } from "../../analytics";
-import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
-import { itwIpzsHasReadPolicy } from "../../issuance/store/actions";
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   const isCieSupportedPot = useIOSelector(itwIsCieSupportedSelector);
-
-  const store = useIOStore();
-  const dispatch = useIODispatch();
 
   const isCieSupported = React.useMemo(
     () => cieFlowForDevServerEnabled || pot.getOrElse(isCieSupportedPot, false),
@@ -54,11 +45,6 @@ export const ItwIdentificationModeSelectionScreen = () => {
   const handleCieIdPress = () => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
     trackItWalletIDMethodSelected({ ITW_ID_method: "cieid" });
-  };
-
-  const handleLinkPress = () => {
-    dispatch(itwIpzsHasReadPolicy(true));
-    void updateMixpanelProfileProperties(store.getState());
   };
 
   return (
@@ -105,7 +91,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
           />
         </VStack>
         <VSpacer size={24} />
-        <ItwMarkdown onLinkOpen={handleLinkPress}>
+        <ItwMarkdown>
           {I18n.t("features.itWallet.identification.mode.privacy")}
         </ItwMarkdown>
       </ContentWrapper>

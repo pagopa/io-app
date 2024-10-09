@@ -1,21 +1,15 @@
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import {
-  itwStoreIntegrityKeyTag,
-  itwRemoveIntegrityKeyTag,
-  itwIpzsHasReadPolicy
-} from "../actions";
+import { itwStoreIntegrityKeyTag, itwRemoveIntegrityKeyTag } from "../actions";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 
 export type ItwIssuanceState = {
   integrityKeyTag: O.Option<string>;
-  hasReadIPZSPolicy: boolean;
 };
 
 export const itwIssuanceInitialState: ItwIssuanceState = {
-  integrityKeyTag: O.none,
-  hasReadIPZSPolicy: false
+  integrityKeyTag: O.none
 };
 
 const reducer = (
@@ -33,11 +27,6 @@ const reducer = (
       return {
         ...state,
         integrityKeyTag: O.none
-      };
-    case getType(itwIpzsHasReadPolicy):
-      return {
-        ...state,
-        hasReadIPZSPolicy: action.payload
       };
   }
   return state;

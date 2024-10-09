@@ -24,7 +24,6 @@ import {
   itwCredentialsByTypeSelector,
   itwCredentialsSelector
 } from "../features/itwallet/credentials/store/selectors";
-import { itwIPZSHasReadPolicySelector } from "../features/itwallet/issuance/store/selectors";
 import {
   MixpanelOptInTrackingType,
   Property,
@@ -49,7 +48,6 @@ type ProfileProperties = {
   ITW_PG_V2: ItwPg;
   ITW_TS_V2: ItwTs;
   ITW_CED_V2: ItwCed;
-  ITW_HAS_READ_IPZS_POLICY: boolean;
   SAVED_PAYMENT_METHOD: number;
 };
 
@@ -74,7 +72,6 @@ export const updateMixpanelProfileProperties = async (
   const ITW_TS_V2 = tsStatusHandler(state);
   const ITW_CED_V2 = cedStatusHandler(state);
   const paymentsAnalyticsData = getPaymentsAnalyticsConfiguration(state);
-  const ITW_HAS_READ_IPZS_POLICY = ipzs_policy(state);
 
   const profilePropertiesObject: ProfileProperties = {
     LOGIN_SESSION,
@@ -86,7 +83,6 @@ export const updateMixpanelProfileProperties = async (
       getNotificationPermissionType(notificationsEnabled),
     SERVICE_CONFIGURATION,
     TRACKING,
-    ITW_HAS_READ_IPZS_POLICY,
     ITW_STATUS_V2,
     ITW_ID_V2,
     ITW_PG_V2,
@@ -127,9 +123,6 @@ const walletStatusHandler = (state: GlobalState): ItwStatus => {
   const credentialsState = itwCredentialsSelector(state);
   return credentialsState.eid ? "L2" : "not_active";
 };
-
-const ipzs_policy = (state: GlobalState): boolean =>
-  itwIPZSHasReadPolicySelector(state);
 
 const idStatusHandler = (state: GlobalState): ItwId => {
   const credentialsState = itwCredentialsSelector(state);

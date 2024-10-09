@@ -220,6 +220,13 @@ export const trackOpenItwTos = () => {
   );
 };
 
+export const trackOpenItwTosAccepted = () => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_TOS_ACCEPTED,
+    buildEventProperties("UX", "action")
+  );
+};
+
 export const trackStartAddNewCredential = (wallet_item: NewCredential) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.WALLET_ADD_START,
@@ -351,13 +358,6 @@ export function trackWalletShowBack(credential: string) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SHOW_BACK,
     buildEventProperties("UX", "action", { credential })
-  );
-}
-
-export function trackWalletPgValidityInfo() {
-  void mixpanelTrack(
-    ITW_ACTIONS_EVENTS.ITW_PG_VALIDITY_INFO,
-    buildEventProperties("UX", "action", { credential: "ITW_PG_V2" })
   );
 }
 
