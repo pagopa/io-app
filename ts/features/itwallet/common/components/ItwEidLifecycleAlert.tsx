@@ -45,7 +45,7 @@ export const ItwEidLifecycleAlert = ({
     eid: StoredCredential;
     eidStatus: ItwCredentialStatus;
   }) => {
-    if (!lifecycleStatus.includes(eidStatus)) {
+    if (eidStatus === "pending" || !lifecycleStatus.includes(eidStatus)) {
       return null;
     }
 
@@ -85,11 +85,11 @@ export const ItwEidLifecycleAlert = ({
       }
     };
 
-    return eidStatus !== "pending" ? (
+    return (
       <View style={verticalSpacing && styles.margins}>
         <Alert {...alertProps[eidStatus]} />
       </View>
-    ) : null;
+    );
   };
 
   return pipe(
