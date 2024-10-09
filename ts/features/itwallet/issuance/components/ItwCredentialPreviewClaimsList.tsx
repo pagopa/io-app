@@ -1,7 +1,6 @@
-import { Divider, H6, IOStyles } from "@pagopa/io-app-design-system";
+import { Divider } from "@pagopa/io-app-design-system";
 import React from "react";
 import { View } from "react-native";
-import I18n from "../../../../i18n";
 import { ItwCredentialClaim } from "../../common/components/ItwCredentialClaim";
 import { ItwReleaserName } from "../../common/components/ItwReleaserName";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
@@ -9,6 +8,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
 type ItwCredentialClaimsListProps = {
   data: StoredCredential;
+  releaserVisible?: boolean;
 };
 
 /**
@@ -17,7 +17,8 @@ type ItwCredentialClaimsListProps = {
  * @param data - the {@link StoredCredential} of the credential.
  */
 const ItwCredentialPreviewClaimsList = ({
-  data
+  data,
+  releaserVisible = true
 }: ItwCredentialClaimsListProps) => {
   const claims = parseClaims(data.parsedCredential, {
     exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
@@ -25,20 +26,18 @@ const ItwCredentialPreviewClaimsList = ({
 
   return (
     <>
-      <View style={IOStyles.rowSpaceBetween}>
-        <H6 color="grey-700">
-          {I18n.t(
-            "features.itWallet.presentation.credentialDetails.documentDataTitle"
-          )}
-        </H6>
-      </View>
       {claims.map((elem, index) => (
         <View key={index}>
           <ItwCredentialClaim claim={elem} isPreview={true} hidden={false} />
-          <Divider />
+          {index < claims.length - 1 && <Divider />}
         </View>
       ))}
-      <ItwReleaserName credential={data} isPreview={true} />
+      {releaserVisible && (
+        <>
+          <Divider />
+          <ItwReleaserName credential={data} isPreview={true} />
+        </>
+      )}
     </>
   );
 };
