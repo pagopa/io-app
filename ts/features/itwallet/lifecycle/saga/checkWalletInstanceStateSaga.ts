@@ -1,20 +1,30 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
-import { call, select } from "typed-redux-saga/macro";
 import * as O from "fp-ts/lib/Option";
+import { call, select } from "typed-redux-saga/macro";
+import { sessionTokenSelector } from "../../../../store/reducers/authentication";
+import { ReduxSagaEffect } from "../../../../types/utils";
+import { assert } from "../../../../utils/assert";
 import { getAttestation } from "../../common/utils/itwAttestationUtils";
 import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { ReduxSagaEffect } from "../../../../types/utils";
+import { itwIsWalletInstanceAttestationValidSelector } from "../../walletInstance/store/reducers";
 import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
-import { sessionTokenSelector } from "../../../../store/reducers/authentication";
-import { assert } from "../../../../utils/assert";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 
 export function* getAttestationOrResetWalletInstance(integrityKeyTag: string) {
   const sessionToken = yield* select(sessionTokenSelector);
-
   assert(sessionToken, "Missing session token");
+  const isWalletInstanceAttestationValid = yield* select(
+    itwIsWalletInstanceAttestationValidSelector
+  );
 
+  if (isWalletInstanceAttestationValid) {
+    // The Wallet Instance Attestation is present and  has not yet expired
+    return;
+  }
+
+  // If the Wallet Instance Attestation is not present or it has expired
+  // we need to request a new one
   try {
     yield* call(ensureIntegrityServiceIsReady);
     yield* call(getAttestation, integrityKeyTag, sessionToken);

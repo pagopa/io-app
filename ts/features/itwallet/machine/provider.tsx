@@ -11,6 +11,7 @@ import { createEidIssuanceActionsImplementation } from "./eid/actions";
 import { createEidIssuanceActorsImplementation } from "./eid/actors";
 import { createEidIssuanceGuardsImplementation } from "./eid/guards";
 import { itwEidIssuanceMachine } from "./eid/machine";
+import { createCredentialIssuanceGuardsImplementation } from "./credential/guards";
 
 type Props = {
   children: JSX.Element;
@@ -43,6 +44,7 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
   });
 
   const credentialIssuanceMachine = itwCredentialIssuanceMachine.provide({
+    guards: createCredentialIssuanceGuardsImplementation(),
     actions: createCredentialIssuanceActionsImplementation(
       navigation,
       dispatch,

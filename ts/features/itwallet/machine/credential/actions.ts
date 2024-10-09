@@ -1,17 +1,15 @@
 import { IOToast } from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { ActionArgs, assertEvent } from "xstate";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
+import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
+import { CREDENTIALS_MAP, trackSaveCredentialSuccess } from "../../analytics";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { checkCurrentSession } from "../../../../store/actions/authentication";
-import { CREDENTIALS_MAP, trackSaveCredentialSuccess } from "../../analytics";
+import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { Context } from "./context";
@@ -48,17 +46,7 @@ export default (
     CredentialIssuanceEvents,
     CredentialIssuanceEvents
   >) => {
-    const credentialName = pipe(
-      O.fromNullable(context.credentialType),
-      O.map(getCredentialNameFromType),
-      O.toUndefined
-    );
-
-    toast.success(
-      I18n.t("features.itWallet.issuance.credentialResult.toast", {
-        credentialName
-      })
-    );
+    toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
     if (context.credentialType) {
       const credential = CREDENTIALS_MAP[context.credentialType];
       trackSaveCredentialSuccess(credential);
@@ -84,6 +72,22 @@ export default (
     });
   },
 
+  storeWalletInstanceAttestation: ({
+    context
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
+    assert(
+      context.walletInstanceAttestation,
+      "walletInstanceAttestation is undefined"
+    );
+    dispatch(
+      itwWalletInstanceAttestationStore(context.walletInstanceAttestation)
+    );
+  },
+
   storeCredential: ({
     context
   }: ActionArgs<
@@ -92,7 +96,6 @@ export default (
     CredentialIssuanceEvents
   >) => {
     assert(context.credential, "credential is undefined");
-
     dispatch(itwCredentialsStore([context.credential]));
   },
 
