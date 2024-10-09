@@ -12,19 +12,18 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { openWebUrl } from "../../../../utils/url";
 import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
 import { PaymentsOnboardingParamsList } from "../navigation/params";
 import {
   WalletOnboardingOutcome,
   WalletOnboardingOutcomeEnum
 } from "../types/OnboardingOutcomeEnum";
-import { ONBOARDING_FAQ_ENABLE_3DS } from "../utils";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { selectPaymentOnboardingRptIdToResume } from "../store/selectors";
 import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
 import { paymentsResetRptIdToResume } from "../store/actions";
 import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
+import { usePaymentOnboardingAuthErrorBottomSheet } from "../components/PaymentsOnboardingAuthErrorBottomSheet";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -56,6 +55,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
 
   const rptIdToResume = useIOSelector(selectPaymentOnboardingRptIdToResume);
   const { startPaymentFlow } = usePagoPaPayment();
+  const { bottomSheet, present } = usePaymentOnboardingAuthErrorBottomSheet();
 
   const outcomeEnumKey = Object.keys(WalletOnboardingOutcomeEnum)[
     Object.values(WalletOnboardingOutcomeEnum).indexOf(outcome)
@@ -112,7 +112,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
           accessibilityLabel: I18n.t(
             `wallet.onboarding.outcome.AUTH_ERROR.secondaryAction`
           ),
-          onPress: () => openWebUrl(ONBOARDING_FAQ_ENABLE_3DS)
+          onPress: present
         };
     }
     return undefined;
@@ -142,6 +142,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
         }}
         secondaryAction={renderSecondaryAction()}
       />
+      {bottomSheet}
     </View>
   );
 };
