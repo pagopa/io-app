@@ -1,76 +1,38 @@
 import { generate } from "@pagopa/io-react-native-crypto";
-import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
   AuthorizationDetail,
   createCryptoContextFor,
-  Credential,
-  WalletInstanceAttestation
+  Credential
 } from "@pagopa/io-react-native-wallet";
 import uuid from "react-native-uuid";
 import {
   itWalletIssuanceRedirectUri,
-  itwEaaProviderBaseUrl,
-  itwWalletProviderBaseUrl
+  itwEaaProviderBaseUrl
 } from "../../../../config";
-import { SessionToken } from "../../../../types/SessionToken";
-import { createItWalletFetch } from "../../api/client";
-import { getIntegrityContext } from "./itwIntegrityUtils";
+import {
+  DPOP_KEYTAG,
+  regenerateCryptoKey,
+  WIA_KEYTAG
+} from "./itwCryptoContextUtils";
 import {
   IssuerConfiguration,
   RequestObject,
   StoredCredential
 } from "./itwTypesUtils";
-import {
-  DPOP_CREDENTIAL_KEYTAG,
-  regenerateCryptoKey,
-  WIA_CREDENTIAL_KEYTAG
-} from "./itwCryptoContextUtils";
-
-export type InitializeWalletParams = {
-  integrityKeyTag: string;
-  sessionToken: SessionToken;
-};
-
-export const initializeWallet = async ({
-  integrityKeyTag,
-  sessionToken
-}: InitializeWalletParams) => {
-  await regenerateCryptoKey(WIA_CREDENTIAL_KEYTAG);
-
-  const appFetch = createItWalletFetch(itwWalletProviderBaseUrl, sessionToken);
-
-  // Obtain a wallet attestation.
-
-  const wiaCryptoContext = createCryptoContextFor(WIA_CREDENTIAL_KEYTAG);
-  const integrityContext = getIntegrityContext(integrityKeyTag);
-
-  const walletInstanceAttestation =
-    await WalletInstanceAttestation.getAttestation({
-      wiaCryptoContext,
-      integrityContext,
-      walletProviderBaseUrl: itwWalletProviderBaseUrl,
-      appFetch
-    });
-
-  return {
-    wiaCryptoContext,
-    walletInstanceAttestation
-  };
-};
 
 export type RequestCredentialParams = {
   credentialType: string;
   walletInstanceAttestation: string;
-  wiaCryptoContext: CryptoContext;
 };
 
 export const requestCredential = async ({
   credentialType,
-  walletInstanceAttestation,
-  wiaCryptoContext
+  walletInstanceAttestation
 }: RequestCredentialParams) => {
-  // Evaluate issuer trust
+  // Get WIA crypto context
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
+  // Evaluate issuer trust
   const { issuerConf } = await Credential.Issuance.evaluateIssuerTrust(
     itwEaaProviderBaseUrl
   );
@@ -107,7 +69,6 @@ export const requestCredential = async ({
 export type ObtainCredentialParams = {
   credentialType: string;
   walletInstanceAttestation: string;
-  wiaCryptoContext: CryptoContext;
   requestedCredential: RequestObject;
   pid: StoredCredential;
   clientId: string;
@@ -120,18 +81,19 @@ export const obtainCredential = async ({
   credentialType,
   requestedCredential,
   pid,
-  wiaCryptoContext,
   walletInstanceAttestation,
   clientId,
   codeVerifier,
   credentialDefinition,
   issuerConf
 }: ObtainCredentialParams) => {
-  await regenerateCryptoKey(DPOP_CREDENTIAL_KEYTAG);
+  // Get WIA crypto context
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   // Create PID and DPoP crypto context;
+  await regenerateCryptoKey(DPOP_KEYTAG);
   const pidCryptoContext = createCryptoContextFor(pid.keyTag);
-  const dPopCryptoContext = createCryptoContextFor(DPOP_CREDENTIAL_KEYTAG);
+  const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
 
   // Complete the user authorization via form_post.jwt mode
   const { code } =

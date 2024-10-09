@@ -2932,12 +2932,6 @@ features:
         title: "This certificate cannot be retrieved"
         subtitle: "Details to receive support:"
         cta: "Get support"
-  uaDonations:
-    webViewScreen:
-      headerTitle: Donation
-      errors:
-        data:
-          buttonTitle: Go back
   pn:
     service:
       activate: "Attiva il servizio"
@@ -3440,6 +3434,9 @@ support:
   panicMode:
     title: "We cannot help you at the moment"
     body: "We know there is a problem and we are working to solve it. If the problem remains, or if you need support on another topic, please try again later."
+  errorGetZendeskToken: 
+    title: Sorry, we're unable to open a service request at the moment.
+    subtitle: Try again later
   askPermissions:
     nameSurname: "Name and Surname"
     fiscalCode: "Fiscal code"

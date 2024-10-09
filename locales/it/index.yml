@@ -2932,12 +2932,6 @@ features:
         title: "Non è possibile recuperare questo \ncertificato: contatta l’assistenza"
         subtitle: "Dati utili per ricevere assistenza:"
         cta: "Contatta l'assistenza"
-  uaDonations:
-    webViewScreen:
-      headerTitle: Donazione
-      errors:
-        data:
-          buttonTitle: Torna indietro
   pn:
     service:
       activate: "Attiva il servizio"
@@ -3440,6 +3434,9 @@ support:
   panicMode:
     title: "Purtroppo, in questo momento non riusciamo ad aiutarti"
     body: "Sappiamo che c’è un problema e siamo al lavoro per risolverlo. Se il problema persiste, o se hai bisogno di assistenza su un altro argomento, riprova a scriverci più tardi."
+  errorGetZendeskToken: 
+    title: Al momento non riusciamo ad aprire una richiesta di assistenza
+    subtitle: Riprova più tardi
   askPermissions:
     nameSurname: "Nome e Cognome"
     fiscalCode: "Codice fiscale"

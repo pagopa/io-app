@@ -42,9 +42,12 @@ import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
 import { DSIOMarkdown } from "../core/DSIOMarkdown";
 import { DSIOScrollView } from "../core/DSIOScrollView";
+import { DSIOScrollViewCentredContent } from "../core/DSIOScrollViewCentredContent";
 import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithLargeHeader";
+import { DSIOScrollViewWithListItems } from "../core/DSIOScrollViewWithListItems";
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
 import { DSIcons } from "../core/DSIcons";
+import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyAccordion } from "../core/DSLegacyAccordion";
 import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
@@ -56,7 +59,6 @@ import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
 import { DSLegacySelection } from "../core/DSLegacySelection";
 import { DSLegacyTextFields } from "../core/DSLegacyTextFields";
 import { DSLegacyTypography } from "../core/DSLegacyTypography";
-import DSListItemScreen from "../core/DSListItemScreen";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSLogos } from "../core/DSLogos";
@@ -75,8 +77,6 @@ import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
-import { DSWizardScreen } from "../core/DSWizardScreen";
-import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -447,14 +447,40 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.WIZARD_SCREEN.route}
-          component={DSWizardScreen}
-          options={{ headerShown: false }}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW.route}
+          component={DSIOScrollView}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW.title
+          }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.LIST_ITEM_SCREEN.route}
-          component={DSListItemScreen}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WO_ACTIONS.route}
+          component={DSIOScrollViewWithoutActions}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WO_ACTIONS.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_LARGEHEADER.route}
+          component={DSIOScrollViewScreenWithLargeHeader}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_LARGEHEADER.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_CENTRED_CONTENT.route}
+          component={DSIOScrollViewCentredContent}
+          options={{ headerShown: true }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WITH_LIST_ITEMS.route}
+          component={DSIOScrollViewWithListItems}
           options={{ headerShown: true }}
         />
 
@@ -493,32 +519,6 @@ export const DesignSystemNavigator = () => {
           component={DSScreenEndMargin}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.SCREEN_END_MARGIN.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW.route}
-          component={DSIOScrollView}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW_WO_ACTIONS.route}
-          component={DSIOScrollViewWithoutActions}
-          options={{
-            headerTitle:
-              DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW_WO_ACTIONS.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW_LARGEHEADER.route}
-          component={DSIOScrollViewScreenWithLargeHeader}
-          options={{
-            headerTitle:
-              DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW_LARGEHEADER.title
           }}
         />
 
