@@ -112,6 +112,12 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
+  navigateToWalletRevocationScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
+    });
+  },
+
   closeIssuance: () => {
     navigation.popToTop();
   },

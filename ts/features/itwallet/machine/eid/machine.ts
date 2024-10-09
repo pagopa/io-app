@@ -39,6 +39,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToCiePinScreen: notImplemented,
     navigateToCieReadCardScreen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
+    navigateToWalletRevocationScreen: notImplemented,
     storeIntegrityKeyTag: (_ctx, _params: { keyTag: string }) =>
       notImplemented(),
     storeEidCredential: notImplemented,
@@ -423,6 +424,10 @@ export const itwEidIssuanceMachine = setup({
         },
         reset: {
           target: "Idle"
+        },
+        "revoke-wallet-instance": {
+          actions: "navigateToWalletRevocationScreen",
+          target: "WalletInstanceRevocation"
         }
       }
     },

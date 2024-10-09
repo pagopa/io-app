@@ -144,6 +144,10 @@ export const ItwIssuanceEidFailureScreen = () => {
         ),
         pictogram: "umbrellaNew",
         action: {
+          label: I18n.t("global.buttons.retry"),
+          onPress: () => machineRef.send({ type: "revoke-wallet-instance" })
+        },
+        secondaryAction: {
           label: I18n.t("global.buttons.close"),
           onPress: () => machineRef.send({ type: "close" })
         }
