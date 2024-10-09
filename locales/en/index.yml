@@ -3192,7 +3192,7 @@ features:
     ipzsPrivacy:
       title: I tuoi Documenti su IO sono al sicuro
       button:
-        label: Accetta e continua
+        label: Continua
     wallet:
       active: Attivo
       inactive: Non attivo
