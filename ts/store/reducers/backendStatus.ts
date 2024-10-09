@@ -15,25 +15,22 @@ import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfi
 import { BarcodesScannerConfig } from "../../../definitions/content/BarcodesScannerConfig";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { Sections } from "../../../definitions/content/Sections";
-import { UaDonationsBanner } from "../../../definitions/content/UaDonationsBanner";
-import { UaDonationsConfig } from "../../../definitions/content/UaDonationsConfig";
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
   fciEnabled,
   premiumMessagesOptInEnabled,
-  scanAdditionalBarcodesEnabled,
-  uaDonationsEnabled
+  scanAdditionalBarcodesEnabled
 } from "../../config";
 import { LocalizedMessageKeys } from "../../i18n";
 import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
-import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 import { StatusMessage } from "../../../definitions/content/StatusMessage";
 import { isIdPayTestEnabledSelector } from "./persistedPreferences";
 import { GlobalState } from "./types";
 import { isPropertyWithMinAppVersionEnabled } from "./featureFlagWithMinAppVersionStatus";
+import { currentRouteSelector } from "./navigation";
 
 export type SectionStatusKey = keyof Sections;
 /** note that this state is not persisted so Option type is accepted
@@ -69,7 +66,7 @@ export const sectionStatusSelector = (sectionStatusKey: SectionStatusKey) =>
     (backendStatus): SectionStatus | undefined =>
       pipe(
         backendStatus,
-        O.map(bs => bs.sections[sectionStatusKey]),
+        O.map(bs => bs.sections?.[sectionStatusKey]),
         O.toUndefined
       )
   );
@@ -134,75 +131,6 @@ export const assistanceToolConfigSelector = createSelector(
       backendStatus,
       O.map(bs => bs.config.assistanceTool.tool),
       O.toUndefined
-    )
-);
-
-/**
- * return the remote config about Ukrainian donations enabled/disabled
- * if there is no data, false is the default value -> (donation disabled)
- */
-export const isUaDonationsEnabledSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): boolean =>
-    (uaDonationsEnabled &&
-      pipe(
-        backendStatus,
-        O.map(bs => bs.config.uaDonations.enabled),
-        O.toUndefined
-      )) ??
-    false
-);
-
-/**
- * return the remote config about Ukrainian donations banner if available
- */
-export const uaDonationsBannerConfigSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): UaDonationsBanner | undefined =>
-    pipe(
-      backendStatus,
-      O.map(bs => bs.config.uaDonations.banner),
-      O.toUndefined
-    )
-);
-
-/**
- * Transform a UaDonationsConfig to `some(UaDonationsBanner)` if all the required conditions are met:
- * - local feature flag === true
- * - remote feature flag === true
- * - banner visible === true
- * - The description in the current locale is not an empty string
- *
- * Return `O.none` otherwise.
- * @param uaConfig
- * @param locale
- */
-const filterBannerVisible = (
-  uaConfig: UaDonationsConfig,
-  locale: LocalizedMessageKeys
-): O.Option<UaDonationsBanner> =>
-  uaDonationsEnabled &&
-  uaConfig.enabled &&
-  uaConfig.banner.visible &&
-  !isStringNullyOrEmpty(uaConfig.banner.description[locale])
-    ? O.some(uaConfig.banner)
-    : O.none;
-
-/**
- * The donation data is an information that we can or we cannot render, based on some conditions.
- * We represent this information using an {@link Option} in order to avoid chaining multiple boolean condition at component level
- * Return `some(UaDonationsBanner)` if all the enabled / visible conditions are met.
- * Return `O.none` otherwise
- */
-export const uaDonationsBannerSelector = createSelector(
-  [
-    backendStatusSelector,
-    (_: GlobalState, locale: LocalizedMessageKeys) => locale
-  ],
-  (backendStatus, locale): O.Option<UaDonationsBanner> =>
-    pipe(
-      backendStatus,
-      O.chain(bs => filterBannerVisible(bs.config.uaDonations, locale))
     )
 );
 
@@ -550,7 +478,7 @@ const sectionStatusUncachedSelector = (
 ) =>
   pipe(
     state.backendStatus.status,
-    O.chainNullableK(status => status.sections[sectionStatusKey])
+    O.chainNullableK(status => status.sections?.[sectionStatusKey])
   );
 
 const statusMessagesSelector = (state: GlobalState) =>
@@ -563,16 +491,18 @@ const statusMessagesSelector = (state: GlobalState) =>
 
 const EMPTY_ARRAY: ReadonlyArray<StatusMessage> = [];
 
-export const statusMessageByRouteSelector = (routeName: string) =>
+// Since the return of the selector comes from an array.filter function it is important to cache the result
+// to avoid unintended rerender on components.
+export const statusMessageByRouteSelector = (routeName?: string) =>
   createSelector(
-    statusMessagesSelector,
-    (statusMessages): ReadonlyArray<StatusMessage> | undefined =>
+    [statusMessagesSelector, currentRouteSelector],
+    (statusMessages, currentRoute): ReadonlyArray<StatusMessage> | undefined =>
       pipe(
         statusMessages,
         O.fromNullable,
         O.map(({ items }) => {
           const messages = items.filter(message =>
-            message.routes.includes(routeName)
+            message.routes.includes(routeName ?? currentRoute)
           );
           return messages.length > 0 ? messages : EMPTY_ARRAY;
         }),
