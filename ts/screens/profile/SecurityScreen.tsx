@@ -32,6 +32,8 @@ import {
 } from "../onboarding/biometric&securityChecks/analytics";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import { FAQsCategoriesType } from "../../utils/faq";
+import { fimsIsHistoryEnabledSelector } from "../../features/fims/history/store/selectors";
+import { FIMS_ROUTES } from "../../features/fims/common/navigation";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -49,6 +51,7 @@ const SecurityScreen = (): React.ReactElement => {
   const isFingerprintEnabled = useIOSelector(isFingerprintEnabledSelector);
   const isIdPayCodeOnboarded = useIOSelector(isIdPayCodeOnboardedSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+  const isFimsHistoryEnabled = useIOSelector(fimsIsHistoryEnabledSelector);
   const navigation = useIONavigation();
   const [isBiometricDataAvailable, setIsBiometricDataAvailable] =
     useState(false);
@@ -146,6 +149,12 @@ const SecurityScreen = (): React.ReactElement => {
     [isFingerprintEnabled, setBiometricPreference]
   );
 
+  const fimsHistoryHandler = useCallback(() => {
+    navigation.navigate(FIMS_ROUTES.MAIN, {
+      screen: FIMS_ROUTES.HISTORY
+    });
+  }, [navigation]);
+
   return (
     <IOScrollViewWithLargeHeader
       title={{
@@ -194,6 +203,18 @@ const SecurityScreen = (): React.ReactElement => {
               onSwitchValueChange={onSwitchValueChange}
               value={isFingerprintEnabled}
               testID="biometric-recognition"
+            />
+          </>
+        )}
+        {/* FIMS History log */}
+        {isFimsHistoryEnabled && (
+          <>
+            <Divider />
+            <ListItemNav
+              value={I18n.t("FIMS.history.profileCTA.title")}
+              description={I18n.t("FIMS.history.profileCTA.subTitle")}
+              onPress={fimsHistoryHandler}
+              testID="fims-history"
             />
           </>
         )}
