@@ -130,7 +130,11 @@ export const getSortedPspList = (
       return _.orderBy(pspList, psp => psp.taxPayerFee);
     case "default":
     default:
-      return _.orderBy(pspList, ["onUs", "taxPayerFee"], ["desc", "asc"]);
+      return _.orderBy(
+        pspList,
+        ["onUs", "taxPayerFee", "pspBusinessName"],
+        ["desc", "asc", "asc"]
+      );
   }
 };
 
