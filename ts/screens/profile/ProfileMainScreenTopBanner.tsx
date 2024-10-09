@@ -4,7 +4,7 @@ import {
   ContentWrapper,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import React, { useCallback } from "react";
 import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
 import { profileBannerToShowSelector } from "../../features/profileSettings/store/selectors";
 import { openSystemNotificationSettingsScreen } from "../../features/pushNotifications/utils";
@@ -18,11 +18,17 @@ export const ProfileMainScreenTopBanner = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
-  const handleCloseBanner = () => dispatch(setShowProfileBanner(false));
-  const navigateToProfile = () =>
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_DATA
-    });
+  const handleCloseBanner = useCallback(() => {
+    dispatch(setShowProfileBanner(false));
+  }, [dispatch]);
+
+  const navigateToProfile = useCallback(
+    () =>
+      navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+        screen: ROUTES.PROFILE_DATA
+      }),
+    [navigation]
+  );
 
   switch (bannerToShow) {
     case "NOTIFICATIONS":
