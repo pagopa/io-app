@@ -81,9 +81,6 @@ export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 // CGN new merchants features
 export const cgnMerchantsV2Enabled = Config.CGN_MERCHANTS_V2_ENABLED === "YES";
 
-// Ukraine donation
-export const uaDonationsEnabled = Config.UA_DONATIONS_ENABLED === "YES";
-
 // CdC (Carta della cultura) Feature Flag
 export const cdcEnabled = Config.CDC_ENABLED === "YES";
 

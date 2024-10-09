@@ -2936,12 +2936,6 @@ features:
         title: "This certificate cannot be retrieved"
         subtitle: "Details to receive support:"
         cta: "Get support"
-  uaDonations:
-    webViewScreen:
-      headerTitle: Donation
-      errors:
-        data:
-          buttonTitle: Go back
   pn:
     service:
       activate: "Attiva il servizio"
