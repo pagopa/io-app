@@ -78,6 +78,15 @@ export const zendeskSupportFailure = createStandardAction(
 )<string>();
 
 /**
+ * Request the zendesk token to getSession
+ */
+export const getZendeskToken = createAsyncAction(
+  "GET_ZENDESK_TOKEN_REQUEST",
+  "GET_ZENDESK_TOKEN_SUCCESS",
+  "GET_ZENDESK_TOKEN_FAILURE"
+)<undefined, undefined, "401" | void>();
+
+/**
  * Request the zendesk config
  */
 export const getZendeskConfig = createAsyncAction(
@@ -114,6 +123,7 @@ export type ZendeskSupportActions =
   | ActionType<typeof zendeskSupportCancel>
   | ActionType<typeof zendeskSupportBack>
   | ActionType<typeof zendeskSupportFailure>
+  | ActionType<typeof getZendeskToken>
   | ActionType<typeof getZendeskConfig>
   | ActionType<typeof zendeskSelectedCategory>
   | ActionType<typeof zendeskRequestTicketNumber>
