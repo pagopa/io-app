@@ -132,7 +132,7 @@ const AuthenticatedStackNavigator = () => {
         component={SystemNotificationPermissionsScreen}
         options={{
           gestureEnabled: true,
-          headerShown: false,
+          headerShown: true,
           presentation: "modal"
         }}
       />
