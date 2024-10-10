@@ -16,6 +16,7 @@ import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import _ from "lodash";
 import { v4 as uuid } from "uuid";
+import { withoutUndefinedValues } from "@pagopa/ts-commons/lib/types";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import {
   AbortUserDataProcessingT,
@@ -146,7 +147,8 @@ export function BackendClient(
   const getSessionT: GetSessionStateT = {
     method: "get",
     url: () => "/api/v1/session",
-    query: _ => ({}),
+    query: ({ ["fields"]: fields }) =>
+      withoutUndefinedValues({ ["fields"]: fields }),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     response_decoder: getSessionStateDefaultDecoder()
   };
