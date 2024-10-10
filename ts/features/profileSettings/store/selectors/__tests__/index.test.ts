@@ -17,25 +17,31 @@ const getState = (notifs: boolean, profileBanner: boolean) =>
 
 describe("profileBannerToShowSelector", () => {
   it("should return 'NOTIFICATIONS' if notifications are not enabled", () => {
-    const expectedResult = "NOTIFICATIONS";
-    const actualResult = profileBannerToShowSelector(getState(false, true));
+    const expected = "NOTIFICATIONS";
+    const bannerToShow = profileBannerToShowSelector(getState(false, true));
 
-    expect(actualResult).toEqual(expectedResult);
+    expect(bannerToShow).toEqual(expected);
+  });
+  it("should return 'NOTIFICATIONS' if notifications and profile banner are not enabled", () => {
+    const expected = "NOTIFICATIONS";
+    const bannerToShow = profileBannerToShowSelector(getState(false, false));
+
+    expect(bannerToShow).toEqual(expected);
   });
 
   it("should return 'PROFILE_BANNER' if notifications are enabled and the profile banner is enabled", () => {
-    const expectedResult = "PROFILE_BANNER";
+    const expected = "PROFILE_BANNER";
 
-    const actualResult = profileBannerToShowSelector(getState(true, true));
+    const bannerToShow = profileBannerToShowSelector(getState(true, true));
 
-    expect(actualResult).toEqual(expectedResult);
+    expect(bannerToShow).toEqual(expected);
   });
 
   it("should return undefined if notifications are enabled and the profile banner is disabled", () => {
-    const expectedResult = undefined;
+    const expected = undefined;
 
-    const actualResult = profileBannerToShowSelector(getState(true, false));
+    const bannerToShow = profileBannerToShowSelector(getState(true, false));
 
-    expect(actualResult).toEqual(expectedResult);
+    expect(bannerToShow).toEqual(expected);
   });
 });
