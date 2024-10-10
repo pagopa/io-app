@@ -56,7 +56,7 @@ import {
 } from "../../utils/identification";
 import {
   hasTwoMinutesElapsedSinceLastActivitySelector,
-  isAutomaticSessionRefreshEnabledSelector
+  isFastLoginEnabledSelector
 } from "../../features/fastLogin/store/selectors";
 import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
 import { areTwoMinElapsedFromLastActivity } from "../../features/fastLogin/store/actions/sessionRefreshActions";
@@ -85,9 +85,9 @@ const IdentificationModal = () => {
   const hasTwoMinutesElapsedSinceLastActivity = useIOSelector(
     hasTwoMinutesElapsedSinceLastActivitySelector
   );
-  const isActiveSessionRefresh = useIOSelector(
-    isAutomaticSessionRefreshEnabledSelector
-  );
+
+  const isFastLoginEnabled = useIOSelector(isFastLoginEnabledSelector);
+
   const previousIdentificationProgressState = usePrevious(
     identificationProgressState
   );
@@ -184,15 +184,15 @@ const IdentificationModal = () => {
        * background and returned to the foreground then the dispatch
        * of the action that refreshes the session will be performed
        */
-      if (hasTwoMinutesElapsedSinceLastActivity && isActiveSessionRefresh) {
+      if (hasTwoMinutesElapsedSinceLastActivity && isFastLoginEnabled) {
         onSuccessDispatchTokenRefresh();
       }
     },
     [
-      identificationProgressState,
-      onIdentificationSuccess,
       hasTwoMinutesElapsedSinceLastActivity,
-      isActiveSessionRefresh,
+      identificationProgressState,
+      isFastLoginEnabled,
+      onIdentificationSuccess,
       onSuccessDispatchTokenRefresh
     ]
   );
