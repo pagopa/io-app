@@ -1,5 +1,5 @@
 import {
-  ActionProp,
+  HeaderActionProps,
   HeaderSecondLevel,
   IOIcons
 } from "@pagopa/io-app-design-system";
@@ -33,18 +33,18 @@ interface HeaderHelpActionProps extends HeaderBaseProps {
 interface HeaderTwoActionsProps extends HeaderBaseProps {
   showHelp: true;
   headerType: "twoActions";
-  secondAction: ActionProp;
+  secondAction: HeaderActionProps;
   thirdAction?: never;
 }
 
 interface HeaderThreeActionsProps extends HeaderBaseProps {
   showHelp: true;
   headerType: "threeActions";
-  secondAction: ActionProp;
-  thirdAction: ActionProp;
+  secondAction: HeaderActionProps;
+  thirdAction: HeaderActionProps;
 }
 
-export type HeaderActionProps =
+export type HeaderActionsProps =
   | HeaderNoActionProps
   | HeaderHelpActionProps
   | HeaderTwoActionsProps
@@ -60,7 +60,7 @@ export type BackProps =
       backAccessibilityLabel?: never;
     };
 
-type HeaderProps = HeaderActionProps &
+type HeaderProps = HeaderActionsProps &
   BackProps &
   Pick<HeaderSecondLevelProps, "title" | "scrollValues"> &
   SupportRequestParams;

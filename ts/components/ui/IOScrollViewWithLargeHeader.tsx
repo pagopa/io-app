@@ -13,7 +13,7 @@ import React, { ComponentProps, forwardRef, useState } from "react";
 import { LayoutChangeEvent, View } from "react-native";
 import {
   BackProps,
-  HeaderActionProps,
+  HeaderActionsProps,
   useHeaderProps
 } from "../../hooks/useHeaderProps";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
@@ -42,7 +42,7 @@ type Props = WithTestID<
     ignoreSafeAreaMargin?: ComponentProps<
       typeof HeaderSecondLevel
     >["ignoreSafeAreaMargin"];
-    headerActionsProp?: HeaderActionProps;
+    headerActionsProp?: HeaderActionsProps;
     canGoback?: boolean;
     excludeEndContentMargin?: boolean;
   } & SupportRequestParams

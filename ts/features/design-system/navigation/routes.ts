@@ -112,6 +112,14 @@ const DESIGN_SYSTEM_ROUTES = {
     FOOTER_ACTIONS_NOT_FIXED: {
       route: "DS_FOOTER_ACTIONS_NOT_FIXED",
       title: "Footer Actions (not fixed)"
+    },
+    FOOTER_ACTIONS_INLINE: {
+      route: "DS_FOOTER_ACTIONS_INLINE",
+      title: "Footer Actions Inline"
+    },
+    FOOTER_ACTIONS_INLINE_NOT_FIXED: {
+      route: "DS_FOOTER_ACTIONS_INLINE_NOT_FIXED",
+      title: "Footer Actions Inline (not fixed)"
     }
   },
   EXPERIMENTAL_LAB: {

@@ -1,4 +1,4 @@
-import { IOSpacingScale, IOVisualCostants } from "@pagopa/io-app-design-system";
+import { IOSpacing, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type EndScreenSpacingValues = {
@@ -32,7 +32,7 @@ export const useScreenEndMargin = (): EndScreenSpacingValues => {
   /* End content margin. If the devices don't have safe area
      boundaries, we calculate the difference to get the same spacing
      value as for devices that do have safe area boundaries. */
-  const contentEndMargin: IOSpacingScale = 32;
+  const contentEndMargin: number = IOSpacing.screenEndMargin;
   const computedContentEndMargin = needSafeAreaMargin
     ? contentEndMargin
     : contentEndMargin - fallbackSafeAreaMargin;
