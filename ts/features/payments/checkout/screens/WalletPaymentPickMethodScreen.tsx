@@ -18,7 +18,8 @@ import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import {
   paymentsCalculatePaymentFeesAction,
   paymentsCreateTransactionAction,
-  paymentsGetPaymentMethodsAction
+  paymentsGetPaymentMethodsAction,
+  paymentsGetRecentPaymentMethodUsedAction
 } from "../store/actions/networking";
 import {
   walletPaymentAmountSelector,
@@ -74,6 +75,10 @@ const WalletPaymentPickMethodScreen = () => {
       dispatch(paymentsGetPaymentMethodsAction.request());
     }, [dispatch])
   );
+
+  useOnFirstRender(() => {
+    dispatch(paymentsGetRecentPaymentMethodUsedAction.request());
+  });
 
   const calculateFeesForSelectedPaymentMethod = React.useCallback(() => {
     pipe(

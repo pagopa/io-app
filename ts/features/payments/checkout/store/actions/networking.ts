@@ -14,6 +14,7 @@ import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets"
 import { NetworkError } from "../../../../../utils/errors";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
+import { UserLastPaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/UserLastPaymentMethodResponse";
 
 export const paymentsGetPaymentDetailsAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_DETAILS_REQUEST",
@@ -36,6 +37,12 @@ export const paymentsGetPaymentUserMethodsAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_USER_METHODS_SUCCESS",
   "PAYMENTS_GET_PAYMENT_USER_METHODS_FAILURE"
 )<PaymentGetPaymentUserMethodsPayload, Wallets, NetworkError>();
+
+export const paymentsGetRecentPaymentMethodUsedAction = createAsyncAction(
+  "PAYMENTS_GET_RECENT_PAYMENT_METHOD_REQUEST",
+  "PAYMENTS_GET_RECENT_PAYMENT_METHOD_SUCCESS",
+  "PAYMENTS_GET_RECENT_PAYMENT_METHOD_FAILURE"
+)<undefined, UserLastPaymentMethodResponse, NetworkError>();
 
 export type CalculateFeePayload = {
   paymentMethodId: string;
@@ -110,4 +117,5 @@ export type PaymentsCheckoutNetworkingActions =
   | ActionType<typeof paymentsCreateTransactionAction>
   | ActionType<typeof paymentsGetPaymentTransactionInfoAction>
   | ActionType<typeof paymentsDeleteTransactionAction>
+  | ActionType<typeof paymentsGetRecentPaymentMethodUsedAction>
   | ActionType<typeof paymentsStartPaymentAuthorizationAction>;

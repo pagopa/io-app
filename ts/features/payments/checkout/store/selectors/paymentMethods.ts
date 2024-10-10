@@ -3,9 +3,10 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
-import { getLatestUsedWallet, isValidPaymentMethod } from "../../utils";
+import { isValidPaymentMethod } from "../../utils";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { WalletApplicationStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletApplicationStatus";
+import { WalletLastUsageTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletLastUsageType";
 import { WalletApplicationNameEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletApplicationName";
 import { UIWalletInfoDetails } from "../../../common/types/UIWalletInfoDetails";
 import { isPaymentMethodExpired } from "../../../common/utils";
@@ -34,13 +35,6 @@ export const walletPaymentEnabledUserWalletsSelector = createSelector(
     )
 );
 
-// Get from the enabled userwallets the wallet with the attribute lastUpdated more recent
-export const walletPaymentUserWalletLastUpdatedSelector = createSelector(
-  walletPaymentEnabledUserWalletsSelector,
-  userWalletsPot =>
-    pipe(userWalletsPot, pot.toOption, O.chain(getLatestUsedWallet))
-);
-
 export const walletPaymentAllMethodsSelector = createSelector(
   selectPaymentsCheckoutState,
   state =>
@@ -48,6 +42,39 @@ export const walletPaymentAllMethodsSelector = createSelector(
       state.allPaymentMethods,
       ({ paymentMethods }) => paymentMethods?.filter(isValidPaymentMethod) ?? []
     )
+);
+
+export const walletRecentPaymentMethodSelector = createSelector(
+  selectPaymentsCheckoutState,
+  walletPaymentUserWalletsSelector,
+  walletPaymentAllMethodsSelector,
+  ({ recentUsedPaymentMethod }, userWallets, allPaymentMethods) => {
+    const recentPaymentMethod = pot.toUndefined(recentUsedPaymentMethod);
+    if (!recentPaymentMethod) {
+      return undefined;
+    }
+    return recentPaymentMethod?.type === WalletLastUsageTypeEnum.wallet
+      ? pot
+          .toUndefined(userWallets)
+          ?.find(wallet => wallet.walletId === recentPaymentMethod.walletId)
+      : pot
+          .toUndefined(allPaymentMethods)
+          ?.find(method => method.id === recentPaymentMethod.paymentMethodId);
+  }
+  //   pot.isSome(state.recentUsedPaymentMethod)
+  //     ? state.recentUsedPaymentMethod.type === WalletLastUsageTypeEnum.wallet
+  //       ? pot
+  //           .toUndefined(userWallets)
+  //           ?.find(wallet => wallet.id === recentUsedPaymentMethod.walletId)
+  //       : pot
+  //           .toUndefined(allPaymentMethods)
+  //           ?.find(
+  //             method =>
+  //               method.paymentMethodId ===
+  //               recentUsedPaymentMethod.paymentMethodId
+  //           )
+  //     : undefined;
+  // }
 );
 
 export const walletPaymentMethodByIdSelector = createSelector(
