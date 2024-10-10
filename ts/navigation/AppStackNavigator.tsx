@@ -100,7 +100,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   const isItwTrialActive = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
-  const canBeActivated = isItwTrialActive && !isItwValid && isItwEnabled;
+  const canItwBeActivated = isItwTrialActive && !isItwValid && isItwEnabled;
 
   // Dark/Light Mode
   const { themeType } = useIOThemeContext();
@@ -151,7 +151,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
             }
           }
         },
-        ...itwLinkingOptions(canBeActivated),
+        ...itwLinkingOptions(canItwBeActivated),
         ...fciLinkingOptions,
         ...(cgnEnabled ? cgnLinkingOptions : {}),
         ...idPayLinkingOptions,
