@@ -18,6 +18,7 @@ const CieIdNotInstalled = ({ isUat }: CieIdNotInstalledProps) => {
 
   return (
     <OperationResultScreenContent
+      pictogram="attention"
       title={I18n.t("authentication.cie_id.cie_not_installed.title")}
       subtitle={I18n.t("authentication.cie_id.cie_not_installed.description")}
       action={{
