@@ -1,4 +1,4 @@
-import { H3, IOColors, Label, VSpacer } from "@pagopa/io-app-design-system";
+import { H3, IOColors, LabelMini, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, {
@@ -7,8 +7,8 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import Placeholder from "rn-placeholder";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 type CounterType = "Value" | "ValueWithProgress";
 
@@ -49,9 +49,9 @@ const BonusCardCounter = (props: BonusCardCounter) => {
       style={[styles.container, { alignItems: "stretch" }]}
       testID="BonusCardCounterTestID"
     >
-      <Label weight="Regular" fontSize="mini" style={styles.label}>
+      <LabelMini weight="Regular" style={{ textAlign: "center" }}>
         {props.label}
-      </Label>
+      </LabelMini>
       <VSpacer size={4} />
       <H3 color="blueItalia-500" style={styles.value}>
         {props.value}
@@ -154,9 +154,6 @@ const BonusCardCounterSkeleton = ({ type }: BonusCardCounterSkeletonProps) => {
 const styles = StyleSheet.create({
   container: {
     flexBasis: "40%"
-  },
-  label: {
-    textAlign: "center"
   },
   value: {
     textAlign: "center"

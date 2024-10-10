@@ -511,65 +511,41 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                           >
                             <Text
                               allowFontScaling={false}
-                              color="black"
-                              defaultColor="black"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="headline"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
-                                  {
-                                    "fontSize": 18,
-                                    "lineHeight": 25,
-                                  },
+                                  {},
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 18,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
+                                    "lineHeight": 25,
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               You have a new message
                             </Text>
                             <Text
                               allowFontScaling={false}
-                              color="black"
-                              defaultColor="black"
-                              defaultWeight="Bold"
                               dynamicTypeRamp="footnote"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 14,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "fontSize": 14,
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "color": "#0E0F13",
+                                    "color": "#555C70",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 14,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
+                                    "lineHeight": 21,
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Open the app to read the content
                             </Text>
@@ -1100,65 +1076,41 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                           >
                             <Text
                               allowFontScaling={false}
-                              color="black"
-                              defaultColor="black"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="headline"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
-                                  {
-                                    "fontSize": 18,
-                                    "lineHeight": 25,
-                                  },
+                                  {},
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 18,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
+                                    "lineHeight": 25,
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               You have a notice due tomorrow
                             </Text>
                             <Text
                               allowFontScaling={false}
-                              color="black"
-                              defaultColor="black"
-                              defaultWeight="Bold"
                               dynamicTypeRamp="footnote"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 14,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "fontSize": 14,
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "color": "#0E0F13",
+                                    "color": "#555C70",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 14,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
+                                    "lineHeight": 21,
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Log in to pay for it
                             </Text>
@@ -1689,65 +1641,41 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                           >
                             <Text
                               allowFontScaling={false}
-                              color="black"
-                              defaultColor="black"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="headline"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
-                                  {
-                                    "fontSize": 18,
-                                    "lineHeight": 25,
-                                  },
+                                  {},
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 18,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
+                                    "lineHeight": 25,
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Comune di Ipazia
                             </Text>
                             <Text
                               allowFontScaling={false}
-                              color="black"
-                              defaultColor="black"
-                              defaultWeight="Bold"
                               dynamicTypeRamp="footnote"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 14,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "fontSize": 14,
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "color": "#0E0F13",
+                                    "color": "#555C70",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 14,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
+                                    "lineHeight": 21,
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Summer camp registration is now open
                             </Text>
@@ -2278,65 +2206,41 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                           >
                             <Text
                               allowFontScaling={false}
-                              color="black"
-                              defaultColor="black"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="headline"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
-                                  {
-                                    "fontSize": 18,
-                                    "lineHeight": 25,
-                                  },
+                                  {},
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 18,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
+                                    "lineHeight": 25,
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               You have a notice due soon
                             </Text>
                             <Text
                               allowFontScaling={false}
-                              color="black"
-                              defaultColor="black"
-                              defaultWeight="Bold"
                               dynamicTypeRamp="footnote"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 14,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "fontSize": 14,
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "color": "#0E0F13",
+                                    "color": "#555C70",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 14,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
+                                    "lineHeight": 21,
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Log in to pay the notice issued by ACI
                             </Text>

@@ -78,12 +78,12 @@ const OperationResultScreenContent = forwardRef<
             <VSpacer size={24} />
           </View>
         )}
-        <H3 style={styles.text}>{title}</H3>
+        <H3 style={{ textAlign: "center" }}>{title}</H3>
         {subtitle && (
           <>
             <VSpacer size={8} />
             {typeof subtitle === "string" ? (
-              <Body style={styles.text}>{subtitle}</Body>
+              <Body style={{ textAlign: "center" }}>{subtitle}</Body>
             ) : (
               <ComposedBodyFromArray body={subtitle} textAlign="center" />
             )}
@@ -126,11 +126,8 @@ const styles = StyleSheet.create({
   wrapper_android: {
     flexGrow: 1,
     justifyContent: "center"
-  },
-  text: {
-    textAlign: "center"
   }
 });
 
-export type { OperationResultScreenContentProps };
 export { OperationResultScreenContent };
+export type { OperationResultScreenContentProps };

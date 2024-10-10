@@ -43,7 +43,7 @@ export const IdPayCard = (props: IdPayCardProps) => (
           <Avatar size="small" logoUri={props.avatarSource} />
         </View>
         <VSpacer size={16} />
-        <LabelSmallAlt>Disponibile</LabelSmallAlt>
+        <LabelSmallAlt color="black">Disponibile</LabelSmallAlt>
         <H3 color="blueItalia-500">
           {formatNumberCentsToAmount(props.amount, true, "right")}
         </H3>

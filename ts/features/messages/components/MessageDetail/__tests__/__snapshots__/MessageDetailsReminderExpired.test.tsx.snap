@@ -809,33 +809,20 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                           <Text
                             accessibilityRole="text"
                             allowFontScaling={false}
-                            color="warning-850"
-                            defaultColor="black"
-                            defaultWeight="Bold"
-                            dynamicTypeRamp="footnote"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 16,
-                                "lineHeight": 24,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                },
+                                {},
                                 {
                                   "color": "#614C15",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             Expired on 21 Mar at 10:33
                           </Text>

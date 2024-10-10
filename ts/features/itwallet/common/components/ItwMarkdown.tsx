@@ -14,7 +14,7 @@ import {
   H6,
   h6FontSize,
   IOToast,
-  LabelLink,
+  Label,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import _ from "lodash";
@@ -79,7 +79,8 @@ const getRules = (onLinkOpen?: ItwMarkdownProps["onLinkOpen"]) => ({
     </Body>
   ),
   link: (node: ASTNode, children: Array<ReactNode>) => (
-    <LabelLink
+    <Label
+      asLink
       key={node.key}
       onPress={() => {
         openWebUrl(node.attributes.href, () =>
@@ -90,7 +91,7 @@ const getRules = (onLinkOpen?: ItwMarkdownProps["onLinkOpen"]) => ({
       numberOfLines={1}
     >
       {children}
-    </LabelLink>
+    </Label>
   )
 });
 

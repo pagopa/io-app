@@ -13,11 +13,13 @@ import * as messagePrecondition from "../../../store/reducers/messagePreconditio
 import * as urlUtils from "../../../../../utils/url";
 import * as analytics from "../../../analytics";
 import { UIMessageId } from "../../../types";
+import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
 describe("PreconditionsFooter", () => {
   afterEach(() => {
     jest.clearAllMocks();
     jest.resetAllMocks();
+    mockAccessibilityInfo(false);
   });
   it("should match snapshot for 'content' footer category", () => {
     jest

@@ -318,22 +318,26 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     }
                                   />
                                   <Text
+                                    allowFontScaling={false}
                                     ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
+                                        {},
                                         {
-                                          "alignSelf": "center",
                                           "color": "#555C70",
-                                          "flexShrink": 1,
-                                          "fontSize": 12,
-                                          "lineHeight": 16,
-                                          "textTransform": "uppercase",
-                                        },
-                                        {
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
                                         },
                                       ]
                                     }
@@ -427,34 +431,22 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "fontSize": 22,
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "color": "#17324D",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
+                                    "lineHeight": 33,
                                   },
                                 ]
                               }
                               testID="message-header-subject"
-                              weight="Semibold"
                             >
                               ######## subject ########
                             </Text>
@@ -467,33 +459,21 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                             />
                             <Text
                               allowFontScaling={false}
-                              color="grey-700"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
                               dynamicTypeRamp="footnote"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 14,
-                                  "lineHeight": 21,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
-                                  },
+                                  {},
                                   {
                                     "color": "#555C70",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 14,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
+                                    "lineHeight": 21,
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               01 Jan 2020, 00:00
                             </Text>
@@ -531,66 +511,42 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 16,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 16,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Ċentru tas-Saħħa
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="blueIO-500"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   onPress={[Function]}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "700",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Bold"
                                 >
                                   health
                                 </Text>
@@ -673,33 +629,21 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                             />
                             <Text
                               allowFontScaling={false}
-                              color="grey-850"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
-                                  {
-                                    "fontSize": 16,
-                                    "lineHeight": 24,
-                                  },
+                                  {},
                                   {
                                     "color": "#2B2E38",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               ######## abstract ########
                             </Text>
@@ -810,34 +754,22 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="black"
-                                      defaultWeight="Semibold"
                                       dynamicTypeRamp="headline"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       role="heading"
                                       style={
                                         [
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          },
+                                          {},
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 18,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 25,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       Attachments
                                     </Text>
@@ -932,34 +864,22 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="blueIO-500"
-                                      defaultColor="black"
-                                      defaultWeight="Semibold"
                                       dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       numberOfLines={2}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          },
+                                          {},
                                           {
                                             "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       A First Attachment
                                     </Text>
@@ -983,29 +903,26 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       }
                                     >
                                       <Text
-                                        accessibilityLabel="PDF"
-                                        accessibilityRole="text"
                                         allowFontScaling={false}
                                         ellipsizeMode="tail"
-                                        importantForAccessibility="yes"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
+                                            {},
+                                            {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 12,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 16,
+                                            },
                                             {
                                               "alignSelf": "center",
                                               "flexShrink": 1,
-                                              "fontSize": 12,
-                                              "lineHeight": 16,
+                                              "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
-                                            },
-                                            {
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                            },
-                                            {
-                                              "color": "#555C70",
                                             },
                                           ]
                                         }
@@ -1171,34 +1088,22 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="blueIO-500"
-                                      defaultColor="black"
-                                      defaultWeight="Semibold"
                                       dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 21,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       numberOfLines={2}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          },
+                                          {},
                                           {
                                             "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       A Second Attachment
                                     </Text>
@@ -1222,29 +1127,26 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       }
                                     >
                                       <Text
-                                        accessibilityLabel="PDF"
-                                        accessibilityRole="text"
                                         allowFontScaling={false}
                                         ellipsizeMode="tail"
-                                        importantForAccessibility="yes"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
+                                            {},
+                                            {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 12,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 16,
+                                            },
                                             {
                                               "alignSelf": "center",
                                               "flexShrink": 1,
-                                              "fontSize": 12,
-                                              "lineHeight": 16,
+                                              "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
-                                            },
-                                            {
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                            },
-                                            {
-                                              "color": "#555C70",
                                             },
                                           ]
                                         }
@@ -1444,7 +1346,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -1453,7 +1355,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
@@ -1488,22 +1390,23 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   <View
                                     style={
                                       {
-                                        "flex": 1,
+                                        "flexGrow": 1,
                                       }
                                     }
                                   >
                                     <Text
+                                      allowFontScaling={false}
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "600",
+                                            "fontWeight": "700",
                                             "lineHeight": 20,
-                                          },
-                                          {
-                                            "color": "#0073E6",
                                           },
                                         ]
                                       }
@@ -1651,7 +1554,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -1660,7 +1563,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
@@ -1695,22 +1598,23 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   <View
                                     style={
                                       {
-                                        "flex": 1,
+                                        "flexGrow": 1,
                                       }
                                     }
                                   >
                                     <Text
+                                      allowFontScaling={false}
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "600",
+                                            "fontWeight": "700",
                                             "lineHeight": 20,
-                                          },
-                                          {
-                                            "color": "#0073E6",
                                           },
                                         ]
                                       }
@@ -1798,34 +1702,22 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           >
                                             <Text
                                               allowFontScaling={false}
-                                              color="grey-700"
-                                              defaultColor="black"
-                                              defaultWeight="Semibold"
                                               dynamicTypeRamp="headline"
-                                              font="TitilliumSansPro"
-                                              fontStyle={
-                                                {
-                                                  "fontSize": 18,
-                                                  "lineHeight": 25,
-                                                }
-                                              }
                                               maxFontSizeMultiplier={1.25}
                                               role="heading"
                                               style={
                                                 [
-                                                  {
-                                                    "fontSize": 18,
-                                                    "lineHeight": 25,
-                                                  },
+                                                  {},
                                                   {
                                                     "color": "#555C70",
                                                     "fontFamily": "Titillium Sans Pro",
+                                                    "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
+                                                    "lineHeight": 25,
                                                   },
                                                 ]
                                               }
-                                              weight="Semibold"
                                             >
                                               Notifica
                                             </Text>
@@ -1977,66 +1869,42 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           >
                                             <Text
                                               allowFontScaling={false}
-                                              color="grey-700"
-                                              defaultColor="blue"
-                                              defaultWeight="Bold"
                                               dynamicTypeRamp="footnote"
-                                              font="TitilliumSansPro"
-                                              fontStyle={
-                                                {
-                                                  "fontSize": 14,
-                                                  "lineHeight": 21,
-                                                }
-                                              }
                                               maxFontSizeMultiplier={1.25}
                                               style={
                                                 [
-                                                  {
-                                                    "fontSize": 14,
-                                                    "lineHeight": 21,
-                                                  },
+                                                  {},
                                                   {
                                                     "color": "#555C70",
                                                     "fontFamily": "Titillium Sans Pro",
+                                                    "fontSize": 14,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "400",
+                                                    "lineHeight": 21,
                                                   },
                                                 ]
                                               }
-                                              weight="Regular"
                                             >
                                               Codice IUN
                                             </Text>
                                             <Text
                                               allowFontScaling={false}
-                                              color="blue"
-                                              defaultColor="black"
-                                              defaultWeight="Semibold"
                                               dynamicTypeRamp="headline"
-                                              font="TitilliumSansPro"
-                                              fontStyle={
-                                                {
-                                                  "fontSize": 18,
-                                                  "lineHeight": 25,
-                                                }
-                                              }
                                               maxFontSizeMultiplier={1.25}
                                               numberOfLines={2}
                                               style={
                                                 [
-                                                  {
-                                                    "fontSize": 18,
-                                                    "lineHeight": 25,
-                                                  },
+                                                  {},
                                                   {
                                                     "color": "#0073E6",
                                                     "fontFamily": "Titillium Sans Pro",
+                                                    "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
+                                                    "lineHeight": 25,
                                                   },
                                                 ]
                                               }
-                                              weight="Semibold"
                                             >
                                               731143-7-0317-8200-0
                                             </Text>
@@ -2147,34 +2015,22 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           >
                                             <Text
                                               allowFontScaling={false}
-                                              color="grey-700"
-                                              defaultColor="black"
-                                              defaultWeight="Semibold"
                                               dynamicTypeRamp="headline"
-                                              font="TitilliumSansPro"
-                                              fontStyle={
-                                                {
-                                                  "fontSize": 18,
-                                                  "lineHeight": 25,
-                                                }
-                                              }
                                               maxFontSizeMultiplier={1.25}
                                               role="heading"
                                               style={
                                                 [
-                                                  {
-                                                    "fontSize": 18,
-                                                    "lineHeight": 25,
-                                                  },
+                                                  {},
                                                   {
                                                     "color": "#555C70",
                                                     "fontFamily": "Titillium Sans Pro",
+                                                    "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
+                                                    "lineHeight": 25,
                                                   },
                                                 ]
                                               }
-                                              weight="Semibold"
                                             >
                                               Message
                                             </Text>
@@ -2326,66 +2182,42 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           >
                                             <Text
                                               allowFontScaling={false}
-                                              color="grey-700"
-                                              defaultColor="blue"
-                                              defaultWeight="Bold"
                                               dynamicTypeRamp="footnote"
-                                              font="TitilliumSansPro"
-                                              fontStyle={
-                                                {
-                                                  "fontSize": 14,
-                                                  "lineHeight": 21,
-                                                }
-                                              }
                                               maxFontSizeMultiplier={1.25}
                                               style={
                                                 [
-                                                  {
-                                                    "fontSize": 14,
-                                                    "lineHeight": 21,
-                                                  },
+                                                  {},
                                                   {
                                                     "color": "#555C70",
                                                     "fontFamily": "Titillium Sans Pro",
+                                                    "fontSize": 14,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "400",
+                                                    "lineHeight": 21,
                                                   },
                                                 ]
                                               }
-                                              weight="Regular"
                                             >
                                               Message ID
                                             </Text>
                                             <Text
                                               allowFontScaling={false}
-                                              color="blue"
-                                              defaultColor="black"
-                                              defaultWeight="Semibold"
                                               dynamicTypeRamp="headline"
-                                              font="TitilliumSansPro"
-                                              fontStyle={
-                                                {
-                                                  "fontSize": 18,
-                                                  "lineHeight": 25,
-                                                }
-                                              }
                                               maxFontSizeMultiplier={1.25}
                                               numberOfLines={2}
                                               style={
                                                 [
-                                                  {
-                                                    "fontSize": 18,
-                                                    "lineHeight": 25,
-                                                  },
+                                                  {},
                                                   {
                                                     "color": "#0073E6",
                                                     "fontFamily": "Titillium Sans Pro",
+                                                    "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
+                                                    "lineHeight": 25,
                                                   },
                                                 ]
                                               }
-                                              weight="Semibold"
                                             >
                                               FAT00001
                                             </Text>
@@ -2657,24 +2489,29 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                             >
                               <Text
                                 accessible={false}
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "textAlign": "center",
-                                    },
+                                    {},
                                     {
                                       "color": "#0E0F13",
-                                    },
-                                    {
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "opacity": 1,
-                                    },
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                      {
+                                        "opacity": 1,
+                                      },
+                                    ],
                                   ]
                                 }
                               />
@@ -3263,36 +3100,24 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                             </View>
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Qualcosa è andato storto
                             </Text>
@@ -3305,36 +3130,24 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
                                     "lineHeight": 24,
                                   },
                                   {
-                                    "color": "#475A6D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
                             </Text>
@@ -3530,24 +3343,29 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                             >
                               <Text
                                 accessible={false}
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "textAlign": "center",
-                                    },
+                                    {},
                                     {
                                       "color": "#0E0F13",
-                                    },
-                                    {
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "opacity": 1,
-                                    },
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                      {
+                                        "opacity": 1,
+                                      },
+                                    ],
                                   ]
                                 }
                               />

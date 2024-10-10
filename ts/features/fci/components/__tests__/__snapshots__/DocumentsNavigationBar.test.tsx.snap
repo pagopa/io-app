@@ -155,33 +155,21 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
   </View>
   <Text
     allowFontScaling={false}
-    color="black"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
-        {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
+        {},
         {
           "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
           "fontWeight": "600",
+          "lineHeight": 25,
         },
       ]
     }
-    weight="Semibold"
   >
     Documento 1 di 2
   </Text>
@@ -319,36 +307,24 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
   />
   <Text
     allowFontScaling={false}
-    color="black"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
-        {
-          "paddingHorizontal": 24,
-        },
-        {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
+        {},
         {
           "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
           "fontWeight": "600",
+          "lineHeight": 25,
+        },
+        {
+          "paddingHorizontal": 24,
         },
       ]
     }
-    weight="Semibold"
   >
     Pagina 1 di 2
   </Text>
