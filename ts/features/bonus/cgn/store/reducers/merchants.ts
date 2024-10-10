@@ -6,7 +6,10 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import {
   cgnOfflineMerchants,
   cgnOnlineMerchants,
-  cgnSelectedMerchant
+  cgnSelectedMerchant,
+  resetMerchantDiscountCode,
+  selectMerchantDiscount,
+  setMerchantDiscountCode
 } from "../actions/merchants";
 import {
   remoteError,
@@ -18,17 +21,22 @@ import {
 import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/OnlineMerchants";
 import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 
 export type CgnMerchantsState = {
   onlineMerchants: RemoteValue<OnlineMerchants["items"], NetworkError>;
   offlineMerchants: RemoteValue<OfflineMerchants["items"], NetworkError>;
   selectedMerchant: RemoteValue<Merchant, NetworkError>;
+  selectedDiscount: RemoteValue<Discount, NetworkError>;
+  selectedDiscountCode?: string;
 };
 
 const INITIAL_STATE: CgnMerchantsState = {
   onlineMerchants: remoteUndefined,
   offlineMerchants: remoteUndefined,
-  selectedMerchant: remoteUndefined
+  selectedMerchant: remoteUndefined,
+  selectedDiscount: remoteUndefined,
+  selectedDiscountCode: undefined
 };
 
 const reducer = (
@@ -86,6 +94,24 @@ const reducer = (
         ...state,
         selectedMerchant: remoteError(action.payload)
       };
+    // Selected Discount detail
+    case getType(selectMerchantDiscount):
+      return {
+        ...state,
+        selectedDiscount: remoteReady(action.payload)
+      };
+    // Set discount code
+    case getType(setMerchantDiscountCode):
+      return {
+        ...state,
+        selectedDiscountCode: action.payload
+      };
+    // Reset discount code
+    case getType(resetMerchantDiscountCode):
+      return {
+        ...state,
+        selectedDiscountCode: undefined
+      };
   }
   return state;
 };
@@ -108,4 +134,14 @@ export const cgnOfflineMerchantsSelector = createSelector(
 export const cgnSelectedMerchantSelector = createSelector(
   cgnMerchantsSelector,
   merchantsState => merchantsState.selectedMerchant
+);
+
+export const cgnSelectedDiscountSelector = createSelector(
+  cgnMerchantsSelector,
+  merchantsState => merchantsState.selectedDiscount
+);
+
+export const cgnSelectedDiscountCodeSelector = createSelector(
+  cgnMerchantsSelector,
+  merchantsState => merchantsState.selectedDiscountCode
 );

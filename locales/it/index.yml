@@ -2694,24 +2694,11 @@ bonus:
           byDistance: Per vicinanza alla tua posizione
           byName: Ordine alfabetico
     merchantDetail:
-      bucket:
-        alert:
-          cta: Ho capito!
-        error:
-          noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
         deals: Opportunità
         description: Descrizione
-        services: Servizi
         contactInfo: Contatti e informazioni
-        hours: Orari
-        validity: Validità
-        discountCode: Codice Sconto
-        conditions: Condizioni
       cta:
-        label: Vai al sito dell'operatore
-        landingPage: Accedi all’opportunità
-        discountUrl: Vai all'opportunità
         website: Vai al sito del partner
       categories:
         counting: e altre {{count}}
@@ -2728,6 +2715,19 @@ bonus:
       information:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
+      discount:
+        description: Descrizione
+        conditions: Condizioni
+        validity: Validità
+        cta:
+          api: Attiva codice sconto
+          static: Vai al codice sconto
+          bucket: Vai al codice sconto
+          landingpage: Vai all'opportunità
+        secondaryCta: Vai all'opportunità
+        title: Ecco il codice sconto!
+        expired: Codice sconto scaduto!
+        copyButton: Copia codice sconto
     cta:
       activeBonus: Attiva Carta Giovani Nazionale
       back: Non ora

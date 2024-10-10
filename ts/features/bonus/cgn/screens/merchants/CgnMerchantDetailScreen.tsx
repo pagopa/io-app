@@ -38,7 +38,7 @@ import { isReady } from "../../../../../common/model/RemoteValue";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDiscountItem";
+import { CgnMerchantDiscountItem } from "../../components/merchants/CgnMerchantsDiscountItem";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
 import { CgnAddressListItem } from "../../components/merchants/CgnAddressListItem";
@@ -100,11 +100,7 @@ const CgnMerchantDetailScreen = () => {
 
   const DiscountListItem = ({ item }: { item: Discount }) =>
     isReady(merchantDetail) ? (
-      <CgnMerchantDiscountItem
-        discount={item}
-        operatorName={merchantDetail.value.name}
-        merchantType={merchantDetail.value.discountCodeType}
-      />
+      <CgnMerchantDiscountItem discount={item} />
     ) : null;
   const renderDiscountsList = (discounts: ReadonlyArray<Discount>) =>
     discounts.map((discount, index) => (
