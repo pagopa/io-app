@@ -1438,7 +1438,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                 [
                                   {},
                                   {
-                                    "color": "#2B2E38",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
                                     "fontStyle": "normal",

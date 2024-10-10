@@ -519,7 +519,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                                 [
                                   {},
                                   {
-                                    "color": "#2B2E38",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
@@ -1099,7 +1099,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                 [
                                   {},
                                   {
-                                    "color": "#2B2E38",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
@@ -2466,7 +2466,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                                 [
                                   {},
                                   {
-                                    "color": "#2B2E38",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
@@ -3389,7 +3389,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                                 [
                                   {},
                                   {
-                                    "color": "#2B2E38",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
@@ -4312,7 +4312,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                                 [
                                   {},
                                   {
-                                    "color": "#2B2E38",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
@@ -5235,7 +5235,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                                 [
                                   {},
                                   {
-                                    "color": "#2B2E38",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
@@ -6158,7 +6158,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                                 [
                                   {},
                                   {
-                                    "color": "#2B2E38",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
@@ -6738,7 +6738,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                 [
                                   {},
                                   {
-                                    "color": "#2B2E38",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
@@ -8105,7 +8105,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                                 [
                                   {},
                                   {
-                                    "color": "#2B2E38",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
@@ -9028,7 +9028,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                                 [
                                   {},
                                   {
-                                    "color": "#2B2E38",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
@@ -9951,7 +9951,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                                 [
                                   {},
                                   {
-                                    "color": "#2B2E38",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
@@ -10874,7 +10874,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                                 [
                                   {},
                                   {
-                                    "color": "#2B2E38",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
                                     "fontStyle": "normal",

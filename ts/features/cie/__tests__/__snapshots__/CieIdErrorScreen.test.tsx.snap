@@ -189,7 +189,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
           [
             {},
             {
-              "color": "#2B2E38",
+              "color": "#0E0F13",
               "fontFamily": "Titillium Sans Pro",
               "fontSize": 22,
               "fontStyle": "normal",
@@ -675,7 +675,7 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
           [
             {},
             {
-              "color": "#2B2E38",
+              "color": "#0E0F13",
               "fontFamily": "Titillium Sans Pro",
               "fontSize": 22,
               "fontStyle": "normal",

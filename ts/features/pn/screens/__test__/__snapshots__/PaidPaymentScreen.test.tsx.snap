@@ -434,7 +434,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                 [
                                   {},
                                   {
-                                    "color": "#2B2E38",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
                                     "fontStyle": "normal",

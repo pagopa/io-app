@@ -368,33 +368,21 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                               accessibilityLabel="Security"
                               accessibilityRole="header"
                               allowFontScaling={false}
-                              color="black"
-                              defaultColor="black"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title1"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 28,
-                                  "lineHeight": 40,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
-                                  {
-                                    "fontSize": 28,
-                                    "lineHeight": 40,
-                                  },
+                                  {},
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
+                                    "lineHeight": 40,
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Security
                             </Text>
@@ -415,33 +403,21 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                             />
                             <Text
                               allowFontScaling={false}
-                              color="grey-700"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
-                                  {
-                                    "fontSize": 16,
-                                    "lineHeight": 24,
-                                  },
+                                  {},
                                   {
                                     "color": "#555C70",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Manage in-app authentication methods.
                             </Text>
@@ -535,65 +511,41 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Semibold"
                                       dynamicTypeRamp="headline"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          },
+                                          {},
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 18,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 25,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       Change the unlock code
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
-                                      defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          },
+                                          {},
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                       Set a new 6-digit code.
                                     </Text>
@@ -743,67 +695,43 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Semibold"
                                       dynamicTypeRamp="headline"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          },
+                                          {},
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 18,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 25,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
-                                      Controlla i tuoi accessi
+                                      Accessi a servizi di terze parti
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="blue"
-                                      defaultWeight="Bold"
                                       dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          },
+                                          {},
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
-                                      Consulta la cronologia degli accessi con IO
+                                      Rivedi gli accessi effettuati a servizi di terze parti tramite IO
                                     </Text>
                                   </View>
                                   <RNSVGSvgView
