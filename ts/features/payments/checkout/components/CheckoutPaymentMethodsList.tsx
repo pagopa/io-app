@@ -155,6 +155,11 @@ const CheckoutPaymentMethodsList = () => {
       })
     );
 
+  const handleOnSelectRecentPaymentMethod = () =>
+    recentUsedPaymentMethod?.status === WalletStatusEnum.VALIDATED
+      ? handleSelectUserWallet
+      : handleSelectPaymentMethod;
+
   const selectedWalletId = O.toUndefined(selectedUserWalletIdOption);
   const selectedPaymentMethodId = O.toUndefined(selectedPaymentMethodIdOption);
 
@@ -177,7 +182,7 @@ const CheckoutPaymentMethodsList = () => {
         type="radioListItem"
         selectedItem={selectedWalletId || selectedPaymentMethodId}
         items={recentPaymentMethodListItem}
-        onPress={handleSelectUserWallet}
+        onPress={handleOnSelectRecentPaymentMethod}
       />
       {!_.isEmpty(userPaymentMethodListItems) && (
         <ListItemHeader
