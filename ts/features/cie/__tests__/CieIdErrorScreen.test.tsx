@@ -5,6 +5,7 @@ import * as useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMeth
 
 const mockNavigateToCiePinInsertion = jest.fn();
 const mockNavigateToIdpSelection = jest.fn();
+const mockNavigateToCieIdScreen = jest.fn();
 const mockPopToTop = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
@@ -23,6 +24,7 @@ describe("CieIdErrorScreen where device supports NFC", () => {
     jest.spyOn(useNavigateToLoginMethod, "default").mockImplementation(() => ({
       navigateToCiePinInsertion: mockNavigateToCiePinInsertion,
       navigateToIdpSelection: mockNavigateToIdpSelection,
+      navigateToCieIdLoginScreen: mockNavigateToCieIdScreen,
       isCieSupported: true
     }));
   });
@@ -37,6 +39,7 @@ describe("CieIdErrorScreen where device supports NFC", () => {
 
     expect(mockNavigateToCiePinInsertion).toHaveBeenCalled();
     expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
+    expect(mockNavigateToCieIdScreen).not.toHaveBeenCalled();
     expect(mockPopToTop).not.toHaveBeenCalled();
   });
   it("Should properly call pop-to-top", testPopToTop);
@@ -47,6 +50,7 @@ describe("CieIdErrorScreen where device doesn't support NFC", () => {
     jest.spyOn(useNavigateToLoginMethod, "default").mockImplementation(() => ({
       navigateToCiePinInsertion: mockNavigateToCiePinInsertion,
       navigateToIdpSelection: mockNavigateToIdpSelection,
+      navigateToCieIdLoginScreen: mockNavigateToCieIdScreen,
       isCieSupported: false
     }));
   });
@@ -61,6 +65,7 @@ describe("CieIdErrorScreen where device doesn't support NFC", () => {
 
     expect(mockNavigateToIdpSelection).toHaveBeenCalled();
     expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
+    expect(mockNavigateToCieIdScreen).not.toHaveBeenCalled();
     expect(mockPopToTop).not.toHaveBeenCalled();
   });
   it("Should properly call pop-to-top", testPopToTop);
@@ -86,5 +91,6 @@ function testPopToTop() {
 
   expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
   expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
+  expect(mockNavigateToCieIdScreen).not.toHaveBeenCalled();
   expect(mockPopToTop).toHaveBeenCalled();
 }

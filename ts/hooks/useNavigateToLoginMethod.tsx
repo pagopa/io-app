@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 import {
   trackCieLoginSelected,
@@ -12,6 +13,9 @@ import { isCieSupportedSelector } from "../store/reducers/cie";
 import { cieFlowForDevServerEnabled } from "../features/cieLogin/utils";
 import { idpSelected } from "../store/actions/authentication";
 import { SpidIdp } from "../../definitions/content/SpidIdp";
+import { SpidLevel } from "../features/cieLogin/components/CieIdLoginWebView";
+import { isCieLoginUatEnabledSelector } from "../features/cieLogin/store/selectors";
+import { ChosenIdentifier } from "../screens/authentication/OptInScreen";
 
 export const IdpCIE: SpidIdp = {
   id: "cie",
@@ -26,6 +30,7 @@ const useNavigateToLoginMethod = () => {
   const store = useIOStore();
   const { navigate } = useIONavigation();
   const isCIEAuthenticationSupported = useIOSelector(isCieSupportedSelector);
+  const isCieUatEnabled = useIOSelector(isCieLoginUatEnabledSelector);
 
   const isCieSupported = useMemo(
     () =>
@@ -34,37 +39,81 @@ const useNavigateToLoginMethod = () => {
     [isCIEAuthenticationSupported]
   );
 
+  const withIsFastLoginOptInCheck = useCallback(
+    (cb: () => void, optInScreenParams: ChosenIdentifier) => {
+      if (isFastLoginOptInFFEnabled) {
+        navigate(ROUTES.AUTHENTICATION, {
+          screen: ROUTES.AUTHENTICATION_OPT_IN,
+          params: optInScreenParams
+        });
+      } else {
+        cb();
+      }
+    },
+    [isFastLoginOptInFFEnabled, navigate]
+  );
+
   const navigateToIdpSelection = useCallback(() => {
     trackSpidLoginSelected();
-    if (isFastLoginOptInFFEnabled) {
-      navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.AUTHENTICATION_OPT_IN,
-        params: { identifier: "SPID" }
-      });
-    } else {
-      navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.AUTHENTICATION_IDP_SELECTION
-      });
-    }
-  }, [isFastLoginOptInFFEnabled, navigate]);
+    withIsFastLoginOptInCheck(
+      () => {
+        navigate(ROUTES.AUTHENTICATION, {
+          screen: ROUTES.AUTHENTICATION_IDP_SELECTION
+        });
+      },
+      { identifier: "SPID" }
+    );
+  }, [withIsFastLoginOptInCheck, navigate]);
 
   const navigateToCiePinInsertion = useCallback(() => {
     dispatch(idpSelected(IdpCIE));
     void trackCieLoginSelected(store.getState());
 
-    if (isFastLoginOptInFFEnabled) {
-      navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.AUTHENTICATION_OPT_IN,
-        params: { identifier: "CIE" }
-      });
-    } else {
-      navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.CIE_PIN_SCREEN
-      });
-    }
-  }, [isFastLoginOptInFFEnabled, navigate, store, dispatch]);
+    withIsFastLoginOptInCheck(
+      () => {
+        navigate(ROUTES.AUTHENTICATION, {
+          screen: ROUTES.CIE_PIN_SCREEN
+        });
+      },
+      { identifier: "CIE" }
+    );
+  }, [withIsFastLoginOptInCheck, navigate, store, dispatch]);
 
-  return { navigateToCiePinInsertion, navigateToIdpSelection, isCieSupported };
+  const navigateToCieIdLoginScreen = useCallback(
+    (spidLevel: SpidLevel = "SpidL2") => {
+      if (isCieIdAvailable(isCieUatEnabled)) {
+        const params = {
+          spidLevel,
+          isUat: isCieUatEnabled
+        };
+
+        withIsFastLoginOptInCheck(
+          () => {
+            navigate(ROUTES.AUTHENTICATION, {
+              screen: ROUTES.AUTHENTICATION_CIE_ID_LOGIN,
+              params
+            });
+          },
+          { identifier: "CIE_ID", params }
+        );
+      } else {
+        navigate(ROUTES.AUTHENTICATION, {
+          screen: ROUTES.CIE_NOT_INSTALLED,
+          params: {
+            isUat: isCieUatEnabled
+          }
+        });
+      }
+    },
+    [isCieUatEnabled, withIsFastLoginOptInCheck, navigate]
+  );
+
+  return {
+    navigateToCiePinInsertion,
+    navigateToIdpSelection,
+    navigateToCieIdLoginScreen,
+    isCieSupported
+  };
 };
 
 export default useNavigateToLoginMethod;

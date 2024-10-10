@@ -740,6 +740,10 @@ authentication:
         description: Se hai SPID, entra su IO inserendo le tue credenziali. Puoi usare anche il tuo volto o l’impronta o il codice impostato per l’app del tuo fornitore di SPID.
         primary_action_label: Entra con SPID
       secondary_action_label: Chiudi
+    cie_not_installed:
+      title: Non riusciamo a trovare l'app CieID
+      description: Per accedere, devi avere l'app installata sul tuo dispositivo.
+      primary_action_label: Scarica CieID
   cie:
     genericTitle: Entra con CIE
     cie: CIE
