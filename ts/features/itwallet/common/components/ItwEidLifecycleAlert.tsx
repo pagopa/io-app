@@ -71,17 +71,13 @@ export const ItwEidLifecycleAlert = ({
           {
             date: format(eid.jwt.expiration, "DD-MM-YYYY")
           }
-        ),
-        action: I18n.t("features.itWallet.discovery.banner.action"),
-        onPress: () => null
+        )
       },
       expired: {
         variant: "error",
         content: I18n.t(
           "features.itWallet.presentation.bottomSheets.eidInfo.alert.expired"
-        ),
-        action: I18n.t("features.itWallet.discovery.banner.action"),
-        onPress: () => null
+        )
       }
     };
 
