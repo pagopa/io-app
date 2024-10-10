@@ -7,7 +7,8 @@ import {
   IOStyles,
   VStack,
   H4,
-  Alert
+  Alert,
+  ButtonSolid
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
@@ -16,7 +17,9 @@ import { useIOSelector } from "../../../../store/hooks";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { format } from "../../../../utils/dates";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
+import { ITW_ROUTES } from "../../navigation/routes";
 import { StoredCredential } from "../utils/itwTypesUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 
@@ -29,13 +32,22 @@ export const ItwEidInfoBottomSheetTitle = () => (
   </HStack>
 );
 
-export const ItwEidInfoBottomSheetContent = () => {
+type Props = {
+  navigation: ReturnType<typeof useIONavigation>;
+};
+
+const ItwEidInfoBottomSheetContent = ({ navigation }: Props) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
 
   const Content = ({ credential }: { credential: StoredCredential }) => {
     const claims = parseClaims(credential.parsedCredential, {
       exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
     });
+
+    const navigateToWalletRevocationScreen = () =>
+      navigation.navigate(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
+      });
 
     return (
       <VStack space={24}>
@@ -66,6 +78,12 @@ export const ItwEidInfoBottomSheetContent = () => {
             "features.itWallet.presentation.bottomSheets.eidInfo.contentBottom"
           )}
         />
+        <ButtonSolid
+          label={I18n.t("features.itWallet.walletRevocation.cta")}
+          fullWidth
+          color="danger"
+          onPress={navigateToWalletRevocationScreen}
+        />
       </VStack>
     );
   };
@@ -78,3 +96,9 @@ export const ItwEidInfoBottomSheetContent = () => {
     )
   );
 };
+
+const MemoizedItwEidInfoBottomSheetContent = React.memo(
+  ItwEidInfoBottomSheetContent
+);
+
+export { MemoizedItwEidInfoBottomSheetContent as ItwEidInfoBottomSheetContent };
