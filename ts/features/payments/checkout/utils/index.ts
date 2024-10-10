@@ -17,6 +17,9 @@ import {
 export const WALLET_PAYMENT_FEEDBACK_URL =
   "https://io.italia.it/diccilatua/ces-pagamento";
 
+export const WALLET_PAYMENT_SHOW_OTHER_CHANNELS_URL =
+  "https://www.pagopa.gov.it/it/cittadini/dove-pagare/";
+
 export const isValidPaymentMethod = (method: PaymentMethodResponse) =>
   [
     PaymentMethodManagementTypeEnum.ONBOARDABLE,

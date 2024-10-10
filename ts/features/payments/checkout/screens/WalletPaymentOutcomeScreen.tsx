@@ -39,6 +39,7 @@ import { walletPaymentSelectedPspSelector } from "../store/selectors/psps";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
+import { usePaymentReversedInfoBottomSheet } from "../hooks/usePaymentReversedInfoBottomSheet";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -68,6 +69,8 @@ const WalletPaymentOutcomeScreen = () => {
   const supportModal = usePaymentFailureSupportModal({
     outcome
   });
+
+  const reversedPaymentModal = usePaymentReversedInfoBottomSheet();
 
   const shouldShowHeader = [
     WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE
@@ -137,6 +140,10 @@ const WalletPaymentOutcomeScreen = () => {
     navigation.pop();
   };
 
+  const handleShowMoreOnReversedPayment = () => {
+    reversedPaymentModal.present();
+  };
+
   const closeSuccessAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("wallet.payment.outcome.SUCCESS.button"),
     accessibilityLabel: I18n.t("wallet.payment.outcome.SUCCESS.button"),
@@ -199,6 +206,14 @@ const WalletPaymentOutcomeScreen = () => {
         );
       }
     };
+
+  const paymentReversedAction: OperationResultScreenContentProps["action"] = {
+    label: I18n.t("wallet.payment.outcome.PAYMENT_REVERSED.primaryAction"),
+    accessibilityLabel: I18n.t(
+      "wallet.payment.outcome.PAYMENT_REVERSED.primaryAction"
+    ),
+    onPress: handleShowMoreOnReversedPayment
+  };
 
   useOnFirstRender(() => {
     const kind =
@@ -371,6 +386,23 @@ const WalletPaymentOutcomeScreen = () => {
           secondaryAction: onboardPaymentMethodCloseAction,
           isHeaderVisible: true
         };
+      case WalletPaymentOutcomeEnum.PAYMENT_REVERSED:
+        return {
+          pictogram: "attention",
+          title: I18n.t("wallet.payment.outcome.PAYMENT_REVERSED.title"),
+          subtitle: I18n.t("wallet.payment.outcome.PAYMENT_REVERSED.subtitle"),
+          action: paymentReversedAction,
+          secondaryAction: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.PAYPAL_REMOVED_ERROR:
+        return {
+          pictogram: "accessDenied",
+          title: I18n.t("wallet.payment.outcome.PAYPAL_REMOVED_ERROR.title"),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.PAYPAL_REMOVED_ERROR.subtitle"
+          ),
+          action: closeFailureAction
+        };
     }
   };
 
@@ -382,6 +414,7 @@ const WalletPaymentOutcomeScreen = () => {
         {requiresFeedback && <WalletPaymentFeebackBanner />}
       </OperationResultScreenContent>
       {supportModal.bottomSheet}
+      {reversedPaymentModal.bottomSheet}
     </>
   );
 };
