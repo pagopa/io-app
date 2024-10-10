@@ -3240,7 +3240,7 @@ features:
         content: Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!
         action: Inizia
       title: La versione digitale dei tuoi documenti, su IO
-      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti personali**, come la Patente di guida, la Tessera Sanitaria e presto molti altri. \n Attiva la funzionalità *Documenti su IO* per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
+      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti personali**, come la Patente di guida e la Tessera Sanitaria. \n Attiva la funzionalità *Documenti su IO* per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
       tos: Per maggiori informazioni, leggi l’[informativa Privacy](https://io.italia.it/informativa-sperimentazione) e i [Termini e Condizioni d’uso](https://io.italia.it/tos-sperimentazione)
       upcomingWalletBanner:
         title: "Novità in arrivo: i tuoi Documenti su IO"
@@ -3320,9 +3320,9 @@ features:
         toast: Fatto!
       notMatchingIdentityError:
         title: Identità non riconosciuta
-        body: Non puoi attivare Documenti con un’identità diversa da quella che usi per accedere a IO. Verifica le credenziali di accesso e riprova.
+        body: Attiva Documenti su IO con la stessa identità utilizzata per accedere all'app IO. Verifica le credenziali di accesso e riprova.
         primaryAction: Ho capito
-        secondaryAction: Segnala un problema
+        secondaryAction: Chiudi
       genericError:
         title: Si è verificato un errore imprevisto
         body: La tua richiesta verso l'ente che emette il documento non è andata a buon fine.
@@ -3409,7 +3409,7 @@ features:
         toast:
           removed: Fatto!
       ctas:
-        openPdf: "Open PDF document"
+        openPdf: "Show document"
         shareButton: Save or share
         fiscalCode: Your Fiscal Code
       trustmark:
@@ -3434,6 +3434,9 @@ support:
   panicMode:
     title: "We cannot help you at the moment"
     body: "We know there is a problem and we are working to solve it. If the problem remains, or if you need support on another topic, please try again later."
+  errorGetZendeskToken: 
+    title: Sorry, we're unable to open a service request at the moment.
+    subtitle: Try again later
   askPermissions:
     nameSurname: "Name and Surname"
     fiscalCode: "Fiscal code"
@@ -4073,8 +4076,8 @@ FIMS:
       successToast: "Fatto! Controlla la tua casella di posta."
       errorToast: "C’è stato un problema nell’invio della richiesta. Riprova"
     profileCTA:
-      title: Accessi a servizi di terze parti
-      subTitle: Rivedi gli accessi effettuati a servizi di terze parti tramite IO
+      title: "Controlla i tuoi accessi"
+      subTitle: "Consulta la cronologia degli accessi con IO"
     historyScreen:
       header: Accessi a servizi di terze parti
       body: Qui puoi vedere tutti gli accessi a servizi esterni che hai fatto tramite IO e richiederne una copia via email
