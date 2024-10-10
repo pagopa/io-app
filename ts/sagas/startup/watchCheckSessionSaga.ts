@@ -8,36 +8,12 @@ import { GetSessionStateT } from "../../../definitions/session_manager/requestTy
 import { BackendClient } from "../../api/backend";
 import {
   checkCurrentSession,
-  loadSupportToken,
   sessionInformationLoadSuccess
 } from "../../store/actions/authentication";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
 import { convertUnknownToError } from "../../utils/errors";
 import { handleSessionExpiredSaga } from "../../features/fastLogin/saga/utils";
-
-// load the support token useful for user assistance
-function* handleLoadSupportToken(
-  getSupportToken: ReturnType<typeof BackendClient>["getSupportToken"]
-): SagaIterator {
-  try {
-    const response: SagaCallReturnType<typeof getSupportToken> = yield* call(
-      getSupportToken,
-      {}
-    );
-    if (E.isLeft(response)) {
-      throw Error(readableReport(response.left));
-    } else {
-      if (response.right.status === 200) {
-        yield* put(loadSupportToken.success(response.right.value));
-      } else {
-        throw Error(`response status code ${response.right.status}`);
-      }
-    }
-  } catch (e) {
-    yield* put(loadSupportToken.failure(convertUnknownToError(e)));
-  }
-}
 
 export function* checkSession(
   getSessionValidity: ReturnType<typeof BackendClient>["getSession"],
@@ -85,17 +61,12 @@ export function* checkSessionResult(
 // Saga that listen to check session dispatch and returns it's validity
 export function* watchCheckSessionSaga(
   getSessionValidity: ReturnType<typeof BackendClient>["getSession"],
-  getSupportToken: ReturnType<typeof BackendClient>["getSupportToken"],
   fields?: string
 ): SagaIterator {
   yield* takeLatest(getType(checkCurrentSession.request), function* () {
     yield* call(checkSession, getSessionValidity, fields);
   });
   yield* takeLatest(getType(checkCurrentSession.success), checkSessionResult);
-
-  yield* takeLatest(getType(loadSupportToken.request), function* () {
-    yield* call(handleLoadSupportToken, getSupportToken);
-  });
 }
 
 export const testableCheckSession = isTestEnv ? checkSession : undefined;

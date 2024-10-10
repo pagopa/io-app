@@ -451,7 +451,6 @@ export function* initializeApplicationSaga(
   yield* fork(
     watchCheckSessionSaga,
     backendClient.getSession,
-    backendClient.getSupportToken,
     formatRequestedTokenString()
   );
   // Start watching for requests of abort the onboarding
