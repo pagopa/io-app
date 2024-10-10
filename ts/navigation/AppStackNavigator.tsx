@@ -21,7 +21,6 @@ import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import {
   isCGNEnabledSelector,
-  isItwEnabledSelector,
   isNewPaymentSectionEnabledSelector
 } from "../store/reducers/backendStatus";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
@@ -35,9 +34,6 @@ import {
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import { itwLifecycleIsValidSelector } from "../features/itwallet/lifecycle/store/selectors";
-import { isItwTrialActiveSelector } from "../features/trialSystem/store/reducers";
-import { itwLinkingOptions } from "../features/itwallet/navigation/ItwStackNavigator";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {

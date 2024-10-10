@@ -4,7 +4,6 @@ import {
 } from "@react-navigation/stack";
 import * as React from "react";
 import { Platform } from "react-native";
-import { PathConfigMap } from "@react-navigation/native";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
 import { ItwActivateNfcScreen } from "../identification/screens/cie/ItwActivateNfcScreen";
