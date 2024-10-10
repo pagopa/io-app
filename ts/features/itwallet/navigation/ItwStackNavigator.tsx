@@ -33,26 +33,12 @@ import ItwPlayground from "../playgrounds/screens/ItwPlayground";
 import { ItwPresentationCredentialAttachmentScreen } from "../presentation/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialDetailScreen } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
 import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
-import { AppParamsList } from "../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
 const Stack = createStackNavigator<ItwParamsList>();
 
 const hiddenHeader = { headerShown: false };
-
-export const itwLinkingOptions = (
-  canBeActivated: boolean
-): PathConfigMap<AppParamsList> => ({
-  [ITW_ROUTES.MAIN]: {
-    path: "itw",
-    screens: {
-      [ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION]:
-        "credential/issuance",
-      ...(canBeActivated && { [ITW_ROUTES.DISCOVERY.INFO]: "discovery/info" })
-    }
-  }
-});
 
 export const ItwStackNavigator = () => (
   <ItWalletIssuanceMachineProvider>

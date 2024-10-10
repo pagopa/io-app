@@ -38,6 +38,7 @@ import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { itwLifecycleIsValidSelector } from "../features/itwallet/lifecycle/store/selectors";
 import { isItwTrialActiveSelector } from "../features/trialSystem/store/reducers";
 import { itwLinkingOptions } from "../features/itwallet/navigation/ItwStackNavigator";
+import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
@@ -96,12 +97,6 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
     isNewPaymentSectionEnabledSelector
   );
 
-  // ITW Flags
-  const isItwTrialActive = useIOSelector(isItwTrialActiveSelector);
-  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
-  const isItwEnabled = useIOSelector(isItwEnabledSelector);
-  const canItwBeActivated = isItwTrialActive && !isItwValid && isItwEnabled;
-
   // Dark/Light Mode
   const { themeType } = useIOThemeContext();
 
@@ -151,7 +146,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
             }
           }
         },
-        ...itwLinkingOptions(canItwBeActivated),
+        ...useItwLinkingOptions(),
         ...fciLinkingOptions,
         ...(cgnEnabled ? cgnLinkingOptions : {}),
         ...idPayLinkingOptions,
