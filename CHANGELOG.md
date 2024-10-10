@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.72.0-rc.0](https://github.com/pagopa/io-app/compare/2.71.0-rc.2...2.72.0-rc.0) (2024-10-10)
+
+
+### Bug Fixes
+
+* [[IOBP-896](https://pagopa.atlassian.net/browse/IOBP-896)] Infinite card loading skeletons in the Wallet tab ([#6250](https://github.com/pagopa/io-app/issues/6250)) ([dbabc0b](https://github.com/pagopa/io-app/commit/dbabc0b7fc083f114b755f5a7eab5c7231b16d82))
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-392](https://pagopa.atlassian.net/browse/IOAPPX-392)] Set `largeHeap=true` ([#6269](https://github.com/pagopa/io-app/issues/6269)) ([b5a488a](https://github.com/pagopa/io-app/commit/b5a488a387926ed2284d7818ca8dd07e23963866))
+* **IT Wallet:** [[SIW-1725](https://pagopa.atlassian.net/browse/SIW-1725)] Add activation from internal navigation ([#6261](https://github.com/pagopa/io-app/issues/6261)) ([9d79a77](https://github.com/pagopa/io-app/commit/9d79a776d8682e12bae7ab12f33e9b2555cdc542)), closes [pagopa/io-dev-api-server#420](https://github.com/pagopa/io-dev-api-server/issues/420)
+* **IT Wallet:** [[SIW-1728](https://pagopa.atlassian.net/browse/SIW-1728)] Wallet instance activation copy review ([#6267](https://github.com/pagopa/io-app/issues/6267)) ([7d2a4ec](https://github.com/pagopa/io-app/commit/7d2a4ec5c8343984c7e707ba86f5c467626fea0c))
+
 ## [2.71.0-rc.2](https://github.com/pagopa/io-app/compare/2.71.0-rc.1...2.71.0-rc.2) (2024-10-04)
 
 
