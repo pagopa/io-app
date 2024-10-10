@@ -771,7 +771,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                       }
                                       weight="Semibold"
                                     >
-                                      Accessi a servizi di terze parti
+                                      Controlla i tuoi accessi
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
@@ -803,7 +803,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                       }
                                       weight="Regular"
                                     >
-                                      Rivedi gli accessi effettuati a servizi di terze parti tramite IO
+                                      Consulta la cronologia degli accessi con IO
                                     </Text>
                                   </View>
                                   <RNSVGSvgView
