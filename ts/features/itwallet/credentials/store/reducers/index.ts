@@ -1,10 +1,17 @@
 import * as O from "fp-ts/lib/Option";
+import { createMigrate, PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { isDevEnv } from "../../../../../utils/environment";
+import itwCreateSecureStorage from "../../../common/store/storages/itwSecureStorage";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
+import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
+import {
+  CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION,
+  itwCredentialsStateMigrations
+} from "./migrations";
 
 export type ItwCredentialsState = {
   eid: O.Option<StoredCredential>;
@@ -63,6 +70,15 @@ const reducer = (
   }
 };
 
+const itwCredentialsPersistConfig: PersistConfig = {
+  key: "itWalletCredentials",
+  storage: itwCreateSecureStorage(),
+  version: CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION,
+  migrate: createMigrate(itwCredentialsStateMigrations, { debug: isDevEnv })
+};
+
+const persistedReducer = persistReducer(itwCredentialsPersistConfig, reducer);
+
 /**
  * Get the new list of credentials overwriting those of the same type, if present.
  */
@@ -86,4 +102,4 @@ const getUpsertedCredentials = (
   );
 };
 
-export default reducer;
+export default persistedReducer;

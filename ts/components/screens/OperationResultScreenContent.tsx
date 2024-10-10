@@ -9,12 +9,15 @@ import {
   IOStyles,
   IOVisualCostants,
   Pictogram,
-  useIOTheme,
   VSpacer,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
-import { PropsWithChildren } from "react";
+import React, {
+  cloneElement,
+  forwardRef,
+  isValidElement,
+  PropsWithChildren
+} from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -38,23 +41,28 @@ type OperationResultScreenContentProps = WithTestID<{
   isHeaderVisible?: boolean;
 }>;
 
-const OperationResultScreenContent = ({
-  pictogram,
-  title,
-  subtitle,
-  action,
-  secondaryAction,
-  children,
-  testID,
-  isHeaderVisible
-}: PropsWithChildren<OperationResultScreenContentProps>) => {
-  const theme = useIOTheme();
-
-  return (
+const OperationResultScreenContent = forwardRef<
+  View,
+  PropsWithChildren<OperationResultScreenContentProps>
+>(
+  (
+    {
+      pictogram,
+      title,
+      subtitle,
+      action,
+      secondaryAction,
+      children,
+      testID,
+      isHeaderVisible
+    },
+    ref
+  ) => (
     <SafeAreaView
       edges={isHeaderVisible ? ["bottom"] : undefined}
       style={styles.container}
       testID={testID}
+      ref={ref}
     >
       <ScrollView
         centerContent={true}
@@ -70,12 +78,7 @@ const OperationResultScreenContent = ({
             <VSpacer size={24} />
           </View>
         )}
-        <H3
-          color={theme["textHeading-secondary"]}
-          style={{ textAlign: "center" }}
-        >
-          {title}
-        </H3>
+        <H3 style={{ textAlign: "center" }}>{title}</H3>
         {subtitle && (
           <>
             <VSpacer size={8} />
@@ -103,11 +106,11 @@ const OperationResultScreenContent = ({
           </View>
         )}
 
-        {React.isValidElement(children) && React.cloneElement(children)}
+        {isValidElement(children) && cloneElement(children)}
       </ScrollView>
     </SafeAreaView>
-  );
-};
+  )
+);
 
 const styles = StyleSheet.create({
   container: {

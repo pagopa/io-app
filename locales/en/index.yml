@@ -3434,6 +3434,9 @@ support:
   panicMode:
     title: "We cannot help you at the moment"
     body: "We know there is a problem and we are working to solve it. If the problem remains, or if you need support on another topic, please try again later."
+  errorGetZendeskToken: 
+    title: Sorry, we're unable to open a service request at the moment.
+    subtitle: Try again later
   askPermissions:
     nameSurname: "Name and Surname"
     fiscalCode: "Fiscal code"
@@ -4073,8 +4076,8 @@ FIMS:
       successToast: "Fatto! Controlla la tua casella di posta."
       errorToast: "C’è stato un problema nell’invio della richiesta. Riprova"
     profileCTA:
-      title: Accessi a servizi di terze parti
-      subTitle: Rivedi gli accessi effettuati a servizi di terze parti tramite IO
+      title: "Controlla i tuoi accessi"
+      subTitle: "Consulta la cronologia degli accessi con IO"
     historyScreen:
       header: Accessi a servizi di terze parti
       body: Qui puoi vedere tutti gli accessi a servizi esterni che hai fatto tramite IO e richiederne una copia via email
