@@ -62,7 +62,7 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
     case WalletPaymentOutcomeEnum.WAITING_CONFIRMATION_EMAIL:
       return "PAYMENT_UNKNOWN_OUTCOME_ERROR";
     case WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER:
-      return "PAYMENT_IN_APP_BROWSER_CLOSED_BY_USER";
+      return "PAYMENT_WEBVIEW_USER_CANCELLATION";
     default:
       return outcome;
   }
