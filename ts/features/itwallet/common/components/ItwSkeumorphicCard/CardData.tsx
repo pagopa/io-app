@@ -148,17 +148,19 @@ const MdlBackData = ({ claims }: DataComponentProps) => {
                     {localeDateFormat(parse(expiry_date), "%d/%m/%y")}
                   </ClaimLabel>
                 </CardClaimContainer>
-                <CardClaimContainer
-                  key={`driving_privilege_restricted_conditions_${driving_privilege}`}
-                  position={{
-                    left: `68.5%`,
-                    top: `${privilegesTableRows[driving_privilege] || 0}%`
-                  }}
-                >
-                  <ClaimLabel fontSize={9}>
-                    {restrictions_conditions}
-                  </ClaimLabel>
-                </CardClaimContainer>
+                {restrictions_conditions && (
+                  <CardClaimContainer
+                    key={`driving_privilege_restricted_conditions_${driving_privilege}`}
+                    position={{
+                      left: `68.5%`,
+                      top: `${privilegesTableRows[driving_privilege] || 0}%`
+                    }}
+                  >
+                    <ClaimLabel fontSize={9}>
+                      {restrictions_conditions}
+                    </ClaimLabel>
+                  </CardClaimContainer>
+                )}
               </Fragment>
             )
           )
