@@ -3,6 +3,7 @@ import React from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";
 import Share from "react-native-share";
+import { useFocusEffect } from "@react-navigation/native";
 import {
   FooterActions,
   FooterActionsMeasurements
@@ -17,6 +18,7 @@ import {
 } from "../../common/utils/itwClaimsUtils";
 import { ParsedCredential } from "../../common/utils/itwTypesUtils";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
+import { trackWalletCredentialFAC_SIMILE } from "../../analytics";
 
 // We currently only support PDF files, extend this if needed
 type SupportedAttachmentType = "application/pdf";
@@ -46,6 +48,8 @@ export const ItwPresentationCredentialAttachmentScreen = ({
       actionBlockHeight: 0,
       safeBottomAreaHeight: 0
     });
+
+  useFocusEffect(trackWalletCredentialFAC_SIMILE);
 
   useHeaderSecondLevel({
     title: "",

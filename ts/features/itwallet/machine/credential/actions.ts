@@ -4,18 +4,21 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { checkCurrentSession } from "../../../../store/actions/authentication";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { CREDENTIALS_MAP, trackSaveCredentialSuccess } from "../../analytics";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
+import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
 export default (
   navigation: ReturnType<typeof useIONavigation>,
   dispatch: ReturnType<typeof useIODispatch>,
+  store: ReturnType<typeof useIOStore>,
   toast: IOToast
 ) => ({
   navigateToTrustIssuerScreen: () => {
@@ -45,7 +48,16 @@ export default (
   >) => {
     toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
     if (context.credentialType) {
-      trackSaveCredentialSuccess(CREDENTIALS_MAP[context.credentialType]);
+      const credential = CREDENTIALS_MAP[context.credentialType];
+      trackSaveCredentialSuccess(credential);
+      void updateMixpanelProfileProperties(store.getState(), {
+        property: credential,
+        value: "valid"
+      });
+      void updateMixpanelSuperProperties(store.getState(), {
+        property: credential,
+        value: "valid"
+      });
     }
     navigation.reset({
       index: 1,

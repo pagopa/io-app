@@ -48,6 +48,7 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
     actions: createCredentialIssuanceActionsImplementation(
       navigation,
       dispatch,
+      store,
       toast
     ),
     actors: createCredentialIssuanceActorsImplementation(store)
