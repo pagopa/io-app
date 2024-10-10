@@ -7,10 +7,7 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 
-export type AnimatedImageProps = Pick<
-  React.ComponentProps<typeof Image>,
-  "source" | "style"
->;
+export type AnimatedImageProps = React.ComponentProps<typeof Image>;
 
 /**
  * AnimatedImage component renders an image with a fade-in animation
@@ -21,7 +18,7 @@ export type AnimatedImageProps = Pick<
  * @param {object} [props.style] - The style to apply to the image.
  * @returns {JSX.Element} The rendered AnimatedImage component.
  */
-export const AnimatedImage = ({ source, style }: AnimatedImageProps) => {
+export const AnimatedImage = ({ style, ...props }: AnimatedImageProps) => {
   const opacity = useSharedValue(0);
 
   const handleOnLoad = () => {
@@ -38,8 +35,8 @@ export const AnimatedImage = ({ source, style }: AnimatedImageProps) => {
 
   return (
     <Animated.Image
+      {...props}
       style={[opacityTransition, style]}
-      source={source}
       onLoad={handleOnLoad}
       accessibilityIgnoresInvertColors={false}
     />
