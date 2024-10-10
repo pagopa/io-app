@@ -280,7 +280,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
             >
               <View
                 collapsable={false}
-                handlerTag={3}
+                handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
