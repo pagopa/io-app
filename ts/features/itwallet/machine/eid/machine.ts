@@ -29,6 +29,7 @@ export const itwEidIssuanceMachine = setup({
   },
   actions: {
     navigateToTosScreen: notImplemented,
+    navigateToIpzsPrivacyScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
     navigateToIdpSelectionScreen: notImplemented,
     navigateToEidPreviewScreen: notImplemented,
@@ -107,7 +108,7 @@ export const itwEidIssuanceMachine = setup({
             target: "WalletInstanceAttestationObtainment"
           },
           {
-            target: "UserIdentification"
+            target: "IpzsPrivacyAcceptance"
           }
         ]
       }
@@ -154,7 +155,7 @@ export const itwEidIssuanceMachine = setup({
             })),
             { type: "storeWalletInstanceAttestation" }
           ],
-          target: "UserIdentification"
+          target: "IpzsPrivacyAcceptance"
         },
         onError: [
           {
@@ -166,6 +167,20 @@ export const itwEidIssuanceMachine = setup({
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]
+      }
+    },
+    IpzsPrivacyAcceptance: {
+      description:
+        "This state handles the acceptance of the IPZS privacy policy",
+      entry: "navigateToIpzsPrivacyScreen",
+      on: {
+        "accept-ipzs-privacy": {
+          target: "UserIdentification"
+        },
+        "error-ipzs-privacy": {
+          target: "#itwEidIssuanceMachine.Failure"
+        },
+        back: "#itwEidIssuanceMachine.TosAcceptance"
       }
     },
     UserIdentification: {
@@ -196,7 +211,7 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.UserIdentification.Completed"
               }
             ],
-            back: "#itwEidIssuanceMachine.TosAcceptance"
+            back: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
           }
         },
         Spid: {
