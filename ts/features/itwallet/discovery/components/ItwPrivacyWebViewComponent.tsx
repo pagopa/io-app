@@ -48,8 +48,10 @@ const ItwPrivacyWebViewComponent = ({
           </ItwMarkdown>
           <ButtonSolid
             fullWidth={true}
-            label={I18n.t("global.buttons.continue")}
-            accessibilityLabel={I18n.t("global.buttons.continue")}
+            label={I18n.t("features.itWallet.ipzsPrivacy.button.label")}
+            accessibilityLabel={I18n.t(
+              "features.itWallet.ipzsPrivacy.button.label"
+            )}
             onPress={onAcceptTos}
           />
         </ContentWrapper>
