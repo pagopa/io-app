@@ -4,7 +4,10 @@ import { pipe } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
-import { getFiscalCodeFromCredential } from "../../../common/utils/itwClaimsUtils";
+import {
+  getCredentialStatus,
+  getFiscalCodeFromCredential
+} from "../../../common/utils/itwClaimsUtils";
 
 export const itwCredentialsSelector = (state: GlobalState) =>
   state.features.itWallet.credentials;
@@ -59,4 +62,14 @@ export const selectFiscalCodeFromEid = createSelector(
 export const itwIsWalletEmptySelector = createSelector(
   itwCredentialsSelector,
   ({ credentials }) => credentials.length === 0
+);
+
+export const itwCredentialsEidStatusSelector = createSelector(
+  itwCredentialsEidSelector,
+  eidOption =>
+    pipe(
+      eidOption,
+      O.map(eid => getCredentialStatus(eid, { checkJwtExpiration: true })),
+      O.getOrElseW(() => undefined)
+    )
 );

@@ -20,7 +20,9 @@ import {
   ItwEidInfoBottomSheetContent,
   ItwEidInfoBottomSheetTitle
 } from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
+import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLifecycleAlert";
 import { WalletCardCategoryFilter } from "../types";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import {
@@ -80,10 +82,13 @@ const ItwCardsContainer = ({
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
+  const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+
+  const isEidExpired = eidStatus === "expired";
 
   const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
     {
-      title: <ItwEidInfoBottomSheetTitle />,
+      title: <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />,
       component: <ItwEidInfoBottomSheetContent />
     },
     EID_INFO_BOTTOM_PADDING
@@ -99,7 +104,7 @@ const ItwCardsContainer = ({
     }
     return {
       iconName: "legalValue",
-      iconColor: "blueIO-500",
+      iconColor: isEidExpired ? "grey-300" : "blueIO-500",
       label: I18n.t("features.wallet.cards.categories.itw"),
       endElement: {
         type: "buttonLink",
@@ -122,7 +127,15 @@ const ItwCardsContainer = ({
         cards={cards}
         isStacked={isStacked}
         header={getHeader()}
-        topElement={<ItwWalletReadyBanner />}
+        topElement={
+          <>
+            <ItwWalletReadyBanner />
+            <ItwEidLifecycleAlert
+              lifecycleStatus={["expiring", "expired"]}
+              verticalSpacing={true}
+            />
+          </>
+        }
       />
       {isItwValid && eidInfoBottomSheet.bottomSheet}
     </>
