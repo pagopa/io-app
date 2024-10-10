@@ -364,6 +364,10 @@ type GetCredentialStatusOptions = {
 /**
  * Get the overall status of the credential, taking into account
  * the status attestation if present and the credential's own expiration date.
+ *
+ * @param credential the stored credential
+ * @param options see {@link GetCredentialStatusOptions}
+ * @returns ItwCredentialStatus
  */
 export const getCredentialStatus = (
   credential: StoredCredential,
