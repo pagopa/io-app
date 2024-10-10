@@ -173,6 +173,10 @@ describe("itwEidIssuanceMachine", () => {
 
     // Accept IPZS privacy
     actor.send({ type: "accept-ipzs-privacy" });
+    // Navigate to identification mode selection
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: "ModeSelection"
+    });
 
     /**
      * Choose SPID as identification mode
