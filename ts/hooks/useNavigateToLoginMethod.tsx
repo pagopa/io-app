@@ -10,10 +10,12 @@ import ROUTES from "../navigation/routes";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { fastLoginOptInFFEnabled } from "../features/fastLogin/store/selectors";
 import { isCieSupportedSelector } from "../store/reducers/cie";
-import { cieFlowForDevServerEnabled } from "../features/cieLogin/utils";
+import {
+  cieFlowForDevServerEnabled,
+  SpidLevel
+} from "../features/cieLogin/utils";
 import { idpSelected } from "../store/actions/authentication";
 import { SpidIdp } from "../../definitions/content/SpidIdp";
-import { SpidLevel } from "../features/cieLogin/components/CieIdLoginWebView";
 import { isCieLoginUatEnabledSelector } from "../features/cieLogin/store/selectors";
 import { ChosenIdentifier } from "../screens/authentication/OptInScreen";
 

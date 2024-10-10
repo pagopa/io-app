@@ -65,8 +65,12 @@ const SPACE_AROUND_BUTTON_LINK = 16;
 export const LandingScreen = () => {
   const isCieIDFFEnabled = useIOSelector(isCieIDFFEnabledSelector);
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
-  const { navigateToIdpSelection, navigateToCiePinInsertion, isCieSupported } =
-    useNavigateToLoginMethod();
+  const {
+    navigateToIdpSelection,
+    navigateToCiePinInsertion,
+    navigateToCieIdLoginScreen,
+    isCieSupported
+  } = useNavigateToLoginMethod();
   const toast = useIOToast();
   const insets = useSafeAreaInsets();
   const {
@@ -96,10 +100,7 @@ export const LandingScreen = () => {
             "authentication.landing.cie_bottom_sheet.module_cie_id.subtitle"
           )}
           icon="device"
-          onPress={() => {
-            // TODO: depends on https://pagopa.atlassian.net/browse/IOPID-2134
-            toast.info("Not implemented yet...");
-          }}
+          onPress={() => navigateToCieIdLoginScreen("SpidL2")}
         />
         <VSpacer size={24} />
         <Banner
