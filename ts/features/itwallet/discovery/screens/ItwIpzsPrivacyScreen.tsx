@@ -6,12 +6,14 @@ import I18n from "../../../../i18n";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { trackOpenItwTosAccepted } from "../../analytics";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   const handleContinuePress = () => {
+    trackOpenItwTosAccepted();
     machineRef.send({ type: "accept-ipzs-privacy" });
   };
 
