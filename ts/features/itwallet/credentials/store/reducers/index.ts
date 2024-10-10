@@ -41,7 +41,6 @@ const reducer = (
       }
 
       return {
-        ...state,
         eid: eid ? O.some(eid) : state.eid,
         credentials: getUpsertedCredentials(state.credentials, otherCredentials)
       };
@@ -65,6 +64,7 @@ const reducer = (
 
     case getType(itwLifecycleStoresReset):
       return { ...itwCredentialsInitialState };
+
     default:
       return state;
   }

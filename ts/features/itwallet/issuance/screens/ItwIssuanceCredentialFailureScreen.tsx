@@ -145,17 +145,19 @@ const ContentView = ({ failure }: ContentViewProps) => {
   };
 
   useEffect(() => {
-    if (storedCredential) {
-      if (failure.type === CredentialIssuanceFailureTypeEnum.ASYNC_ISSUANCE) {
-        trackItWalletDeferredIssuing(storedCredential.credentialType);
-        return;
-      }
-      trackAddCredentialTimeout({
-        reason: failure.reason,
-        type: failure.type,
-        credential: CREDENTIALS_MAP[storedCredential.credentialType]
-      });
+    if (!storedCredential) {
+      return;
     }
+
+    if (failure.type === CredentialIssuanceFailureTypeEnum.ASYNC_ISSUANCE) {
+      trackItWalletDeferredIssuing(storedCredential.credentialType);
+      return;
+    }
+    trackAddCredentialTimeout({
+      reason: failure.reason,
+      type: failure.type,
+      credential: CREDENTIALS_MAP[storedCredential.credentialType]
+    });
   }, [failure, storedCredential]);
 
   const resultScreenProps = resultScreensMap[failure.type];
