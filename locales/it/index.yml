@@ -3409,7 +3409,7 @@ features:
         toast:
           removed: Fatto!
       ctas:
-        openPdf: "Apri documento PDF"
+        openPdf: "Mostra documento"
         shareButton: Salva o condividi
         fiscalCode: Il tuo Codice Fiscale
       trustmark:

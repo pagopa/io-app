@@ -3409,7 +3409,7 @@ features:
         toast:
           removed: Fatto!
       ctas:
-        openPdf: "Open PDF document"
+        openPdf: "Show document"
         shareButton: Save or share
         fiscalCode: Your Fiscal Code
       trustmark:
