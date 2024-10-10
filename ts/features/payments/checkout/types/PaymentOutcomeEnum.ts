@@ -19,7 +19,8 @@ export enum WalletPaymentOutcomeEnum {
   INVALID_SESSION = "14", // transaction failed
   METHOD_NOT_ENABLED = "15", // payment method not enabled
   WAITING_CONFIRMATION_EMAIL = "17", // waiting for confirmation email
-  PAYMENT_METHODS_NOT_AVAILABLE = "18" // payment methods not available
+  PAYMENT_METHODS_NOT_AVAILABLE = "18", // payment methods not available
+  IN_APP_BROWSER_CLOSED_BY_USER = "24" // in-app browser closed by user (24 because from 19 to 23 are already used by backend)
 }
 
 export type WalletPaymentOutcome = t.TypeOf<typeof WalletPaymentOutcome>;

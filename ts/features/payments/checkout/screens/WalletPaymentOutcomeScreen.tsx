@@ -371,6 +371,18 @@ const WalletPaymentOutcomeScreen = () => {
           secondaryAction: onboardPaymentMethodCloseAction,
           isHeaderVisible: true
         };
+      case WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER:
+        return {
+          pictogram: "lostConnection",
+          title: I18n.t(
+            "wallet.payment.outcome.IN_APP_BROWSER_CLOSED_BY_USER.title"
+          ),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.IN_APP_BROWSER_CLOSED_BY_USER.subtitle"
+          ),
+          action: closeFailureAction,
+          isHeaderVisible: true
+        };
     }
   };
 
