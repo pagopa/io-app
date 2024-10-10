@@ -114,6 +114,13 @@ const renderComponent = (
               },
               pn: {
                 frontend_url: "https://www.domain.com/sendUrl"
+              },
+              itw: {
+                enabled: true,
+                min_app_version: {
+                  android: "0.0.0.0",
+                  ios: "0.0.0.0"
+                }
               }
             }
           } as BackendStatus)
