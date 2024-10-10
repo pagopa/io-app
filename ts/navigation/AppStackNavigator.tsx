@@ -34,7 +34,7 @@ import {
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
+import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
@@ -138,13 +138,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
             }
           }
         },
-        [ITW_ROUTES.MAIN]: {
-          path: "itw",
-          screens: {
-            [ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION]:
-              "credential/issuance"
-          }
-        },
+        ...useItwLinkingOptions(),
         ...fciLinkingOptions,
         ...(cgnEnabled ? cgnLinkingOptions : {}),
         ...idPayLinkingOptions,
