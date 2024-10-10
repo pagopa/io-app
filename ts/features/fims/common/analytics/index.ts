@@ -1,6 +1,10 @@
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { mixpanelTrack } from "../../../../mixpanel";
+import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../utils/analytics";
+import { serviceByIdSelector } from "../../../services/details/store/reducers";
+import { fimsCtaTextSelector } from "../../singleSignOn/store/selectors";
 
 export const trackAuthenticationStart = (
   serviceId: ServiceId,
@@ -116,4 +120,33 @@ export const trackHistoryFailure = (reason: string) => {
   const eventName = `SETTINGS_3P_ACCESS_LOG_ERROR`;
   const props = buildEventProperties("KO", "error", { reason });
   void mixpanelTrack(eventName, props);
+};
+
+export const computeAndTrackDataShare = (
+  service: ServicePublic,
+  state: GlobalState
+) => {
+  const ctaText = fimsCtaTextSelector(state);
+  trackDataShare(
+    service.service_id,
+    service.service_name,
+    service.organization_name,
+    service.organization_fiscal_code,
+    ctaText
+  );
+};
+
+export const computeAndTrackDataShareAccepted = (
+  serviceId: ServiceId,
+  state: GlobalState
+) => {
+  const service = serviceByIdSelector(state, serviceId);
+  const ctaText = fimsCtaTextSelector(state);
+  trackDataShareAccepted(
+    serviceId,
+    service?.service_name,
+    service?.organization_name,
+    service?.organization_fiscal_code,
+    ctaText
+  );
 };
