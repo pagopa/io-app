@@ -43,6 +43,9 @@ const ItwIpzsPrivacyScreen = () => {
         <VSpacer size={24} />
       </View>
       <ItwPrivacyWebViewComponent
+        source={{
+          uri: "https://io.italia.it/informativa-ipzs-sperimentazione"
+        }}
         onAcceptTos={handleContinuePress}
         onLoadEnd={onLoadEnd}
         onError={onError}
