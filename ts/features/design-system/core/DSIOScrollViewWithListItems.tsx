@@ -1,12 +1,12 @@
+import { ListItemInfo } from "@pagopa/io-app-design-system";
 import React from "react";
 import { Alert } from "react-native";
-import { ListItemInfo } from "@pagopa/io-app-design-system";
-import ScreenWithListItems from "../../../components/screens/ScreenWithListItems";
+import { IOScrollViewWithListItems } from "../../../components/ui/IOScrollViewWithListItems";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import I18n from "../../../i18n";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 
-const DSListItemScreen = () => {
+export const DSIOScrollViewWithListItems = () => {
   const navigation = useIONavigation();
   const onButtonPress = () => {
     Alert.alert("Alert", "Action triggered");
@@ -36,22 +36,23 @@ const DSListItemScreen = () => {
   ];
 
   return (
-    <ScreenWithListItems
+    <IOScrollViewWithListItems
       isHeaderVisible={true}
       title={I18n.t("authentication.cie.nfc.title")}
       subtitle={I18n.t("authentication.cie.nfc.subtitle")}
       listItemHeaderLabel={I18n.t("authentication.cie.nfc.listItemTitle")}
       renderItems={renderItems}
-      primaryActionProps={{
-        label: I18n.t("authentication.cie.nfc.action"),
-        onPress: onButtonPress
-      }}
-      secondaryActionProps={{
-        label: I18n.t("global.buttons.continue"),
-        onPress: onButtonPress
+      actions={{
+        type: "TwoButtons",
+        primary: {
+          label: I18n.t("authentication.cie.nfc.action"),
+          onPress: onButtonPress
+        },
+        secondary: {
+          label: I18n.t("global.buttons.continue"),
+          onPress: onButtonPress
+        }
       }}
     />
   );
 };
-
-export default DSListItemScreen;
