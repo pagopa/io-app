@@ -23,6 +23,7 @@ import {
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 import { itwEaaVerifierBaseUrl } from "../../../../config";
+import { trackWalletCredentialShowTrustmark } from "../../analytics";
 
 type ItwCredentialTrustmarkProps = WithTestID<{
   credential: StoredCredential;
@@ -63,10 +64,15 @@ export const ItwCredentialTrustmark = ({
     return null;
   }
 
+  const onPressWithTrackEvent = () => {
+    trackWalletCredentialShowTrustmark(credential.credential);
+    trustmarkBottomSheet.present();
+  };
+
   return (
     <>
       <Pressable
-        onPress={trustmarkBottomSheet.present}
+        onPress={onPressWithTrackEvent}
         testID={testID}
         accessible={true}
         accessibilityLabel={I18n.t(

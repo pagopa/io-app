@@ -19,11 +19,13 @@ const reducer = (
   switch (action.type) {
     case getType(itwStoreIntegrityKeyTag):
       return {
+        ...state,
         integrityKeyTag: O.some(action.payload)
       };
     case getType(itwRemoveIntegrityKeyTag):
     case getType(itwLifecycleStoresReset):
       return {
+        ...state,
         integrityKeyTag: O.none
       };
   }

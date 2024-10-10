@@ -2,6 +2,7 @@ import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import {
   IOStackNavigationRouteProps,
@@ -25,6 +26,10 @@ import { ItwCredentialTrustmark } from "../components/ItwCredentialTrustmark";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import I18n from "../../../../i18n";
+import {
+  trackCredentialDetail,
+  trackWalletCredentialShowFAC_SIMILE
+} from "../../analytics";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -48,6 +53,19 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
       O.map(credential => credential.parsedCredential),
       O.toUndefined
     )
+  });
+
+  useFocusEffect(() => {
+    if (O.isNone(credentialOption)) {
+      return;
+    }
+    const credential = credentialOption.value;
+
+    trackCredentialDetail({
+      credential: credential.credential,
+      credential_status:
+        credential.storedStatusAttestation?.credentialStatus || "not_valid"
+    });
   });
 
   if (O.isNone(credentialOption)) {
@@ -87,19 +105,25 @@ const getCtaProps = (
 ): CredentialCtaProps | undefined => {
   const { parsedCredential } = credential;
 
+  const onPress = () => {
+    if (credential.credential === "ITW_TS_V2") {
+      trackWalletCredentialShowFAC_SIMILE();
+    }
+
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
+      params: {
+        attachmentClaim: parsedCredential[WellKnownClaim.content]
+      }
+    });
+  };
+
   // If the "content" claim exists, return a CTA to view and download it.
   if (parsedCredential[WellKnownClaim.content]) {
     return {
       label: I18n.t("features.itWallet.presentation.ctas.openPdf"),
       icon: "docPaymentTitle",
-      onPress: () => {
-        navigation.navigate(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
-          params: {
-            attachmentClaim: parsedCredential[WellKnownClaim.content]
-          }
-        });
-      }
+      onPress
     };
   }
 

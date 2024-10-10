@@ -147,7 +147,7 @@ export const ItwIssuanceEidFailureScreen = () => {
         trackIdNotMatch(identification.mode);
       }
       if (failure.type === IssuanceFailureType.UNSUPPORTED_DEVICE) {
-        trackItwUnsupportedDevice();
+        trackItwUnsupportedDevice(failure);
       }
       if (
         failure.type === IssuanceFailureType.ISSUER_GENERIC &&
