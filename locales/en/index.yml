@@ -2145,6 +2145,9 @@ messagePDFPreview:
     opening: "An error occurred while opening the document. You may not have a PDF reader installed."
     saving: "An error occurred while saving the document"
 notifications:
+  profileBanner:
+    title: "Turn on push notifications to know when you get a message on IO."
+    cta: "Turn on push notifications"
   installation:
     errorTitle: Push notifications
     errorMessage: Registration with the push notifications service generated an error
@@ -2691,24 +2694,11 @@ bonus:
           byDistance: By proximity to your location
           byName: Alphabetical order
     merchantDetail:
-      bucket:
-        alert:
-          cta: I got it!
-        error:
-          noCode: Codes for this discount are temporary over, please try again later
       title:
         deals: Opportunities
         description: Description
-        services: Services
         contactInfo: Addresses
-        hours: Working Hours
-        validity: Validity
-        discountCode: Discount code
-        conditions: Conditions
       cta:
-        label: Go to partner's website
-        landingPage: Get the benefit
-        discountUrl: Go to the benefit
         website: Go to partner's website
       categories:
         counting: and other {{count}}
@@ -2725,6 +2715,19 @@ bonus:
       information:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
+      discount:
+        description: Descrizione
+        conditions: Condizioni
+        validity: Validità
+        cta:
+          api: Attiva codice sconto
+          static: Vai al codice sconto
+          bucket: Vai al codice sconto
+          landingpage: Vai all'opportunità
+        secondaryCta: Vai all'opportunità
+        title: Ecco il codice sconto!
+        expired: Codice sconto scaduto!
+        copyButton: Copia codice sconto
     cta:
       activeBonus: Activate Carta Giovani Nazionale
       back: Not now

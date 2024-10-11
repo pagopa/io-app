@@ -18,6 +18,8 @@ import CgnMerchantLandingWebview from "../screens/merchants/CgnMerchantLandingWe
 import CgnMerchantsCategoriesSelectionScreen from "../screens/merchants/CgnMerchantsCategoriesSelectionScreen";
 import CgnMerchantsListByCategory from "../screens/merchants/CgnMerchantsListByCategory";
 import CgnMerchantsTabsScreen from "../screens/merchants/CgnMerchantsTabsScreen";
+import CgnDiscountDetailScreen from "../screens/discount/CgnDiscountDetailScreen";
+import CgnDiscountCodeScreen from "../screens/discount/CgnDiscountCodeScreen";
 import {
   CgnActivationParamsList,
   CgnDetailsParamsList,
@@ -128,6 +130,17 @@ export const CgnDetailsNavigator = () => (
       name={CGN_ROUTES.DETAILS.MERCHANTS.LANDING_WEBVIEW}
       options={{ headerShown: false }}
       component={CgnMerchantLandingWebview}
+    />
+    <DetailStack.Screen
+      name={CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT}
+      component={CgnDiscountDetailScreen}
+    />
+    <DetailStack.Screen
+      name={CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT_CODE}
+      component={CgnDiscountCodeScreen}
+      options={{
+        presentation: "modal"
+      }}
     />
   </DetailStack.Navigator>
 );
