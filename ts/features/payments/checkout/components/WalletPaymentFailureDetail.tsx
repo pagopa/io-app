@@ -20,7 +20,6 @@ import {
 } from "../../history/store/selectors";
 import * as analytics from "../analytics";
 import { selectWalletPaymentCurrentStep } from "../store/selectors";
-import { WalletPaymentStepEnum } from "../types";
 import { getPaymentPhaseFromStep } from "../utils";
 
 type Props = {
