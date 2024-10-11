@@ -193,10 +193,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -1631,10 +1634,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -3069,10 +3075,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -4507,10 +4516,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -5945,10 +5957,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -7383,10 +7398,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -8821,10 +8839,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -10259,10 +10280,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -11697,10 +11721,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -13135,10 +13162,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -14573,10 +14603,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -16011,10 +16044,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -17449,10 +17485,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -18887,10 +18926,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -20325,10 +20367,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -21763,10 +21808,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -23201,10 +23249,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -24639,10 +24690,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}

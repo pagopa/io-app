@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`itwEidIssuanceMachine Should obtain an eID (SPID) 1`] = `
+{
+  "cieAuthContext": undefined,
+  "eid": undefined,
+  "failure": undefined,
+  "identification": undefined,
+  "integrityKeyTag": "abc",
+  "walletInstanceAttestation": "abcdefg",
+}
+`;

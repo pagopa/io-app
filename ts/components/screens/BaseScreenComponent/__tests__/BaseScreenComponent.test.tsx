@@ -61,7 +61,14 @@ describe("BaseScreenComponent", () => {
                     ios: "0.0.0.0"
                   }
                 },
-                fims: { enabled: true }
+                fims: { enabled: true },
+                itw: {
+                  enabled: true,
+                  min_app_version: {
+                    android: "0.0.0.0",
+                    ios: "0.0.0.0"
+                  }
+                }
               } as Config
             } as BackendStatus)
           } as BackendStatusState
@@ -88,7 +95,14 @@ describe("BaseScreenComponent", () => {
                   ios: "0.0.0.0"
                 }
               },
-              fims: { enabled: true }
+              fims: { enabled: true },
+              itw: {
+                enabled: true,
+                min_app_version: {
+                  android: "0.0.0.0",
+                  ios: "0.0.0.0"
+                }
+              }
             } as Config
           } as BackendStatus)
         } as BackendStatusState

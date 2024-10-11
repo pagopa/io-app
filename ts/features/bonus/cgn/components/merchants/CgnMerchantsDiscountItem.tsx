@@ -1,20 +1,17 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { connect } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { navigateToCgnMerchantLandingWebview } from "../../navigation/actions";
-import { Dispatch } from "../../../../../store/actions/types";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { DiscountCodeType } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
-import { useCgnDiscountDetailBottomSheet } from "../../hooks/useCgnDiscountDetailBottomSheet";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
+import CGN_ROUTES from "../../navigation/routes";
+import { CgnDetailsParamsList } from "../../navigation/params";
+import { useIODispatch } from "../../../../../store/hooks";
+import { selectMerchantDiscount } from "../../store/actions/merchants";
 import { CgnModuleDiscount } from "./CgnModuleDiscount";
 
 type Props = {
   discount: Discount;
-  operatorName: string;
-  merchantType?: DiscountCodeType;
-} & ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -22,37 +19,26 @@ const styles = StyleSheet.create({
   }
 });
 
-const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
-  discount,
-  operatorName,
-  merchantType,
-  navigateToLandingWebview
+export const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
+  discount
 }: Props) => {
-  const { present, bottomSheet: cgnDiscountDetail } =
-    useCgnDiscountDetailBottomSheet(
-      discount,
-      operatorName,
-      merchantType,
-      navigateToLandingWebview
-    );
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<
+        CgnDetailsParamsList,
+        "CGN_MERCHANTS_DISCOUNT_SCREEN"
+      >
+    >();
+  const dispatch = useIODispatch();
+
+  const onDiscountPress = () => {
+    dispatch(selectMerchantDiscount(discount));
+    navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT);
+  };
+
   return (
     <View style={styles.container}>
-      <CgnModuleDiscount onPress={present} discount={discount} />
-      {cgnDiscountDetail}
+      <CgnModuleDiscount onPress={onDiscountPress} discount={discount} />
     </View>
   );
 };
-
-const mapStateToProps = (_: GlobalState) => ({});
-
-const mapDispatchToProps = (_: Dispatch) => ({
-  navigateToLandingWebview: (url: string, referer: string) =>
-    navigateToCgnMerchantLandingWebview({
-      landingPageUrl: url,
-      landingPageReferrer: referer
-    })
-});
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CgnMerchantDiscountItem);
