@@ -4,6 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../../../definitions/content/Config";
@@ -13,6 +14,12 @@ import { BPayPaymentMethod } from "../../../../../types/pagopa";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as hooks from "../../../onboarding/bancomat/hooks/useImageResize";
 import BPayWalletPreview from "../BPayWalletPreview";
+import { SubscriptionStateEnum } from "../../../../../../definitions/trial_system/SubscriptionState";
+import { TrialSystemState } from "../../../../trialSystem/store/reducers";
+import { itwTrialId } from "../../../../../config";
+import { ItWalletState } from "../../../../itwallet/common/store/reducers";
+import { ItwLifecycleState } from "../../../../itwallet/lifecycle/store/reducers";
+import { PersistedFeaturesState } from "../../../../common/store/reducers";
 
 describe("BPayWalletPreview component", () => {
   const mockStore = configureMockStore();
@@ -41,6 +48,9 @@ describe("BPayWalletPreview component", () => {
 
   beforeEach(() => {
     store = mockStore({
+      trialSystem: {
+        [itwTrialId]: pot.some(SubscriptionStateEnum.UNSUBSCRIBED)
+      } as TrialSystemState,
       backendStatus: {
         status: O.some({
           config: {
@@ -53,10 +63,22 @@ describe("BPayWalletPreview component", () => {
                 ios: "0.0.0.0"
               }
             },
-            fims: { enabled: true }
+            fims: { enabled: true },
+            itw: {
+              enabled: true,
+              min_app_version: {
+                android: "0.0.0.0",
+                ios: "0.0.0.0"
+              }
+            }
           } as Config
         } as BackendStatus)
-      }
+      },
+      features: {
+        itWallet: {
+          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
+        } as ItWalletState
+      } as PersistedFeaturesState
     });
   });
 
