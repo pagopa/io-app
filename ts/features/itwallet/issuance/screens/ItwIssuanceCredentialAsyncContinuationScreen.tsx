@@ -2,7 +2,10 @@ import React from "react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import {
+  OperationResultScreenContent,
+  OperationResultScreenContentProps
+} from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
@@ -15,6 +18,8 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
+import { isItwTrialActiveSelector } from "../../../trialSystem/store/reducers";
+import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "./ItwIssuanceCredentialTrustIssuerScreen";
 
 export type ItwIssuanceCredentialAsyncContinuationNavigationParams = {
@@ -38,9 +43,20 @@ export const ItwIssuanceCredentialAsyncContinuationScreen = ({
     itwCredentialByTypeSelector(credentialType)
   );
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
+  const isItwTrialActive = useIOSelector(isItwTrialActiveSelector);
+  const isItwEnabled = useIOSelector(isItwEnabledSelector);
 
   if (!isWalletValid) {
     const ns = "features.itWallet.issuance.walletInstanceNotActive" as const;
+
+    const primaryAction: OperationResultScreenContentProps["action"] = {
+      label: I18n.t(`${ns}.primaryAction`),
+      onPress: () =>
+        navigation.replace(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.DISCOVERY.INFO
+        })
+    };
+
     return (
       <OperationResultScreenContent
         title={I18n.t(`${ns}.title`)}
@@ -52,13 +68,7 @@ export const ItwIssuanceCredentialAsyncContinuationScreen = ({
           }
         ]}
         pictogram="itWallet"
-        action={{
-          label: I18n.t(`${ns}.primaryAction`),
-          onPress: () =>
-            navigation.replace(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.DISCOVERY.INFO
-            })
-        }}
+        action={isItwEnabled && isItwTrialActive ? primaryAction : undefined}
         secondaryAction={{
           label: I18n.t(`${ns}.secondaryAction`),
           onPress: () => navigation.popToTop()
