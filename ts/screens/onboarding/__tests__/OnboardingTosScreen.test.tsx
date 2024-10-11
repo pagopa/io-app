@@ -338,6 +338,13 @@ const commonSetup = ({
           tos: {
             tos_version: CurrentTestToSVersion,
             tos_url: "https://www.example.com"
+          },
+          itw: {
+            enabled: true,
+            min_app_version: {
+              android: "0.0.0.0",
+              ios: "0.0.0.0"
+            }
           }
         }
       })
