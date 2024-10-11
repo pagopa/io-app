@@ -8,8 +8,7 @@ import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { trackOpenItwTosAccepted } from "../../analytics";
 
-const IPZS_PRIVACY_URL =
-  "https://io.italia.it/informativa-ipzs-sperimentazione";
+const IPZS_PRIVACY_URL = "http://io.italia.it/informativa-ipzs";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
