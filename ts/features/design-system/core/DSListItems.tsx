@@ -22,7 +22,7 @@ import { Alert } from "react-native";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
-import CgnMerchantDiscountItem from "../../bonus/cgn/components/merchants/CgnMerchantsDiscountItem";
+import { CgnMerchantDiscountItem } from "../../bonus/cgn/components/merchants/CgnMerchantsDiscountItem";
 import { getBadgeTextByTransactionStatus } from "../../payments/common/utils";
 import { BankPreviewItem } from "../../wallet/onboarding/bancomat/components/BankPreviewItem";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -104,8 +104,6 @@ export const DSListItems = () => {
                   ],
                   startDate: new Date()
                 }}
-                operatorName={"Operator name"}
-                merchantType={undefined}
               />
             </DSComponentViewerBox>
           </VStack>

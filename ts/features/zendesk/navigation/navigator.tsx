@@ -8,6 +8,7 @@ import ZendeskChooseSubCategory from "../screens/ZendeskChooseSubCategory";
 import ZendeskPanicMode from "../screens/ZendeskPanicMode";
 import ZendeskSeeReportsRouters from "../screens/ZendeskSeeReportsRouters";
 import ZendeskSupportHelpCenter from "../screens/ZendeskSupportHelpCenter";
+import RequestZandeskTokenErrorScreen from "../screens/RequestZandeskTokenErrorScreen";
 import { ZendeskParamsList } from "./params";
 import ZENDESK_ROUTES from "./routes";
 
@@ -31,6 +32,11 @@ export const ZendeskStackNavigator = () => (
       <Stack.Screen
         name={ZENDESK_ROUTES.HELP_CENTER}
         component={ZendeskSupportHelpCenter}
+      />
+      <Stack.Screen
+        name={ZENDESK_ROUTES.ERROR_REQUEST_ZENDESK_TOKEN}
+        component={RequestZandeskTokenErrorScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={ZENDESK_ROUTES.ASK_PERMISSIONS}
