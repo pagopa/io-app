@@ -34,11 +34,15 @@ import {
 } from "../../history/store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getPaymentPhaseFromStep } from "../utils";
-import { paymentCompletedSuccess } from "../store/actions/orchestration";
+import {
+  paymentCompletedSuccess,
+  walletPaymentSetCurrentStep
+} from "../store/actions/orchestration";
 import { walletPaymentSelectedPspSelector } from "../store/selectors/psps";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
+import { WalletPaymentStepEnum } from "../types";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -191,6 +195,9 @@ const WalletPaymentOutcomeScreen = () => {
           first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
           expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
         });
+        dispatch(
+          walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PAYMENT_METHOD)
+        );
         navigation.replace(
           PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
           {
