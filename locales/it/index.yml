@@ -2148,6 +2148,9 @@ messagePDFPreview:
     opening: "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF."
     saving: "Si è verificato un errore salvando il documento."
 notifications:
+  profileBanner:
+    title: "Attiva le notifiche push per sapere quando ricevi un messaggio su IO."
+    cta: "Attiva notifiche push"
   installation:
     errorTitle: Notifiche push
     errorMessage: La registrazione verso il servizio di notifiche push ha generato un errore
@@ -2694,24 +2697,11 @@ bonus:
           byDistance: Per vicinanza alla tua posizione
           byName: Ordine alfabetico
     merchantDetail:
-      bucket:
-        alert:
-          cta: Ho capito!
-        error:
-          noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
         deals: Opportunità
         description: Descrizione
-        services: Servizi
         contactInfo: Contatti e informazioni
-        hours: Orari
-        validity: Validità
-        discountCode: Codice Sconto
-        conditions: Condizioni
       cta:
-        label: Vai al sito dell'operatore
-        landingPage: Accedi all’opportunità
-        discountUrl: Vai all'opportunità
         website: Vai al sito del partner
       categories:
         counting: e altre {{count}}
@@ -2728,6 +2718,19 @@ bonus:
       information:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
+      discount:
+        description: Descrizione
+        conditions: Condizioni
+        validity: Validità
+        cta:
+          api: Attiva codice sconto
+          static: Vai al codice sconto
+          bucket: Vai al codice sconto
+          landingpage: Vai all'opportunità
+        secondaryCta: Vai all'opportunità
+        title: Ecco il codice sconto!
+        expired: Codice sconto scaduto!
+        copyButton: Copia codice sconto
     cta:
       activeBonus: Attiva Carta Giovani Nazionale
       back: Non ora
@@ -3243,7 +3246,7 @@ features:
         content: Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!
         action: Inizia
       title: La versione digitale dei tuoi documenti, su IO
-      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti personali**, come la Patente di guida, la Tessera Sanitaria e presto molti altri. \n Attiva la funzionalità *Documenti su IO* per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
+      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti personali**, come la Patente di guida e la Tessera Sanitaria. \n Attiva la funzionalità *Documenti su IO* per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
       tos: Per maggiori informazioni, leggi l’[informativa Privacy](https://io.italia.it/informativa-sperimentazione) e i [Termini e Condizioni d’uso](https://io.italia.it/tos-sperimentazione)
       upcomingWalletBanner:
         title: "Novità in arrivo: i tuoi Documenti su IO"
@@ -3323,9 +3326,9 @@ features:
         toast: Fatto!
       notMatchingIdentityError:
         title: Identità non riconosciuta
-        body: Non puoi attivare Documenti con un’identità diversa da quella che usi per accedere a IO. Verifica le credenziali di accesso e riprova.
+        body: Attiva Documenti su IO con la stessa identità utilizzata per accedere all'app IO. Verifica le credenziali di accesso e riprova.
         primaryAction: Ho capito
-        secondaryAction: Segnala un problema
+        secondaryAction: Chiudi
       genericError:
         title: Si è verificato un errore imprevisto
         body: La tua richiesta verso l'ente che emette il documento non è andata a buon fine.
@@ -3412,7 +3415,7 @@ features:
         toast:
           removed: Fatto!
       ctas:
-        openPdf: "Apri documento PDF"
+        openPdf: "Mostra documento"
         shareButton: Salva o condividi
         fiscalCode: Il tuo Codice Fiscale
       trustmark:
@@ -3437,6 +3440,9 @@ support:
   panicMode:
     title: "Purtroppo, in questo momento non riusciamo ad aiutarti"
     body: "Sappiamo che c’è un problema e siamo al lavoro per risolverlo. Se il problema persiste, o se hai bisogno di assistenza su un altro argomento, riprova a scriverci più tardi."
+  errorGetZendeskToken: 
+    title: Al momento non riusciamo ad aprire una richiesta di assistenza
+    subtitle: Riprova più tardi
   askPermissions:
     nameSurname: "Nome e Cognome"
     fiscalCode: "Codice fiscale"
@@ -4076,8 +4082,8 @@ FIMS:
       successToast: "Fatto! Controlla la tua casella di posta."
       errorToast: "C’è stato un problema nell’invio della richiesta. Riprova"
     profileCTA:
-      title: Accessi a servizi di terze parti
-      subTitle: Rivedi gli accessi effettuati a servizi di terze parti tramite IO
+      title: "Controlla i tuoi accessi"
+      subTitle: "Consulta la cronologia degli accessi con IO"
     historyScreen:
       header: Accessi a servizi di terze parti
       body: Qui puoi vedere tutti gli accessi a servizi esterni che hai fatto tramite IO e richiederne una copia via email
