@@ -2,12 +2,13 @@
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import {
   fetch as fetchNetInfo,
   NetInfoState
 } from "@react-native-community/netinfo";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { AccessibilityInfo, View } from "react-native";
 import I18n from "../../../i18n";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { trackIngressScreen } from "../../../screens/profile/analytics";
@@ -23,6 +24,7 @@ import {
   trackIngressServicesSlowDown,
   trackIngressTimeout
 } from "../analytics";
+import { setAccessibilityFocus } from "../../../utils/accessibility";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
@@ -34,6 +36,15 @@ export const IngressScreen = () => {
   const [netInfo, setNetInfo] = useState<NetInfoState>();
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
   const [contentTitle, setContentTitle] = useState(I18n.t("startup.title"));
+
+  useEffect(() => {
+    // Since the screen is shown for a very short time,
+    // we prefer to announce the content to the screen reader,
+    // instead of focusing the first element.
+    AccessibilityInfo.announceForAccessibilityWithOptions(contentTitle, {
+      queue: true
+    });
+  }, [contentTitle]);
 
   useEffect(() => {
     // `isMixpanelEnabled` mustn't be `false`
@@ -102,8 +113,13 @@ export const IngressScreen = () => {
 };
 
 const IngressScreenBlockingError = memo(() => {
+  const operationRef = useRef<View>(null);
   const isBackendStatusLoaded = useIOSelector(isBackendStatusLoadedSelector);
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
+
+  useEffect(() => {
+    setAccessibilityFocus(operationRef);
+  }, []);
 
   useEffect(() => {
     // It's not necessary to check if mixpanel is initialized since this screen is shown after 10 seconds.
@@ -119,6 +135,7 @@ const IngressScreenBlockingError = memo(() => {
 
   return (
     <OperationResultScreenContent
+      ref={operationRef}
       testID="device-blocking-screen-id"
       {...(isBackendStatusLoaded
         ? {
