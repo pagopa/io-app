@@ -11,20 +11,20 @@ import {
   securityAdviceAcknowledgedPersistor
 } from "./securityAdviceReducer";
 import {
-  AutomaticSessionRefreshReducer,
+  automaticSessionRefreshPersistor,
   AutomaticSessionRefreshState
 } from "./sessionRefreshReducer";
 
 export type FastLoginState = {
   optIn: FastLoginOptInState & PersistPartial;
-  automaticSessionRefresh: AutomaticSessionRefreshState;
+  automaticSessionRefresh: AutomaticSessionRefreshState & PersistPartial;
   tokenRefreshHandler: FastLoginTokenRefreshState;
   securityAdviceAcknowledged: SecurityAdviceAcknowledgedState & PersistPartial;
 };
 
 export const fastLoginReducer = combineReducers<FastLoginState, Action>({
   optIn: fastLoginOptInPersistor,
-  automaticSessionRefresh: AutomaticSessionRefreshReducer,
+  automaticSessionRefresh: automaticSessionRefreshPersistor,
   tokenRefreshHandler: FastLoginTokenRefreshReducer,
   securityAdviceAcknowledged: securityAdviceAcknowledgedPersistor
 });
