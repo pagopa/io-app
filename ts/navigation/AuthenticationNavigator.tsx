@@ -116,7 +116,7 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.AUTHENTICATION_CIE_ID_LOGIN}
       component={CieIdLoginScreen}
-      options={{ headerShown: true }}
+      options={{ headerShown: false }}
     />
 
     <Stack.Screen
