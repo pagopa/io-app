@@ -2111,13 +2111,13 @@ services:
       subtitleSingular: "{{count}} Dienst verfügbar"
   search:
     input:
-      placeholder: "Suche nach einer nationalen oder lokalen Körperschaft"
-      placeholderShort: "Suche eine Körperschaft"
+      placeholder: "Suche nach einer Körperschaft"
+      placeholderShort: "Körperschaft suchen"
       cancel: "Abbrechen"
       clear: "Löschen"
     emptyState:
       invalidQuery:
-        title: "Gib den Namen einer Körpferschaft ein, \nnational oder lokal."
+        title: "Gib den Namen einer Körperschaft ein, \nnational oder lokal."
       noResults:
         title: "Kein Dienst gefunden"
         subtitle: "Gib den Namen einer bestehenden nationalen oder lokalen Körperschaft ein."
