@@ -3,6 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { IOColors } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../definitions/content/Config";
@@ -15,6 +16,12 @@ import { SectionStatusKey } from "../../../store/reducers/backendStatus";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { openWebUrl } from "../../../utils/url";
 import SectionStatusComponent from "../index";
+import { SubscriptionStateEnum } from "../../../../definitions/trial_system/SubscriptionState";
+import { itwTrialId } from "../../../config";
+import { TrialSystemState } from "../../../features/trialSystem/store/reducers";
+import { PersistedFeaturesState } from "../../../features/common/store/reducers";
+import { ItwLifecycleState } from "../../../features/itwallet/lifecycle/store/reducers";
+import { ItWalletState } from "../../../features/itwallet/common/store/reducers";
 
 jest.mock("../../../utils/url");
 
@@ -48,11 +55,27 @@ const mockSectionStatusState = (
             ios: "0.0.0.0"
           }
         },
-        fims: { enabled: true }
+        fims: { enabled: true },
+        itw: {
+          enabled: true,
+          min_app_version: {
+            android: "0.0.0.0",
+            ios: "0.0.0.0"
+          }
+        }
       } as Config
     } as BackendStatus)
-  }
+  },
+  features: {
+    itWallet: {
+      lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
+    } as ItWalletState
+  } as PersistedFeaturesState,
+  trialSystem: {
+    [itwTrialId]: pot.some(SubscriptionStateEnum.UNSUBSCRIBED)
+  } as TrialSystemState
 });
+
 const mockStore = configureMockStore();
 
 describe("SectionStatusComponent", () => {
@@ -163,7 +186,17 @@ describe("Section Status Component should return null", () => {
     const component = getComponent(
       "messages",
       mockStore({
-        backendStatus: { status: O.none }
+        backendStatus: {
+          status: O.none
+        },
+        trialSystem: {
+          [itwTrialId]: pot.some(SubscriptionStateEnum.UNSUBSCRIBED)
+        } as TrialSystemState,
+        features: {
+          itWallet: {
+            lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
+          } as ItWalletState
+        } as PersistedFeaturesState
       })
     );
     expect(component.queryByTestId("SectionStatusComponentLabel")).toBeNull();

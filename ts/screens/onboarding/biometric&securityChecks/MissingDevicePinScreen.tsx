@@ -11,8 +11,9 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { FAQsCategoriesType } from "../../../utils/faq";
-import ScreenWithListItems from "../../../components/screens/ScreenWithListItems";
 import { isSettingsVisibleAndHideProfileSelector } from "../../../store/reducers/backendStatus";
+import { IOScrollViewWithListItems } from "../../../components/ui/IOScrollViewWithListItems";
+import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
 import { trackPinEducationalScreen } from "./analytics";
 
 const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = [
@@ -69,29 +70,31 @@ const MissingDevicePinScreen = () => {
     []
   );
 
-  const actionProps = useMemo(
+  const actions: IOScrollViewActions = useMemo(
     () => ({
-      label: I18n.t("global.buttons.continue"),
-      accessibilityLabel: I18n.t("global.buttons.continue"),
-      onPress: () =>
-        dispatch(
-          preferenceFingerprintIsEnabledSaveSuccess({
-            isFingerprintEnabled: false
-          })
-        )
+      type: "SingleButton",
+      primary: {
+        label: I18n.t("global.buttons.continue"),
+        onPress: () =>
+          dispatch(
+            preferenceFingerprintIsEnabledSaveSuccess({
+              isFingerprintEnabled: false
+            })
+          )
+      }
     }),
     [dispatch]
   );
 
   return (
-    <ScreenWithListItems
+    <IOScrollViewWithListItems
       title={I18n.t("onboarding.biometric.unavailable.title")}
       subtitle={I18n.t("onboarding.biometric.unavailable.subtitle")}
       listItemHeaderLabel={I18n.t(
         "onboarding.biometric.unavailable.body.label"
       )}
       renderItems={listItems}
-      primaryActionProps={actionProps}
+      actions={actions}
     />
   );
 };

@@ -239,8 +239,6 @@ export const AuthSeq: ReadonlyArray<Action> = [
       "h7890416477432ecbde1f94dfe59f2d6350f716cb2cf523d8cad36fa18d71fa9924e0ea6d372ecab86447abe93d99c456",
     bpdToken:
       "h7890416477432ecbde1f94dfe59f2d6350f716cb2cf523d8cad36fa18d71fa9924e0ea6d372ecab86447abe93d99cd5",
-    myPortalToken:
-      "b56c764f75e3fd5c2979c27b9fb3561bcb453ae952c83f0e1bb6075666cfef2aee7169667f187efe65e41789af643249",
     spidLevel: "https://www.spid.gov.it/SpidL2" as SpidLevelEnum,
     walletToken:
       "666666635248824960766f96115b59ac1c2ca700c7e68192e4a7c26e1e17ca4fcc2a66e158295390624f87f05f53235e",

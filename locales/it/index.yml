@@ -250,6 +250,7 @@ permissionRationale:
     message: "Abbiamo bisogno dell'accesso alla fotocamera per utilizzare la torcia."
 startup:
   title: Stiamo preparando la tua esperienza su IO
+  title2: Ancora un po’ di pazienza...
   authentication: Utente autenticato
   sessionInfo: Attributi SPID caricati
   profileInfo: Profilo utente caricato
@@ -263,6 +264,15 @@ startup:
     cta_2: Ignora
   contextualHelp:
     title: Problemi di inizializzazione?
+  connection_lost:
+    title: Non hai una connessione a internet attiva
+    description: Controlla la tua connessione e riavvia l’app
+  slowdowns_results_screen:
+    title: Sembra che le cose vadano un po' a rilento
+    subtitle: Può dipendere dai nostri sistemi o dalla connessione del tuo dispositivo. Riprova tra qualche minuto.
+  cdn_unreachable_results_screen:
+    title: Qualcosa non ha funzionato
+    subtitle: Chiudi l’app e riprova tra qualche minuto.
 login:
   expiration_info: Per ragioni di sicurezza, dovrai entrare con SPID o CIE ogni 30 giorni.
   expiration_info_FL: Per ragioni di sicurezza, dovrai entrare con SPID o CIE una volta all’anno.
@@ -1920,9 +1930,9 @@ wallet:
       INVALID_METHOD:
         title: Il metodo di pagamento non è supportato
       WAITING_CONFIRMATION_EMAIL:
-        title: Attendi la conferma via email
-        subtitle: Riceverai l'esito del pagamento all'indirizzo {{email}}
-        defaultSubtitle: Riceverai l'esito del pagamento all'indirizzo email associato.
+        title: Attendi la conferma del pagamento
+        subtitle: "Il pagamento non si è ancora concluso: riceverai a breve l’esito all'indirizzo {{email}}. L’operazione può richiedere fino a 15 minuti."
+        defaultSubtitle: "Il pagamento non si è ancora concluso: riceverai a breve l’esito via email. L’operazione può richiedere fino a 15 minuti."
       METHOD_NOT_ENABLED:
         title: Abilita il metodo per effettuare pagamenti in app
         subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
@@ -2135,9 +2145,17 @@ messagePDFPreview:
     opening: "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF."
     saving: "Si è verificato un errore salvando il documento."
 notifications:
+  profileBanner:
+    title: "Attiva le notifiche push per sapere quando ricevi un messaggio su IO."
+    cta: "Attiva notifiche push"
   installation:
     errorTitle: Notifiche push
     errorMessage: La registrazione verso il servizio di notifiche push ha generato un errore
+  modal:
+    content: "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app."
+    primaryButton: "Attiva notifiche push"
+    secondaryButton: "Non ora"
+    title: "Non perderti i messaggi importanti!"
 biometric_recognition:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
   contextualHelpContent: !include profile/profile_security_biometric_recognition.md
@@ -2676,24 +2694,11 @@ bonus:
           byDistance: Per vicinanza alla tua posizione
           byName: Ordine alfabetico
     merchantDetail:
-      bucket:
-        alert:
-          cta: Ho capito!
-        error:
-          noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
         deals: Opportunità
         description: Descrizione
-        services: Servizi
         contactInfo: Contatti e informazioni
-        hours: Orari
-        validity: Validità
-        discountCode: Codice Sconto
-        conditions: Condizioni
       cta:
-        label: Vai al sito dell'operatore
-        landingPage: Accedi all’opportunità
-        discountUrl: Vai all'opportunità
         website: Vai al sito del partner
       categories:
         counting: e altre {{count}}
@@ -2710,6 +2715,19 @@ bonus:
       information:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
+      discount:
+        description: Descrizione
+        conditions: Condizioni
+        validity: Validità
+        cta:
+          api: Attiva codice sconto
+          static: Vai al codice sconto
+          bucket: Vai al codice sconto
+          landingpage: Vai all'opportunità
+        secondaryCta: Vai all'opportunità
+        title: Ecco il codice sconto!
+        expired: Codice sconto scaduto!
+        copyButton: Copia codice sconto
     cta:
       activeBonus: Attiva Carta Giovani Nazionale
       back: Non ora
@@ -2917,12 +2935,6 @@ features:
         title: "Non è possibile recuperare questo \ncertificato: contatta l’assistenza"
         subtitle: "Dati utili per ricevere assistenza:"
         cta: "Contatta l'assistenza"
-  uaDonations:
-    webViewScreen:
-      headerTitle: Donazione
-      errors:
-        data:
-          buttonTitle: Torna indietro
   pn:
     service:
       activate: "Attiva il servizio"
@@ -3179,7 +3191,7 @@ features:
       eid: Identità Digitale
       mdl: Patente di Guida
       dc: Carta Europea della Disabilità
-      ts: Tessera Sanitaria
+      ts: Tessera Sanitaria - Tessera europea di assicurazione malattia
     wallet:
       active: Attivo
       inactive: Non attivo
@@ -3218,7 +3230,7 @@ features:
         issuedBy: "Credenziale emessa da"
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
-        releasedBy: "Rilasciata da"
+        releasedBy: Emissione versione digitale
         attachments: "Allegati"
         mdl:
           category: "Licenza {{category}}"
@@ -3231,8 +3243,12 @@ features:
         content: Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!
         action: Inizia
       title: La versione digitale dei tuoi documenti, su IO
-      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti personali**, come la Patente di guida, la Tessera Sanitaria e presto molti altri. \n Attiva la funzionalità *Documenti su IO* per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
+      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti personali**, come la Patente di guida e la Tessera Sanitaria. \n Attiva la funzionalità *Documenti su IO* per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
       tos: Per maggiori informazioni, leggi l’[informativa Privacy](https://io.italia.it/informativa-sperimentazione) e i [Termini e Condizioni d’uso](https://io.italia.it/tos-sperimentazione)
+      upcomingWalletBanner:
+        title: "Novità in arrivo: i tuoi Documenti su IO"
+        content: Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!
+        action: Scopri di più
     identification:
       mode:
         title: Per iniziare, attiva Documenti su IO
@@ -3279,7 +3295,8 @@ features:
           1: I dati saranno condivisi solo per il tempo necessario al rilascio della credenziale.
         tos: "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione)."
       eidPreview:
-        title: "Stiamo aggiungendo i seguenti dati al Portafoglio:"
+        title: Identità verificata
+        subtitle: "Stai attivando **Documenti su IO** come:"
         actions:
           primary: Continua
           secondary: Annulla
@@ -3289,7 +3306,7 @@ features:
         bottomSheet:
           about:
             title: "Chi è?"
-            subtitle: "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo."
+            subtitle: "È l'ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
@@ -3300,14 +3317,15 @@ features:
           toast: Fatto!
           actions:
             continue: Aggiungi primo documento
+            continueAlt: Aggiungi documento
             close: Continua più tardi
       credentialResult:
-        toast: Fatto! Hai aggiunto {{credentialName}}
+        toast: Fatto!
       notMatchingIdentityError:
         title: Identità non riconosciuta
-        body: Non puoi attivare Documenti con un’identità diversa da quella che usi per accedere a IO. Verifica le credenziali di accesso e riprova.
+        body: Attiva Documenti su IO con la stessa identità utilizzata per accedere all'app IO. Verifica le credenziali di accesso e riprova.
         primaryAction: Ho capito
-        secondaryAction: Segnala un problema
+        secondaryAction: Chiudi
       genericError:
         title: Si è verificato un errore imprevisto
         body: La tua richiesta verso l'ente che emette il documento non è andata a buon fine.
@@ -3318,9 +3336,19 @@ features:
         body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
         primaryAction: Ho capito
       asyncCredentialError:
-        title: La tua richiesta è stata presa in carico
-        body: Riceverai un messaggio in app con l'esito della tua richiesta appena sarà disponibile.
+        title: Motorizzazione Civile ha preso in carico la tua richiesta
+        body: Riceverai un messaggio in app per continuare appena Motorizzazione Civile avrà elaborato la tua richiesta.
         primaryAction: Ho capito
+      credentialAlreadyAdded:
+        title: Hai già questo documento
+        body: La versione digitale del documento è già presente nel tuo Portafoglio.
+        primaryAction: Vai al documento
+      walletInstanceNotActive:
+        title: Attiva Documenti su IO per continuare
+        body: "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare "
+        bodyBold: Documenti su IO
+        primaryAction: Inizia
+        secondaryAction: Non ora
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
@@ -3332,10 +3360,11 @@ features:
     presentation:
       alerts:
         mdl:
-          content: "In questa fase, la versione digitale della Patente non ha lo stesso valore del documento fisico: dovrai presentarla insieme a un documento di identità valido."
+          content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle forze dell'ordine."
           action: Scopri di più
         ehc:
-          content: "Questo documento è valido solo in Italia. La copia ufficiale del documento si trova nel PDF."
+          content: "La tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO è equivalente al documento fisico e consente, mostrandola, di accedere a tutti i servizi previsti."
+          action: "Scopri di più"
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
           action: Aggiorna il documento
@@ -3345,10 +3374,21 @@ features:
         mdl:
           title: "Patente: contesti di verifica"
           content: "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Carta di Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valore legale del documento fisico.**"
+        ehc:
+          title: "Tessera Sanitaria - Tessera europea di assicurazione malattia su IO: contesti d'uso"
+          content: "###### In quali casi posso usare la versione digitale della mia Tessera Sanitaria - Tessera europea di assicurazione malattia? \n Puoi usare la versione digitale della tua Tessera Sanitaria - Tessera europea di assicurazione malattia per prenotare una visita medica o un esame di laboratorio, per ritirare un medicinale in farmacia e ogni volta che devi certificare il tuo Codice Fiscale. \n\n All'estero puoi usarla per usufruire delle prestazioni sanitarie secondo le normative vigenti nei singoli paesi."
+        eidInfo:
+          title: "Documenti su IO:\nidentità verificata"
+          contentTop: Con **Documenti su IO** salvi nel Portafoglio di IO le versioni digitali dei tuoi documenti.
+          contentBottom: "###### Come funziona?\n\nLa tua **identità è verificata** in fase di attivazione tramite SPID o CIE."
+          triggerLabel: Cos'è?
+          alert:
+            valid: L'ultima verifica è del {{issuanceDate}}.
       credentialDetails:
-        flipCard: "Mostra retro"
+        flipCardFront: "Mostra retro"
+        flipCardBack: "Mostra fronte"
         personalDataTitle: "Dati personali"
-        documentDataTitle: "Dati documento"
+        documentDataTitle: "Dati del documento"
         lastUpdated: "Dati aggiornati al {{lastUpdateTime}}"
         boolClaim:
           true: Sì
@@ -3370,9 +3410,9 @@ features:
             content: Se cambi idea, potrai riaggiungerlo in seguito.
             confirm: Sì, rimuovi
         toast:
-          removed: Fatto! Hai rimosso {{credentialName}}
+          removed: Fatto!
       ctas:
-        openPdf: "Apri documento PDF"
+        openPdf: "Mostra documento"
         shareButton: Salva o condividi
         fiscalCode: Il tuo Codice Fiscale
       trustmark:
@@ -3380,9 +3420,6 @@ features:
         title: Certificato di autenticità
         usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
         certifiedLabel: Questo documento è certificato dall'ente emittente.
-  trialSystem:
-    toast:
-      subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione
 support:
   ticketList:
     noTicket:
@@ -3400,6 +3437,9 @@ support:
   panicMode:
     title: "Purtroppo, in questo momento non riusciamo ad aiutarti"
     body: "Sappiamo che c’è un problema e siamo al lavoro per risolverlo. Se il problema persiste, o se hai bisogno di assistenza su un altro argomento, riprova a scriverci più tardi."
+  errorGetZendeskToken: 
+    title: Al momento non riusciamo ad aprire una richiesta di assistenza
+    subtitle: Riprova più tardi
   askPermissions:
     nameSurname: "Nome e Cognome"
     fiscalCode: "Codice fiscale"
@@ -4039,8 +4079,8 @@ FIMS:
       successToast: "Fatto! Controlla la tua casella di posta."
       errorToast: "C’è stato un problema nell’invio della richiesta. Riprova"
     profileCTA:
-      title: Accessi a servizi di terze parti
-      subTitle: Rivedi gli accessi effettuati a servizi di terze parti tramite IO
+      title: "Controlla i tuoi accessi"
+      subTitle: "Consulta la cronologia degli accessi con IO"
     historyScreen:
       header: Accessi a servizi di terze parti
       body: Qui puoi vedere tutti gli accessi a servizi esterni che hai fatto tramite IO e richiederne una copia via email
@@ -4058,6 +4098,9 @@ FIMS:
     subtitle: "Attendi qualche secondo"
   consentsScreen:
     errorStates:
+      missingInAppBrowser:
+        title: "Aggiorna il tuo browser per procedere"
+        body: "Per completare l'accesso in modo sicuro, scarica o aggiorna il browser installato sul tuo dispositivo."
       tempErrorBody: "C’è un problema temporaneo, riprova più tardi"
     title: "Per accedere al servizio, consenti la condivisione dei seguenti dati"
     subtitle: "Autorizza IO a trasmettere a "

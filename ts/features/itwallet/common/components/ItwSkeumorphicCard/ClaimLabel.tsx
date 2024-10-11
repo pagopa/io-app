@@ -3,7 +3,7 @@ import {
   useTypographyFactory
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { useWindowDimensions } from "react-native";
+import { TextStyle, useWindowDimensions } from "react-native";
 
 const defaultFontSize = 11;
 const defaultFontWeight: IOFontWeight = "Semibold";
@@ -11,6 +11,7 @@ const defaultFontWeight: IOFontWeight = "Semibold";
 export type ClaimLabelProps = {
   fontSize?: number;
   fontWeight?: IOFontWeight;
+  textTransform?: TextStyle["textTransform"];
 };
 
 /**
@@ -21,6 +22,7 @@ export const ClaimLabel: React.FunctionComponent<
 > = ({
   fontSize = defaultFontSize,
   fontWeight = defaultFontWeight,
+  textTransform = "none",
   ...props
 }) => {
   const { width } = useWindowDimensions();
@@ -35,7 +37,7 @@ export const ClaimLabel: React.FunctionComponent<
     defaultWeight: fontWeight,
     defaultColor: "black",
     font: "TitilliumSansPro",
-    fontStyle: { fontSize: fontSize * fontScale },
+    fontStyle: { fontSize: fontSize * fontScale, textTransform },
     lineBreakMode: "head",
     numberOfLines: 1
   });
