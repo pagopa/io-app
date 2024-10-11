@@ -52,8 +52,7 @@ import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import {
   watchGetZendeskTokenSaga,
-  watchZendeskGetSessionSaga,
-  watchZendeskSupportSaga
+  watchZendeskGetSessionSaga
 } from "../features/zendesk/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
@@ -198,10 +197,6 @@ export function* initializeApplicationSaga(
 
   // listen for mixpanel enabling events
   yield* takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
-
-  if (zendeskEnabled) {
-    yield* fork(watchZendeskSupportSaga);
-  }
 
   // clear cached downloads when the logged user changes
   yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments);
