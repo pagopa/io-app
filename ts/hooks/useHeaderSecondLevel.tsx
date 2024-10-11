@@ -9,6 +9,7 @@ import {
 import I18n from "../i18n";
 import { FAQsCategoriesType } from "../utils/faq";
 import { useStartSupportRequest } from "./useStartSupportRequest";
+import { useStatusAlertProps } from "./useStatusAlertProps";
 
 type SpecificHookProps = {
   canGoBack?: boolean;
@@ -102,6 +103,7 @@ export const useHeaderSecondLevel = ({
   enableDiscreteTransition,
   animatedRef
 }: HeaderSecondLevelHookProps) => {
+  const alertProps = useStatusAlertProps();
   const startSupportRequest = useStartSupportRequest({
     faqCategories,
     contextualHelpMarkdown,
@@ -127,6 +129,7 @@ export const useHeaderSecondLevel = ({
     const enableDiscreteTransitionProps =
       enableDiscreteTransition && animatedRef
         ? {
+            ignoreSafeAreaMargin: !!alertProps,
             enableDiscreteTransition,
             animatedRef
           }
@@ -141,6 +144,7 @@ export const useHeaderSecondLevel = ({
   }, [
     enableDiscreteTransition,
     animatedRef,
+    alertProps,
     scrollValues,
     variant,
     backgroundColor

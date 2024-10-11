@@ -24,7 +24,8 @@ jest.mock("@react-navigation/native", () => {
       addListener: () => jest.fn(),
       removeListener: () => jest.fn(),
       getParent: () => undefined,
-      pop: mockPop
+      pop: mockPop,
+      setOptions: jest.fn()
     })
   };
 });

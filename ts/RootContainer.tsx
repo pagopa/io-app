@@ -8,6 +8,7 @@ import {
   Platform,
   StatusBar
 } from "react-native";
+import { ReactNavigationInstrumentation } from "@sentry/react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 import configurePushNotifications from "./features/pushNotifications/utils/configurePushNotification";
@@ -29,7 +30,10 @@ import {
 import { GlobalState } from "./store/reducers/types";
 import customVariables from "./theme/variables";
 
-type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+type Props = ReturnType<typeof mapStateToProps> &
+  typeof mapDispatchToProps & {
+    routingInstumentation: ReactNavigationInstrumentation;
+  };
 
 /**
  * The main container of the application with:
@@ -99,7 +103,9 @@ class RootContainer extends React.PureComponent<Props> {
         />
         {Platform.OS === "android" && <FlagSecureComponent />}
 
-        <IONavigationContainer />
+        <IONavigationContainer
+          routingInstrumentation={this.props.routingInstumentation}
+        />
 
         {/* When debug mode is enabled, the following information
         is displayed:
