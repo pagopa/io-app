@@ -1,5 +1,4 @@
 import {
-  Banner,
   ContentWrapper,
   Divider,
   IOVisualCostants,
@@ -19,10 +18,10 @@ import React, {
   useState
 } from "react";
 import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
+import { TranslationKeys } from "../../../locales/locales";
 import AppVersion from "../../components/AppVersion";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../components/ui/LightModal";
-import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
-import { showProfileBannerSelector } from "../../features/profileSettings/store/selectors";
 import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
@@ -30,12 +29,11 @@ import ROUTES from "../../navigation/routes";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus";
-import { TranslationKeys } from "../../../locales/locales";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { isDevEnv } from "../../utils/environment";
-import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import DeveloperModeSection from "./DeveloperModeSection";
 import useContentWithFF from "./useContentWithFF";
+import { ProfileMainScreenTopBanner } from "./ProfileMainScreenTopBanner";
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
@@ -58,7 +56,6 @@ const ProfileMainScreenFC = () => {
   const navigation = useIONavigation();
   const { show } = useIOToast();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
-  const showProfileBanner = useIOSelector(showProfileBannerSelector);
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
   const scrollViewContentRef = useRef<ScrollView>(null);
   const idResetTap = useRef<number>();
@@ -189,10 +186,6 @@ const ProfileMainScreenFC = () => {
     [navigation, navigateToProfile]
   );
 
-  const handleCloseBanner = useCallback(() => {
-    dispatch(setShowProfileBanner(false));
-  }, [dispatch]);
-
   const keyExtractor = useCallback(
     (item: ProfileNavListItem, index: number) => `${item.value}-${index}`,
     []
@@ -222,21 +215,7 @@ const ProfileMainScreenFC = () => {
 
   return (
     <>
-      {showProfileBanner && (
-        <ContentWrapper>
-          <VSpacer size={16} />
-          <Banner
-            title={I18n.t("profile.main.banner.title")}
-            action={I18n.t("profile.main.banner.action")}
-            pictogramName="help"
-            color="neutral"
-            size="big"
-            onPress={navigateToProfile}
-            onClose={handleCloseBanner}
-            labelClose={I18n.t("profile.main.banner.close")}
-          />
-        </ContentWrapper>
-      )}
+      <ProfileMainScreenTopBanner />
       <VSpacer size={16} />
       <FlatList
         scrollEnabled={false}

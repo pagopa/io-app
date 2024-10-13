@@ -51,8 +51,8 @@ import { handleClearAllAttachments } from "../features/messages/saga/handleClear
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import {
-  watchZendeskGetSessionSaga,
-  watchZendeskSupportSaga
+  watchGetZendeskTokenSaga,
+  watchZendeskGetSessionSaga
 } from "../features/zendesk/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
@@ -114,6 +114,7 @@ import { pushNotificationTokenUpload } from "../features/pushNotifications/sagas
 import { handlePendingMessageStateIfAllowed } from "../features/pushNotifications/sagas/common";
 import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
+import { formatRequestedTokenString } from "../features/zendesk/utils";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import {
   clearKeychainError,
@@ -201,10 +202,6 @@ export function* initializeApplicationSaga(
   // listen for mixpanel enabling events
   yield* takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
 
-  if (zendeskEnabled) {
-    yield* fork(watchZendeskSupportSaga);
-  }
-
   // clear cached downloads when the logged user changes
   yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments);
 
@@ -285,9 +282,18 @@ export function* initializeApplicationSaga(
   // it will handle its own cancelation logic.
   yield* spawn(watchLogoutSaga, backendClient.logout);
 
+  if (zendeskEnabled) {
+    yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
+  }
+
   // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
-    yield* call(checkSession, backendClient.getSession);
+    yield* call(
+      checkSession,
+      backendClient.getSession,
+      formatRequestedTokenString()
+    );
+
   if (checkSessionResponse === 401) {
     // This is the first API call we make to the backend, it may happen that
     // when we're using the previous session token, that session has expired
@@ -440,10 +446,13 @@ export function* initializeApplicationSaga(
   yield* fork(
     watchCheckSessionSaga,
     backendClient.getSession,
-    backendClient.getSupportToken
+    backendClient.getSupportToken,
+    formatRequestedTokenString()
   );
-
   // Start watching for requests of abort the onboarding
+
+  yield* fork(watchGetZendeskTokenSaga, backendClient.getSession);
+
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
   yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
@@ -554,10 +563,6 @@ export function* initializeApplicationSaga(
 
   // Start wathing new wallet sagas
   yield* fork(watchNewWalletSaga);
-
-  if (zendeskEnabled) {
-    yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
-  }
 
   // Here we can be sure that the session information is loaded and valid
   const bpdToken = maybeSessionInformation.value.bpdToken as string;
