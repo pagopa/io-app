@@ -11,7 +11,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { PaymentsHomeScreen } from "../PaymentsHomeScreen";
-import { TransactionListItem } from "../../../../../../definitions/pagopa/biz-events/TransactionListItem";
+import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
 
 jest.mock("react-native-reanimated", () => ({
   ...require("react-native-reanimated/mock"),
@@ -20,12 +20,14 @@ jest.mock("react-native-reanimated", () => ({
   }
 }));
 
-const validTransaction: TransactionListItem = {
-  transactionId: "0e208420-19dc-490c-8f3f-5772b7249643",
+const validTransaction: NoticeListItem = {
+  eventId: "0e208420-19dc-490c-8f3f-5772b7249643",
   payeeName: "Hessel, Muller and Kilback",
+  isDebtor: true,
+  isPayer: false,
   payeeTaxCode: "262700362",
   amount: "246.53",
-  transactionDate: "2024-05-08T14:32:45.927Z",
+  noticeDate: "2024-05-08T14:32:45.927Z",
   isCart: true
 };
 
@@ -161,7 +163,7 @@ const renderComponent = ({
   userMethods = pot.none,
   shouldShowAddMethodsBanner = true
 }: {
-  transactions?: pot.Pot<ReadonlyArray<TransactionListItem>, Error>;
+  transactions?: pot.Pot<ReadonlyArray<NoticeListItem>, Error>;
   userMethods?: pot.Pot<Wallets, NetworkError>;
   shouldShowAddMethodsBanner?: boolean;
 }) => {
