@@ -126,15 +126,9 @@ export const ItwIssuanceEidFailureScreen = () => {
         pictogram: "accessDenied",
         action: {
           label: I18n.t(
-            "features.itWallet.issuance.notMatchingIdentityError.primaryAction"
-          ),
-          onPress: () => closeIssuance() // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-        },
-        secondaryAction: {
-          label: I18n.t(
             "features.itWallet.issuance.notMatchingIdentityError.secondaryAction"
           ),
-          onPress: () => undefined
+          onPress: () => closeIssuance() // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         }
       },
       [IssuanceFailureType.WALLET_REVOCATION_GENERIC]: {
