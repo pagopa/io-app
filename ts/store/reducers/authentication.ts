@@ -6,7 +6,6 @@ import { PublicSession } from "../../../definitions/session_manager/PublicSessio
 import { SessionToken } from "../../types/SessionToken";
 import {
   idpSelected,
-  loadSupportToken,
   loginSuccess,
   logoutFailure,
   logoutSuccess,
@@ -16,14 +15,6 @@ import {
   sessionInvalid
 } from "../actions/authentication";
 import { Action } from "../actions/types";
-import {
-  remoteError,
-  remoteLoading,
-  remoteReady,
-  remoteUndefined,
-  RemoteValue
-} from "../../common/model/RemoteValue";
-import { SupportToken } from "../../../definitions/backend/SupportToken";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
 import { logoutRequest } from "./../actions/authentication";
@@ -60,14 +51,12 @@ export type LoggedInWithoutSessionInfo = Readonly<{
   sessionToken: SessionToken;
 }>;
 
-export type SupportTokenState = RemoteValue<SupportToken, Error>;
 // The user is logged in and we also have all session info
 export type LoggedInWithSessionInfo = Readonly<{
   kind: "LoggedInWithSessionInfo";
   idp: SpidIdp;
   sessionToken: SessionToken;
   sessionInfo: PublicSession;
-  supportToken?: SupportTokenState;
 }>;
 
 export type LogoutRequested = Readonly<{
@@ -176,11 +165,6 @@ export const sessionInfoSelector = createSelector(
       : O.none
 );
 
-export const supportTokenSelector = (state: GlobalState): SupportTokenState =>
-  isLoggedInWithSessionInfo(state.authentication)
-    ? state.authentication.supportToken ?? remoteUndefined
-    : remoteUndefined;
-
 export const zendeskTokenSelector = (state: GlobalState): string | undefined =>
   isLoggedInWithSessionInfo(state.authentication)
     ? state.authentication.sessionInfo.zendeskToken
@@ -227,7 +211,6 @@ export const idpSelector = ({
 export const loggedInAuthSelector = ({ authentication }: GlobalState) =>
   isLoggedIn(authentication) ? authentication : undefined;
 
-// eslint-disable-next-line complexity
 const reducer = (
   state: AuthenticationState = INITIAL_STATE,
   action: Action
@@ -241,36 +224,6 @@ const reducer = (
         kind: "LoggedOutWithIdp",
         idp: action.payload
       }
-    };
-  }
-
-  if (
-    isActionOf(loadSupportToken.request, action) &&
-    isLoggedInWithSessionInfo(state)
-  ) {
-    return {
-      ...state,
-      supportToken: remoteLoading
-    };
-  }
-
-  if (
-    isActionOf(loadSupportToken.success, action) &&
-    isLoggedInWithSessionInfo(state)
-  ) {
-    return {
-      ...state,
-      supportToken: remoteReady(action.payload)
-    };
-  }
-
-  if (
-    isActionOf(loadSupportToken.failure, action) &&
-    isLoggedInWithSessionInfo(state)
-  ) {
-    return {
-      ...state,
-      supportToken: remoteError(action.payload)
     };
   }
 
