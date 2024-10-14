@@ -24,6 +24,8 @@ export type CgnDetailsParamsList = {
     .DETAIL]: CgnMerchantDetailScreenNavigationParams;
   [CGN_ROUTES.DETAILS.MERCHANTS
     .LANDING_WEBVIEW]: CgnMerchantLandingWebviewNavigationParams;
+  [CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT]: undefined;
+  [CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT_CODE]: undefined;
 };
 
 export type CgnEYCAActivationParamsList = {
