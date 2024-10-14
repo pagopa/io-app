@@ -556,6 +556,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
