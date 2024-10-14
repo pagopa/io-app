@@ -8,7 +8,6 @@ import {
   ButtonSolid,
   ContentWrapper,
   ModuleNavigation,
-  useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
@@ -71,7 +70,6 @@ export const LandingScreen = () => {
     navigateToCieIdLoginScreen,
     isCieSupported
   } = useNavigateToLoginMethod();
-  const toast = useIOToast();
   const insets = useSafeAreaInsets();
   const {
     present,
@@ -214,14 +212,18 @@ export const LandingScreen = () => {
       if (isCieSupported) {
         present();
       } else {
-        // Depends on https://pagopa.atlassian.net/browse/IOPID-2134
-        // TODO: should navigate to CieID login
-        toast.info("Not implemented yet...");
+        navigateToCieIdLoginScreen("SpidL2");
       }
     } else {
       handleLegacyCieLogin();
     }
-  }, [present, toast, isCieSupported, isCieIDFFEnabled, handleLegacyCieLogin]);
+  }, [
+    present,
+    isCieSupported,
+    isCieIDFFEnabled,
+    handleLegacyCieLogin,
+    navigateToCieIdLoginScreen
+  ]);
 
   const navigateToPrivacyUrl = useCallback(() => {
     trackMethodInfo();
