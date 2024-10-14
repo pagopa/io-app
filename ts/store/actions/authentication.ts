@@ -12,7 +12,6 @@ import {
 import { PublicSession } from "../../../definitions/session_manager/PublicSession";
 import { PasswordLogin } from "../../../definitions/session_manager/PasswordLogin";
 import { SessionToken } from "../../types/SessionToken";
-import { SupportToken } from "../../../definitions/backend/SupportToken";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { IdpData } from "../../../definitions/content/IdpData";
 
@@ -83,12 +82,6 @@ export const checkCurrentSession = createAsyncAction(
   "CHECK_CURRENT_SESSION_FAILURE"
 )<void, CheckSessionResult, Error>();
 
-export const loadSupportToken = createAsyncAction(
-  "LOAD_TOKEN_SUPPORT_REQUEST",
-  "LOAD_TOKEN_SUPPORT_SUCCESS",
-  "LOAD_TOKEN_SUPPORT_FAILURE"
-)<void, SupportToken, Error>();
-
 export const sessionExpired = createStandardAction("SESSION_EXPIRED")();
 
 export const sessionInvalid = createStandardAction("SESSION_INVALID")();
@@ -109,5 +102,4 @@ export type AuthenticationActions =
   | ActionType<typeof sessionExpired>
   | ActionType<typeof sessionInvalid>
   | ActionType<typeof resetAuthenticationState>
-  | ActionType<typeof loadSupportToken>
   | ActionType<typeof disableNativeAuthentication>;
