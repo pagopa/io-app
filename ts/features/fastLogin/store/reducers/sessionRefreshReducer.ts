@@ -1,24 +1,27 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { PersistConfig, persistReducer } from "redux-persist";
-import { getType } from "typesafe-actions";
 import {
-  areTwoMinElapsedFromLastActivity,
-  setAutomaticSessionRefresh
-} from "../actions/sessionRefreshActions";
+  createMigrate,
+  MigrationManifest,
+  PersistConfig,
+  PersistedState,
+  persistReducer
+} from "redux-persist";
+import { getType } from "typesafe-actions";
+import _ from "lodash";
+import { areTwoMinElapsedFromLastActivity } from "../actions/sessionRefreshActions";
 import { Action } from "../../../../store/actions/types";
 import {
   logoutFailure,
   logoutSuccess
 } from "../../../../store/actions/authentication";
+import { isDevEnv } from "../../../../utils/environment";
 
 export type AutomaticSessionRefreshState = {
-  enabled: boolean | undefined;
   areAlreadyTwoMinAfterLastActivity: boolean;
 };
 
 export const automaticSessionRefreshInitialState: AutomaticSessionRefreshState =
   {
-    enabled: undefined,
     areAlreadyTwoMinAfterLastActivity: false
   };
 
@@ -30,11 +33,6 @@ const AutomaticSessionRefreshReducer = (
     case getType(logoutSuccess):
     case getType(logoutFailure):
       return automaticSessionRefreshInitialState;
-    case getType(setAutomaticSessionRefresh):
-      return {
-        ...state,
-        enabled: action.payload.enabled
-      };
     case getType(areTwoMinElapsedFromLastActivity):
       return {
         ...state,
@@ -45,13 +43,23 @@ const AutomaticSessionRefreshReducer = (
   }
 };
 
-const CURRENT_REDUX_SESSION_REFRESH_STORE_VERSION = -1;
+const CURRENT_REDUX_SESSION_REFRESH_STORE_VERSION = 0;
+
+const migrations: MigrationManifest = {
+  // we changed the way we compute the installation ID
+  "0": (state: PersistedState) =>
+    _.omit(
+      state,
+      "features.loginFeatures.fastLogin.automaticSessionRefresh.enabled"
+    )
+};
 
 const persistConfig: PersistConfig = {
   key: "sessionRefresh",
   storage: AsyncStorage,
   version: CURRENT_REDUX_SESSION_REFRESH_STORE_VERSION,
-  whitelist: ["enabled"]
+  migrate: createMigrate(migrations, { debug: isDevEnv }),
+  whitelist: []
 };
 
 export const automaticSessionRefreshPersistor = persistReducer<
