@@ -3240,11 +3240,11 @@ features:
         placeOfBirth: "Luogo di nascita"
         expirationDate: "Scadenza"
         securityLevel: "Livello di sicurezza"
-        issuedBy: "Credenziale emessa da"
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
         releasedBy: Emissione versione digitale
         attachments: "Allegati"
+        authenticSource: Origine dei dati
         mdl:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
