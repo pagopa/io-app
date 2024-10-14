@@ -28,6 +28,7 @@ export function* handleGetBizEventsTransactionReceipt(
     );
 
     if (E.isLeft(getTransactionReceiptResult)) {
+      action.payload.onError?.();
       yield* put(
         getPaymentsBizEventsReceiptAction.failure({
           ...getGenericError(
