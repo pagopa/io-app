@@ -115,6 +115,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
           url,
           result => {
             if (result.id === "ERROR") {
+              // TODO: remove this after https://pagopa.atlassian.net/browse/IOPID-2322
               navigateToCieIdAuthenticationError();
             } else {
               setAuthenticatedUrl(result.url);

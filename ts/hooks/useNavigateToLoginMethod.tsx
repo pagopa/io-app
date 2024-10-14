@@ -42,14 +42,17 @@ const useNavigateToLoginMethod = () => {
   );
 
   const withIsFastLoginOptInCheck = useCallback(
-    (cb: () => void, optInScreenParams: ChosenIdentifier) => {
+    (
+      navigateToTheChosenLoginMethod: () => void,
+      optInScreenParams: ChosenIdentifier
+    ) => {
       if (isFastLoginOptInFFEnabled) {
         navigate(ROUTES.AUTHENTICATION, {
           screen: ROUTES.AUTHENTICATION_OPT_IN,
           params: optInScreenParams
         });
       } else {
-        cb();
+        navigateToTheChosenLoginMethod();
       }
     },
     [isFastLoginOptInFFEnabled, navigate]
