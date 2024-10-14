@@ -743,7 +743,7 @@ authentication:
     cie_not_installed:
       title: We can't find the CieID app
       description: To login, you must have the app installed on your device.
-      primary_action_label: Download CieID
+      primary_action_label: Get the app
   cie:
     genericTitle: Login with CIE
     cie: CIE
