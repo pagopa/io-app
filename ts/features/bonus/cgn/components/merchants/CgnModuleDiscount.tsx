@@ -53,7 +53,7 @@ type CategoryTagProps = {
   category: ProductCategory;
 };
 
-const CategoryTag = ({ category }: CategoryTagProps) => {
+export const CategoryTag = ({ category }: CategoryTagProps) => {
   const categorySpecs = getCategorySpecs(category);
 
   return O.isSome(categorySpecs) ? (
