@@ -23,6 +23,7 @@ import React, {
 } from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+import _ from "lodash";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import IOMarkdown from "../../../components/IOMarkdown";
 import { ContextualHelpProps } from "../../../components/screens/BaseScreenComponent";
@@ -62,10 +63,17 @@ import ZENDESK_ROUTES from "../navigation/routes";
 import {
   ZendeskStartPayload,
   getZendeskConfig,
+  getZendeskToken,
   zendeskSupportCancel
 } from "../store/actions";
-import { zendeskConfigSelector } from "../store/reducers";
+import {
+  getZendeskTokenStatusSelector,
+  zendeskConfigSelector,
+  ZendeskTokenStatusEnum
+} from "../store/reducers";
 import { handleContactSupport } from "../utils";
+import { usePrevious } from "../../../utils/hooks/usePrevious";
+import { isLoggedIn } from "../../../store/reducers/authentication";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -83,6 +91,10 @@ export type ContextualHelpData = {
 
 export type ZendeskSupportHelpCenterNavigationParams = ZendeskStartPayload;
 
+enum ButtonPressedEnum {
+  ON_GOING_REQUEST = "ON_GOING_REQUEST",
+  OPEN_NEW_REQUEST = "OPEN_NEW_REQUEST"
+}
 /**
  * This component must be used only here.
  * Make the {@link ZendeskSupportHelpCenter} compatible with {@link HeaderSecondLevel} and substitute the {@link ContextualHelp}
@@ -186,10 +198,17 @@ const ZendeskSupportHelpCenter = () => {
   const dispatch = useIODispatch();
   const workUnitCancel = () => dispatch(zendeskSupportCancel());
   // const workUnitComplete = () => dispatch(zendeskSupportCompleted());
-  const profile = useIOSelector(profileSelector);
+  const profile = useIOSelector(profileSelector, _.isEqual);
   const signatureRequestId = useIOSelector(fciSignatureRequestIdSelector);
-  const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
+  const isEmailValidated = useIOSelector(
+    isProfileEmailValidatedSelector,
+    _.isEqual
+  );
   const showRequestSupportContacts = isEmailValidated || !pot.isSome(profile);
+
+  const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
+  const getZendeskTokenStatus = useIOSelector(getZendeskTokenStatusSelector);
+  const prevGetZendeskTokenStatus = usePrevious(getZendeskTokenStatus);
 
   // Check for Actions to be displayed
   const maybeProfile: O.Option<InitializedProfile> = pot.toOption(profile);
@@ -197,7 +216,7 @@ const ZendeskSupportHelpCenter = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const route = useRoute<RouteProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">>();
-
+  const [pressedButton, setPressedButton] = useState<ButtonPressedEnum>();
   // Navigation prop
   const {
     faqCategories,
@@ -207,7 +226,7 @@ const ZendeskSupportHelpCenter = () => {
     assistanceForPayment,
     assistanceForCard,
     assistanceForFci
-  } = route.params;
+  } = route.params || {};
   //   !contextualHelpMarkdown
   // );
 
@@ -219,6 +238,35 @@ const ZendeskSupportHelpCenter = () => {
   /*
   Check for Actions
   */
+
+  const handleOnGoingRequest = useCallback(() => {
+    void mixpanelTrack("ZENDESK_SHOW_TICKETS_STARTS");
+    if (O.isNone(maybeProfile)) {
+      navigation.navigate(ZENDESK_ROUTES.MAIN, {
+        screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
+        params: {
+          assistanceForPayment,
+          assistanceForCard,
+          assistanceForFci
+        }
+      });
+    } else {
+      navigation.navigate(ZENDESK_ROUTES.MAIN, {
+        screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
+        params: {
+          assistanceForPayment,
+          assistanceForCard,
+          assistanceForFci
+        }
+      });
+    }
+  }, [
+    assistanceForCard,
+    assistanceForFci,
+    assistanceForPayment,
+    maybeProfile,
+    navigation
+  ]);
 
   const handleContactSupportPress = useCallback(
     () =>
@@ -238,49 +286,42 @@ const ZendeskSupportHelpCenter = () => {
     ]
   );
 
+  const handleButtonPress = React.useCallback(
+    (value: ButtonPressedEnum) => {
+      setPressedButton(value);
+      if (isUserLoggedIn) {
+        // dispatching this action invokes the saga that performs
+        // the getSession and retrieves the Zendesk token from the BE
+        dispatch(getZendeskToken.request());
+      } else {
+        if (value === ButtonPressedEnum.ON_GOING_REQUEST) {
+          handleOnGoingRequest();
+        } else if (value === ButtonPressedEnum.OPEN_NEW_REQUEST) {
+          handleContactSupportPress();
+        }
+      }
+    },
+    [dispatch, handleOnGoingRequest, handleContactSupportPress, isUserLoggedIn]
+  );
+
   const footerActions: IOScrollViewActions = useMemo(
     () => ({
       type: "TwoButtons",
       primary: {
         testID: "contactSupportButton",
         label: I18n.t("support.helpCenter.cta.contactSupport"),
-        onPress: handleContactSupportPress
+        onPress: () => handleButtonPress(ButtonPressedEnum.OPEN_NEW_REQUEST),
+        loading:
+          getZendeskTokenStatus === "request" &&
+          pressedButton === ButtonPressedEnum.OPEN_NEW_REQUEST
       },
       secondary: {
         testID: "showTicketsButton",
         label: I18n.t("support.helpCenter.cta.seeReports"),
-        onPress: () => {
-          void mixpanelTrack("ZENDESK_SHOW_TICKETS_STARTS");
-          if (O.isNone(maybeProfile)) {
-            navigation.navigate(ZENDESK_ROUTES.MAIN, {
-              screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
-              params: {
-                assistanceForPayment,
-                assistanceForCard,
-                assistanceForFci
-              }
-            });
-          } else {
-            navigation.navigate(ZENDESK_ROUTES.MAIN, {
-              screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
-              params: {
-                assistanceForPayment,
-                assistanceForCard,
-                assistanceForFci
-              }
-            });
-          }
-        }
+        onPress: () => handleButtonPress(ButtonPressedEnum.ON_GOING_REQUEST)
       }
     }),
-    [
-      handleContactSupportPress,
-      assistanceForPayment,
-      assistanceForCard,
-      assistanceForFci,
-      maybeProfile,
-      navigation
-    ]
+    [getZendeskTokenStatus, handleButtonPress, pressedButton]
   );
 
   /**
@@ -297,6 +338,34 @@ const ZendeskSupportHelpCenter = () => {
   if (signatureRequestId !== undefined) {
     addTicketCustomField(zendeskFciId, signatureRequestId ?? "");
   }
+
+  // This useEffect handles the response of the getSession and allows the request to be handled.
+  useEffect(() => {
+    if (
+      prevGetZendeskTokenStatus === ZendeskTokenStatusEnum.REQUEST &&
+      getZendeskTokenStatus === ZendeskTokenStatusEnum.SUCCESS
+    ) {
+      if (pressedButton === ButtonPressedEnum.ON_GOING_REQUEST) {
+        handleOnGoingRequest();
+      } else if (pressedButton === ButtonPressedEnum.OPEN_NEW_REQUEST) {
+        handleContactSupportPress();
+      }
+    } else if (
+      prevGetZendeskTokenStatus === ZendeskTokenStatusEnum.REQUEST &&
+      getZendeskTokenStatus === ZendeskTokenStatusEnum.ERROR
+    ) {
+      navigation.navigate(ZENDESK_ROUTES.MAIN, {
+        screen: ZENDESK_ROUTES.ERROR_REQUEST_ZENDESK_TOKEN
+      });
+    }
+  }, [
+    getZendeskTokenStatus,
+    handleContactSupportPress,
+    handleOnGoingRequest,
+    navigation,
+    pressedButton,
+    prevGetZendeskTokenStatus
+  ]);
 
   useLayoutEffect(() => {
     navigation.setOptions({

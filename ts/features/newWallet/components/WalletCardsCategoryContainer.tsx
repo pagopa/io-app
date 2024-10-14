@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import {
   ListItemHeader,
   VSpacer,
@@ -18,6 +19,13 @@ export type WalletCardsCategoryContainerProps = WithTestID<{
   header?: ListItemHeader;
   topElement?: JSX.Element;
 }>;
+
+// The item layout animation has a bug on Android for a FlatList that doesn't have a fixed height [https://github.com/software-mansion/react-native-reanimated/issues/5728]
+// * The animations work perfectly when an item enters, but when removing an item, there is always a UI bug where the last item becomes invisible during rendering.
+// * Even with an hardcoded height with the onLayout event, the bug is still present
+// * The workaround is to disable the layout animation on Android
+const itemLayoutAnimation =
+  Platform.OS !== "android" ? LinearTransition.duration(200) : undefined;
 
 /**
  * This component handles the rendering of cards of a specific category.
@@ -40,7 +48,7 @@ export const WalletCardsCategoryContainer = ({
       renderItem={({ index, item }) =>
         renderWalletCardFn(item, isStacked && index < cards.length - 1)
       }
-      itemLayoutAnimation={LinearTransition.duration(200)}
+      itemLayoutAnimation={itemLayoutAnimation}
       entering={FadeInDown.duration(150)}
       exiting={FadeOutDown.duration(150)}
     />

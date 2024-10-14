@@ -19,7 +19,8 @@ import {
   zendeskSelectedSubcategory,
   zendeskStartPolling,
   zendeskStopPolling,
-  zendeskSupportStart
+  zendeskSupportStart,
+  getZendeskToken
 } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
@@ -33,12 +34,19 @@ type ZendeskValue = {
 };
 export type ZendeskConfig = RemoteValue<ZendeskValue, NetworkError>;
 
+export enum ZendeskTokenStatusEnum {
+  SUCCESS = "success",
+  ERROR = "error",
+  REQUEST = "request"
+}
+
 export type ZendeskState = {
   zendeskConfig: ZendeskConfig;
   selectedCategory?: ZendeskCategory;
   selectedSubcategory?: ZendeskSubCategory;
   ticketNumber: pot.Pot<number, Error>;
   getSessionPollingRunning?: boolean;
+  getZendeskTokenStatus?: ZendeskTokenStatusEnum | "401";
 };
 
 const INITIAL_STATE: ZendeskState = {
@@ -51,6 +59,25 @@ const reducer = (
   action: Action
 ): ZendeskState => {
   switch (action.type) {
+    case getType(getZendeskToken.request):
+      return {
+        ...state,
+        getZendeskTokenStatus: ZendeskTokenStatusEnum.REQUEST
+      };
+
+    case getType(getZendeskToken.success):
+      return {
+        ...state,
+        getZendeskTokenStatus: ZendeskTokenStatusEnum.SUCCESS
+      };
+    case getType(getZendeskToken.failure):
+      return {
+        ...state,
+        getZendeskTokenStatus:
+          action.payload === "401"
+            ? action.payload
+            : ZendeskTokenStatusEnum.ERROR
+      };
     case getType(zendeskStopPolling):
       return {
         ...state,
@@ -119,6 +146,10 @@ export const zendeskConfigSelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.zendeskConfig],
   (zendeskConfig: ZendeskConfig): ZendeskConfig => zendeskConfig
 );
+
+export const getZendeskTokenStatusSelector = (state: GlobalState) =>
+  state.assistanceTools.zendesk.getZendeskTokenStatus;
+
 export const zendeskSelectedCategorySelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.selectedCategory],
   (zendeskCategory: ZendeskCategory | undefined): ZendeskCategory | undefined =>
