@@ -32,8 +32,6 @@ import {
   getServicePreferencesDefaultDecoder,
   GetServicePreferencesT,
   GetServiceT,
-  getSupportTokenDefaultDecoder,
-  GetSupportTokenT,
   getUserDataProcessingDefaultDecoder,
   GetUserDataProcessingT,
   getUserMessageDefaultDecoder,
@@ -340,13 +338,6 @@ export function BackendClient(
     response_decoder: getActivationStatusDefaultDecoder()
   };
 
-  const getSupportToken: GetSupportTokenT = {
-    method: "get",
-    url: () => `/api/v1/token/support`,
-    headers: tokenHeaderProducer,
-    query: () => ({}),
-    response_decoder: getSupportTokenDefaultDecoder()
-  };
   const withBearerToken = withToken(token);
   return {
     getSession: withBearerToken(createFetchRequestForApi(getSessionT, options)),
@@ -417,9 +408,6 @@ export function BackendClient(
     ),
     postUserDataProcessingRequest: withBearerToken(
       createFetchRequestForApi(postUserDataProcessingT, options)
-    ),
-    getSupportToken: withBearerToken(
-      createFetchRequestForApi(getSupportToken, options)
     ),
     deleteUserDataProcessingRequest: withBearerToken(
       createFetchRequestForApi(deleteUserDataProcessingT, options)
