@@ -46,7 +46,7 @@ export const walletPaymentAllMethodsSelector = createSelector(
 
 export const walletRecentPaymentMethodSelector = createSelector(
   selectPaymentsCheckoutState,
-  walletPaymentUserWalletsSelector,
+  walletPaymentEnabledUserWalletsSelector,
   walletPaymentAllMethodsSelector,
   ({ recentUsedPaymentMethod }, userWallets, allPaymentMethods) => {
     const recentPaymentMethod = pot.toUndefined(recentUsedPaymentMethod);
