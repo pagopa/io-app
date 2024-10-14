@@ -155,10 +155,10 @@ const CheckoutPaymentMethodsList = () => {
       })
     );
 
-  const handleOnSelectRecentPaymentMethod = () =>
+  const handleOnSelectRecentPaymentMethod = (walletId: string) =>
     recentUsedPaymentMethod?.status === WalletStatusEnum.VALIDATED
-      ? handleSelectUserWallet
-      : handleSelectPaymentMethod;
+      ? handleSelectUserWallet(walletId)
+      : handleSelectPaymentMethod(walletId);
 
   const selectedWalletId = O.toUndefined(selectedUserWalletIdOption);
   const selectedPaymentMethodId = O.toUndefined(selectedPaymentMethodIdOption);
