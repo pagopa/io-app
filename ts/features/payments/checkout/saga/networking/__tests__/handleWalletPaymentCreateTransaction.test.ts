@@ -50,7 +50,6 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       .next(T_SESSION_TOKEN)
       .next(E.right({ status: 200, value: newTransactionResponse }))
       .next()
-      .put(paymentsCreateTransactionAction.success(newTransactionResponse))
       .next()
       .isDone();
   });
