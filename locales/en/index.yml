@@ -741,9 +741,9 @@ authentication:
         primary_action_label: Login with SPID
       secondary_action_label: Close
     cie_not_installed:
-      title: Non riusciamo a trovare l'app CieID
-      description: Per accedere, devi avere l'app installata sul tuo dispositivo.
-      primary_action_label: Scarica CieID
+      title: We can't find the CieID app
+      description: To login, you must have the app installed on your device.
+      primary_action_label: Download CieID
   cie:
     genericTitle: Login with CIE
     cie: CIE
