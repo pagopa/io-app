@@ -11,6 +11,7 @@ const INITIAL_STATE: PaymentsCheckoutState = {
   paymentDetails: pot.none,
   userWallets: pot.none,
   allPaymentMethods: pot.none,
+  recentUsedPaymentMethod: pot.none,
   pspList: pot.none,
   selectedWallet: O.none,
   selectedPaymentMethod: O.none,
