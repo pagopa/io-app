@@ -3376,7 +3376,7 @@ features:
           content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle forze dell'ordine."
           action: Scopri di più
         ehc:
-          content: "La tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO è equivalente al documento fisico e consente, mostrandola, di accedere a tutti i servizi previsti."
+          content: "Puoi usare la tua Tessera Sanitaria - Tessera Europea di Assicurazione Malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
           action: "Scopri di più"
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio

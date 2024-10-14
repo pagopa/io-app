@@ -3376,7 +3376,7 @@ features:
           content: "In questa fase, la versione digitale della Patente non ha lo stesso valore del documento fisico: dovrai presentarla insieme a un documento di identità valido."
           action: Scopri di più
         ehc:
-          content: "La tua Tessera sanitaria - Tessera europea di assicurazione malattia su IO è equivalente al documento fisico."
+          content: "Puoi usare la tua Tessera Sanitaria - Tessera Europea di Assicurazione Malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
           action: "Scopri di più"
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
