@@ -12,6 +12,7 @@ import {
 } from "../../store/reducers/startup";
 import { handlePendingMessageStateIfAllowed } from "../../features/pushNotifications/sagas/common";
 import { areTwoMinElapsedFromLastActivity } from "../../features/fastLogin/store/actions/sessionRefreshActions";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 /**
  * Listen to APP_STATE_CHANGE_ACTION and:
@@ -85,10 +86,15 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
             timestamp: Date.now()
           };
           if (timeSinceLastStateChange >= backgroundActivityTimeoutMillis) {
-            // this dispatch will be used to determine whether or not to refresh the session
-            yield* put(
-              areTwoMinElapsedFromLastActivity({ hasTwoMinPassed: true })
+            const isFastLoginEnabled = yield* select(
+              isFastLoginEnabledSelector
             );
+            // this dispatch will be used to determine whether or not to refresh the session
+            if (isFastLoginEnabled) {
+              yield* put(
+                areTwoMinElapsedFromLastActivity({ hasTwoMinPassed: true })
+              );
+            }
             // The app was in background for a long time, request identification
             yield* put(identificationRequest());
             // refresh session token
