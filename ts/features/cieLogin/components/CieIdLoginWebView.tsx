@@ -1,16 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
 import { Alert, Linking, Platform, StyleSheet } from "react-native";
 import WebView, { type WebViewNavigation } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
+import _isEqual from "lodash/isEqual";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { getCieIDLoginUri, SpidLevel } from "../utils";
 import { useLollipopLoginSource } from "../../lollipop/hooks/useLollipopLoginSource";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import { useIODispatch } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { loginSuccess } from "../../../store/actions/authentication";
 import { SessionToken } from "../../../types/SessionToken";
 import ROUTES from "../../../navigation/routes";
+import { loggedInAuthSelector } from "../../../store/reducers/authentication";
+import { IdpSuccessfulAuthentication } from "../../../components/IdpSuccessfulAuthentication";
 
 export type WebViewLoginNavigationProps = {
   spidLevel: SpidLevel;
@@ -36,7 +39,15 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const webView = useRef<WebView>(null);
   const dispatch = useIODispatch();
   const [authenticatedUrl, setAuthenticatedUrl] = useState<string | null>(null);
+  const loggedInAuth = useIOSelector(loggedInAuthSelector, _isEqual);
   const loginUri = getCieIDLoginUri(spidLevel, isUat);
+
+  const navigateToCieIdAuthenticationError = useCallback(() => {
+    navigation.navigate(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.AUTHENTICATION_CIE_ID_ERROR
+    });
+  }, [navigation]);
+
   const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
     useLollipopLoginSource(navigateToCieIdAuthenticationError, loginUri);
 
@@ -58,6 +69,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
               const [, errorMessage] = continueUrl.split(
                 "cieid_error_message="
               );
+              // TODO: remove this after https://pagopa.atlassian.net/browse/IOPID-2322
               Alert.alert("Login error ❌", errorMessage ?? "error");
             } else {
               setAuthenticatedUrl(continueUrl);
@@ -69,12 +81,6 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
 
     return () => urlListenerSubscription.remove();
   }, []);
-
-  function navigateToCieIdAuthenticationError() {
-    navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_CIE_ID_ERROR
-    });
-  }
 
   const handleOnShouldStartLoadWithRequest = (
     event: WebViewNavigation
@@ -122,13 +128,18 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     return true;
   };
 
+  // TODO: remove this after https://pagopa.atlassian.net/browse/IOPID-2322
   if (!webviewSource) {
     return (
       <LoadingSpinnerOverlay
         isLoading
-        onCancel={() => navigateToCieIdAuthenticationError()}
+        onCancel={navigateToCieIdAuthenticationError}
       />
     );
+  }
+
+  if (loggedInAuth) {
+    return <IdpSuccessfulAuthentication />;
   }
 
   return (
