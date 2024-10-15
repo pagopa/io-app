@@ -28,6 +28,8 @@ const defaultUserAgent = Platform.select({
 });
 
 const originSchemasWhiteList = ["https://*", "iologin://*"];
+const IO_LOGIN_CIE_URL_SCHEME = "iologincie:";
+const LOGIN_SUCCESS_PAGE = "profile.html?token=";
 
 export type CieIdLoginProps = {
   spidLevel: SpidLevel;
@@ -51,6 +53,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
     useLollipopLoginSource(navigateToCieIdAuthenticationError, loginUri);
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   useEffect(() => {
     // https://reactnative.dev/docs/linking#open-links-and-deep-links-universal-links
     const urlListenerSubscription = Linking.addEventListener(
@@ -58,19 +61,24 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
       ({ url }) => {
         // if the url is of this format: iologincie:https://idserver.servizicie.interno.gov.it/idp/login/livello2mobile?value=e1s2
         // extract the part after iologincie: and dispatch the action to handle the login
-        if (url.startsWith("iologincie:")) {
-          const [, continueUrl] = url.split("iologincie:");
+        if (url.startsWith(IO_LOGIN_CIE_URL_SCHEME)) {
+          const [, continueUrl] = url.split(IO_LOGIN_CIE_URL_SCHEME);
 
           if (continueUrl) {
             // https://idserver.servizicie.interno.gov.it/cieiderror?cieid_error_message=Operazione_annullata_dall'utente
             // We check if the continueUrl is an error
             if (continueUrl.indexOf("cieiderror") !== -1) {
-              // And we extract the error message and show it in an alert
-              const [, errorMessage] = continueUrl.split(
-                "cieid_error_message="
-              );
-              // TODO: remove this after https://pagopa.atlassian.net/browse/IOPID-2322
-              Alert.alert("Login error ❌", errorMessage ?? "error");
+              if (continueUrl.indexOf("cieid_error_message=")) {
+                // And we extract the error message and show it in an alert
+                const [, errorMessage] = continueUrl.split(
+                  "cieid_error_message="
+                );
+                // TODO: remove this after https://pagopa.atlassian.net/browse/IOPID-2322
+                Alert.alert("Login error ❌", errorMessage);
+              } else {
+                // TODO: remove this after https://pagopa.atlassian.net/browse/IOPID-2322
+                Alert.alert("Login error ❌", "error");
+              }
             } else {
               setAuthenticatedUrl(continueUrl);
             }
@@ -92,11 +100,11 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
       return false;
     }
 
-    if (url.indexOf("token=") !== -1) {
-      const [, token] = url.split("token=");
+    if (url.indexOf(LOGIN_SUCCESS_PAGE) !== -1) {
+      const [, token] = url.split(LOGIN_SUCCESS_PAGE);
       if (token) {
         // show success alert with dismiss button navigatin back
-        dispatch(loginSuccess({ token: token as SessionToken, idp: "cie" })); // ! the idp is cie?
+        dispatch(loginSuccess({ token: token as SessionToken, idp: "cie" }));
       }
       return false;
     }
