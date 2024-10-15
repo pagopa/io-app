@@ -11,14 +11,16 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import useNavigateToLoginMethod from "../../../../hooks/useNavigateToLoginMethod";
 
 const CIE_ID_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/cie-id/";
 
 const CieIdWizard = () => {
-  const { error, info } = useIOToast();
+  const { error } = useIOToast();
   const { navigate } = useIONavigation();
   const label = I18n.t("authentication.wizards.cie_id_wizard.title");
+  const { navigateToCieIdLoginScreen } = useNavigateToLoginMethod();
 
   const getActions = (): IOScrollViewActions => {
     const primaryLabel = I18n.t(
@@ -33,9 +35,7 @@ const CieIdWizard = () => {
         label: primaryLabel,
         accessibilityLabel: primaryLabel,
         onPress: () => {
-          // Depends on https://pagopa.atlassian.net/browse/IOPID-2134
-          // TODO: navigate to CieID login
-          info("Not implemented yet...");
+          navigateToCieIdLoginScreen("SpidL2");
         }
       },
       secondary: {
