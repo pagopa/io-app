@@ -740,6 +740,10 @@ authentication:
         description: Se hai SPID, entra su IO inserendo le tue credenziali. Puoi usare anche il tuo volto o l’impronta o il codice impostato per l’app del tuo fornitore di SPID.
         primary_action_label: Entra con SPID
       secondary_action_label: Chiudi
+    cie_not_installed:
+      title: Non riusciamo a trovare l'app CieID
+      description: Per accedere, devi avere l'app installata sul tuo dispositivo.
+      primary_action_label: Scarica CieID
   cie:
     genericTitle: Entra con CIE
     cie: CIE
@@ -3433,6 +3437,18 @@ features:
         title: Certificato di autenticità
         usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
         certifiedLabel: Questo documento è certificato dall'ente emittente.
+    walletRevocation:
+      cta: Disattiva Documenti su IO
+      confirmScreen:
+        title: Vuoi davvero disattivare Documenti su IO?
+        subtitle: "Eliminerai i documenti che hai aggiunto al Portafoglio.\nSe cambi idea, potrai riattivare Documenti su IO in futuro."
+        action: Conferma e continua
+      loadingScreen:
+        title: Stiamo disattivando Documenti su IO...
+        subtitle: Attendi qualche secondo
+      failureScreen:
+        title: Si è verificato un errore imprevisto
+        subtitle: Non è stato possibile disattivare il servizio. Riprova.
 support:
   ticketList:
     noTicket:

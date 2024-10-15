@@ -1043,7 +1043,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                         "fontWeight": "600",
                                       },
                                       {
-                                        "color": "#1A0744",
+                                        "color": "#5517E3",
                                       },
                                     ]
                                   }

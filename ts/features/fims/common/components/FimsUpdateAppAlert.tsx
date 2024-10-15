@@ -1,4 +1,7 @@
-import { ActionProp, HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import {
+  HeaderActionProps,
+  HeaderSecondLevel
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
@@ -38,7 +41,7 @@ const useOnlySupportRequestHeader = () => {
           title=""
           type="singleAction"
           firstAction={{
-            icon: "help" as ActionProp["icon"],
+            icon: "help" as HeaderActionProps["icon"],
             onPress: startSupportRequest,
             accessibilityLabel: I18n.t(
               "global.accessibility.contextualHelp.open.label"
