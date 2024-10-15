@@ -31,6 +31,7 @@ export function* handleWalletPaymentCreateTransaction(
   newTransaction: PaymentClient["newTransactionForIO"],
   action: ActionType<(typeof paymentsCreateTransactionAction)["request"]>
 ) {
+  const paymentAnalyticsData = yield* select(paymentAnalyticsDataSelector);
   try {
     const newTransactionResult = yield* withPaymentsSessionToken(
       newTransaction,
@@ -41,7 +42,6 @@ export function* handleWalletPaymentCreateTransaction(
       "pagoPAPlatformSessionToken"
     );
 
-    const paymentAnalyticsData = yield* select(paymentAnalyticsDataSelector);
     if (E.isLeft(newTransactionResult)) {
       handleError(paymentAnalyticsData, action.payload.onError);
       yield* put(
@@ -73,6 +73,7 @@ export function* handleWalletPaymentCreateTransaction(
       );
     } else if (status !== 401) {
       // The 401 status is handled by the withPaymentsSessionToken
+      handleError(paymentAnalyticsData, action.payload.onError);
       yield* put(
         paymentsCreateTransactionAction.failure(
           newTransactionResult.right.value
@@ -80,6 +81,7 @@ export function* handleWalletPaymentCreateTransaction(
       );
     }
   } catch (e) {
+    handleError(paymentAnalyticsData, action.payload.onError);
     yield* put(
       paymentsCreateTransactionAction.failure({ ...getNetworkError(e) })
     );
