@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Dimensions, View } from "react-native";
 import {
   Badge,
@@ -81,18 +81,17 @@ const OptInScreen = () => {
 
   useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
 
-  const navigationParams = useMemo<
-    NavigatorScreenParams<AuthenticationParamsList>
-  >(() => {
-    if (params.identifier === "CIE_ID") {
-      return {
-        screen: authScreensMap[params.identifier],
-        params: params.params
-      };
-    }
+  const getNavigationParams =
+    (): NavigatorScreenParams<AuthenticationParamsList> => {
+      if (params.identifier === "CIE_ID") {
+        return {
+          screen: authScreensMap[params.identifier],
+          params: params.params
+        };
+      }
 
-    return { screen: authScreensMap[params.identifier] };
-  }, [params]);
+      return { screen: authScreensMap[params.identifier] };
+    };
 
   const navigateToIdpPage = (isLV: boolean) => {
     if (isLV) {
@@ -100,7 +99,7 @@ const OptInScreen = () => {
     } else {
       void trackLoginSessionOptIn30(store.getState());
     }
-    navigation.navigate(ROUTES.AUTHENTICATION, navigationParams);
+    navigation.navigate(ROUTES.AUTHENTICATION, getNavigationParams());
     dispatch(setFastLoginOptIn({ enabled: isLV }));
   };
 
