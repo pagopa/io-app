@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { IOToast } from "@pagopa/io-app-design-system";
-import { ActionArgs } from "xstate";
+import { ActionArgs, assign } from "xstate";
+import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
@@ -16,6 +17,8 @@ import {
 import { ItwLifecycleState } from "../../lifecycle/store/reducers";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
+import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
+import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -175,5 +178,18 @@ export const createEidIssuanceActionsImplementation = (
   resetWalletInstance: () => {
     store.dispatch(itwLifecycleWalletReset());
     toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
-  }
+  },
+
+  onInit: assign<Context, EidIssuanceEvents, unknown, EidIssuanceEvents, any>(
+    () => {
+      const state = store.getState();
+      const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(state);
+      const walletInstanceAttestation =
+        itwWalletInstanceAttestationSelector(state);
+      return {
+        integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
+        walletInstanceAttestation
+      };
+    }
+  )
 });

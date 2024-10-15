@@ -156,7 +156,7 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   beforeEach(() => {
-    onInit.mockImplementation(() => ({}));
+    onInit.mockImplementation(() => ({ walletInstanceAttestation: undefined }));
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
   });
 
