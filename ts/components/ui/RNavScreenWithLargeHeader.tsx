@@ -16,7 +16,7 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   BackProps,
-  HeaderActionProps,
+  HeaderActionsProps,
   useHeaderProps
 } from "../../hooks/useHeaderProps";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
@@ -34,7 +34,7 @@ type Props = {
   title: LargeHeaderTitleProps;
   description?: string;
   goBack?: BackProps["goBack"];
-  headerActionsProp?: HeaderActionProps;
+  headerActionsProp?: HeaderActionsProps;
   canGoback?: boolean;
 } & SupportRequestParams;
 

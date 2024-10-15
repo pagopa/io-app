@@ -84,7 +84,7 @@ export const useWalletPaymentAuthorizationModal = ({
           },
           () => {
             handleAuthorizationOutcome(
-              WalletPaymentOutcomeEnum.CANCELED_BY_USER
+              WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER
             );
           }
         )
