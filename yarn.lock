@@ -2105,10 +2105,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.6.tgz#b211e953eb05b76b43effc0d9d7be79767c361f9"
   integrity sha512-Dx1WPdqFaB76Wv8WgkLCIQoj9ADZeWyfe/GTnGWQKeIWnTe5v3socbEDdax9fh0asxizuTVzTVj962H2nCQxwg==
 
-"@pagopa/io-react-native-wallet@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.19.0.tgz#3b056d46d9e7b74868cb23ed1d77ae20ff93e848"
-  integrity sha512-dxBrQlzOnxNxY5rR4dKboFcVBjQnH8MaXPgyhCQxBSDxOqyQ5hF8waf0ooYLlQhe1kMS2M9ZRnVWKUMUmHIrgQ==
+"@pagopa/io-react-native-wallet@^0.20.0":
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.20.0.tgz#f6c3794d94716074a938051fa115b56f94fa6931"
+  integrity sha512-hAMTMre3lhSdD7zyj7Qk9izBwOEPqm0/Zh9X8zcdjGECKG0bqFOpT0XWqGp1JTpj8/Hwnk07DRV8RPnkaQBwRg==
   dependencies:
     js-sha256 "^0.9.0"
     parse-url "^9.2.0"
@@ -13623,10 +13623,10 @@ react-native-view-shot@3.1.2:
   resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-3.1.2.tgz#8c8e84c67a4bc8b603e697dbbd59dbc9b4f84825"
   integrity sha512-9u9fPtp6a52UMoZ/UCPrCjKZk8tnkI9To0Eh6yYnLKFEGkRZ7Chm6DqwDJbYJHeZrheCCopaD5oEOnRqhF4L2Q==
 
-react-native-vision-camera@3.9.2:
-  version "3.9.2"
-  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-3.9.2.tgz#d6656a4c0af929916d5e6b57af5adfe94ff8c65a"
-  integrity sha512-watHRWbeH7CBYq/5sPj2fpZj87V8J5nGdmYO61aYsDLuJ2Pkij7anAzBf8B8oZiyoSUuYpAzX4lIIi+LjWVedA==
+react-native-vision-camera@4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-4.3.1.tgz#f755107f259f71f51a619ccaaefc55bbe341b2c7"
+  integrity sha512-7BzvZnorTQDQ5qZEOeiRpjA1BM0ZsUxxCsPtntRf1by7Ialok+gD04k285+n+7yy/2+WT4TwLSPeiAqx9z+uew==
 
 react-native-webview@^13.10.3:
   version "13.10.3"
