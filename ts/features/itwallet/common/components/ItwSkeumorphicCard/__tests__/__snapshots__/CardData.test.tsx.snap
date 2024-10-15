@@ -597,8 +597,10 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
+            "fontSize": 18.75,
             "fontStyle": "normal",
             "fontWeight": "600",
+            "lineHeight": undefined,
           },
         ]
       }
