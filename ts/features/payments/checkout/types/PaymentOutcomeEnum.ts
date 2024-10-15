@@ -19,7 +19,9 @@ export enum WalletPaymentOutcomeEnum {
   INVALID_SESSION = "14", // transaction failed
   METHOD_NOT_ENABLED = "15", // payment method not enabled
   WAITING_CONFIRMATION_EMAIL = "17", // waiting for confirmation email
-  PAYMENT_METHODS_NOT_AVAILABLE = "18" // payment methods not available
+  PAYMENT_REVERSED = "18", // "Storno"
+  PAYPAL_REMOVED_ERROR = "19", // error while executing the payment with PayPal
+  PAYMENT_METHODS_NOT_AVAILABLE = "20" // payment methods not available
 }
 
 export type WalletPaymentOutcome = t.TypeOf<typeof WalletPaymentOutcome>;
