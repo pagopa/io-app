@@ -3256,16 +3256,16 @@ features:
         content: Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!
         action: Inizia
       title: La versione digitale dei tuoi documenti, su IO
-      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti personali**, come la Patente di guida e la Tessera Sanitaria. \n Attiva la funzionalità *Documenti su IO* per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
-      tos: Per maggiori informazioni, leggi l’[informativa Privacy](https://io.italia.it/informativa-sperimentazione) e i [Termini e Condizioni d’uso](https://io.italia.it/tos-sperimentazione)
+      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti** personali, come la Patente di guida e la Tessera Sanitaria.  \n\n Attiva la funzionalità **Documenti su IO** per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati."
+      tos: Premendo **Continua** dichiari di aver letto l’[informativa Privacy](https://io.italia.it/informativa-sperimentazione) e i [Termini e Condizioni d’uso](https://io.italia.it/tos-sperimentazione).
       upcomingWalletBanner:
         title: "Novità in arrivo: i tuoi Documenti su IO"
         content: Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!
         action: Scopri di più
     identification:
       mode:
-        title: Per iniziare, attiva Documenti su IO
-        description: È un passaggio necessario solo la prima volta per garantire la sicurezza dei tuoi dati.
+        title: Verfica la tua identità
+        description: È un passaggio necessario per garantire la sicurezza dei tuoi dati.
         header: Scegli come identificarti
         method:
           spid:
