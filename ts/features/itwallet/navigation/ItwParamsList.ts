@@ -37,4 +37,5 @@ export type ItwParamsList = {
   // PLAYGROUNDS
   [ITW_ROUTES.PLAYGROUNDS]: undefined;
   [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
+  [ITW_ROUTES.WALLET_REVOCATION_SCREEN]: undefined;
 };

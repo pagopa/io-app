@@ -68,6 +68,10 @@ export type Abort = {
   type: "abort";
 };
 
+export type RevokeWalletInstance = {
+  type: "revoke-wallet-instance";
+};
+
 export type EidIssuanceEvents =
   | Reset
   | Start
@@ -84,4 +88,5 @@ export type EidIssuanceEvents =
   | Close
   | NfcEnabled
   | Abort
+  | RevokeWalletInstance
   | ErrorActorEvent;

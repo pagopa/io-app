@@ -39,6 +39,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToCiePinScreen: notImplemented,
     navigateToCieReadCardScreen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
+    navigateToWalletRevocationScreen: notImplemented,
     storeIntegrityKeyTag: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
     storeEidCredential: notImplemented,
@@ -47,11 +48,13 @@ export const itwEidIssuanceMachine = setup({
     setWalletInstanceToValid: notImplemented,
     handleSessionExpired: notImplemented,
     abortIdentification: notImplemented,
+    resetWalletInstance: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) }))
   },
   actors: {
     onInit: fromPromise<OnInitActorOutput>(notImplemented),
     createWalletInstance: fromPromise<string>(notImplemented),
+    revokeWalletInstance: fromPromise<void>(notImplemented),
     getWalletAttestation: fromPromise<string, GetWalletAttestationActorParams>(
       notImplemented
     ),
@@ -89,6 +92,12 @@ export const itwEidIssuanceMachine = setup({
       on: {
         start: {
           target: "TosAcceptance"
+        },
+        close: {
+          actions: "closeIssuance"
+        },
+        "revoke-wallet-instance": {
+          target: "WalletInstanceRevocation"
         }
       }
     },
@@ -138,6 +147,21 @@ export const itwEidIssuanceMachine = setup({
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]
+      }
+    },
+    WalletInstanceRevocation: {
+      tags: [ItwTags.Loading],
+      invoke: {
+        src: "revokeWalletInstance",
+        onDone: {
+          actions: ["resetWalletInstance", "closeIssuance"]
+        },
+        onError: {
+          actions: assign(
+            setFailure(IssuanceFailureType.WALLET_REVOCATION_GENERIC)
+          ),
+          target: "#itwEidIssuanceMachine.Failure"
+        }
       }
     },
     WalletInstanceAttestationObtainment: {
@@ -410,6 +434,10 @@ export const itwEidIssuanceMachine = setup({
         },
         reset: {
           target: "Idle"
+        },
+        "revoke-wallet-instance": {
+          actions: "navigateToWalletRevocationScreen",
+          target: "WalletInstanceRevocation"
         }
       }
     },
