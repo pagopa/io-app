@@ -5,7 +5,7 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { checkCurrentSession } from "../../../../store/actions/authentication";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
@@ -21,7 +21,7 @@ import { EidIssuanceEvents } from "./events";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
-  dispatch: ReturnType<typeof useIODispatch>,
+  store: ReturnType<typeof useIOStore>,
   toast: IOToast
 ) => ({
   navigateToTosScreen: () => {
@@ -124,20 +124,22 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   setWalletInstanceToOperational: () => {
-    dispatch(
+    store.dispatch(
       itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL)
     );
   },
 
   setWalletInstanceToValid: () => {
-    dispatch(itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_VALID));
+    store.dispatch(
+      itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_VALID)
+    );
   },
 
   storeIntegrityKeyTag: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assert(context.integrityKeyTag, "integrityKeyTag is undefined");
-    dispatch(itwStoreIntegrityKeyTag(context.integrityKeyTag));
+    store.dispatch(itwStoreIntegrityKeyTag(context.integrityKeyTag));
   },
 
   storeWalletInstanceAttestation: ({
@@ -147,7 +149,7 @@ export const createEidIssuanceActionsImplementation = (
       context.walletInstanceAttestation,
       "walletInstanceAttestation is undefined"
     );
-    dispatch(
+    store.dispatch(
       itwWalletInstanceAttestationStore(context.walletInstanceAttestation)
     );
   },
@@ -156,13 +158,13 @@ export const createEidIssuanceActionsImplementation = (
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assert(context.eid, "eID is undefined");
-    dispatch(itwCredentialsStore([context.eid]));
+    store.dispatch(itwCredentialsStore([context.eid]));
   },
 
   requestAssistance: () => {},
 
   handleSessionExpired: () =>
-    dispatch(checkCurrentSession.success({ isSessionValid: false })),
+    store.dispatch(checkCurrentSession.success({ isSessionValid: false })),
 
   abortIdentification: ({
     context
@@ -171,7 +173,7 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   resetWalletInstance: () => {
-    dispatch(itwLifecycleWalletReset());
+    store.dispatch(itwLifecycleWalletReset());
     toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
   }
 });
