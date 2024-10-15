@@ -514,7 +514,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -1069,7 +1069,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -1695,7 +1695,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -2532,7 +2532,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -3437,7 +3437,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -4493,7 +4493,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -5685,7 +5685,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -7877,7 +7877,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
