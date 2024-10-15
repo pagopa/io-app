@@ -6,7 +6,8 @@ import { View, StyleSheet, Platform, AccessibilityInfo } from "react-native";
 import {
   ContentWrapper,
   H3,
-  IOStyles,
+  IOColors,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,9 +16,8 @@ import { WithTestID } from "../../types/WithTestID";
 
 const styles = StyleSheet.create({
   container: {
-    ...IOStyles.bgWhite,
-    ...IOStyles.centerJustified,
-    ...IOStyles.flex
+    flex: 1,
+    justifyContent: "center"
   },
   contentTitle: {
     textAlign: "center"
@@ -37,6 +37,7 @@ type LoadingScreenContentProps = WithTestID<{
 
 export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
   const { contentTitle, children, headerVisible, testID } = props;
+  const theme = useIOTheme();
 
   React.useEffect(() => {
     // Since the screen is shown for a very short time,
@@ -52,7 +53,10 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
 
   return (
     <SafeAreaView
-      style={styles.container}
+      style={[
+        styles.container,
+        { backgroundColor: IOColors[theme["appBackground-primary"]] }
+      ]}
       edges={headerVisible ? ["bottom"] : undefined}
       testID={testID}
     >
