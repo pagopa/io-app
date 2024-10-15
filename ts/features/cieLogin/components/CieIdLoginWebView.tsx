@@ -30,6 +30,8 @@ const defaultUserAgent = Platform.select({
 const originSchemasWhiteList = ["https://*", "iologin://*"];
 const IO_LOGIN_CIE_URL_SCHEME = "iologincie:";
 const LOGIN_SUCCESS_PAGE = "profile.html?token=";
+const CIE_ID_ERROR = "cieiderror";
+const CIE_ID_ERROR_MESSAGE = "cieid_error_message=";
 
 export type CieIdLoginProps = {
   spidLevel: SpidLevel;
@@ -67,12 +69,11 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
           if (continueUrl) {
             // https://idserver.servizicie.interno.gov.it/cieiderror?cieid_error_message=Operazione_annullata_dall'utente
             // We check if the continueUrl is an error
-            if (continueUrl.indexOf("cieiderror") !== -1) {
-              if (continueUrl.indexOf("cieid_error_message=")) {
+            if (continueUrl.indexOf(CIE_ID_ERROR) !== -1) {
+              if (continueUrl.indexOf(CIE_ID_ERROR_MESSAGE) !== -1) {
                 // And we extract the error message and show it in an alert
-                const [, errorMessage] = continueUrl.split(
-                  "cieid_error_message="
-                );
+                const [, errorMessage] =
+                  continueUrl.split(CIE_ID_ERROR_MESSAGE);
                 // TODO: remove this after https://pagopa.atlassian.net/browse/IOPID-2322
                 Alert.alert("Login error ❌", errorMessage);
               } else {
