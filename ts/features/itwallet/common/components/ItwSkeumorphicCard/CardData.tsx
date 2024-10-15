@@ -119,31 +119,51 @@ const MdlBackData = ({ claims }: DataComponentProps) => {
         claim={claims["driving_privileges_details"]}
         is={DrivingPrivilegesClaim.is}
         component={privileges =>
-          privileges.map(({ driving_privilege, issue_date, expiry_date }) => (
-            <Fragment key={`driving_privilege_row_${driving_privilege}`}>
-              <CardClaimContainer
-                position={{
-                  left: `41.5%`,
-                  top: `${privilegesTableRows[driving_privilege] || 0}%`
-                }}
-              >
-                <ClaimLabel fontSize={9}>
-                  {localeDateFormat(parse(issue_date), "%d/%m/%y")}
-                </ClaimLabel>
-              </CardClaimContainer>
-              <CardClaimContainer
-                key={`driving_privilege_${driving_privilege}`}
-                position={{
-                  left: `55%`,
-                  top: `${privilegesTableRows[driving_privilege] || 0}%`
-                }}
-              >
-                <ClaimLabel fontSize={9}>
-                  {localeDateFormat(parse(expiry_date), "%d/%m/%y")}
-                </ClaimLabel>
-              </CardClaimContainer>
-            </Fragment>
-          ))
+          privileges.map(
+            ({
+              driving_privilege,
+              issue_date,
+              expiry_date,
+              restrictions_conditions
+            }) => (
+              <Fragment key={`driving_privilege_row_${driving_privilege}`}>
+                <CardClaimContainer
+                  position={{
+                    left: `41.5%`,
+                    top: `${privilegesTableRows[driving_privilege] || 0}%`
+                  }}
+                >
+                  <ClaimLabel fontSize={9}>
+                    {localeDateFormat(parse(issue_date), "%d/%m/%y")}
+                  </ClaimLabel>
+                </CardClaimContainer>
+                <CardClaimContainer
+                  key={`driving_privilege_${driving_privilege}`}
+                  position={{
+                    left: `55%`,
+                    top: `${privilegesTableRows[driving_privilege] || 0}%`
+                  }}
+                >
+                  <ClaimLabel fontSize={9}>
+                    {localeDateFormat(parse(expiry_date), "%d/%m/%y")}
+                  </ClaimLabel>
+                </CardClaimContainer>
+                {restrictions_conditions && (
+                  <CardClaimContainer
+                    key={`driving_privilege_restricted_conditions_${driving_privilege}`}
+                    position={{
+                      left: `68.5%`,
+                      top: `${privilegesTableRows[driving_privilege] || 0}%`
+                    }}
+                  >
+                    <ClaimLabel fontSize={9}>
+                      {restrictions_conditions}
+                    </ClaimLabel>
+                  </CardClaimContainer>
+                )}
+              </Fragment>
+            )
+          )
         }
       />
       <CardClaim

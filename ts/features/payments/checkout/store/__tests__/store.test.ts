@@ -7,7 +7,7 @@ import { walletPaymentSetCurrentStep } from "../actions/orchestration";
 import { PaymentsCheckoutState } from "../reducers";
 
 const INITIAL_STATE: PaymentsCheckoutState = {
-  currentStep: 1,
+  currentStep: 0,
   paymentDetails: pot.none,
   userWallets: pot.none,
   allPaymentMethods: pot.none,
