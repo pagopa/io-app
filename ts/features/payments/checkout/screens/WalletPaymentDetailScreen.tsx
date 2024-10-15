@@ -62,6 +62,8 @@ import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { walletPaymentEnabledUserWalletsSelector } from "../store/selectors/paymentMethods";
+import { WalletPaymentStepEnum } from "../types";
+import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -187,6 +189,11 @@ const WalletPaymentDetailContent = ({
       paymentsGetPaymentUserMethodsAction.request({
         onResponse: wallets => {
           if (!wallets || wallets?.length > 0) {
+            dispatch(
+              walletPaymentSetCurrentStep(
+                WalletPaymentStepEnum.PICK_PAYMENT_METHOD
+              )
+            );
             navigation.navigate(
               PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR,
               {

@@ -31,6 +31,7 @@
         <array>
           <string>ioit</string>
           <string>iowalletcie</string>
+					<string>iologincie</string>
         </array>
       </dict>
     </array>
@@ -42,7 +43,8 @@
     <array>
       <string>http</string>
       <string>https</string>
-    </array>
+			<string>CIEID</string>
+		</array>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>LSSupportsOpeningDocumentsInPlace</key>
