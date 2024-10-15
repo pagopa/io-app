@@ -2282,24 +2282,11 @@ bonus:
           byDistance: "Nach der Nähe zu deinem Standort"
           byName: "Alphabetisch geordnet"
     merchantDetail:
-      bucket:
-        alert:
-          cta: "Verstanden!"
-        error:
-          noCode: "Die Rabattcodes für diese Ermäßigung sind derzeit abgelaufen, bitte versuche es später noch einmal."
       title:
         deals: Opportunità
         description: "Beschreibung"
-        services: "Dienste"
         contactInfo: "Adressen"
-        hours: "Öffnungszeiten"
-        validity: "Gültigkeit"
-        discountCode: "Rabattcode"
-        conditions: "Bedingungen"
       cta:
-        label: "Besuche die Website des Anbieters"
-        landingPage: "Die Ermäßigung nutzen"
-        discountUrl: "Nutze die Ermäßigung"
         website: Vai al sito del partner
       categories:
         counting: "und weitere {{count}}"
@@ -2573,10 +2560,6 @@ features:
         title: "Vorherige Transaktionen"
         bottomSheet:
           title: "Wo finde ich die Zahlungsquittung?"
-          noticeHeading: "Kürzlich bezahlte Aufforderungen"
-          noticeBody: "Wir sind gerade dabei, unsere Systeme zu aktualisieren: Sobald sie abgeschlossen ist, findest du die Quittungen im PDF-Format im Abschnitt Zahlungen."
-          allNoticesHeading: "Alle anderen Aufforderungen"
-          allNoticesBody: "Für Transaktionen, die vor dem 1. April 2023 getätigt wurden, wende dich bitte an den Gläubiger."
       multiplePayment: "Mehrfache Zahlung"
       title: "Transaktionsverlauf"
       button: "Alle anzeigen"

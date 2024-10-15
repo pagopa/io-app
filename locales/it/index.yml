@@ -1941,6 +1941,14 @@ wallet:
         subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
         primaryAction: Aggiungi carta
         secondaryAction: Usa altri metodi
+      PAYMENT_REVERSED:
+        title: Il pagamento non è andato a buon fine
+        subtitle: L’importo autorizzato è stato rimborsato sul tuo metodo di pagamento. Il trasferimento di denaro potrebbe richiedere del tempo.
+        primaryAction: Scopri di più
+        secondaryAction: Chiudi
+      PAYPAL_REMOVED_ERROR:
+        title: Autorizzazione negata
+        subtitle: Potresti avere rimosso pagoPA dai pagamenti automatici di PayPal. Elimina il conto PayPal dal tuo Portafoglio, aggiungilo di nuovo e riprova ad effettuare il pagamento.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -2694,24 +2702,11 @@ bonus:
           byDistance: Per vicinanza alla tua posizione
           byName: Ordine alfabetico
     merchantDetail:
-      bucket:
-        alert:
-          cta: Ho capito!
-        error:
-          noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
         deals: Opportunità
         description: Descrizione
-        services: Servizi
         contactInfo: Contatti e informazioni
-        hours: Orari
-        validity: Validità
-        discountCode: Codice Sconto
-        conditions: Condizioni
       cta:
-        label: Vai al sito dell'operatore
-        landingPage: Accedi all’opportunità
-        discountUrl: Vai all'opportunità
         website: Vai al sito del partner
       categories:
         counting: e altre {{count}}
@@ -2728,6 +2723,19 @@ bonus:
       information:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
+      discount:
+        description: Descrizione
+        conditions: Condizioni
+        validity: Validità
+        cta:
+          api: Attiva codice sconto
+          static: Vai al codice sconto
+          bucket: Vai al codice sconto
+          landingpage: Vai all'opportunità
+        secondaryCta: Vai all'opportunità
+        title: Ecco il codice sconto!
+        expired: Codice sconto scaduto!
+        copyButton: Copia codice sconto
     cta:
       activeBonus: Attiva Carta Giovani Nazionale
       back: Non ora
@@ -3153,10 +3161,8 @@ features:
         title: Operazioni precedenti
         bottomSheet:
           title: Dove trovo la ricevuta di pagamento?
-          noticeHeading: Avvisi pagati di recente
-          noticeBody: "Stiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
-          allNoticesHeading: Tutti gli altri avvisi
-          allNoticesBody: Per le operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
+          notice: "**Avvisi pagati di recente**\nStiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
+          allNotices: "**Tutti gli altri avvisi**\nPer le operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore."
       multiplePayment: Pagamento multiplo
       title: Ricevute pagoPA
       button: Vedi tutte
@@ -3186,6 +3192,13 @@ features:
         explainationContent: "Quando hai salvato questo metodo, hai autorizzato {{pspBusinessName}} a gestire le transazioni eseguite tramite “PayPal pagamento veloce”.\n\nSe vuoi usare un altro gestore, aggiungi nuovamente il metodo al tuo Portafoglio.\n\nPer revocare l’autorizzazione, rimuovi il metodo dal Portafoglio.\n\nUsa l’app PayPal per modificare la carta o conto bancario su cui addebitare le spese."
     errors:
       transactionCreationError: C’è un problema con i sistemi di pagamento.
+    checkout:
+      bottomSheet:
+        PAYMENT_REVERSED:
+          title: "Cosa fare se il pagamento non va a buon fine?"
+          payNotice: "**Paga l'avviso**\nRicorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, [scopri gli altri canali abilitati a pagoPA]({{url}})"
+          waitRefund: "**Attendi il rimborso**\nDi solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il trasferimento di denaro sul tuo conto o carta potrebbe richiedere più tempo."
+          contactSupport: "**Contatta l'assistenza**\nSe dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’assistenza."
   itWallet:
     credentialName:
       eid: Identità Digitale
@@ -3420,6 +3433,18 @@ features:
         title: Certificato di autenticità
         usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
         certifiedLabel: Questo documento è certificato dall'ente emittente.
+    walletRevocation:
+      cta: Disattiva Documenti su IO
+      confirmScreen:
+        title: Vuoi davvero disattivare Documenti su IO?
+        subtitle: "Eliminerai i documenti che hai aggiunto al Portafoglio.\nSe cambi idea, potrai riattivare Documenti su IO in futuro."
+        action: Conferma e continua
+      loadingScreen:
+        title: Stiamo disattivando Documenti su IO...
+        subtitle: Attendi qualche secondo
+      failureScreen:
+        title: Si è verificato un errore imprevisto
+        subtitle: Non è stato possibile disattivare il servizio. Riprova.
 support:
   ticketList:
     noTicket:
