@@ -110,6 +110,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -157,6 +158,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -204,6 +206,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -251,6 +254,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -298,6 +302,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -359,6 +364,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -406,6 +412,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -453,6 +460,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -500,6 +508,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -539,6 +548,54 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
           "position": "absolute",
         },
         {
+          "left": "68.5%",
+          "top": "30.3%",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      accessible={false}
+      allowFontScaling={false}
+      color="black"
+      defaultColor="black"
+      defaultWeight="Semibold"
+      font="TitilliumSansPro"
+      fontStyle={
+        {
+          "fontSize": 18.75,
+          "textTransform": "none",
+        }
+      }
+      lineBreakMode="head"
+      numberOfLines={1}
+      style={
+        [
+          {
+            "fontSize": 18.75,
+            "textTransform": "none",
+          },
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="Semibold"
+    >
+      78
+    </Text>
+  </View>
+  <View
+    style={
+      [
+        {
+          "position": "absolute",
+        },
+        {
           "bottom": "6.5%",
           "left": "8%",
         },
@@ -547,6 +604,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -641,6 +699,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -688,6 +747,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -735,6 +795,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -782,6 +843,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -829,6 +891,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -876,6 +939,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -923,6 +987,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -970,6 +1035,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
@@ -1017,6 +1083,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     }
   >
     <Text
+      accessible={false}
       allowFontScaling={false}
       color="black"
       defaultColor="black"
