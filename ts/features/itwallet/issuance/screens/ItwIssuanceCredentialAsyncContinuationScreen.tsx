@@ -1,4 +1,5 @@
 import React from "react";
+import * as t from "io-ts";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
@@ -26,13 +27,48 @@ type ScreenProps = IOStackNavigationRouteProps<
   "ITW_ISSUANCE_CREDENTIAL_ASYNC_FLOW_CONTINUATION"
 >;
 
+const routeParams = t.type({
+  credentialType: t.literal("MDL") // Only MDL supports the async issuance flow
+});
+
+const getCredentialType = (params: unknown) =>
+  pipe(
+    params,
+    routeParams.decode,
+    O.fromEither,
+    O.map(x => x.credentialType)
+  );
+
 /**
  * Landing screen to resume the async issuance flow from a deep link.
+ * We can not assume the route params will be of the expected shape,
+ * so we guard against invalid values in this screen.
  */
 export const ItwIssuanceCredentialAsyncContinuationScreen = ({
   route
 }: ScreenProps) => {
-  const { credentialType } = route.params;
+  const credentialType = getCredentialType(route.params);
+  const navigation = useIONavigation();
+
+  return pipe(
+    credentialType,
+    O.fold(
+      () => (
+        <OperationResultScreenContent
+          pictogram="umbrellaNew"
+          title={I18n.t("genericError")}
+          action={{
+            label: I18n.t("global.buttons.close"),
+            onPress: () => navigation.popToTop()
+          }}
+        />
+      ),
+      value => <InnerComponent credentialType={value} />
+    )
+  );
+};
+
+const InnerComponent = ({ credentialType }: { credentialType: string }) => {
   const navigation = useIONavigation();
   const credentialOption = useIOSelector(
     itwCredentialByTypeSelector(credentialType)
