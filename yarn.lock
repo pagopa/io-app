@@ -2075,6 +2075,11 @@
     fp-ts "^2.12.1"
     io-ts "^2.2.16"
 
+"@pagopa/io-react-native-cieid@^0.3.5":
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-cieid/-/io-react-native-cieid-0.3.5.tgz#88eeb846c0fb9b460b002c3585acb5868546b28f"
+  integrity sha512-MK64BfBLnQTOiIwhjvAui4wZph6RoonxPVeIakW61SfAJ+V6SczAoqfDD6MfUtUntIC7dUpCzI3zUxB93tCq4Q==
+
 "@pagopa/io-react-native-crypto@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-crypto/-/io-react-native-crypto-0.3.0.tgz#4181a53e36d4cd142b93ef133d3d227d9d360f96"
