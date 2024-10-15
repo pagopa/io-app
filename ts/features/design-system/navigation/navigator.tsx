@@ -33,6 +33,7 @@ import { DSColors } from "../core/DSColors";
 import { DSDynamicBackground } from "../core/DSDynamicBackground";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
 import { DSFooterActions } from "../core/DSFooterActions";
+import { DSFooterActionsInline } from "../core/DSFooterActionsInline";
 import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
 import { DSFooterActionsSticky } from "../core/DSFooterActionsSticky";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
@@ -42,6 +43,7 @@ import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
 import { DSIOMarkdown } from "../core/DSIOMarkdown";
 import { DSIOScrollView } from "../core/DSIOScrollView";
+import { DSIOScrollViewCentredContent } from "../core/DSIOScrollViewCentredContent";
 import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithLargeHeader";
 import { DSIOScrollViewWithListItems } from "../core/DSIOScrollViewWithListItems";
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
@@ -75,7 +77,7 @@ import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
-import { DSIOScrollViewCentredContent } from "../core/DSIOScrollViewCentredContent";
+import { DSFooterActionsInlineNotFixed } from "../core/DSFooterActionsInlineNotFixed";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -532,6 +534,25 @@ export const DesignSystemNavigator = () => {
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_NOT_FIXED.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE.route}
+          component={DSFooterActionsInline}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE.title
+          }}
+        />
+
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE_NOT_FIXED.route
+          }
+          component={DSFooterActionsInlineNotFixed}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE_NOT_FIXED.title
           }}
         />
 
