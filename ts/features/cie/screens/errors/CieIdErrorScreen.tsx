@@ -4,6 +4,7 @@ import useNavigateToLoginMethod from "../../../../hooks/useNavigateToLoginMethod
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import I18n from "../../../../i18n";
 import { TranslationKeys } from "../../../../../locales/locales";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 const CIE_PIN_DESC: TranslationKeys =
   "authentication.cie_id.error_screen.cie_pin_supported.description";
@@ -18,6 +19,8 @@ const CieIdErrorScreen = () => {
   const { navigateToIdpSelection, navigateToCiePinInsertion, isCieSupported } =
     useNavigateToLoginMethod();
   const { popToTop } = useIONavigation();
+
+  useAvoidHardwareBackButton();
 
   const subtitle = I18n.t(isCieSupported ? CIE_PIN_DESC : SPID_DESC);
   const primaryActionLabel = I18n.t(

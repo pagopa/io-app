@@ -44,9 +44,11 @@ Sentry.init({
   },
   integrations: integrations => [
     ...integrations,
-    new Sentry.ReactNativeTracing({ routingInstrumentation })
+    Sentry.reactNativeTracingIntegration({ routingInstrumentation })
   ],
   enabled: !isDevEnv,
+  // https://sentry.zendesk.com/hc/en-us/articles/23337524872987-Why-is-the-the-message-in-my-error-being-truncated
+  maxValueLength: 3000,
   tracesSampleRate: 0.3,
   sampleRate: 0.3
 });

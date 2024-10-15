@@ -2075,6 +2075,11 @@
     fp-ts "^2.12.1"
     io-ts "^2.2.16"
 
+"@pagopa/io-react-native-cieid@^0.3.5":
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-cieid/-/io-react-native-cieid-0.3.5.tgz#88eeb846c0fb9b460b002c3585acb5868546b28f"
+  integrity sha512-MK64BfBLnQTOiIwhjvAui4wZph6RoonxPVeIakW61SfAJ+V6SczAoqfDD6MfUtUntIC7dUpCzI3zUxB93tCq4Q==
+
 "@pagopa/io-react-native-crypto@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-crypto/-/io-react-native-crypto-0.3.0.tgz#4181a53e36d4cd142b93ef133d3d227d9d360f96"
@@ -2105,10 +2110,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.6.tgz#b211e953eb05b76b43effc0d9d7be79767c361f9"
   integrity sha512-Dx1WPdqFaB76Wv8WgkLCIQoj9ADZeWyfe/GTnGWQKeIWnTe5v3socbEDdax9fh0asxizuTVzTVj962H2nCQxwg==
 
-"@pagopa/io-react-native-wallet@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.19.0.tgz#3b056d46d9e7b74868cb23ed1d77ae20ff93e848"
-  integrity sha512-dxBrQlzOnxNxY5rR4dKboFcVBjQnH8MaXPgyhCQxBSDxOqyQ5hF8waf0ooYLlQhe1kMS2M9ZRnVWKUMUmHIrgQ==
+"@pagopa/io-react-native-wallet@^0.20.0":
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.20.0.tgz#f6c3794d94716074a938051fa115b56f94fa6931"
+  integrity sha512-hAMTMre3lhSdD7zyj7Qk9izBwOEPqm0/Zh9X8zcdjGECKG0bqFOpT0XWqGp1JTpj8/Hwnk07DRV8RPnkaQBwRg==
   dependencies:
     js-sha256 "^0.9.0"
     parse-url "^9.2.0"
