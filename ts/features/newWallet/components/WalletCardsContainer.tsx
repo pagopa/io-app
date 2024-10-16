@@ -2,6 +2,7 @@ import { IOStyles, ListItemHeader } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { isItwEnabledSelector } from "../../../store/reducers/backendStatus";
@@ -22,6 +23,7 @@ import {
 } from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
 import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLifecycleAlert";
 import { WalletCardCategoryFilter } from "../types";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
@@ -78,6 +80,7 @@ const WalletCardsContainer = () => {
 const ItwCardsContainer = ({
   isStacked
 }: Pick<WalletCardsCategoryContainerProps, "isStacked">) => {
+  const navigation = useIONavigation();
   const cards = useIOSelector(selectWalletItwCards);
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
@@ -89,9 +92,18 @@ const ItwCardsContainer = ({
   const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
     {
       title: <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />,
-      component: <ItwEidInfoBottomSheetContent />
+      // Navigation does not seem to work when the bottom sheet's component is not inline
+      component: <ItwEidInfoBottomSheetContent navigation={navigation} />
     },
     EID_INFO_BOTTOM_PADDING
+  );
+
+  useFocusEffect(
+    React.useCallback(
+      // Automatically dismiss the bottom sheet when focus is lost
+      () => eidInfoBottomSheet.dismiss,
+      [eidInfoBottomSheet.dismiss]
+    )
   );
 
   if (!isItwTrialEnabled || !isItwEnabled) {
