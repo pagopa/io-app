@@ -1,4 +1,10 @@
-import { IOColors, VSpacer, useIOTheme } from "@pagopa/io-app-design-system";
+import {
+  FooterActions,
+  FooterActionsMeasurements,
+  IOColors,
+  VSpacer,
+  useIOTheme
+} from "@pagopa/io-app-design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
 import React, { useMemo, useState } from "react";
 import {
@@ -17,10 +23,6 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue
 } from "react-native-reanimated";
-import {
-  FooterActions,
-  FooterActionsMeasurements
-} from "../../../components/ui/FooterActions";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");

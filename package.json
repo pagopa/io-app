@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.72.0-rc.0",
+  "version": "2.73.0-rc.1",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v14.3.0-RELEASE/api_backend.yaml",
   "io_session_manager_api": "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/internal.yaml",
   "io_session_manager_public_api": "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/public.yaml",
@@ -93,7 +93,7 @@
     "generate:payments": "npm-run-all generate:pagopa-walletv3-api generate:pagopa-ecommerce-api generate:pagopa-biz-events-api generate:pagopa-platform-api",
     "generate": "npm-run-all generate:*",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
-    "remove_unused_locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/remove-unused-locales.ts",    
+    "remove_unused_locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/remove-unused-locales.ts",
     "lollipop_checks:comment": "./scripts/toggle-comments-on-lollipop-checks.sh comment ./ts/sagas/startup.ts",
     "lollipop_checks:uncomment": "./scripts/toggle-comments-on-lollipop-checks.sh uncomment ./ts/sagas/startup.ts",
     "prepare": "husky install"
@@ -107,8 +107,9 @@
   "dependencies": {
     "@babel/plugin-transform-regenerator": "^7.18.6",
     "@gorhom/bottom-sheet": "^4.1.5",
-    "@pagopa/io-app-design-system": "1.46.1",
+    "@pagopa/io-app-design-system": "1.47.0",
     "@pagopa/io-pagopa-commons": "^3.1.0",
+    "@pagopa/io-react-native-cieid": "^0.3.5",
     "@pagopa/io-react-native-crypto": "^0.3.0",
     "@pagopa/io-react-native-http-client": "1.0.5",
     "@pagopa/io-react-native-integrity": "^0.3.0",
