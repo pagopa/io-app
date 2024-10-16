@@ -130,6 +130,21 @@ export const ItwIssuanceEidFailureScreen = () => {
           ),
           onPress: () => closeIssuance() // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         }
+      },
+      [IssuanceFailureType.WALLET_REVOCATION_GENERIC]: {
+        title: I18n.t("features.itWallet.walletRevocation.failureScreen.title"),
+        subtitle: I18n.t(
+          "features.itWallet.walletRevocation.failureScreen.subtitle"
+        ),
+        pictogram: "umbrellaNew",
+        action: {
+          label: I18n.t("global.buttons.retry"),
+          onPress: () => machineRef.send({ type: "revoke-wallet-instance" })
+        },
+        secondaryAction: {
+          label: I18n.t("global.buttons.close"),
+          onPress: () => machineRef.send({ type: "close" })
+        }
       }
     };
 

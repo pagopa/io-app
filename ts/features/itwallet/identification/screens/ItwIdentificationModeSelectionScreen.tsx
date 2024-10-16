@@ -51,6 +51,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
     <IOScrollViewWithLargeHeader
       title={{ label: I18n.t("features.itWallet.identification.mode.title") }}
       description={I18n.t("features.itWallet.identification.mode.description")}
+      headerActionsProp={{ showHelp: true }}
     >
       <ContentWrapper>
         <ListItemHeader

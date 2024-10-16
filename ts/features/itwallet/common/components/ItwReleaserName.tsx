@@ -54,7 +54,7 @@ export const ItwReleaserName = ({ credential, isPreview }: Props) => {
       type: "iconButton",
       componentProps: {
         icon: "info",
-        accessibilityLabel: "test",
+        accessibilityLabel: "Info",
         onPress: onPressWithMixpanelEvent
       }
     };
