@@ -59,7 +59,6 @@ export const TransactionsList = (props: Props) => {
   if (!isLoadingMore && pot.isLoading(props.transactions)) {
     return (
       <BoxedRefreshIndicator
-        white={true}
         caption={<Body>{I18n.t("wallet.transactionsLoadMessage")}</Body>}
       />
     );

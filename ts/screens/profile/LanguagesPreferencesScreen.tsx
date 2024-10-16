@@ -1,6 +1,5 @@
 import {
   Banner,
-  ContentWrapper,
   RadioGroup,
   RadioItem,
   useIOToast,
@@ -197,6 +196,7 @@ const LanguagesPreferencesScreen = () => {
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <IOScrollViewWithLargeHeader
+        includeContentMargins
         title={{
           label: I18n.t("profile.preferences.list.preferred_language.title")
         }}
@@ -207,31 +207,29 @@ const LanguagesPreferencesScreen = () => {
         headerActionsProp={{ showHelp: true }}
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
-        <ContentWrapper>
-          <VSpacer size={16} />
-          <RadioGroup<string>
-            type="radioListItem"
-            items={renderedItem}
-            selectedItem={selectedItem}
-            onPress={onLanguageSelected}
+        <VSpacer size={16} />
+        <RadioGroup<string>
+          type="radioListItem"
+          items={renderedItem}
+          selectedItem={selectedItem}
+          onPress={onLanguageSelected}
+        />
+        <VSpacer size={16} />
+        {isBannerVisible && (
+          <Banner
+            viewRef={viewRef}
+            color="neutral"
+            size="big"
+            content={bannerInfoSelector.message[getFullLocale()]}
+            pictogramName="charity"
+            action={I18n.t(
+              "profile.preferences.list.preferred_language.banner.button"
+            )}
+            onPress={() =>
+              openWebUrl(bannerInfoSelector.web_url?.[getFullLocale()] || "")
+            }
           />
-          <VSpacer size={16} />
-          {isBannerVisible && (
-            <Banner
-              viewRef={viewRef}
-              color="neutral"
-              size="big"
-              content={bannerInfoSelector.message[getFullLocale()]}
-              pictogramName="charity"
-              action={I18n.t(
-                "profile.preferences.list.preferred_language.banner.button"
-              )}
-              onPress={() =>
-                openWebUrl(bannerInfoSelector.web_url?.[getFullLocale()] || "")
-              }
-            />
-          )}
-        </ContentWrapper>
+        )}
       </IOScrollViewWithLargeHeader>
     </LoadingSpinnerOverlay>
   );
