@@ -9,7 +9,6 @@ import {
   getIntegrityHardwareKeyTag,
   registerWalletInstance
 } from "../../common/utils/itwAttestationUtils";
-import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUtils";
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
@@ -65,7 +64,6 @@ export const createEidIssuanceActorsImplementation = (
     // If there is a stored key tag we assume the wallet instance was already created
     // so we just need to prepare the integrity service and return the existing key tag.
     if (O.isSome(storedIntegrityKeyTag)) {
-      await ensureIntegrityServiceIsReady();
       return storedIntegrityKeyTag.value;
     }
 
