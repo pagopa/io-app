@@ -364,6 +364,9 @@ exports[`IngressScreen Should match the snapshot 1`] = `
                             style={
                               {
                                 "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "rowGap": 24,
                               }
                             }
                           >
@@ -552,13 +555,6 @@ exports[`IngressScreen Should match the snapshot 1`] = `
                                 </View>
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "height": 24,
-                                }
-                              }
-                            />
                             <Text
                               accessibilityLabel="We are getting ready for your experience on IO"
                               allowFontScaling={false}

@@ -3,16 +3,12 @@
 exports[`ServicesHeaderSection component should match snapshot for loading 1`] = `
 <View
   style={
-    [
-      {
-        "backgroundColor": "#F4F5F8",
-      },
-      {
-        "marginTop": -1334,
-        "paddingBottom": undefined,
-        "paddingTop": 1534,
-      },
-    ]
+    {
+      "backgroundColor": "#F4F5F8",
+      "marginTop": -1334,
+      "paddingBottom": undefined,
+      "paddingTop": 1534,
+    }
   }
 >
   <View
@@ -171,16 +167,12 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
 exports[`ServicesHeaderSection component should match the snapshot for service header 1`] = `
 <View
   style={
-    [
-      {
-        "backgroundColor": "#F4F5F8",
-      },
-      {
-        "marginTop": -1334,
-        "paddingBottom": undefined,
-        "paddingTop": 1534,
-      },
-    ]
+    {
+      "backgroundColor": "#F4F5F8",
+      "marginTop": -1334,
+      "paddingBottom": undefined,
+      "paddingTop": 1534,
+    }
   }
 >
   <View
