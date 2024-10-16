@@ -2,6 +2,7 @@ import { IOStyles, ListItemHeader } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { isItwEnabledSelector } from "../../../store/reducers/backendStatus";
@@ -21,6 +22,7 @@ import {
   ItwEidInfoBottomSheetTitle
 } from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { WalletCardCategoryFilter } from "../types";
 import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/ItwUpcomingWalletBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
@@ -82,13 +84,23 @@ const ItwCardsContainer = ({
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
+  const navigation = useIONavigation();
 
   const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
     {
       title: <ItwEidInfoBottomSheetTitle />,
-      component: <ItwEidInfoBottomSheetContent />
+      // Navigation does not seem to work when the bottom sheet's component is not inline
+      component: <ItwEidInfoBottomSheetContent navigation={navigation} />
     },
     EID_INFO_BOTTOM_PADDING
+  );
+
+  useFocusEffect(
+    React.useCallback(
+      // Automatically dismiss the bottom sheet when focus is lost
+      () => eidInfoBottomSheet.dismiss,
+      [eidInfoBottomSheet.dismiss]
+    )
   );
 
   if (!isItwTrialEnabled || !isItwEnabled) {
