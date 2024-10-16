@@ -20,6 +20,13 @@ export type KoState = {
   cta_id: string;
 };
 
+/**
+ * This is the list of credentials that are tracked in MixPanel
+ * ITW_ID_V2: PersonIdentificationData
+ * ITW_PG_V2: MDL
+ * ITW_CED_V2: EuropeanDisabilityCard
+ * ITW_TS_V2: EuropeanHealthInsuranceCard
+ */
 const mixPanelCredentials = [
   "ITW_ID_V2",
   "ITW_PG_V2",
@@ -37,7 +44,13 @@ type TrackCredentialDetail = {
 export type OtherMixPanelCredential = "welfare" | "payment_method" | "CGN";
 type NewCredential = MixPanelCredential | OtherMixPanelCredential;
 
-// This map is used to map the internal credential type to the MixPanelCredential that needs to be tracked
+/**
+ * This map is used to map the credential type to the MixPanel credential
+ * ITW_ID_V2: PersonIdentificationData
+ * ITW_PG_V2: MDL
+ * ITW_CED_V2: EuropeanDisabilityCard
+ * ITW_TS_V2: EuropeanHealthInsuranceCard
+ */
 export const CREDENTIALS_MAP: Record<string, MixPanelCredential> = {
   PersonIdentificationData: "ITW_ID_V2",
   MDL: "ITW_PG_V2",
@@ -371,6 +384,7 @@ export function trackWalletCredentialShowIssuer(
   );
 }
 
+// TODO: To be added on the data origin tooltip
 export function trackWalletCredentialShowAuthSource(
   credential: MixPanelCredential
 ) {
