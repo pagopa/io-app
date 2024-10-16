@@ -1,4 +1,4 @@
-import { IOColors, useIOToast } from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme, useIOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as React from "react";
@@ -72,6 +72,9 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   const isLoadingReceipt = pot.isLoading(transactionReceiptPot);
   const isError = pot.isError(transactionDetailsPot);
   const transactionDetails = pot.toUndefined(transactionDetailsPot);
+
+  const theme = useIOTheme();
+  const backgroundColor = IOColors[theme["appBackground-secondary"]];
 
   useOnFirstRender(() => {
     fetchTransactionDetails();
@@ -158,9 +161,9 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
       headerActionsProp={{ showHelp: true }}
     >
       <FocusAwareStatusBar barStyle={"dark-content"} />
-      <View style={styles.wrapper}>
+      <View style={[styles.wrapper, { backgroundColor }]}>
         {/* The following line is used to show the background color gray that overlay the basic one which is white */}
-        <View style={styles.bottomBackground} />
+        <View style={[styles.bottomBackground, { backgroundColor }]} />
         <PaymentsBizEventsTransactionHeadingSection
           transaction={transactionDetails}
           isLoading={isLoading}

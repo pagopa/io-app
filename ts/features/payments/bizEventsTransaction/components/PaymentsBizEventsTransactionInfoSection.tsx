@@ -4,19 +4,21 @@ import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import {
   Divider,
+  IOColors,
   IOLogoPaymentType,
   IORadiusScale,
   IOVisualCostants,
   ListItemHeader,
   ListItemInfo,
   ListItemInfoCopy,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import Svg, { Path } from "react-native-svg";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { format } from "../../../../utils/dates";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import TransactionReceiptDivider from "../../../../../img/features/wallet/transaction-receipt-divider.svg";
 import { TransactionDetailResponse } from "../../../../../definitions/pagopa/biz-events/TransactionDetailResponse";
 import { WalletInfo } from "../../../../../definitions/pagopa/biz-events/WalletInfo";
 import { getPayerInfoLabel } from "../utils";
@@ -33,7 +35,6 @@ const styles = StyleSheet.create({
   },
   contentCard: {
     ...IOStyles.horizontalContentPadding,
-    ...IOStyles.bgWhite,
     borderRadius: IORadiusScale["1"],
     marginVertical: IOVisualCostants.appMarginDefault
   }
@@ -46,16 +47,28 @@ const PaymentsBizEventsTransactionInfoSection = ({
   transaction,
   loading
 }: PaymentsBizEventsTransactionInfoSectionProps) => {
+  const theme = useIOTheme();
+  const backgroundColor = IOColors[theme["appBackground-primary"]];
+
   const transactionInfo = transaction?.infoTransaction;
+
   return (
     <>
-      <TransactionReceiptDivider
-        height={24}
-        width={"100%"}
+      {/* TransactionReceiptDivider */}
+      <Svg
+        width="100%"
+        height="24"
+        viewBox="0 0 360 24"
         preserveAspectRatio="xMin slice"
-      />
+        fill="none"
+      >
+        <Path
+          d="M0 0H360V20.5645L348.75 24L337.5 20.5645L326.25 24L315 20.5645L303.75 24L292.5 20.5645L281.25 24L270 20.5645L258.75 24L247.5 20.5645L236.25 24L225 20.5645L213.75 24L202.5 20.5645L191.25 24L180 20.5645L168.75 24L157.5 20.5645L146.25 24L135 20.5645L123.75 24L112.5 20.5645L101.25 24L90 20.5645L78.75 24L67.5 20.5645L56.25 24L45 20.5645L33.75 24L22.5 20.5645L11.25 24L0 20.5645L0 0Z"
+          fill={IOColors[theme["appBackground-primary"]]}
+        />
+      </Svg>
       <View style={styles.container}>
-        <View style={styles.contentCard}>
+        <View style={[styles.contentCard, { backgroundColor }]}>
           <ListItemHeader
             label={I18n.t("transaction.details.info.title")}
             accessibilityLabel={I18n.t("transaction.details.info.title")}
