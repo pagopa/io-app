@@ -15,6 +15,7 @@ import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfi
 import { BarcodesScannerConfig } from "../../../definitions/content/BarcodesScannerConfig";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { Sections } from "../../../definitions/content/Sections";
+import { StatusMessage } from "../../../definitions/content/StatusMessage";
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
@@ -26,11 +27,10 @@ import { LocalizedMessageKeys } from "../../i18n";
 import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
-import { StatusMessage } from "../../../definitions/content/StatusMessage";
-import { isIdPayTestEnabledSelector } from "./persistedPreferences";
-import { GlobalState } from "./types";
 import { isPropertyWithMinAppVersionEnabled } from "./featureFlagWithMinAppVersionStatus";
 import { currentRouteSelector } from "./navigation";
+import { isIdPayTestEnabledSelector } from "./persistedPreferences";
+import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
 /** note that this state is not persisted so Option type is accepted
@@ -198,6 +198,16 @@ export const fimsDomainSelector = createSelector(
     pipe(
       backendStatus,
       O.map(bs => bs.config.fims.domain),
+      O.toUndefined
+    )
+);
+
+export const LandingScreenBannerOrderSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): ReadonlyArray<string> | undefined =>
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.landing_banners?.priority_order),
       O.toUndefined
     )
 );

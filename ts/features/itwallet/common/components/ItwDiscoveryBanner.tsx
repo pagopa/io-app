@@ -1,21 +1,21 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
+import { useRoute } from "@react-navigation/native";
 import React, { ReactElement } from "react";
 import { StyleSheet, View } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { itwTrialId } from "../../../../config";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { isItwTrialActiveSelector } from "../../../trialSystem/store/reducers";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { isItwTrialActiveSelector } from "../../../trialSystem/store/reducers";
 import {
-  trackItWalletBannerTap,
   trackItWalletBannerClosure,
+  trackItWalletBannerTap,
   trackITWalletBannerVisualized
 } from "../../analytics";
-import { itwTrialId } from "../../../../config";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
