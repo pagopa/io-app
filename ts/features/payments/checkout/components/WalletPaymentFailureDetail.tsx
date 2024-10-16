@@ -19,6 +19,8 @@ import {
   paymentAnalyticsDataSelector
 } from "../../history/store/selectors";
 import * as analytics from "../analytics";
+import { selectWalletPaymentCurrentStep } from "../store/selectors";
+import { getPaymentPhaseFromStep } from "../utils";
 
 type Props = {
   failure: WalletPaymentFailure;
@@ -30,6 +32,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
   const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
   const dispatch = useIODispatch();
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
+  const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
 
   const handleClose = () => {
     navigation.pop();
@@ -39,6 +42,8 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     analytics.trackPaymentErrorHelp({
       error: failure.faultCodeCategory,
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
       service_name: paymentAnalyticsData?.serviceName,
       first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
@@ -150,11 +155,13 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     }
     analytics.trackPaymentRequestFailure(failure, {
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
       service_name: paymentAnalyticsData?.serviceName,
       data_entry: paymentAnalyticsData?.startOrigin,
       first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
-      payment_phase: "verifica"
+      payment_phase: getPaymentPhaseFromStep(currentStep)
     });
   });
 

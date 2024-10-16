@@ -1,4 +1,7 @@
-import { ActionProp, HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import {
+  HeaderActionProps,
+  HeaderSecondLevel
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { ComponentProps, useLayoutEffect, useMemo } from "react";
@@ -49,8 +52,8 @@ type NoAdditionalActions = {
 type WithAdditionalActions =
   | NoAdditionalActions
   | {
-      secondAction: ActionProp;
-      thirdAction?: ActionProp;
+      secondAction: HeaderActionProps;
+      thirdAction?: HeaderActionProps;
     };
 
 type PropsWithSupport = SpecificHookProps &
@@ -157,7 +160,7 @@ export const useHeaderSecondLevel = ({
       };
     }
 
-    const helpAction: ActionProp = {
+    const helpAction: HeaderActionProps = {
       icon: "help",
       onPress: startSupportRequest,
       accessibilityLabel: I18n.t(
