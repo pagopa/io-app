@@ -338,9 +338,11 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                               "paddingHorizontal": 24,
                             },
                             {
-                              "backgroundColor": "#F4F5F8",
                               "marginBottom": "-75%",
                               "paddingBottom": "75%",
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
                             },
                           ]
                         }
@@ -870,9 +872,11 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                               "paddingHorizontal": 24,
                             },
                             {
-                              "backgroundColor": "#F4F5F8",
                               "marginBottom": "-75%",
                               "paddingBottom": "75%",
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
                             },
                           ]
                         }
@@ -1402,9 +1406,11 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                               "paddingHorizontal": 24,
                             },
                             {
-                              "backgroundColor": "#F4F5F8",
                               "marginBottom": "-75%",
                               "paddingBottom": "75%",
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
                             },
                           ]
                         }
@@ -1934,9 +1940,11 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                               "paddingHorizontal": 24,
                             },
                             {
-                              "backgroundColor": "#F4F5F8",
                               "marginBottom": "-75%",
                               "paddingBottom": "75%",
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
                             },
                           ]
                         }
@@ -2466,9 +2474,11 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               "paddingHorizontal": 24,
                             },
                             {
-                              "backgroundColor": "#F4F5F8",
                               "marginBottom": "-75%",
                               "paddingBottom": "75%",
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
                             },
                           ]
                         }
@@ -3164,9 +3174,11 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               "paddingHorizontal": 24,
                             },
                             {
-                              "backgroundColor": "#F4F5F8",
                               "marginBottom": "-75%",
                               "paddingBottom": "75%",
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
                             },
                           ]
                         }
@@ -3862,9 +3874,11 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               "paddingHorizontal": 24,
                             },
                             {
-                              "backgroundColor": "#F4F5F8",
                               "marginBottom": "-75%",
                               "paddingBottom": "75%",
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
                             },
                           ]
                         }
@@ -4560,9 +4574,11 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               "paddingHorizontal": 24,
                             },
                             {
-                              "backgroundColor": "#F4F5F8",
                               "marginBottom": "-75%",
                               "paddingBottom": "75%",
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
                             },
                           ]
                         }
