@@ -14,6 +14,7 @@ export type PaymentAnalyticsProps = {
   data_entry: string;
   first_time_opening: string;
   organization_name: string;
+  organization_fiscal_code: string;
   service_name: string;
   saved_payment_method: number;
   amount: string;
