@@ -8,7 +8,7 @@ import {
   H3,
   IOColors,
   useIOTheme,
-  VSpacer
+  VStack
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
@@ -18,12 +18,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center"
-  },
-  contentTitle: {
-    textAlign: "center"
-  },
-  content: {
-    alignItems: "center"
   }
 });
 
@@ -61,7 +55,10 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
       testID={testID}
     >
       <ContentWrapper>
-        <View style={styles.content}>
+        <VStack
+          space={SPACE_BETWEEN_SPINNER_AND_TEXT}
+          style={{ alignItems: "center" }}
+        >
           <View
             accessible={false}
             accessibilityElementsHidden={true}
@@ -69,11 +66,10 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
           >
             <LoadingIndicator />
           </View>
-          <VSpacer size={SPACE_BETWEEN_SPINNER_AND_TEXT} />
-          <H3 style={styles.contentTitle} accessibilityLabel={contentTitle}>
+          <H3 style={{ textAlign: "center" }} accessibilityLabel={contentTitle}>
             {contentTitle}
           </H3>
-        </View>
+        </VStack>
       </ContentWrapper>
       {children}
     </SafeAreaView>
