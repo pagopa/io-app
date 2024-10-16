@@ -21,6 +21,7 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
   CREDENTIALS_MAP,
+  trackAddCredentialFailure,
   trackAddCredentialTimeout,
   trackItWalletDeferredIssuing,
   trackWalletCreationFailed
@@ -150,7 +151,17 @@ const ContentView = ({ failure }: ContentViewProps) => {
     }
 
     if (failure.type === CredentialIssuanceFailureTypeEnum.ASYNC_ISSUANCE) {
-      trackItWalletDeferredIssuing(storedCredential.credentialType);
+      trackItWalletDeferredIssuing(
+        CREDENTIALS_MAP[storedCredential.credentialType]
+      );
+      return;
+    }
+    if (failure.type === CredentialIssuanceFailureTypeEnum.GENERIC) {
+      trackAddCredentialFailure({
+        reason: failure.reason,
+        type: failure.type,
+        credential: CREDENTIALS_MAP[storedCredential.credentialType]
+      });
       return;
     }
     trackAddCredentialTimeout({

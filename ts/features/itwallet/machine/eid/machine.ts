@@ -5,8 +5,8 @@ import { ItwTags } from "../tags";
 import {
   GetWalletAttestationActorParams,
   OnInitActorOutput,
-  StartCieAuthFlowActorParams,
-  type RequestEidActorParams
+  type RequestEidActorParams,
+  StartCieAuthFlowActorParams
 } from "./actors";
 import { CieAuthContext, Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -49,6 +49,7 @@ export const itwEidIssuanceMachine = setup({
     handleSessionExpired: notImplemented,
     abortIdentification: notImplemented,
     resetWalletInstance: notImplemented,
+    trackWalletInstanceRevocation: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) }))
   },
   actors: {
@@ -154,7 +155,11 @@ export const itwEidIssuanceMachine = setup({
       invoke: {
         src: "revokeWalletInstance",
         onDone: {
-          actions: ["resetWalletInstance", "closeIssuance"]
+          actions: [
+            "resetWalletInstance",
+            "closeIssuance",
+            "trackWalletInstanceRevocation"
+          ]
         },
         onError: {
           actions: assign(

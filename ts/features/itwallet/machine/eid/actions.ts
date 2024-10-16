@@ -5,7 +5,7 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { checkCurrentSession } from "../../../../store/actions/authentication";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
@@ -16,12 +16,14 @@ import {
 import { ItwLifecycleState } from "../../lifecycle/store/reducers";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
+import { trackItwDeactivated } from "../../analytics";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
   dispatch: ReturnType<typeof useIODispatch>,
+  store: ReturnType<typeof useIOStore>,
   toast: IOToast
 ) => ({
   navigateToTosScreen: () => {
@@ -173,5 +175,9 @@ export const createEidIssuanceActionsImplementation = (
   resetWalletInstance: () => {
     dispatch(itwLifecycleWalletReset());
     toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
+  },
+
+  trackWalletInstanceRevocation: () => {
+    trackItwDeactivated(store.getState());
   }
 });
