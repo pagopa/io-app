@@ -24,6 +24,7 @@ import {
   paymentsGetPaymentMethodsAction,
   paymentsGetPaymentTransactionInfoAction,
   paymentsGetPaymentUserMethodsAction,
+  paymentsGetRecentPaymentMethodUsedAction,
   paymentsStartPaymentAuthorizationAction
 } from "../actions/networking";
 import {
@@ -33,6 +34,7 @@ import {
   selectPaymentPspAction,
   walletPaymentSetCurrentStep
 } from "../actions/orchestration";
+import { UserLastPaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/UserLastPaymentMethodResponse";
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
 export type PaymentsCheckoutState = {
@@ -43,6 +45,7 @@ export type PaymentsCheckoutState = {
     NetworkError | WalletPaymentFailure
   >;
   userWallets: pot.Pot<Wallets, NetworkError>;
+  recentUsedPaymentMethod: pot.Pot<UserLastPaymentMethodResponse, NetworkError>;
   allPaymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
   pspList: pot.Pot<ReadonlyArray<Bundle>, NetworkError>;
   selectedWallet: O.Option<WalletInfo>;
@@ -54,9 +57,10 @@ export type PaymentsCheckoutState = {
 };
 
 const INITIAL_STATE: PaymentsCheckoutState = {
-  currentStep: WalletPaymentStepEnum.PICK_PAYMENT_METHOD,
+  currentStep: WalletPaymentStepEnum.NONE,
   paymentDetails: pot.none,
   userWallets: pot.none,
+  recentUsedPaymentMethod: pot.none,
   allPaymentMethods: pot.none,
   pspList: pot.none,
   selectedWallet: O.none,
@@ -89,6 +93,9 @@ const reducer = (
       return {
         ...state,
         rptId: action.payload,
+        recentUsedPaymentMethod: pot.none,
+        selectedPaymentMethod: O.none,
+        selectedWallet: O.none,
         paymentDetails: pot.toLoading(state.paymentDetails)
       };
     case getType(paymentsGetPaymentDetailsAction.success):
@@ -134,6 +141,26 @@ const reducer = (
       return {
         ...state,
         allPaymentMethods: pot.toError(state.allPaymentMethods, action.payload)
+      };
+
+    // Recent payment method
+    case getType(paymentsGetRecentPaymentMethodUsedAction.request):
+      return {
+        ...state,
+        recentUsedPaymentMethod: pot.toLoading(state.recentUsedPaymentMethod)
+      };
+    case getType(paymentsGetRecentPaymentMethodUsedAction.success):
+      return {
+        ...state,
+        recentUsedPaymentMethod: pot.some(action.payload)
+      };
+    case getType(paymentsGetRecentPaymentMethodUsedAction.failure):
+      return {
+        ...state,
+        recentUsedPaymentMethod: pot.toError(
+          state.recentUsedPaymentMethod,
+          action.payload
+        )
       };
 
     case getType(selectPaymentMethodAction):

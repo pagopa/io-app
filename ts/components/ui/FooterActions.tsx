@@ -124,6 +124,9 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * @deprecated This component is deprecated. Please use `FooterActions` from `io-app-design-system` instead.
+ */
 export const FooterActions = ({
   actions,
   excludeSafeAreaMargins = false,

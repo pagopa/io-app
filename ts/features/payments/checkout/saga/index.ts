@@ -9,6 +9,7 @@ import {
   paymentsGetPaymentMethodsAction,
   paymentsGetPaymentTransactionInfoAction,
   paymentsGetPaymentUserMethodsAction,
+  paymentsGetRecentPaymentMethodUsedAction,
   paymentsStartPaymentAuthorizationAction
 } from "../store/actions/networking";
 import { handleWalletPaymentAuthorization } from "./networking/handleWalletPaymentAuthorization";
@@ -19,6 +20,7 @@ import { handleWalletPaymentGetAllMethods } from "./networking/handleWalletPayme
 import { handleWalletPaymentGetDetails } from "./networking/handleWalletPaymentGetDetails";
 import { handleWalletPaymentGetTransactionInfo } from "./networking/handleWalletPaymentGetTransactionInfo";
 import { handleWalletPaymentGetUserWallets } from "./networking/handleWalletPaymentGetUserWallets";
+import { handleWalletPaymentGetRecentMethod } from "./networking/handleWalletPaymentGetRecentMethod";
 
 /**
  * Handle the pagoPA payments requests
@@ -73,5 +75,11 @@ export function* watchPaymentsCheckoutSaga(
     paymentsStartPaymentAuthorizationAction.request,
     handleWalletPaymentAuthorization,
     paymentClient.requestTransactionAuthorizationForIO
+  );
+
+  yield* takeLatest(
+    paymentsGetRecentPaymentMethodUsedAction.request,
+    handleWalletPaymentGetRecentMethod,
+    paymentClient.getUserLastPaymentMethodUsed
   );
 }

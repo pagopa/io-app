@@ -95,6 +95,8 @@ const WalletPaymentConfirmScreen = () => {
         analytics.trackPaymentConversion({
           attempt: paymentAnalyticsData?.attempt,
           organization_name: paymentAnalyticsData?.verifiedData?.paName,
+          organization_fiscal_code:
+            paymentAnalyticsData?.verifiedData?.paFiscalCode,
           service_name: paymentAnalyticsData?.serviceName,
           amount: paymentAnalyticsData?.formattedAmount,
           expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
@@ -156,6 +158,8 @@ const WalletPaymentConfirmScreen = () => {
       analytics.trackPaymentSummaryScreen({
         attempt: paymentAnalyticsData?.attempt,
         organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        organization_fiscal_code:
+          paymentAnalyticsData?.verifiedData?.paFiscalCode,
         service_name: paymentAnalyticsData?.serviceName,
         amount: paymentAnalyticsData?.formattedAmount,
         expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
