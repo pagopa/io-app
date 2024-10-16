@@ -18,7 +18,7 @@ import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { trackWalletShowBack } from "../../analytics";
+import { CREDENTIALS_MAP, trackWalletShowBack } from "../../analytics";
 
 /**
  * Credentials that should display a skeumorphic card
@@ -40,9 +40,9 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const [isFlipped, setIsFlipped] = React.useState(false);
 
   const handleOnPress = useCallback(() => {
-    trackWalletShowBack(credential.credential);
+    trackWalletShowBack(CREDENTIALS_MAP[credential.credentialType]);
     setIsFlipped(_ => !_);
-  }, [credential.credential]);
+  }, [credential.credentialType]);
 
   const { backgroundColor } = getThemeColorByCredentialType(
     credential.credentialType

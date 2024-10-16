@@ -27,6 +27,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import I18n from "../../../../i18n";
 import {
+  CREDENTIALS_MAP,
   trackCredentialDetail,
   trackWalletCredentialShowFAC_SIMILE
 } from "../../analytics";
@@ -62,7 +63,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
     const credential = credentialOption.value;
 
     trackCredentialDetail({
-      credential: credential.credential,
+      credential: CREDENTIALS_MAP[credential.credentialType],
       credential_status:
         credential.storedStatusAttestation?.credentialStatus || "not_valid"
     });

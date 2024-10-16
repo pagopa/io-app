@@ -56,7 +56,7 @@ const ItwPresentationDetailsFooter = ({
   };
 
   const showRemoveCredentialDialog = () => {
-    trackItwCredentialDelete(credential.credential);
+    trackItwCredentialDelete(CREDENTIALS_MAP[credential.credentialType]);
     return Alert.alert(
       I18n.t(
         "features.itWallet.presentation.credentialDetails.dialogs.remove.title"
@@ -81,7 +81,7 @@ const ItwPresentationDetailsFooter = ({
   };
 
   const startAndTrackSupportRequest = () => {
-    trackWalletCredentialSupport(credential.credential);
+    trackWalletCredentialSupport(CREDENTIALS_MAP[credential.credentialType]);
     startSupportRequest();
   };
 

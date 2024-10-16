@@ -30,13 +30,14 @@ const mixPanelCredentials = [
 type MixPanelCredential = (typeof mixPanelCredentials)[number];
 
 type TrackCredentialDetail = {
-  credential: string; // MixPanelCredential
+  credential: MixPanelCredential; // MixPanelCredential
   credential_status: string; // ItwPg
 };
 
 export type OtherMixPanelCredential = "welfare" | "payment_method" | "CGN";
 type NewCredential = MixPanelCredential | OtherMixPanelCredential;
 
+// This map is used to map the internal credential type to the MixPanelCredential that needs to be tracked
 export const CREDENTIALS_MAP: Record<string, MixPanelCredential> = {
   PersonIdentificationData: "ITW_ID_V2",
   MDL: "ITW_PG_V2",
@@ -180,7 +181,7 @@ export function trackItWalletCieCardReadingSuccess() {
   );
 }
 
-export function trackItWalletDeferredIssuing(credential: string) {
+export function trackItWalletDeferredIssuing(credential: MixPanelCredential) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_DEFERRED_ISSUING,
     buildEventProperties("UX", "screen_view", { credential })
@@ -197,7 +198,7 @@ export function trackWalletCredentialFAC_SIMILE() {
 
 // #region ACTIONS
 
-export const trackItwCredentialDelete = (credential: string) => {
+export const trackItwCredentialDelete = (credential: MixPanelCredential) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_DELETE,
     buildEventProperties("UX", "action", { credential })
@@ -354,27 +355,31 @@ export function trackWalletCategoryFilter(wallet_category: string) {
   );
 }
 
-export function trackWalletShowBack(credential: string) {
+export function trackWalletShowBack(credential: MixPanelCredential) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SHOW_BACK,
     buildEventProperties("UX", "action", { credential })
   );
 }
 
-export function trackWalletCredentialShowIssuer(credential: string) {
+export function trackWalletCredentialShowIssuer(
+  credential: MixPanelCredential
+) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SHOW_ISSUER,
     buildEventProperties("UX", "action", { credential })
   );
 }
 
-export function trackWalletCredentialShowAuthSource(credential: string) {
+export function trackWalletCredentialShowAuthSource(
+  credential: MixPanelCredential
+) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SHOW_AUTH_SOURCE,
     buildEventProperties("UX", "action", { credential })
   );
 }
-export function trackWalletCredentialSupport(credential: string) {
+export function trackWalletCredentialSupport(credential: MixPanelCredential) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SUPPORT,
     buildEventProperties("UX", "action", { credential })
@@ -389,7 +394,9 @@ export function trackWalletCredentialShowFAC_SIMILE() {
 }
 
 // ITW_CREDENTIAL_SHOW_TRUSTMARK
-export function trackWalletCredentialShowTrustmark(credential: string) {
+export function trackWalletCredentialShowTrustmark(
+  credential: MixPanelCredential
+) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SHOW_TRUSTMARK,
     buildEventProperties("UX", "action", { credential })
@@ -411,7 +418,9 @@ export function trackWalletNewIdReset(state: GlobalState) {
   );
 }
 
-export function trackWalletCredentialRenewStart(credential: string) {
+export function trackWalletCredentialRenewStart(
+  credential: MixPanelCredential
+) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_RENEW_START,
     buildEventProperties("UX", "action", { credential })
