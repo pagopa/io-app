@@ -86,6 +86,9 @@ const useNavigateToLoginMethod = () => {
 
   const navigateToCieIdLoginScreen = useCallback(
     (spidLevel: SpidLevel = "SpidL2") => {
+      dispatch(idpSelected(IdpCIE));
+      // TODO: track event cieID selected https://pagopa.atlassian.net/browse/IOPID-2079
+
       if (isCieIdAvailable(isCieUatEnabled)) {
         const params = {
           spidLevel,
@@ -110,7 +113,7 @@ const useNavigateToLoginMethod = () => {
         });
       }
     },
-    [isCieUatEnabled, withIsFastLoginOptInCheck, navigate]
+    [isCieUatEnabled, withIsFastLoginOptInCheck, navigate, dispatch]
   );
 
   return {
