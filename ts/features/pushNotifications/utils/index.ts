@@ -21,7 +21,6 @@ const checkPermissionAndroid = () =>
   new Promise<boolean>(resolve =>
     PushNotification.checkPermissions(data => {
       // On Android, only 'alert' has a value
-      console.log(`=== ${!!data.alert}`);
       resolve(!!data.alert);
     })
   );

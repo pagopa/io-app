@@ -16,7 +16,7 @@ export const userBehaviourReducer = (
 ): UserBehaviourState => {
   switch (action.type) {
     case getType(setEngagementScreenShown):
-      return { ...state, engagementScreenShown: false };
+      return { ...state, engagementScreenShown: true };
   }
   return state;
 };
