@@ -1953,6 +1953,9 @@ wallet:
       PAYPAL_REMOVED_ERROR:
         title: Autorizzazione negata
         subtitle: Potresti avere rimosso pagoPA dai pagamenti automatici di PayPal. Elimina il conto PayPal dal tuo Portafoglio, aggiungilo di nuovo e riprova ad effettuare il pagamento.
+      IN_APP_BROWSER_CLOSED_BY_USER:
+        title: Hai interrotto il pagamento
+        subtitle: Verifica l’esito dalla sezione Pagamenti. Se intendi pagare, attendi qualche minuto prima di riprovare.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
