@@ -22,12 +22,7 @@ export const ItwUpcomingWalletBanner = ({
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const itwTrialStatus = useIOSelector(trialStatusSelector(itwTrialId));
 
-  const showBanner =
-    isItwEnabled &&
-    itwTrialStatus !== SubscriptionStateEnum.ACTIVE &&
-    itwTrialStatus !== SubscriptionStateEnum.DISABLED;
-
-  if (!showBanner) {
+  if (!isItwEnabled || itwTrialStatus !== SubscriptionStateEnum.SUBSCRIBED) {
     return null;
   }
 
