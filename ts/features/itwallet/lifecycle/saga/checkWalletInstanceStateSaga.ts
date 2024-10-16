@@ -14,6 +14,7 @@ import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 export function* getAttestationOrResetWalletInstance(integrityKeyTag: string) {
   const sessionToken = yield* select(sessionTokenSelector);
   assert(sessionToken, "Missing session token");
+
   const isWalletInstanceAttestationValid = yield* select(
     itwIsWalletInstanceAttestationValidSelector
   );
@@ -26,7 +27,6 @@ export function* getAttestationOrResetWalletInstance(integrityKeyTag: string) {
   // If the Wallet Instance Attestation is not present or it has expired
   // we need to request a new one
   try {
-    yield* call(ensureIntegrityServiceIsReady);
     yield* call(getAttestation, integrityKeyTag, sessionToken);
   } catch (err) {
     if (
@@ -46,6 +46,10 @@ export function* checkWalletInstanceStateSaga(): Generator<
   ReduxSagaEffect,
   void
 > {
+  // We start the warming up process of the integrity service on Android
+  // TODO: consider the result of the operation to decide whether to proceed or not [SIW-1759]
+  yield* call(ensureIntegrityServiceIsReady);
+
   const isItwOperationalOrValid = yield* select(
     itwLifecycleIsOperationalOrValid
   );
