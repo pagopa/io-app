@@ -1,9 +1,7 @@
-import { createCryptoContextFor } from "@pagopa/io-react-native-wallet";
 import { format } from "date-fns";
 import MockDate from "mockdate";
 import * as React from "react";
 import { createStore } from "redux";
-import { fromPromise } from "xstate";
 import I18n from "../../../../../i18n";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -13,7 +11,6 @@ import {
   CredentialType,
   ItwStoredCredentialsMocks
 } from "../../../common/utils/itwMocksUtils";
-import { OnInitActorOutput } from "../../../machine/credential/actors";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -80,12 +77,8 @@ const renderComponent = (credentialType: CredentialType, expireDate: Date) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const logic = itwCredentialIssuanceMachine.provide({
-    actors: {
-      onInit: fromPromise<OnInitActorOutput>(async () => ({
-        integrityKeyTag: "",
-        walletInstanceAttestation: "",
-        wiaCryptoContext: createCryptoContextFor("")
-      }))
+    actions: {
+      onInit: jest.fn()
     }
   });
 
