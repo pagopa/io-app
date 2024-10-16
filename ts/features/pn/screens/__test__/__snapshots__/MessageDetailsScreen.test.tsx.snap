@@ -2487,7 +2487,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -3360,7 +3360,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {

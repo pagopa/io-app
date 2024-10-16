@@ -341,11 +341,15 @@ exports[`IngressScreen Should match the snapshot 1`] = `
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                         testID="ingress-screen-loader-id"
                       >

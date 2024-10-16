@@ -341,11 +341,15 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -950,11 +954,15 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -1559,11 +1567,15 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -2165,11 +2177,15 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View

@@ -200,11 +200,15 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -518,7 +522,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -1074,11 +1078,15 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -1392,7 +1400,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -2478,7 +2486,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -3034,11 +3042,15 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -3352,7 +3364,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -3908,11 +3920,15 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -4226,7 +4242,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
