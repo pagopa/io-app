@@ -28,7 +28,7 @@ import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
 import { logoForService } from "../../../services/home/utils";
-import { useAutoFetchingServiceByIdPot } from "../../common/utils/hooks";
+import { useAutoFetchingServiceByIdPot } from "../../common/hooks";
 import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import { fimsErrorTagSelector } from "../store/selectors";
 import { ConsentData } from "../types";
