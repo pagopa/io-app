@@ -6,7 +6,6 @@ import {
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAttestationActorInput,
-  OnInitActorOutput,
   RequestCredentialActorInput,
   RequestCredentialActorOutput
 } from "./actors";
@@ -32,10 +31,10 @@ export const itwCredentialIssuanceMachine = setup({
     storeCredential: notImplemented,
     closeIssuance: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
-    handleSessionExpired: notImplemented
+    handleSessionExpired: notImplemented,
+    onInit: notImplemented
   },
   actors: {
-    onInit: fromPromise<OnInitActorOutput>(notImplemented),
     getWalletAttestation:
       fromPromise<GetWalletAttestationActorOutput>(notImplemented),
     requestCredential: fromPromise<
@@ -59,15 +58,7 @@ export const itwCredentialIssuanceMachine = setup({
   id: "itwCredentialIssuanceMachine",
   context: { ...InitialContext },
   initial: "Idle",
-  invoke: {
-    src: "onInit",
-    onDone: {
-      actions: assign(({ event }) => ({
-        walletInstanceAttestation: event.output.walletInstanceAttestation
-      }))
-    },
-    target: ".Idle"
-  },
+  entry: "onInit",
   states: {
     Idle: {
       description:

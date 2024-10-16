@@ -14,13 +14,7 @@ import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
 import type { CieAuthContext, IdentificationContext } from "./context";
-
-export type OnInitActorOutput = {
-  integrityKeyTag: string | undefined;
-  walletInstanceAttestation: string | undefined;
-};
 
 export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
@@ -44,18 +38,6 @@ export type GetWalletAttestationActorParams = {
 export const createEidIssuanceActorsImplementation = (
   store: ReturnType<typeof useIOStore>
 ) => ({
-  onInit: fromPromise<OnInitActorOutput>(async () => {
-    const walletInstanceAttestation = itwWalletInstanceAttestationSelector(
-      store.getState()
-    );
-    const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(store.getState());
-
-    return {
-      integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
-      walletInstanceAttestation
-    };
-  }),
-
   createWalletInstance: fromPromise<string>(async () => {
     const sessionToken = sessionTokenSelector(store.getState());
     assert(sessionToken, "sessionToken is undefined");
