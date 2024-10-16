@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
 import { useIONavigation } from "../navigation/params/AppParamsList";
@@ -34,12 +34,9 @@ const useNavigateToLoginMethod = () => {
   const isCIEAuthenticationSupported = useIOSelector(isCieSupportedSelector);
   const isCieUatEnabled = useIOSelector(isCieLoginUatEnabledSelector);
 
-  const isCieSupported = useMemo(
-    () =>
-      cieFlowForDevServerEnabled ||
-      pot.getOrElse(isCIEAuthenticationSupported, false),
-    [isCIEAuthenticationSupported]
-  );
+  const isCieSupported =
+    cieFlowForDevServerEnabled ||
+    pot.getOrElse(isCIEAuthenticationSupported, false);
 
   const withIsFastLoginOptInCheck = useCallback(
     (
