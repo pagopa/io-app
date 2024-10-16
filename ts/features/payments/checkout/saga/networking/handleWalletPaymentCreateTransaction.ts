@@ -18,6 +18,7 @@ const handleError = (
   IOToast.error(I18n.t("features.payments.errors.transactionCreationError"));
   analytics.trackPaymentMethodVerificaFatalError({
     organization_name: paymentAnalyticsData?.verifiedData?.paName,
+    organization_fiscal_code: paymentAnalyticsData?.verifiedData?.paFiscalCode,
     service_name: paymentAnalyticsData?.serviceName,
     attempt: paymentAnalyticsData?.attempt,
     expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
