@@ -42,6 +42,8 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     analytics.trackPaymentErrorHelp({
       error: failure.faultCodeCategory,
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
       service_name: paymentAnalyticsData?.serviceName,
       first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
@@ -153,6 +155,8 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     }
     analytics.trackPaymentRequestFailure(failure, {
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
       service_name: paymentAnalyticsData?.serviceName,
       data_entry: paymentAnalyticsData?.startOrigin,
       first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
