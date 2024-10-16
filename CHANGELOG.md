@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.73.0-rc.1](https://github.com/pagopa/io-app/compare/2.73.0-rc.0...2.73.0-rc.1) (2024-10-16)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1754](https://pagopa.atlassian.net/browse/SIW-1754)] Missing contextual help inside identification mode screen ([#6282](https://github.com/pagopa/io-app/issues/6282)) ([40639ac](https://github.com/pagopa/io-app/commit/40639acf150fcb549d7d400601bae8174501229a))
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-401](https://pagopa.atlassian.net/browse/IOAPPX-401)] Update JDK version in release workflow ([#6287](https://github.com/pagopa/io-app/issues/6287)) ([6256221](https://github.com/pagopa/io-app/commit/625622152dc73bc610340bbafd3e982ca6c9cd06))
+
 ## [2.73.0-rc.0](https://github.com/pagopa/io-app/compare/2.71.0-rc.2...2.73.0-rc.0) (2024-10-15)
 
 
