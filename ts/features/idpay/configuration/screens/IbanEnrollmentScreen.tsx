@@ -1,18 +1,15 @@
 import {
+  FeatureInfo,
   FooterWithButtons,
-  HSpacer,
-  Icon,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import I18n from "../../../../i18n";
@@ -188,21 +185,14 @@ export const IbanEnrollmentScreen = () => {
           <VSpacer size={24} />
           {renderIbanList()}
           <VSpacer size={16} />
-          {/*  TODO:: AdviceComponent goes here once implemented @dmnplb */}
-          <View style={styles.bottomSection}>
-            <Icon name="profile" color="bluegrey" />
-            <HSpacer size={8} />
-            <LabelSmall
-              color="bluegrey"
-              weight="Regular"
-              style={IOStyles.flex} // required for correct wrapping
-            >
-              {isSettingsVisibleAndHideProfile
+          <FeatureInfo
+            iconName="profile"
+            body={
+              isSettingsVisibleAndHideProfile
                 ? I18n.t("idpay.configuration.iban.enrollment.footer")
-                : I18n.t("idpay.configuration.iban.enrollment.legacyFooter")}
-            </LabelSmall>
-          </View>
-          {/* TODO:: end AdviceComponent  */}
+                : I18n.t("idpay.configuration.iban.enrollment.legacyFooter")
+            }
+          />
         </ScrollView>
         <SafeAreaView>{renderFooter()}</SafeAreaView>
       </LoadingSpinnerOverlay>
@@ -214,9 +204,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: customVariables.contentPadding
-  },
-  bottomSection: {
-    flexDirection: "row",
-    alignItems: "center"
   }
 });

@@ -7,7 +7,6 @@ import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 
 /* Types */
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
-import AdviceComponent from "../../../components/AdviceComponent";
 import { Body } from "../../../components/core/typography/Body";
 import { H5 } from "../../../components/core/typography/H5";
 import { Label } from "../../../components/core/typography/Label";
@@ -28,12 +27,6 @@ const styles = StyleSheet.create({
 
 export const DSLegacyAdvice = () => (
   <DesignSystemScreen title={"Advice & Banners"}>
-    <AdviceComponent
-      text={
-        "Dopo questo passaggio non sarà più possibile annullare il pagamento."
-      }
-    />
-    <VSpacer size={16} />
     <View style={[styles.content, IOStyles.horizontalContentPadding]}>
       <InfoBox>
         <Body>
