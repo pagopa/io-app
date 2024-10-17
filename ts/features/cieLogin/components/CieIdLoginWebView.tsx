@@ -5,7 +5,7 @@ import WebView, { type WebViewNavigation } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
 import _isEqual from "lodash/isEqual";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { getCieIDLoginUri, SpidLevel } from "../utils";
+import { getCieIDLoginUri, isAuthenticationUrl, SpidLevel } from "../utils";
 import { useLollipopLoginSource } from "../../lollipop/hooks/useLollipopLoginSource";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -37,7 +37,8 @@ const originSchemasWhiteList = [
   "iologin://*",
   ...(isDevEnv ? ["http://*"] : [])
 ];
-const IO_LOGIN_CIE_URL_SCHEME = "iologincie:";
+const IO_LOGIN_CIE_SOURCE_APP = "iologincie";
+const IO_LOGIN_CIE_URL_SCHEME = `${IO_LOGIN_CIE_SOURCE_APP}:`;
 const CIE_ID_ERROR = "cieiderror";
 const CIE_ID_ERROR_MESSAGE = "cieid_error_message=";
 
@@ -130,25 +131,13 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     [dispatch]
   );
 
-  const handleOnShouldStartLoadWithRequest = (
-    event: WebViewNavigation
-  ): boolean => {
-    const url = event.url;
-
-    if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
-      return false;
-    }
-
-    if (
-      url.indexOf("livello1") >= 0 || // SpidL1
-      (url.indexOf("livello2") >= 0 && url.indexOf("livello2mobile") === -1) || // SpidL2
-      url.indexOf("nextUrl") >= 0 || // SpidL3 iOS
-      url.indexOf("openApp") >= 0 // SpidL3 Android
-    ) {
+  const handleOpenCieIdApp = useCallback(
+    (url: string) => {
       if (Platform.OS === "ios") {
-        const urlForCieId = `CIEID://${url}&sourceApp=iologincie`;
         // TODO: error tracking opening url https://pagopa.atlassian.net/browse/IOPID-2079
-        Linking.openURL(urlForCieId).catch(navigateToCieIdAuthenticationError); // ! generic error or cieID auth error?
+        Linking.openURL(
+          `CIEID://${url}&sourceApp=${IO_LOGIN_CIE_SOURCE_APP}`
+        ).catch(navigateToCieIdAuthenticationError); // ! generic error or cieID auth error?
       } else {
         openCieIdApp(
           url,
@@ -162,6 +151,22 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
           isUat
         );
       }
+    },
+    [handleLoginFailure, isUat, navigateToCieIdAuthenticationError]
+  );
+
+  const handleOnShouldStartLoadWithRequest = (
+    event: WebViewNavigation
+  ): boolean => {
+    const url = event.url;
+
+    if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
+      return false;
+    }
+
+    if (isAuthenticationUrl(url)) {
+      handleOpenCieIdApp(url);
+
       return false;
     }
 
