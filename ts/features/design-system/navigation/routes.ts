@@ -161,10 +161,6 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DESIGN_SYSTEM_LEGACY_SELECTION",
       title: "Selection"
     },
-    ACCORDION: {
-      route: "DESIGN_SYSTEM_LEGACY_ACCORDION",
-      title: "Accordion"
-    },
     ALERT: {
       route: "DESIGN_SYSTEM_LEGACY_ALERT",
       title: "Alert"

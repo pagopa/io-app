@@ -57,7 +57,6 @@ export type DesignSystemParamsList = {
   [DESIGN_SYSTEM_ROUTES.LEGACY.LIST_ITEMS.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.LEGACY.BADGES.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.LEGACY.SELECTION.route]: undefined;
-  [DESIGN_SYSTEM_ROUTES.LEGACY.ACCORDION.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.LEGACY.ALERT.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.LEGACY.ADVICE.route]: undefined;
 };
