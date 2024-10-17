@@ -9,7 +9,6 @@ import { SessionToken } from "../../../../types/SessionToken";
 import { createItWalletFetch } from "../../api/client";
 import { regenerateCryptoKey, WIA_KEYTAG } from "./itwCryptoContextUtils";
 import {
-  ensureIntegrityServiceIsReady,
   generateIntegrityHardwareKeyTag,
   getIntegrityContext
 } from "./itwIntegrityUtils";
@@ -18,10 +17,8 @@ import {
  * Getter for the integrity hardware keytag to be used for an {@link IntegrityContext}.
  * @return the integrity hardware keytag to be persisted
  */
-export const getIntegrityHardwareKeyTag = async (): Promise<string> => {
-  await ensureIntegrityServiceIsReady();
-  return await generateIntegrityHardwareKeyTag();
-};
+export const getIntegrityHardwareKeyTag = async (): Promise<string> =>
+  await generateIntegrityHardwareKeyTag();
 
 /**
  * Register a new wallet instance with hardwareKeyTag.

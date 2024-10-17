@@ -14,8 +14,8 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isPaymentsLatestTransactionsEmptySelector } from "../store/selectors";
 import { walletLatestTransactionsBizEventsListPotSelector } from "../../bizEventsTransaction/store/selectors";
 import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
+import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { PaymentsBizEventsListItemTransaction } from "../../bizEventsTransaction/components/PaymentsBizEventsListItemTransaction";
-import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { PaymentsTransactionBizEventsRoutes } from "../../bizEventsTransaction/navigation/routes";
@@ -45,10 +45,8 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
     }
   });
 
-  const handleNavigateToTransactionDetails = (
-    transaction: TransactionListItem
-  ) => {
-    if (transaction.transactionId === undefined) {
+  const handleNavigateToTransactionDetails = (transaction: NoticeListItem) => {
+    if (transaction.eventId === undefined) {
       return;
     }
     navigation.navigate(
@@ -57,7 +55,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
         screen:
           PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_DETAILS,
         params: {
-          transactionId: transaction.transactionId,
+          transactionId: transaction.eventId,
           isPayer: transaction.isPayer
         }
       }
@@ -80,11 +78,9 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
       return (
         <View testID="PaymentsHomeTransactionsListTestID">
           {latestTransactionsPot.value.map((latestTransaction, index) => (
-            <React.Fragment
-              key={`transaction_${latestTransaction.transactionId}`}
-            >
+            <React.Fragment key={`transaction_${latestTransaction.eventId}`}>
               <PaymentsBizEventsListItemTransaction
-                key={`transaction_${latestTransaction.transactionId}`}
+                key={`transaction_${latestTransaction.eventId}`}
                 onPress={() =>
                   handleNavigateToTransactionDetails(latestTransaction)
                 }
