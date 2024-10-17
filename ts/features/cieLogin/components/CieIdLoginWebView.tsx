@@ -14,6 +14,7 @@ import { SessionToken } from "../../../types/SessionToken";
 import ROUTES from "../../../navigation/routes";
 import { loggedInAuthSelector } from "../../../store/reducers/authentication";
 import { IdpSuccessfulAuthentication } from "../../../components/IdpSuccessfulAuthentication";
+import { isDevEnv } from "../../../utils/environment";
 
 export type WebViewLoginNavigationProps = {
   spidLevel: SpidLevel;
@@ -27,7 +28,11 @@ const defaultUserAgent = Platform.select({
   default: undefined
 });
 
-const originSchemasWhiteList = ["https://*", "iologin://*"];
+const originSchemasWhiteList = [
+  "https://*",
+  "iologin://*",
+  ...(isDevEnv ? ["http://*"] : [])
+];
 const IO_LOGIN_CIE_URL_SCHEME = "iologincie:";
 const LOGIN_SUCCESS_PAGE = "profile.html?token=";
 const CIE_ID_ERROR = "cieiderror";
