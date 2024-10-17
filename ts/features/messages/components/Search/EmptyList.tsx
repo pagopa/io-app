@@ -1,23 +1,12 @@
 import {
+  ContentWrapper,
   H6,
   IOPictograms,
-  IOStyles,
-  IOVisualCostants,
   Pictogram,
-  VSpacer,
+  VStack,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { StyleSheet, View } from "react-native";
-
-const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: IOVisualCostants.appMarginDefault
-  },
-  text: {
-    textAlign: "center"
-  }
-});
 
 export type EmptyListProps = WithTestID<{
   pictogram: IOPictograms;
@@ -25,11 +14,10 @@ export type EmptyListProps = WithTestID<{
 }>;
 
 export const EmptyList = ({ pictogram, title, testID }: EmptyListProps) => (
-  <View style={styles.container} testID={testID}>
-    <View style={IOStyles.alignCenter}>
+  <ContentWrapper testID={testID}>
+    <VStack style={{ alignItems: "center" }} space={24}>
       <Pictogram name={pictogram} size={120} />
-      <VSpacer size={24} />
-    </View>
-    <H6 style={styles.text}>{title}</H6>
-  </View>
+      <H6 style={{ textAlign: "center" }}>{title}</H6>
+    </VStack>
+  </ContentWrapper>
 );

@@ -1,4 +1,10 @@
-import { Body, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  IOColors,
+  IOStyles,
+  useIOTheme,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
@@ -24,6 +30,9 @@ export const WalletTransactionHeadingSection = ({
   isLoading
 }: Props) => {
   const navigation = useNavigation<PaymentsTransactionStackNavigation>();
+
+  const theme = useIOTheme();
+  const backgroundColor = IOColors[theme["appBackground-primary"]];
 
   const handlePressTransactionDetails = (operationDetails: Dettaglio) => {
     if (transaction) {
@@ -72,8 +81,8 @@ export const WalletTransactionHeadingSection = ({
   };
 
   return (
-    <View style={[IOStyles.horizontalContentPadding, IOStyles.bgWhite]}>
-      <VSpacer size={16} />
+    <View style={[IOStyles.horizontalContentPadding, { backgroundColor }]}>
+      <VSpacer size={8} />
       <WalletTransactionDetailsList
         transaction={transaction}
         loading={isLoading}
