@@ -1,27 +1,22 @@
 import {
   ContentWrapper,
-  GradientBottomActions,
+  Divider,
   GradientScrollView,
   H1,
-  IOSpacer,
-  IOSpacingScale,
   IOToast,
   IOVisualCostants,
+  ListItemAction,
   ListItemHeader,
   ListItemInfo,
-  VSpacer,
-  buttonSolidHeight
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import Placeholder from "rn-placeholder";
 import { Route, useRoute } from "@react-navigation/native";
 import * as React from "react";
 import { useCallback, useEffect, useMemo } from "react";
 import Animated, {
-  Easing,
   useAnimatedScrollHandler,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming
+  useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
@@ -31,7 +26,6 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { isReady } from "../../../../../common/model/RemoteValue";
@@ -51,15 +45,10 @@ export type CgnMerchantDetailScreenNavigationParams = Readonly<{
 
 const scrollTriggerOffsetValue: number = 88;
 
-const gradientSafeArea: IOSpacingScale = 80;
-const contentEndMargin: IOSpacingScale = 32;
-const spaceBetweenActions: IOSpacer = 24;
-
 const CgnMerchantDetailScreen = () => {
   // -------    hooks
   const safeAreaInsets = useSafeAreaInsets();
 
-  const gradientOpacity = useSharedValue(1);
   const scrollTranslationY = useSharedValue(0);
 
   const [titleHeight, setTitleHeight] = React.useState(0);
@@ -84,16 +73,6 @@ const CgnMerchantDetailScreen = () => {
     [safeAreaInsets]
   );
 
-  const safeBottomAreaHeight: number = React.useMemo(
-    () => bottomMargin + buttonSolidHeight + contentEndMargin,
-    [bottomMargin]
-  );
-
-  const gradientAreaHeight: number = React.useMemo(
-    () => bottomMargin + buttonSolidHeight + gradientSafeArea,
-    [bottomMargin]
-  );
-
   useEffect(loadMerchantDetail, [loadMerchantDetail]);
 
   // -------    utils/logic
@@ -115,19 +94,10 @@ const CgnMerchantDetailScreen = () => {
     }
   };
 
-  const scrollHandler = useAnimatedScrollHandler(
-    ({ contentOffset, layoutMeasurement, contentSize }) => {
-      // eslint-disable-next-line functional/immutable-data
-      scrollTranslationY.value = contentOffset.y;
-
-      const isEndReached =
-        Math.floor(layoutMeasurement.height + contentOffset.y) >=
-        Math.floor(contentSize.height);
-
-      // eslint-disable-next-line functional/immutable-data
-      gradientOpacity.value = isEndReached ? 0 : 1;
-    }
-  );
+  const scrollHandler = useAnimatedScrollHandler(({ contentOffset }) => {
+    // eslint-disable-next-line functional/immutable-data
+    scrollTranslationY.value = contentOffset.y;
+  });
 
   const getTitleHeight = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
@@ -148,32 +118,13 @@ const CgnMerchantDetailScreen = () => {
     }
   });
 
-  const footerCta = (url: string) => ({
-    label: I18n.t("bonus.cgn.merchantDetail.cta.website"),
-    onPress: () => handlePressMerchantWebsite(url)
-  });
+  const showAddresses =
+    isReady(merchantDetail) &&
+    merchantDetail.value.addresses !== undefined &&
+    merchantDetail.value.addresses.length > 0;
 
-  const footerGradientOpacityTransition = useAnimatedStyle(() => ({
-    opacity: withTiming(gradientOpacity.value, {
-      duration: 200,
-      easing: Easing.ease
-    })
-  }));
-
-  const footerComponent = isReady(merchantDetail) &&
-    merchantDetail.value.websiteUrl && (
-      <GradientBottomActions
-        primaryActionProps={footerCta(merchantDetail.value.websiteUrl)}
-        transitionAnimStyle={footerGradientOpacityTransition}
-        dimensions={{
-          bottomMargin,
-          extraBottomMargin: 0,
-          gradientAreaHeight,
-          spaceBetweenActions,
-          safeBackgroundHeight: bottomMargin
-        }}
-      />
-    );
+  const showGotToWebsite =
+    isReady(merchantDetail) && merchantDetail.value.websiteUrl !== undefined;
 
   return (
     <>
@@ -188,7 +139,7 @@ const CgnMerchantDetailScreen = () => {
             snapToEnd={false}
             contentContainerStyle={{
               flexGrow: 1,
-              paddingBottom: safeBottomAreaHeight
+              paddingBottom: bottomMargin
             }}
           >
             <ContentWrapper>
@@ -215,14 +166,34 @@ const CgnMerchantDetailScreen = () => {
                 value={merchantDetail.value.description}
               />
               <VSpacer size={24} />
-              {renderMerchantAddressesList(
-                merchantDetail.value.addresses,
-                merchantDetail.value.allNationalAddresses
-              )}
+              {showAddresses || showGotToWebsite ? (
+                <ListItemHeader
+                  label={I18n.t("bonus.cgn.merchantDetail.title.contactInfo")}
+                />
+              ) : null}
+              {showGotToWebsite ? (
+                <ListItemAction
+                  variant="primary"
+                  icon="website"
+                  label={I18n.t("bonus.cgn.merchantDetail.cta.website")}
+                  onPress={() =>
+                    handlePressMerchantWebsite(merchantDetail.value.websiteUrl)
+                  }
+                />
+              ) : null}
+              {showGotToWebsite && showAddresses ? <Divider /> : null}
+              {merchantDetail.value.addresses?.map((address, index) => (
+                <CgnAddressListItem
+                  item={address}
+                  key={index}
+                  isAllNationalAddress={
+                    merchantDetail.value.allNationalAddresses
+                  }
+                />
+              ))}
               <VSpacer size={24} />
             </ContentWrapper>
           </Animated.ScrollView>
-          {footerComponent}
         </>
       ) : (
         <SafeAreaView style={IOStyles.flex}>
@@ -257,25 +228,6 @@ const CgnMerchantDetailScreenSkeleton = () => (
     <ListItemHeader label="" />
   </GradientScrollView>
 );
-
-const renderMerchantAddressesList = (
-  addresses: ReadonlyArray<Address> | undefined,
-  isAllNationalAddressMerchant: boolean
-) =>
-  addresses !== undefined && addresses.length > 0 ? (
-    <>
-      <ListItemHeader
-        label={I18n.t("bonus.cgn.merchantDetail.title.contactInfo")}
-      />
-      {addresses.map((address, index) => (
-        <CgnAddressListItem
-          item={address}
-          key={index}
-          isAllNationalAddress={isAllNationalAddressMerchant}
-        />
-      ))}
-    </>
-  ) : null;
 
 // ------------------------ styles - consts - export
 
