@@ -30,19 +30,24 @@ export function isTextIncludedCaseInsensitive(
  * @param text
  * @param separator
  */
-export function capitalize(text: string, separator: string = " ") {
-  return text
-    .split(separator)
-    .reduce(
-      (acc: string, curr: string, index: number) =>
-        `${acc}${index === 0 ? "" : separator}${curr.replace(
-          new RegExp(curr.trimLeft(), "ig"),
-          _.capitalize(curr.trimLeft())
-        )}`,
-      ""
-    );
-}
+export function capitalize(text: string, separator: string = " "): string {
+  // Match leading and trailing spaces
+  const leadingSpacesMatch = /^\s*/.exec(text);
+  const trailingSpacesMatch = /\s*$/.exec(text);
 
+  const leadingSpaces = leadingSpacesMatch ? leadingSpacesMatch[0] : "";
+  const trailingSpaces = trailingSpacesMatch ? trailingSpacesMatch[0] : "";
+
+  // Capitalize the words between the separators
+  const capitalizedText = text
+    .trim() // Remove leading/trailing spaces for processing
+    .split(separator)
+    .map(token => token.charAt(0).toUpperCase() + token.slice(1))
+    .join(separator);
+
+  // Re-add the leading and trailing spaces
+  return `${leadingSpaces}${capitalizedText}${trailingSpaces}`;
+}
 /**
  * Convert the EnteBEneficiario content type in a readable string
  * @param e organization data
