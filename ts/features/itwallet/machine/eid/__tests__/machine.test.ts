@@ -1,13 +1,12 @@
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
-import { createActor, fromPromise, StateFrom } from "xstate";
+import { assign, createActor, fromPromise, StateFrom } from "xstate";
 import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
   GetWalletAttestationActorParams,
-  OnInitActorOutput,
   RequestEidActorParams,
   StartCieAuthFlowActorParams
 } from "../actors";
@@ -39,8 +38,8 @@ describe("itwEidIssuanceMachine", () => {
   const setWalletInstanceToValid = jest.fn();
   const handleSessionExpired = jest.fn();
   const abortIdentification = jest.fn();
-
   const onInit = jest.fn();
+
   const createWalletInstance = jest.fn();
   const getWalletAttestation = jest.fn();
   const requestEid = jest.fn();
@@ -72,10 +71,10 @@ describe("itwEidIssuanceMachine", () => {
       setWalletInstanceToOperational,
       setWalletInstanceToValid,
       handleSessionExpired,
-      abortIdentification
+      abortIdentification,
+      onInit: assign(onInit)
     },
     actors: {
-      onInit: fromPromise<OnInitActorOutput>(onInit),
       createWalletInstance: fromPromise<string>(createWalletInstance),
       getWalletAttestation: fromPromise<
         string,
@@ -99,7 +98,10 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   beforeEach(() => {
-    onInit.mockImplementation(() => Promise.resolve({} as OnInitActorOutput));
+    onInit.mockImplementation(() => ({
+      integrityKeyTag: undefined,
+      walletInstanceAttestation: undefined
+    }));
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
   });
 
