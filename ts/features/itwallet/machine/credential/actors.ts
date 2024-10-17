@@ -9,12 +9,7 @@ import { getCredentialStatusAttestation } from "../../common/utils/itwCredential
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
 import { type Context } from "./context";
-
-export type OnInitActorOutput = {
-  walletInstanceAttestation: string | undefined;
-};
 
 export type GetWalletAttestationActorOutput = Awaited<
   ReturnType<typeof itwAttestationUtils.getAttestation>
@@ -37,16 +32,6 @@ export type ObtainCredentialActorOutput = Awaited<
 export type ObtainStatusAttestationActorInput = Pick<Context, "credential">;
 
 export default (store: ReturnType<typeof useIOStore>) => {
-  const onInit = fromPromise<OnInitActorOutput>(async () => {
-    const walletInstanceAttestation = itwWalletInstanceAttestationSelector(
-      store.getState()
-    );
-
-    return {
-      walletInstanceAttestation
-    };
-  });
-
   const getWalletAttestation = fromPromise<GetWalletAttestationActorOutput>(
     async () => {
       const sessionToken = sessionTokenSelector(store.getState());
@@ -134,7 +119,6 @@ export default (store: ReturnType<typeof useIOStore>) => {
   });
 
   return {
-    onInit,
     getWalletAttestation,
     requestCredential,
     obtainCredential,

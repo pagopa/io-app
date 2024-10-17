@@ -45,6 +45,7 @@ import { handleApplicationStartupTransientError } from "../../features/startup/s
 import { startupTransientErrorInitialState } from "../../store/reducers/startup";
 import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
 import { notificationPermissionsListener } from "../../features/pushNotifications/sagas/notificationPermissionsListener";
+import { trackKeychainFailures } from "../../utils/analytics";
 import { checkSession } from "../startup/watchCheckSessionSaga";
 import { formatRequestedTokenString } from "../../features/zendesk/utils";
 import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigation";
@@ -118,6 +119,7 @@ describe("initializeApplicationSaga", () => {
       .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
+      .next(trackKeychainFailures)
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
@@ -172,6 +174,7 @@ describe("initializeApplicationSaga", () => {
       .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
+      .next(trackKeychainFailures)
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
@@ -220,6 +223,7 @@ describe("initializeApplicationSaga", () => {
       .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
+      .next(trackKeychainFailures)
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
@@ -273,6 +277,7 @@ describe("initializeApplicationSaga", () => {
       .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
+      .next(trackKeychainFailures)
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
@@ -337,6 +342,7 @@ describe("initializeApplicationSaga", () => {
       .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
+      .next(trackKeychainFailures)
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
@@ -390,6 +396,7 @@ describe("initializeApplicationSaga", () => {
       .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
+      .next(trackKeychainFailures)
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
