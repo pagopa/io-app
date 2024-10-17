@@ -13,7 +13,7 @@ import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSession
  * @param action
  */
 export function* handleGetBizEventsTransactionDetails(
-  getTransactionDetails: TransactionClient["getTransactionDetails"],
+  getTransactionDetails: TransactionClient["getPaidNoticeDetail"],
   action: ActionType<
     (typeof getPaymentsBizEventsTransactionDetailsAction)["request"]
   >
@@ -23,7 +23,7 @@ export function* handleGetBizEventsTransactionDetails(
       getTransactionDetails,
       action,
       {
-        "transaction-id": action.payload.transactionId
+        "event-id": action.payload.transactionId
       },
       "Authorization"
     );
