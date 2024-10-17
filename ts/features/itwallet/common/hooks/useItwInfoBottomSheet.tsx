@@ -1,7 +1,8 @@
 import React from "react";
 import { View } from "react-native";
-import { Body, H6, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import { H6, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import ItwMarkdown from "../components/ItwMarkdown";
 
 /**
  * The type of the content of the bottom sheet.
@@ -35,8 +36,7 @@ export const useItwInfoBottomSheet = ({ title, content }: ItwInfoFlowProps) => {
               <VSpacer size={8} />
             </>
           )}
-          <Body>{item.body}</Body>
-          <VSpacer size={16} />
+          <ItwMarkdown>{item.body}</ItwMarkdown>
         </View>
       ))}
       <VSpacer size={24} />

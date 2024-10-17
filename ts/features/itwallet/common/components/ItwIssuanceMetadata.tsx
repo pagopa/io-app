@@ -10,6 +10,7 @@ import {
   trackWalletCredentialShowAuthSource,
   trackWalletCredentialShowIssuer
 } from "../../analytics";
+import { itwIpzsPrivacyUrl } from "../../../../config";
 
 type ItwIssuanceMetadataProps = {
   credential: StoredCredential;
@@ -105,7 +106,10 @@ export const ItwIssuanceMetadata = ({
           "features.itWallet.issuance.credentialPreview.bottomSheet.about.title"
         ),
         contentBody: I18n.t(
-          "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle"
+          "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle",
+          {
+            privacyUrl: itwIpzsPrivacyUrl
+          }
         ),
         onPress: () =>
           trackWalletCredentialShowIssuer(
