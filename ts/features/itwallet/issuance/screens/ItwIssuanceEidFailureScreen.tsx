@@ -156,7 +156,11 @@ export const ItwIssuanceEidFailureScreen = () => {
         failure.type === IssuanceFailureType.ISSUER_GENERIC &&
         identification
       ) {
-        trackItwIdRequestFailure(identification.mode);
+        trackItwIdRequestFailure({
+          ITW_ID_method: identification.mode,
+          reason: failure.reason,
+          type: failure.type
+        });
       }
       if (failure.type === IssuanceFailureType.GENERIC) {
         trackItwIdRequestUnexpected({

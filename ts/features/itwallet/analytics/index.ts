@@ -74,6 +74,12 @@ type AddCredentialFailure = {
   type: string;
 };
 
+type IdRequestFailure = {
+  ITW_ID_method: ItwIdMethod;
+  reason: unknown;
+  type: string;
+};
+
 type IdUnexpectedFailure = {
   reason: unknown;
   type: string;
@@ -511,11 +517,11 @@ export const trackItwIdRequestTimeout = (ITW_ID_method?: ItwIdMethod) => {
   }
 };
 
-export const trackItwIdRequestFailure = (ITW_ID_method?: ItwIdMethod) => {
-  if (ITW_ID_method) {
+export const trackItwIdRequestFailure = (properties: IdRequestFailure) => {
+  if (properties.ITW_ID_method) {
     void mixpanelTrack(
       ITW_ERRORS_EVENTS.ITW_ID_REQUEST_FAILURE,
-      buildEventProperties("KO", "error", { ITW_ID_method })
+      buildEventProperties("KO", "error", properties)
     );
   }
 };
