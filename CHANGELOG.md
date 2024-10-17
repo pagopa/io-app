@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.73.0-rc.2](https://github.com/pagopa/io-app/compare/2.73.0-rc.1...2.73.0-rc.2) (2024-10-16)
+
+
+### Features
+
+* [[IOBP-840](https://pagopa.atlassian.net/browse/IOBP-840)] Add payment tracking property `organization_fiscal_code` ([#6159](https://github.com/pagopa/io-app/issues/6159)) ([17aa7c1](https://github.com/pagopa/io-app/commit/17aa7c18503dea8f490bcb97645196c2e91594b6))
+
+
+### Bug Fixes
+
+* [[IOCOM-1881](https://pagopa.atlassian.net/browse/IOCOM-1881)] Push notification status on Android 12 or less ([#6289](https://github.com/pagopa/io-app/issues/6289)) ([61f0f80](https://github.com/pagopa/io-app/commit/61f0f8011fa7a41ac47c6ec37601ca7397c87093))
+* [[IOPID-2389](https://pagopa.atlassian.net/browse/IOPID-2389)] - Fix login CieID ([#6288](https://github.com/pagopa/io-app/issues/6288)) ([c168db3](https://github.com/pagopa/io-app/commit/c168db34491c621a1e89a8ccb640da0e06a8142b))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1756](https://pagopa.atlassian.net/browse/SIW-1756)] Prepare integrity service at startup ([#6290](https://github.com/pagopa/io-app/issues/6290)) ([69a4de0](https://github.com/pagopa/io-app/commit/69a4de08776f78dd8b272d5a141c8bba4bfdf0a6))
+* **IT Wallet:** [[SIW-1757](https://pagopa.atlassian.net/browse/SIW-1757)] Init context synchronously in ITW issuance machines ([#6286](https://github.com/pagopa/io-app/issues/6286)) ([9e1b9b3](https://github.com/pagopa/io-app/commit/9e1b9b3ccf283bc2e3eeb5c19d5b01b396907482))
+
 ## [2.73.0-rc.1](https://github.com/pagopa/io-app/compare/2.73.0-rc.0...2.73.0-rc.1) (2024-10-16)
 
 

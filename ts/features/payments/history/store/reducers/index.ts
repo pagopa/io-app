@@ -193,10 +193,10 @@ const reducer = (
         ...state,
         analyticsData: {
           ...state.analyticsData,
-          transactionsHomeLength: action.payload.transactions?.length ?? 0,
+          transactionsHomeLength: action.payload?.length ?? 0,
           paymentsHomeStatus: getPaymentsHomeStatus(
             state.analyticsData?.savedPaymentMethods?.length ?? 0,
-            action.payload.transactions?.length ?? 0
+            action.payload?.length ?? 0
           )
         }
       };
@@ -226,7 +226,7 @@ const reducer = (
         analyticsData: {
           ...state.analyticsData,
           receiptOrganizationName: action.payload.carts?.[0]?.payee?.name,
-          receiptPayerFiscalCode: action.payload.infoTransaction?.payer?.taxCode
+          receiptPayerFiscalCode: action.payload.infoNotice?.payer?.taxCode
         }
       };
     case getType(differentProfileLoggedIn):
