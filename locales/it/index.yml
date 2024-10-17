@@ -3255,11 +3255,11 @@ features:
         placeOfBirth: "Luogo di nascita"
         expirationDate: "Scadenza"
         securityLevel: "Livello di sicurezza"
-        issuedBy: "Credenziale emessa da"
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
         releasedBy: Emissione versione digitale
         attachments: "Allegati"
+        authenticSource: Origine dei dati
         mdl:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
@@ -3334,6 +3334,9 @@ features:
           about:
             title: "Chi è?"
             subtitle: "È l'ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti."
+          authSource:
+            title: "Chi è?"
+            subtitle: "È l'ente che detiene i dati contenuti all'interno del tuo documento."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
