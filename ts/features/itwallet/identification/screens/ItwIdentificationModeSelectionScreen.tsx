@@ -2,7 +2,6 @@ import {
   ContentWrapper,
   ListItemHeader,
   ModuleNavigation,
-  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -13,7 +12,6 @@ import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { itwIsCieSupportedSelector } from "../store/selectors";
 import {
   trackItWalletIDMethod,
@@ -91,10 +89,6 @@ export const ItwIdentificationModeSelectionScreen = () => {
             onPress={handleCieIdPress}
           />
         </VStack>
-        <VSpacer size={24} />
-        <ItwMarkdown>
-          {I18n.t("features.itWallet.identification.mode.privacy")}
-        </ItwMarkdown>
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
   );
