@@ -66,7 +66,7 @@ const WalletCardsContainer = () => {
       layout={LinearTransition.duration(200)}
     >
       <View testID="walletCardsContainerTestID">
-        <ItwUpcomingWalletBanner />
+        <ItwUpcomingWalletBanner vSpacer={true} />
         <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
         {shouldRender("itw") && <ItwCardsContainer isStacked={stackCards} />}
         {shouldRender("other") && (

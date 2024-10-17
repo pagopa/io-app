@@ -1,6 +1,5 @@
 import React from "react";
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
-import { Linking } from "react-native";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { trialStatusSelector } from "../../../trialSystem/store/reducers";
@@ -8,11 +7,17 @@ import { itwTrialId } from "../../../../config";
 import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
 import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus";
 
-export const ItwUpcomingWalletBanner = () => {
+type ItwUpcomingWalletBannerProps = {
+  vSpacer?: boolean;
+};
+
+export const ItwUpcomingWalletBanner = ({
+  vSpacer
+}: ItwUpcomingWalletBannerProps) => {
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const itwTrialStatus = useIOSelector(trialStatusSelector(itwTrialId));
 
-  if (!isItwEnabled || itwTrialStatus !== SubscriptionStateEnum.SUBSCRIBED) {
+  if (isItwEnabled || itwTrialStatus === SubscriptionStateEnum.ACTIVE) {
     return null;
   }
 
@@ -27,12 +32,12 @@ export const ItwUpcomingWalletBanner = () => {
         content={I18n.t(
           "features.itWallet.discovery.upcomingWalletBanner.content"
         )}
-        action={I18n.t(
-          "features.itWallet.discovery.upcomingWalletBanner.action"
-        )}
-        onPress={() => Linking.openURL("https://io.italia.it/documenti-su-io/")}
+        // action={I18n.t(
+        //   "features.itWallet.discovery.upcomingWalletBanner.action"
+        // )}
+        // onPress={() => Linking.openURL("https://io.italia.it/documenti-su-io/")} //At the moment, the page is not available
       />
-      <VSpacer size={24} />
+      {vSpacer && <VSpacer size={24} />}
     </>
   );
 };

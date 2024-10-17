@@ -27,12 +27,12 @@ jest.mock("../../../../../config", () => ({
 describe("ItwUpcomingWalletBanner", () => {
   it.each([
     [true, SubscriptionStateEnum.UNSUBSCRIBED, false],
-    [true, SubscriptionStateEnum.SUBSCRIBED, true],
+    [true, SubscriptionStateEnum.SUBSCRIBED, false],
     [true, SubscriptionStateEnum.DISABLED, false],
     [true, SubscriptionStateEnum.ACTIVE, false],
-    [false, SubscriptionStateEnum.UNSUBSCRIBED, false],
-    [false, SubscriptionStateEnum.SUBSCRIBED, false],
-    [false, SubscriptionStateEnum.DISABLED, false],
+    [false, SubscriptionStateEnum.UNSUBSCRIBED, true],
+    [false, SubscriptionStateEnum.SUBSCRIBED, true],
+    [false, SubscriptionStateEnum.DISABLED, true],
     [false, SubscriptionStateEnum.ACTIVE, false]
   ])(
     "If ITW is %s and the trial status is %s, the rendering of the banner should be %s",
