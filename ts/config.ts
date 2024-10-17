@@ -255,3 +255,8 @@ export const itwEaaVerifierBaseUrl = Config.ITW_EAA_VERIFIER_BASE_URL;
 export const itwBypassIdentityMatch =
   Config.ITW_BYPASS_IDENTITY_MATCH === "YES";
 export const itwIdpHintTest = Config.ITW_IDP_HINT_TEST === "YES";
+export const itwIpzsPrivacyUrl: string = pipe(
+  Config.ITW_IPZS_PRIVACY_URL,
+  t.string.decode,
+  E.getOrElse(() => "https://io.italia.it/informativa-ipzs")
+);
