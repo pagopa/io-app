@@ -5,8 +5,13 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { StoredCredential } from "../utils/itwTypesUtils";
+import {
+  CREDENTIALS_MAP,
+  trackWalletCredentialShowAuthSource,
+  trackWalletCredentialShowIssuer
+} from "../../analytics";
 
-type Props = {
+type ItwIssuanceMetadataProps = {
   credential: StoredCredential;
   isPreview?: boolean;
 };
@@ -17,7 +22,7 @@ type ItwMetadataIssuanceListItemProps = {
   bottomSheet: {
     contentTitle: string;
     contentBody: string;
-    onPress?: () => void;
+    onPress: () => void;
   };
   isPreview?: boolean;
 };
@@ -49,7 +54,7 @@ const ItwMetadataIssuanceListItem = ({
         icon: "info",
         accessibilityLabel: `Info ${label}`,
         onPress: () => {
-          bottomSheetProps.onPress?.();
+          bottomSheetProps.onPress();
           bottomSheet.present();
         }
       }
@@ -85,35 +90,47 @@ const getAuthSource = (credential: StoredCredential) =>
  * @param isPreview - whether the component is rendered in preview mode which hides the info button.
  * @returns the list items with the metadata.
  */
-export const ItwIssuanceMetadata = ({ credential, isPreview }: Props) => {
+export const ItwIssuanceMetadata = ({
+  credential,
+  isPreview
+}: ItwIssuanceMetadataProps) => {
   const releaserName =
     credential.issuerConf.federation_entity.organization_name;
-  const authSource = getAuthSource(credential) ?? "Ministero X";
+  const authSource = getAuthSource(credential);
 
-  const releaserNameBottomSheet = useMemo(
-    () => ({
-      contentTitle: I18n.t(
-        "features.itWallet.issuance.credentialPreview.bottomSheet.about.title"
-      ),
-      contentBody: I18n.t(
-        "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle"
-      )
-    }),
-    []
-  );
+  const releaserNameBottomSheet: ItwMetadataIssuanceListItemProps["bottomSheet"] =
+    useMemo(
+      () => ({
+        contentTitle: I18n.t(
+          "features.itWallet.issuance.credentialPreview.bottomSheet.about.title"
+        ),
+        contentBody: I18n.t(
+          "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle"
+        ),
+        onPress: () =>
+          trackWalletCredentialShowIssuer(
+            CREDENTIALS_MAP[credential.credentialType]
+          )
+      }),
+      [credential.credentialType]
+    );
 
-  const authSourceBottomSheet = useMemo(
-    () => ({
-      contentTitle: I18n.t(
-        "features.itWallet.issuance.credentialPreview.bottomSheet.authSource.title"
-      ),
-      contentBody: I18n.t(
-        "features.itWallet.issuance.credentialPreview.bottomSheet.authSource.subtitle"
-      ),
-      onPress: () => null
-    }),
-    []
-  );
+  const authSourceBottomSheet: ItwMetadataIssuanceListItemProps["bottomSheet"] =
+    useMemo(
+      () => ({
+        contentTitle: I18n.t(
+          "features.itWallet.issuance.credentialPreview.bottomSheet.authSource.title"
+        ),
+        contentBody: I18n.t(
+          "features.itWallet.issuance.credentialPreview.bottomSheet.authSource.subtitle"
+        ),
+        onPress: () =>
+          trackWalletCredentialShowAuthSource(
+            CREDENTIALS_MAP[credential.credentialType]
+          )
+      }),
+      [credential.credentialType]
+    );
 
   return (
     <>
