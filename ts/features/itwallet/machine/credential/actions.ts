@@ -10,6 +10,8 @@ import { CREDENTIALS_MAP, trackSaveCredentialSuccess } from "../../analytics";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
+import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
@@ -46,7 +48,16 @@ export default (
   >) => {
     toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
     if (context.credentialType) {
-      trackSaveCredentialSuccess(CREDENTIALS_MAP[context.credentialType]);
+      const credential = CREDENTIALS_MAP[context.credentialType];
+      trackSaveCredentialSuccess(credential);
+      void updateMixpanelProfileProperties(store.getState(), {
+        property: credential,
+        value: "valid"
+      });
+      void updateMixpanelSuperProperties(store.getState(), {
+        property: credential,
+        value: "valid"
+      });
     }
     navigation.reset({
       index: 1,
