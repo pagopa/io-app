@@ -3,7 +3,6 @@ import TestRenderer from "react-test-renderer";
 import type { IOColors } from "@pagopa/io-app-design-system";
 import { IOFontWeight } from "../../fonts";
 import { calculateWeightColor } from "../common";
-import { H1 } from "../H1";
 import { H2 } from "../H2";
 import { H3 } from "../H3";
 import { H4 } from "../H4";
@@ -14,12 +13,6 @@ import { Link } from "../Link";
 import { Monospace } from "../Monospace";
 
 describe("Test Typography Components", () => {
-  it("H1 Snapshot", () => {
-    const h1Default = TestRenderer.create(<H1>Text</H1>).toJSON();
-    expect(h1Default).toMatchSnapshot();
-    const h1White = TestRenderer.create(<H1 color={"white"}>Text</H1>).toJSON();
-    expect(h1White).toMatchSnapshot();
-  });
   it("H2 Snapshot", () => {
     const h2Default = TestRenderer.create(<H2>Text</H2>).toJSON();
     expect(h2Default).toMatchSnapshot();

@@ -1,6 +1,8 @@
 import {
   Body,
   FooterWithButtons,
+  H1,
+  H2,
   Icon,
   PressableListItemBase,
   VSpacer
@@ -18,7 +20,6 @@ import {
 } from "react-native";
 import { isError, isReady } from "../../../../common/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
-import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -182,7 +183,7 @@ const PayPalPspUpdateScreen: React.FunctionComponent = () => {
           <SafeAreaView style={IOStyles.flex} testID={"PayPalPspUpdateScreen"}>
             <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
               <VSpacer size={8} />
-              <H1>{locales.title}</H1>
+              <H2>{locales.title}</H2>
               <VSpacer size={8} />
               <ScrollView>
                 <Body>{locales.body}</Body>

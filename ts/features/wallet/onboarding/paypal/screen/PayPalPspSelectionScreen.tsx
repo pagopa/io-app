@@ -1,4 +1,9 @@
-import { Body, FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  FooterWithButtons,
+  H2,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
@@ -13,7 +18,6 @@ import {
   RadioButtonList,
   RadioItem
 } from "../../../../../components/core/selection/RadioButtonList";
-import { H1 } from "../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { Link } from "../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -136,7 +140,7 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
           >
             <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
               <VSpacer size={8} />
-              <H1>{locales.title}</H1>
+              <H2>{locales.title}</H2>
               <VSpacer size={8} />
               <ScrollView>
                 <Body>{locales.body}</Body>

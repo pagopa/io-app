@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import {
   Body,
+  H2,
   IOColors,
   IOIcons,
   IOPictograms,
@@ -21,7 +22,6 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useEffect } from "react";
 import ScreenHeader from "../ScreenHeader";
-import { H1 } from "../../components/core/typography/H1";
 
 import variables from "../../theme/variables";
 
@@ -116,15 +116,14 @@ export const ScreenContentHeader = ({
         <VSpacer size={16} />
         <ScreenHeader
           heading={
-            <H1
+            <H2
               accessible={true}
               accessibilityRole="header"
-              weight="Bold"
               testID={"screen-content-header-title"}
               color={dark ? "white" : "bluegreyDark"}
             >
               {title}
-            </H1>
+            </H2>
           }
           rasterIcon={rasterIcon}
           icon={icon}

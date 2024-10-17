@@ -2,6 +2,7 @@ import {
   ContentWrapper,
   Divider,
   FooterWithButtons,
+  H2,
   H6,
   HSpacer,
   Icon,
@@ -14,7 +15,6 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
-import { H1 } from "../../../../components/core/typography/H1";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -102,7 +102,7 @@ const IDPayPaymentAuthorizationScreen = () => {
       <SafeAreaView style={IOStyles.flex}>
         <View style={IOStyles.flex}>
           <ContentWrapper>
-            <H1>{I18n.t("idpay.payment.authorization.header")}</H1>
+            <H2>{I18n.t("idpay.payment.authorization.header")}</H2>
             <VSpacer size={24} />
             {renderContent()}
           </ContentWrapper>
@@ -142,7 +142,7 @@ const AuthorizationScreenContent = ({
     <VSpacer size={16} />
     <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
       <H6>{I18n.t("idpay.payment.authorization.toAuth")}</H6>
-      <H1>{formatNumberCurrencyCentsOrDefault(data.rewardCents)}</H1>
+      <H2>{formatNumberCurrencyCentsOrDefault(data.rewardCents)}</H2>
     </View>
     <VSpacer size={16} />
     <Divider />

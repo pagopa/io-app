@@ -1,11 +1,10 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import { Image, Linking, StyleSheet, View } from "react-native";
-import { Body, ButtonSolid, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, ButtonSolid, H2, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { storeUrl } from "../utils/appVersion";
-import { H1 } from "./core/typography/H1";
 import { H3 } from "./core/typography/H3";
 import { IOStyles } from "./core/variables/IOStyles";
 
@@ -73,7 +72,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
           <VSpacer size={40} />
         </React.Fragment>
         <View style={IOStyles.alignCenter}>
-          <H1>{I18n.t("wallet.alert.titlePagoPaUpdateApp")}</H1>
+          <H2>{I18n.t("wallet.alert.titlePagoPaUpdateApp")}</H2>
         </View>
         <VSpacer size={16} />
         <Body>{I18n.t("wallet.alert.messagePagoPaUpdateApp")}</Body>

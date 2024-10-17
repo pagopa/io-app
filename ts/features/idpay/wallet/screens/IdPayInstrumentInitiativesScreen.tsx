@@ -4,9 +4,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { H2, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
-import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -62,7 +61,7 @@ export const IdPayInstrumentInitiativesScreen = () => {
       goBack={true}
     >
       <ScrollView style={styles.container}>
-        <H1>{TypedI18n.t("idpay.wallet.initiativePairing.header")}</H1>
+        <H2>{TypedI18n.t("idpay.wallet.initiativePairing.header")}</H2>
         <VSpacer size={16} />
         {maskedPan && (
           <View style={[IOStyles.row, { paddingVertical: 8 }]}>

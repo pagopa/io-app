@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Body, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, H2, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../i18n";
-import { H1 } from "../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { Link } from "../../../../../components/core/typography/Link";
 import InternationalCircuitIconsBar from "../../../../../components/wallet/InternationalCircuitIconsBar";
@@ -54,7 +53,7 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
 
   return (
     <>
-      <H1>{locales.title}</H1>
+      <H2>{locales.title}</H2>
       {props.showCircuitLogo && (
         <>
           <VSpacer size={24} />

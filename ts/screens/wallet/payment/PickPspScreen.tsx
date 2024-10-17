@@ -1,5 +1,6 @@
 import {
   FooterWithButtons,
+  H2,
   IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -18,7 +19,6 @@ import {
 } from "../../../common/model/RemoteValue";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
-import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -133,7 +133,7 @@ class PickPspScreen extends React.Component<PickPspScreenProps> {
             <SafeAreaView style={IOStyles.flex} testID="PickPspScreen">
               <VSpacer size={16} />
               <View style={styles.padded}>
-                <H1>{I18n.t("wallet.pickPsp.title")}</H1>
+                <H2>{I18n.t("wallet.pickPsp.title")}</H2>
                 <VSpacer size={8} />
                 <H4 weight="Regular" color="bluegreyDark">
                   {I18n.t("wallet.pickPsp.info")}

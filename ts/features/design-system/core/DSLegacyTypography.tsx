@@ -1,7 +1,6 @@
 import { HStack, IOColors, VStack } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, View } from "react-native";
-import { H1 as LegacyH1 } from "../../../components/core/typography/H1";
 import { H2 as LegacyH2 } from "../../../components/core/typography/H2";
 import { H3 as LegacyH3 } from "../../../components/core/typography/H3";
 import { H4 as LegacyH4 } from "../../../components/core/typography/H4";
@@ -15,7 +14,6 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 export const DSLegacyTypography = () => (
   <DesignSystemScreen title={"Legacy typography"}>
     <VStack space={40}>
-      <LegacyH1Row />
       <LegacyH2Row />
       <LegacyH3Row />
       <LegacyH4Row />
@@ -33,13 +31,6 @@ const getLongerTitle = (element: string) =>
   `Very loooong looong title set with Heading ${element}`;
 
 const typeSpecimenMargin = 8;
-
-const LegacyH1Row = () => (
-  <VStack space={typeSpecimenMargin}>
-    <LegacyH1>{getTitle("H1")}</LegacyH1>
-    <LegacyH1>{getLongerTitle("H1")}</LegacyH1>
-  </VStack>
-);
 
 const LegacyH2Row = () => (
   <VStack space={typeSpecimenMargin}>

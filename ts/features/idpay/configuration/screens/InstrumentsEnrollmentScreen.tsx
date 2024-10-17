@@ -2,6 +2,7 @@ import {
   Body,
   FeatureInfo,
   FooterWithButtons,
+  H2,
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -11,7 +12,6 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { H1 } from "../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -264,7 +264,7 @@ export const InstrumentsEnrollmentScreen = () => {
             style={[IOStyles.flex, IOStyles.horizontalContentPadding]}
           >
             <VSpacer size={16} />
-            <H1>{I18n.t("idpay.configuration.instruments.header")}</H1>
+            <H2>{I18n.t("idpay.configuration.instruments.header")}</H2>
             <VSpacer size={8} />
             <Body>
               {I18n.t("idpay.configuration.instruments.body", {

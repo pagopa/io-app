@@ -5,6 +5,7 @@ import {
   ContentWrapper,
   Divider,
   FooterWithButtons,
+  H2,
   IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -26,7 +27,6 @@ import {
   isLoading as isLoadingRemote,
   isLoading as isRemoteLoading
 } from "../../../common/model/RemoteValue";
-import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
@@ -104,7 +104,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.flex}>
           <ContentWrapper>
-            <H1>{I18n.t("wallet.payWith.pickPaymentMethod.title")}</H1>
+            <H2>{I18n.t("wallet.payWith.pickPaymentMethod.title")}</H2>
             <VSpacer size={16} />
             {methodsCanPay.length > 0 ? (
               <>

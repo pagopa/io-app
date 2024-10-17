@@ -19,6 +19,7 @@ import { connect } from "react-redux";
 import {
   ContentWrapper,
   FooterWithButtons,
+  H2,
   HSpacer,
   IOToast,
   NativeSwitch,
@@ -30,7 +31,6 @@ import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import image from "../../../img/wallet/errors/payment-unavailable-icon.png";
 import { InfoBox } from "../../components/box/InfoBox";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
-import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
 import { H5 } from "../../components/core/typography/H5";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -251,7 +251,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         <SafeAreaView style={IOStyles.flex}>
           <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <ContentWrapper>
-              <H1>{I18n.t("wallet.saveCard.title")}</H1>
+              <H2>{I18n.t("wallet.saveCard.title")}</H2>
               <H4 weight={"Regular"}>{I18n.t("wallet.saveCard.subtitle")}</H4>
               <VSpacer size={16} />
               <CardComponent

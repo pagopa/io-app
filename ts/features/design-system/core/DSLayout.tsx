@@ -2,6 +2,7 @@ import {
   Body,
   ContentWrapper,
   Divider,
+  H2,
   HStack,
   IOAppMargin,
   IOColors,
@@ -11,7 +12,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
-import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -39,13 +39,9 @@ const Grid = () => {
   return (
     <View>
       <ContentWrapper>
-        <H1
-          color={theme["textHeading-default"]}
-          weight={"Bold"}
-          style={{ marginBottom: 16 }}
-        >
+        <H2 color={theme["textHeading-default"]} style={{ marginBottom: 16 }}>
           Grid
-        </H1>
+        </H2>
         <H3
           color={theme["textHeading-default"]}
           weight={"Semibold"}
@@ -93,13 +89,9 @@ const Spacing = () => {
 
   return (
     <ContentWrapper>
-      <H1
-        color={theme["textHeading-default"]}
-        weight={"Bold"}
-        style={{ marginBottom: 16 }}
-      >
+      <H2 color={theme["textHeading-default"]} style={{ marginBottom: 16 }}>
         Spacing
-      </H1>
+      </H2>
 
       <VStack space={24}>
         {/* VSPACER */}
@@ -147,13 +139,9 @@ const Stack = () => {
 
   return (
     <ContentWrapper>
-      <H1
-        color={theme["textHeading-default"]}
-        weight={"Bold"}
-        style={{ marginBottom: 16 }}
-      >
+      <H2 color={theme["textHeading-default"]} style={{ marginBottom: 16 }}>
         Stack
-      </H1>
+      </H2>
 
       <VStack space={24}>
         <VStack space={16}>
@@ -306,13 +294,9 @@ const DividerRow = () => {
   return (
     <>
       <ContentWrapper>
-        <H1
-          color={theme["textHeading-default"]}
-          weight={"Bold"}
-          style={{ marginBottom: 16 }}
-        >
+        <H2 color={theme["textHeading-default"]} style={{ marginBottom: 16 }}>
           Divider
-        </H1>
+        </H2>
 
         <H3
           color={theme["textHeading-default"]}

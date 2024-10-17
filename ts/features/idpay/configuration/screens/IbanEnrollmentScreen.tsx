@@ -1,4 +1,5 @@
 import {
+  H2,
   Body,
   FeatureInfo,
   FooterWithButtons,
@@ -9,7 +10,6 @@ import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { H1 } from "../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import I18n from "../../../../i18n";
@@ -179,7 +179,7 @@ export const IbanEnrollmentScreen = () => {
     >
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
         <ScrollView style={styles.container}>
-          <H1>{I18n.t("idpay.configuration.iban.enrollment.header")}</H1>
+          <H2>{I18n.t("idpay.configuration.iban.enrollment.header")}</H2>
           <VSpacer size={8} />
           <Body>{I18n.t("idpay.configuration.iban.enrollment.subTitle")}</Body>
           <VSpacer size={24} />

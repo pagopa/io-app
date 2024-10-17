@@ -5,13 +5,13 @@ import { connect } from "react-redux";
 import {
   Body,
   FooterWithButtons,
+  H2,
   HSpacer,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
-import { H1 } from "../../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import { Label } from "../../../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
@@ -79,7 +79,7 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
               IOStyles.horizontalContentPadding
             ]}
           >
-            <H1 style={styles.title}>{screenTitle}</H1>
+            <H2 style={styles.title}>{screenTitle}</H2>
             <VSpacer size={8} />
             <H4 weight={"Regular"} style={styles.flexStart}>
               {label}
