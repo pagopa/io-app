@@ -1,4 +1,4 @@
-import { HSpacer } from "@pagopa/io-app-design-system";
+import { Body, HSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
@@ -7,7 +7,6 @@ import I18n from "../../../../i18n";
 import { getRemoteLocale } from "../../../messages/utils/messages";
 
 import { IOBadge } from "../../../../components/core/IOBadge";
-import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 

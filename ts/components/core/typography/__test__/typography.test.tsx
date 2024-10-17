@@ -2,7 +2,6 @@ import React from "react";
 import TestRenderer from "react-test-renderer";
 import type { IOColors } from "@pagopa/io-app-design-system";
 import { IOFontWeight } from "../../fonts";
-import { Body } from "../Body";
 import { calculateWeightColor } from "../common";
 import { H1 } from "../H1";
 import { H2 } from "../H2";
@@ -133,10 +132,6 @@ describe("Test Typography Components", () => {
       </H5>
     ).toJSON();
     expect(h5Regularblue).toMatchSnapshot();
-  });
-  it("Body Snapshot", () => {
-    const bodyDefault = TestRenderer.create(<Body>Text</Body>).toJSON();
-    expect(bodyDefault).toMatchSnapshot();
   });
   it("LabelSmall Snapshot", () => {
     const labelSmallDefault = TestRenderer.create(

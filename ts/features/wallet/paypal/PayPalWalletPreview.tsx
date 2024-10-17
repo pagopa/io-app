@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
+import { Body } from "@pagopa/io-app-design-system";
 import payPalCard from "../../../../img/wallet/cards-icons/paypal_card.png";
-import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
 import {

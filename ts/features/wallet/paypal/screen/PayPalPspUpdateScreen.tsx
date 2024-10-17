@@ -1,4 +1,5 @@
 import {
+  Body,
   FooterWithButtons,
   Icon,
   PressableListItemBase,
@@ -17,7 +18,6 @@ import {
 } from "react-native";
 import { isError, isReady } from "../../../../common/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
-import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Label } from "../../../../components/core/typography/Label";

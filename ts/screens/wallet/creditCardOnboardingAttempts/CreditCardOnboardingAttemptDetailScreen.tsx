@@ -1,10 +1,9 @@
-import { ButtonOutline, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, ButtonOutline, VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
 import { Label } from "../../../components/core/typography/Label";
 import { IOStyles } from "../../../components/core/variables/IOStyles";

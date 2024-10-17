@@ -1,11 +1,10 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import { Image, Linking, StyleSheet, View } from "react-native";
-import { ButtonSolid, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, ButtonSolid, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { storeUrl } from "../utils/appVersion";
-import { Body } from "./core/typography/Body";
 import { H1 } from "./core/typography/H1";
 import { H3 } from "./core/typography/H3";
 import { IOStyles } from "./core/variables/IOStyles";

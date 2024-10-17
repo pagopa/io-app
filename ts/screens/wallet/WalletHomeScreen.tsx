@@ -1,4 +1,5 @@
 import {
+  Body,
   ButtonOutline,
   ButtonSolid,
   IOColors,
@@ -20,7 +21,6 @@ import {
 import { connect } from "react-redux";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import SectionStatusComponent from "../../components/SectionStatus";
-import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";

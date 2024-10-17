@@ -12,6 +12,7 @@ import {
   Platform
 } from "react-native";
 import {
+  Body,
   IOColors,
   IOIcons,
   IOPictograms,
@@ -23,7 +24,6 @@ import ScreenHeader from "../ScreenHeader";
 import { H1 } from "../../components/core/typography/H1";
 
 import variables from "../../theme/variables";
-import { Body } from "../core/typography/Body";
 
 type Props = Readonly<{
   title?: string;

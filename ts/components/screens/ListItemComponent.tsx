@@ -17,12 +17,12 @@ import {
   HSpacer,
   Divider,
   VSpacer,
-  NativeSwitch
+  NativeSwitch,
+  Body
 } from "@pagopa/io-app-design-system";
 import customVariables from "../../theme/variables";
 import { makeFontStyleObject } from "../core/fonts";
 import { IOBadge } from "../core/IOBadge";
-import { Body } from "../core/typography/Body";
 import { IOStyles } from "../core/variables/IOStyles";
 import { BadgeComponent } from "./BadgeComponent";
 

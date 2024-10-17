@@ -1,4 +1,4 @@
-import { Icon } from "@pagopa/io-app-design-system";
+import { Body, Icon } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { FC } from "react";
@@ -9,7 +9,6 @@ import customVariables from "../../../theme/variables";
 import { getPspIconUrlFromAbi } from "../../../utils/paymentMethod";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import { Body } from "../../core/typography/Body";
 import { H4 } from "../../core/typography/H4";
 
 const ICON_SIZE = 24;

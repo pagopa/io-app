@@ -86,6 +86,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.payWith.contextualHelpContent"
 };
 
+/**
+ * @deprecated Marked as to be deleted
+ */
 const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {

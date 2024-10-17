@@ -82,6 +82,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 /**
  * Select a PSP to be used for a the current selected wallet
+ * @deprecated Marked as to be deleted
  */
 class PickPspScreen extends React.Component<PickPspScreenProps> {
   public componentDidMount() {

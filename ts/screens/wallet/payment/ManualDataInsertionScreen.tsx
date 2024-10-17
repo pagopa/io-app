@@ -1,4 +1,5 @@
 import {
+  Body,
   ContentWrapper,
   FooterWithButtons,
   IOColors,
@@ -20,7 +21,6 @@ import * as React from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { LabelledItem } from "../../../components/LabelledItem";
-import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
 import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";

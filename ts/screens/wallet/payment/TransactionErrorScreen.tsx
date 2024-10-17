@@ -366,6 +366,9 @@ export const errorTransactionUIElements = (
   }
 };
 
+/**
+ * @deprecated Marked as to be deleted
+ */
 const TransactionErrorScreen = (props: Props) => {
   const { rptId, error, onCancel } =
     useRoute<

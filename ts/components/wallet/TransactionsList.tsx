@@ -3,6 +3,7 @@ import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import {
+  Body,
   ButtonOutline,
   IOColors,
   IOVisualCostants,
@@ -15,7 +16,6 @@ import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { format } from "../../utils/dates";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
-import { Body } from "../core/typography/Body";
 import { H3 } from "../core/typography/H3";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";

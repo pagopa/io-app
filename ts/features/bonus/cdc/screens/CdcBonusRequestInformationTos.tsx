@@ -10,7 +10,6 @@ import {
   View
 } from "react-native";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
-import { IORenderHtml } from "../../../../components/core/IORenderHtml";
 import { H2 } from "../../../../components/core/typography/H2";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -77,7 +76,8 @@ const CdcBonusRequestInformationTos = () => {
             )}
           </View>
           <VSpacer size={16} />
-          <IORenderHtml
+          {/* Replace the following chunk of code with IOMarkdown */}
+          {/* <IORenderHtml
             source={{
               html: bonusTypeLocalizedContent.content
             }}
@@ -96,7 +96,7 @@ const CdcBonusRequestInformationTos = () => {
                 marginBottom: 0
               }
             }}
-          />
+          /> */}
           <VSpacer size={16} />
         </ScrollView>
       </SafeAreaView>

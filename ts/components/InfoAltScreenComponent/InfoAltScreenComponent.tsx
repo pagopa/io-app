@@ -1,10 +1,14 @@
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { VSpacer, IOPictograms, Pictogram } from "@pagopa/io-app-design-system";
+import {
+  VSpacer,
+  IOPictograms,
+  Pictogram,
+  Body
+} from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import themeVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { Body } from "../core/typography/Body";
 import { H2 } from "../core/typography/H2";
 
 type Props = {

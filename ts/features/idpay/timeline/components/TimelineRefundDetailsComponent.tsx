@@ -1,5 +1,5 @@
 import { useBottomSheet } from "@gorhom/bottom-sheet";
-import { Alert, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { Alert, Body, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { CommonActions } from "@react-navigation/native";
 import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
@@ -10,7 +10,6 @@ import { RefundDetailDTO } from "../../../../../definitions/idpay/RefundDetailDT
 import { OperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 import { IOBadge } from "../../../../components/core/IOBadge";
-import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import NavigationService from "../../../../navigation/NavigationService";

@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Text, View, SafeAreaView, ScrollView } from "react-native";
 import {
+  Body,
   IOColors,
   IOVisualCostants,
   hexToRgba
 } from "@pagopa/io-app-design-system";
-import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 

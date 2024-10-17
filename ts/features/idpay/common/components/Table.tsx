@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { StyleSheet, View } from "react-native";
-import { Divider, WithTestID } from "@pagopa/io-app-design-system";
-import { Body } from "../../../../components/core/typography/Body";
+import { Body, Divider, WithTestID } from "@pagopa/io-app-design-system";
 import { H3 } from "../../../../components/core/typography/H3";
 
 export type TableRow = WithTestID<{

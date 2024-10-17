@@ -1,4 +1,5 @@
 import {
+  Body,
   FeatureInfo,
   FooterWithButtons,
   IOStyles,
@@ -10,7 +11,6 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";

@@ -1,4 +1,4 @@
-import { Alert, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { Alert, Body, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -9,7 +9,6 @@ import {
 } from "../../../../../definitions/idpay/TransactionDetailDTO";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";

@@ -1,10 +1,9 @@
-import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
 import I18n from "../../i18n";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
-import { Body } from "../core/typography/Body";
 import { H3 } from "../core/typography/H3";
 import { IOStyles } from "../core/variables/IOStyles";
 import { BadgeComponent } from "../screens/BadgeComponent";

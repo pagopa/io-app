@@ -3,7 +3,7 @@
  * with different appearences based on
  * the props passed
  */
-import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
@@ -18,7 +18,6 @@ import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import { Body } from "../../core/typography/Body";
 import { H5 } from "../../core/typography/H5";
 import Logo, { cardIcons } from "./Logo";
 
