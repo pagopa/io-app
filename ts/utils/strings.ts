@@ -42,7 +42,13 @@ export function capitalize(text: string, separator: string = " "): string {
   const capitalizedText = text
     .trim() // Remove leading/trailing spaces for processing
     .split(separator)
-    .map(token => _.upperFirst(token))
+    .map(token =>
+      // Handle words with apostrophes
+      token
+        .split("'")
+        .map(subToken => _.upperFirst(subToken.toLowerCase()))
+        .join("'")
+    )
     .join(separator);
 
   // Re-add the leading and trailing spaces
