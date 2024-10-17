@@ -34,6 +34,12 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
+  navigateToIpzsPrivacyScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.DISCOVERY.IPZS_PRIVACY
+    });
+  },
+
   navigateToIdentificationModeScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION
