@@ -13,7 +13,7 @@ import {
   CredentialIssuanceFailureTypeEnum
 } from "../../machine/credential/failure";
 import {
-  selectCredential,
+  selectCredentialTypeOption,
   selectFailureOption
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
@@ -57,8 +57,9 @@ type ContentViewProps = { failure: CredentialIssuanceFailure };
  */
 const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
-  const storedCredential =
-    ItwCredentialIssuanceMachineContext.useSelector(selectCredential);
+  const credentialType = ItwCredentialIssuanceMachineContext.useSelector(
+    selectCredentialTypeOption
+  );
 
   const closeIssuance = (cta_id: string) => {
     machineRef.send({ type: "close" });
@@ -147,14 +148,12 @@ const ContentView = ({ failure }: ContentViewProps) => {
   };
 
   useEffect(() => {
-    if (!storedCredential) {
+    if (O.isNone(credentialType)) {
       return;
     }
 
     if (failure.type === CredentialIssuanceFailureTypeEnum.ASYNC_ISSUANCE) {
-      trackItWalletDeferredIssuing(
-        CREDENTIALS_MAP[storedCredential.credentialType]
-      );
+      trackItWalletDeferredIssuing(CREDENTIALS_MAP[credentialType.value]);
       return;
     }
 
@@ -162,7 +161,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
       trackCredentialNotEntitledFailure({
         reason: failure.reason,
         type: failure.type,
-        credential: CREDENTIALS_MAP[storedCredential.credentialType]
+        credential: CREDENTIALS_MAP[credentialType.value]
       });
       return;
     }
@@ -171,16 +170,16 @@ const ContentView = ({ failure }: ContentViewProps) => {
       trackAddCredentialFailure({
         reason: failure.reason,
         type: failure.type,
-        credential: CREDENTIALS_MAP[storedCredential.credentialType]
+        credential: CREDENTIALS_MAP[credentialType.value]
       });
       return;
     }
     trackAddCredentialTimeout({
       reason: failure.reason,
       type: failure.type,
-      credential: CREDENTIALS_MAP[storedCredential.credentialType]
+      credential: CREDENTIALS_MAP[credentialType.value]
     });
-  }, [failure, storedCredential]);
+  }, [credentialType, failure]);
 
   const resultScreenProps = resultScreensMap[failure.type];
   return <OperationResultScreenContent {...resultScreenProps} />;
