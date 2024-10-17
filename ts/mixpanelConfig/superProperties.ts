@@ -19,6 +19,17 @@ import { mixpanel } from "../mixpanel";
 import { LoginSessionDuration } from "../features/fastLogin/analytics/optinAnalytics";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
+  ItwCed,
+  ItwId,
+  ItwPg,
+  ItwStatus,
+  ItwTs
+} from "../features/itwallet/analytics";
+import {
+  itwCredentialsByTypeSelector,
+  itwCredentialsSelector
+} from "../features/itwallet/credentials/store/selectors";
+import {
   Property,
   PropertyToUpdate,
   loginSessionConfigHandler,
@@ -37,6 +48,11 @@ type SuperProperties = {
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
   NOTIFICATION_PERMISSION: NotificationPermissionType;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
+  ITW_STATUS_V2: ItwStatus;
+  ITW_ID_V2: ItwId;
+  ITW_PG_V2: ItwPg;
+  ITW_TS_V2: ItwTs;
+  ITW_CED_V2: ItwCed;
 };
 
 export const updateMixpanelSuperProperties = async (
@@ -55,6 +71,11 @@ export const updateMixpanelSuperProperties = async (
   const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
   const notificationsEnabled = await checkNotificationPermissions();
   const SERVICE_CONFIGURATION = serviceConfigHandler(state);
+  const ITW_STATUS_V2 = walletStatusHandler(state);
+  const ITW_ID_V2 = idStatusHandler(state);
+  const ITW_PG_V2 = pgStatusHandler(state);
+  const ITW_TS_V2 = tsStatusHandler(state);
+  const ITW_CED_V2 = cedStatusHandler(state);
 
   const superPropertiesObject: SuperProperties = {
     isScreenReaderEnabled: screenReaderEnabled,
@@ -67,7 +88,12 @@ export const updateMixpanelSuperProperties = async (
     NOTIFICATION_CONFIGURATION,
     NOTIFICATION_PERMISSION:
       getNotificationPermissionType(notificationsEnabled),
-    SERVICE_CONFIGURATION
+    SERVICE_CONFIGURATION,
+    ITW_STATUS_V2,
+    ITW_ID_V2,
+    ITW_PG_V2,
+    ITW_TS_V2,
+    ITW_CED_V2
   };
 
   if (forceUpdateFor) {
@@ -83,4 +109,28 @@ const forceUpdate = <T extends keyof SuperProperties>(
 ) => {
   // eslint-disable-next-line functional/immutable-data
   superPropertiesObject[toUpdate.property] = toUpdate.value;
+};
+
+const walletStatusHandler = (state: GlobalState): ItwStatus => {
+  const credentialsState = itwCredentialsSelector(state);
+  return credentialsState.eid ? "L2" : "not_active";
+};
+
+const idStatusHandler = (state: GlobalState): ItwId => {
+  const credentialsState = itwCredentialsSelector(state);
+  return credentialsState.eid ? "valid" : "not_available";
+};
+const pgStatusHandler = (state: GlobalState): ItwPg => {
+  const credentialsByType = itwCredentialsByTypeSelector(state);
+  return credentialsByType.MDL ? "valid" : "not_available";
+};
+const tsStatusHandler = (state: GlobalState): ItwTs => {
+  const credentialsByType = itwCredentialsByTypeSelector(state);
+  return credentialsByType.EuropeanHealthInsuranceCard
+    ? "valid"
+    : "not_available";
+};
+const cedStatusHandler = (state: GlobalState): ItwCed => {
+  const credentialsByType = itwCredentialsByTypeSelector(state);
+  return credentialsByType.EuropeanDisabilityCard ? "valid" : "not_available";
 };
