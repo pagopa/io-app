@@ -33,11 +33,15 @@ describe("capitalize", () => {
   });
 
   it("should return a string where each word has the first char in uppercase even after an apostrophe-2", () => {
-    expect(capitalize("capit'alize")).toEqual("Capit'alize");
+    expect(capitalize("capit'alize")).toEqual("Capit'Alize");
   });
 
   it("should return a string where each word has the first char in uppercase even after an apostrophe-3", () => {
-    expect(capitalize("Capit'alize")).toEqual("Capit'alize");
+    expect(capitalize("Capit'alize")).toEqual("Capit'Alize");
+  });
+
+  it("should return a string where each word has the first char in uppercase even after an apostrophe-4", () => {
+    expect(capitalize("capit'Alize")).toEqual("Capit'Alize");
   });
 });
 
