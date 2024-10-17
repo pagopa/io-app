@@ -740,6 +740,10 @@ authentication:
         description: If you have SPID, log in to IO by entering your credentials. You can also use your face or fingerprint or the code set for your SPID provider's app.
         primary_action_label: Login with SPID
       secondary_action_label: Close
+    cie_not_installed:
+      title: We can't find the CieID app
+      description: To login, you must have the app installed on your device.
+      primary_action_label: Get the app
   cie:
     genericTitle: Login with CIE
     cie: CIE
@@ -1949,6 +1953,9 @@ wallet:
       PAYPAL_REMOVED_ERROR:
         title: Autorizzazione negata
         subtitle: Potresti avere rimosso pagoPA dai pagamenti automatici di PayPal. Elimina il conto PayPal dal tuo Portafoglio, aggiungilo di nuovo e riprova ad effettuare il pagamento.
+      IN_APP_BROWSER_CLOSED_BY_USER:
+        title: Hai interrotto il pagamento
+        subtitle: Verifica l’esito dalla sezione Pagamenti. Se intendi pagare, attendi qualche minuto prima di riprovare.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -3433,6 +3440,18 @@ features:
         title: Certificato di autenticità
         usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
         certifiedLabel: Questo documento è certificato dall'ente emittente.
+    walletRevocation:
+      cta: Disattiva Documenti su IO
+      confirmScreen:
+        title: Vuoi davvero disattivare Documenti su IO?
+        subtitle: "Eliminerai i documenti che hai aggiunto al Portafoglio.\nSe cambi idea, potrai riattivare Documenti su IO in futuro."
+        action: Conferma e continua
+      loadingScreen:
+        title: Stiamo disattivando Documenti su IO...
+        subtitle: Attendi qualche secondo
+      failureScreen:
+        title: Si è verificato un errore imprevisto
+        subtitle: Non è stato possibile disattivare il servizio. Riprova.
 support:
   ticketList:
     noTicket:

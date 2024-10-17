@@ -57,7 +57,7 @@ export type PaymentsCheckoutState = {
 };
 
 const INITIAL_STATE: PaymentsCheckoutState = {
-  currentStep: WalletPaymentStepEnum.PICK_PAYMENT_METHOD,
+  currentStep: WalletPaymentStepEnum.NONE,
   paymentDetails: pot.none,
   userWallets: pot.none,
   recentUsedPaymentMethod: pot.none,
