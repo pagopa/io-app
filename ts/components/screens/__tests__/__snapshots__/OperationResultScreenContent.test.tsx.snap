@@ -376,36 +376,24 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                           <View>
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               title
                             </Text>
@@ -418,36 +406,24 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
                                     "lineHeight": 24,
                                   },
                                   {
-                                    "color": "#475A6D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               subtitle
                             </Text>
@@ -553,36 +529,26 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                         accessibilityElementsHidden={true}
                                         accessible={false}
                                         allowFontScaling={false}
-                                        color="white"
-                                        defaultColor="white"
-                                        defaultWeight="Bold"
                                         ellipsizeMode="tail"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                          }
-                                        }
                                         importantForAccessibility="no-hide-descendants"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
-                                            {
-                                              "alignSelf": "center",
-                                            },
-                                            {
-                                              "fontSize": 16,
-                                            },
+                                            {},
                                             {
                                               "color": "#FFFFFF",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "700",
+                                              "lineHeight": 20,
+                                            },
+                                            {
+                                              "alignSelf": "center",
                                             },
                                           ]
                                         }
-                                        weight="Bold"
                                       >
                                         Action
                                       </Text>
@@ -681,18 +647,18 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                       allowFontScaling={false}
                                       ellipsizeMode="tail"
                                       importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.3}
+                                      maxFontSizeMultiplier={1.25}
                                       numberOfLines={1}
                                       style={
                                         [
+                                          {},
                                           {
+                                            "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "700",
-                                          },
-                                          {
-                                            "color": "#0073E6",
+                                            "lineHeight": undefined,
                                           },
                                           {
                                             "color": undefined,

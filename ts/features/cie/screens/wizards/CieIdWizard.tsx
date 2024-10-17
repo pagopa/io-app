@@ -1,16 +1,16 @@
-import React from "react";
 import {
   ContentWrapper,
-  LabelLink,
+  Label,
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { openWebUrl } from "../../../../utils/url";
+import React from "react";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import ROUTES from "../../../../navigation/routes";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { openWebUrl } from "../../../../utils/url";
 import useNavigateToLoginMethod from "../../../../hooks/useNavigateToLoginMethod";
 
 const CIE_ID_LINK =
@@ -22,32 +22,26 @@ const CieIdWizard = () => {
   const label = I18n.t("authentication.wizards.cie_id_wizard.title");
   const { navigateToCieIdLoginScreen } = useNavigateToLoginMethod();
 
-  const getActions = (): IOScrollViewActions => {
-    const primaryLabel = I18n.t(
-      "authentication.wizards.cie_id_wizard.actions.primary.label"
-    );
-    const secondaryLabel = I18n.t(
-      "authentication.wizards.cie_id_wizard.actions.secondary.label"
-    );
-    return {
-      type: "TwoButtons",
-      primary: {
-        label: primaryLabel,
-        accessibilityLabel: primaryLabel,
-        onPress: () => {
-          navigateToCieIdLoginScreen("SpidL2");
-        }
-      },
-      secondary: {
-        label: secondaryLabel,
-        accessibilityLabel: secondaryLabel,
-        onPress: () =>
-          navigate(ROUTES.AUTHENTICATION, {
-            screen: ROUTES.AUTHENTICATION_CIE_PIN_WIZARD
-          })
+  const screenActions = (): IOScrollViewActions => ({
+    type: "TwoButtons",
+    primary: {
+      label: I18n.t(
+        "authentication.wizards.cie_id_wizard.actions.primary.label"
+      ),
+      onPress: () => {
+        navigateToCieIdLoginScreen("SpidL2");
       }
-    };
-  };
+    },
+    secondary: {
+      label: I18n.t(
+        "authentication.wizards.cie_id_wizard.actions.secondary.label"
+      ),
+      onPress: () =>
+        navigate(ROUTES.AUTHENTICATION, {
+          screen: ROUTES.AUTHENTICATION_CIE_PIN_WIZARD
+        })
+    }
+  });
 
   return (
     <IOScrollViewWithLargeHeader
@@ -56,11 +50,12 @@ const CieIdWizard = () => {
         accessibilityLabel: label
       }}
       description={I18n.t("authentication.wizards.cie_id_wizard.description")}
-      actions={getActions()}
+      actions={screenActions()}
     >
       <ContentWrapper>
         <VSpacer size={12} />
-        <LabelLink
+        <Label
+          asLink
           onPress={() => {
             openWebUrl(CIE_ID_LINK, () => {
               error(I18n.t("global.jserror.title"));
@@ -68,7 +63,7 @@ const CieIdWizard = () => {
           }}
         >
           {I18n.t("authentication.wizards.cie_id_wizard.link")}
-        </LabelLink>
+        </Label>
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
   );

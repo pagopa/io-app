@@ -513,36 +513,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                             </View>
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Your archive is empty.
                             </Text>
@@ -555,36 +543,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
                                     "lineHeight": 24,
                                   },
                                   {
-                                    "color": "#475A6D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
                             </Text>
@@ -1117,36 +1093,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                             </View>
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Loading messages has failed
                             </Text>
@@ -1253,36 +1217,26 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                         accessibilityElementsHidden={true}
                                         accessible={false}
                                         allowFontScaling={false}
-                                        color="white"
-                                        defaultColor="white"
-                                        defaultWeight="Bold"
                                         ellipsizeMode="tail"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                          }
-                                        }
                                         importantForAccessibility="no-hide-descendants"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
-                                            {
-                                              "alignSelf": "center",
-                                            },
-                                            {
-                                              "fontSize": 16,
-                                            },
+                                            {},
                                             {
                                               "color": "#FFFFFF",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "700",
+                                              "lineHeight": 20,
+                                            },
+                                            {
+                                              "alignSelf": "center",
                                             },
                                           ]
                                         }
-                                        weight="Bold"
                                       >
                                         Retry
                                       </Text>
@@ -2506,36 +2460,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                             </View>
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Your archive is empty.
                             </Text>
@@ -2548,36 +2490,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
                                     "lineHeight": 24,
                                   },
                                   {
-                                    "color": "#475A6D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
                             </Text>
@@ -3453,36 +3383,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                             </View>
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Your archive is empty.
                             </Text>
@@ -3495,36 +3413,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
                                     "lineHeight": 24,
                                   },
                                   {
-                                    "color": "#475A6D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
                             </Text>
@@ -4400,36 +4306,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                             </View>
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Your archive is empty.
                             </Text>
@@ -4442,36 +4336,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
                                     "lineHeight": 24,
                                   },
                                   {
-                                    "color": "#475A6D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
                             </Text>
@@ -5347,36 +5229,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                             </View>
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Your archive is empty.
                             </Text>
@@ -5389,36 +5259,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
                                     "lineHeight": 24,
                                   },
                                   {
-                                    "color": "#475A6D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
                             </Text>
@@ -6294,36 +6152,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                             </View>
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Your message list is empty.
                             </Text>
@@ -6336,36 +6182,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
                                     "lineHeight": 24,
                                   },
                                   {
-                                    "color": "#475A6D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Refresh to check for any new messages.
                             </Text>
@@ -6898,36 +6732,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                             </View>
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Loading messages has failed
                             </Text>
@@ -7034,36 +6856,26 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                         accessibilityElementsHidden={true}
                                         accessible={false}
                                         allowFontScaling={false}
-                                        color="white"
-                                        defaultColor="white"
-                                        defaultWeight="Bold"
                                         ellipsizeMode="tail"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                          }
-                                        }
                                         importantForAccessibility="no-hide-descendants"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
-                                            {
-                                              "alignSelf": "center",
-                                            },
-                                            {
-                                              "fontSize": 16,
-                                            },
+                                            {},
                                             {
                                               "color": "#FFFFFF",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "700",
+                                              "lineHeight": 20,
+                                            },
+                                            {
+                                              "alignSelf": "center",
                                             },
                                           ]
                                         }
-                                        weight="Bold"
                                       >
                                         Retry
                                       </Text>
@@ -8287,36 +8099,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                             </View>
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Your message list is empty.
                             </Text>
@@ -8329,36 +8129,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
                                     "lineHeight": 24,
                                   },
                                   {
-                                    "color": "#475A6D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Refresh to check for any new messages.
                             </Text>
@@ -9234,36 +9022,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                             </View>
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Your message list is empty.
                             </Text>
@@ -9276,36 +9052,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
                                     "lineHeight": 24,
                                   },
                                   {
-                                    "color": "#475A6D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Refresh to check for any new messages.
                             </Text>
@@ -10181,36 +9945,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                             </View>
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Your message list is empty.
                             </Text>
@@ -10223,36 +9975,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
                                     "lineHeight": 24,
                                   },
                                   {
-                                    "color": "#475A6D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Refresh to check for any new messages.
                             </Text>
@@ -11128,36 +10868,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                             </View>
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Your message list is empty.
                             </Text>
@@ -11170,36 +10898,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
                                     "lineHeight": 24,
                                   },
                                   {
-                                    "color": "#475A6D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Refresh to check for any new messages.
                             </Text>

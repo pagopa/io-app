@@ -10,6 +10,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import * as thirdPartyById from "../../../messages/store/reducers/thirdPartyById";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { ATTACHMENT_CATEGORY } from "../../../messages/types/attachmentCategory";
+import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 
 const generateOneAttachmentArray = () => [
   {
@@ -57,6 +58,7 @@ describe("F24Section", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.restoreAllMocks();
+    mockAccessibilityInfo(false);
   });
   it("should match snapshot when there are no F24", () => {
     jest

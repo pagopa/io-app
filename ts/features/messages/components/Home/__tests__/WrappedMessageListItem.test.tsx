@@ -17,6 +17,7 @@ import {
   scheduledPreconditionStatusAction,
   toScheduledPayload
 } from "../../../store/actions/preconditions";
+import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({
@@ -37,6 +38,7 @@ describe("WrappedMessageListItem", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
+    mockAccessibilityInfo(false);
   });
   it("should match snapshot, not from SEND, not a payment, unread message", () => {
     const message = messageGenerator(false, false, false);

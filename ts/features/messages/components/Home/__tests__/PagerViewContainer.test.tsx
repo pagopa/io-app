@@ -18,6 +18,7 @@ import {
   setShownMessageCategoryAction
 } from "../../../store/actions";
 import { pageSize } from "../../../../../config";
+import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -29,6 +30,7 @@ describe("PagerViewContainer", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
+    mockAccessibilityInfo(false);
   });
   it("should not dispatch 'reloadAllMessages.request' upon first rendering for INBOX with useEffect (since it is dispatched by the PagerView's pageSelected callback)", () => {
     renderComponent("INBOX", pot.none, pot.none);

@@ -1,19 +1,14 @@
 import {
   HStack,
   IOColors,
+  IOText,
   VStack,
   hexToRgba,
-  makeFontStyleObject
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useState } from "react";
-import {
-  Platform,
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  Text
-} from "react-native";
+import { Platform, Pressable, SafeAreaView, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
 import { ReduxProps } from "../store/actions/types";
@@ -40,16 +35,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     zIndex: 1000
   },
-  versionText: {
-    fontSize: 12,
-    color: IOColors["grey-850"],
-    ...makeFontStyleObject("Semibold")
-  },
-  screenDebugText: {
-    fontSize: 12,
-    color: IOColors["grey-850"],
-    ...makeFontStyleObject("Regular")
-  },
   versionTextWrapper: {
     display: "flex",
     flexDirection: "row",
@@ -72,6 +57,7 @@ const styles = StyleSheet.create({
 });
 
 const DebugInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
+  const theme = useIOTheme();
   const appVersion = getAppVersion();
   const [showRootName, setShowRootName] = useState(true);
   const [isDebugDataVisibile, showDebugData] = useState(false);
@@ -91,7 +77,15 @@ const DebugInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
               accessibilityLabel={appVersionText}
               accessibilityHint={"Tap here to show/hide the root name"}
             >
-              <Text style={styles.versionText}>{appVersionText}</Text>
+              <IOText
+                color={theme["textBody-secondary"]}
+                font="TitilliumSansPro"
+                weight="Semibold"
+                size={12}
+                lineHeight={16}
+              >
+                {appVersionText}
+              </IOText>
             </Pressable>
             {isPagoPATestEnabled && <PagoPATestIndicator />}
           </HStack>
@@ -104,9 +98,15 @@ const DebugInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
                 clipboardSetStringWithFeedback(props.screenNameDebug)
               }
             >
-              <Text style={styles.screenDebugText}>
+              <IOText
+                color={theme["textBody-secondary"]}
+                font="TitilliumSansPro"
+                weight="Regular"
+                size={12}
+                lineHeight={16}
+              >
                 {props.screenNameDebug}
-              </Text>
+              </IOText>
             </Pressable>
           )}
           <DebugDataIndicator

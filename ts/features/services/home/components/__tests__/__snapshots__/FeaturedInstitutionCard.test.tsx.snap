@@ -484,35 +484,23 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="hanPurple-850"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   lineBreakMode="head"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#1A0744",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 25,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   ### Institution ###
                                 </Text>
@@ -1021,35 +1009,23 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="hanPurple-850"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   lineBreakMode="head"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#1A0744",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 25,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   ### Institution ###
                                 </Text>

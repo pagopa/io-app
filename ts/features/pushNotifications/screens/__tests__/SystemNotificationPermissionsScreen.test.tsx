@@ -1,18 +1,19 @@
-import React from "react";
-import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { constUndefined } from "fp-ts/lib/function";
+import React from "react";
+import { createStore } from "redux";
 
+import I18n from "../../../../i18n";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../../store/reducers";
+import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { SystemNotificationPermissionsScreen } from "../SystemNotificationPermissionsScreen";
-import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
-import * as utils from "../../utils";
-import { setEngagementScreenShown } from "../../store/actions/userBehaviour";
 import * as analytics from "../../analytics";
-import I18n from "../../../../i18n";
+import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
+import { setEngagementScreenShown } from "../../store/actions/userBehaviour";
+import * as utils from "../../utils";
+import { SystemNotificationPermissionsScreen } from "../SystemNotificationPermissionsScreen";
 
 const mockGoBack = jest.fn();
 const mockSetNavigationOptions = jest.fn();
@@ -36,6 +37,7 @@ describe("SystemNotificationPermissionsScreen", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
+    mockAccessibilityInfo(false);
   });
   it("Should match snapshot", () => {
     const screen = renderScreen();

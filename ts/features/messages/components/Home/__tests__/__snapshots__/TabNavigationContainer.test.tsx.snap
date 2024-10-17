@@ -528,31 +528,21 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                   />
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 20,
-                                      }
-                                    }
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 20,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 21,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Inbox
                                   </Text>
@@ -707,31 +697,21 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                   />
                                   <Text
                                     allowFontScaling={false}
-                                    color="blue"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 20,
-                                      }
-                                    }
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 20,
-                                        },
+                                        {},
                                         {
                                           "color": "#0073E6",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 21,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Archived
                                   </Text>
@@ -1295,31 +1275,21 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                   />
                                   <Text
                                     allowFontScaling={false}
-                                    color="blue"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 20,
-                                      }
-                                    }
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 20,
-                                        },
+                                        {},
                                         {
                                           "color": "#0073E6",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 21,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Inbox
                                   </Text>
@@ -1474,31 +1444,21 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                   />
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 20,
-                                      }
-                                    }
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 20,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 21,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Archived
                                   </Text>

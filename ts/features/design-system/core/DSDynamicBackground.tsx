@@ -164,7 +164,6 @@ export const DSDynamicBackground = () => {
             <View style={{ alignSelf: "center", flexShrink: 1 }}>
               <H3 color={theme["textBody-secondary"]}>{entityData?.name}</H3>
               <LabelSmall
-                fontSize="regular"
                 weight="Regular"
                 color={theme["textBody-secondary"]}
                 style={{ opacity: 0.8 }}

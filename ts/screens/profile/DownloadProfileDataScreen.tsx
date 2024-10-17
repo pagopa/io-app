@@ -1,7 +1,7 @@
 import {
   Body,
   ContentWrapper,
-  LabelLink,
+  Label,
   VSpacer,
   useIOToast
 } from "@pagopa/io-app-design-system";
@@ -149,9 +149,9 @@ const DownloadProfileDataScreen = () => {
         <VSpacer />
         <Body accessibilityRole="link" onPress={handleNavigateToProfilePrivacy}>
           {I18n.t("profile.main.privacy.exportData.detail.paragraph3.part1")}
-          <LabelLink>
+          <Label asLink onPress={handleNavigateToProfilePrivacy}>
             {I18n.t("profile.main.privacy.exportData.detail.paragraph3.link")}
-          </LabelLink>
+          </Label>
         </Body>
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
