@@ -17,15 +17,11 @@ const getMockPnOptInServiceId = () => "optInServiceId" as ServiceId;
 
 const getMockState = () =>
   ({
-    backendStatus: {
-      status: O.some({
-        config: {
-          pn: {
-            optInServiceId: getMockPnOptInServiceId()
-          }
-        }
-      })
-    }
+    remoteConfig: O.some({
+      pn: {
+        optInServiceId: getMockPnOptInServiceId()
+      }
+    })
   } as GlobalState);
 
 const getMockCTAs = () =>

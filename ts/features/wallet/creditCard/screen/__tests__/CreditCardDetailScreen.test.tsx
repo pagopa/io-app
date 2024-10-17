@@ -58,7 +58,7 @@ const initiativesFromInstrumentMock = jest
   )
   .mockImplementation(() => [mockInitiative]);
 const isIDPayEnabledMock = jest.spyOn(
-  require("../../../../../store/reducers/backendStatus"),
+  require("../../../../../store/reducers/backendStatus/config"),
   "isIdPayEnabledSelector"
 );
 

@@ -6,7 +6,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { trialStatusSelector } from "../../../trialSystem/store/reducers";
 import { itwTrialId } from "../../../../config";
 import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
-import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus";
+import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 export const ItwUpcomingWalletBanner = () => {
   const isItwEnabled = useIOSelector(isItwEnabledSelector);

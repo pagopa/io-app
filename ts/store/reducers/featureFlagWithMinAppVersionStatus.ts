@@ -35,7 +35,7 @@ type ExtractSecondLevelKeyWithMinAppVersion<
 type CheckPropertyWithMinAppVersionParameters<
   T extends KeysWithMinAppVersion<Config>
 > = {
-  backendStatus: O.Option<BackendStatus>;
+  remoteConfig: O.Option<BackendStatus["config"]>;
   mainLocalFlag: boolean;
   configPropertyName: T;
 } & (
@@ -83,7 +83,7 @@ type CheckPropertyWithMinAppVersionParameters<
 export const isPropertyWithMinAppVersionEnabled = <
   T extends KeysWithMinAppVersion<Config>
 >({
-  backendStatus,
+  remoteConfig,
   mainLocalFlag,
   configPropertyName,
   optionalLocalFlag,
@@ -94,7 +94,7 @@ export const isPropertyWithMinAppVersionEnabled = <
       pipe(
         O.fromNullable(
           getObjectWithMinAppVersion(
-            backendStatus,
+            remoteConfig,
             mainLocalFlag,
             configPropertyName,
             optionalLocalFlag,
@@ -121,15 +121,14 @@ export const isPropertyWithMinAppVersionEnabled = <
   );
 
 function getObjectWithMinAppVersion<T extends KeysWithMinAppVersion<Config>>(
-  backendStatus: O.Option<BackendStatus>,
+  remoteConfig: O.Option<BackendStatus["config"]>,
   mainLocalFlag: boolean,
   configPropertyName: T,
   optionalLocalFlag?: boolean,
   optionalConfig?: ExtractSecondLevelKeyWithMinAppVersion<Config, T>
 ): ObjectWithMinAppVersion {
   return pipe(
-    backendStatus,
-    O.chainNullableK(bs => bs.config),
+    remoteConfig,
     O.chainNullableK(cfg => cfg[configPropertyName]),
     O.fold(
       () => undefined,
@@ -141,7 +140,7 @@ function getObjectWithMinAppVersion<T extends KeysWithMinAppVersion<Config>>(
             opt =>
               optionalLocalFlag &&
               isPropertyWithMinAppVersionEnabled({
-                backendStatus,
+                remoteConfig,
                 mainLocalFlag,
                 configPropertyName
               })

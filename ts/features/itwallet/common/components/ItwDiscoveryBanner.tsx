@@ -8,7 +8,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { isItwTrialActiveSelector } from "../../../trialSystem/store/reducers";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus";
+import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   trackItWalletBannerTap,

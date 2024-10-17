@@ -12,7 +12,7 @@ import {
   SectionStatus
 } from "../../../../definitions/content/SectionStatus";
 import I18n, { setLocale } from "../../../i18n";
-import { SectionStatusKey } from "../../../store/reducers/backendStatus";
+import { SectionStatusKey } from "../../../store/reducers/backendStatus/sectionStatus";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { openWebUrl } from "../../../utils/url";
 import SectionStatusComponent from "../index";

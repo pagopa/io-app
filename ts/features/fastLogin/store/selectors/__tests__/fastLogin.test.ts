@@ -33,18 +33,13 @@ describe("FastLogin remote flag test", () => {
           }
         }
       },
-      backendStatus: {
-        status: O.some({
-          ...status,
-          config: {}
-        })
-      }
+      remoteConfig: O.some({})
     } as unknown as GlobalState;
     const actualStatus =
-      customStoreWithMissingMinAppVersionInFastLoginConfig.backendStatus.status;
+      customStoreWithMissingMinAppVersionInFastLoginConfig.remoteConfig;
     expect(O.isSome(actualStatus)).toBe(true);
     if (O.isSome(actualStatus)) {
-      expect(actualStatus.value.config.fastLogin).toBeUndefined();
+      expect(actualStatus.value.fastLogin).toBeUndefined();
     }
     const isFastLoginEnabled = isFastLoginEnabledSelector(
       customStoreWithMissingMinAppVersionInFastLoginConfig
@@ -54,12 +49,12 @@ describe("FastLogin remote flag test", () => {
 
   function checkBrokenFastLoginFlagTest(
     minAppVersion: string | undefined,
-    currentAppVersion: string,
+    appVersion: string,
     expectedValue: boolean
   ) {
     const testTitle = `FastLogin${
       expectedValue ? "" : " NOT"
-    } enabled with min version ${minAppVersion} for actual version ${currentAppVersion}`;
+    } enabled with min version ${minAppVersion} for actual version ${appVersion}`;
     it(testTitle, () => {
       checkFastLoginFlagWithBrokenStatus(expectedValue);
     });
@@ -125,12 +120,12 @@ describe("FastLogin remote flag test", () => {
 
   function checkFastLoginFlagTest(
     minAppVersion: string | undefined,
-    currentAppVersion: string,
+    appVersion: string,
     expectedValue: boolean
   ) {
     const testTitle = `FastLogin${
       expectedValue ? "" : " NOT"
-    } enabled with min version ${minAppVersion} for actual version ${currentAppVersion}`;
+    } enabled with min version ${minAppVersion} for actual version ${appVersion}`;
     it(testTitle, () => {
       checkIfFastLoginFlagIsEnableForThisAppVersion(
         minAppVersion,

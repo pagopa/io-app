@@ -8,7 +8,7 @@ import { appReducer } from "../../../../store/reducers/";
 import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
-} from "../../../../store/reducers/backendStatus";
+} from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
 import { pspSelectedV2ListSelector } from "../../../../store/reducers/wallet/payment";
 import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wallets";
@@ -76,9 +76,9 @@ jest.mock("../../../../store/reducers/wallet/payment", () => {
 });
 
 // Mock feature flags
-jest.mock("../../../../store/reducers/backendStatus", () => {
+jest.mock("../../../../store/reducers/backendStatus/config", () => {
   const actualModule = jest.requireActual(
-    "../../../../store/reducers/backendStatus"
+    "../../../../store/reducers/backendStatus/config"
   );
 
   return {
