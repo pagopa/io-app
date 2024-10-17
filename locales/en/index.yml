@@ -3215,6 +3215,11 @@ features:
       mdl: Patente di Guida
       dc: Carta Europea della Disabilità
       ts: Tessera Sanitaria - Tessera europea di assicurazione malattia
+    ipzsPrivacy:
+      title: I tuoi Documenti su IO sono al sicuro
+      warning: Premendo **Continua** dichiari di aver letto e compreso l’**Informativa Privacy**.
+      button:
+        label: Continua
     wallet:
       active: Attivo
       inactive: Non attivo
@@ -3250,11 +3255,11 @@ features:
         placeOfBirth: "Luogo di nascita"
         expirationDate: "Scadenza"
         securityLevel: "Livello di sicurezza"
-        issuedBy: "Credenziale emessa da"
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
         releasedBy: Emissione versione digitale
         attachments: "Attachments"
+        authenticSource: Origine dei dati
         mdl:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
@@ -3287,7 +3292,6 @@ features:
           cieId:
             title: CieID
             subtitle: Usa credenziali e app CieID
-        privacy: Identificandoti dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione) di **Istituto Poligrafico e Zecca dello Stato**.
       nfc:
         title: Attiva l'NFC per continuare
         description: Per consentire a IO di leggere la tua CIE, attiva l'NFC dalle Impostazioni del tuo dispositivo.
@@ -3330,6 +3334,9 @@ features:
           about:
             title: "Chi è?"
             subtitle: "È l'ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti."
+          authSource:
+            title: "Chi è?"
+            subtitle: "È l'ente che detiene i dati contenuti all'interno del tuo documento."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
