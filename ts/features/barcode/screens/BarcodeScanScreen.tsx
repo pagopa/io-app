@@ -44,6 +44,7 @@ import { getIOBarcodesByType } from "../utils/getBarcodesByType";
 import { PaymentsBarcodeRoutes } from "../../payments/barcode/navigation/routes";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { usePagoPaPayment } from "../../payments/checkout/hooks/usePagoPaPayment";
+import { FCI_ROUTES } from "../../fci/navigation/routes";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -147,6 +148,14 @@ const BarcodeScanScreen = () => {
         break;
       case "IDPAY":
         openDeepLink(barcode.authUrl);
+        break;
+      case "FCI":
+        navigation.navigate(FCI_ROUTES.MAIN, {
+          screen: FCI_ROUTES.ROUTER,
+          params: {
+            signatureRequestId: barcode.signatureRequestId
+          }
+        });
         break;
     }
   };

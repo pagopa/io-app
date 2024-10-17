@@ -20,6 +20,7 @@ import { BancomatPayConfig } from "../../../../definitions/content/BancomatPayCo
 import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVersionStatus";
 import { BarcodesScannerConfig } from "../../../../definitions/content/BarcodesScannerConfig";
 import { isIdPayTestEnabledSelector } from "../persistedPreferences";
+import { Banner } from "../../../../definitions/content/Banner";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -354,5 +355,39 @@ export const isItwEnabledSelector = createSelector(
           ) && c.itw.enabled
       ),
       O.getOrElse(() => false)
+    )
+);
+
+/**
+ * Return the remote feature flag about the payment feedback banner enabled/disabled
+ * that is shown after a successful payment.
+ */
+export const isPaymentsFeedbackBannerEnabledSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean =>
+    pipe(
+      remoteConfig,
+      O.map(c =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? c.newPaymentSection.feedbackBanner?.min_app_version.ios
+            : c.newPaymentSection.feedbackBanner?.min_app_version.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
+    )
+);
+
+/**
+ * Return the remote config about the payment feedback banner
+ */
+export const paymentsFeedbackBannerConfigSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): Banner | undefined =>
+    pipe(
+      remoteConfig,
+      O.map(c => c.newPaymentSection.feedbackBanner),
+      O.toUndefined
     )
 );
