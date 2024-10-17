@@ -48,6 +48,7 @@ export const itwEidIssuanceMachine = setup({
     handleSessionExpired: notImplemented,
     abortIdentification: notImplemented,
     resetWalletInstance: notImplemented,
+    trackWalletInstanceRevocation: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     onInit: notImplemented
   },
@@ -144,7 +145,11 @@ export const itwEidIssuanceMachine = setup({
       invoke: {
         src: "revokeWalletInstance",
         onDone: {
-          actions: ["resetWalletInstance", "closeIssuance"]
+          actions: [
+            "resetWalletInstance",
+            "closeIssuance",
+            "trackWalletInstanceRevocation"
+          ]
         },
         onError: {
           actions: assign(
