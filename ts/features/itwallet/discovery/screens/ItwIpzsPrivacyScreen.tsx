@@ -7,8 +7,7 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { trackOpenItwTosAccepted } from "../../analytics";
-
-const IPZS_PRIVACY_URL = "http://io.italia.it/informativa-ipzs";
+import { itwIpzsPrivacyUrl } from "../../../../config";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -48,7 +47,7 @@ const ItwIpzsPrivacyScreen = () => {
       </View>
       <ItwPrivacyWebViewComponent
         source={{
-          uri: IPZS_PRIVACY_URL
+          uri: itwIpzsPrivacyUrl
         }}
         onAcceptTos={handleContinuePress}
         onLoadEnd={onLoadEnd}
