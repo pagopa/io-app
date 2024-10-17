@@ -24,7 +24,7 @@
   "fast_login_api": "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/fast-login.yaml",
   "pagopa_api_walletv3": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.202.0/src/domains/pay-wallet-app/api/io-payment-wallet/v1/_openapi.json.tpl",
   "pagopa_api_ecommerce": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.202.0/src/domains/ecommerce-app/api/ecommerce-io/v2/_openapi.json.tpl",
-  "pagopa_api_biz_events": "https://raw.githubusercontent.com/pagopa/pagopa-biz-events-service/0.1.37/openapi/openapi_io_patch.json",
+  "pagopa_api_biz_events": "https://raw.githubusercontent.com/pagopa/pagopa-biz-events-service/0.1.57/openapi/openapi_io_patch_lap.json",
   "pagopa_api_platform": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/shared-app/api/session-wallet/v1/_openapi.json.tpl",
   "trial_system": "https://raw.githubusercontent.com/pagopa/io-backend/v14.3.0-RELEASE/api_trial_system.yaml",
   "private": true,

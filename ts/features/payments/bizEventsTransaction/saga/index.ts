@@ -23,24 +23,24 @@ export function* watchPaymentsBizEventsTransactionSaga(
   yield* takeLatest(
     getPaymentsBizEventsTransactionsAction.request,
     handleGetBizEventsTransactions,
-    transactionClient.getTransactionList
+    transactionClient.getPaidNotices
   );
 
   yield* takeLatest(
     getPaymentsLatestBizEventsTransactionsAction.request,
     handleGetLatestBizEventsTransactions,
-    transactionClient.getTransactionList
+    transactionClient.getPaidNotices
   );
 
   yield* takeLatest(
     getPaymentsBizEventsTransactionDetailsAction.request,
     handleGetBizEventsTransactionDetails,
-    transactionClient.getTransactionDetails
+    transactionClient.getPaidNoticeDetail
   );
 
   yield* takeLatest(
     getPaymentsBizEventsReceiptAction.request,
     handleGetBizEventsTransactionReceipt,
-    transactionClient.getPDFReceipt
+    transactionClient.generatePDF
   );
 }
