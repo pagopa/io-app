@@ -3417,7 +3417,7 @@ features:
           true: Sì
           false: No
         hiddenClaim: "Nascosto"
-        fiscalCode: Codice fiscale
+        fiscalCode: Il tuo Codice Fiscale
         status:
           valid: Valida
           expired: Non valida
