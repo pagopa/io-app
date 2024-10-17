@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
@@ -15,6 +15,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
+import { CREDENTIALS_MAP, trackItwHasAlreadyCredential } from "../../analytics";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "./ItwIssuanceCredentialTrustIssuerScreen";
 
 export type ItwIssuanceCredentialAsyncContinuationNavigationParams = {
@@ -38,6 +39,22 @@ export const ItwIssuanceCredentialAsyncContinuationScreen = ({
     itwCredentialByTypeSelector(credentialType)
   );
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
+
+  const isCredentialValid = pipe(
+    credentialOption,
+    O.map(getCredentialStatus),
+    O.map(status => status === "valid"),
+    O.getOrElse(() => false)
+  );
+
+  useEffect(() => {
+    if (isCredentialValid) {
+      trackItwHasAlreadyCredential({
+        credential: CREDENTIALS_MAP[credentialType],
+        credential_status: "valid"
+      });
+    }
+  }, [credentialType, isCredentialValid]);
 
   if (!isWalletValid) {
     const ns = "features.itWallet.issuance.walletInstanceNotActive" as const;
@@ -66,13 +83,6 @@ export const ItwIssuanceCredentialAsyncContinuationScreen = ({
       />
     );
   }
-
-  const isCredentialValid = pipe(
-    credentialOption,
-    O.map(getCredentialStatus),
-    O.map(status => status === "valid"),
-    O.getOrElse(() => false)
-  );
 
   if (isCredentialValid) {
     const ns = "features.itWallet.issuance.credentialAlreadyAdded" as const;
