@@ -3,7 +3,10 @@ import React, { useCallback, useMemo } from "react";
 import I18n from "../../../../i18n";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { StoredCredential } from "../utils/itwTypesUtils";
-import { trackWalletCredentialShowIssuer } from "../../analytics";
+import {
+  CREDENTIALS_MAP,
+  trackWalletCredentialShowIssuer
+} from "../../analytics";
 
 type Props = {
   credential: StoredCredential;
@@ -41,9 +44,9 @@ export const ItwReleaserName = ({ credential, isPreview }: Props) => {
   });
 
   const onPressWithMixpanelEvent = useCallback(() => {
-    trackWalletCredentialShowIssuer(credential.credential);
+    trackWalletCredentialShowIssuer(CREDENTIALS_MAP[credential.credentialType]);
     releasedByBottomSheet.present();
-  }, [credential.credential, releasedByBottomSheet]);
+  }, [credential.credentialType, releasedByBottomSheet]);
 
   const endElement: ListItemInfo["endElement"] = useMemo(() => {
     if (isPreview) {
@@ -54,7 +57,7 @@ export const ItwReleaserName = ({ credential, isPreview }: Props) => {
       type: "iconButton",
       componentProps: {
         icon: "info",
-        accessibilityLabel: "test",
+        accessibilityLabel: "Info",
         onPress: onPressWithMixpanelEvent
       }
     };

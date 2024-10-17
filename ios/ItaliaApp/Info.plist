@@ -17,7 +17,7 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.71.0</string>
+    <string>2.73.0</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleURLTypes</key>
@@ -31,6 +31,7 @@
         <array>
           <string>ioit</string>
           <string>iowalletcie</string>
+          <string>iologincie</string>
         </array>
       </dict>
     </array>
@@ -42,6 +43,7 @@
     <array>
       <string>http</string>
       <string>https</string>
+      <string>CIEID</string>
     </array>
     <key>LSRequiresIPhoneOS</key>
     <true/>

@@ -1,14 +1,14 @@
 import React from "react";
-import { Pressable, StyleSheet, View, Image } from "react-native";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {
-  WithTestID,
-  Caption,
-  VStack,
   Body,
+  Caption,
   FeatureInfo,
+  H6,
   VSpacer,
-  H6
+  VStack,
+  WithTestID
 } from "@pagopa/io-app-design-system";
 import Animated from "react-native-reanimated";
 import I18n from "../../../../i18n";
@@ -23,7 +23,10 @@ import {
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 import { itwEaaVerifierBaseUrl } from "../../../../config";
-import { trackWalletCredentialShowTrustmark } from "../../analytics";
+import {
+  CREDENTIALS_MAP,
+  trackWalletCredentialShowTrustmark
+} from "../../analytics";
 
 type ItwCredentialTrustmarkProps = WithTestID<{
   credential: StoredCredential;
@@ -65,7 +68,9 @@ export const ItwCredentialTrustmark = ({
   }
 
   const onPressWithTrackEvent = () => {
-    trackWalletCredentialShowTrustmark(credential.credential);
+    trackWalletCredentialShowTrustmark(
+      CREDENTIALS_MAP[credential.credentialType]
+    );
     trustmarkBottomSheet.present();
   };
 

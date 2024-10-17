@@ -15,11 +15,10 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsRemove } from "../../credentials/store/actions";
 import {
   CREDENTIALS_MAP,
+  trackCredentialDeleteProperties,
   trackItwCredentialDelete,
   trackWalletCredentialSupport
 } from "../../analytics";
-import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
-import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
@@ -43,20 +42,16 @@ const ItwPresentationDetailsFooter = ({
     toast.success(
       I18n.t("features.itWallet.presentation.credentialDetails.toast.removed")
     );
-    void updateMixpanelSuperProperties(store.getState(), {
-      property: CREDENTIALS_MAP[credential.credentialType],
-      value: "not_available"
-    });
-    void updateMixpanelProfileProperties(store.getState(), {
-      property: CREDENTIALS_MAP[credential.credentialType],
-      value: "not_available"
-    });
+    void trackCredentialDeleteProperties(
+      CREDENTIALS_MAP[credential.credentialType],
+      store.getState()
+    );
 
     navigation.pop();
   };
 
   const showRemoveCredentialDialog = () => {
-    trackItwCredentialDelete(credential.credential);
+    trackItwCredentialDelete(CREDENTIALS_MAP[credential.credentialType]);
     return Alert.alert(
       I18n.t(
         "features.itWallet.presentation.credentialDetails.dialogs.remove.title"
@@ -81,7 +76,7 @@ const ItwPresentationDetailsFooter = ({
   };
 
   const startAndTrackSupportRequest = () => {
-    trackWalletCredentialSupport(credential.credential);
+    trackWalletCredentialSupport(CREDENTIALS_MAP[credential.credentialType]);
     startSupportRequest();
   };
 

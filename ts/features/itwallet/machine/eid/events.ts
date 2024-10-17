@@ -72,6 +72,10 @@ export type Abort = {
   type: "abort";
 };
 
+export type RevokeWalletInstance = {
+  type: "revoke-wallet-instance";
+};
+
 export type Error = {
   type: "error";
   // Add a custom error code to the error event to distinguish between different errors. Add a new error code for each different error if needed.
@@ -95,5 +99,6 @@ export type EidIssuanceEvents =
   | Close
   | NfcEnabled
   | Abort
+  | RevokeWalletInstance
   | ErrorActorEvent
   | Error;

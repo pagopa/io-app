@@ -28,7 +28,8 @@ import {
   RefreshControl,
   RefreshControlProps,
   StyleSheet,
-  View
+  View,
+  ViewStyle
 } from "react-native";
 import { easeGradient } from "react-native-easing-gradient";
 import LinearGradient from "react-native-linear-gradient";
@@ -87,6 +88,7 @@ type IOScrollView = WithTestID<
     /* Center content in iOS without inertial scrolling */
     centerContent?: boolean;
     refreshControlProps?: RefreshControlProps;
+    contentContainerStyle?: ViewStyle;
   }>
 >;
 
@@ -155,6 +157,7 @@ export const IOScrollView = ({
   debugMode = false,
   centerContent,
   refreshControlProps,
+  contentContainerStyle,
   testID
 }: IOScrollView) => {
   const theme = useIOTheme();
@@ -284,7 +287,8 @@ export const IOScrollView = ({
               : bottomMargin + contentEndMargin,
             paddingHorizontal: includeContentMargins
               ? IOVisualCostants.appMarginDefault
-              : 0
+              : 0,
+            ...contentContainerStyle
           },
           /* Apply the same logic used in the
           `OperationResultScreenContent` component */

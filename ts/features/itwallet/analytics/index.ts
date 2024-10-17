@@ -15,11 +15,18 @@ import {
 } from "./enum";
 
 export type KoState = {
-  reason: string;
+  reason: unknown;
   cta_category: "custom_1" | "custom_2";
   cta_id: string;
 };
 
+/**
+ * This is the list of credentials that are tracked in MixPanel
+ * ITW_ID_V2: PersonIdentificationData
+ * ITW_PG_V2: MDL
+ * ITW_CED_V2: EuropeanDisabilityCard
+ * ITW_TS_V2: EuropeanHealthInsuranceCard
+ */
 const mixPanelCredentials = [
   "ITW_ID_V2",
   "ITW_PG_V2",
@@ -30,13 +37,20 @@ const mixPanelCredentials = [
 type MixPanelCredential = (typeof mixPanelCredentials)[number];
 
 type TrackCredentialDetail = {
-  credential: string; // MixPanelCredential
+  credential: MixPanelCredential; // MixPanelCredential
   credential_status: string; // ItwPg
 };
 
 export type OtherMixPanelCredential = "welfare" | "payment_method" | "CGN";
 type NewCredential = MixPanelCredential | OtherMixPanelCredential;
 
+/**
+ * This map is used to map the credential type to the MixPanel credential
+ * ITW_ID_V2: PersonIdentificationData
+ * ITW_PG_V2: MDL
+ * ITW_CED_V2: EuropeanDisabilityCard
+ * ITW_TS_V2: EuropeanHealthInsuranceCard
+ */
 export const CREDENTIALS_MAP: Record<string, MixPanelCredential> = {
   PersonIdentificationData: "ITW_ID_V2",
   MDL: "ITW_PG_V2",
@@ -56,6 +70,17 @@ type ItwExit = {
 
 type AddCredentialFailure = {
   credential: MixPanelCredential;
+  reason: unknown;
+  type: string;
+};
+
+type IdRequestFailure = {
+  ITW_ID_method: ItwIdMethod;
+  reason: unknown;
+  type: string;
+};
+
+type IdUnexpectedFailure = {
   reason: unknown;
   type: string;
 };
@@ -180,7 +205,7 @@ export function trackItWalletCieCardReadingSuccess() {
   );
 }
 
-export function trackItWalletDeferredIssuing(credential: string) {
+export function trackItWalletDeferredIssuing(credential: MixPanelCredential) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_DEFERRED_ISSUING,
     buildEventProperties("UX", "screen_view", { credential })
@@ -197,7 +222,7 @@ export function trackWalletCredentialFAC_SIMILE() {
 
 // #region ACTIONS
 
-export const trackItwCredentialDelete = (credential: string) => {
+export const trackItwCredentialDelete = (credential: MixPanelCredential) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_DELETE,
     buildEventProperties("UX", "action", { credential })
@@ -354,27 +379,32 @@ export function trackWalletCategoryFilter(wallet_category: string) {
   );
 }
 
-export function trackWalletShowBack(credential: string) {
+export function trackWalletShowBack(credential: MixPanelCredential) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SHOW_BACK,
     buildEventProperties("UX", "action", { credential })
   );
 }
 
-export function trackWalletCredentialShowIssuer(credential: string) {
+export function trackWalletCredentialShowIssuer(
+  credential: MixPanelCredential
+) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SHOW_ISSUER,
     buildEventProperties("UX", "action", { credential })
   );
 }
 
-export function trackWalletCredentialShowAuthSource(credential: string) {
+// TODO: To be added on the data origin tooltip
+export function trackWalletCredentialShowAuthSource(
+  credential: MixPanelCredential
+) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SHOW_AUTH_SOURCE,
     buildEventProperties("UX", "action", { credential })
   );
 }
-export function trackWalletCredentialSupport(credential: string) {
+export function trackWalletCredentialSupport(credential: MixPanelCredential) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SUPPORT,
     buildEventProperties("UX", "action", { credential })
@@ -389,7 +419,9 @@ export function trackWalletCredentialShowFAC_SIMILE() {
 }
 
 // ITW_CREDENTIAL_SHOW_TRUSTMARK
-export function trackWalletCredentialShowTrustmark(credential: string) {
+export function trackWalletCredentialShowTrustmark(
+  credential: MixPanelCredential
+) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SHOW_TRUSTMARK,
     buildEventProperties("UX", "action", { credential })
@@ -411,7 +443,9 @@ export function trackWalletNewIdReset(state: GlobalState) {
   );
 }
 
-export function trackWalletCredentialRenewStart(credential: string) {
+export function trackWalletCredentialRenewStart(
+  credential: MixPanelCredential
+) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_RENEW_START,
     buildEventProperties("UX", "action", { credential })
@@ -473,6 +507,7 @@ export const trackIdNotMatch = (ITW_ID_method: ItwIdMethod) => {
   );
 };
 
+// TODO: Track IPZS timeout on eID flow
 export const trackItwIdRequestTimeout = (ITW_ID_method?: ItwIdMethod) => {
   if (ITW_ID_method) {
     void mixpanelTrack(
@@ -482,11 +517,11 @@ export const trackItwIdRequestTimeout = (ITW_ID_method?: ItwIdMethod) => {
   }
 };
 
-export const trackItwIdRequestFailure = (ITW_ID_method?: ItwIdMethod) => {
-  if (ITW_ID_method) {
+export const trackItwIdRequestFailure = (properties: IdRequestFailure) => {
+  if (properties.ITW_ID_method) {
     void mixpanelTrack(
       ITW_ERRORS_EVENTS.ITW_ID_REQUEST_FAILURE,
-      buildEventProperties("KO", "error", { ITW_ID_method })
+      buildEventProperties("KO", "error", properties)
     );
   }
 };
@@ -536,6 +571,27 @@ export const trackAddCredentialFailure = ({
   );
 };
 
+export const trackCredentialNotEntitledFailure = ({
+  credential,
+  reason,
+  type
+}: AddCredentialFailure) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_NOT_ENTITLED_FAILURE,
+    buildEventProperties("KO", "error", { credential, reason, type })
+  );
+};
+
+export const trackItwIdRequestUnexpected = ({
+  reason,
+  type
+}: IdUnexpectedFailure) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_ID_REQUEST_UNEXPECTED_FAILURE,
+    buildEventProperties("KO", "error", { reason, type })
+  );
+};
+
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
@@ -557,17 +613,21 @@ export const trackCredentialDeleteProperties = async (
 export const trackAllCredentialProfileAndSuperProperties = async (
   state: GlobalState
 ) => {
-  mixPanelCredentials.forEach(async credential => {
-    await updateMixpanelProfileProperties(state, {
-      property: credential,
-      value: "valid"
-    });
-    await updateMixpanelSuperProperties(state, {
-      property: credential,
-      value: "valid"
-    });
+  const promises = mixPanelCredentials.map(async credential => {
+    await Promise.all([
+      updateMixpanelProfileProperties(state, {
+        property: credential,
+        value: "valid"
+      }),
+      updateMixpanelSuperProperties(state, {
+        property: credential,
+        value: "valid"
+      })
+    ]);
   });
+  await Promise.all(promises);
 };
+
 // #endregion PROFILE PROPERTIES
 
 // #region CONFIRM

@@ -4,9 +4,8 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
   GetWalletAttestationActorParams,
-  OnInitActorOutput,
-  type RequestEidActorParams,
-  StartCieAuthFlowActorParams
+  StartCieAuthFlowActorParams,
+  type RequestEidActorParams
 } from "./actors";
 import { CieAuthContext, Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -40,6 +39,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToCiePinScreen: notImplemented,
     navigateToCieReadCardScreen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
+    navigateToWalletRevocationScreen: notImplemented,
     storeIntegrityKeyTag: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
     storeEidCredential: notImplemented,
@@ -48,11 +48,14 @@ export const itwEidIssuanceMachine = setup({
     setWalletInstanceToValid: notImplemented,
     handleSessionExpired: notImplemented,
     abortIdentification: notImplemented,
-    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) }))
+    resetWalletInstance: notImplemented,
+    trackWalletInstanceRevocation: notImplemented,
+    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
+    onInit: notImplemented
   },
   actors: {
-    onInit: fromPromise<OnInitActorOutput>(notImplemented),
     createWalletInstance: fromPromise<string>(notImplemented),
+    revokeWalletInstance: fromPromise<void>(notImplemented),
     getWalletAttestation: fromPromise<string, GetWalletAttestationActorParams>(
       notImplemented
     ),
@@ -74,22 +77,19 @@ export const itwEidIssuanceMachine = setup({
   id: "itwEidIssuanceMachine",
   context: { ...InitialContext },
   initial: "Idle",
-  invoke: {
-    src: "onInit",
-    onDone: {
-      actions: assign(({ event }) => ({
-        integrityKeyTag: event.output.integrityKeyTag,
-        walletInstanceAttestation: event.output.walletInstanceAttestation
-      }))
-    },
-    target: ".Idle"
-  },
+  entry: "onInit",
   states: {
     Idle: {
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
           target: "TosAcceptance"
+        },
+        close: {
+          actions: "closeIssuance"
+        },
+        "revoke-wallet-instance": {
+          target: "WalletInstanceRevocation"
         }
       }
     },
@@ -139,6 +139,25 @@ export const itwEidIssuanceMachine = setup({
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]
+      }
+    },
+    WalletInstanceRevocation: {
+      tags: [ItwTags.Loading],
+      invoke: {
+        src: "revokeWalletInstance",
+        onDone: {
+          actions: [
+            "resetWalletInstance",
+            "closeIssuance",
+            "trackWalletInstanceRevocation"
+          ]
+        },
+        onError: {
+          actions: assign(
+            setFailure(IssuanceFailureType.WALLET_REVOCATION_GENERIC)
+          ),
+          target: "#itwEidIssuanceMachine.Failure"
+        }
       }
     },
     WalletInstanceAttestationObtainment: {
@@ -425,6 +444,10 @@ export const itwEidIssuanceMachine = setup({
         },
         reset: {
           target: "Idle"
+        },
+        "revoke-wallet-instance": {
+          actions: "navigateToWalletRevocationScreen",
+          target: "WalletInstanceRevocation"
         }
       }
     },
