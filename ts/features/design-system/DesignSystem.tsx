@@ -1,5 +1,6 @@
 import {
   Divider,
+  H2,
   IOVisualCostants,
   ListItemNav,
   VSpacer,
@@ -8,7 +9,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { SectionList, StatusBar, useColorScheme } from "react-native";
-import { H1 } from "../../components/core/typography/H1";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useScreenEndMargin } from "../../hooks/useScreenEndMargin";
@@ -109,7 +109,7 @@ export const DesignSystem = () => {
     section: { title: string; description?: string };
   }) => (
     <VStack space={4}>
-      <H1 color={theme["textHeading-default"]}>{title}</H1>
+      <H2 color={theme["textHeading-default"]}>{title}</H2>
       {description && (
         <LabelSmall weight={"Regular"} color={theme["textBody-tertiary"]}>
           {description}

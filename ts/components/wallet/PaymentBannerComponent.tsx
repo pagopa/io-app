@@ -2,11 +2,10 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { Body, IOColors } from "@pagopa/io-app-design-system";
 import { ImportoEuroCents } from "../../../definitions/backend/ImportoEuroCents";
 import I18n from "../../i18n";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
-import { Body } from "../core/typography/Body";
 import { Label } from "../core/typography/Label";
 import { IOStyles } from "../core/variables/IOStyles";
 

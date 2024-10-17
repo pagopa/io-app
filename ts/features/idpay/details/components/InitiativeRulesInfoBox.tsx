@@ -7,9 +7,9 @@ import {
   Icon,
   HSpacer,
   VSpacer,
-  ContentWrapper
+  ContentWrapper,
+  Body
 } from "@pagopa/io-app-design-system";
-import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";

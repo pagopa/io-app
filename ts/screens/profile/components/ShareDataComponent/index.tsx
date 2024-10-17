@@ -1,6 +1,5 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import React, { memo } from "react";
-import { Body } from "../../../../components/core/typography/Body";
 import { Link } from "../../../../components/core/typography/Link";
 import I18n from "../../../../i18n";
 import { openWebUrl } from "../../../../utils/url";

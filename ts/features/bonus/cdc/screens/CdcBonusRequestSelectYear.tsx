@@ -1,5 +1,6 @@
 import {
   FooterWithButtons,
+  H2,
   HSpacer,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -11,7 +12,6 @@ import { Anno } from "../../../../../definitions/cdc/Anno";
 import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
 import { isReady } from "../../../../common/model/RemoteValue";
 import { CheckBox } from "../../../../components/core/selection/checkbox/CheckBox";
-import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -70,7 +70,7 @@ const CdcBonusRequestSelectYear = () => {
     >
       <SafeAreaView style={IOStyles.flex} testID={"CdcBonusRequestSelectYear"}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
-          <H1>{I18n.t("bonus.cdc.bonusRequest.selectYear.header")}</H1>
+          <H2>{I18n.t("bonus.cdc.bonusRequest.selectYear.header")}</H2>
           <VSpacer size={8} />
           <H4 weight={"Regular"}>
             {I18n.t("bonus.cdc.bonusRequest.selectYear.body")}

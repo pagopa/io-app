@@ -38,6 +38,9 @@ export const renderStatusContent = (props: StatusContentProps) => (
   </StatusContent>
 );
 
+/**
+ * @deprecated Marked as to be deleted
+ */
 export const TransactionSummaryStatus = (props: {
   error: TransactionSummaryError;
 }) => {

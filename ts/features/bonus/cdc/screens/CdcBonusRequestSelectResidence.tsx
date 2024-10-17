@@ -1,5 +1,6 @@
 import {
   FooterWithButtons,
+  H2,
   HSpacer,
   Icon,
   VSpacer
@@ -11,7 +12,6 @@ import {
   RadioButtonList,
   RadioItem
 } from "../../../../components/core/selection/RadioButtonList";
-import { H1 } from "../../../../components/core/typography/H1";
 import { H3 } from "../../../../components/core/typography/H3";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -62,7 +62,7 @@ const CdcBonusRequestSelectResidence = () => {
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
-          <H1>{I18n.t("bonus.cdc.bonusRequest.selectResidence.header")}</H1>
+          <H2>{I18n.t("bonus.cdc.bonusRequest.selectResidence.header")}</H2>
           <VSpacer size={16} />
           <H4 weight={"Regular"}>
             {I18n.t("bonus.cdc.bonusRequest.selectResidence.info")}

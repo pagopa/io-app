@@ -1,4 +1,5 @@
 import {
+  Body,
   ButtonSolid,
   Chip,
   ContentWrapper,
@@ -23,7 +24,6 @@ import {
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
 import { BonusStatus } from "../../../../components/BonusCard/type";
-import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";

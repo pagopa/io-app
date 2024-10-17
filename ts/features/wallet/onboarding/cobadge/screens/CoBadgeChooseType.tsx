@@ -11,12 +11,12 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import {
   FooterWithButtons,
+  H2,
   Icon,
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
-import { H1 } from "../../../../../components/core/typography/H1";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -135,7 +135,7 @@ const CoBadgeChooseType = (props: Props): React.ReactElement => {
     >
       <SafeAreaView style={IOStyles.flex} testID="coBadgeChooseType">
         <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-          <H1>{I18n.t("wallet.onboarding.coBadge.chooseType.title")}</H1>
+          <H2>{I18n.t("wallet.onboarding.coBadge.chooseType.title")}</H2>
           <VSpacer size={16} />
           <H4 weight={"Regular"} color={"bluegreyDark"}>
             {I18n.t("wallet.onboarding.coBadge.chooseType.description")}

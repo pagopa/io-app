@@ -276,9 +276,11 @@ exports[`PspRadioItem match snapshot 1`] = `
                 }
               >
                 <Text
+                  allowFontScaling={false}
                   color="bluegrey"
                   defaultColor="bluegrey"
                   defaultWeight="Regular"
+                  dynamicTypeRamp="body"
                   font="TitilliumSansPro"
                   fontStyle={
                     {
@@ -286,6 +288,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                       "lineHeight": 24,
                     }
                   }
+                  maxFontSizeMultiplier={1.25}
                   style={
                     [
                       {
@@ -389,9 +392,11 @@ exports[`PspRadioItem match snapshot 1`] = `
                 }
               >
                 <Text
+                  allowFontScaling={false}
                   color="bluegrey"
                   defaultColor="bluegrey"
                   defaultWeight="Regular"
+                  dynamicTypeRamp="body"
                   font="TitilliumSansPro"
                   fontStyle={
                     {
@@ -399,6 +404,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                       "lineHeight": 24,
                     }
                   }
+                  maxFontSizeMultiplier={1.25}
                   style={
                     [
                       {

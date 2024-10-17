@@ -1,5 +1,6 @@
 import {
   FooterWithButtons,
+  H2,
   HSpacer,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -9,7 +10,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import { BPay } from "../../../../../../../definitions/pagopa/BPay";
-import { H1 } from "../../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
@@ -52,9 +52,9 @@ const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => (
             IOStyles.horizontalContentPadding
           ]}
         >
-          <H1 style={styles.title}>
+          <H2 style={styles.title}>
             {I18n.t("wallet.onboarding.bPay.add.screenTitle")}
-          </H1>
+          </H2>
           <VSpacer size={8} />
           <H4 weight={"Regular"} style={styles.flexStart}>
             {I18n.t("wallet.onboarding.bPay.add.label", {

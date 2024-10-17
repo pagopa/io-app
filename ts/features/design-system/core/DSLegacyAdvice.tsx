@@ -1,4 +1,4 @@
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { InfoBox } from "../../../components/box/InfoBox";
@@ -7,8 +7,6 @@ import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 
 /* Types */
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
-import AdviceComponent from "../../../components/AdviceComponent";
-import { Body } from "../../../components/core/typography/Body";
 import { H5 } from "../../../components/core/typography/H5";
 import { Label } from "../../../components/core/typography/Label";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -28,12 +26,6 @@ const styles = StyleSheet.create({
 
 export const DSLegacyAdvice = () => (
   <DesignSystemScreen title={"Advice & Banners"}>
-    <AdviceComponent
-      text={
-        "Dopo questo passaggio non sarà più possibile annullare il pagamento."
-      }
-    />
-    <VSpacer size={16} />
     <View style={[styles.content, IOStyles.horizontalContentPadding]}>
       <InfoBox>
         <Body>

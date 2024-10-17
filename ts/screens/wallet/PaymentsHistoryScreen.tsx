@@ -1,7 +1,6 @@
-import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import * as AR from "fp-ts/lib/Array";
 import * as React from "react";
-import { Body } from "../../components/core/typography/Body";
 import { H2 } from "../../components/core/typography/H2";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";

@@ -1,4 +1,9 @@
-import { ButtonOutline, IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ButtonOutline,
+  IOColors,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
@@ -14,7 +19,6 @@ import {
 import { connect } from "react-redux";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
-import { Body } from "../../components/core/typography/Body";
 import { H2 } from "../../components/core/typography/H2";
 import { Link } from "../../components/core/typography/Link";
 import { IOStyles } from "../../components/core/variables/IOStyles";

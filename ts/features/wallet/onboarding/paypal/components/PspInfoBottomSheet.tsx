@@ -1,10 +1,9 @@
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import * as React from "react";
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
-import { Body } from "../../../../../components/core/typography/Body";
 import { Label } from "../../../../../components/core/typography/Label";
 import { Link } from "../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";

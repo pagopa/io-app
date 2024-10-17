@@ -6,9 +6,9 @@ import {
   IOColors,
   hexToRgba,
   VSpacer,
-  IOVisualCostants
+  IOVisualCostants,
+  Body
 } from "@pagopa/io-app-design-system";
-import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 

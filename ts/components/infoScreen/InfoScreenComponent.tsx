@@ -1,10 +1,9 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import themeVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { Body } from "../core/typography/Body";
 import { H2 } from "../core/typography/H2";
 
 type Props = {

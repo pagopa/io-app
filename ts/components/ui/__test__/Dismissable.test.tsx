@@ -5,7 +5,7 @@ import {
   fireGestureHandler,
   getByGestureTestId
 } from "react-native-gesture-handler/jest-utils";
-import { Body } from "../../core/typography/Body";
+import { Body } from "@pagopa/io-app-design-system";
 import { Dismissable } from "../Dismissable";
 
 const tContent = "Dismissable content";

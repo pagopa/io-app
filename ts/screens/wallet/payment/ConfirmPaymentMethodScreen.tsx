@@ -1,5 +1,6 @@
 import {
   FooterWithButtons,
+  H2,
   HSpacer,
   IOColors,
   IOToast,
@@ -34,7 +35,6 @@ import {
   isReady
 } from "../../../common/model/RemoteValue";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
@@ -426,8 +426,8 @@ const ConfirmPaymentMethodScreen: React.FC<ConfirmPaymentMethodScreenProps> = (
                 )} ${formattedTotal}`}
                 accessible
               >
-                <H1>{I18n.t("wallet.ConfirmPayment.total")}</H1>
-                <H1>{formattedTotal}</H1>
+                <H2>{I18n.t("wallet.ConfirmPayment.total")}</H2>
+                <H2>{formattedTotal}</H2>
               </View>
 
               <VSpacer size={24} />
