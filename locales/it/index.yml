@@ -3336,7 +3336,7 @@ features:
             subtitle: "È l'ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti."
           authSource:
             title: "Chi è?"
-            subtitle: "È l'ente che detiene i dati contenuti all'interno el tuo documento."
+            subtitle: "È l'ente che detiene i dati contenuti all'interno del tuo documento."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
