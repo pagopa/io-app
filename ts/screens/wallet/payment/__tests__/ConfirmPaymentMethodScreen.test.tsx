@@ -76,9 +76,9 @@ jest.mock("../../../../store/reducers/wallet/payment", () => {
 });
 
 // Mock feature flags
-jest.mock("../../../../store/reducers/backendStatus/config", () => {
+jest.mock("../../../../store/reducers/backendStatus/remoteConfig", () => {
   const actualModule = jest.requireActual(
-    "../../../../store/reducers/backendStatus/config"
+    "../../../../store/reducers/backendStatus/remoteConfig"
   );
 
   return {
