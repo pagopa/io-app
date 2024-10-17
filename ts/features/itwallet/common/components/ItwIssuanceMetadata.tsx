@@ -17,7 +17,6 @@ const getAuthSource = (credential: StoredCredential) =>
     credential.issuerConf.openid_credential_issuer
       .credential_configurations_supported[credential.credentialType],
     O.fromNullable,
-    // @ts-expect-error update io-react-native-wallet
     O.map(config => config.authentic_source),
     O.toUndefined
   );
@@ -32,7 +31,7 @@ const getAuthSource = (credential: StoredCredential) =>
 export const ItwIssuanceMetadata = ({ credential, isPreview }: Props) => {
   const releaserName =
     credential.issuerConf.federation_entity.organization_name;
-  const authSource = getAuthSource(credential) ?? "Italia IO";
+  const authSource = getAuthSource(credential);
 
   const releaserNameLabel = I18n.t(
     "features.itWallet.verifiableCredentials.claims.releasedBy"
@@ -64,7 +63,7 @@ export const ItwIssuanceMetadata = ({ credential, isPreview }: Props) => {
       type: "iconButton",
       componentProps: {
         icon: "info",
-        accessibilityLabel: "test",
+        accessibilityLabel: "Info",
         onPress: () => releasedByBottomSheet.present()
       }
     };
