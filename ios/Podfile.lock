@@ -94,6 +94,9 @@ PODS:
     - Mixpanel-swift (= 4.2.0)
     - React-Core
   - OpenSSL-Universal (1.1.1100)
+  - pagopa-io-react-native-cieid (0.3.5):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
   - pagopa-io-react-native-crypto (0.3.0):
     - React-Core
   - pagopa-io-react-native-http-client (1.0.5):
@@ -634,9 +637,11 @@ PODS:
   - Sentry/HybridSDK (8.36.0)
   - SocketRocket (0.6.1)
   - SwiftCBOR (0.4.7)
-  - VisionCamera (3.9.2):
-    - React
-    - React-callinvoker
+  - VisionCamera (4.3.1):
+    - VisionCamera/Core (= 4.3.1)
+    - VisionCamera/React (= 4.3.1)
+  - VisionCamera/Core (4.3.1)
+  - VisionCamera/React (4.3.1):
     - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -701,6 +706,7 @@ DEPENDENCIES:
   - lottie-react-native (from `../node_modules/lottie-react-native`)
   - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
   - OpenSSL-Universal (= 1.1.1100)
+  - "pagopa-io-react-native-cieid (from `../node_modules/@pagopa/io-react-native-cieid`)"
   - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
   - "pagopa-io-react-native-http-client (from `../node_modules/@pagopa/io-react-native-http-client`)"
   - "pagopa-io-react-native-integrity (from `../node_modules/@pagopa/io-react-native-integrity`)"
@@ -845,6 +851,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/lottie-react-native"
   MixpanelReactNative:
     :path: "../node_modules/mixpanel-react-native"
+  pagopa-io-react-native-cieid:
+    :path: "../node_modules/@pagopa/io-react-native-cieid"
   pagopa-io-react-native-crypto:
     :path: "../node_modules/@pagopa/io-react-native-crypto"
   pagopa-io-react-native-http-client:
@@ -1040,6 +1048,7 @@ SPEC CHECKSUMS:
   Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
   MixpanelReactNative: 0101b8828c2f335c128850e71ab7d3b7adde089a
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
+  pagopa-io-react-native-cieid: d58f2bf3581fe20e10de735b376652a9221f0493
   pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
   pagopa-io-react-native-http-client: cbdfb83c92432efb0de22b7c3c85cffa391870f8
   pagopa-io-react-native-integrity: ca77804cefb1cd75d04053652472bcb938ce4b18
@@ -1124,7 +1133,7 @@ SPEC CHECKSUMS:
   Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   SwiftCBOR: 465775bed0e8bac7bfb8160bcf7b95d7f75971e4
-  VisionCamera: 36c460338692788a0d377dce7d32f8ba049fb4f2
+  VisionCamera: 58d2120e6e23c155b25f4702b7912dc2b1e5e8c2
   Yoga: c32e0be1a17f8f1f0e633a3122f7666441f52c82
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   ZendeskAnswerBotProvidersSDK: a024260282886870a15e7a986bf5286c23fd9311
