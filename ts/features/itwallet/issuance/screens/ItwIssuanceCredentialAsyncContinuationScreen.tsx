@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as t from "io-ts";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -16,6 +16,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "./ItwIssuanceCredentialTrustIssuerScreen";
 
 export type ItwIssuanceCredentialAsyncContinuationNavigationParams = {
@@ -146,16 +147,22 @@ const WrappedItwIssuanceCredentialTrustIssuerScreen = ({
   credentialType: string;
 }) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const [isMachineReady, setIsMachineReady] = useState(false);
 
-  // Transition the credential machine to the correct state
-  // when the credential selection screen is bypassed.
+  // Transition the credential machine to the correct state when the credential selection screen is bypassed.
+  // During this transition we should not render ItwIssuanceCredentialTrustIssuerScreen to avoid the generic error screen.
   useOnFirstRender(() => {
     machineRef.send({
       type: "select-credential",
       credentialType,
       skipNavigation: true
     });
+    setIsMachineReady(true);
   });
 
-  return <ItwIssuanceCredentialTrustIssuerScreen />;
+  return isMachineReady ? (
+    <ItwIssuanceCredentialTrustIssuerScreen />
+  ) : (
+    <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+  );
 };
