@@ -8,6 +8,12 @@ import UnlockAccessComponent, {
   UnlockAccessProps
 } from "../UnlockAccessComponent";
 
+// https://pagopa.atlassian.net/wiki/spaces/IAEI/pages/1305084137/Analisi+della+gestione+degli+errori+CieID+L2+e+L3#iOS
+export const IOS_OPERATION_CANCELED_MESSAGE =
+  "Operazione_annullata_dall'utente";
+export const IOS_INVALID_OPERATION_MESSAGE = "Operazione_non_valida";
+export const CIEID_OPERATION_CANCEL = "CIEID_OPERATION_CANCEL";
+
 type Props = {
   errorCode?: string;
   onRetry: () => void;
@@ -88,6 +94,24 @@ const AuthErrorComponent = ({
         title: I18n.t("authentication.auth_errors.error_1001.title"),
         subtitle: I18n.t("authentication.auth_errors.error_1001.subtitle"),
         ...footerWithCloseButton
+      },
+      [CIEID_OPERATION_CANCEL]: {
+        pictogram: "accessDenied",
+        title: I18n.t("authentication.auth_errors.error_25.title"),
+        subtitle: I18n.t("authentication.auth_errors.error_25.subtitle"),
+        ...footerWithCloseAndRetryButtons
+      },
+      [IOS_OPERATION_CANCELED_MESSAGE]: {
+        pictogram: "accessDenied",
+        title: I18n.t("authentication.auth_errors.error_25.title"),
+        subtitle: I18n.t("authentication.auth_errors.error_25.subtitle"),
+        ...footerWithCloseAndRetryButtons
+      },
+      [IOS_INVALID_OPERATION_MESSAGE]: {
+        pictogram: "umbrellaNew",
+        title: I18n.t("authentication.auth_errors.generic.title"),
+        subtitle: I18n.t("authentication.auth_errors.generic.subtitle"),
+        ...footerWithCloseAndRetryButtons
       },
       generic: {
         pictogram: "umbrellaNew",
