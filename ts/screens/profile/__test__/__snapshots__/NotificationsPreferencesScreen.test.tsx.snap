@@ -962,7 +962,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -2287,7 +2287,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -3612,7 +3612,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -4937,7 +4937,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -6262,7 +6262,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -7587,7 +7587,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -8912,7 +8912,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -10237,7 +10237,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -11562,7 +11562,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -12887,7 +12887,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -14212,7 +14212,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -15537,7 +15537,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -16862,7 +16862,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -18187,7 +18187,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -19512,7 +19512,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -20837,7 +20837,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -22162,7 +22162,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -23487,7 +23487,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {

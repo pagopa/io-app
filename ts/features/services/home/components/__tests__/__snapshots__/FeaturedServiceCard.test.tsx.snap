@@ -1030,14 +1030,6 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                         "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
-                                      {
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                      },
-                                      {
-                                        "color": "#5517E3",
-                                      },
                                     ]
                                   }
                                 >
