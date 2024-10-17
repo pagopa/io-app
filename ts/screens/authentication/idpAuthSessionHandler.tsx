@@ -42,7 +42,7 @@ import {
 } from "../../store/actions/authentication";
 import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { selectedIdentityProviderSelector } from "../../store/reducers/authentication";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
 import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 import themeVariables from "../../theme/variables";

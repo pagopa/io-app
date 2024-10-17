@@ -4,13 +4,12 @@ import _ from "lodash";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
-import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../../definitions/content/Config";
 import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { BackendStatusState } from "../../../../store/reducers/backendStatus";
+import { RemoteConfigState } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { CredentialType } from "../../../itwallet/common/utils/itwMocksUtils";
@@ -226,29 +225,25 @@ const renderComponent = ({
           })
         }
       },
-      backendStatus: {
-        status: O.some({
-          config: {
-            itw: {
-              enabled: isItwEnabled,
-              min_app_version: {
-                android: "0.0.0.0",
-                ios: "0.0.0.0"
-              }
-            },
-            assistanceTool: { tool: ToolEnum.none },
-            cgn: { enabled: true },
-            newPaymentSection: {
-              enabled: false,
-              min_app_version: {
-                android: "0.0.0.0",
-                ios: "0.0.0.0"
-              }
-            },
-            fims: { enabled: true }
-          } as Config
-        } as BackendStatus)
-      } as BackendStatusState
+      remoteConfig: O.some({
+        itw: {
+          enabled: isItwEnabled,
+          min_app_version: {
+            android: "0.0.0.0",
+            ios: "0.0.0.0"
+          }
+        },
+        assistanceTool: { tool: ToolEnum.none },
+        cgn: { enabled: true },
+        newPaymentSection: {
+          enabled: false,
+          min_app_version: {
+            android: "0.0.0.0",
+            ios: "0.0.0.0"
+          }
+        },
+        fims: { enabled: true }
+      } as Config) as RemoteConfigState
     } as GlobalState)
   );
 

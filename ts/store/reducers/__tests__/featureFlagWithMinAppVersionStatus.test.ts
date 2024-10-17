@@ -9,12 +9,10 @@ describe("backend service Feature Flag (nativeLogin example) with min app versio
 
   const customConfigNativeLogin = (
     nativeLoginConfig: object
-  ): O.Option<BackendStatus> =>
+  ): O.Option<BackendStatus["config"]> =>
     O.some({
-      config: {
-        nativeLogin: nativeLoginConfig
-      }
-    }) as unknown as O.Option<BackendStatus>;
+      nativeLogin: nativeLoginConfig
+    }) as unknown as O.Option<BackendStatus["config"]>;
 
   it("should return (nativelogin) enabled --- eq min version & local flag enabled", () => {
     const store = customConfigNativeLogin({
@@ -22,7 +20,7 @@ describe("backend service Feature Flag (nativeLogin example) with min app versio
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "nativeLogin"
       })
@@ -35,7 +33,7 @@ describe("backend service Feature Flag (nativeLogin example) with min app versio
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "nativeLogin"
       })
@@ -48,7 +46,7 @@ describe("backend service Feature Flag (nativeLogin example) with min app versio
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "nativeLogin"
       })
@@ -61,7 +59,7 @@ describe("backend service Feature Flag (nativeLogin example) with min app versio
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: false,
         configPropertyName: "nativeLogin"
       })
@@ -74,7 +72,7 @@ describe("backend service Feature Flag (nativeLogin example) with min app versio
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: false,
         configPropertyName: "nativeLogin"
       })
@@ -87,7 +85,7 @@ describe("backend service Feature Flag (nativeLogin example) with min app versio
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: false,
         configPropertyName: "nativeLogin"
       })
@@ -98,7 +96,7 @@ describe("backend service Feature Flag (nativeLogin example) with min app versio
     const store = customConfigNativeLogin({});
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: false,
         configPropertyName: "nativeLogin"
       })
@@ -109,7 +107,7 @@ describe("backend service Feature Flag (nativeLogin example) with min app versio
     const store = customConfigNativeLogin({});
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "nativeLogin"
       })
@@ -119,10 +117,10 @@ describe("backend service Feature Flag (nativeLogin example) with min app versio
   it("should return (nativelogin) disabled --- nativelogin undefined & local flag enabled", () => {
     const store = O.some({
       config: {}
-    }) as unknown as O.Option<BackendStatus>;
+    }) as unknown as O.Option<BackendStatus["config"]>;
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "nativeLogin"
       })
@@ -132,10 +130,10 @@ describe("backend service Feature Flag (nativeLogin example) with min app versio
   it("should return (nativelogin) disabled --- nativelogin undefined & local flag disabled", () => {
     const store = O.some({
       config: {}
-    }) as unknown as O.Option<BackendStatus>;
+    }) as unknown as O.Option<BackendStatus["config"]>;
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: false,
         configPropertyName: "nativeLogin"
       })
@@ -149,12 +147,10 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
 
   const customConfigFastLogin = (
     fastLoginConfig: object
-  ): O.Option<BackendStatus> =>
+  ): O.Option<BackendStatus["config"]> =>
     O.some({
-      config: {
-        fastLogin: fastLoginConfig
-      }
-    }) as unknown as O.Option<BackendStatus>;
+      fastLogin: fastLoginConfig
+    }) as unknown as O.Option<BackendStatus["config"]>;
 
   it("should return (fastlogin) enabled --- eq min version & local flag enabled & optional config undefined", () => {
     const store = customConfigFastLogin({
@@ -162,7 +158,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin"
       })
@@ -178,7 +174,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin"
       })
@@ -194,7 +190,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin"
       })
@@ -210,7 +206,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin"
       })
@@ -226,7 +222,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin"
       })
@@ -242,7 +238,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin",
         optionalLocalFlag: true,
@@ -260,7 +256,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin",
         optionalLocalFlag: true,
@@ -278,7 +274,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin",
         optionalLocalFlag: true,
@@ -296,7 +292,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin",
         optionalLocalFlag: false,
@@ -314,7 +310,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin",
         optionalLocalFlag: false,
@@ -332,7 +328,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin",
         optionalLocalFlag: false,
@@ -350,7 +346,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin",
         optionalLocalFlag: true,
@@ -368,7 +364,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: false,
         configPropertyName: "fastLogin",
         optionalLocalFlag: true,
@@ -386,7 +382,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin",
         optionalLocalFlag: true,
@@ -404,7 +400,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: false,
         configPropertyName: "fastLogin",
         optionalLocalFlag: true,
@@ -421,7 +417,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin",
         optionalLocalFlag: true,
@@ -438,7 +434,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: false,
         configPropertyName: "fastLogin",
         optionalLocalFlag: true,
@@ -456,7 +452,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: false,
         configPropertyName: "fastLogin",
         optionalLocalFlag: true,
@@ -471,7 +467,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin",
         optionalLocalFlag: true,
@@ -487,7 +483,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin",
         optionalLocalFlag: true,
@@ -502,7 +498,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin",
         optionalLocalFlag: false,
@@ -518,7 +514,7 @@ describe("backend service Feature Flag (fastLogin example) with min app version 
     });
     expect(
       isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: true,
         configPropertyName: "fastLogin",
         optionalLocalFlag: false,

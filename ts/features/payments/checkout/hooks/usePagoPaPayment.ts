@@ -16,7 +16,7 @@ import {
   PaymentInitStateParams,
   initPaymentStateAction
 } from "../store/actions/orchestration";
-import { isNewPaymentSectionEnabledSelector } from "../../../../store/reducers/backendStatus";
+import { isNewPaymentSectionEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 type PagoPaPaymentParams = Omit<PaymentInitStateParams, "startRoute">;
 

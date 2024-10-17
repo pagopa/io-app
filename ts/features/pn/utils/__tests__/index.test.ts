@@ -17,15 +17,11 @@ const getMockPnOptInServiceId = () => "optInServiceId" as ServiceId;
 
 const getMockState = () =>
   ({
-    backendStatus: {
-      status: O.some({
-        config: {
-          pn: {
-            optInServiceId: getMockPnOptInServiceId()
-          }
-        }
-      })
-    }
+    remoteConfig: O.some({
+      pn: {
+        optInServiceId: getMockPnOptInServiceId()
+      }
+    })
   } as GlobalState);
 
 const getMockCTAs = () =>
@@ -217,15 +213,11 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
       serviceId: getMockPnOptInServiceId(),
       state: {
         ...getMockState(),
-        backendStatus: {
-          status: O.some({
-            config: {
-              pn: {
-                optInServiceId: "notTheOptInServiceId"
-              }
-            }
-          })
-        }
+        remoteConfig: O.some({
+          pn: {
+            optInServiceId: "notTheOptInServiceId"
+          }
+        })
       } as GlobalState
     },
     output: {
@@ -242,9 +234,7 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
       serviceId: getMockPnOptInServiceId(),
       state: {
         ...getMockState(),
-        backendStatus: {
-          status: O.none
-        }
+        remoteConfig: O.none
       } as GlobalState
     },
     output: {

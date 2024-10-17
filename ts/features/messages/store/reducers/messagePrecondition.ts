@@ -19,7 +19,7 @@ import {
   updateRequiredPreconditionStatusAction
 } from "../actions/preconditions";
 import { GlobalState } from "../../../../store/reducers/types";
-import { isPnAppVersionSupportedSelector } from "../../../../store/reducers/backendStatus";
+import { isPnAppVersionSupportedSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { TagEnum as SENDTagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 

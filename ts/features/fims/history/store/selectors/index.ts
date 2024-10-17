@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/Option";
 import { constUndefined, pipe } from "fp-ts/lib/function";
-import { backendStatusSelector } from "../../../../../store/reducers/backendStatus";
+import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { potFoldWithDefault } from "../../../../../utils/pot";
 
@@ -29,8 +29,8 @@ export const fimsHistoryErrorSelector = (
 export const fimsIsHistoryEnabledSelector = (state: GlobalState) =>
   pipe(
     state,
-    backendStatusSelector,
-    O.map(backendStatus => backendStatus.config.fims.historyEnabled !== false),
+    remoteConfigSelector,
+    O.map(c => c.fims.historyEnabled !== false),
     O.getOrElse(() => false)
   );
 

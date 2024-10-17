@@ -42,7 +42,7 @@ import {
   paymentVerifica
 } from "../../../store/actions/wallet/payment";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
-import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import {
   PaymentHistory,
   paymentsHistorySelector

@@ -174,40 +174,35 @@ const commonSetup = () => {
   };
   const testState = {
     ...globalState,
-    backendStatus: {
-      ...globalState.backendStatus,
-      status: O.some({
-        config: {
-          assistanceTool: {
-            tool: ToolEnum.zendesk
-          },
-          cgn: {
-            enabled: false
-          },
-          newPaymentSection: {
-            enabled: false,
-            min_app_version: {
-              android: "0.0.0.0",
-              ios: "0.0.0.0"
-            }
-          },
-          fims: {
-            enabled: false
-          },
-          tos: {
-            tos_version: 3.2,
-            tos_url: "https://www.example.com"
-          },
-          itw: {
-            enabled: true,
-            min_app_version: {
-              android: "0.0.0.0",
-              ios: "0.0.0.0"
-            }
-          }
+    remoteConfig: O.some({
+      assistanceTool: {
+        tool: ToolEnum.zendesk
+      },
+      cgn: {
+        enabled: false
+      },
+      newPaymentSection: {
+        enabled: false,
+        min_app_version: {
+          android: "0.0.0.0",
+          ios: "0.0.0.0"
         }
-      })
-    },
+      },
+      fims: {
+        enabled: false
+      },
+      tos: {
+        tos_version: 3.2,
+        tos_url: "https://www.example.com"
+      },
+      itw: {
+        enabled: true,
+        min_app_version: {
+          android: "0.0.0.0",
+          ios: "0.0.0.0"
+        }
+      }
+    }),
     profile: pot.some(testProfile)
   } as GlobalState;
 

@@ -7,7 +7,7 @@ import { fciSignaturesListSelector } from "../../store/reducers/fciSignaturesLis
 import { fciSignaturesListRequest } from "../../store/actions";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import I18n from "../../../../i18n";
-import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus";
+import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
   addTicketCustomField,
   assistanceToolRemoteConfig,

@@ -10,7 +10,7 @@ import {
   isCGNEnabledSelector,
   isPnEnabledSelector,
   isPnAppVersionSupportedSelector
-} from "../../../../store/reducers/backendStatus";
+} from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openAppStoreUrl } from "../../../../utils/url";
 import { CgnServiceCta } from "../../../bonus/cgn/components/CgnServiceCTA";
 import { PnServiceCta } from "../../../pn/components/ServiceCTA";

@@ -32,7 +32,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import {
   cgnMerchantVersionSelector,
   isCGNEnabledSelector
-} from "../../../../store/reducers/backendStatus";
+} from "../../../../store/reducers/backendStatus/remoteConfig";
 import { profileSelector } from "../../../../store/reducers/profile";
 import { GlobalState } from "../../../../store/reducers/types";
 import { formatDateAsShortFormat } from "../../../../utils/dates";
