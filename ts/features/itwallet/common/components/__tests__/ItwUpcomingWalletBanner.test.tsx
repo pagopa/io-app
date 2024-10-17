@@ -26,9 +26,9 @@ jest.mock("../../../../../config", () => ({
 
 describe("ItwUpcomingWalletBanner", () => {
   it.each([
-    [true, SubscriptionStateEnum.UNSUBSCRIBED, false],
-    [true, SubscriptionStateEnum.SUBSCRIBED, false],
-    [true, SubscriptionStateEnum.DISABLED, false],
+    [true, SubscriptionStateEnum.UNSUBSCRIBED, true],
+    [true, SubscriptionStateEnum.SUBSCRIBED, true],
+    [true, SubscriptionStateEnum.DISABLED, true],
     [true, SubscriptionStateEnum.ACTIVE, false],
     [false, SubscriptionStateEnum.UNSUBSCRIBED, true],
     [false, SubscriptionStateEnum.SUBSCRIBED, true],

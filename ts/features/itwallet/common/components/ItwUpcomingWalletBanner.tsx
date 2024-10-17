@@ -1,23 +1,21 @@
 import React from "react";
-import { Banner, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, IOSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { trialStatusSelector } from "../../../trialSystem/store/reducers";
 import { itwTrialId } from "../../../../config";
 import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
-import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus";
 
 type ItwUpcomingWalletBannerProps = {
-  vSpacer?: boolean;
+  bottomSpacing?: IOSpacer;
 };
 
 export const ItwUpcomingWalletBanner = ({
-  vSpacer
+  bottomSpacing
 }: ItwUpcomingWalletBannerProps) => {
-  const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const itwTrialStatus = useIOSelector(trialStatusSelector(itwTrialId));
 
-  if (isItwEnabled || itwTrialStatus === SubscriptionStateEnum.ACTIVE) {
+  if (itwTrialStatus === SubscriptionStateEnum.ACTIVE) {
     return null;
   }
 
@@ -37,7 +35,7 @@ export const ItwUpcomingWalletBanner = ({
         // )}
         // onPress={() => Linking.openURL("https://io.italia.it/documenti-su-io/")} //At the moment, the page is not available
       />
-      {vSpacer && <VSpacer size={24} />}
+      {bottomSpacing && <VSpacer size={bottomSpacing} />}
     </>
   );
 };
