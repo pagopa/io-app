@@ -1,7 +1,6 @@
 import {
   Body,
   FooterWithButtons,
-  H1,
   H2,
   Icon,
   PressableListItemBase,
