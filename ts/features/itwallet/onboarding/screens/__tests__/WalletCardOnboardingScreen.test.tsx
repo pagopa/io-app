@@ -1,10 +1,8 @@
-import { createCryptoContextFor } from "@pagopa/io-react-native-wallet";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import { fromPromise } from "xstate";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../../../definitions/content/Config";
@@ -21,7 +19,6 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
-import { OnInitActorOutput } from "../../../machine/credential/actors";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -130,12 +127,8 @@ const renderComponent = ({
     } as GlobalState)
   );
   const logic = itwCredentialIssuanceMachine.provide({
-    actors: {
-      onInit: fromPromise<OnInitActorOutput>(async () => ({
-        integrityKeyTag: "",
-        walletInstanceAttestation: "",
-        wiaCryptoContext: createCryptoContextFor("")
-      }))
+    actions: {
+      onInit: jest.fn()
     }
   });
 
