@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  ButtonSolid,
   ContentWrapper,
   IOStyles,
   VSpacer
@@ -8,10 +7,10 @@ import {
 import WebView from "react-native-webview";
 import { View } from "react-native";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../../utils/webview";
 import I18n from "../../../../i18n";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
+import { FooterActions } from "../../../../components/ui/FooterActions";
 
 type Props = {
   source: WebViewSource;
@@ -25,39 +24,39 @@ const ItwPrivacyWebViewComponent = ({
   onAcceptTos,
   onLoadEnd,
   onError
-}: Props) => {
-  const { bottom } = useSafeAreaInsets();
-  return (
-    <View style={IOStyles.flex}>
-      <WebView
-        androidCameraAccessDisabled={true}
-        androidMicrophoneAccessDisabled={true}
-        onLoadEnd={onLoadEnd}
-        onError={onError}
-        textZoom={100}
-        style={IOStyles.flex}
-        source={source}
-        injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
-      />
+}: Props) => (
+  <View style={IOStyles.flex}>
+    <WebView
+      androidCameraAccessDisabled={true}
+      androidMicrophoneAccessDisabled={true}
+      onLoadEnd={onLoadEnd}
+      onError={onError}
+      textZoom={100}
+      style={IOStyles.flex}
+      source={source}
+      injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
+    />
 
-      <View style={{ marginBottom: bottom }}>
-        <ContentWrapper>
-          <VSpacer size={4} />
-          <ItwMarkdown>
-            {I18n.t("features.itWallet.ipzsPrivacy.warning")}
-          </ItwMarkdown>
-          <ButtonSolid
-            fullWidth={true}
-            label={I18n.t("features.itWallet.ipzsPrivacy.button.label")}
-            accessibilityLabel={I18n.t(
-              "features.itWallet.ipzsPrivacy.button.label"
-            )}
-            onPress={onAcceptTos}
-          />
-        </ContentWrapper>
-      </View>
-    </View>
-  );
-};
+    <ContentWrapper>
+      <VSpacer size={4} />
+      <ItwMarkdown>
+        {I18n.t("features.itWallet.ipzsPrivacy.warning")}
+      </ItwMarkdown>
+    </ContentWrapper>
+    <FooterActions
+      fixed={false}
+      actions={{
+        type: "SingleButton",
+        primary: {
+          label: I18n.t("features.itWallet.ipzsPrivacy.button.label"),
+          accessibilityLabel: I18n.t(
+            "features.itWallet.ipzsPrivacy.button.label"
+          ),
+          onPress: onAcceptTos
+        }
+      }}
+    />
+  </View>
+);
 
 export default ItwPrivacyWebViewComponent;

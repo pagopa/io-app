@@ -24,7 +24,7 @@ const ItwIpzsPrivacyScreen = () => {
 
   const onError = () => {
     onLoadEnd();
-    machineRef.send({ type: "error-ipzs-privacy" });
+    machineRef.send({ type: "error", scope: "ipzs-privacy" });
   };
 
   useHeaderSecondLevel({
