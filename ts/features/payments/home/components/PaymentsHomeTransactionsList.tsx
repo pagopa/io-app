@@ -5,17 +5,18 @@ import {
   ListItemTransaction
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { View } from "react-native";
 import Animated, { Layout } from "react-native-reanimated";
+import * as analytics from "../analytics";
 import { default as I18n } from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isPaymentsLatestTransactionsEmptySelector } from "../store/selectors";
 import { walletLatestTransactionsBizEventsListPotSelector } from "../../bizEventsTransaction/store/selectors";
 import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
+import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { PaymentsBizEventsListItemTransaction } from "../../bizEventsTransaction/components/PaymentsBizEventsListItemTransaction";
-import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { PaymentsTransactionBizEventsRoutes } from "../../bizEventsTransaction/navigation/routes";
 import { PaymentsHomeEmptyScreenContent } from "./PaymentsHomeEmptyScreenContent";
@@ -33,19 +34,19 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   );
 
   const isLoading =
-    pot.isLoading(latestTransactionsPot) || enforcedLoadingState;
+    (!pot.isSome(latestTransactionsPot) &&
+      pot.isLoading(latestTransactionsPot)) ||
+    enforcedLoadingState;
   const isEmpty = useIOSelector(isPaymentsLatestTransactionsEmptySelector);
 
-  useFocusEffect(
-    React.useCallback(() => {
+  useOnFirstRender(() => {
+    if (pot.isNone(latestTransactionsPot)) {
       dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
-    }, [dispatch])
-  );
+    }
+  });
 
-  const handleNavigateToTransactionDetails = (
-    transaction: TransactionListItem
-  ) => {
-    if (transaction.transactionId === undefined) {
+  const handleNavigateToTransactionDetails = (transaction: NoticeListItem) => {
+    if (transaction.eventId === undefined) {
       return;
     }
     navigation.navigate(
@@ -54,13 +55,15 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
         screen:
           PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_DETAILS,
         params: {
-          transactionId: transaction.transactionId
+          transactionId: transaction.eventId,
+          isPayer: transaction.isPayer
         }
       }
     );
   };
 
   const handleNavigateToTransactionList = () => {
+    analytics.trackPaymentsOpenReceiptListing();
     navigation.navigate(
       PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR,
       {
@@ -75,11 +78,9 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
       return (
         <View testID="PaymentsHomeTransactionsListTestID">
           {latestTransactionsPot.value.map((latestTransaction, index) => (
-            <React.Fragment
-              key={`transaction_${latestTransaction.transactionId}`}
-            >
+            <React.Fragment key={`transaction_${latestTransaction.eventId}`}>
               <PaymentsBizEventsListItemTransaction
-                key={`transaction_${latestTransaction.transactionId}`}
+                key={`transaction_${latestTransaction.eventId}`}
                 onPress={() =>
                   handleNavigateToTransactionDetails(latestTransaction)
                 }

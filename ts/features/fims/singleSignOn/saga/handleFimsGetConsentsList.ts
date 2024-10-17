@@ -1,22 +1,24 @@
 import {
+  HttpClientSuccessResponse,
   isCancelledFailure,
   nativeRequest,
   setCookie
 } from "@pagopa/io-react-native-http-client";
+import { supportsInAppBrowser } from "@pagopa/io-react-native-login-utils";
 import * as E from "fp-ts/lib/Either";
 import { identity, pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import { fimsTokenSelector } from "../../../../store/reducers/authentication";
 import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
 import { fimsGetConsentsListAction } from "../store/actions";
 import { ConsentData } from "../types";
 import { deallocateFimsAndRenewFastLoginSession } from "./handleFimsResourcesDeallocation";
 import {
+  computeAndTrackAuthenticationError,
   formatHttpClientResponseForMixPanel,
   isFastLoginFailure,
-  isValidRedirectResponse,
-  logToMixPanel
+  isValidRedirectResponse
 } from "./sagaUtils";
 
 export function* handleFimsGetConsentsList(
@@ -29,11 +31,30 @@ export function* handleFimsGetConsentsList(
   if (!fimsToken || !fimsProviderDomain || !fimsCTAUrl) {
     // TODO:: proper error handling
     const debugMessage = `missing FIMS data: fimsToken: ${!!fimsToken}, oidcProviderUrl: ${!!fimsProviderDomain}, fimsCTAUrl: ${!!fimsCTAUrl}`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
 
     yield* put(
       fimsGetConsentsListAction.failure({
+        errorTag: "GENERIC",
         standardMessage: "missing FIMS data",
+        debugMessage
+      })
+    );
+    return;
+  }
+
+  // Check that the device has a supported InApp Browser
+  // (e.g., on Android, you can disable all browsers and the
+  // underlying CustomTabs implementation will not work)
+  const inAppBrowserSupported = yield* call(supportsInAppBrowser);
+  if (!inAppBrowserSupported) {
+    const debugMessage = `InApp Browser not supported`;
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
+
+    yield* put(
+      fimsGetConsentsListAction.failure({
+        errorTag: "MISSING_INAPP_BROWSER",
+        standardMessage: "The InApp Browser is not supported on this device",
         debugMessage
       })
     );
@@ -54,9 +75,10 @@ export function* handleFimsGetConsentsList(
     const debugMessage = `cta url has invalid redirect response: ${formatHttpClientResponseForMixPanel(
       fimsCTAUrlResponse
     )}`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetConsentsListAction.failure({
+        errorTag: "GENERIC",
         standardMessage: "cta url has invalid redirect response",
         debugMessage
       })
@@ -72,9 +94,10 @@ export function* handleFimsGetConsentsList(
 
   if (!isRedirectTowardsFimsProvider) {
     const debugMessage = `relying party did not redirect to provider, URL was: ${relyingPartyRedirectUrl}`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetConsentsListAction.failure({
+        errorTag: "GENERIC",
         standardMessage: "relying party did not redirect to provider",
         debugMessage
       })
@@ -104,16 +127,33 @@ export function* handleFimsGetConsentsList(
     const debugMessage = `consent data fetch error: ${formatHttpClientResponseForMixPanel(
       getConsentsResult
     )}`;
-    logToMixPanel(debugMessage);
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsGetConsentsListAction.failure({
+        errorTag: "GENERIC",
         standardMessage: "consent data fetch error",
         debugMessage
       })
     );
     return;
   }
-  yield pipe(
+  const nextAction = yield* call(
+    decodeSuccessfulConsentsResponse,
+    getConsentsResult
+  );
+  if (isActionOf(fimsGetConsentsListAction.failure, nextAction)) {
+    const debugMessage = nextAction.payload.debugMessage;
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
+  }
+  yield* put(nextAction);
+}
+
+// --------- UTILS --------
+
+const decodeSuccessfulConsentsResponse = (
+  getConsentsResult: HttpClientSuccessResponse
+) =>
+  pipe(
     getConsentsResult.body,
     E.tryCatchK(JSON.parse, identity),
     E.map(ConsentData.decode),
@@ -121,15 +161,12 @@ export function* handleFimsGetConsentsList(
     E.foldW(
       () => {
         const debugMessage = `could not decode, body: ${getConsentsResult.body}`;
-        logToMixPanel(debugMessage);
-        return put(
-          fimsGetConsentsListAction.failure({
-            standardMessage: "could not decode",
-            debugMessage
-          })
-        );
+        return fimsGetConsentsListAction.failure({
+          errorTag: "GENERIC",
+          standardMessage: "could not decode",
+          debugMessage
+        });
       },
-      decodedConsents => put(fimsGetConsentsListAction.success(decodedConsents))
+      decodedConsents => fimsGetConsentsListAction.success(decodedConsents)
     )
   );
-}

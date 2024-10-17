@@ -7,23 +7,20 @@ import {
 } from "@react-navigation/native";
 import React, { useRef } from "react";
 import { View } from "react-native";
+import { ReactNavigationInstrumentation } from "@sentry/react-native";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
-import { fimsEnabled } from "../config";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
-import { fimsLegacyLinkingOptions } from "../features/fimsLegacy/navigation/navigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
-import { IngressScreen } from "../screens/ingress/IngressScreen";
+import { IngressScreen } from "../features/ingress/screens/IngressScreen";
 import { startApplicationInitialization } from "../store/actions/application";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import {
   isCGNEnabledSelector,
-  isFIMSEnabledSelector,
   isNewPaymentSectionEnabledSelector
 } from "../store/reducers/backendStatus";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
@@ -37,6 +34,7 @@ import {
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
+import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
@@ -81,13 +79,16 @@ export const AppStackNavigator = (): React.ReactElement => {
   return <AuthenticatedStackNavigator />;
 };
 
-const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
+type InnerNavigationContainerProps = React.PropsWithChildren<{
+  routingInstrumentation?: ReactNavigationInstrumentation;
+}>;
+
+const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   const routeNameRef = useRef<string>();
   const dispatch = useIODispatch();
   const store = useIOStore();
 
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
-  const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
   const isNewWalletSectionEnabled = useIOSelector(
     isNewPaymentSectionEnabledSelector
   );
@@ -141,11 +142,10 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
             }
           }
         },
+        ...useItwLinkingOptions(),
         ...fciLinkingOptions,
-        ...(isFimsEnabled ? fimsLegacyLinkingOptions : {}),
         ...(cgnEnabled ? cgnLinkingOptions : {}),
         ...idPayLinkingOptions,
-        [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }
     },
@@ -161,6 +161,11 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
       linking={linking}
       fallback={<LoadingSpinnerOverlay isLoading={true} />}
       onReady={() => {
+        if (props.routingInstrumentation) {
+          props.routingInstrumentation.registerNavigationContainer(
+            navigationRef
+          );
+        }
         NavigationService.setNavigationReady();
         routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
       }}
@@ -186,8 +191,12 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
  * Wraps the NavigationContainer with the AppStackNavigator (Root navigator of the app)
  * @constructor
  */
-export const IONavigationContainer = () => (
-  <InnerNavigationContainer>
+export const IONavigationContainer = ({
+  routingInstrumentation
+}: {
+  routingInstrumentation: ReactNavigationInstrumentation;
+}) => (
+  <InnerNavigationContainer routingInstrumentation={routingInstrumentation}>
     <AppStackNavigator />
   </InnerNavigationContainer>
 );

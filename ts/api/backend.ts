@@ -16,6 +16,7 @@ import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import _ from "lodash";
 import { v4 as uuid } from "uuid";
+import { withoutUndefinedValues } from "@pagopa/ts-commons/lib/types";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import {
   AbortUserDataProcessingT,
@@ -31,10 +32,6 @@ import {
   getServicePreferencesDefaultDecoder,
   GetServicePreferencesT,
   GetServiceT,
-  getSessionStateDefaultDecoder,
-  GetSessionStateT,
-  getSupportTokenDefaultDecoder,
-  GetSupportTokenT,
   getUserDataProcessingDefaultDecoder,
   GetUserDataProcessingT,
   getUserMessageDefaultDecoder,
@@ -67,6 +64,10 @@ import {
 } from "../utils/api";
 import { KeyInfo } from "../features/lollipop/utils/crypto";
 import { lollipopFetch } from "../features/lollipop/utils/fetch";
+import {
+  getSessionStateDefaultDecoder,
+  GetSessionStateT
+} from "../../definitions/session_manager/requestTypes";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -144,7 +145,8 @@ export function BackendClient(
   const getSessionT: GetSessionStateT = {
     method: "get",
     url: () => "/api/v1/session",
-    query: _ => ({}),
+    query: ({ ["fields"]: fields }) =>
+      withoutUndefinedValues({ ["fields"]: fields }),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     response_decoder: getSessionStateDefaultDecoder()
   };
@@ -336,13 +338,6 @@ export function BackendClient(
     response_decoder: getActivationStatusDefaultDecoder()
   };
 
-  const getSupportToken: GetSupportTokenT = {
-    method: "get",
-    url: () => `/api/v1/token/support`,
-    headers: tokenHeaderProducer,
-    query: () => ({}),
-    response_decoder: getSupportTokenDefaultDecoder()
-  };
   const withBearerToken = withToken(token);
   return {
     getSession: withBearerToken(createFetchRequestForApi(getSessionT, options)),
@@ -413,9 +408,6 @@ export function BackendClient(
     ),
     postUserDataProcessingRequest: withBearerToken(
       createFetchRequestForApi(postUserDataProcessingT, options)
-    ),
-    getSupportToken: withBearerToken(
-      createFetchRequestForApi(getSupportToken, options)
     ),
     deleteUserDataProcessingRequest: withBearerToken(
       createFetchRequestForApi(deleteUserDataProcessingT, options)

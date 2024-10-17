@@ -8,11 +8,18 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Alert, ScrollView } from "react-native";
+import { Alert, Pressable, ScrollView } from "react-native";
 import { CgnCard } from "../../bonus/cgn/components/CgnCard";
 import { IdPayCard } from "../../idpay/wallet/components/IdPayCard";
 import { ItwCredentialCard } from "../../itwallet/common/components/ItwCredentialCard";
-import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
+import {
+  ItwSkeumorphicCard,
+  ItwSkeumorphicCardProps
+} from "../../itwallet/common/components/ItwSkeumorphicCard";
+import {
+  CredentialType,
+  ItwStoredCredentialsMocks
+} from "../../itwallet/common/utils/itwMocksUtils";
 import { PaymentCard } from "../../payments/common/components/PaymentCard";
 import { PaymentCardBig } from "../../payments/common/components/PaymentCardBig";
 import { PaymentCardSmall } from "../../payments/common/components/PaymentCardSmall";
@@ -436,6 +443,15 @@ const ItwCards = () => (
         </DSComponentViewerBox>
       </VStack>
     </DesignSystemSection>
+    <DesignSystemSection title="Skeumorphic Driving License">
+      <VStack space={componentMargin}>
+        <DSComponentViewerBox name="Valid">
+          <ItwSkeumorphicCardPreview
+            credential={ItwStoredCredentialsMocks.mdl}
+          />
+        </DSComponentViewerBox>
+      </VStack>
+    </DesignSystemSection>
     <DesignSystemSection title="Disability Card">
       <VStack space={componentMargin}>
         <DSComponentViewerBox name="Preview">
@@ -465,6 +481,15 @@ const ItwCards = () => (
           <ItwCredentialCard
             credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
             status="pending"
+          />
+        </DSComponentViewerBox>
+      </VStack>
+    </DesignSystemSection>
+    <DesignSystemSection title="Skeumorphic Disability Card">
+      <VStack space={componentMargin}>
+        <DSComponentViewerBox name="Valid">
+          <ItwSkeumorphicCardPreview
+            credential={ItwStoredCredentialsMocks.dc}
           />
         </DSComponentViewerBox>
       </VStack>
@@ -505,6 +530,19 @@ const ItwCards = () => (
   </VStack>
 );
 
+const ItwSkeumorphicCardPreview = (props: ItwSkeumorphicCardProps) => {
+  const [isFlipped, setIsFlipped] = React.useState(false);
+  return (
+    <Pressable
+      onPress={() => setIsFlipped(!isFlipped)}
+      accessibilityRole="button"
+      accessibilityLabel="Flip card"
+    >
+      <ItwSkeumorphicCard {...props} isFlipped={isFlipped} />
+    </Pressable>
+  );
+};
+
 // for testing reasons, abi codes can be found here:
 // https://www.comuniecitta.it/elenco-banche-per-codice-abi
 export const DSCards = () => {
@@ -520,7 +558,7 @@ export const DSCards = () => {
         <TabItem label="Payments" accessibilityLabel="Payments" />
         <TabItem label="Bonus" accessibilityLabel="Bonus" />
         <TabItem label="Services" accessibilityLabel="Services" />
-        <TabItem label="IT Wallet" accessibilityLabel="IT Wallet" />
+        <TabItem label="Documenti" accessibilityLabel="Documenti" />
       </TabNavigation>
       <VSpacer size={24} />
       <ContentWrapper>

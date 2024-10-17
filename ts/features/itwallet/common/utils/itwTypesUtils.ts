@@ -37,6 +37,21 @@ export type ParsedCredential = Awaited<
 >["parsedCredential"];
 
 /**
+ * Alias for the ParsedStatusAttestation type
+ */
+export type ParsedStatusAttestation = Awaited<
+  ReturnType<typeof Credential.Status.verifyAndParseStatusAttestation>
+>["parsedStatusAttestation"]["payload"];
+
+export type StoredStatusAttestation =
+  | {
+      credentialStatus: "valid";
+      statusAttestation: string;
+      parsedStatusAttestation: ParsedStatusAttestation;
+    }
+  | { credentialStatus: "invalid" | "unknown" };
+
+/**
  * Type for a stored credential.
  */
 export type StoredCredential = {
@@ -46,4 +61,13 @@ export type StoredCredential = {
   parsedCredential: ParsedCredential;
   credentialType: string;
   issuerConf: IssuerConfiguration;
+  storedStatusAttestation?: StoredStatusAttestation;
+  /**
+   * The SD-JWT issuance and expiration dates in ISO format.
+   * These might be different from the underlying document's dates.
+   */
+  jwt: {
+    expiration: string;
+    issuedAt?: string;
+  };
 };

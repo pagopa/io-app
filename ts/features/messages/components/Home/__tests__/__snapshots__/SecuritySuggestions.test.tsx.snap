@@ -339,6 +339,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                         handleComponent={[Function]}
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        onDismiss={[Function]}
                         snapPoints={
                           [
                             1,

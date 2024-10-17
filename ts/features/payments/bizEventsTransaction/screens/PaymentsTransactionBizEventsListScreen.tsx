@@ -25,7 +25,6 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PaymentsTransactionBizEventsParamsList } from "../navigation/params";
 import { getPaymentsBizEventsTransactionsAction } from "../store/actions";
 import { walletTransactionBizEventsListPotSelector } from "../store/selectors";
-import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { isPaymentsTransactionsEmptySelector } from "../../home/store/selectors";
 import { PaymentsBizEventsListItemTransaction } from "../components/PaymentsBizEventsListItemTransaction";
@@ -36,6 +35,8 @@ import { groupTransactionsByMonth } from "../utils";
 import I18n from "../../../../i18n";
 import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
 import { PaymentsTransactionRoutes } from "../../transaction/navigation/routes";
+import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
+import * as analytics from "../analytics";
 
 export type PaymentsTransactionBizEventsListScreenProps = RouteProp<
   PaymentsTransactionBizEventsParamsList,
@@ -43,7 +44,7 @@ export type PaymentsTransactionBizEventsListScreenProps = RouteProp<
 >;
 
 const AnimatedSectionList = Animated.createAnimatedComponent(
-  SectionList as new () => SectionList<TransactionListItem>
+  SectionList as new () => SectionList<NoticeListItem>
 );
 
 const PaymentsTransactionBizEventsListScreen = () => {
@@ -56,7 +57,7 @@ const PaymentsTransactionBizEventsListScreen = () => {
     string | undefined
   >();
   const [groupedTransactions, setGroupedTransactions] =
-    React.useState<ReadonlyArray<SectionListData<TransactionListItem>>>();
+    React.useState<ReadonlyArray<SectionListData<NoticeListItem>>>();
   const insets = useSafeAreaInsets();
 
   const transactionsPot = useIOSelector(
@@ -66,10 +67,8 @@ const PaymentsTransactionBizEventsListScreen = () => {
 
   const isLoading = pot.isLoading(transactionsPot);
 
-  const handleNavigateToTransactionDetails = (
-    transaction: TransactionListItem
-  ) => {
-    if (transaction.transactionId === undefined) {
+  const handleNavigateToTransactionDetails = (transaction: NoticeListItem) => {
+    if (transaction.eventId === undefined) {
       return;
     }
     navigation.navigate(
@@ -78,13 +77,15 @@ const PaymentsTransactionBizEventsListScreen = () => {
         screen:
           PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_DETAILS,
         params: {
-          transactionId: transaction.transactionId
+          transactionId: transaction.eventId,
+          isPayer: transaction.isPayer
         }
       }
     );
   };
 
   const handleNavigateToLegacyTransactions = () => {
+    analytics.trackPaymentsOpenOldReceiptListing("payments_receipt_listing");
     navigation.navigate(
       PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR,
       {
@@ -109,6 +110,7 @@ const PaymentsTransactionBizEventsListScreen = () => {
 
   useOnFirstRender(
     React.useCallback(() => {
+      analytics.trackPaymentsReceiptListing();
       dispatch(
         getPaymentsBizEventsTransactionsAction.request({
           firstLoad: true,
@@ -126,7 +128,6 @@ const PaymentsTransactionBizEventsListScreen = () => {
 
   useHeaderSecondLevel({
     title: I18n.t("features.payments.transactions.title"),
-    canGoBack: true,
     supportRequest: true,
     scrollValues: {
       contentOffsetY: scrollTranslationY,
@@ -213,7 +214,7 @@ const PaymentsTransactionBizEventsListScreen = () => {
         <ListItemHeader label={section.title} />
       )}
       ListFooterComponent={renderLoadingFooter}
-      keyExtractor={item => `transaction_${item.transactionId}`}
+      keyExtractor={item => `transaction_${item.eventId}`}
       renderItem={({ item }) => (
         <PaymentsBizEventsListItemTransaction
           onPress={() => handleNavigateToTransactionDetails(item)}

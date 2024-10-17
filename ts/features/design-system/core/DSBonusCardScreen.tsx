@@ -1,18 +1,24 @@
-import { Body, ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ContentWrapper,
+  Tag,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert } from "react-native";
 import { BonusCardScreenComponent } from "../../../components/BonusCard";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import I18n from "../../../i18n";
 
 const DSBonusCardScreen = () => (
   <BonusCardScreenComponent
-    logoUri={{
-      uri: "https://vtlogo.com/wp-content/uploads/2021/08/18app-vector-logo.png"
-    }}
+    logoUris={[
+      {
+        uri: "https://vtlogo.com/wp-content/uploads/2021/08/18app-vector-logo.png"
+      }
+    ]}
     name="18app"
     organizationName="Ministero della Cultura"
-    status="PAUSED"
-    endDate={new Date()}
+    status={<Tag variant="info" text={I18n.t("bonusCard.paused")} />}
     counters={[
       {
         type: "ValueWithProgress",
@@ -33,12 +39,14 @@ const DSBonusCardScreen = () => (
       },
       accessibilityLabel: "info"
     }}
-    footerCta={{
-      label: "Autorizza una transazione",
-      accessibilityLabel: "Autorizza una transazione",
-      onPress: () => Alert.alert("Autorizzata!")
+    actions={{
+      type: "SingleButton",
+      primary: {
+        label: "Autorizza una transazione",
+        accessibilityLabel: "Autorizza una transazione",
+        onPress: () => Alert.alert("Autorizzata!")
+      }
     }}
-    contextualHelp={emptyContextualHelp}
   >
     <VSpacer size={16} />
     <ContentWrapper>

@@ -15,6 +15,7 @@ import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 import {
+  AccessibilityInfo,
   Dimensions,
   LayoutChangeEvent,
   Modal,
@@ -137,15 +138,20 @@ export const useIOBottomSheetModal = ({
   const insets = useSafeAreaInsets();
   const { dismissAll } = useBottomSheetModal();
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
-  const setBSOpened = useHardwareBackButtonToDismiss(dismissAll);
+  const { onOpen, onClose } = useHardwareBackButtonToDismiss(dismissAll);
   const [screenReaderEnabled, setIsScreenReaderEnabled] =
     useState<boolean>(false);
 
   const bottomSheetProps = bottomSheetContent(component, title, dismissAll);
 
+  const handleDismiss = () => {
+    onDismiss?.();
+    onClose();
+  };
+
   const present = () => {
     bottomSheetModalRef.current?.present();
-    setBSOpened();
+    onOpen();
   };
 
   // // Add opacity fade effect to backdrop
@@ -162,9 +168,19 @@ export const useIOBottomSheetModal = ({
   );
 
   useEffect(() => {
+    // Check if the screen reader is enabled when the component is mounted
     isScreenReaderEnabled()
-      .then(sre => setIsScreenReaderEnabled(sre))
+      .then(setIsScreenReaderEnabled)
       .catch(_ => setIsScreenReaderEnabled(false));
+    // Subscribe to `screenReaderChanged` to properly update the state.
+    // The method above is necessary because the event listener is triggered
+    // only when the screen reader internal state changes.
+    // Unfortunately its function is not executed on subscription.
+    const screenReaderChangedSubscription = AccessibilityInfo.addEventListener(
+      "screenReaderChanged",
+      setIsScreenReaderEnabled
+    );
+    return () => screenReaderChangedSubscription.remove();
   }, []);
 
   const footerComponent = footer ? (
@@ -182,7 +198,7 @@ export const useIOBottomSheetModal = ({
       enableDismissOnClose={true}
       accessible={false}
       importantForAccessibility={"yes"}
-      onDismiss={onDismiss}
+      onDismiss={handleDismiss}
     >
       {screenReaderEnabled && Platform.OS === "android" ? (
         <Modal>

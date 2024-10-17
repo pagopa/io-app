@@ -1,8 +1,12 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import I18n from "../../../../i18n";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { StoredCredential } from "../utils/itwTypesUtils";
+import {
+  CREDENTIALS_MAP,
+  trackWalletCredentialShowIssuer
+} from "../../analytics";
 
 type Props = {
   credential: StoredCredential;
@@ -38,6 +42,12 @@ export const ItwReleaserName = ({ credential, isPreview }: Props) => {
       }
     ]
   });
+
+  const onPressWithMixpanelEvent = useCallback(() => {
+    trackWalletCredentialShowIssuer(CREDENTIALS_MAP[credential.credentialType]);
+    releasedByBottomSheet.present();
+  }, [credential.credentialType, releasedByBottomSheet]);
+
   const endElement: ListItemInfo["endElement"] = useMemo(() => {
     if (isPreview) {
       return;
@@ -47,11 +57,11 @@ export const ItwReleaserName = ({ credential, isPreview }: Props) => {
       type: "iconButton",
       componentProps: {
         icon: "info",
-        accessibilityLabel: "test",
-        onPress: () => releasedByBottomSheet.present()
+        accessibilityLabel: "Info",
+        onPress: onPressWithMixpanelEvent
       }
     };
-  }, [isPreview, releasedByBottomSheet]);
+  }, [isPreview, onPressWithMixpanelEvent]);
 
   if (!releaserName) {
     return null;

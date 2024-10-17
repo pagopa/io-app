@@ -5,7 +5,6 @@ import {
   ListItemSwitch
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useSelector } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -13,8 +12,8 @@ import { default as React } from "react";
 import { StatusEnum as InstrumentStatusEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import { CreditCardType, Wallet } from "../../../../types/pagopa";
 import { instrumentStatusLabels } from "../../common/labels";
-import { useConfigurationMachineService } from "../xstate/provider";
-import { instrumentStatusByIdWalletSelector } from "../xstate/selectors";
+import { IdPayConfigurationMachineContext } from "../machine/provider";
+import { instrumentStatusByIdWalletSelector } from "../machine/selectors";
 
 /**
  * See @ListItemSwitch
@@ -40,11 +39,9 @@ type InstrumentEnrollmentSwitchProps = {
  */
 const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
   const { wallet, isStaged, onValueChange } = props;
-
-  const configurationMachine = useConfigurationMachineService();
+  const { useSelector } = IdPayConfigurationMachineContext;
 
   const instrumentStatusPot = useSelector(
-    configurationMachine,
     instrumentStatusByIdWalletSelector(wallet.idWallet)
   );
 

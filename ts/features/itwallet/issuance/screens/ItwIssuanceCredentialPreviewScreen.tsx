@@ -1,13 +1,15 @@
 import {
-  ContentWrapper,
   ForceScrollDownView,
   H2,
+  IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { sequenceS } from "fp-ts/lib/Apply";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
+import React, { useMemo } from "react";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { StyleSheet, View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -16,18 +18,24 @@ import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
-import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
+import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   selectCredentialOption,
   selectCredentialTypeOption,
-  selectIsLoading
+  selectIsIssuing
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import {
+  CREDENTIALS_MAP,
+  trackCredentialPreview,
+  trackItwExit,
+  trackSaveCredentialToWallet
+} from "../../analytics";
+import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
@@ -36,13 +44,13 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialOption
   );
-  const isLoading =
-    ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
+  const isIssuing =
+    ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
 
-  useItwDisbleGestureNavigation();
+  useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  if (isLoading) {
+  if (isIssuing) {
     return (
       <LoadingScreenContent
         contentTitle={I18n.t(
@@ -57,12 +65,15 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
       credentialType: credentialTypeOption,
       credential: credentialOption
     }),
-    O.fold(constNull, props => <ContentView {...props} />)
+    O.fold(
+      () => <ItwGenericErrorContent />,
+      props => <ContentView {...props} />
+    )
   );
 };
 
 type ContentViewProps = {
-  credentialType: CredentialType;
+  credentialType: string;
   credential: StoredCredential;
 };
 
@@ -71,13 +82,24 @@ type ContentViewProps = {
  */
 const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
-
-  const dispatch = useIODispatch();
-  const dismissDialog = useItwDismissalDialog(() =>
-    machineRef.send({ type: "close" })
+  const route = useRoute();
+  const mixPanelCredential = useMemo(
+    () => CREDENTIALS_MAP[credentialType],
+    [credentialType]
   );
 
+  useFocusEffect(() => {
+    trackCredentialPreview(mixPanelCredential);
+  });
+
+  const dispatch = useIODispatch();
+  const dismissDialog = useItwDismissalDialog(() => {
+    machineRef.send({ type: "close" });
+    trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+  });
+
   const handleSaveToWallet = () => {
+    trackSaveCredentialToWallet(credential.credentialType);
     dispatch(
       identificationRequest(
         false,
@@ -104,16 +126,16 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   });
 
   return (
-    <ForceScrollDownView>
-      <ContentWrapper>
+    <ForceScrollDownView contentContainerStyle={styles.scrollView}>
+      <View style={styles.container}>
         <H2>
           {I18n.t("features.itWallet.issuance.credentialPreview.title", {
             credential: getCredentialNameFromType(credentialType)
           })}
         </H2>
         <VSpacer size={24} />
-        <ItwCredentialClaimsList data={credential} isPreview={true} />
-      </ContentWrapper>
+        <ItwCredentialPreviewClaimsList data={credential} />
+      </View>
       <FooterActions
         fixed={false}
         actions={{
@@ -137,3 +159,13 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
     </ForceScrollDownView>
   );
 };
+
+const styles = StyleSheet.create({
+  scrollView: {
+    flexGrow: 1
+  },
+  container: {
+    flex: 1,
+    marginHorizontal: IOVisualCostants.appMarginDefault
+  }
+});

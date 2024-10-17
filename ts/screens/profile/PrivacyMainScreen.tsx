@@ -17,8 +17,6 @@ import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserD
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
-import { FIMS_ROUTES } from "../../features/fims/common/navigation";
-import { fimsIsHistoryEnabledSelector } from "../../features/fims/history/store/selectors";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
@@ -65,7 +63,6 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
 
   const userDataProcessing = useIOSelector(userDataProcessingSelector);
   const prevUserDataProcessing = usePrevious(userDataProcessing);
-  const isFimsHistoryEnabled = useIOSelector(fimsIsHistoryEnabledSelector);
   const [requestProcess, setRequestProcess] = useState(false);
   const isLoading =
     pot.isLoading(userDataProcessing.DELETE) ||
@@ -184,19 +181,6 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     handleUserDataRequestAlert
   ]);
 
-  const spreadableMaybeFimsHistoryListItem = isFimsHistoryEnabled
-    ? [
-        {
-          value: I18n.t("FIMS.history.profileCTA.title"),
-          description: I18n.t("FIMS.history.profileCTA.subTitle"),
-          onPress: () =>
-            navigation.navigate(FIMS_ROUTES.MAIN, {
-              screen: FIMS_ROUTES.HISTORY
-            })
-        }
-      ]
-    : [];
-
   const isRequestProcessing = useCallback(
     (choice: UserDataProcessingChoiceEnum): boolean =>
       !pot.isLoading(userDataProcessing[choice]) &&
@@ -252,7 +236,6 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
           : undefined,
         testID: "profile-export-data"
       },
-      ...spreadableMaybeFimsHistoryListItem,
       {
         // Remove account
         value: I18n.t("profile.main.privacy.removeAccount.title"),
@@ -275,7 +258,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         testID: "profile-delete"
       }
     ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [dispatch, handleUserDataRequestAlert, isRequestProcessing, navigation]
   );
 

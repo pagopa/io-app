@@ -3,6 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
+import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../../../definitions/content/Config";
 import {
@@ -10,17 +11,18 @@ import {
   SubscriptionStateEnum
 } from "../../../../../../definitions/trial_system/SubscriptionState";
 import { TrialId } from "../../../../../../definitions/trial_system/TrialId";
+import { itwTrialId } from "../../../../../config";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { BackendStatusState } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
-import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
-import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
-import { itwTrialId } from "../../../../../config";
 
 type RenderOptions = {
   isIdPayEnabled?: boolean;
@@ -43,7 +45,12 @@ describe("WalletCardOnboardingScreen", () => {
   it("it should render the IT Wallet modules", () => {
     const { queryByTestId } = renderComponent({});
 
-    expect(queryByTestId("itwDrivingLicenseModuleTestID")).toBeTruthy();
+    expect(
+      queryByTestId(`${CredentialType.DRIVING_LICENSE}ModuleTestID`)
+    ).toBeTruthy();
+    expect(
+      queryByTestId(`${CredentialType.EUROPEAN_DISABILITY_CARD}ModuleTestID`)
+    ).toBeTruthy();
   });
 
   test.each([
@@ -58,18 +65,6 @@ describe("WalletCardOnboardingScreen", () => {
       expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
     }
   );
-
-  it("it should not render the ID Pay module if ID Pay is not active", () => {
-    const { queryByTestId } = renderComponent({ isIdPayEnabled: false });
-
-    expect(queryByTestId("idPayModuleTestID")).toBeFalsy();
-  });
-
-  it("it should render the ID Pay module if ID Pay is active", () => {
-    const { queryByTestId } = renderComponent({ isIdPayEnabled: true });
-
-    expect(queryByTestId("idPayModuleTestID")).toBeTruthy();
-  });
 });
 
 const renderComponent = ({
@@ -131,10 +126,15 @@ const renderComponent = ({
       } as BackendStatusState
     } as GlobalState)
   );
+  const logic = itwCredentialIssuanceMachine.provide({
+    actions: {
+      onInit: jest.fn()
+    }
+  });
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider>
+      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
         <WalletCardOnboardingScreen />
       </ItwCredentialIssuanceMachineContext.Provider>
     ),

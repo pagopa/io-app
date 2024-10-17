@@ -1119,6 +1119,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -2701,6 +2702,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -4284,6 +4286,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -5867,6 +5870,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -7742,6 +7746,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,

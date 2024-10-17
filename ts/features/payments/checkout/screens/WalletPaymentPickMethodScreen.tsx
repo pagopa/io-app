@@ -1,4 +1,4 @@
-import { GradientScrollView, H2, VSpacer } from "@pagopa/io-app-design-system";
+import { H2, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import { sequenceT } from "fp-ts/lib/Apply";
@@ -18,7 +18,8 @@ import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import {
   paymentsCalculatePaymentFeesAction,
   paymentsCreateTransactionAction,
-  paymentsGetPaymentMethodsAction
+  paymentsGetPaymentMethodsAction,
+  paymentsGetRecentPaymentMethodUsedAction
 } from "../store/actions/networking";
 import {
   walletPaymentAmountSelector,
@@ -40,7 +41,8 @@ import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import * as analytics from "../analytics";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { PaymentAnalyticsSelectedMethodFlag } from "../types/PaymentAnalytics";
+import { PaymentAnalyticsSelectedMethodFlag } from "../../common/types/PaymentAnalytics";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -73,6 +75,10 @@ const WalletPaymentPickMethodScreen = () => {
       dispatch(paymentsGetPaymentMethodsAction.request());
     }, [dispatch])
   );
+
+  useOnFirstRender(() => {
+    dispatch(paymentsGetRecentPaymentMethodUsedAction.request());
+  });
 
   const calculateFeesForSelectedPaymentMethod = React.useCallback(() => {
     pipe(
@@ -154,9 +160,12 @@ const WalletPaymentPickMethodScreen = () => {
       analytics.trackPaymentMethodSelection({
         attempt: paymentAnalyticsData?.attempt,
         organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        organization_fiscal_code:
+          paymentAnalyticsData?.verifiedData?.paFiscalCode,
         service_name: paymentAnalyticsData?.serviceName,
         amount: paymentAnalyticsData?.formattedAmount,
-        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        saved_payment_method:
+          paymentAnalyticsData?.savedPaymentMethods?.length || 0,
         saved_payment_method_unavailable:
           paymentAnalyticsData?.savedPaymentMethodsUnavailable?.length,
         last_used_payment_method: "no", // <- TODO: This should be dynamic when the feature will be implemented
@@ -203,6 +212,8 @@ const WalletPaymentPickMethodScreen = () => {
     analytics.trackPaymentMethodSelected({
       attempt: paymentAnalyticsData?.attempt,
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
       service_name: paymentAnalyticsData?.serviceName,
       amount: paymentAnalyticsData?.formattedAmount,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
@@ -234,15 +245,18 @@ const WalletPaymentPickMethodScreen = () => {
   };
 
   return (
-    <GradientScrollView
-      primaryActionProps={
+    <IOScrollView
+      actions={
         canContinue
           ? {
-              label: I18n.t("global.buttons.continue"),
-              accessibilityLabel: I18n.t("global.buttons.continue"),
-              onPress: handleContinue,
-              disabled: isLoading || isLoadingTransaction,
-              loading: isLoading || isLoadingTransaction
+              type: "SingleButton",
+              primary: {
+                label: I18n.t("global.buttons.continue"),
+                accessibilityLabel: I18n.t("global.buttons.continue"),
+                onPress: handleContinue,
+                disabled: isLoading || isLoadingTransaction,
+                loading: isLoading || isLoadingTransaction
+              }
             }
           : undefined
       }
@@ -254,7 +268,7 @@ const WalletPaymentPickMethodScreen = () => {
       ) : (
         <CheckoutPaymentMethodsList />
       )}
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 

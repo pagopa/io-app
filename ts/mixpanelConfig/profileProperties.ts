@@ -12,8 +12,18 @@ import {
 import { idpSelector } from "../store/reducers/authentication";
 import { tosVersionSelector } from "../store/reducers/profile";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
-import { PaymentsTrackingConfiguration } from "../features/payments/common/analytics";
 import { getPaymentsAnalyticsConfiguration } from "../features/payments/common/store/selectors";
+import {
+  ItwCed,
+  ItwId,
+  ItwPg,
+  ItwStatus,
+  ItwTs
+} from "../features/itwallet/analytics";
+import {
+  itwCredentialsByTypeSelector,
+  itwCredentialsSelector
+} from "../features/itwallet/credentials/store/selectors";
 import {
   MixpanelOptInTrackingType,
   Property,
@@ -33,7 +43,12 @@ type ProfileProperties = {
   NOTIFICATION_PERMISSION: NotificationPermissionType;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
   TRACKING: MixpanelOptInTrackingType;
-  PAYMENTS_CONFIGURATION: PaymentsTrackingConfiguration;
+  ITW_STATUS_V2: ItwStatus;
+  ITW_ID_V2: ItwId;
+  ITW_PG_V2: ItwPg;
+  ITW_TS_V2: ItwTs;
+  ITW_CED_V2: ItwCed;
+  SAVED_PAYMENT_METHOD: number;
 };
 
 export const updateMixpanelProfileProperties = async (
@@ -51,7 +66,12 @@ export const updateMixpanelProfileProperties = async (
   const notificationsEnabled = await checkNotificationPermissions();
   const SERVICE_CONFIGURATION = serviceConfigHandler(state);
   const TRACKING = mixpanelOptInHandler(state);
-  const PAYMENTS_CONFIGURATION = getPaymentsAnalyticsConfiguration(state);
+  const ITW_STATUS_V2 = walletStatusHandler(state);
+  const ITW_ID_V2 = idStatusHandler(state);
+  const ITW_PG_V2 = pgStatusHandler(state);
+  const ITW_TS_V2 = tsStatusHandler(state);
+  const ITW_CED_V2 = cedStatusHandler(state);
+  const paymentsAnalyticsData = getPaymentsAnalyticsConfiguration(state);
 
   const profilePropertiesObject: ProfileProperties = {
     LOGIN_SESSION,
@@ -63,7 +83,12 @@ export const updateMixpanelProfileProperties = async (
       getNotificationPermissionType(notificationsEnabled),
     SERVICE_CONFIGURATION,
     TRACKING,
-    PAYMENTS_CONFIGURATION
+    ITW_STATUS_V2,
+    ITW_ID_V2,
+    ITW_PG_V2,
+    ITW_TS_V2,
+    ITW_CED_V2,
+    SAVED_PAYMENT_METHOD: paymentsAnalyticsData.savedPaymentMethods || 0
   };
 
   if (forceUpdateFor) {
@@ -92,4 +117,28 @@ const loginMethodHandler = (state: GlobalState): string => {
 const tosVersionHandler = (state: GlobalState): number | string => {
   const optInState = tosVersionSelector(state);
   return optInState ? optInState : "not set";
+};
+
+const walletStatusHandler = (state: GlobalState): ItwStatus => {
+  const credentialsState = itwCredentialsSelector(state);
+  return credentialsState.eid ? "L2" : "not_active";
+};
+
+const idStatusHandler = (state: GlobalState): ItwId => {
+  const credentialsState = itwCredentialsSelector(state);
+  return credentialsState.eid ? "valid" : "not_available";
+};
+const pgStatusHandler = (state: GlobalState): ItwPg => {
+  const credentialsByType = itwCredentialsByTypeSelector(state);
+  return credentialsByType.MDL ? "valid" : "not_available";
+};
+const tsStatusHandler = (state: GlobalState): ItwTs => {
+  const credentialsByType = itwCredentialsByTypeSelector(state);
+  return credentialsByType.EuropeanHealthInsuranceCard
+    ? "valid"
+    : "not_available";
+};
+const cedStatusHandler = (state: GlobalState): ItwCed => {
+  const credentialsByType = itwCredentialsByTypeSelector(state);
+  return credentialsByType.EuropeanDisabilityCard ? "valid" : "not_available";
 };

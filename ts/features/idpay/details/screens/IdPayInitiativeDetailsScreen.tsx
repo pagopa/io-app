@@ -1,8 +1,9 @@
 import {
   ButtonSolid,
-  ButtonSolidProps,
+  Chip,
   ContentWrapper,
   Pictogram,
+  Tag,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -21,18 +22,20 @@ import {
 } from "../../../../../definitions/idpay/InitiativeDTO";
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
+import { BonusStatus } from "../../../../components/BonusCard/type";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
+import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import { format } from "../../../../utils/dates";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
-import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
+import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 import { IdPayInitiativeLastUpdateCounter } from "../components/IdPayInitiativeLastUpdateCounter";
 import { InitiativeDiscountSettingsComponent } from "../components/InitiativeDiscountSettingsComponent";
 import { InitiativeRefundSettingsComponent } from "../components/InitiativeRefundSettingsComponent";
@@ -48,7 +51,7 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
-import { BonusStatus } from "../../../../components/BonusCard/type";
+import { ConfigurationMode } from "../../configuration/types";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -82,9 +85,9 @@ const IdPayInitiativeDetailsScreen = () => {
   };
 
   const navigateToConfiguration = () => {
-    navigation.push(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
-      params: { initiativeId }
+    navigation.push(IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR, {
+      screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
+      params: { initiativeId, mode: ConfigurationMode.COMPLETE }
     });
   };
   const discountBottomSheet = useIdPayDiscountDetailsBottomSheet(initiativeId);
@@ -116,35 +119,17 @@ const IdPayInitiativeDetailsScreen = () => {
     );
   }
 
-  const getInitiativeStatus = (initiative: InitiativeDTO): BonusStatus => {
-    if (initiative.status === StatusEnum.UNSUBSCRIBED) {
-      return "REMOVED";
-    }
-
-    const now = new Date();
-    if (now > initiative.endDate) {
-      return "EXPIRED";
-    }
-
-    const next7Days = new Date(new Date().setDate(new Date().getDate() + 7));
-    if (next7Days > initiative.endDate) {
-      return "EXPIRING";
-    }
-
-    return "ACTIVE";
-  };
-
   const getInitiativeCounters = (
     initiative: InitiativeDTO
   ): ReadonlyArray<BonusCardCounter> => {
-    const availableAmount = initiative.amount || 0;
-    const accruedAmount = initiative.accrued || 0;
+    const availableAmount = initiative.amountCents || 0;
+    const accruedAmount = initiative.accruedCents || 0;
 
     const amountProgress = pipe(
       sequenceS(O.Monad)({
-        amount: O.fromNullable(initiative.amount),
-        accrued: O.fromNullable(initiative.accrued),
-        refunded: O.fromNullable(initiative.refunded)
+        amount: O.fromNullable(initiative.amountCents),
+        accrued: O.fromNullable(initiative.accruedCents),
+        refunded: O.fromNullable(initiative.refundedCents)
       }),
       O.map(({ amount, accrued, refunded }) => ({
         total: amount + accrued + refunded,
@@ -170,7 +155,11 @@ const IdPayInitiativeDetailsScreen = () => {
                   label: I18n.t(
                     "idpay.initiative.details.initiativeCard.availableAmount"
                   ),
-                  value: formatNumberAmount(availableAmount, true, "right"),
+                  value: formatNumberCentsToAmount(
+                    availableAmount,
+                    true,
+                    "right"
+                  ),
                   progress: amountProgress
                 }
               ];
@@ -181,7 +170,11 @@ const IdPayInitiativeDetailsScreen = () => {
                   label: I18n.t(
                     "idpay.initiative.details.initiativeCard.availableAmount"
                   ),
-                  value: formatNumberAmount(availableAmount, true, "right"),
+                  value: formatNumberCentsToAmount(
+                    availableAmount,
+                    true,
+                    "right"
+                  ),
                   progress: amountProgress
                 },
                 {
@@ -189,7 +182,7 @@ const IdPayInitiativeDetailsScreen = () => {
                   label: I18n.t(
                     "idpay.initiative.details.initiativeCard.toRefund"
                   ),
-                  value: formatNumberAmount(accruedAmount, true, "right")
+                  value: formatNumberCentsToAmount(accruedAmount, true, "right")
                 }
               ];
           }
@@ -283,15 +276,15 @@ const IdPayInitiativeDetailsScreen = () => {
 
   const getInitiativeFooterProps = (
     rewardType?: InitiativeRewardTypeEnum
-  ): ButtonSolidProps | undefined => {
+  ): IOScrollViewActions | undefined => {
     switch (rewardType) {
       case InitiativeRewardTypeEnum.DISCOUNT:
         return {
-          label: I18n.t("idpay.initiative.discountDetails.authorizeButton"),
-          accessibilityLabel: I18n.t(
-            "idpay.initiative.discountDetails.authorizeButton"
-          ),
-          onPress: discountBottomSheet.present
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("idpay.initiative.discountDetails.authorizeButton"),
+            onPress: discountBottomSheet.present
+          }
         };
       default:
       case InitiativeRewardTypeEnum.REFUND:
@@ -303,7 +296,6 @@ const IdPayInitiativeDetailsScreen = () => {
   const {
     initiativeName,
     organizationName,
-    endDate,
     lastCounterUpdate,
     initiativeRewardType,
     logoURL
@@ -316,14 +308,12 @@ const IdPayInitiativeDetailsScreen = () => {
         onPress: navigateToBeneficiaryDetails,
         accessibilityLabel: "info"
       }}
-      logoUri={{ uri: logoURL }}
+      logoUris={[{ uri: logoURL }]}
       name={initiativeName || ""}
       organizationName={organizationName || ""}
-      endDate={endDate}
-      status={getInitiativeStatus(initiative)}
-      contextualHelp={emptyContextualHelp}
+      status={<IdPayCardStatus now={new Date()} initiative={initiative} />}
       counters={getInitiativeCounters(initiative)}
-      footerCta={getInitiativeFooterProps(initiativeRewardType)}
+      actions={getInitiativeFooterProps(initiativeRewardType)}
     >
       <IdPayInitiativeLastUpdateCounter lastUpdateDate={lastCounterUpdate} />
       {getInitiativeDetailsContent(initiative)}
@@ -343,3 +333,61 @@ const styles = StyleSheet.create({
 });
 
 export { IdPayInitiativeDetailsScreen };
+
+export function IdPayCardStatus({
+  now,
+  initiative
+}: {
+  now: Date;
+  initiative: InitiativeDTO;
+}) {
+  const getInitiativeStatus = (): BonusStatus => {
+    if (initiative.status === StatusEnum.UNSUBSCRIBED) {
+      return "REMOVED";
+    }
+
+    if (now > initiative.endDate) {
+      return "EXPIRED";
+    }
+
+    const next7Days = new Date(new Date(now).setDate(now.getDate() + 7));
+    if (next7Days > initiative.endDate) {
+      return "EXPIRING";
+    }
+
+    return "ACTIVE";
+  };
+
+  switch (getInitiativeStatus()) {
+    case "ACTIVE":
+      return (
+        <Chip color="grey-650">
+          {I18n.t("bonusCard.validUntil", {
+            endDate: format(initiative.endDate, "DD/MM/YY")
+          })}
+        </Chip>
+      );
+    case "EXPIRING":
+      return (
+        <Tag
+          variant="warning"
+          text={I18n.t("bonusCard.expiring", {
+            endDate: format(initiative.endDate, "DD/MM/YY")
+          })}
+        />
+      );
+    case "EXPIRED":
+      return (
+        <Tag
+          variant="error"
+          text={I18n.t("bonusCard.expired", {
+            endDate: format(initiative.endDate, "DD/MM/YY")
+          })}
+        />
+      );
+    case "PAUSED":
+      return <Tag variant="info" text={I18n.t("bonusCard.paused")} />;
+    case "REMOVED":
+      return <Tag variant="error" text={I18n.t("bonusCard.removed")} />;
+  }
+}

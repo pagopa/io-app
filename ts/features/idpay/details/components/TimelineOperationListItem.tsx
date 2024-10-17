@@ -49,7 +49,7 @@ import I18n from "../../../../i18n";
 import { hoursAndMinutesToAccessibilityReadableFormat } from "../../../../utils/accessibility";
 import { localeDateFormat } from "../../../../utils/locale";
 import { getBadgeTextByTransactionStatus } from "../../../payments/common/utils";
-import { formatAbsNumberAmountOrDefault } from "../../common/utils/strings";
+import { formatAbsNumberAmountCentsOrDefault } from "../../common/utils/strings";
 
 export type TimelineOperationListItemProps = WithTestID<
   | {
@@ -120,8 +120,8 @@ const getTransactionOperationProps = (
     businessName,
     brand,
     status,
-    amount,
-    accrued
+    amountCents,
+    accruedCents
   } = operation;
 
   const isQRCode = channel === ChannelEnum.QRCODE;
@@ -149,13 +149,15 @@ const getTransactionOperationProps = (
 
   const subtitle = getOperationSubtitleWithAmount(
     operationDate,
-    amount,
+    amountCents,
     isReversal
   );
 
   const getAccruedString = () => {
     const signString = isReversal ? "" : "-";
-    const accruedString = `${formatAbsNumberAmountOrDefault(accrued)} €`;
+    const accruedString = `${formatAbsNumberAmountCentsOrDefault(
+      accruedCents
+    )} €`;
 
     return `${signString}${accruedString}`;
   };
@@ -279,7 +281,7 @@ const getOnboardingOperationProps = (
 const getRefundOperationProps = (
   operation: RefundOperationDTO
 ): ListItemTransaction => {
-  const { operationDate, operationType, amount } = operation;
+  const { operationDate, operationType, amountCents } = operation;
   const isRejected = operationType === RefundOperationTypeEnum.REJECTED_REFUND;
 
   const paymentLogoIcon = (
@@ -305,7 +307,7 @@ const getRefundOperationProps = (
     subtitle,
     paymentLogoIcon,
     transactionStatus: "success",
-    transactionAmount: `${formatAbsNumberAmountOrDefault(amount)} €`
+    transactionAmount: `${formatAbsNumberAmountCentsOrDefault(amountCents)} €`
   };
 };
 
@@ -371,7 +373,7 @@ export const getOperationSubtitleWithAmount = (
   withMinusSign: boolean = false
 ): string => {
   const signString = withMinusSign ? "-" : "";
-  const amountString = `${formatAbsNumberAmountOrDefault(amount)} €`;
+  const amountString = `${formatAbsNumberAmountCentsOrDefault(amount)} €`;
 
   return `${getOperationSubtitle(
     operationDate

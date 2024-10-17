@@ -1,7 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { PersistConfig, PersistPartial, persistReducer } from "redux-persist";
 import { combineReducers } from "redux";
+import { PersistConfig, PersistPartial, persistReducer } from "redux-persist";
 import { Action } from "../../../../../store/actions/types";
+import itwCredentialsReducer, {
+  ItwCredentialsState
+} from "../../../credentials/store/reducers";
 import identificationReducer, {
   ItwIdentificationState
 } from "../../../identification/store/reducers";
@@ -11,45 +14,36 @@ import issuanceReducer, {
 import lifecycleReducer, {
   ItwLifecycleState
 } from "../../../lifecycle/store/reducers";
-import itwCredentialsReducer, {
-  ItwCredentialsState
-} from "../../../credentials/store/reducers";
-import itwCreateCredentialsStorage from "../storages/itwCredentialsStorage";
+import wiaReducer, {
+  ItwWalletInstanceState
+} from "../../../walletInstance/store/reducers";
 
 export type ItWalletState = {
   identification: ItwIdentificationState;
   issuance: ItwIssuanceState;
   lifecycle: ItwLifecycleState;
   credentials: ItwCredentialsState & PersistPartial;
+  walletInstance: ItwWalletInstanceState & PersistPartial;
 };
 
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
 
 const CURRENT_REDUX_ITW_STORE_VERSION = -1;
-const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = -1;
-
-export const itwPersistConfig: PersistConfig = {
-  key: "itWallet",
-  storage: AsyncStorage,
-  whitelist: ["issuance", "lifecycle"] satisfies Array<keyof ItWalletState>,
-  version: CURRENT_REDUX_ITW_STORE_VERSION
-};
-
-export const itwCredentialsPersistConfig: PersistConfig = {
-  key: "itWalletCredentials",
-  storage: itwCreateCredentialsStorage(),
-  version: CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION
-};
 
 const itwReducer = combineReducers({
   identification: identificationReducer,
   issuance: issuanceReducer,
   lifecycle: lifecycleReducer,
-  credentials: persistReducer(
-    itwCredentialsPersistConfig,
-    itwCredentialsReducer
-  )
+  credentials: itwCredentialsReducer,
+  walletInstance: wiaReducer
 });
+
+const itwPersistConfig: PersistConfig = {
+  key: "itWallet",
+  storage: AsyncStorage,
+  whitelist: ["issuance", "lifecycle"] satisfies Array<keyof ItWalletState>,
+  version: CURRENT_REDUX_ITW_STORE_VERSION
+};
 
 export const persistedReducer = persistReducer<ItWalletState, Action>(
   itwPersistConfig,

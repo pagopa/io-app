@@ -8,15 +8,17 @@ import { WalletCard } from "../../../newWallet/types";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { walletAddCards } from "../../../newWallet/store/actions/cards";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 
 const mapCredentialsToWalletCards = (
   credentials: Array<StoredCredential>
 ): Array<WalletCard> =>
   credentials.map(credential => ({
-    key: credential.keyTag,
+    key: `ITW_${credential.credentialType}`,
     type: "itw",
     category: "itw",
-    credentialType: credential.credentialType as CredentialType
+    credentialType: credential.credentialType as CredentialType,
+    status: getCredentialStatus(credential)
   }));
 
 /**
@@ -32,10 +34,7 @@ export function* handleWalletCredentialsRehydration() {
     return;
   }
 
-  const allItwCredentials = [
-    eid.value,
-    ...pipe(credentials, A.filterMap(identity))
-  ];
+  const allItwCredentials = pipe(credentials, A.filterMap(identity));
 
   yield* put(walletAddCards(mapCredentialsToWalletCards(allItwCredentials)));
 }

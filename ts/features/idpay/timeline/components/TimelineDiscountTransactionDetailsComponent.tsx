@@ -14,7 +14,7 @@ import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { format } from "../../../../utils/dates";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 
 type Props = {
   transaction: TransactionDetailDTO;
@@ -48,9 +48,9 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
   );
 
   const formattedAmount = pipe(
-    transaction.amount,
+    transaction.amountCents,
     O.fromNullable,
-    O.map(amount => formatNumberAmount(amount, true)),
+    O.map(amount => formatNumberCentsToAmount(amount, true)),
     O.getOrElse(() => "-")
   );
 
@@ -79,7 +79,7 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
           )}
         </Body>
         <Body weight="Semibold">
-          {formatNumberAmount(transaction.accrued, true)}
+          {formatNumberCentsToAmount(transaction.accruedCents, true)}
         </Body>
       </View>
       <ItemSeparatorComponent noPadded={true} />

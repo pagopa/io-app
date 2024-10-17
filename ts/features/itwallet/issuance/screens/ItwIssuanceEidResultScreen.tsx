@@ -1,22 +1,43 @@
 import React from "react";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { useItwDisbleGestureNavigation } from "../../common/hooks/useItwDisbleGestureNavigation";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import {
+  trackAddFirstCredential,
+  trackBackToWallet,
+  trackSaveCredentialSuccess,
+  updateITWStatusAndIDProperties
+} from "../../analytics";
+import { useIOStore } from "../../../../store/hooks";
+
+const ITW_CREDENTIAL = "ITW_ID_V2";
 
 export const ItwIssuanceEidResultScreen = () => {
+  const route = useRoute();
+  const store = useIOStore();
+
+  useFocusEffect(() => {
+    trackSaveCredentialSuccess(ITW_CREDENTIAL);
+    updateITWStatusAndIDProperties(store.getState());
+  });
+
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
-  useItwDisbleGestureNavigation();
+  useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
   const handleContinue = () => {
     machineRef.send({ type: "add-new-credential" });
+    trackAddFirstCredential();
   };
 
-  const handleClose = () => {
+  const handleClose = async () => {
     machineRef.send({ type: "go-to-wallet" });
+    trackBackToWallet({ exit_page: route.name, credential: ITW_CREDENTIAL });
+    updateITWStatusAndIDProperties(store.getState());
   };
 
   return (

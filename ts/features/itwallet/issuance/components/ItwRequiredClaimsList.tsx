@@ -16,13 +16,15 @@ import { localeDateFormat } from "../../../../utils/locale";
 import {
   ClaimDisplayFormat,
   ClaimValue,
-  DateClaim,
+  DateWithoutTimezoneClaim,
   DrivingPrivilegesClaim,
   EmptyStringClaim,
   EvidenceClaim,
   extractFiscalCode,
   FiscalCodeClaim,
+  getSafeText,
   ImageClaim,
+  BoolClaim,
   PlaceOfBirthClaim,
   StringClaim
 } from "../../common/utils/itwClaimsUtils";
@@ -72,11 +74,12 @@ const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => (
 const ClaimText = ({ claim }: { claim: ClaimDisplayFormat }) => {
   const displayValue = getClaimDisplayValue(claim);
   return Array.isArray(displayValue) ? (
-    displayValue.map((value, index) => (
-      <H6 key={`${index}_${value}`}>{value}</H6>
-    ))
+    displayValue.map((value, index) => {
+      const safeValue = getSafeText(value);
+      return <H6 key={`${index}_${safeValue}`}>{safeValue}</H6>;
+    })
   ) : isStringNullyOrEmpty(displayValue) ? null : ( // We want to exclude empty strings and null values
-    <H6>{displayValue}</H6>
+    <H6>{getSafeText(displayValue)}</H6>
   );
 };
 
@@ -91,7 +94,7 @@ export const getClaimDisplayValue = (
       decoded => {
         if (PlaceOfBirthClaim.is(decoded)) {
           return `${decoded.locality} (${decoded.country})`;
-        } else if (DateClaim.is(decoded)) {
+        } else if (DateWithoutTimezoneClaim.is(decoded)) {
           return localeDateFormat(
             decoded,
             I18n.t("global.dateFormats.shortFormat")
@@ -107,6 +110,10 @@ export const getClaimDisplayValue = (
             decoded,
             extractFiscalCode,
             O.getOrElseW(() => decoded)
+          );
+        } else if (BoolClaim.is(decoded)) {
+          return I18n.t(
+            `features.itWallet.presentation.credentialDetails.boolClaim.${decoded}`
           );
         } else if (StringClaim.is(decoded) || EmptyStringClaim.is(decoded)) {
           return decoded; // must be the last one to be checked due to overlap with IPatternStringTag

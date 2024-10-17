@@ -7,14 +7,24 @@ import {
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
+import {
+  trackWalletAdd,
+  updatePropertiesWalletRevoked
+} from "../../itwallet/analytics";
+import { useIOStore } from "../../../store/hooks";
 
 const WalletEmptyScreenContent = () => {
   const navigation = useIONavigation();
+  const store = useIOStore();
+
+  useFocusEffect(() => updatePropertiesWalletRevoked(store.getState()));
 
   const handleAddToWalletButtonPress = () => {
+    trackWalletAdd();
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ONBOARDING
     });

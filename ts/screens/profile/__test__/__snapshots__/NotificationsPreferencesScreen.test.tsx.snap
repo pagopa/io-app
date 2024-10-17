@@ -193,10 +193,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -265,7 +268,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -992,6 +995,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -1624,10 +1628,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -1696,7 +1703,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -2423,6 +2430,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -3055,10 +3063,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -3127,7 +3138,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -3854,6 +3865,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -4486,10 +4498,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -4558,7 +4573,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -5285,6 +5300,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -5917,10 +5933,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -5989,7 +6008,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -6716,6 +6735,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -7348,10 +7368,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -7420,7 +7443,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -8147,6 +8170,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -8779,10 +8803,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -8851,7 +8878,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -9578,6 +9605,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -10210,10 +10238,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -10282,7 +10313,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -11009,6 +11040,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -11641,10 +11673,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -11713,7 +11748,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -12440,6 +12475,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -13072,10 +13108,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -13144,7 +13183,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -13871,6 +13910,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -14503,10 +14543,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -14575,7 +14618,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -15302,6 +15345,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -15934,10 +15978,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -16006,7 +16053,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -16733,6 +16780,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -17365,10 +17413,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -17437,7 +17488,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -18164,6 +18215,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -18796,10 +18848,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -18868,7 +18923,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -19595,6 +19650,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -20227,10 +20283,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -20299,7 +20358,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -21026,6 +21085,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -21658,10 +21718,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -21730,7 +21793,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -22457,6 +22520,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -23089,10 +23153,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -23161,7 +23228,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -23888,6 +23955,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,
@@ -24520,10 +24588,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          {
-                            "paddingBottom": 56,
-                            "paddingHorizontal": 0,
-                          }
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
@@ -24592,7 +24663,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 4,
+                                  "height": 16,
                                 }
                               }
                             />
@@ -25319,6 +25390,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              onDismiss={[Function]}
                               snapPoints={
                                 [
                                   340,

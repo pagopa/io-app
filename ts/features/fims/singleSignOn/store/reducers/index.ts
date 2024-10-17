@@ -1,7 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { getType } from "typesafe-actions";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { startApplicationInitialization } from "../../../../../store/actions/application";
 import { Action } from "../../../../../store/actions/types";
 import { ConsentData } from "../../types";
@@ -20,21 +21,27 @@ export type FimsFlowStateTags =
   | "abort"
   | "fastLogin_forced_restart";
 
+export type FIMS_SSO_ERROR_TAGS = "GENERIC" | "DEBUG" | "MISSING_INAPP_BROWSER";
 export type FimsErrorStateType = {
-  standardMessage: string;
+  errorTag: FIMS_SSO_ERROR_TAGS;
+  standardMessage: string; // this will be deprecated
   debugMessage: string;
 };
 
 export type FimsSSOState = {
-  currentFlowState: FimsFlowStateTags;
   consentsData: pot.Pot<ConsentData, FimsErrorStateType>;
+  ctaText?: string;
+  currentFlowState: FimsFlowStateTags;
+  relyingPartyServiceId?: ServiceId;
   relyingPartyUrl?: string;
 };
 
 const INITIAL_STATE: FimsSSOState = {
+  consentsData: pot.none,
+  ctaText: undefined,
   currentFlowState: "idle",
-  relyingPartyUrl: undefined,
-  consentsData: pot.none
+  relyingPartyServiceId: undefined,
+  relyingPartyUrl: undefined
 };
 
 const reducer = (
@@ -47,20 +54,24 @@ const reducer = (
         ? {
             ...state,
             consentsData: pot.none,
-            currentFlowState: "fastLogin_forced_restart"
+            currentFlowState: "fastLogin_forced_restart",
+            relyingPartyServiceId: undefined
           }
         : INITIAL_STATE;
 
     case getType(fimsGetConsentsListAction.request):
       return {
+        ctaText: action.payload.ctaText,
         currentFlowState: "consents",
         consentsData: pot.noneLoading,
+        relyingPartyServiceId: undefined,
         relyingPartyUrl: action.payload.ctaUrl
       };
     case getType(fimsGetConsentsListAction.success):
       return {
         ...state,
-        consentsData: pot.some(action.payload)
+        consentsData: pot.some(action.payload),
+        relyingPartyServiceId: action.payload.service_id as ServiceId
       };
     case getType(fimsGetRedirectUrlAndOpenIABAction.request):
       return {

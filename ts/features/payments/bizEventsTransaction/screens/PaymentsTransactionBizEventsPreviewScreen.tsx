@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import Share from "react-native-share";
 
 import { IOColors, IOStyles } from "@pagopa/io-app-design-system";
@@ -17,6 +17,7 @@ import {
   FooterActions,
   FooterActionsMeasurements
 } from "../../../../components/ui/FooterActions";
+import * as analytics from "../analytics";
 
 export type PaymentsTransactionBizEventsPreviewScreenProps = RouteProp<
   PaymentsTransactionBizEventsParamsList,
@@ -36,41 +37,30 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
 
   useHeaderSecondLevel({
     title: "",
-    canGoBack: true,
     supportRequest: true
   });
 
   const handleOnShare = async () => {
-    const transactionReceiptFile = pot.toUndefined(transactionReceiptPot);
-    if (!transactionReceiptFile) {
+    const transactionReceiptFileInfo = pot.toUndefined(transactionReceiptPot);
+    if (!transactionReceiptFileInfo) {
       return;
     }
-    try {
-      await Share.open({
-        activityItemSources: [
-          {
-            item: {
-              default: {
-                content: `${I18n.t(
-                  "features.payments.transactions.receipt.title"
-                )}.pdf`,
-                type: "url"
-              }
-            },
-            placeholderItem: {
-              content: `${I18n.t(
-                "features.payments.transactions.receipt.title"
-              )}.pdf`,
-              type: "url"
-            }
-          }
-        ],
-        type: "application/pdf",
-        url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptFile}`
-      });
-    } catch (err) {
-      // Don't do anything if the user cancels the share action
-    }
+    analytics.trackPaymentsSaveAndShareReceipt();
+    // The file name is normalized to remove the .pdf extension on Android devices since it's added by default to the Share module
+    const normalizedFilename =
+      Platform.OS === "ios"
+        ? transactionReceiptFileInfo.filename
+        : transactionReceiptFileInfo.filename?.replace(/.pdf/g, "");
+    await Share.open({
+      type: "application/pdf",
+      url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptFileInfo.base64File}`,
+      filename:
+        normalizedFilename ||
+        `${I18n.t("features.payments.transactions.receipt.title")}${
+          Platform.OS === "ios" ? ".pdf" : ""
+        }`,
+      failOnCancel: false
+    });
   };
 
   const handleFooterActionsMeasurements = (
@@ -95,7 +85,7 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
             backgroundColor: IOColors["grey-100"]
           }}
           source={{
-            uri: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value}`,
+            uri: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value.base64File}`,
             cache: true
           }}
         />

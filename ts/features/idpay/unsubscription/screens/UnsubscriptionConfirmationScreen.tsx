@@ -4,10 +4,11 @@ import {
   IconButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useSelector } from "@xstate/react";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -15,34 +16,91 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
 import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckListItem";
-import { useUnsubscriptionMachineService } from "../xstate/provider";
+import { IdPayUnsubscriptionParamsList } from "../navigation/params";
+import { idPayUnsubscribeAction } from "../store/actions";
 import {
+  isFailureSelector,
   isLoadingSelector,
-  selectInitiativeName,
-  selectUnsubscriptionChecks
-} from "../xstate/selectors";
+  isUnsubscriptionSuccessSelector
+} from "../store/selectors";
+import { IdPayUnsubscriptionRoutes } from "../navigation/routes";
+
+export type IdPayUnsubscriptionConfirmationScreenParams = {
+  initiativeId: string;
+  initiativeName: string;
+  initiativeType: InitiativeRewardTypeEnum;
+};
+
+type RouteProps = RouteProp<
+  IdPayUnsubscriptionParamsList,
+  "IDPAY_UNSUBSCRIPTION_CONFIRMATION"
+>;
+
+const checksByInitiativeType = {
+  [InitiativeRewardTypeEnum.REFUND]: [
+    {
+      title: I18n.t("idpay.unsubscription.checks.1.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.1.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.2.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.2.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.3.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.3.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.4.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.4.content")
+    }
+  ],
+
+  [InitiativeRewardTypeEnum.DISCOUNT]: [
+    {
+      title: I18n.t("idpay.unsubscription.checks.1.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.1.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.3.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.3.content")
+    }
+  ]
+};
 
 const UnsubscriptionConfirmationScreen = () => {
-  const machine = useUnsubscriptionMachineService();
-  const isLoading = useSelector(machine, isLoadingSelector);
-  const initiativeName = useSelector(machine, selectInitiativeName);
-  const unsubscriptionChecks = useSelector(machine, selectUnsubscriptionChecks);
+  const dispatch = useIODispatch();
+  const navigation = useIONavigation();
+  const { params } = useRoute<RouteProps>();
+  const { initiativeId, initiativeName, initiativeType } = params;
 
+  const isLoading = useIOSelector(isLoadingSelector);
+  const isSuccess = useIOSelector(isUnsubscriptionSuccessSelector);
+  const isFailure = useIOSelector(isFailureSelector);
+  const unsubscriptionChecks = checksByInitiativeType[initiativeType];
   const checks = useConfirmationChecks(unsubscriptionChecks.length);
 
-  const handleClosePress = () =>
-    machine.send({
-      type: "EXIT"
-    });
+  const handleClosePress = () => {
+    dispatch(idPayUnsubscribeAction.cancel());
+    navigation.pop();
+  };
 
   const handleConfirmPress = () => {
-    machine.send({
-      type: "CONFIRM_UNSUBSCRIPTION"
-    });
+    dispatch(idPayUnsubscribeAction.request({ initiativeId }));
   };
+
+  React.useEffect(() => {
+    if (isFailure || isSuccess) {
+      navigation.navigate(IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
+        screen: IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_RESULT
+      });
+    }
+  }, [navigation, isFailure, isSuccess]);
 
   const closeButton = (
     <IconButton

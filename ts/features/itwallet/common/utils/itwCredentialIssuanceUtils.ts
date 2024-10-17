@@ -1,77 +1,38 @@
-import { deleteKey, generate } from "@pagopa/io-react-native-crypto";
-import { type CryptoContext } from "@pagopa/io-react-native-jwt";
+import { generate } from "@pagopa/io-react-native-crypto";
 import {
   AuthorizationDetail,
   createCryptoContextFor,
-  Credential,
-  WalletInstanceAttestation
+  Credential
 } from "@pagopa/io-react-native-wallet";
-import { constNull } from "fp-ts/lib/function";
 import uuid from "react-native-uuid";
 import {
   itWalletIssuanceRedirectUri,
-  itwEaaProviderBaseUrl,
-  itwWalletProviderBaseUrl
+  itwEaaProviderBaseUrl
 } from "../../../../config";
-import { SessionToken } from "../../../../types/SessionToken";
-import { createItWalletFetch } from "../../api/client";
-import { getIntegrityContext } from "./itwIntegrityUtils";
-import { CredentialType } from "./itwMocksUtils";
+import {
+  DPOP_KEYTAG,
+  regenerateCryptoKey,
+  WIA_KEYTAG
+} from "./itwCryptoContextUtils";
 import {
   IssuerConfiguration,
   RequestObject,
   StoredCredential
 } from "./itwTypesUtils";
 
-const WIA_CRDENTIAL_KEYTAG = "WIA_CRDENTIAL_KEYTAG";
-
-export type InitializeWalletParams = {
-  integrityKeyTag: string;
-  sessionToken: SessionToken;
-};
-
-export const initializeWallet = async ({
-  integrityKeyTag,
-  sessionToken
-}: InitializeWalletParams) => {
-  await deleteKey(WIA_CRDENTIAL_KEYTAG)
-    .catch(constNull)
-    .finally(() => generate(WIA_CRDENTIAL_KEYTAG));
-
-  const appFetch = createItWalletFetch(itwWalletProviderBaseUrl, sessionToken);
-
-  // Obtain a wallet attestation.
-
-  const wiaCryptoContext = createCryptoContextFor(WIA_CRDENTIAL_KEYTAG);
-  const integrityContext = getIntegrityContext(integrityKeyTag);
-
-  const walletInstanceAttestation =
-    await WalletInstanceAttestation.getAttestation({
-      wiaCryptoContext,
-      integrityContext,
-      walletProviderBaseUrl: itwWalletProviderBaseUrl,
-      appFetch
-    });
-
-  return {
-    wiaCryptoContext,
-    walletInstanceAttestation
-  };
-};
-
 export type RequestCredentialParams = {
-  credentialType: CredentialType;
+  credentialType: string;
   walletInstanceAttestation: string;
-  wiaCryptoContext: CryptoContext;
 };
 
 export const requestCredential = async ({
   credentialType,
-  walletInstanceAttestation,
-  wiaCryptoContext
+  walletInstanceAttestation
 }: RequestCredentialParams) => {
-  // Evaluate issuer trust
+  // Get WIA crypto context
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
+  // Evaluate issuer trust
   const { issuerConf } = await Credential.Issuance.evaluateIssuerTrust(
     itwEaaProviderBaseUrl
   );
@@ -106,9 +67,8 @@ export const requestCredential = async ({
 };
 
 export type ObtainCredentialParams = {
-  credentialType: CredentialType;
+  credentialType: string;
   walletInstanceAttestation: string;
-  wiaCryptoContext: CryptoContext;
   requestedCredential: RequestObject;
   pid: StoredCredential;
   clientId: string;
@@ -121,15 +81,19 @@ export const obtainCredential = async ({
   credentialType,
   requestedCredential,
   pid,
-  wiaCryptoContext,
   walletInstanceAttestation,
   clientId,
   codeVerifier,
   credentialDefinition,
   issuerConf
 }: ObtainCredentialParams) => {
-  // Create PID crypto context;
+  // Get WIA crypto context
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
+
+  // Create PID and DPoP crypto context;
+  await regenerateCryptoKey(DPOP_KEYTAG);
   const pidCryptoContext = createCryptoContextFor(pid.keyTag);
+  const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
 
   // Complete the user authorization via form_post.jwt mode
   const { code } =
@@ -143,18 +107,18 @@ export const obtainCredential = async ({
       }
     );
 
-  const { accessToken, dPoPContext } =
-    await Credential.Issuance.authorizeAccess(
-      issuerConf,
-      code,
-      clientId,
-      `${itWalletIssuanceRedirectUri}`,
-      codeVerifier,
-      {
-        walletInstanceAttestation,
-        wiaCryptoContext
-      }
-    );
+  const { accessToken } = await Credential.Issuance.authorizeAccess(
+    issuerConf,
+    code,
+    clientId,
+    `${itWalletIssuanceRedirectUri}`,
+    codeVerifier,
+    {
+      walletInstanceAttestation,
+      dPopCryptoContext,
+      wiaCryptoContext
+    }
+  );
 
   // Create credential crypto context
 
@@ -169,20 +133,20 @@ export const obtainCredential = async ({
     accessToken,
     clientId,
     credentialDefinition,
-    dPoPContext,
     {
+      dPopCryptoContext,
       credentialCryptoContext
     }
   );
 
   // Parse and verify the credential. The ignoreMissingAttributes flag must be set to false or omitted in production.
 
-  const { parsedCredential } =
+  const { parsedCredential, issuedAt, expiration } =
     await Credential.Issuance.verifyAndParseCredential(
       issuerConf,
       credential,
       format,
-      { credentialCryptoContext, ignoreMissingAttributes: true }
+      { credentialCryptoContext, ignoreMissingAttributes: false }
     );
 
   const storedCredential: StoredCredential = {
@@ -191,14 +155,14 @@ export const obtainCredential = async ({
     credentialType,
     format,
     issuerConf,
-    keyTag: credentialKeyTag
+    keyTag: credentialKeyTag,
+    jwt: {
+      expiration: expiration.toISOString(),
+      issuedAt: issuedAt?.toISOString()
+    }
   };
 
   return {
     credential: storedCredential
   };
-};
-
-export const disposeWallet = async () => {
-  await deleteKey(WIA_CRDENTIAL_KEYTAG).catch(constNull);
 };

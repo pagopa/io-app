@@ -95,12 +95,14 @@ const WalletPaymentConfirmScreen = () => {
         analytics.trackPaymentConversion({
           attempt: paymentAnalyticsData?.attempt,
           organization_name: paymentAnalyticsData?.verifiedData?.paName,
+          organization_fiscal_code:
+            paymentAnalyticsData?.verifiedData?.paFiscalCode,
           service_name: paymentAnalyticsData?.serviceName,
           amount: paymentAnalyticsData?.formattedAmount,
           expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
           payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
           saved_payment_method:
-            paymentAnalyticsData?.savedPaymentMethods?.length,
+            paymentAnalyticsData?.savedPaymentMethods?.length || 0,
           selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
           data_entry: paymentAnalyticsData?.startOrigin
         });
@@ -156,10 +158,13 @@ const WalletPaymentConfirmScreen = () => {
       analytics.trackPaymentSummaryScreen({
         attempt: paymentAnalyticsData?.attempt,
         organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        organization_fiscal_code:
+          paymentAnalyticsData?.verifiedData?.paFiscalCode,
         service_name: paymentAnalyticsData?.serviceName,
         amount: paymentAnalyticsData?.formattedAmount,
         expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
-        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        saved_payment_method:
+          paymentAnalyticsData?.savedPaymentMethods?.length || 0,
         selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
         payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod
       });
@@ -249,7 +254,8 @@ const SelectedPaymentMethodModuleCheckout = () => {
   const handleOnPress = () => {
     analytics.trackPaymentSummaryEditing({
       payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
-      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      saved_payment_method:
+        paymentAnalyticsData?.savedPaymentMethods?.length || 0,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
       selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
       editing: "payment_method",
@@ -316,7 +322,8 @@ const SelectedPspModuleCheckout = () => {
   const handleOnPress = () => {
     analytics.trackPaymentSummaryEditing({
       payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
-      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      saved_payment_method:
+        paymentAnalyticsData?.savedPaymentMethods?.length || 0,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
       selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
       editing: "psp",

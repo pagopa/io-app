@@ -10,6 +10,7 @@ import {
   Platform
 } from "react-native";
 import {
+  Divider,
   H3,
   HSpacer,
   IOColors,
@@ -49,7 +50,8 @@ import { mixAndSortMerchants } from "../../utils/merchants";
 import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
-import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
+import { CgnMerchantListViewRenderItem } from "../../components/merchants/CgnMerchantsListView";
+import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 
 export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
   category: ProductCategoryEnum;
@@ -87,7 +89,7 @@ const CgnMerchantsListByCategory = () => {
     [route]
   );
 
-  const navigation =
+  const { navigate } =
     useNavigation<
       IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_CATEGORIES">
     >();
@@ -102,9 +104,12 @@ const CgnMerchantsListByCategory = () => {
     [route]
   );
 
+  const [isPullRefresh, setIsPullRefresh] = React.useState(false);
+
   const initLoadingLists = () => {
     dispatch(cgnOfflineMerchants.request(categoryFilter));
     dispatch(cgnOnlineMerchants.request(categoryFilter));
+    setIsPullRefresh(false);
   };
 
   React.useEffect(initLoadingLists, [route, categoryFilter, dispatch]);
@@ -120,11 +125,14 @@ const CgnMerchantsListByCategory = () => {
     [onlineMerchants, offlineMerchants]
   );
 
-  const onItemPress = (id: Merchant["id"]) => {
-    navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.DETAIL, {
-      merchantID: id
-    });
-  };
+  const onItemPress = React.useCallback(
+    (id: Merchant["id"]) => {
+      navigate(CGN_ROUTES.DETAILS.MERCHANTS.DETAIL, {
+        merchantID: id
+      });
+    },
+    [navigate]
+  );
 
   useHeaderSecondLevel({
     title: I18n.t(
@@ -142,10 +150,86 @@ const CgnMerchantsListByCategory = () => {
       triggerOffset: titleHeight
     },
     transparent: true,
-    canGoBack: true,
     supportRequest: true
   });
 
+  const renderItem = React.useMemo(
+    () => CgnMerchantListViewRenderItem({ onItemPress }),
+    [onItemPress]
+  );
+
+  const isListLoading =
+    isLoading(onlineMerchants) || isLoading(offlineMerchants);
+
+  const isListRefreshing = isListLoading && isPullRefresh;
+
+  const header = () => (
+    <>
+      {Platform.OS === "ios" && (
+        <View
+          style={{
+            position: "absolute",
+            height: 1000,
+            backgroundColor: categorySpecs?.colors,
+            top: -1000,
+            right: 0,
+            left: 0
+          }}
+        />
+      )}
+      {categorySpecs && (
+        <View
+          onLayout={getTitleHeight}
+          style={[
+            IOStyles.horizontalContentPadding,
+            {
+              paddingTop: insets.top,
+              backgroundColor: categorySpecs.colors,
+              paddingBottom: 24
+            }
+          ]}
+        >
+          <VSpacer size={48} />
+          <VSpacer size={32} />
+          <View style={[IOStyles.row, { alignItems: "center" }]}>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: hexToRgba(IOColors.white, 0.2),
+                height: 66,
+                width: 66,
+                borderRadius: 8
+              }}
+            >
+              <Icon
+                name={categorySpecs.icon}
+                size={32}
+                color={categorySpecs.textColor}
+              />
+            </View>
+            <HSpacer size={16} />
+            <View style={{ flex: 1 }}>
+              <H3 color={categorySpecs.textColor}>
+                {I18n.t(categorySpecs.nameKey)}
+              </H3>
+            </View>
+          </View>
+        </View>
+      )}
+    </>
+  );
+  const refreshControl = (
+    <RefreshControl
+      style={{ zIndex: 1 }}
+      progressViewOffset={Platform.OS === "ios" ? titleHeight : undefined}
+      refreshing={isListRefreshing}
+      onRefresh={() => {
+        initLoadingLists();
+        setIsPullRefresh(true);
+      }}
+    />
+  );
   return (
     <>
       <FocusAwareStatusBar
@@ -155,7 +239,7 @@ const CgnMerchantsListByCategory = () => {
       {isError(onlineMerchants) && isError(offlineMerchants) ? (
         <GenericErrorComponent onRetry={initLoadingLists} />
       ) : (
-        <Animated.ScrollView
+        <Animated.FlatList
           style={{ flexGrow: 1, backgroundColor: IOColors.white }}
           onScroll={scrollHandler}
           scrollEventThrottle={8}
@@ -166,73 +250,14 @@ const CgnMerchantsListByCategory = () => {
             paddingBottom: 48,
             backgroundColor: IOColors.white
           }}
-          refreshControl={
-            <RefreshControl
-              style={{ zIndex: 1 }}
-              refreshing={
-                isLoading(onlineMerchants) || isLoading(offlineMerchants)
-              }
-              onRefresh={initLoadingLists}
-            />
-          }
-        >
-          {Platform.OS === "ios" && (
-            <View
-              style={{
-                position: "absolute",
-                height: 1000,
-                backgroundColor: categorySpecs?.colors,
-                top: -1000,
-                right: 0,
-                left: 0
-              }}
-            />
-          )}
-          {categorySpecs && (
-            <View
-              onLayout={getTitleHeight}
-              style={[
-                IOStyles.horizontalContentPadding,
-                {
-                  paddingTop: insets.top,
-                  backgroundColor: categorySpecs.colors,
-                  paddingBottom: 24
-                }
-              ]}
-            >
-              <VSpacer size={48} />
-              <VSpacer size={32} />
-              <View style={[IOStyles.row, { alignItems: "center" }]}>
-                <View
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: hexToRgba(IOColors.white, 0.2),
-                    height: 66,
-                    width: 66,
-                    borderRadius: 8
-                  }}
-                >
-                  <Icon
-                    name={categorySpecs.icon}
-                    size={32}
-                    color={categorySpecs.textColor}
-                  />
-                </View>
-                <HSpacer size={16} />
-                <View style={{ flex: 1 }}>
-                  <H3 color={categorySpecs.textColor}>
-                    {I18n.t(categorySpecs.nameKey)}
-                  </H3>
-                </View>
-              </View>
-            </View>
-          )}
-          <CgnMerchantsListView
-            merchantList={merchantsAll}
-            onItemPress={onItemPress}
-          />
-        </Animated.ScrollView>
+          refreshControl={refreshControl}
+          data={isListLoading && !isPullRefresh ? [] : merchantsAll}
+          keyExtractor={item => item.id}
+          ListEmptyComponent={CgnMerchantListSkeleton}
+          renderItem={renderItem}
+          ItemSeparatorComponent={() => <Divider />}
+          ListHeaderComponent={header}
+        />
       )}
     </>
   );

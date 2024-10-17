@@ -22,10 +22,7 @@ import I18n from "../../i18n";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../config";
-import {
-  isAutomaticSessionRefreshToggleActiveSelector,
-  isFastLoginEnabledSelector
-} from "../../features/fastLogin/store/selectors";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
 import { notificationsInstallationSelector } from "../../features/pushNotifications/store/reducers/installation";
@@ -36,7 +33,6 @@ import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
-  preferencesNewScanSectionSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
@@ -49,7 +45,6 @@ import {
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
   isIdPayTestEnabledSelector,
-  isNewScanSectionLocallyEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -58,7 +53,8 @@ import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
-import { setAutomaticSessionRefresh } from "../../features/fastLogin/store/actions/sessionRefreshActions";
+import { isCieIDLocalFeatureEnabledSelector } from "../../features/cieLogin/store/selectors";
+import { cieIDFeatureSetEnabled } from "../../features/cieLogin/store/actions";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -301,30 +297,6 @@ const DeveloperDataSection = () => {
 const DesignSystemSection = () => {
   const navigation = useIONavigation();
   const { themeType, setTheme } = useIOThemeContext();
-  const dispatch = useIODispatch();
-
-  const isNewScanSectionLocallyEnabled = useIOSelector(
-    isNewScanSectionLocallyEnabledSelector
-  );
-
-  const isAutomaticSessionRefreshToggleActive = useIOSelector(
-    isAutomaticSessionRefreshToggleActiveSelector
-  );
-
-  const dispatchAutomaticSessionRefresh = React.useCallback(
-    (enabled: boolean) => {
-      dispatch(setAutomaticSessionRefresh({ enabled }));
-    },
-    [dispatch]
-  );
-
-  const onNewScanSectionToggle = (enabled: boolean) => {
-    dispatch(
-      preferencesNewScanSectionSetEnabled({
-        isNewScanSectionEnabled: enabled
-      })
-    );
-  };
 
   return (
     <ContentWrapper>
@@ -348,17 +320,6 @@ const DesignSystemSection = () => {
         onSwitchValueChange={() =>
           setTheme(themeType === "dark" ? "light" : "dark")
         }
-      />
-      <Divider />
-      <ListItemSwitch
-        label={I18n.t("profile.main.newScanSection")}
-        value={isNewScanSectionLocallyEnabled}
-        onSwitchValueChange={onNewScanSectionToggle}
-      />
-      <ListItemSwitch
-        label={I18n.t("profile.main.sessionRefresh")}
-        value={isAutomaticSessionRefreshToggleActive}
-        onSwitchValueChange={dispatchAutomaticSessionRefresh}
       />
     </ContentWrapper>
   );
@@ -427,7 +388,7 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      value: "IT Wallet",
+      value: "Documenti su IO",
       onPress: () =>
         navigation.navigate(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.PLAYGROUNDS
@@ -489,6 +450,9 @@ const DeveloperTestEnvironmentSection = ({
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
   const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
+  const isCieIDFeatureEnabled = useIOSelector(
+    isCieIDLocalFeatureEnabledSelector
+  );
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -535,6 +499,9 @@ const DeveloperTestEnvironmentSection = ({
     dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled: enabled }));
     handleShowModal();
   };
+  const onCieIDFeatureToggle = (enabled: boolean) => {
+    dispatch(cieIDFeatureSetEnabled({ isCieIDFeatureEnabled: enabled }));
+  };
 
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
     {
@@ -553,6 +520,11 @@ const DeveloperTestEnvironmentSection = ({
       description: I18n.t("profile.main.idpay.idpayTestAlert"),
       value: isIdPayTestEnabled,
       onSwitchValueChange: onIdPayTestToggle
+    },
+    {
+      label: I18n.t("profile.main.cieID.cieIdTest.title"),
+      value: isCieIDFeatureEnabled,
+      onSwitchValueChange: onCieIDFeatureToggle
     }
   ];
 

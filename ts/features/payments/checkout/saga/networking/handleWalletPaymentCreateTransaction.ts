@@ -18,6 +18,7 @@ const handleError = (
   IOToast.error(I18n.t("features.payments.errors.transactionCreationError"));
   analytics.trackPaymentMethodVerificaFatalError({
     organization_name: paymentAnalyticsData?.verifiedData?.paName,
+    organization_fiscal_code: paymentAnalyticsData?.verifiedData?.paFiscalCode,
     service_name: paymentAnalyticsData?.serviceName,
     attempt: paymentAnalyticsData?.attempt,
     expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
@@ -31,6 +32,7 @@ export function* handleWalletPaymentCreateTransaction(
   newTransaction: PaymentClient["newTransactionForIO"],
   action: ActionType<(typeof paymentsCreateTransactionAction)["request"]>
 ) {
+  const paymentAnalyticsData = yield* select(paymentAnalyticsDataSelector);
   try {
     const newTransactionResult = yield* withPaymentsSessionToken(
       newTransaction,
@@ -41,7 +43,6 @@ export function* handleWalletPaymentCreateTransaction(
       "pagoPAPlatformSessionToken"
     );
 
-    const paymentAnalyticsData = yield* select(paymentAnalyticsDataSelector);
     if (E.isLeft(newTransactionResult)) {
       handleError(paymentAnalyticsData, action.payload.onError);
       yield* put(
@@ -61,6 +62,8 @@ export function* handleWalletPaymentCreateTransaction(
         )
       );
     } else if (status === 400) {
+      // Handling unhandled error from third-party services (GEC) during payment verification.
+      // This is not an internal backend error from pagoPA, but rather a third-party service error and should be handled differently.
       handleError(paymentAnalyticsData, action.payload.onError);
       yield* put(
         paymentsCreateTransactionAction.failure({
@@ -69,7 +72,9 @@ export function* handleWalletPaymentCreateTransaction(
           )
         })
       );
-    } else {
+    } else if (status !== 401) {
+      // The 401 status is handled by the withPaymentsSessionToken
+      handleError(paymentAnalyticsData, action.payload.onError);
       yield* put(
         paymentsCreateTransactionAction.failure(
           newTransactionResult.right.value
@@ -77,6 +82,7 @@ export function* handleWalletPaymentCreateTransaction(
       );
     }
   } catch (e) {
+    handleError(paymentAnalyticsData, action.payload.onError);
     yield* put(
       paymentsCreateTransactionAction.failure({ ...getNetworkError(e) })
     );

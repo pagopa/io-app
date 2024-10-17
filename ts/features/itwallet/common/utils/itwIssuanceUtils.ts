@@ -17,6 +17,11 @@ import {
 } from "../../../../config";
 import { type IdentificationContext } from "../../machine/eid/context";
 import { StoredCredential } from "./itwTypesUtils";
+import {
+  DPOP_KEYTAG,
+  regenerateCryptoKey,
+  WIA_KEYTAG
+} from "./itwCryptoContextUtils";
 
 type AccessToken = Awaited<
   ReturnType<typeof Credential.Issuance.authorizeAccess>
@@ -36,7 +41,6 @@ const getRedirectUri = (identificationMode: IdentificationContext["mode"]) =>
 
 type StartCieAuthFlowParams = {
   walletAttestation: string;
-  wiaCryptoContext: CryptoContext;
 };
 
 /**
@@ -44,12 +48,10 @@ type StartCieAuthFlowParams = {
  * reading the card to get the `authUrl` to launch the CIE web view, and other params that are needed later.
  * After successfully reading the card, the flow must be completed invoking `completeCieAuthFlow`.
  * @param walletAttestation - The wallet attestation.
- * @param wiaCryptoContext - The crypto context related to the wallet attestation.
  * @returns Authentication params to use when completing the flow.
  */
 const startCieAuthFlow = async ({
-  walletAttestation,
-  wiaCryptoContext
+  walletAttestation
 }: StartCieAuthFlowParams) => {
   const startFlow: Credential.Issuance.StartFlow = () => ({
     issuerUrl: itwPidProviderBaseUrl,
@@ -61,6 +63,8 @@ const startCieAuthFlow = async ({
   const { issuerConf } = await Credential.Issuance.evaluateIssuerTrust(
     issuerUrl
   );
+
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   const { issuerRequestUri, clientId, codeVerifier, credentialDefinition } =
     await Credential.Issuance.startUserAuthorization(
@@ -97,7 +101,6 @@ type CompleteCieAuthFlowParams = {
   clientId: string;
   codeVerifier: string;
   walletAttestation: string;
-  wiaCryptoContext: CryptoContext;
 };
 
 export type CompleteCieAuthFlowResult = Awaited<
@@ -109,7 +112,6 @@ export type CompleteCieAuthFlowResult = Awaited<
  * and after reading the card to get the final `callbackUrl`. The rest of the parameters are those obtained from
  * `startCieAuthFlow` + the wallet attestation.
  * @param walletAttestation - The wallet attestation.
- * @param wiaCryptoContext - The crypto context related to the wallet attestation.
  * @param callbackUrl - The callback url from which the code to get the access token is extracted.
  * @returns Authentication tokens.
  */
@@ -118,31 +120,33 @@ const completeCieAuthFlow = async ({
   clientId,
   codeVerifier,
   issuerConf,
-  walletAttestation,
-  wiaCryptoContext
+  walletAttestation
 }: CompleteCieAuthFlowParams) => {
   const query = Object.fromEntries(new URL(callbackUrl).searchParams);
   const { code } = Credential.Issuance.parseAuthroizationResponse(query);
 
-  const { accessToken, dPoPContext } =
-    await Credential.Issuance.authorizeAccess(
-      issuerConf,
-      code,
-      clientId,
-      CIE_L3_REDIRECT_URI,
-      codeVerifier,
-      {
-        walletInstanceAttestation: walletAttestation,
-        wiaCryptoContext
-      }
-    );
+  await regenerateCryptoKey(DPOP_KEYTAG);
+  const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
-  return { accessToken, dPoPContext };
+  const { accessToken } = await Credential.Issuance.authorizeAccess(
+    issuerConf,
+    code,
+    clientId,
+    CIE_L3_REDIRECT_URI,
+    codeVerifier,
+    {
+      walletInstanceAttestation: walletAttestation,
+      wiaCryptoContext,
+      dPopCryptoContext
+    }
+  );
+
+  return { accessToken, dPoPContext: dPopCryptoContext };
 };
 
 type FullAuthFlowParams = {
   walletAttestation: string;
-  wiaCryptoContext: CryptoContext;
   identification: Exclude<IdentificationContext, { mode: "ciePin" }>;
 };
 
@@ -150,13 +154,11 @@ type FullAuthFlowParams = {
  * Full authentication flow completely handled by `io-react-native-wallet`. The consumer of the library
  * does not need to implement any authentication screen or logic. Only compatible with SPID and CieID.
  * @param walletAttestation - The wallet attestation.
- * @param wiaCryptoContext - The crypto context related to the wallet attestation.
  * @param identification - Object that contains details on the selected identification mode.
  * @returns Authentication tokens and other params needed to get the PID.
  */
 const startAndCompleteFullAuthFlow = async ({
   walletAttestation,
-  wiaCryptoContext,
   identification
 }: FullAuthFlowParams) => {
   const authorizationContext: AuthorizationContext | undefined =
@@ -179,6 +181,8 @@ const startAndCompleteFullAuthFlow = async ({
 
   const redirectUri = getRedirectUri(identification.mode);
 
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
+
   const { issuerRequestUri, clientId, codeVerifier, credentialDefinition } =
     await Credential.Issuance.startUserAuthorization(
       issuerConf,
@@ -197,25 +201,29 @@ const startAndCompleteFullAuthFlow = async ({
       issuerConf,
       idpHint,
       redirectUri,
-      authorizationContext
+      authorizationContext,
+      identification.abortController?.signal
     );
 
-  const { accessToken, dPoPContext } =
-    await Credential.Issuance.authorizeAccess(
-      issuerConf,
-      code,
-      clientId,
-      redirectUri,
-      codeVerifier,
-      {
-        walletInstanceAttestation: walletAttestation,
-        wiaCryptoContext
-      }
-    );
+  await regenerateCryptoKey(DPOP_KEYTAG);
+  const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
+
+  const { accessToken } = await Credential.Issuance.authorizeAccess(
+    issuerConf,
+    code,
+    clientId,
+    redirectUri,
+    codeVerifier,
+    {
+      walletInstanceAttestation: walletAttestation,
+      wiaCryptoContext,
+      dPopCryptoContext
+    }
+  );
 
   return {
     accessToken,
-    dPoPContext,
+    dPoPContext: dPopCryptoContext,
     credentialDefinition,
     clientId,
     issuerConf
@@ -253,11 +261,13 @@ const getPid = async ({
     accessToken,
     clientId,
     credentialDefinition,
-    dPoPContext,
-    { credentialCryptoContext }
+    {
+      credentialCryptoContext,
+      dPopCryptoContext: dPoPContext
+    }
   );
 
-  const { parsedCredential } =
+  const { parsedCredential, issuedAt, expiration } =
     await Credential.Issuance.verifyAndParseCredential(
       issuerConf,
       credential,
@@ -271,7 +281,11 @@ const getPid = async ({
     keyTag: credentialKeyTag,
     credentialType: CREDENTIAL_TYPE,
     format,
-    credential
+    credential,
+    jwt: {
+      expiration: expiration.toISOString(),
+      issuedAt: issuedAt?.toISOString()
+    }
   };
 };
 

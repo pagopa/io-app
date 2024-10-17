@@ -1,5 +1,7 @@
 import { ItwCieWrongCiePinScreenNavigationParams } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
+import { ItwPresentationCredentialAttachmentNavigationParams } from "../presentation/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
+import { ItwIssuanceCredentialAsyncContinuationNavigationParams } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
@@ -25,9 +27,15 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER]: undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW]: undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE]: undefined;
+  [ITW_ROUTES.ISSUANCE
+    .CREDENTIAL_ASYNC_FLOW_CONTINUATION]: ItwIssuanceCredentialAsyncContinuationNavigationParams;
   // PRESENTATION
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_DETAIL]: ItwPresentationCredentialDetailNavigationParams;
+  [ITW_ROUTES.PRESENTATION
+    .CREDENTIAL_ATTACHMENT]: ItwPresentationCredentialAttachmentNavigationParams;
   // PLAYGROUNDS
   [ITW_ROUTES.PLAYGROUNDS]: undefined;
+  [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
+  [ITW_ROUTES.WALLET_REVOCATION_SCREEN]: undefined;
 };

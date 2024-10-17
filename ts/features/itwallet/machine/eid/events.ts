@@ -1,4 +1,4 @@
-import { ErrorActorEvent } from "xstate5";
+import { ErrorActorEvent } from "xstate";
 import { LocalIdpsFallback } from "../../../../utils/idps";
 
 export type IdentificationMode = "spid" | "ciePin" | "cieId";
@@ -64,6 +64,14 @@ export type NfcEnabled = {
   type: "nfc-enabled";
 };
 
+export type Abort = {
+  type: "abort";
+};
+
+export type RevokeWalletInstance = {
+  type: "revoke-wallet-instance";
+};
+
 export type EidIssuanceEvents =
   | Reset
   | Start
@@ -79,4 +87,6 @@ export type EidIssuanceEvents =
   | Back
   | Close
   | NfcEnabled
+  | Abort
+  | RevokeWalletInstance
   | ErrorActorEvent;

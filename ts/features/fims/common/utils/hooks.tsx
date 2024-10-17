@@ -10,13 +10,16 @@ export const useAutoFetchingServiceByIdPot = (serviceId: ServiceId) => {
   const serviceData = useIOSelector(state =>
     serviceByIdPotSelector(state, serviceId)
   );
-  const shouldFetchServiceData = isStrictNone(serviceData);
 
   React.useEffect(() => {
+    const shouldFetchServiceData =
+      isStrictNone(serviceData) || serviceData.kind === "PotNoneError";
+
     if (shouldFetchServiceData) {
       dispatch(loadServiceDetail.request(serviceId));
     }
-  }, [dispatch, serviceId, shouldFetchServiceData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, serviceId]);
 
-  return { serviceData };
+  return serviceData;
 };
