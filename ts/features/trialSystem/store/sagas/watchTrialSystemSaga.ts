@@ -8,10 +8,10 @@ import { TrialSystemClient, createTrialSystemClient } from "../../api/client";
 import { apiUrlPrefix } from "../../../../config";
 import {
   trialSystemActivationStatus,
-  trialSystemActivationStatusReset,
   trialSystemActivationStatusUpsert
 } from "../actions";
 import { getError } from "../../../../utils/errors";
+import { TrialSystemError } from "../../utils/error";
 
 function* handleTrialSystemActivationStatusUpsert(
   upsertTrialSystemActivationStatus: TrialSystemClient["createSubscription"],
@@ -74,13 +74,21 @@ function* handleTrialSystemActivationStatus(
     }
 
     if (result.right.status === 404) {
-      yield* put(trialSystemActivationStatusReset(action.payload));
+      yield* put(
+        trialSystemActivationStatus.failure({
+          trialId: action.payload,
+          error: new TrialSystemError(
+            "User not found",
+            "TRIAL_SYSTEM_USER_NOT_FOUND"
+          )
+        })
+      );
       return;
     } else {
       yield* put(
         trialSystemActivationStatus.failure({
           trialId: action.payload,
-          error: new Error(`response status ${result.right.status}`)
+          error: new TrialSystemError(`response status ${result.right.status}`)
         })
       );
     }
@@ -88,7 +96,10 @@ function* handleTrialSystemActivationStatus(
     yield* put(
       trialSystemActivationStatus.failure({
         trialId: action.payload,
-        error: getError(e)
+        error: new TrialSystemError(
+          getError(e).message,
+          "TRIAL_SYSTEM_NETWORK_ERROR"
+        )
       })
     );
   }

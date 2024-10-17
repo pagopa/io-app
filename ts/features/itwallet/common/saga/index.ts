@@ -1,5 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import { fork, put, call, take, select } from "typed-redux-saga/macro";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { isActionOf } from "typesafe-actions";
 import {
   trialSystemActivationStatus,
@@ -13,8 +14,7 @@ import { itwCieIsSupported } from "../../identification/store/actions";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
 import { watchItwLifecycleSaga } from "../../lifecycle/saga";
 import { checkCredentialsStatusAttestation } from "../../credentials/saga/checkCredentialsStatusAttestation";
-import { trialStatusSelector } from "../../../trialSystem/store/reducers";
-import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
+import { trialStatusPotSelector } from "../../../trialSystem/store/reducers";
 
 function* checkWalletInstanceAndCredentialsValiditySaga() {
   // Status attestations of credentials are checked only in case of a valid wallet instance.
@@ -34,9 +34,12 @@ export function* handleTrialSystemSubscription() {
     trialSystemActivationStatus.success,
     trialSystemActivationStatus.failure
   ]);
-  if (isActionOf(trialSystemActivationStatus.success, outputAction)) {
-    const status = yield* select(trialStatusSelector(itwTrialId));
-    if (status && status === SubscriptionStateEnum.UNSUBSCRIBED) {
+  if (isActionOf(trialSystemActivationStatus.failure, outputAction)) {
+    const potStatus = yield* select(trialStatusPotSelector(itwTrialId));
+    if (
+      pot.isError(potStatus) &&
+      potStatus.error.type === "TRIAL_SYSTEM_USER_NOT_FOUND"
+    ) {
       yield* put(trialSystemActivationStatusUpsert.request(itwTrialId));
     }
   }
