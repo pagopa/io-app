@@ -37,7 +37,6 @@ export const useItwInfoBottomSheet = ({ title, content }: ItwInfoFlowProps) => {
             </>
           )}
           <ItwMarkdown>{item.body}</ItwMarkdown>
-          <VSpacer size={8} />
         </View>
       ))}
       <VSpacer size={24} />
