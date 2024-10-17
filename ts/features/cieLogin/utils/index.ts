@@ -24,7 +24,7 @@ export const getCieIDLoginUri = (spidLevel: SpidLevel, isUat: boolean) =>
  * @returns a `boolean`
  */
 export const isAuthenticationUrl = (url: string) => {
-  const test = /\/(livello2|livello1|nextUrl|openApp)(\/|\?|$)/;
+  const test = /\/(livello1|livello2|nextUrl|openApp)(\/|\?|$)/;
 
   return test.test(url);
 };
