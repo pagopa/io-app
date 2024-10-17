@@ -52,12 +52,17 @@ import {
   ingressScreenReducer,
   IngressScreenState
 } from "../../../ingress/store/reducer";
+import {
+  loginInfoReducer,
+  LoginInfoState
+} from "../../../login/info/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
   nativeLogin: NativeLoginState;
   fastLogin: FastLoginState;
   cieLogin: CieLoginState & PersistPartial;
+  loginInfo: LoginInfoState;
 };
 
 export type FeaturesState = {
@@ -91,7 +96,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     testLogin: testLoginReducer,
     nativeLogin: nativeLoginReducer,
     fastLogin: fastLoginReducer,
-    cieLogin: cieLoginPersistor
+    cieLogin: cieLoginPersistor,
+    loginInfo: loginInfoReducer
   }),
   wallet: walletReducer,
   fims: fimsReducer,
