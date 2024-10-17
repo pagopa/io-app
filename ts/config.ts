@@ -260,3 +260,13 @@ export const itwIpzsPrivacyUrl: string = pipe(
   t.string.decode,
   E.getOrElse(() => "https://io.italia.it/informativa-ipzs")
 );
+export const itwPrivacyUrl: string = pipe(
+  Config.ITW_PRIVACY_URL,
+  t.string.decode,
+  E.getOrElse(() => "https://io.italia.it/informativa-sperimentazione")
+);
+export const itwTosUrl: string = pipe(
+  Config.ITW_TOS_URL,
+  t.string.decode,
+  E.getOrElse(() => "https://io.italia.it/tos-sperimentazione")
+);
