@@ -15,10 +15,11 @@ import {
 } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwTrialId } from "../../../../config";
+import { TrialSystemError } from "../../utils/error";
 
 export type TrialSystemState = Record<
   TrialId,
-  pot.Pot<SubscriptionState, Error>
+  pot.Pot<SubscriptionState, TrialSystemError>
 >;
 
 const initialState: TrialSystemState = {};
@@ -108,6 +109,13 @@ export const isUpdatingTrialStatusSelector =
       status => status[id] ?? pot.none,
       pot.isUpdating
     );
+
+export const trialStatusPotSelector = (id: TrialId) => (state: GlobalState) =>
+  pipe(
+    state,
+    trialSystemActivationStatusSelector,
+    status => status[id] ?? pot.none
+  );
 
 /**
  * Allows to know if the user has the access to the specified trial
