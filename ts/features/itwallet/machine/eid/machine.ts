@@ -4,9 +4,8 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
   GetWalletAttestationActorParams,
-  OnInitActorOutput,
-  type RequestEidActorParams,
-  StartCieAuthFlowActorParams
+  StartCieAuthFlowActorParams,
+  type RequestEidActorParams
 } from "./actors";
 import { CieAuthContext, Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -50,10 +49,10 @@ export const itwEidIssuanceMachine = setup({
     abortIdentification: notImplemented,
     resetWalletInstance: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
-    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) }))
+    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
+    onInit: notImplemented
   },
   actors: {
-    onInit: fromPromise<OnInitActorOutput>(notImplemented),
     createWalletInstance: fromPromise<string>(notImplemented),
     revokeWalletInstance: fromPromise<void>(notImplemented),
     getWalletAttestation: fromPromise<string, GetWalletAttestationActorParams>(
@@ -77,16 +76,7 @@ export const itwEidIssuanceMachine = setup({
   id: "itwEidIssuanceMachine",
   context: { ...InitialContext },
   initial: "Idle",
-  invoke: {
-    src: "onInit",
-    onDone: {
-      actions: assign(({ event }) => ({
-        integrityKeyTag: event.output.integrityKeyTag,
-        walletInstanceAttestation: event.output.walletInstanceAttestation
-      }))
-    },
-    target: ".Idle"
-  },
+  entry: "onInit",
   states: {
     Idle: {
       description: "The machine is in idle, ready to start the issuance flow",
