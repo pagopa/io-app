@@ -3212,7 +3212,7 @@ features:
   itWallet:
     credentialName:
       eid: Identità Digitale
-      mdl: Patente di Guida
+      mdl: Patente di guida
       dc: Carta Europea della Disabilità
       ts: Tessera Sanitaria - Tessera europea di assicurazione malattia
     wallet:
@@ -3256,7 +3256,7 @@ features:
         releasedBy: Emissione versione digitale
         attachments: "Attachments"
         mdl:
-          category: "Licenza {{category}}"
+          category: "Patente {{category}}"
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
           restrictionConditions: "Codici"
@@ -3311,11 +3311,11 @@ features:
     issuance:
       credentialAuth:
         title: "{{credentialName}}: dati necessari"
-        subtitle: "Saranno condivisi con **{{organization}}** per il rilascio della credenziale"
+        subtitle: "Saranno condivisi con **{{organization}}** per il rilascio della versione digitale del documento."
         requiredClaims: Dati richiesti
         disclaimer:
           0: I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.
-          1: I dati saranno condivisi solo per il tempo necessario al rilascio della credenziale.
+          1: I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento.
         tos: "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione/)."
       eidPreview:
         title: Identità verificata
@@ -3331,7 +3331,7 @@ features:
             title: "Chi è?"
             subtitle: "È l'ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti."
         actions:
-          primary: Aggiungi al portafoglio
+          primary: Aggiungi al Portafoglio
           secondary: Annulla
       eidResult:
         success:
@@ -3359,8 +3359,8 @@ features:
         body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
         primaryAction: Ho capito
       asyncCredentialError:
-        title: Motorizzazione Civile ha preso in carico la tua richiesta
-        body: Riceverai un messaggio in app per continuare appena Motorizzazione Civile avrà elaborato la tua richiesta.
+        title: La Motorizzazione Civile ha preso in carico la tua richiesta
+        body: Riceverai un messaggio in app per continuare appena La Motorizzazione Civile avrà elaborato la tua richiesta.
         primaryAction: Ho capito
       credentialAlreadyAdded:
         title: Hai già questo documento
@@ -3383,10 +3383,10 @@ features:
     presentation:
       alerts:
         mdl:
-          content: "In questa fase, la versione digitale della Patente non ha lo stesso valore del documento fisico: dovrai presentarla insieme a un documento di identità valido."
+          content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle Forze dell'ordine."
           action: Scopri di più
         ehc:
-          content: "Puoi usare la tua Tessera Sanitaria - Tessera Europea di Assicurazione Malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
+          content: "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
           action: "Scopri di più"
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
