@@ -5,8 +5,8 @@ import { ItwTags } from "../tags";
 import {
   GetWalletAttestationActorParams,
   OnInitActorOutput,
-  StartCieAuthFlowActorParams,
-  type RequestEidActorParams
+  type RequestEidActorParams,
+  StartCieAuthFlowActorParams
 } from "./actors";
 import { CieAuthContext, Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -177,7 +177,7 @@ export const itwEidIssuanceMachine = setup({
         "accept-ipzs-privacy": {
           target: "UserIdentification"
         },
-        "error-ipzs-privacy": {
+        error: {
           target: "#itwEidIssuanceMachine.Failure"
         },
         back: "#itwEidIssuanceMachine.TosAcceptance"

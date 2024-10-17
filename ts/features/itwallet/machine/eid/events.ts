@@ -19,10 +19,6 @@ export type AcceptIpzsPrivacy = {
   type: "accept-ipzs-privacy";
 };
 
-export type ErrorIpzsPrivacy = {
-  type: "error-ipzs-privacy";
-};
-
 export type AddToWallet = {
   type: "add-to-wallet";
 };
@@ -76,6 +72,12 @@ export type Abort = {
   type: "abort";
 };
 
+export type Error = {
+  type: "error";
+  // Add a custom error code to the error event to distinguish between different errors. Add a new error code for each different error if needed.
+  scope: "ipzs-privacy";
+};
+
 export type EidIssuanceEvents =
   | Reset
   | Start
@@ -94,4 +96,4 @@ export type EidIssuanceEvents =
   | NfcEnabled
   | Abort
   | ErrorActorEvent
-  | ErrorIpzsPrivacy;
+  | Error;
