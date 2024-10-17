@@ -27,6 +27,22 @@ describe("capitalize", () => {
   it("should return a string where each word has first char in uppercase-5", () => {
     expect(capitalize("   hello,world   ", ",")).toEqual("   Hello,World   ");
   });
+
+  it("should return a string where each word has the first char in uppercase even after an apostrophe", () => {
+    expect(capitalize("Capit'Alize")).toEqual("Capit'Alize");
+  });
+
+  it("should return a string where each word has the first char in uppercase even after an apostrophe-2", () => {
+    expect(capitalize("capit'alize")).toEqual("Capit'alize");
+  });
+
+  it("should return a string where each word has the first char in uppercase even after an apostrophe-3", () => {
+    expect(capitalize("capit'alize")).toEqual("Capit'alize");
+  });
+
+  it("should return a string where each word has the first char in uppercase even after an apostrophe-4", () => {
+    expect(capitalize("Capit'alize")).toEqual("Capit'alize");
+  });
 });
 
 describe("isStringNullyOrEmpty", () => {
