@@ -14,10 +14,11 @@ export enum AuthorizationStatus {
   NotDetermined = 0,
   StatusDenied = 1,
   Authorized = 2,
-  Provisional = 3
+  Provisional = 3,
+  Ephemeral = 4 // This is a state that may be returned by iOS (as a number) but it is not mapped in the iOS library
 }
 
-const checkPermissionAndroid = () =>
+export const checkPermissionAndroid = () =>
   new Promise<boolean>(resolve =>
     PushNotification.checkPermissions(data => {
       // On Android, only 'alert' has a value
@@ -25,18 +26,22 @@ const checkPermissionAndroid = () =>
     })
   );
 
-const checkPermissioniOS = () =>
+export const checkPermissioniOS = () =>
   new Promise<boolean>(resolve =>
     PushNotificationIOS.checkPermissions(({ authorizationStatus }) => {
+      // On iOS, 'authorizationStatus' is the parameter that
+      // reflects the notification permission status ('alert'
+      // is just one of the presentation's options)
       resolve(
-        authorizationStatus !== AuthorizationStatus.NotDetermined &&
+        authorizationStatus !== undefined &&
+          authorizationStatus !== AuthorizationStatus.NotDetermined &&
           authorizationStatus !== AuthorizationStatus.StatusDenied
       );
     })
   );
 
 export const checkNotificationPermissions = () =>
-  isIos ? checkPermissioniOS() : checkPermissionAndroid();
+  isIos ? exports.checkPermissioniOS() : exports.checkPermissionAndroid(); // 'exports.' is needed to test this function while mocking the internal ones
 
 const requestPermissioniOS = () =>
   pipe(
