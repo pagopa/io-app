@@ -1397,6 +1397,9 @@ wallet:
         subtitle: Controlla di aver seguito correttamente le istruzioni della tua banca o app di pagamento.
         primaryAction: Chiudi
         secondaryAction: Scopri di più
+        bottomSheet:
+          title: "Cosa fare se il salvataggio non va a buon fine?"
+          description: "**Carta di credito o debito**\n\nTi invitiamo a verificare con la tua banca. I casi più frequenti sono:\n\n1. La tua carta non è abilitata agli acquisti online.\n2. Non hai ancora attivato il servizio 3DS: si tratta di un sistema di sicurezza legato ai pagamenti online.\n3. La tua carta è stata sospesa o bloccata.\n4. Hai messo 'in pausa' la tua carta.\n\n\n**Altri metodi**\n\nContatta l'assistenza del tuo metodo e chiedi il motivo del rifiuto."
       TIMEOUT:
         title: La sessione è scaduta
         subtitle: Per la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione.
@@ -3212,6 +3215,11 @@ features:
       mdl: Patente di Guida
       dc: Carta Europea della Disabilità
       ts: Tessera Sanitaria - Tessera europea di assicurazione malattia
+    ipzsPrivacy:
+      title: I tuoi Documenti su IO sono al sicuro
+      warning: Premendo **Continua** dichiari di aver letto e compreso l’**Informativa Privacy**.
+      button:
+        label: Continua
     wallet:
       active: Attivo
       inactive: Non attivo
@@ -3247,11 +3255,11 @@ features:
         placeOfBirth: "Luogo di nascita"
         expirationDate: "Scadenza"
         securityLevel: "Livello di sicurezza"
-        issuedBy: "Credenziale emessa da"
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
         releasedBy: Emissione versione digitale
         attachments: "Allegati"
+        authenticSource: Origine dei dati
         mdl:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
@@ -3284,7 +3292,6 @@ features:
           cieId:
             title: CieID
             subtitle: Usa credenziali e app CieID
-        privacy: Identificandoti dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione) di **Istituto Poligrafico e Zecca dello Stato**.
       nfc:
         title: Attiva l'NFC per continuare
         description: Per consentire a IO di leggere la tua CIE, attiva l'NFC dalle Impostazioni del tuo dispositivo.
@@ -3327,6 +3334,9 @@ features:
           about:
             title: "Chi è?"
             subtitle: "È l'ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti."
+          authSource:
+            title: "Chi è?"
+            subtitle: "È l'ente che detiene i dati contenuti all'interno del tuo documento."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
@@ -4051,6 +4061,8 @@ transaction:
     totalFee: Il totale comprende
     totalFeePsp: "di commissione, applicata da {{pspName}}."
     totalFeeNoPsp: "di commissione, applicata dal gestore della transazione (PSP)."
+    bannerImported:
+      content: "La ricevuta pagoPA non è disponibile. Rivolgiti all’Ente Creditore se hai bisogno della quietanza di pagamento, cioè il documento che attesta di aver saldato un debito."
     info:
       title: Informazioni sulla transazione
       pspName: Gestore della transazione (PSP)
