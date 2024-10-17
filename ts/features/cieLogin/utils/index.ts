@@ -13,3 +13,18 @@ export const getCieIDLoginUri = (spidLevel: SpidLevel, isUat: boolean) =>
   `${apiUrlPrefix}/login?entityID=${
     isUat ? "xx_servizicie_coll" : "xx_servizicie"
   }&authLevel=${spidLevel}`;
+
+/**
+ * @description this function checks if the given `url` is an authentication url
+ * @property livello1 refers to SpidL1
+ * @property livello2 refers to SpidL2
+ * @property nextUrl refers to SpidL3 for `iOS`
+ * @property openApp refers to SpidL3 for `android`
+ *
+ * @returns a `boolean`
+ */
+export const isAuthenticationUrl = (url: string) => {
+  const test = /\/(livello2|livello1|nextUrl|openApp)(\/|\?|$)/;
+
+  return test.test(url);
+};
