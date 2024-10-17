@@ -35,7 +35,7 @@ type ExtractSecondLevelKeyWithMinAppVersion<
 type CheckPropertyWithMinAppVersionParameters<
   T extends KeysWithMinAppVersion<Config>
 > = {
-  remoteConfig: O.Option<BackendStatus["config"]>;
+  remoteConfig: O.Option<Config>;
   mainLocalFlag: boolean;
   configPropertyName: T;
 } & (
@@ -54,13 +54,13 @@ type CheckPropertyWithMinAppVersionParameters<
 *
 * Details:
 * The fuction take an object with this property:
-* @property {Option\<BackendStatus\>} backendStatus - Our backendStatus object
+* @property {Option\<Config\>} remoteConfig - Our remoteConfig object
 * @property {boolean} mainLocalFlag - The local config that represents the feature
 * @property {KeysWithMinAppVersion\<Config\>} configPropertyName - A property that extends ObjectWithMinAppVersion in the Config object (from backendStatus)
 *
 * @example
 * isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: fastLoginConfig,
         configPropertyName: "fastLogin"
       });
@@ -72,7 +72,7 @@ type CheckPropertyWithMinAppVersionParameters<
 *
 * @example
 * isPropertyWithMinAppVersionEnabled({
-        backendStatus: store,
+        remoteConfig: store,
         mainLocalFlag: fastLoginConfig,
         configPropertyName: "fastLogin",
         optionalLocalFlag: optInFastLoginConfig,

@@ -5,6 +5,7 @@ import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/bac
 import { GlobalState } from "../../../../../store/reducers/types";
 import { getAppVersion } from "../../../../../utils/appVersion";
 import { isFastLoginEnabledSelector } from "..";
+import { Config } from "../../../../../../definitions/content/Config";
 
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: jest.fn().mockReturnValue("1.2.3.4"),
@@ -98,20 +99,15 @@ describe("FastLogin remote flag test", () => {
           }
         }
       },
-      backendStatus: {
-        status: O.some({
-          ...status,
-          config: {
-            ...status.config,
-            fastLogin: {
-              min_app_version: {
-                android: minAppVersion,
-                ios: minAppVersion
-              }
-            }
+      remoteConfig: O.some({
+        ...status.config,
+        fastLogin: {
+          min_app_version: {
+            android: minAppVersion,
+            ios: minAppVersion
           }
-        })
-      }
+        }
+      } as Config)
     } as unknown as GlobalState;
 
     const isFastLoginEnabled = isFastLoginEnabledSelector(customStore);

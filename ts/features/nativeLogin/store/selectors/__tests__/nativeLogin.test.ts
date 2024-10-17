@@ -80,20 +80,15 @@ describe("NativeLogin remote flag test", () => {
     expectedValue: boolean
   ) {
     const customStore = {
-      backendStatus: {
-        status: O.some({
-          ...status,
-          config: {
-            ...status.config,
-            nativeLogin: {
-              min_app_version: {
-                android: minAppVersion,
-                ios: minAppVersion
-              }
-            }
+      remoteConfig: O.some({
+        ...status.config,
+        nativeLogin: {
+          min_app_version: {
+            android: minAppVersion,
+            ios: minAppVersion
           }
-        })
-      }
+        }
+      })
     } as unknown as GlobalState;
 
     const isNativeLoginEnabled = isNativeLoginEnabledSelector(customStore);
