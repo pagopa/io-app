@@ -43,6 +43,10 @@ describe("capitalize", () => {
   it("should return a string where each word has the first char in uppercase even after an apostrophe-4", () => {
     expect(capitalize("capit'Alize")).toEqual("Capit'Alize");
   });
+
+  it("should return a string where each word has the first char in uppercase even after an apostrophe-5", () => {
+    expect(capitalize("CAPIT'ALIZE")).toEqual("Capit'Alize");
+  });
 });
 
 describe("isStringNullyOrEmpty", () => {
