@@ -23,6 +23,7 @@ import {
   CREDENTIALS_MAP,
   trackAddCredentialFailure,
   trackAddCredentialTimeout,
+  trackCredentialNotEntitledFailure,
   trackItWalletDeferredIssuing,
   trackWalletCreationFailed
 } from "../../analytics";
@@ -62,7 +63,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const closeIssuance = (cta_id: string) => {
     machineRef.send({ type: "close" });
     trackWalletCreationFailed({
-      reason: failure.type,
+      reason: failure.reason,
       cta_category: "custom_2",
       cta_id
     });
@@ -70,7 +71,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const retryIssuance = (cta_id: string) => {
     machineRef.send({ type: "retry" });
     trackWalletCreationFailed({
-      reason: failure.type,
+      reason: failure.reason,
       cta_category: "custom_1",
       cta_id
     });
@@ -156,6 +157,16 @@ const ContentView = ({ failure }: ContentViewProps) => {
       );
       return;
     }
+
+    if (failure.type === CredentialIssuanceFailureTypeEnum.NOT_ENTITLED) {
+      trackCredentialNotEntitledFailure({
+        reason: failure.reason,
+        type: failure.type,
+        credential: CREDENTIALS_MAP[storedCredential.credentialType]
+      });
+      return;
+    }
+
     if (failure.type === CredentialIssuanceFailureTypeEnum.GENERIC) {
       trackAddCredentialFailure({
         reason: failure.reason,

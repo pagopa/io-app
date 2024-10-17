@@ -15,21 +15,17 @@ import {
   selectFailureOption,
   selectIdentification
 } from "../../machine/eid/selectors";
-import {
-  ItwCredentialIssuanceMachineContext,
-  ItwEidIssuanceMachineContext
-} from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import {
-  CREDENTIALS_MAP,
   KoState,
-  trackAddCredentialTimeout,
   trackIdNotMatch,
+  trackItwIdRequestFailure,
+  trackItwIdRequestUnexpected,
   trackItwUnsupportedDevice,
   trackWalletCreationFailed
 } from "../../analytics";
-import { selectCredential } from "../../machine/credential/selectors";
 
 export const ItwIssuanceEidFailureScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -37,8 +33,6 @@ export const ItwIssuanceEidFailureScreen = () => {
     ItwEidIssuanceMachineContext.useSelector(selectFailureOption);
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
-  const storedCredential =
-    ItwCredentialIssuanceMachineContext.useSelector(selectCredential);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
@@ -78,7 +72,7 @@ export const ItwIssuanceEidFailureScreen = () => {
           ),
           onPress: () =>
             closeIssuance({
-              reason: failure.type,
+              reason: failure.reason,
               cta_category: "custom_1",
               cta_id: I18n.t(
                 "features.itWallet.issuance.genericError.primaryAction"
@@ -91,7 +85,7 @@ export const ItwIssuanceEidFailureScreen = () => {
           ),
           onPress: () =>
             closeIssuance({
-              reason: failure.type,
+              reason: failure.reason,
               cta_category: "custom_2",
               cta_id: I18n.t(
                 "features.itWallet.issuance.genericError.secondaryAction"
@@ -160,12 +154,14 @@ export const ItwIssuanceEidFailureScreen = () => {
       }
       if (
         failure.type === IssuanceFailureType.ISSUER_GENERIC &&
-        storedCredential
+        identification
       ) {
-        trackAddCredentialTimeout({
+        trackItwIdRequestFailure(identification.mode);
+      }
+      if (failure.type === IssuanceFailureType.GENERIC) {
+        trackItwIdRequestUnexpected({
           reason: failure.reason,
-          type: failure.type,
-          credential: CREDENTIALS_MAP[storedCredential.credentialType]
+          type: failure.type
         });
       }
     }, [failure]);

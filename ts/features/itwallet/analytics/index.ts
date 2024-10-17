@@ -15,7 +15,7 @@ import {
 } from "./enum";
 
 export type KoState = {
-  reason: string;
+  reason: unknown;
   cta_category: "custom_1" | "custom_2";
   cta_id: string;
 };
@@ -70,6 +70,11 @@ type ItwExit = {
 
 type AddCredentialFailure = {
   credential: MixPanelCredential;
+  reason: unknown;
+  type: string;
+};
+
+type IdUnexpectedFailure = {
   reason: unknown;
   type: string;
 };
@@ -496,6 +501,7 @@ export const trackIdNotMatch = (ITW_ID_method: ItwIdMethod) => {
   );
 };
 
+// TODO: Track IPZS timeout on eID flow
 export const trackItwIdRequestTimeout = (ITW_ID_method?: ItwIdMethod) => {
   if (ITW_ID_method) {
     void mixpanelTrack(
@@ -559,6 +565,27 @@ export const trackAddCredentialFailure = ({
   );
 };
 
+export const trackCredentialNotEntitledFailure = ({
+  credential,
+  reason,
+  type
+}: AddCredentialFailure) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_NOT_ENTITLED_FAILURE,
+    buildEventProperties("KO", "error", { credential, reason, type })
+  );
+};
+
+export const trackItwIdRequestUnexpected = ({
+  reason,
+  type
+}: IdUnexpectedFailure) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_ID_REQUEST_UNEXPECTED_FAILURE,
+    buildEventProperties("KO", "error", { reason, type })
+  );
+};
+
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
@@ -580,17 +607,21 @@ export const trackCredentialDeleteProperties = async (
 export const trackAllCredentialProfileAndSuperProperties = async (
   state: GlobalState
 ) => {
-  mixPanelCredentials.forEach(async credential => {
-    await updateMixpanelProfileProperties(state, {
-      property: credential,
-      value: "valid"
-    });
-    await updateMixpanelSuperProperties(state, {
-      property: credential,
-      value: "valid"
-    });
+  const promises = mixPanelCredentials.map(async credential => {
+    await Promise.all([
+      updateMixpanelProfileProperties(state, {
+        property: credential,
+        value: "valid"
+      }),
+      updateMixpanelSuperProperties(state, {
+        property: credential,
+        value: "valid"
+      })
+    ]);
   });
+  await Promise.all(promises);
 };
+
 // #endregion PROFILE PROPERTIES
 
 // #region CONFIRM
