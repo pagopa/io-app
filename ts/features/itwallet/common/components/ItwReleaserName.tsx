@@ -7,6 +7,7 @@ import {
   CREDENTIALS_MAP,
   trackWalletCredentialShowIssuer
 } from "../../analytics";
+import { itwIpzsPrivacyUrl } from "../../../../config";
 
 type Props = {
   credential: StoredCredential;
@@ -37,7 +38,10 @@ export const ItwReleaserName = ({ credential, isPreview }: Props) => {
           "features.itWallet.issuance.credentialPreview.bottomSheet.about.title"
         ),
         body: I18n.t(
-          "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle"
+          "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle",
+          {
+            privacyUrl: itwIpzsPrivacyUrl
+          }
         )
       }
     ]

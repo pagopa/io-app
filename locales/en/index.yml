@@ -3333,7 +3333,7 @@ features:
         bottomSheet:
           about:
             title: "Chi è?"
-            subtitle: "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.\n\n Per sapere come tratta i tuoi dati consulta l’[Informativa Privacy](https://io.italia.it/informativa-ipzs). "
+            subtitle: "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.\n\n Per sapere come tratta i tuoi dati consulta l’[Informativa Privacy]({{privacyUrl}}). "
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
