@@ -48,15 +48,19 @@ export function* checkWalletInstanceStateSaga(): Generator<
 > {
   // We start the warming up process of the integrity service on Android
   // TODO: consider the result of the operation to decide whether to proceed or not [SIW-1759]
-  yield* call(ensureIntegrityServiceIsReady);
+  try {
+    yield* call(ensureIntegrityServiceIsReady);
 
-  const isItwOperationalOrValid = yield* select(
-    itwLifecycleIsOperationalOrValid
-  );
-  const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
+    const isItwOperationalOrValid = yield* select(
+      itwLifecycleIsOperationalOrValid
+    );
+    const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
 
-  // Only operational or valid wallet instances can be revoked.
-  if (isItwOperationalOrValid && O.isSome(integrityKeyTag)) {
-    yield* call(getAttestationOrResetWalletInstance, integrityKeyTag.value);
+    // Only operational or valid wallet instances can be revoked.
+    if (isItwOperationalOrValid && O.isSome(integrityKeyTag)) {
+      yield* call(getAttestationOrResetWalletInstance, integrityKeyTag.value);
+    }
+  } catch (e) {
+    // Ignore the error, the integrity service is not available and an error will occur if the wallet requests an attestation
   }
 }
