@@ -1,7 +1,6 @@
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
 import React, { useMemo } from "react";
 import { pipe } from "fp-ts/lib/function";
-import {} from "lodash";
 import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
@@ -10,6 +9,64 @@ import { StoredCredential } from "../utils/itwTypesUtils";
 type Props = {
   credential: StoredCredential;
   isPreview?: boolean;
+};
+
+type ItwMetadataIssuanceListItemProps = {
+  label: string;
+  value: string;
+  bottomSheet: {
+    contentTitle: string;
+    contentBody: string;
+    onPress?: () => void;
+  };
+  isPreview?: boolean;
+};
+
+const ItwMetadataIssuanceListItem = ({
+  label,
+  value,
+  bottomSheet: bottomSheetProps,
+  isPreview
+}: ItwMetadataIssuanceListItemProps) => {
+  const bottomSheet = useItwInfoBottomSheet({
+    title: value,
+    content: [
+      {
+        title: bottomSheetProps.contentTitle,
+        body: bottomSheetProps.contentBody
+      }
+    ]
+  });
+
+  const endElement: ListItemInfo["endElement"] = useMemo(() => {
+    if (isPreview) {
+      return;
+    }
+
+    return {
+      type: "iconButton",
+      componentProps: {
+        icon: "info",
+        accessibilityLabel: `Info ${label}`,
+        onPress: () => {
+          bottomSheetProps.onPress?.();
+          bottomSheet.present();
+        }
+      }
+    };
+  }, [isPreview, bottomSheet, bottomSheetProps, label]);
+
+  return (
+    <>
+      <ListItemInfo
+        endElement={endElement}
+        label={label}
+        value={value}
+        accessibilityLabel={`${label} ${value}`}
+      />
+      {bottomSheet.bottomSheet}
+    </>
+  );
 };
 
 const getAuthSource = (credential: StoredCredential) =>
@@ -31,64 +88,55 @@ const getAuthSource = (credential: StoredCredential) =>
 export const ItwIssuanceMetadata = ({ credential, isPreview }: Props) => {
   const releaserName =
     credential.issuerConf.federation_entity.organization_name;
-  const authSource = getAuthSource(credential);
+  const authSource = getAuthSource(credential) ?? "Ministero X";
 
-  const releaserNameLabel = I18n.t(
-    "features.itWallet.verifiableCredentials.claims.releasedBy"
+  const releaserNameBottomSheet = useMemo(
+    () => ({
+      contentTitle: I18n.t(
+        "features.itWallet.issuance.credentialPreview.bottomSheet.about.title"
+      ),
+      contentBody: I18n.t(
+        "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle"
+      )
+    }),
+    []
   );
-  const authSourceLabel = I18n.t(
-    "features.itWallet.verifiableCredentials.claims.authenticSource"
-  );
-  const releasedByBottomSheet = useItwInfoBottomSheet({
-    title:
-      releaserName ??
-      I18n.t("features.itWallet.generic.placeholders.organizationName"),
-    content: [
-      {
-        title: I18n.t(
-          "features.itWallet.issuance.credentialPreview.bottomSheet.about.title"
-        ),
-        body: I18n.t(
-          "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle"
-        )
-      }
-    ]
-  });
-  const endElement: ListItemInfo["endElement"] = useMemo(() => {
-    if (isPreview) {
-      return;
-    }
 
-    return {
-      type: "iconButton",
-      componentProps: {
-        icon: "info",
-        accessibilityLabel: "Info",
-        onPress: () => releasedByBottomSheet.present()
-      }
-    };
-  }, [isPreview, releasedByBottomSheet]);
+  const authSourceBottomSheet = useMemo(
+    () => ({
+      contentTitle: I18n.t(
+        "features.itWallet.issuance.credentialPreview.bottomSheet.authSource.title"
+      ),
+      contentBody: I18n.t(
+        "features.itWallet.issuance.credentialPreview.bottomSheet.authSource.subtitle"
+      ),
+      onPress: () => null
+    }),
+    []
+  );
 
   return (
     <>
       {authSource && (
-        <ListItemInfo
-          label={authSourceLabel}
+        <ItwMetadataIssuanceListItem
+          label={I18n.t(
+            "features.itWallet.verifiableCredentials.claims.authenticSource"
+          )}
           value={authSource}
-          accessibilityLabel={`${authSourceLabel} ${authSource}`}
+          isPreview={isPreview}
+          bottomSheet={authSourceBottomSheet}
         />
       )}
       {authSource && releaserName && <Divider />}
       {releaserName && (
-        <>
-          <ListItemInfo
-            endElement={endElement}
-            label={releaserNameLabel}
-            value={releaserName}
-            accessibilityLabel={`${releaserNameLabel} ${releaserName}`}
-          />
-          {releasedByBottomSheet.bottomSheet}
-        </>
+        <ItwMetadataIssuanceListItem
+          label={I18n.t(
+            "features.itWallet.verifiableCredentials.claims.releasedBy"
+          )}
+          value={releaserName}
+          isPreview={isPreview}
+          bottomSheet={releaserNameBottomSheet}
+        />
       )}
     </>
   );
