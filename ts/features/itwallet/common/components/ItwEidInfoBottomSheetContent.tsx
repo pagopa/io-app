@@ -7,7 +7,6 @@ import {
   IOStyles,
   VStack,
   H4,
-  Alert,
   ButtonSolid
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
@@ -16,18 +15,26 @@ import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { format } from "../../../../utils/dates";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { StoredCredential } from "../utils/itwTypesUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
+import { ItwEidLifecycleAlert } from "./ItwEidLifecycleAlert";
 
-export const ItwEidInfoBottomSheetTitle = () => (
+export const ItwEidInfoBottomSheetTitle = ({
+  isExpired
+}: {
+  isExpired: boolean;
+}) => (
   <HStack space={8} style={IOStyles.alignCenter}>
-    <Icon name="legalValue" color="blueIO-500" />
+    <Icon name="legalValue" color={isExpired ? "grey-300" : "blueIO-500"} />
     <H4>
-      {I18n.t("features.itWallet.presentation.bottomSheets.eidInfo.title")}
+      {I18n.t(
+        isExpired
+          ? "features.itWallet.presentation.bottomSheets.eidInfo.titleExpired"
+          : "features.itWallet.presentation.bottomSheets.eidInfo.title"
+      )}
     </H4>
   </HStack>
 );
@@ -64,15 +71,7 @@ const ItwEidInfoBottomSheetContent = ({ navigation }: Props) => {
             </React.Fragment>
           ))}
         </View>
-        {credential.jwt.issuedAt && (
-          <Alert
-            variant="success"
-            content={I18n.t(
-              "features.itWallet.presentation.bottomSheets.eidInfo.alert.valid",
-              { issuanceDate: format(credential.jwt.issuedAt, "DD-MM-YYYY") }
-            )}
-          />
-        )}
+        <ItwEidLifecycleAlert />
         <IOMarkdown
           content={I18n.t(
             "features.itWallet.presentation.bottomSheets.eidInfo.contentBottom"
