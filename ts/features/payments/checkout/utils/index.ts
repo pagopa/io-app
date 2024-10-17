@@ -52,13 +52,13 @@ export const getPaymentPhaseFromStep = (
 ): PaymentAnalyticsPhase => {
   switch (step) {
     case WalletPaymentStepEnum.PICK_PAYMENT_METHOD:
-      return "verifica";
+      return "attiva";
     case WalletPaymentStepEnum.PICK_PSP:
       return "attiva";
     case WalletPaymentStepEnum.CONFIRM_TRANSACTION:
       return "pagamento";
     default:
-      return "pagamento";
+      return "verifica";
   }
 };
 

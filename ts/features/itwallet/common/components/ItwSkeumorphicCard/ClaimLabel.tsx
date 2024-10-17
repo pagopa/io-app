@@ -39,6 +39,9 @@ export const ClaimLabel: React.FunctionComponent<
     font: "TitilliumSansPro",
     fontStyle: { fontSize: fontSize * fontScale, textTransform },
     lineBreakMode: "head",
-    numberOfLines: 1
+    numberOfLines: 1,
+    // This text should not be read by the voiceover.
+    // If you want to make it accessible use the parent components
+    accessible: false
   });
 };

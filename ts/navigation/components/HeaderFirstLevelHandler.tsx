@@ -1,4 +1,7 @@
-import { ActionProp, HeaderFirstLevel } from "@pagopa/io-app-design-system";
+import {
+  HeaderActionProps,
+  HeaderFirstLevel
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { ComponentProps, useCallback, useMemo } from "react";
@@ -158,7 +161,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     }
   }, [canNavigateIfIsArchivingCallback, navigateToSettingMainScreen]);
 
-  const settingsAction: ActionProp = useMemo(
+  const settingsAction: HeaderActionProps = useMemo(
     () => ({
       icon: "coggle",
       accessibilityLabel: I18n.t("global.buttons.settings"),
@@ -167,7 +170,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     [navigateToSettingMainScreen]
   );
 
-  const settingsActionInMessageSection: ActionProp = useMemo(
+  const settingsActionInMessageSection: HeaderActionProps = useMemo(
     () => ({
       icon: "coggle",
       accessibilityLabel: I18n.t("global.buttons.settings"),
@@ -176,7 +179,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     [navigateToSettingMainScreenFromMessageSection]
   );
 
-  const settingsActionInServicesSection: ActionProp = useMemo(
+  const settingsActionInServicesSection: HeaderActionProps = useMemo(
     () => ({
       icon: "coggle",
       accessibilityLabel: I18n.t("global.buttons.settings"),
@@ -195,7 +198,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     [currentRouteName]
   );
   const startSupportRequest = useStartSupportRequest(requestParams);
-  const helpAction: ActionProp = useMemo(
+  const helpAction: HeaderActionProps = useMemo(
     () => ({
       icon: "help",
       accessibilityLabel: I18n.t(
@@ -211,7 +214,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     present: presentWalletHomeHeaderBottomsheet
   } = useWalletHomeHeaderBottomSheet();
 
-  const walletAction: ActionProp = useMemo(
+  const walletAction: HeaderActionProps = useMemo(
     () => ({
       icon: "add",
       accessibilityLabel: I18n.t("wallet.accessibility.addElement"),
@@ -221,7 +224,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     [presentWalletHomeHeaderBottomsheet]
   );
 
-  const searchMessageAction: ActionProp = useMemo(
+  const searchMessageAction: HeaderActionProps = useMemo(
     () => ({
       icon: "search",
       accessibilityLabel: I18n.t("global.accessibility.search"),
@@ -230,7 +233,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     [messageSearchCallback]
   );
 
-  const searchInstitutionAction: ActionProp = useMemo(
+  const searchInstitutionAction: HeaderActionProps = useMemo(
     () => ({
       icon: "search",
       accessibilityLabel: I18n.t("global.accessibility.search"),

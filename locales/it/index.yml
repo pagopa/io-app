@@ -740,6 +740,10 @@ authentication:
         description: Se hai SPID, entra su IO inserendo le tue credenziali. Puoi usare anche il tuo volto o l’impronta o il codice impostato per l’app del tuo fornitore di SPID.
         primary_action_label: Entra con SPID
       secondary_action_label: Chiudi
+    cie_not_installed:
+      title: Non riusciamo a trovare l'app CieID
+      description: Per accedere, devi avere l'app installata sul tuo dispositivo.
+      primary_action_label: Scarica CieID
   cie:
     genericTitle: Entra con CIE
     cie: CIE
@@ -1393,6 +1397,9 @@ wallet:
         subtitle: Controlla di aver seguito correttamente le istruzioni della tua banca o app di pagamento.
         primaryAction: Chiudi
         secondaryAction: Scopri di più
+        bottomSheet:
+          title: "Cosa fare se il salvataggio non va a buon fine?"
+          description: "**Carta di credito o debito**\n\nTi invitiamo a verificare con la tua banca. I casi più frequenti sono:\n\n1. La tua carta non è abilitata agli acquisti online.\n2. Non hai ancora attivato il servizio 3DS: si tratta di un sistema di sicurezza legato ai pagamenti online.\n3. La tua carta è stata sospesa o bloccata.\n4. Hai messo 'in pausa' la tua carta.\n\n\n**Altri metodi**\n\nContatta l'assistenza del tuo metodo e chiedi il motivo del rifiuto."
       TIMEOUT:
         title: La sessione è scaduta
         subtitle: Per la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione.
@@ -1949,6 +1956,9 @@ wallet:
       PAYPAL_REMOVED_ERROR:
         title: Autorizzazione negata
         subtitle: Potresti avere rimosso pagoPA dai pagamenti automatici di PayPal. Elimina il conto PayPal dal tuo Portafoglio, aggiungilo di nuovo e riprova ad effettuare il pagamento.
+      IN_APP_BROWSER_CLOSED_BY_USER:
+        title: Hai interrotto il pagamento
+        subtitle: Verifica l’esito dalla sezione Pagamenti. Se intendi pagare, attendi qualche minuto prima di riprovare.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -3433,6 +3443,18 @@ features:
         title: Certificato di autenticità
         usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
         certifiedLabel: Questo documento è certificato dall'ente emittente.
+    walletRevocation:
+      cta: Disattiva Documenti su IO
+      confirmScreen:
+        title: Vuoi davvero disattivare Documenti su IO?
+        subtitle: "Eliminerai i documenti che hai aggiunto al Portafoglio.\nSe cambi idea, potrai riattivare Documenti su IO in futuro."
+        action: Conferma e continua
+      loadingScreen:
+        title: Stiamo disattivando Documenti su IO...
+        subtitle: Attendi qualche secondo
+      failureScreen:
+        title: Si è verificato un errore imprevisto
+        subtitle: Non è stato possibile disattivare il servizio. Riprova.
 support:
   ticketList:
     noTicket:

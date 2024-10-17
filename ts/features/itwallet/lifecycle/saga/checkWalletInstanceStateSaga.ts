@@ -14,6 +14,7 @@ import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 export function* getAttestationOrResetWalletInstance(integrityKeyTag: string) {
   const sessionToken = yield* select(sessionTokenSelector);
   assert(sessionToken, "Missing session token");
+
   const isWalletInstanceAttestationValid = yield* select(
     itwIsWalletInstanceAttestationValidSelector
   );
@@ -26,7 +27,6 @@ export function* getAttestationOrResetWalletInstance(integrityKeyTag: string) {
   // If the Wallet Instance Attestation is not present or it has expired
   // we need to request a new one
   try {
-    yield* call(ensureIntegrityServiceIsReady);
     yield* call(getAttestation, integrityKeyTag, sessionToken);
   } catch (err) {
     if (
@@ -46,13 +46,21 @@ export function* checkWalletInstanceStateSaga(): Generator<
   ReduxSagaEffect,
   void
 > {
-  const isItwOperationalOrValid = yield* select(
-    itwLifecycleIsOperationalOrValid
-  );
-  const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
+  // We start the warming up process of the integrity service on Android
+  // TODO: consider the result of the operation to decide whether to proceed or not [SIW-1759]
+  try {
+    yield* call(ensureIntegrityServiceIsReady);
 
-  // Only operational or valid wallet instances can be revoked.
-  if (isItwOperationalOrValid && O.isSome(integrityKeyTag)) {
-    yield* call(getAttestationOrResetWalletInstance, integrityKeyTag.value);
+    const isItwOperationalOrValid = yield* select(
+      itwLifecycleIsOperationalOrValid
+    );
+    const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
+
+    // Only operational or valid wallet instances can be revoked.
+    if (isItwOperationalOrValid && O.isSome(integrityKeyTag)) {
+      yield* call(getAttestationOrResetWalletInstance, integrityKeyTag.value);
+    }
+  } catch (e) {
+    // Ignore the error, the integrity service is not available and an error will occur if the wallet requests an attestation
   }
 }
