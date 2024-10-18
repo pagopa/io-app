@@ -7,9 +7,9 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwDiscoveryInfoScreen } from "../ItwDiscoveryInfoScreen";
+import ItwIpzsPrivacyScreen from "../ItwIpzsPrivacyScreen";
 
-describe("Test ItwDiscoveryInfo screen", () => {
+describe("Test ItwIpzsPrivacy screen", () => {
   it("it should render the screen correctly", () => {
     const component = renderComponent();
     expect(component).toBeTruthy();
@@ -29,10 +29,10 @@ const renderComponent = () => {
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwEidIssuanceMachineContext.Provider logic={logic}>
-        <ItwDiscoveryInfoScreen />
+        <ItwIpzsPrivacyScreen />
       </ItwEidIssuanceMachineContext.Provider>
     ),
-    ITW_ROUTES.DISCOVERY.INFO,
+    ITW_ROUTES.DISCOVERY.IPZS_PRIVACY,
     {},
     createStore(appReducer, globalState as any)
   );

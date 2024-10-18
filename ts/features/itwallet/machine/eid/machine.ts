@@ -4,7 +4,6 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
   GetWalletAttestationActorParams,
-  OnInitActorOutput,
   StartCieAuthFlowActorParams,
   type RequestEidActorParams
 } from "./actors";
@@ -29,6 +28,7 @@ export const itwEidIssuanceMachine = setup({
   },
   actions: {
     navigateToTosScreen: notImplemented,
+    navigateToIpzsPrivacyScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
     navigateToIdpSelectionScreen: notImplemented,
     navigateToEidPreviewScreen: notImplemented,
@@ -49,10 +49,11 @@ export const itwEidIssuanceMachine = setup({
     handleSessionExpired: notImplemented,
     abortIdentification: notImplemented,
     resetWalletInstance: notImplemented,
-    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) }))
+    trackWalletInstanceRevocation: notImplemented,
+    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
+    onInit: notImplemented
   },
   actors: {
-    onInit: fromPromise<OnInitActorOutput>(notImplemented),
     createWalletInstance: fromPromise<string>(notImplemented),
     revokeWalletInstance: fromPromise<void>(notImplemented),
     getWalletAttestation: fromPromise<string, GetWalletAttestationActorParams>(
@@ -76,16 +77,7 @@ export const itwEidIssuanceMachine = setup({
   id: "itwEidIssuanceMachine",
   context: { ...InitialContext },
   initial: "Idle",
-  invoke: {
-    src: "onInit",
-    onDone: {
-      actions: assign(({ event }) => ({
-        integrityKeyTag: event.output.integrityKeyTag,
-        walletInstanceAttestation: event.output.walletInstanceAttestation
-      }))
-    },
-    target: ".Idle"
-  },
+  entry: "onInit",
   states: {
     Idle: {
       description: "The machine is in idle, ready to start the issuance flow",
@@ -116,7 +108,7 @@ export const itwEidIssuanceMachine = setup({
             target: "WalletInstanceAttestationObtainment"
           },
           {
-            target: "UserIdentification"
+            target: "IpzsPrivacyAcceptance"
           }
         ]
       }
@@ -154,7 +146,11 @@ export const itwEidIssuanceMachine = setup({
       invoke: {
         src: "revokeWalletInstance",
         onDone: {
-          actions: ["resetWalletInstance", "closeIssuance"]
+          actions: [
+            "resetWalletInstance",
+            "closeIssuance",
+            "trackWalletInstanceRevocation"
+          ]
         },
         onError: {
           actions: assign(
@@ -178,7 +174,7 @@ export const itwEidIssuanceMachine = setup({
             })),
             { type: "storeWalletInstanceAttestation" }
           ],
-          target: "UserIdentification"
+          target: "IpzsPrivacyAcceptance"
         },
         onError: [
           {
@@ -190,6 +186,20 @@ export const itwEidIssuanceMachine = setup({
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]
+      }
+    },
+    IpzsPrivacyAcceptance: {
+      description:
+        "This state handles the acceptance of the IPZS privacy policy",
+      entry: "navigateToIpzsPrivacyScreen",
+      on: {
+        "accept-ipzs-privacy": {
+          target: "UserIdentification"
+        },
+        error: {
+          target: "#itwEidIssuanceMachine.Failure"
+        },
+        back: "#itwEidIssuanceMachine.TosAcceptance"
       }
     },
     UserIdentification: {
@@ -220,7 +230,7 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.UserIdentification.Completed"
               }
             ],
-            back: "#itwEidIssuanceMachine.TosAcceptance"
+            back: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
           }
         },
         Spid: {

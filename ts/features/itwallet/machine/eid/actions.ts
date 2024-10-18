@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { IOToast } from "@pagopa/io-app-design-system";
-import { ActionArgs } from "xstate";
+import { ActionArgs, assign } from "xstate";
+import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { checkCurrentSession } from "../../../../store/actions/authentication";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
@@ -16,17 +17,26 @@ import {
 import { ItwLifecycleState } from "../../lifecycle/store/reducers";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
+import { trackItwDeactivated } from "../../analytics";
+import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
+import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
-  dispatch: ReturnType<typeof useIODispatch>,
+  store: ReturnType<typeof useIOStore>,
   toast: IOToast
 ) => ({
   navigateToTosScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO
+    });
+  },
+
+  navigateToIpzsPrivacyScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.DISCOVERY.IPZS_PRIVACY
     });
   },
 
@@ -124,20 +134,22 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   setWalletInstanceToOperational: () => {
-    dispatch(
+    store.dispatch(
       itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL)
     );
   },
 
   setWalletInstanceToValid: () => {
-    dispatch(itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_VALID));
+    store.dispatch(
+      itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_VALID)
+    );
   },
 
   storeIntegrityKeyTag: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assert(context.integrityKeyTag, "integrityKeyTag is undefined");
-    dispatch(itwStoreIntegrityKeyTag(context.integrityKeyTag));
+    store.dispatch(itwStoreIntegrityKeyTag(context.integrityKeyTag));
   },
 
   storeWalletInstanceAttestation: ({
@@ -147,7 +159,7 @@ export const createEidIssuanceActionsImplementation = (
       context.walletInstanceAttestation,
       "walletInstanceAttestation is undefined"
     );
-    dispatch(
+    store.dispatch(
       itwWalletInstanceAttestationStore(context.walletInstanceAttestation)
     );
   },
@@ -156,13 +168,13 @@ export const createEidIssuanceActionsImplementation = (
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assert(context.eid, "eID is undefined");
-    dispatch(itwCredentialsStore([context.eid]));
+    store.dispatch(itwCredentialsStore([context.eid]));
   },
 
   requestAssistance: () => {},
 
   handleSessionExpired: () =>
-    dispatch(checkCurrentSession.success({ isSessionValid: false })),
+    store.dispatch(checkCurrentSession.success({ isSessionValid: false })),
 
   abortIdentification: ({
     context
@@ -171,7 +183,24 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   resetWalletInstance: () => {
-    dispatch(itwLifecycleWalletReset());
+    store.dispatch(itwLifecycleWalletReset());
     toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
-  }
+  },
+
+  trackWalletInstanceRevocation: () => {
+    trackItwDeactivated(store.getState());
+  },
+
+  onInit: assign<Context, EidIssuanceEvents, unknown, EidIssuanceEvents, any>(
+    () => {
+      const state = store.getState();
+      const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(state);
+      const walletInstanceAttestation =
+        itwWalletInstanceAttestationSelector(state);
+      return {
+        integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
+        walletInstanceAttestation
+      };
+    }
+  )
 });
