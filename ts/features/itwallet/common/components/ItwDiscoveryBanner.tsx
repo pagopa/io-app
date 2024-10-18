@@ -2,7 +2,6 @@ import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import React, { ReactElement } from "react";
 import { StyleSheet, View } from "react-native";
-import { itwTrialId } from "../../../../config";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -38,10 +37,10 @@ export const ItwDiscoveryBannerStandalone = (
 ) => {
   const [isVisible, setVisible] = React.useState(true);
 
-  const isItwTrialActive = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
 
+  const isItwTrialActive = useIOSelector(isItwTrialActiveSelector);
   const shouldBeHidden = React.useMemo(
     () =>
       // Banner should be hidden if:
@@ -88,7 +87,7 @@ export const ItwDiscoveryBanner = ({
 
   const trackBannerProperties = React.useMemo(
     () => ({
-      banner_id: itwTrialId,
+      banner_id: "itwDiscoveryBannerTestID",
       banner_page: route.name,
       banner_landing: "ITW_INTRO"
     }),
@@ -108,6 +107,7 @@ export const ItwDiscoveryBanner = ({
     trackItWalletBannerClosure(trackBannerProperties);
     handleOnClose?.();
   };
+  // trailID
 
   return (
     <View style={!ignoreMargins && styles.margins}>
