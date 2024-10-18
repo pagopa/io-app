@@ -191,17 +191,13 @@ export const useIOBottomSheetModal = ({
     <BottomSheetModal
       style={styles.bottomSheet}
       footerComponent={(_: BottomSheetFooterProps) => footerComponent}
+      enableDynamicSizing={false}
       snapPoints={[...snapPoint]}
       ref={bottomSheetModalRef}
       handleComponent={_ => bottomSheetProps.config.handleComponent}
       backdropComponent={BackdropElement}
       enableDismissOnClose={true}
       accessible={false}
-      // set this attribute to an empty string to avoid the default announcement from the library
-      accessibilityPositionChangeAnnouncement={""}
-      handleComponentAccessibility={{
-        accessible: false
-      }}
       importantForAccessibility={"yes"}
       onDismiss={handleDismiss}
     >
@@ -251,10 +247,12 @@ export const useIOBottomSheetAutoresizableModal = (
   const handleContentOnLayout = React.useCallback(
     (event: LayoutChangeEvent) => {
       const { height } = event.nativeEvent.layout;
-      const snapPoint = insets.bottom + bottomPadding + height;
+      const snapPointWithPadding = insets.bottom + bottomPadding + height;
 
       setSnapPoint(
-        fullScreen ? snapPoint : Math.min(screenHeight - insets.top, snapPoint)
+        fullScreen
+          ? snapPointWithPadding
+          : Math.min(screenHeight - insets.top, snapPointWithPadding)
       );
     },
     [insets, fullScreen, bottomPadding]
