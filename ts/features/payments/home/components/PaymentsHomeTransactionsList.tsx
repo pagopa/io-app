@@ -17,6 +17,7 @@ import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTra
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { PaymentsBizEventsListItemTransaction } from "../../bizEventsTransaction/components/PaymentsBizEventsListItemTransaction";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { BannerErrorState } from "../../../../components/ui/BannerErrorState";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { PaymentsTransactionBizEventsRoutes } from "../../bizEventsTransaction/navigation/routes";
 import { PaymentsHomeEmptyScreenContent } from "./PaymentsHomeEmptyScreenContent";
@@ -45,21 +46,28 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
     }
   });
 
-  const handleNavigateToTransactionDetails = (transaction: NoticeListItem) => {
-    if (transaction.eventId === undefined) {
-      return;
-    }
-    navigation.navigate(
-      PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR,
-      {
-        screen:
-          PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_DETAILS,
-        params: {
-          transactionId: transaction.eventId,
-          isPayer: transaction.isPayer
-        }
+  const handleNavigateToTransactionDetails = React.useCallback(
+    (transaction: NoticeListItem) => {
+      if (transaction.eventId === undefined) {
+        return;
       }
-    );
+      navigation.navigate(
+        PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR,
+        {
+          screen:
+            PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_DETAILS,
+          params: {
+            transactionId: transaction.eventId,
+            isPayer: transaction.isPayer
+          }
+        }
+      );
+    },
+    [navigation]
+  );
+
+  const handleOnRetry = () => {
+    dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
   };
 
   const handleNavigateToTransactionList = () => {
@@ -73,7 +81,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
     );
   };
 
-  const renderItems = () => {
+  const renderLatestNoticesItems = () => {
     if (!isLoading && pot.isSome(latestTransactionsPot)) {
       return (
         <View testID="PaymentsHomeTransactionsListTestID">
@@ -90,6 +98,19 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
             </React.Fragment>
           ))}
         </View>
+      );
+    }
+
+    if (pot.isError(latestTransactionsPot)) {
+      return (
+        <BannerErrorState
+          testID="PaymentsHomeTransactionsListTestID-error"
+          color="neutral"
+          label="Il caricamento delle ricevute è fallito."
+          icon="warningFilled"
+          actionText="Prova di nuovo"
+          onPress={handleOnRetry}
+        />
       );
     }
 
@@ -119,7 +140,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
         label={I18n.t("features.payments.transactions.title")}
         accessibilityLabel={I18n.t("features.payments.transactions.title")}
         endElement={
-          !isLoading
+          !isLoading && !pot.isError(latestTransactionsPot)
             ? {
                 type: "buttonLink",
                 componentProps: {
@@ -130,7 +151,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
             : undefined
         }
       />
-      {renderItems()}
+      {renderLatestNoticesItems()}
     </Animated.View>
   );
 };
