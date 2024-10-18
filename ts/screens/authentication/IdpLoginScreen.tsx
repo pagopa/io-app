@@ -262,7 +262,7 @@ const IdpLoginScreen = () => {
         errorCode,
         authMethod: "SPID",
         authLevel: "L2",
-        onRetrySpid: onRetryButtonPressed
+        onRetry: onRetryButtonPressed
       }
     });
   }, [errorCode, onRetryButtonPressed, navigate]);

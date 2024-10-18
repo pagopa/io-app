@@ -114,7 +114,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
           }
           weight="Regular"
         >
-          If you have the CieID app on your device, log in to IO by entering the app's credentials. You can also use your face or fingerprint, or the code you set up for the CieID app.
+          Se hai l’app CieID sul tuo dispositivo, inserisci il codice che hai impostato per l’app CieID  o usa il tuo volto o l’impronta.
         </Text>
       </View>
       <View

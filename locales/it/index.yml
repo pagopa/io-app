@@ -662,7 +662,7 @@ authentication:
   wizards:
     cie_id_wizard:
       title: Hai l'app CieID?
-      description: Se hai l’app CieID sul tuo dispositivo, accedi a IO inserendo le credenziali dell’app. Puoi usare anche il tuo volto o l’impronta, oppure il codice che hai impostato per l’app CieID.
+      description: Se hai l’app CieID sul tuo dispositivo, inserisci il codice che hai impostato per l’app CieID  o usa il tuo volto o l’impronta.
       actions:
         primary:
           label: Sì, entra con CieID

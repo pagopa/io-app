@@ -373,7 +373,7 @@ export const AuthSessionPage = () => {
         errorCode: requestInfo.errorCode,
         authMethod: "SPID",
         authLevel: "L2",
-        onRetrySpid: onRetry
+        onRetry
       }
     });
   }

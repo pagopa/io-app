@@ -1,46 +1,71 @@
-import { Route, useRoute } from "@react-navigation/native";
+import {
+  NavigatorScreenParams,
+  Route,
+  useRoute
+} from "@react-navigation/native";
 import React, { useCallback } from "react";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
+import { CieIdLoginProps } from "../../features/cieLogin/components/CieIdLoginWebView";
+import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import { UnlockAccessProps } from "./UnlockAccessComponent";
 import AuthErrorComponent from "./components/AuthErrorComponent";
 
 type CommonAuthErrorScreenProps = {
   errorCode?: string;
-  authMethod: "SPID" | "CIE";
 } & UnlockAccessProps;
 
 type SpidProps = {
   authMethod: "SPID";
-  onRetrySpid: () => void;
+  onRetry: () => void;
+};
+
+type CieIdProps = {
+  authMethod: "CIE_ID";
+  onRetry: () => void;
+  params: CieIdLoginProps;
 };
 
 type CieProps = {
   authMethod: "CIE";
-  onRetrySpid?: never;
 };
 
 export type AuthErrorScreenProps = CommonAuthErrorScreenProps &
-  (SpidProps | CieProps);
+  (SpidProps | CieProps | CieIdProps);
+
+const authScreenByAuthMethod = {
+  CIE: ROUTES.CIE_PIN_SCREEN,
+  SPID: ROUTES.AUTHENTICATION_IDP_SELECTION,
+  CIE_ID: ROUTES.AUTHENTICATION_CIE_ID_LOGIN
+};
 
 const AuthErrorScreen = () => {
   const route =
     useRoute<Route<typeof ROUTES.AUTH_ERROR_SCREEN, AuthErrorScreenProps>>();
-  const { errorCode, authMethod, authLevel, onRetrySpid } = route.params;
+  const { errorCode, authMethod, authLevel } = route.params;
 
   const navigation = useIONavigation();
 
+  const getNavigationParams =
+    useCallback((): NavigatorScreenParams<AuthenticationParamsList> => {
+      if (authMethod === "CIE_ID") {
+        return {
+          screen: authScreenByAuthMethod[authMethod],
+          params: route.params.params
+        };
+      }
+
+      return {
+        screen: authScreenByAuthMethod[authMethod]
+      };
+    }, [authMethod, route.params]);
+
   const onRetry = useCallback(() => {
-    if (authMethod === "SPID") {
-      onRetrySpid();
+    if (authMethod === "SPID" || authMethod === "CIE_ID") {
+      route.params.onRetry();
     }
-    navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen:
-        authMethod === "CIE"
-          ? ROUTES.CIE_PIN_SCREEN
-          : ROUTES.AUTHENTICATION_IDP_SELECTION
-    });
-  }, [authMethod, navigation, onRetrySpid]);
+    navigation.navigate(ROUTES.AUTHENTICATION, getNavigationParams());
+  }, [authMethod, navigation, route.params, getNavigationParams]);
 
   const onCancel = useCallback(() => {
     navigation.navigate(ROUTES.AUTHENTICATION, {
