@@ -35,6 +35,9 @@ export function* handleTrialSystemSubscription() {
     trialSystemActivationStatus.failure
   ]);
   if (isActionOf(trialSystemActivationStatus.failure, outputAction)) {
+    /* We check if the error is due to the user not being found in the trial system and we try to subscribe the user
+    the trial system returns 404 if the usuer is not found or if the trial id is not found. However, the trial id is
+    hardcoded in the config file and we assume it is correct so the only reason for the 404 is the user not being found. */
     const potStatus = yield* select(trialStatusPotSelector(itwTrialId));
     if (
       pot.isError(potStatus) &&

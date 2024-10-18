@@ -74,6 +74,10 @@ function* handleTrialSystemActivationStatus(
     }
 
     if (result.right.status === 404) {
+      /**
+       * 404 is returned when the user is not found in the trial system. However, the API also returns 404 when the trial id is not found.
+       * We assume the trial id is correct so the only reason for the 404 is the user not being found.
+       */
       yield* put(
         trialSystemActivationStatus.failure({
           trialId: action.payload,

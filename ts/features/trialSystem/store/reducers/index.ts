@@ -110,6 +110,11 @@ export const isUpdatingTrialStatusSelector =
       pot.isUpdating
     );
 
+/**
+ * Returns the pot state of a given trial
+ * @param id - The trial id
+ * @returns the pot state of the trial
+ */
 export const trialStatusPotSelector = (id: TrialId) => (state: GlobalState) =>
   pipe(
     state,
