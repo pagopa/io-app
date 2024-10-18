@@ -26,6 +26,7 @@ import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomS
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLifecycleAlert";
 import { WalletCardCategoryFilter } from "../types";
+import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/ItwUpcomingWalletBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import {
   WalletCardsCategoryContainer,
@@ -67,6 +68,7 @@ const WalletCardsContainer = () => {
       layout={LinearTransition.duration(200)}
     >
       <View testID="walletCardsContainerTestID">
+        <ItwUpcomingWalletBanner bottomSpacing={24} />
         <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
         {shouldRender("itw") && <ItwCardsContainer isStacked={stackCards} />}
         {shouldRender("other") && (

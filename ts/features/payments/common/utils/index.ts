@@ -15,10 +15,10 @@ import { getDateFromExpiryDate, isExpiredDate } from "../../../../utils/dates";
 import { WalletPaymentPspSortType } from "../../checkout/types";
 import { PaymentCardProps } from "../components/PaymentCard";
 import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
+import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { WalletCard } from "../../../newWallet/types";
 import { contentRepoUrl } from "../../../../config";
-import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
 import { LevelEnum } from "../../../../../definitions/content/SectionStatus";
 import { AlertVariant } from "./types";
 
@@ -170,13 +170,14 @@ export const getPaymentLogoFromWalletDetails = (
       details.brand,
       O.fromNullable,
       O.chain(findFirstCaseInsensitive(IOPaymentLogos)),
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       O.map(([logoName, _]) => logoName as IOLogoPaymentType),
       O.toUndefined
     );
   }
 };
 
-export const getTransactionLogo = (transaction: TransactionListItem) =>
+export const getTransactionLogo = (transaction: NoticeListItem) =>
   pipe(
     transaction.payeeTaxCode,
     O.fromNullable,
