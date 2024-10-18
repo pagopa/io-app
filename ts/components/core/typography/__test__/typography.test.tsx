@@ -6,7 +6,6 @@ import { calculateWeightColor } from "../common";
 import { Label } from "../Label";
 import { LabelSmall } from "../LabelSmall";
 import { Link } from "../Link";
-import { Monospace } from "../Monospace";
 
 describe("Test Typography Components", () => {
   it("LabelSmall Snapshot", () => {
@@ -53,10 +52,6 @@ describe("Test Typography Components", () => {
   it("Link Snapshot", () => {
     const link = TestRenderer.create(<Link>Text</Link>).toJSON();
     expect(link).toMatchSnapshot();
-  });
-  it("Monospace Snapshot", () => {
-    const monospace = TestRenderer.create(<Monospace>Text</Monospace>).toJSON();
-    expect(monospace).toMatchSnapshot();
   });
 });
 

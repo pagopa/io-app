@@ -4,7 +4,6 @@ import { Alert, View } from "react-native";
 import { Label as LegacyLabel } from "../../../components/core/typography/Label";
 import { LabelSmall as LegacyLabelSmall } from "../../../components/core/typography/LabelSmall";
 import { Link as LegacyLink } from "../../../components/core/typography/Link";
-import { Monospace as LegacyMonospace } from "../../../components/core/typography/Monospace";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 export const DSLegacyTypography = () => (
@@ -13,7 +12,6 @@ export const DSLegacyTypography = () => (
       <LegacyLabelSmallRow />
       <LegacyLabelRow />
       <LegacyLink onPress={() => Alert.alert("onPress link!")}>Link</LegacyLink>
-      <LegacyMonospace>MonoSpace</LegacyMonospace>
     </VStack>
   </DesignSystemScreen>
 );
