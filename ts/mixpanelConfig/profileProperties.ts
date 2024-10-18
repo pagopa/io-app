@@ -43,12 +43,11 @@ type ProfileProperties = {
   NOTIFICATION_PERMISSION: NotificationPermissionType;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
   TRACKING: MixpanelOptInTrackingType;
-  ITW_STATUS: ItwStatus;
-  ITW_ID: ItwId;
-  ITW_PG: ItwPg;
-  ITW_TS: ItwTs;
-  ITW_CED: ItwCed;
-  ITW_HAS_READ_IPZS_POLICY: boolean;
+  ITW_STATUS_V2: ItwStatus;
+  ITW_ID_V2: ItwId;
+  ITW_PG_V2: ItwPg;
+  ITW_TS_V2: ItwTs;
+  ITW_CED_V2: ItwCed;
   SAVED_PAYMENT_METHOD: number;
 };
 
@@ -67,11 +66,11 @@ export const updateMixpanelProfileProperties = async (
   const notificationsEnabled = await checkNotificationPermissions();
   const SERVICE_CONFIGURATION = serviceConfigHandler(state);
   const TRACKING = mixpanelOptInHandler(state);
-  const ITW_STATUS = walletStatusHandler();
-  const ITW_ID = idStatusHandler(state);
-  const ITW_PG = pgStatusHandler(state);
-  const ITW_TS = tsStatusHandler(state);
-  const ITW_CED = cedStatusHandler(state);
+  const ITW_STATUS_V2 = walletStatusHandler(state);
+  const ITW_ID_V2 = idStatusHandler(state);
+  const ITW_PG_V2 = pgStatusHandler(state);
+  const ITW_TS_V2 = tsStatusHandler(state);
+  const ITW_CED_V2 = cedStatusHandler(state);
   const paymentsAnalyticsData = getPaymentsAnalyticsConfiguration(state);
 
   const profilePropertiesObject: ProfileProperties = {
@@ -84,12 +83,11 @@ export const updateMixpanelProfileProperties = async (
       getNotificationPermissionType(notificationsEnabled),
     SERVICE_CONFIGURATION,
     TRACKING,
-    ITW_HAS_READ_IPZS_POLICY: false,
-    ITW_STATUS,
-    ITW_ID,
-    ITW_PG,
-    ITW_TS,
-    ITW_CED,
+    ITW_STATUS_V2,
+    ITW_ID_V2,
+    ITW_PG_V2,
+    ITW_TS_V2,
+    ITW_CED_V2,
     SAVED_PAYMENT_METHOD: paymentsAnalyticsData.savedPaymentMethods || 0
   };
 
@@ -121,8 +119,10 @@ const tosVersionHandler = (state: GlobalState): number | string => {
   return optInState ? optInState : "not set";
 };
 
-// TODO [SIW-1438]: Add dynamic profile properties
-const walletStatusHandler = (): ItwStatus => "L2";
+const walletStatusHandler = (state: GlobalState): ItwStatus => {
+  const credentialsState = itwCredentialsSelector(state);
+  return credentialsState.eid ? "L2" : "not_active";
+};
 
 const idStatusHandler = (state: GlobalState): ItwId => {
   const credentialsState = itwCredentialsSelector(state);

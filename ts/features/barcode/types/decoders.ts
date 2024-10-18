@@ -10,6 +10,7 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { decodePosteDataMatrix } from "../../../utils/payment";
+import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
@@ -43,6 +44,10 @@ export type DecodedIOBarcode =
       type: "IDPAY";
       authUrl: string;
       trxCode: string;
+    }
+  | {
+      type: "FCI";
+      signatureRequestId: SignatureRequestDetailView["id"];
     };
 
 // Barcode decoder function which is used to determine the type and content of a barcode
@@ -90,6 +95,18 @@ const decodePagoPABarcode: IOBarcodeDecoderFn = (data: string) =>
     O.alt(() => decodePagoPAQRCode(data))
   );
 
+const decodeFciBarcode: IOBarcodeDecoderFn = (data: string) =>
+  pipe(
+    data.match(
+      /^https:\/\/continua\.io\.pagopa\.it\/fci\/main\?signatureRequestId=([a-zA-Z0-9]+)$/
+    ),
+    O.fromNullable,
+    O.map(m => ({
+      type: "FCI",
+      signatureRequestId: m[1] as SignatureRequestDetailView["id"]
+    }))
+  );
+
 // Each type comes with its own decoded function which is used to identify the barcode content
 // To add a new barcode type, add a new entry to this object
 //
@@ -102,7 +119,8 @@ const decodePagoPABarcode: IOBarcodeDecoderFn = (data: string) =>
 // };
 export const IOBarcodeDecoders: IOBarcodeDecodersType = {
   IDPAY: decodeIdPayBarcode,
-  PAGOPA: decodePagoPABarcode
+  PAGOPA: decodePagoPABarcode,
+  FCI: decodeFciBarcode
 };
 
 type DecodeOptions = {
