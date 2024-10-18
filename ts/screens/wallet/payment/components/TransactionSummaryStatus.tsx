@@ -12,7 +12,7 @@ type StatusContentProps = {
   viewRef: React.RefObject<View>;
   backgroundColor: "orange" | "aqua";
   iconName: IOIcons;
-  foregroundColor: "white" | "bluegreyDark";
+  foregroundColor: "white" | "black";
   line1: string;
   line2?: string;
 };
@@ -104,7 +104,7 @@ export const TransactionSummaryStatus = (props: {
         viewRef,
         backgroundColor: "aqua",
         iconName: "ok",
-        foregroundColor: "bluegreyDark",
+        foregroundColor: "black",
         line1: I18n.t("wallet.errors.DUPLICATED")
       };
       break;

@@ -4,6 +4,7 @@ import {
   H2,
   H6,
   Icon,
+  Label,
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -20,7 +21,6 @@ import {
 } from "react-native";
 import { isError, isReady } from "../../../../common/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
-import { Label } from "../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -132,7 +132,7 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
         )}
       </View>
       <View style={IOStyles.row}>
-        <Label color={"blue"}>{formatNumberCentsToAmount(psp.fee)}</Label>
+        <Label color={"black"}>{formatNumberCentsToAmount(psp.fee)}</Label>
         <View style={{ justifyContent: "center" }}>
           <Icon name="chevronRightListItem" size={24} color="blue" />
         </View>

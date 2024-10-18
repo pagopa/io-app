@@ -3,14 +3,19 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
-import { VSpacer, ButtonOutline, Body, H4 } from "@pagopa/io-app-design-system";
+import {
+  VSpacer,
+  ButtonOutline,
+  Body,
+  H4,
+  Label
+} from "@pagopa/io-app-design-system";
 import { useNavigation, useRoute, Route } from "@react-navigation/native";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../../definitions/content/ZendeskCategory";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
-import { Label } from "../../components/core/typography/Label";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -81,7 +86,7 @@ const renderItem = (label: string, value?: string) => {
   return (
     <React.Fragment>
       <Body>{label}</Body>
-      <Label weight="Bold" color="bluegrey">
+      <Label weight="Bold" color="grey-700">
         {value}
       </Label>
       <VSpacer size={16} />
@@ -254,7 +259,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       <View style={IOStyles.flex}>
         <Body>{label}</Body>
       </View>
-      <Label weight="Bold" color="bluegreyDark">
+      <Label weight="Bold" color="grey-700">
         {value}
       </Label>
     </View>

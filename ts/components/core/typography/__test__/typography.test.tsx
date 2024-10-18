@@ -3,7 +3,6 @@ import TestRenderer from "react-test-renderer";
 import type { IOColors } from "@pagopa/io-app-design-system";
 import { IOFontWeight } from "../../fonts";
 import { calculateWeightColor } from "../common";
-import { Label } from "../Label";
 import { LabelSmall } from "../LabelSmall";
 
 describe("Test Typography Components", () => {
@@ -27,25 +26,6 @@ describe("Test Typography Components", () => {
         <LabelSmall color={color}>Text</LabelSmall>
       ).toJSON();
       expect(labelSmall).toMatchSnapshot();
-    });
-  });
-  it("Label Snapshot", () => {
-    const labelDefault = TestRenderer.create(<Label>Text</Label>).toJSON();
-    expect(labelDefault).toMatchSnapshot();
-
-    type BodyColors = React.ComponentProps<typeof Label>["color"];
-
-    const allowedColors: ReadonlyArray<BodyColors> = [
-      "blue",
-      "bluegrey",
-      "white"
-    ];
-
-    allowedColors.map(color => {
-      const label = TestRenderer.create(
-        <Label color={color}>Text</Label>
-      ).toJSON();
-      expect(label).toMatchSnapshot();
     });
   });
 });
