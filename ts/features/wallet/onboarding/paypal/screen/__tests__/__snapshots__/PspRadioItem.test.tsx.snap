@@ -11,19 +11,24 @@ exports[`PspRadioItem match snapshot 1`] = `
   }
 >
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="Semibold"
+    dynamicTypeRamp="headline"
     font="TitilliumSansPro"
     fontStyle={
       {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       [
         {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         {
           "color": "#17324D",
@@ -35,7 +40,6 @@ exports[`PspRadioItem match snapshot 1`] = `
     }
     testID="pspNameTestID"
     weight="Semibold"
-    weightColorFactory={[Function]}
   >
     PayTipper
   </Text>
