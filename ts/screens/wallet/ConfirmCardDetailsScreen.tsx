@@ -30,7 +30,6 @@ import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import image from "../../../img/wallet/errors/payment-unavailable-icon.png";
-import { InfoBox } from "../../components/box/InfoBox";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -259,14 +258,6 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
                 extraSpace={true}
                 hideFavoriteIcon={true}
               />
-              <VSpacer size={16} />
-              <InfoBox
-                alignedCentral={true}
-                iconSize={24}
-                iconColor="bluegreyDark"
-              >
-                <H6>{I18n.t("wallet.saveCard.notice")}</H6>
-              </InfoBox>
               <VSpacer size={24} />
               <View style={styles.preferredMethodContainer}>
                 <View style={IOStyles.flex}>
