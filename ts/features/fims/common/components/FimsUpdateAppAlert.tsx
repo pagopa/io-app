@@ -2,15 +2,15 @@ import {
   HeaderActionProps,
   HeaderSecondLevel
 } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import I18n from "../../../../i18n";
 import { openAppStoreUrl } from "../../../../utils/url";
 
 export const FimsUpdateAppAlert = () => {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   useOnlySupportRequestHeader();
   return (
     <OperationResultScreenContent
@@ -20,18 +20,20 @@ export const FimsUpdateAppAlert = () => {
       pictogram="updateOS"
       action={{
         label: I18n.t("btnUpdateApp"),
-        onPress: () => openAppStoreUrl()
+        onPress: () => openAppStoreUrl(),
+        testID: "primary-update-app"
       }}
       secondaryAction={{
         label: I18n.t("global.buttons.close"),
-        onPress: navigation.goBack
+        onPress: navigation.goBack,
+        testID: "secondary-update-app"
       }}
     />
   );
 };
 
 const useOnlySupportRequestHeader = () => {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const startSupportRequest = useStartSupportRequest({});
 
   React.useEffect(() => {

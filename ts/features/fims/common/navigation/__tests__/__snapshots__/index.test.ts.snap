@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FIMS_ROUTES should match expected values 1`] = `
+{
+  "CONSENTS": "FIMS_SSO_CONSENTS",
+  "HISTORY": "FIMS_HISTORY",
+  "MAIN": "FIMS_MAIN",
+}
+`;
