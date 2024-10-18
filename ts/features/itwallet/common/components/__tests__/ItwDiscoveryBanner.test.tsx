@@ -13,7 +13,7 @@ import { BackendStatusState } from "../../../../../store/reducers/backendStatus"
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
-import { ItwDiscoveryBanner } from "../ItwDiscoveryBanner";
+import { ItwDiscoveryBannerStandalone } from "../ItwDiscoveryBanner";
 import { itwTrialId } from "../../../../../config";
 
 type RenderOptions = {
@@ -103,7 +103,7 @@ const renderComponent = ({
 
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
-      ItwDiscoveryBanner,
+      ItwDiscoveryBannerStandalone,
       ROUTES.WALLET_HOME,
       {},
       store

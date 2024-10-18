@@ -4,9 +4,8 @@ import { Action } from "../../../store/actions/types";
 import { updateLandingScreenBannerVisibility } from "./actions";
 
 const localEnabledMap = {
-  ITW_DISCOVERY: true, // ITW DISCOVERY BANNER
-  SETTINGS_DISCOVERY: true,
-  DEV_TEST123: true // REMOVE_ME
+  ITW_DISCOVERY: true,
+  SETTINGS_DISCOVERY: true
 } as const;
 
 export type LandingScreenBannerId = keyof typeof localEnabledMap;

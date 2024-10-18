@@ -5,7 +5,7 @@ import Animated, { LinearTransition } from "react-native-reanimated";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { isItwEnabledSelector } from "../../../store/reducers/backendStatus";
-import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
+import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/ItwDiscoveryBanner";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import { isItwTrialActiveSelector } from "../../trialSystem/store/reducers";
 import {
@@ -63,7 +63,7 @@ const WalletCardsContainer = () => {
       layout={LinearTransition.duration(200)}
     >
       <View testID="walletCardsContainerTestID">
-        <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
+        <ItwDiscoveryBannerStandalone ignoreMargins={true} closable={false} />
         {shouldRender("itw") && <ItwCardsContainer isStacked={stackCards} />}
         {shouldRender("other") && (
           <OtherCardsContainer isStacked={stackCards} />

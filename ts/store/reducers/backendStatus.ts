@@ -9,6 +9,7 @@ import { Platform } from "react-native";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
+import { identity } from "io-ts";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
@@ -202,15 +203,15 @@ export const fimsDomainSelector = createSelector(
     )
 );
 
-export const LandingScreenBannerOrderSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): ReadonlyArray<string> | undefined =>
-    pipe(
-      backendStatus,
-      O.map(bs => bs.config.landing_banners?.priority_order),
-      O.toUndefined
-    )
-);
+const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
+export const LandingScreenBannerOrderSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    backendStatusSelector,
+    O.chainNullableK(bs => bs.config.landing_banners),
+    O.chainNullableK(bs => bs.priority_order),
+    O.fold(() => emptyArray, identity)
+  );
 
 /**
  * Return the remote config about the Premium Messages opt-in/out

@@ -1,30 +1,27 @@
-import { Banner } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { SettingsDiscoveryBanner } from "../../screens/profile/components/SettingsDiscoveryBanner";
-import { useIOSelector } from "../../store/hooks";
-import { ItwDiscoveryBanner } from "../itwallet/common/components/ItwDiscoveryBanner";
-import { LandingScreenBannerId } from "./store/reducer";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { LandingScreenBannerToRenderSelector } from "./store/selectors";
+import { landingScreenBannerMap } from "./utils/landingScreenBannerMap";
+import { updateLandingScreenBannerVisibility } from "./store/actions";
 
 export const LandingScreenBannerPicker = () => {
+  const dispatch = useIODispatch();
   const bannerToRender = useIOSelector(LandingScreenBannerToRenderSelector);
+
+  const closeHandler = React.useCallback(() => {
+    if (bannerToRender) {
+      dispatch(
+        updateLandingScreenBannerVisibility({
+          id: bannerToRender,
+          enabled: false
+        })
+      );
+    }
+  }, [bannerToRender, dispatch]);
 
   if (bannerToRender === undefined) {
     return <></>;
   }
-  return componentMap[bannerToRender];
-};
 
-const componentMap: { [key in LandingScreenBannerId]: React.ReactElement } = {
-  ITW_DISCOVERY: <ItwDiscoveryBanner />,
-  SETTINGS_DISCOVERY: <SettingsDiscoveryBanner />,
-  // REMOVE_ME
-  DEV_TEST123: (
-    <Banner
-      color="neutral"
-      pictogramName="feedback"
-      size="big"
-      title="TESTING"
-    />
-  )
+  return landingScreenBannerMap[bannerToRender].component(closeHandler);
 };
