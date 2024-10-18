@@ -3255,11 +3255,11 @@ features:
         placeOfBirth: "Luogo di nascita"
         expirationDate: "Scadenza"
         securityLevel: "Livello di sicurezza"
-        issuedBy: "Credenziale emessa da"
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
         releasedBy: Emissione versione digitale
         attachments: "Allegati"
+        authenticSource: Origine dei dati
         mdl:
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"
@@ -3334,6 +3334,9 @@ features:
           about:
             title: "Chi è?"
             subtitle: "È l'ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti."
+          authSource:
+            title: "Chi è?"
+            subtitle: "È l'ente che detiene i dati contenuti all'interno del tuo documento."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
@@ -4058,6 +4061,8 @@ transaction:
     totalFee: Il totale comprende
     totalFeePsp: "di commissione, applicata da {{pspName}}."
     totalFeeNoPsp: "di commissione, applicata dal gestore della transazione (PSP)."
+    bannerImported:
+      content: "La ricevuta pagoPA non è disponibile. Rivolgiti all’Ente Creditore se hai bisogno della quietanza di pagamento, cioè il documento che attesta di aver saldato un debito."
     info:
       title: Informazioni sulla transazione
       pspName: Gestore della transazione (PSP)

@@ -182,3 +182,47 @@ export const formatBytesWithUnit = (bytes: number) => {
   const unit = units[Math.min(i, units.length - 1)];
   return `${value} ${unit}`;
 };
+
+/**
+ * Capitalizes the first letter of each word in the given text, preserving leading and trailing spaces.
+ * Words are separated by the specified separator.
+ * Handles words with apostrophes by capitalizing the first letter of each sub-token.
+ *
+ * @param {string} text
+ * @param {string} [separator=" "]
+ * @returns {string}
+ *
+ * @example
+ * capitalizeTextName(" hello world "); // returns " Hello World "
+ *
+ * @example
+ * capitalizeTextName("d'angelo"); //returns "D'Angelo"
+ */
+
+export const capitalizeTextName = (
+  text: string,
+  separator: string = " "
+): string => {
+  // Match leading and trailing spaces
+  const leadingSpacesMatch = /^\s*/.exec(text);
+  const trailingSpacesMatch = /\s*$/.exec(text);
+
+  const leadingSpaces = leadingSpacesMatch ? leadingSpacesMatch[0] : "";
+  const trailingSpaces = trailingSpacesMatch ? trailingSpacesMatch[0] : "";
+
+  // Capitalize the words between the separators
+  const capitalizedText = text
+    .trim() // Remove leading/trailing spaces for processing
+    .split(separator)
+    .map(token =>
+      // Handle words with apostrophes
+      token
+        .split("'")
+        .map(subToken => _.upperFirst(subToken.toLowerCase()))
+        .join("'")
+    )
+    .join(separator);
+
+  // Re-add the leading and trailing spaces
+  return `${leadingSpaces}${capitalizedText}${trailingSpaces}`;
+};

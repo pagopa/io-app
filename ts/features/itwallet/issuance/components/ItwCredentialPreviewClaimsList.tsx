@@ -2,7 +2,7 @@ import { Divider } from "@pagopa/io-app-design-system";
 import React from "react";
 import { View } from "react-native";
 import { ItwCredentialClaim } from "../../common/components/ItwCredentialClaim";
-import { ItwReleaserName } from "../../common/components/ItwReleaserName";
+import { ItwIssuanceMetadata } from "../../common/components/ItwIssuanceMetadata";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
@@ -35,7 +35,7 @@ const ItwCredentialPreviewClaimsList = ({
       {releaserVisible && (
         <>
           <Divider />
-          <ItwReleaserName credential={data} isPreview={true} />
+          <ItwIssuanceMetadata credential={data} isPreview={true} />
         </>
       )}
     </>
