@@ -4061,6 +4061,8 @@ transaction:
     totalFee: Il totale comprende
     totalFeePsp: "di commissione, applicata da {{pspName}}."
     totalFeeNoPsp: "di commissione, applicata dal gestore della transazione (PSP)."
+    bannerImported:
+      content: "La ricevuta pagoPA non è disponibile. Rivolgiti all’Ente Creditore se hai bisogno della quietanza di pagamento, cioè il documento che attesta di aver saldato un debito."
     info:
       title: Informazioni sulla transazione
       pspName: Gestore della transazione (PSP)
