@@ -9,33 +9,40 @@ import {
   trialSystemActivationStatusUpsert
 } from "../../../../trialSystem/store/actions";
 import { SubscriptionStateEnum } from "../../../../../../definitions/trial_system/SubscriptionState";
-import { trialStatusSelector } from "../../../../trialSystem/store/reducers";
+import {
+  trialStatusPotSelector,
+  trialStatusSelector
+} from "../../../../trialSystem/store/reducers";
 import { TrialId } from "../../../../../../definitions/trial_system/TrialId";
+import { TrialSystemError } from "../../../../trialSystem/utils/error";
 
 describe("handleTrialSystemSubscription", () => {
-  it("should handle trial system subscription correctly", async () => {
+  it("should handle trial system subscription correctly when the endpoint returns 404", async () => {
     const trialId = "baz" as TrialId;
-    const state = SubscriptionStateEnum.UNSUBSCRIBED;
+    const error = new TrialSystemError(
+      "User not found",
+      "TRIAL_SYSTEM_USER_NOT_FOUND"
+    );
+    const state = pot.noneError(error);
     const store: DeepPartial<GlobalState> = {
       trialSystem: {
-        [trialId]: pot.some(state)
+        [trialId]: state
       }
     };
     return expectSaga(handleTrialSystemSubscription)
       .withState(store)
       .put(trialSystemActivationStatus.request(trialId))
       .dispatch(
-        trialSystemActivationStatus.success({
+        trialSystemActivationStatus.failure({
           trialId,
-          state,
-          createdAt: new Date()
+          error
         })
       )
       .take([
         trialSystemActivationStatus.success,
         trialSystemActivationStatus.failure
       ])
-      .provide([[matchers.select(trialStatusSelector), state]])
+      .provide([[matchers.select(trialStatusPotSelector), state]])
       .put(trialSystemActivationStatusUpsert.request(trialId))
       .run();
   });
