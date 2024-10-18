@@ -12,8 +12,6 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
 
 export const DSWallet = () => {
-  const [isStacked, setStacked] = React.useState(true);
-
   const cards: ReadonlyArray<WalletCard> = [
     {
       key: "1",
@@ -108,11 +106,6 @@ export const DSWallet = () => {
 
   return (
     <DesignSystemScreen title={"Wallet"}>
-      <ListItemSwitch
-        label="Show stacked cards"
-        value={isStacked}
-        onSwitchValueChange={setStacked}
-      />
       <VStack space={blockMargin}>
         <DesignSystemSection title="With Documenti su IO">
           <WalletCardsCategoryContainer
@@ -122,7 +115,6 @@ export const DSWallet = () => {
               iconName: "legalValue",
               iconColor: "blueIO-500"
             }}
-            isStacked={isStacked}
           />
           <WalletCardsCategoryContainer
             cards={[
@@ -133,7 +125,6 @@ export const DSWallet = () => {
             header={{
               label: "Altro"
             }}
-            isStacked={isStacked}
             topElement={
               <>
                 <Banner
@@ -155,7 +146,6 @@ export const DSWallet = () => {
               ...cardsByCategory.cgn,
               ...cardsByCategory.bonus
             ]}
-            isStacked={isStacked}
           />
         </DesignSystemSection>
       </VStack>
