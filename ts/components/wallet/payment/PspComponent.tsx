@@ -1,4 +1,4 @@
-import { Icon } from "@pagopa/io-app-design-system";
+import { Body, H6, Icon } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { FC } from "react";
@@ -9,8 +9,6 @@ import customVariables from "../../../theme/variables";
 import { getPspIconUrlFromAbi } from "../../../utils/paymentMethod";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import { Body } from "../../core/typography/Body";
-import { H4 } from "../../core/typography/H4";
 
 const ICON_SIZE = 24;
 const IMAGE_WIDTH = 100;
@@ -73,7 +71,7 @@ export const PspComponent: FC<Props> = ({ psp, onPress }) => {
           <Body testID="businessName">{psp.ragioneSociale}</Body>
         )}
         <View style={styles.feeContainer}>
-          <H4 color="blue">{cost}</H4>
+          <H6 color="blue">{cost}</H6>
           <Icon name="chevronRightListItem" size={ICON_SIZE} color="blue" />
         </View>
       </View>

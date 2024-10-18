@@ -3,6 +3,7 @@ import {
   H3,
   IOColors,
   Icon,
+  Label,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
@@ -23,7 +24,6 @@ import { formatDateAsLocal } from "../../../utils/dates";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import { Label } from "../../core/typography/Label";
 import { IOStyles } from "../../core/variables/IOStyles";
 import { BadgeComponent } from "../../screens/BadgeComponent";
 import { EdgeBorderComponent } from "../../screens/EdgeBorderComponent";
@@ -71,7 +71,7 @@ const itemStyles = StyleSheet.create({
 });
 
 const ICON_WIDTH = 24;
-const labelColor = "bluegrey";
+const labelColor: IOColors = "grey-700";
 export const getPanDescription = (attempt: CreditCardInsertion) =>
   `${FOUR_UNICODE_CIRCLES} ${attempt.blurredPan}\n ${I18n.t(
     "cardComponent.validUntil"

@@ -1,12 +1,15 @@
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  Icon,
+  Label,
+  LabelLink,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import * as React from "react";
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
-import { Body } from "../../../../../components/core/typography/Body";
-import { Label } from "../../../../../components/core/typography/Label";
-import { Link } from "../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
@@ -48,7 +51,7 @@ const getItem = (props: Props) => [
         {I18n.t(
           "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row2Description1"
         )}
-        <Label color={"bluegreyDark"}>
+        <Label color={"grey-700"}>
           {formatNumberCentsToAmount(props.pspFee, true)}
         </Label>
         {I18n.t(
@@ -65,12 +68,12 @@ const getItem = (props: Props) => [
           accessibilityRole="button"
           onPress={() => props.pspPrivacyUrl && openWebUrl(props.pspPrivacyUrl)}
         >
-          <Link weight={"Semibold"}>
+          <LabelLink weight={"Semibold"}>
             {I18n.t(
               "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row3Description1",
               { psp: props.pspName }
             )}
-          </Link>
+          </LabelLink>
         </TouchableWithoutFeedback>
       </View>
     )

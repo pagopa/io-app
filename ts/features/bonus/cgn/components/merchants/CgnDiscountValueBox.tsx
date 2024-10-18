@@ -4,10 +4,7 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
-import { H3 } from "../../../../../components/core/typography/H3";
-import { H4 } from "../../../../../components/core/typography/H4";
-import { H5 } from "../../../../../components/core/typography/H5";
+import { H6, IOColors } from "@pagopa/io-app-design-system";
 
 type ValueBoxProps = {
   value: number;
@@ -45,26 +42,14 @@ const CgnDiscountValueBox = ({ value, small }: ValueBoxProps) => {
     E.map(v => v.toString()),
     E.getOrElse(() => "-")
   );
-  const percentage = (
-    <H5 weight={"Semibold"} color={"white"}>
-      {PERCENTAGE_SYMBOL}
-    </H5>
-  );
+  const percentage = <H6 color={"white"}>{PERCENTAGE_SYMBOL}</H6>;
   return (
     <View style={small ? styles.smallValueBox : styles.discountValueBox}>
-      {small ? (
-        <H4 weight={"Bold"} color={"white"} style={styles.percentage}>
-          {MINUS_SYMBOL}
-          {normalizedValue}
-          {percentage}
-        </H4>
-      ) : (
-        <H3 weight={"Bold"} color={"white"} style={styles.percentage}>
-          {MINUS_SYMBOL}
-          {normalizedValue}
-          {percentage}
-        </H3>
-      )}
+      <H6 color={"white"} style={styles.percentage}>
+        {MINUS_SYMBOL}
+        {normalizedValue}
+        {percentage}
+      </H6>
     </View>
   );
 };

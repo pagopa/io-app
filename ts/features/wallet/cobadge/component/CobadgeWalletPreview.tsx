@@ -4,7 +4,7 @@ import * as React from "react";
 import { Image, ImageStyle, StyleProp } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Body } from "../../../../components/core/typography/Body";
+import { Body } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Logo";
 import I18n from "../../../../i18n";

@@ -1,4 +1,4 @@
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { H6, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
@@ -8,7 +8,6 @@ import TouchableDefaultOpacity, {
   TouchableDefaultOpacityProps
 } from "../../../../components/TouchableDefaultOpacity";
 import { IOBadge } from "../../../../components/core/IOBadge";
-import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
@@ -86,9 +85,9 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
       )}
     </View>
     <VSpacer size={8} />
-    <H3 weight={"Semibold"} color={"blue"}>
+    <H6 weight={"Semibold"} color={"blue"}>
       {props.title}
-    </H3>
+    </H6>
   </TouchableDefaultOpacity>
 );
 

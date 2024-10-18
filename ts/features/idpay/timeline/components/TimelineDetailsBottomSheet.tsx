@@ -10,7 +10,8 @@ import {
   ButtonOutline,
   VSpacer,
   Pictogram,
-  ContentWrapper
+  ContentWrapper,
+  H6
 } from "@pagopa/io-app-design-system";
 import Placeholder from "rn-placeholder";
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
@@ -18,7 +19,6 @@ import { OperationListDTO } from "../../../../../definitions/idpay/OperationList
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
 import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../definitions/idpay/TransactionDetailDTO";
 import { ChannelEnum } from "../../../../../definitions/idpay/TransactionOperationDTO";
-import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -66,7 +66,7 @@ const useTimelineDetailsBottomSheet = (
     O.filter(_ => !isError),
     O.fold(
       () => null,
-      title => (isLoading ? <TitleSkeleton /> : <H3>{title}</H3>)
+      title => (isLoading ? <TitleSkeleton /> : <H6>{title}</H6>)
     )
   );
 
@@ -176,7 +176,7 @@ const ErrorComponent = () => (
   >
     <Pictogram name="attention" size={72} />
     <VSpacer size={16} />
-    <H3>{I18n.t("idpay.initiative.operationDetails.errorBody")}</H3>
+    <H6>{I18n.t("idpay.initiative.operationDetails.errorBody")}</H6>
   </View>
 );
 

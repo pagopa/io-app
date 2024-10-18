@@ -1,9 +1,8 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { Icon, HSpacer, VSpacer, Body } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
-import { Body } from "../core/typography/Body";
 import { IOStyles } from "../core/variables/IOStyles";
 import { BadgeComponent } from "../screens/BadgeComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";

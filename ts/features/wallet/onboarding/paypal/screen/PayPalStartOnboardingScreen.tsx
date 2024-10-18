@@ -1,4 +1,4 @@
-import { FooterWithButtons } from "@pagopa/io-app-design-system";
+import { Body, FooterWithButtons } from "@pagopa/io-app-design-system";
 import React from "react";
 import { Dimensions, SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
@@ -6,7 +6,6 @@ import { Dispatch } from "redux";
 import Oval from "../../../../../../img/wallet/payment-methods/paypal/oval.svg";
 import PPLogo from "../../../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
-import { Body } from "../../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";

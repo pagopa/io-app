@@ -1,11 +1,10 @@
-import { HSpacer, Icon } from "@pagopa/io-app-design-system";
+import { H6, HSpacer, Icon } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import bancomatLogoMin from "../../../../../img/wallet/payment-methods/bancomatpay-logo.png";
-import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { profileNameSurnameSelector } from "../../../../store/reducers/profile";
@@ -50,9 +49,9 @@ const topLeft = (phone: string) => (
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Icon name="phone" size={24} />
         <HSpacer size={8} />
-        <H4 weight={"Regular"} testID="phone">
+        <H6 weight={"Regular"} testID="phone">
           {phone}
-        </H4>
+        </H6>
       </View>
     )}
   </View>
@@ -73,9 +72,9 @@ const BPayCard: React.FunctionComponent<Props> = (props: Props) => (
           O.fold(
             () => undefined,
             nameSurname => (
-              <H4 weight={"Regular"} testID={"nameSurname"}>
+              <H6 weight={"Regular"} testID={"nameSurname"}>
                 {nameSurname.toLocaleUpperCase()}
-              </H4>
+              </H6>
             )
           )
         )}
