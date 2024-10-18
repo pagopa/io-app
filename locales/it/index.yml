@@ -3333,10 +3333,10 @@ features:
         bottomSheet:
           about:
             title: "Chi è?"
-            subtitle: "È l'ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti."
+            subtitle: "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.\n\n Per sapere come tratta i tuoi dati consulta l’[Informativa Privacy]({{privacyUrl}}). "
           authSource:
             title: "Chi è?"
-            subtitle: "È l'ente che detiene i dati contenuti all'interno del tuo documento."
+            subtitle: "È l’ente che detiene i dati contenuti all’interno del tuo documento."
         actions:
           primary: Aggiungi al Portafoglio
           secondary: Annulla
