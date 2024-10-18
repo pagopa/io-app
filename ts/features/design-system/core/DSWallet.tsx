@@ -1,9 +1,4 @@
-import {
-  Banner,
-  ListItemSwitch,
-  VSpacer,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { Banner, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
 import { WalletCardsCategoryContainer } from "../../newWallet/components/WalletCardsCategoryContainer";
