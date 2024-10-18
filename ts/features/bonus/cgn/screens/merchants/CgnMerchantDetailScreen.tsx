@@ -65,7 +65,7 @@ const CgnMerchantDetailScreen = () => {
     dispatch(cgnSelectedMerchant.request(merchantID));
   }, [merchantID, dispatch]);
 
-  const bottomMargin: number = React.useMemo(
+  const paddingBottom: number = React.useMemo(
     () =>
       safeAreaInsets.bottom === 0
         ? IOVisualCostants.appMarginDefault
@@ -126,82 +126,78 @@ const CgnMerchantDetailScreen = () => {
   const showGotToWebsite =
     isReady(merchantDetail) && merchantDetail.value.websiteUrl !== undefined;
 
-  return (
-    <>
-      {isReady(merchantDetail) ? (
-        <>
-          <Animated.ScrollView
-            style={{ flexGrow: 1 }}
-            onScroll={scrollHandler}
-            scrollEventThrottle={8}
-            scrollIndicatorInsets={{ right: 1 }}
-            snapToOffsets={[0]}
-            snapToEnd={false}
-            contentContainerStyle={{
-              flexGrow: 1,
-              paddingBottom: bottomMargin
-            }}
-          >
-            <ContentWrapper>
-              {merchantDetail.value.imageUrl !== undefined && (
-                <View onLayout={getTitleHeight}>
-                  <Image
-                    accessibilityIgnoresInvertColors
-                    source={{ uri: merchantDetail.value.imageUrl }}
-                    style={styles.merchantImage}
-                  />
-                  <VSpacer size={24} />
-                </View>
-              )}
-              <H1>{merchantDetail.value.name}</H1>
-              <VSpacer size={24} />
-              <ListItemHeader
-                label={I18n.t("bonus.cgn.merchantDetail.title.deals")}
-              />
-              {renderDiscountsList(merchantDetail.value.discounts)}
-              <VSpacer size={24} />
-              <ListItemInfo
-                numberOfLines={0}
-                label={I18n.t("bonus.cgn.merchantDetail.title.description")}
-                value={merchantDetail.value.description}
+  if (isReady(merchantDetail)) {
+    return (
+      <Animated.ScrollView
+        style={{ flexGrow: 1 }}
+        onScroll={scrollHandler}
+        scrollEventThrottle={8}
+        scrollIndicatorInsets={{ right: 1 }}
+        snapToOffsets={[0]}
+        snapToEnd={false}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom
+        }}
+      >
+        <ContentWrapper>
+          {merchantDetail.value.imageUrl !== undefined && (
+            <View onLayout={getTitleHeight}>
+              <Image
+                accessibilityIgnoresInvertColors
+                source={{ uri: merchantDetail.value.imageUrl }}
+                style={styles.merchantImage}
               />
               <VSpacer size={24} />
-              {showAddresses || showGotToWebsite ? (
-                <ListItemHeader
-                  label={I18n.t("bonus.cgn.merchantDetail.title.contactInfo")}
-                />
-              ) : null}
-              {showGotToWebsite ? (
-                <ListItemAction
-                  variant="primary"
-                  icon="website"
-                  label={I18n.t("bonus.cgn.merchantDetail.cta.website")}
-                  onPress={() =>
-                    handlePressMerchantWebsite(merchantDetail.value.websiteUrl)
-                  }
-                />
-              ) : null}
-              {showGotToWebsite && showAddresses ? <Divider /> : null}
-              {merchantDetail.value.addresses?.map((address, index) => (
-                <CgnAddressListItem
-                  item={address}
-                  key={index}
-                  isAllNationalAddress={
-                    merchantDetail.value.allNationalAddresses
-                  }
-                />
-              ))}
-              <VSpacer size={24} />
-            </ContentWrapper>
-          </Animated.ScrollView>
-        </>
-      ) : (
-        <SafeAreaView style={IOStyles.flex}>
-          <CgnMerchantDetailScreenSkeleton />
-        </SafeAreaView>
-      )}
-    </>
-  );
+            </View>
+          )}
+          <H1>{merchantDetail.value.name}</H1>
+          <VSpacer size={24} />
+          <ListItemHeader
+            label={I18n.t("bonus.cgn.merchantDetail.title.deals")}
+          />
+          {renderDiscountsList(merchantDetail.value.discounts)}
+          <VSpacer size={24} />
+          <ListItemInfo
+            numberOfLines={0}
+            label={I18n.t("bonus.cgn.merchantDetail.title.description")}
+            value={merchantDetail.value.description}
+          />
+          <VSpacer size={24} />
+          {(showAddresses || showGotToWebsite) && (
+            <ListItemHeader
+              label={I18n.t("bonus.cgn.merchantDetail.title.contactInfo")}
+            />
+          )}
+          {showGotToWebsite && (
+            <ListItemAction
+              variant="primary"
+              icon="website"
+              label={I18n.t("bonus.cgn.merchantDetail.cta.website")}
+              onPress={() =>
+                handlePressMerchantWebsite(merchantDetail.value.websiteUrl)
+              }
+            />
+          )}
+          {showGotToWebsite && showAddresses && <Divider />}
+          {merchantDetail.value.addresses?.map((address, index) => (
+            <CgnAddressListItem
+              item={address}
+              key={index}
+              isAllNationalAddress={merchantDetail.value.allNationalAddresses}
+            />
+          ))}
+          <VSpacer size={24} />
+        </ContentWrapper>
+      </Animated.ScrollView>
+    );
+  } else {
+    return (
+      <SafeAreaView style={IOStyles.flex}>
+        <CgnMerchantDetailScreenSkeleton />
+      </SafeAreaView>
+    );
+  }
 };
 
 // ------------------------ render utils

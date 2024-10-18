@@ -2717,7 +2717,7 @@ bonus:
         description: Descrizione
         contactInfo: Contatti e informazioni
       cta:
-        website: Visita al sito del partner
+        website: Visita il sito del partner
       categories:
         counting: e altre {{count}}
         cultureAndEntertainment: Cultura e tempo libero

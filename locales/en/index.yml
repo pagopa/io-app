@@ -2717,7 +2717,7 @@ bonus:
         description: Description
         contactInfo: Addresses
       cta:
-        website: Visit to partner's website
+        website: Visit the partner's website
       categories:
         counting: and other {{count}}
         cultureAndEntertainment: Culture and entertainment
