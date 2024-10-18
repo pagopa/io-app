@@ -2,6 +2,7 @@ import {
   Divider,
   H2,
   IOVisualCostants,
+  LabelSmall,
   ListItemNav,
   VSpacer,
   VStack,
@@ -9,7 +10,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { SectionList, StatusBar, useColorScheme } from "react-native";
-import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useScreenEndMargin } from "../../hooks/useScreenEndMargin";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
