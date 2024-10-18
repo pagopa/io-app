@@ -6,8 +6,9 @@ import { View, StyleSheet, Platform, AccessibilityInfo } from "react-native";
 import {
   ContentWrapper,
   H3,
-  IOStyles,
-  VSpacer
+  IOColors,
+  useIOTheme,
+  VStack
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
@@ -15,15 +16,8 @@ import { WithTestID } from "../../types/WithTestID";
 
 const styles = StyleSheet.create({
   container: {
-    ...IOStyles.bgWhite,
-    ...IOStyles.centerJustified,
-    ...IOStyles.flex
-  },
-  contentTitle: {
-    textAlign: "center"
-  },
-  content: {
-    alignItems: "center"
+    flex: 1,
+    justifyContent: "center"
   }
 });
 
@@ -37,6 +31,7 @@ type LoadingScreenContentProps = WithTestID<{
 
 export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
   const { contentTitle, children, headerVisible, testID } = props;
+  const theme = useIOTheme();
 
   React.useEffect(() => {
     // Since the screen is shown for a very short time,
@@ -52,12 +47,18 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
 
   return (
     <SafeAreaView
-      style={styles.container}
+      style={[
+        styles.container,
+        { backgroundColor: IOColors[theme["appBackground-primary"]] }
+      ]}
       edges={headerVisible ? ["bottom"] : undefined}
       testID={testID}
     >
       <ContentWrapper>
-        <View style={styles.content}>
+        <VStack
+          space={SPACE_BETWEEN_SPINNER_AND_TEXT}
+          style={{ alignItems: "center" }}
+        >
           <View
             accessible={false}
             accessibilityElementsHidden={true}
@@ -65,11 +66,10 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
           >
             <LoadingIndicator />
           </View>
-          <VSpacer size={SPACE_BETWEEN_SPINNER_AND_TEXT} />
-          <H3 style={styles.contentTitle} accessibilityLabel={contentTitle}>
+          <H3 style={{ textAlign: "center" }} accessibilityLabel={contentTitle}>
             {contentTitle}
           </H3>
-        </View>
+        </VStack>
       </ContentWrapper>
       {children}
     </SafeAreaView>

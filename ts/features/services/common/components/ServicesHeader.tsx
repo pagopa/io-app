@@ -8,6 +8,7 @@ import {
   IOStyles,
   IOVisualCostants,
   LabelSmall,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import Placeholder from "rn-placeholder";
@@ -37,19 +38,23 @@ export const ServicesHeader = ({
   logoUri,
   title,
   subTitle
-}: ServicesHeaderProps) => (
-  <View style={styles.container} testID="services-header">
-    <View style={styles.itemAvatar}>
-      <Avatar logoUri={logoUri} size="medium" />
+}: ServicesHeaderProps) => {
+  const theme = useIOTheme();
+
+  return (
+    <View style={styles.container} testID="services-header">
+      <View style={styles.itemAvatar}>
+        <Avatar logoUri={logoUri} size="medium" />
+      </View>
+      <View style={IOStyles.flex}>
+        <H3>{title}</H3>
+        <LabelSmall fontSize="regular" color={theme["textBody-tertiary"]}>
+          {subTitle}
+        </LabelSmall>
+      </View>
     </View>
-    <View style={IOStyles.flex}>
-      <H3>{title}</H3>
-      <LabelSmall fontSize="regular" color="grey-700">
-        {subTitle}
-      </LabelSmall>
-    </View>
-  </View>
-);
+  );
+};
 
 export const ServicesHeaderSkeleton = () => (
   <View

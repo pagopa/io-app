@@ -3,6 +3,7 @@ import {
   IOColors,
   IOSpacingScale,
   IOVisualCostants,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
@@ -38,6 +39,9 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
   const insets = useSafeAreaInsets();
   const translationY = useSharedValue(0);
   const [titleHeight, setTitleHeight] = React.useState(0);
+
+  const theme = useIOTheme();
+  const backgroundColor = IOColors[theme["appBackground-primary"]];
   const blueHeaderColor = isDSenabled ? IOColors["blueIO-600"] : IOColors.blue;
 
   useHeaderSecondLevel({
@@ -74,7 +78,7 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
       contentContainerStyle={{
         flexGrow: 1,
         paddingBottom: 48,
-        backgroundColor: IOColors.white
+        backgroundColor
       }}
     >
       <FocusAwareStatusBar

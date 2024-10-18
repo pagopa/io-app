@@ -1050,7 +1050,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {

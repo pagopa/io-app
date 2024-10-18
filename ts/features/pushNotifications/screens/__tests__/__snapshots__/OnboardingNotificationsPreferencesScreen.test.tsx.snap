@@ -1350,7 +1350,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -2940,7 +2940,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -4530,7 +4530,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -6120,7 +6120,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -8139,7 +8139,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {

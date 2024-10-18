@@ -32,15 +32,12 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
   >
     <View
       style={
-        [
-          {
-            "alignItems": "center",
-            "flex": 1,
-            "height": 100,
-            "justifyContent": "center",
-          },
-          undefined,
-        ]
+        {
+          "alignItems": "center",
+          "flex": 1,
+          "height": 100,
+          "justifyContent": "center",
+        }
       }
     >
       <View
@@ -461,15 +458,12 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
   >
     <View
       style={
-        [
-          {
-            "alignItems": "center",
-            "flex": 1,
-            "height": 100,
-            "justifyContent": "center",
-          },
-          undefined,
-        ]
+        {
+          "alignItems": "center",
+          "flex": 1,
+          "height": 100,
+          "justifyContent": "center",
+        }
       }
     >
       <View

@@ -221,15 +221,12 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                         >
                           <View
                             style={
-                              [
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "height": 100,
-                                  "justifyContent": "center",
-                                },
-                                undefined,
-                              ]
+                              {
+                                "alignItems": "center",
+                                "flex": 1,
+                                "height": 100,
+                                "justifyContent": "center",
+                              }
                             }
                           >
                             <View
@@ -673,7 +670,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -1546,7 +1543,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
