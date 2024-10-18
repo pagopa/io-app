@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Body, H2, H6, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, H2, H6, LabelLink, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../i18n";
-import { Link } from "../../../../../components/core/typography/Link";
 import InternationalCircuitIconsBar from "../../../../../components/wallet/InternationalCircuitIconsBar";
 
 type Props = {
@@ -69,7 +68,7 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
         {props.methodType === "cobadge" && props.bankName ? (
           <H6 color={"bluegreyDark"}>{props.bankName}</H6>
         ) : (
-          <Link
+          <LabelLink
             onPress={
               props.methodType === "cobadge"
                 ? props.openParticipatingBanksModal
@@ -77,7 +76,7 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
             }
           >
             {locales.text2}
-          </Link>
+          </LabelLink>
         )}
       </Body>
 
@@ -86,13 +85,13 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
         <H6 weight={"Regular"} color={"bluegreyDark"}>
           {locales.text3}
         </H6>
-        <Link
+        <LabelLink
           onPress={
             props.methodType === "cobadge" ? props.openTosModal : props.onSearch
           }
         >
           {locales.text4}
-        </Link>
+        </LabelLink>
       </Body>
     </>
   );

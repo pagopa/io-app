@@ -9,9 +9,9 @@ import {
   VSpacer,
   ContentWrapper,
   Body,
-  H6
+  H6,
+  LabelLink
 } from "@pagopa/io-app-design-system";
-import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../i18n";
@@ -60,9 +60,9 @@ const InitiativeRulesInfoBox = (props: Props) => {
         <View style={IOStyles.row}>
           <Icon name="categLearning" color="blue" />
           <HSpacer size={8} />
-          <Link onPress={() => present()}>
+          <LabelLink onPress={() => present()}>
             {I18n.t("idpay.initiative.beneficiaryDetails.infobox.rulesButton")}
-          </Link>
+          </LabelLink>
         </View>
       </View>
       <VSpacer size={16} />

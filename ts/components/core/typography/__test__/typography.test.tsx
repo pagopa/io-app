@@ -5,7 +5,6 @@ import { IOFontWeight } from "../../fonts";
 import { calculateWeightColor } from "../common";
 import { Label } from "../Label";
 import { LabelSmall } from "../LabelSmall";
-import { Link } from "../Link";
 
 describe("Test Typography Components", () => {
   it("LabelSmall Snapshot", () => {
@@ -48,10 +47,6 @@ describe("Test Typography Components", () => {
       ).toJSON();
       expect(label).toMatchSnapshot();
     });
-  });
-  it("Link Snapshot", () => {
-    const link = TestRenderer.create(<Link>Text</Link>).toJSON();
-    expect(link).toMatchSnapshot();
   });
 });
 

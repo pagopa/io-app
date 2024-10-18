@@ -3,6 +3,7 @@ import {
   ButtonOutline,
   H4,
   IOColors,
+  LabelLink,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -20,7 +21,6 @@ import {
 import { connect } from "react-redux";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
-import { Link } from "../../components/core/typography/Link";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
@@ -228,7 +228,7 @@ class TransactionDetailsScreen extends React.Component<
             recipient={transaction.merchant}
             description={cleanTransactionDescription(transaction.description)}
           />
-          <Link
+          <LabelLink
             onPress={this.handleOnFullReasonPress}
             accessible
             accessibilityRole={"button"}
@@ -239,7 +239,7 @@ class TransactionDetailsScreen extends React.Component<
             }`}
           >
             {I18n.t("wallet.transactionFullReason")}
-          </Link>
+          </LabelLink>
           {this.state.showFullReason && (
             <Body
               selectable={true}

@@ -1,9 +1,8 @@
 import { HStack, IOColors, VStack } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import { Label as LegacyLabel } from "../../../components/core/typography/Label";
 import { LabelSmall as LegacyLabelSmall } from "../../../components/core/typography/LabelSmall";
-import { Link as LegacyLink } from "../../../components/core/typography/Link";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 export const DSLegacyTypography = () => (
@@ -11,7 +10,6 @@ export const DSLegacyTypography = () => (
     <VStack space={40}>
       <LegacyLabelSmallRow />
       <LegacyLabelRow />
-      <LegacyLink onPress={() => Alert.alert("onPress link!")}>Link</LegacyLink>
     </VStack>
   </DesignSystemScreen>
 );

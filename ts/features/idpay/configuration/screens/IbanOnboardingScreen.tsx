@@ -4,6 +4,7 @@ import {
   H2,
   HSpacer,
   Icon,
+  LabelLink,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
@@ -13,7 +14,6 @@ import { ScrollView, View } from "react-native";
 import { Iban } from "../../../../../definitions/backend/Iban";
 import { LabelledItem } from "../../../../components/LabelledItem";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
-import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -52,7 +52,9 @@ export const IbanOnboardingScreen = () => {
         <H2>{I18n.t("idpay.configuration.iban.onboarding.header")}</H2>
         <VSpacer size={16} />
         <Body>{I18n.t("idpay.configuration.iban.onboarding.body")}</Body>
-        <Link>{I18n.t("idpay.configuration.iban.onboarding.bodyLink")}</Link>
+        <LabelLink>
+          {I18n.t("idpay.configuration.iban.onboarding.body")}
+        </LabelLink>
         <VSpacer size={24} />
         <LabelledItem
           isValid={O.isSome(iban.value)}

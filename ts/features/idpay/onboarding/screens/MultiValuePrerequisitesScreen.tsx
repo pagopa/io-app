@@ -7,6 +7,7 @@ import {
   IOColors,
   IOStyles,
   Icon,
+  LabelLink,
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -14,7 +15,6 @@ import { default as React } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
-import { Link } from "../../../../components/core/typography/Link";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
@@ -98,7 +98,9 @@ const MultiValuePrerequisiteItemScreenContent = ({
           <H1>{I18n.t("idpay.onboarding.multiPrerequisites.header")}</H1>
           <VSpacer size={16} />
           <Body>{I18n.t("idpay.onboarding.multiPrerequisites.body")}</Body>
-          <Link>{I18n.t("idpay.onboarding.multiPrerequisites.link")}</Link>
+          <LabelLink>
+            {I18n.t("idpay.onboarding.multiPrerequisites.link")}
+          </LabelLink>
           <VSpacer size={24} />
           <H6>{selfDeclaration.description}</H6>
           <ScrollView>

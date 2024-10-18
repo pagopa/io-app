@@ -4,6 +4,7 @@ import {
   FooterWithButtons,
   H2,
   IOColors,
+  LabelLink,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import {
@@ -22,7 +23,6 @@ import * as React from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { LabelledItem } from "../../../components/LabelledItem";
-import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -188,9 +188,9 @@ class ManualDataInsertionScreen extends React.Component<
             <ContentWrapper>
               <H2>{I18n.t("wallet.insertManually.title")}</H2>
               <Body>{I18n.t("wallet.insertManually.info")}</Body>
-              <Link onPress={this.showModal}>
+              <LabelLink onPress={this.showModal}>
                 {I18n.t("wallet.insertManually.link")}
-              </Link>
+              </LabelLink>
               <VSpacer size={16} />
               <LabelledItem
                 isValid={unwrapOptionalEither(this.state.paymentNoticeNumber)}

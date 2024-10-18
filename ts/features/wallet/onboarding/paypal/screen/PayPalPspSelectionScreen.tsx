@@ -3,6 +3,7 @@ import {
   FooterWithButtons,
   H2,
   H6,
+  LabelLink,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React, { useEffect, useState } from "react";
@@ -19,7 +20,6 @@ import {
   RadioButtonList,
   RadioItem
 } from "../../../../../components/core/selection/RadioButtonList";
-import { Link } from "../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
@@ -144,12 +144,12 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
               <VSpacer size={8} />
               <ScrollView>
                 <Body>{locales.body}</Body>
-                <Link
+                <LabelLink
                   onPress={presentWhatIsPspBottomSheet}
                   testID={"whatIsPSPTestID"}
                 >
                   {locales.link}
-                </Link>
+                </LabelLink>
                 <VSpacer size={24} />
                 <RadioListHeader
                   leftColumnTitle={locales.leftColumnTitle}
